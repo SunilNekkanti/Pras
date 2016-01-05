@@ -12,8 +12,6 @@ import com.pfchoice.springmvc.controller.MembershipAction;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.annotation.Resource;
-
 
 /**
  *

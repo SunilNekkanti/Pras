@@ -12,9 +12,7 @@ import com.pfchoice.springmvc.interceptor.AuthenticationInterceptor;
 
 import org.apache.tiles.Attribute;
 import org.apache.tiles.Definition;
-//import org.apache.tiles.context.TilesRequestContext;
 
-import org.apache.tiles.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
