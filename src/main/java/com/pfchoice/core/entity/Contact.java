@@ -48,7 +48,7 @@ public class Contact implements Serializable
     private String city;
     
     @Column(name="zipcode")
-    private String zipCode;
+    private Integer zipCode;
     
     @Column(name="statecode")
     private Integer stateCode;
@@ -196,14 +196,14 @@ public class Contact implements Serializable
 	/**
 	 * @return the zipCode
 	 */
-	public String getZipCode() {
+	public Integer getZipCode() {
 		return zipCode;
 	}
 
 	/**
 	 * @param zipCode the zipCode to set
 	 */
-	public void setZipCode(String zipCode) {
+	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
 	}
 
