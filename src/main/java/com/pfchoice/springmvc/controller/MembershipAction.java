@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipStatus;
+import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.MembershipService;
+import com.pfchoice.core.service.MembershipStatusService;
 
 
 
@@ -39,7 +43,12 @@ public class MembershipAction
 
     @Autowired
     private GenderService genderService;
+    
+    @Autowired
+    private MembershipStatusService membershipStatusService;
 
+    @Autowired
+    private CountyService countyService;
     /**
      * Persist a Membership bean into database.
      *
@@ -113,8 +122,11 @@ public class MembershipAction
     {
         Membership bean = membershipService.findById(id);
         Gender 	genderBean = genderService.findById(bean.getGenderId());
+        MembershipStatus statusBean = membershipStatusService.findById(bean.getStatus());
+        County countyBean = countyService.findById(bean.getCountyCode());
         bean.setGenderDescription(genderBean.getDescription());
-
+        bean.setStatusDescription(statusBean.getDescription());
+        bean.setCountyDescription(countyBean.getDescription());
         return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, bean);
     }
 }
