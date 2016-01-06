@@ -11,11 +11,10 @@ import com.pfchoice.form.LoginForm;
 import com.pfchoice.form.MembershipForm;
 
 @Controller
-@RequestMapping(value = "/")
+@RequestMapping(value = "*")
 public class LoginController {
 	
-	
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showForm(Map<String,Object> model) {
 		LoginForm loginForm = new LoginForm();
 		model.put("loginForm", loginForm);
