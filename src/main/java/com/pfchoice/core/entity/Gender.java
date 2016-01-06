@@ -193,7 +193,7 @@ public class Gender implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.Student[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.Gender[ id=" + id + " ]";
     }
 
 }
