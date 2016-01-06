@@ -73,6 +73,12 @@ public class Membership implements Serializable
     
    @Transient
    private String genderDescription;
+   
+   @Transient
+   private String statusDescription;
+   
+   @Transient
+   private String countyDescription;
     
     public Membership()
     {
@@ -317,6 +323,34 @@ public class Membership implements Serializable
 	public void setGenderDescription(String genderDescription) {
 		this.genderDescription = genderDescription;
 	}
+	
+	/**
+	 * @return the statusDescription
+	 */
+	public String getStatusDescription() {
+		return statusDescription;
+	}
+
+	/**
+	 * @param statusDescription the statusDescription to set
+	 */
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
+	}
+	
+	/**
+	 * @return the countyDescription
+	 */
+	public String getCountyDescription() {
+		return countyDescription;
+	}
+
+	/**
+	 * @param countyDescription the countyDescription to set
+	 */
+	public void setCountyDescription(String countyDescription) {
+		this.countyDescription = countyDescription;
+	}
 
 	@Override
     public int hashCode()
@@ -345,7 +379,7 @@ public class Membership implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.Student[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.Membership[ id=" + id + " ]";
     }
 
 }
