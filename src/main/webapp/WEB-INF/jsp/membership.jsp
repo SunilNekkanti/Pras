@@ -30,7 +30,7 @@ pageEncoding="ISO-8859-1"%>
 
 <script>
 var xmlhttp = new XMLHttpRequest();
-var url = "http://localhost:8080/Pras/membership/157";
+var url = "http://localhost:8080/Pras/membership/161";
  xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
         myFunction(xmlhttp.responseText);
@@ -55,7 +55,16 @@ function myFunction(response) {
         arr["data"].dob + "</td> </tr>" +
         
         "<td>Gender:<FONT color=\"red\"><form:errors   path='lastName' /></FONT></td><td>"+
-        arr["data"].genderDescription + "</td> </tr>";
+        arr["data"].genderDescription + "</td> </tr>"+
+        
+        "<td>County:<FONT color=\"red\"><form:errors   path='county' /></FONT></td><td>"+
+        arr["data"].countyDescription + "</td> </tr>"+
+        
+        "<td>File Id:<FONT color=\"red\"><form:errors   path='fileId' /></FONT></td><td>"+
+        arr["data"].fileId + "</td> </tr>"+
+        
+        "<td>Status:<FONT color=\"red\"><form:errors   path='status' /></FONT></td><td>"+
+        arr["data"].statusDescription + "</td> </tr>";
         
     
         out += "</table>";
