@@ -101,4 +101,5 @@ public class ApplicationContext
         HibernateTransactionManager txManager = new HibernateTransactionManager(sessionFactory);
         return txManager;
     }
+    
 }
