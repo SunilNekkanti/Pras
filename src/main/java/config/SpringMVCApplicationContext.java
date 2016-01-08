@@ -1,9 +1,7 @@
 package config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentResolver;
 
@@ -31,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.AbstractHandlerMapping;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.JstlView;
@@ -134,14 +133,12 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	registry
         .addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    	registry.setOrder(-1);
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-     /*   registry.addViewController("/").setViewName("index");
-        registry.addViewController("/index").setViewName("loginform");
-        registry.addViewController("/loginform").setViewName("loginform");
-        registry.addViewController("/membership").setViewName("membership");*/
+        registry.addViewController("/").setViewName("index");
     }
 
     @Bean
