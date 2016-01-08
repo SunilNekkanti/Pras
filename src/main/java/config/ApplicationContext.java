@@ -93,7 +93,6 @@ public class ApplicationContext
         return hibernateProperties;
 
     }
-//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Hibernate transaction manager">
     @Bean
@@ -103,5 +102,4 @@ public class ApplicationContext
         HibernateTransactionManager txManager = new HibernateTransactionManager(sessionFactory);
         return txManager;
     }
-//</editor-fold>
 }
