@@ -2,6 +2,9 @@ package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,5 +131,20 @@ public class MembershipAction
         bean.setStatusDescription(statusBean.getDescription());
         bean.setCountyDescription(countyBean.getDescription());
         return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, bean);
+    }
+    
+    /**
+     * GET all Membership record from database.
+     *
+     * @param id primary key of target Membership.
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping( method = RequestMethod.GET)
+    public Message retrieveAll()
+    {
+        List<Membership> listBean = membershipService.findAll();
+        return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, listBean);
     }
 }
