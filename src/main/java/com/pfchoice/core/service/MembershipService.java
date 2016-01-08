@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Membership;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -20,5 +22,7 @@ public interface MembershipService
     Membership save(Membership bean);
 
     Membership update(Membership bean);
+    
+    List<Membership> findAll();
 
 }
