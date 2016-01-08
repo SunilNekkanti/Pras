@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(value = "com.pfchoice")
 public class ApplicationContext
 {
-
     public static final String hibernate_connection_autocommit = "hibernate.connection.autocommit";
 
     public static final String hibernate_format_sql = "hibernate.format_sql";
