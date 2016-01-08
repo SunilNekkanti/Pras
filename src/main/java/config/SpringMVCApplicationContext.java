@@ -56,11 +56,11 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 {
 	
-    @Autowired
-    private AuthenticationInterceptor authenticationInterceptor;
+ //   @Autowired
+ //   private AuthenticationInterceptor authenticationInterceptor;
     
-	private static final Map<String, Definition> tiles = new HashMap<String,Definition>();
-	private static final Attribute TEMPLATE = new Attribute("/WEB-INF/jsp/layout.jsp");
+//	private static final Map<String, Definition> tiles = new HashMap<String,Definition>();
+//	private static final Attribute TEMPLATE = new Attribute("/WEB-INF/jsp/layout.jsp");
 
 
     @Override
@@ -125,23 +125,23 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 		viewResolver.setPrefix("/WEB-INF/jsp/");
 		viewResolver.setSuffix(".jsp");
 
-		viewResolver.setViewClass(JstlView.class);
-		//viewResolver.setViewClass(TilesView.class);
+		//viewResolver.setViewClass(JstlView.class);
+		viewResolver.setViewClass(TilesView.class);
 		return viewResolver;
 	}
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-     registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    	registry
+        .addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
+     /*   registry.addViewController("/").setViewName("index");
         registry.addViewController("/index").setViewName("loginform");
         registry.addViewController("/loginform").setViewName("loginform");
-        registry.addViewController("/membership").setViewName("membership");
+        registry.addViewController("/membership").setViewName("membership");*/
     }
 
     @Bean
@@ -170,7 +170,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     /**
      * <code>Configures Apache tiles definitions bean used by Apache TilesViewResolver to resolve views selected for rendering by @Controllers</code>
      */ 
-    @Bean
+   /* @Bean
     public TilesConfigurer getTilesConfigurer() {
      TilesConfigurer tilesConfigurer = new TilesConfigurer();
      tilesConfigurer.setCheckRefresh(true);
@@ -180,5 +180,5 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
      TilesDefinitionsConfig.addDefinitions();
      
      return tilesConfigurer;
-    }
+    }*/
 }
