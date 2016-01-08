@@ -26,5 +26,21 @@ public interface CommonMessageContent
     String GET_MEMBERSHIP = "Get Membership profile";
 
     String ACCESS_FORBIDDEN = "Unmatched combination of username and credential";
+    
+    String INSURANCE_SAVED =  "New Insurance registered";
+   
+    String INSURANCE_UPDATED = "Insurance profile updated";
+
+    String INSURANCE_DELETED = "Insurance profile deleted";
+
+    String GET_INSURANCE = "Get Insurance profile";
+
+    String PROVIDER_SAVED =  "New Provider registered";
+    
+    String PROVIDER_UPDATED = "Provider profile updated";
+
+    String PROVIDER_DELETED = "Provider profile deleted";
+
+    String GET_PROVIDER = "Get Provider profile";
 
 }
