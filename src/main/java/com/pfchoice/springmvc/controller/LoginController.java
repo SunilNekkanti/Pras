@@ -20,6 +20,13 @@ public class LoginController {
 		model.put("loginForm", loginForm);
 		return "loginform";
 	}
+	
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String loginForm(Map<String,Object> model) {
+		LoginForm loginForm = new LoginForm();
+		model.put("loginForm", loginForm);
+		return "loginform";
+	}
 
 	@RequestMapping(value = "/loginform", method = RequestMethod.POST)
 	public String processForm(@Valid LoginForm loginForm, BindingResult result,
