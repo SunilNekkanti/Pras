@@ -18,19 +18,17 @@ pageEncoding="ISO-8859-1"%>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
 </head>
 
 <body>
 
 <form:form action="membership.html" commandName="membership">
 
-<div id="id01">
-
-</div>
 
 <script>
 var xmlhttp = new XMLHttpRequest();
-var url = "http://localhost:8080/Pras/membership/161";
+var url = "http://localhost:8080/Pras/membership/";
  xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
         myFunction(xmlhttp.responseText);
@@ -41,39 +39,104 @@ xmlhttp.send();
 
 function myFunction(response) {
     var arr = JSON.parse(response);
-    var i;
-    var out = "<table>";
-
-        out += "<tr><td>First Name:<FONT color=\"red\"><form:errors   path='firstName' /></FONT></td><td>" +
+    var out = "";
+  //  alert("<arr.data length is"+arr.data.length)
+  //  alert("<arr.data 1 is"+arr.data[0].firstName)
+      for(var i=0;i<arr.data.length;i++){
+        out += "<tr><td>" +
         
-        arr["data"].firstName + "</td> </tr>" +
+        arr.data[i].firstName + "</td> " +
         
-        "<td>Last Name:<FONT color=\"red\"><form:errors   path='lastName' /></FONT></td><td>"+
-        arr["data"].lastName + "</td> </tr>" +
+        "<td>"+
+        arr.data[i].lastName + "</td> " +
         
-        "<td>Date of Birth:<FONT color=\"red\"><form:errors   path='lastName' /></FONT></td><td>"+
-        arr["data"].dob + "</td> </tr>" +
+        "<td>"+
+        arr.data[i].dob + "</td> " +
         
-        "<td>Gender:<FONT color=\"red\"><form:errors   path='lastName' /></FONT></td><td>"+
-        arr["data"].genderDescription + "</td> </tr>"+
+        "<td>"+
+        arr.data[i].genderId.description + "</td>"+
         
-        "<td>County:<FONT color=\"red\"><form:errors   path='county' /></FONT></td><td>"+
-        arr["data"].countyDescription + "</td> </tr>"+
+        "<td>"+
+        arr.data[i].countyCode.description + "</td> "+
         
-        "<td>File Id:<FONT color=\"red\"><form:errors   path='fileId' /></FONT></td><td>"+
-        arr["data"].fileId + "</td> </tr>"+
+        "<td>"+
+        arr.data[i].fileId + "</td> "+
         
-        "<td>Status:<FONT color=\"red\"><form:errors   path='status' /></FONT></td><td>"+
-        arr["data"].statusDescription + "</td> </tr>";
-        
+        "<td>"+
+        arr.data[i].status.description + "</td></tr> ";
+      }
     
-        out += "</table>";
-    document.getElementById("id01").innerHTML = out;
+    document.getElementById("loadHere").innerHTML = out; 
+    
 }
+
+
+ $(document).ready(function() {
+	
+$.get('membership',null,function(responseText) { 
+	 for(var i=0;i<responseText.data.length;i++) {
+		 $("#tab tbody").append(
+		    "<tr>" +
+		   "<td>"+ responseText.data[i].firstName + "</td> " +
+        
+        "<td>"+ responseText.data[i].lastName + "</td> " +
+        
+        "<td>"+ responseText.data[i].dob + "</td> " +
+        
+        "<td>"+ responseText.data[i].genderId.description + "</td>"+
+        
+        "<td>"+ responseText.data[i].countyCode.description + "</td> "+
+        
+        "<td>"+ responseText.data[i].fileId + "</td> "+
+        
+        "<td>"+ responseText.data[i].status.description + "</td></tr> "      );
+	 }
+   });
+
+
+}); 
+
+
 </script>
-
  
+</head> 
 
- 
+<div class="container">
+  <h2>Membership Details</h2>
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Membership Details</div>
+      <div class="panel-body">
+         
+         
+<table id="tab" class="table table-striped"> 
+<thead> 
+<tr>
+   						<th  scope="col">First Name</th>  
+				        <th  scope="col">Last Name</th>  
+				        <th  scope="col">Date Of Birth</th>  
+				        <th  scope="col">Gender</th>  
+				        <th  scope="col">County</th>
+				        <th  scope="col">File Number</th>  
+				        <th  scope="col">Status</th>  
+	 </tr>   
+</thead> 
+<tbody id="loadHere"> 
+</tbody> 
+<tfoot> 
+<td  colspan="4"><ul id="paging" class="pagination"> 
+</ul></td> 
+</tfoot> 
+</table> 
+   
+
+         
+         
+      </div>
+    </div>
+  </div>
+</div>
+
 </form:form>
 </body>
+</html>
