@@ -47,31 +47,9 @@ $.get('membership/list',null,function(responseText) {
 	 }
 	 
    });
-   
-   
-$.get('membership/157',null,function(responseText) { 
-	
-	 	 $("#tab tbody").append(
-		    "<tr>" +
-		   "<td> <a href= membership/"+responseText.data[i].id + ">"+responseText.data[i].firstName +"</a></td> " +
-       
-       "<td>"+ responseText.data[i].lastName + "</td> " +
-       
-       "<td>"+ responseText.data[i].dob + "</td> " +
-       
-       "<td>"+ responseText.data[i].genderId.description + "</td>"+
-       
-       "<td>"+ responseText.data[i].countyCode.description + "</td> "+
-       
-       "<td>"+ responseText.data[i].fileId + "</td> "+
-       
-       "<td>"+ responseText.data[i].status.description + "</td></tr> "      );
-		 
-	
-	 
-  });
-   
+
 });
+   
 
 $(document).ready(function(){
 	

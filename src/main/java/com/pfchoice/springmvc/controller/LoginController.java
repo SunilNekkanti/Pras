@@ -42,7 +42,7 @@ public class LoginController {
 			return "loginform";
 		}
 		MembershipForm membershipForm = new MembershipForm();
-		model.put("membershipForm", membershipForm);
+		model.put("membership", membershipForm);
 		return "membership";
 	}
 

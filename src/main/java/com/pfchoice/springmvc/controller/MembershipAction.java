@@ -140,9 +140,16 @@ public class MembershipAction
      *
      * @return
      */
+    @RequestMapping( method = RequestMethod.GET)
+    public Message retrieveAll()
+    {
+        List<Membership> listBean = membershipService.findAll();
+        return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, listBean);
+    }
+    
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Message retrieveAll()
+    public Message retrieveAllList()
     {
         List<Membership> listBean = membershipService.findAll();
         return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, listBean);

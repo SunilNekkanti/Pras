@@ -129,9 +129,16 @@ public class InsuranceAction
      *
      * @return
      */
+    @RequestMapping(method = RequestMethod.GET)
+    public Message retrieveAll()
+    {
+    	List<InsuranceContract> listBean = insuranceContractService.findAll();
+      return Message.successMessage(CommonMessageContent.GET_INSURANCE, listBean);
+    }
+    
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Message retrieveAll()
+    public Message retrieveAllList()
     {
     	List<InsuranceContract> listBean = insuranceContractService.findAll();
       return Message.successMessage(CommonMessageContent.GET_INSURANCE, listBean);

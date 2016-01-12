@@ -136,7 +136,7 @@ $(document).ready(function(){
 
 
 
-<form:form action="insurance.html" commandName="provider">
+<form:form action="provider.html" commandName="provider">
 	<h2>Provider List</h2>
   	<div class="panel-group">
   		<div class="panel panel-primary">
