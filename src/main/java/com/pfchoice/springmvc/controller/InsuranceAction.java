@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.InsuranceContract;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.Provider;
+import com.pfchoice.core.service.InsuranceContractService;
 import com.pfchoice.core.service.InsuranceService;
 
 
@@ -37,6 +40,9 @@ public class InsuranceAction
 
     @Autowired
     private InsuranceService insuranceService;
+    
+    @Autowired
+    private InsuranceContractService insuranceContractService;
 
     
     
@@ -124,13 +130,10 @@ public class InsuranceAction
      * @return
      */
     @ResponseBody
-    @RequestMapping( method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Message retrieveAll()
     {
-        List<Insurance> listBean = insuranceService.findAll();
-          for( Insurance i : listBean){
-        	  System.out.println(i.getName());
-          }
-        return Message.successMessage(CommonMessageContent.GET_INSURANCE, listBean);
+    	List<InsuranceContract> listBean = insuranceContractService.findAll();
+      return Message.successMessage(CommonMessageContent.GET_INSURANCE, listBean);
     }
 }
