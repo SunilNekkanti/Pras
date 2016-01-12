@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Provider;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -20,5 +22,7 @@ public interface ProviderService
     Provider save(Provider bean);
 
     Provider update(Provider bean);
+    
+    List<Provider> findAll();
 
 }
