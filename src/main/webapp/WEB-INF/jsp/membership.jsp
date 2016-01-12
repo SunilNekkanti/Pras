@@ -22,21 +22,15 @@ pageEncoding="ISO-8859-1"%>
     <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
     
-</head>
-
-<body>
-
-<form:form action="membership.html" commandName="membership">
-
 
 <script>
 $(document).ready(function(){	
-$.get('membership',null,function(responseText) { 
+$.get('membership/list',null,function(responseText) { 
 	
 	 for(var i=0;i<responseText.data.length;i++) {
 		 $("#tab tbody").append(
 		    "<tr>" +
-		   "<td>"+ responseText.data[i].firstName + "</td> " +
+		   "<td> <a href= membership/"+responseText.data[i].id + ">"+responseText.data[i].firstName +"</a></td> " +
         
         "<td>"+ responseText.data[i].lastName + "</td> " +
         
@@ -54,6 +48,29 @@ $.get('membership',null,function(responseText) {
 	 
    });
    
+   
+$.get('membership/157',null,function(responseText) { 
+	
+	 	 $("#tab tbody").append(
+		    "<tr>" +
+		   "<td> <a href= membership/"+responseText.data[i].id + ">"+responseText.data[i].firstName +"</a></td> " +
+       
+       "<td>"+ responseText.data[i].lastName + "</td> " +
+       
+       "<td>"+ responseText.data[i].dob + "</td> " +
+       
+       "<td>"+ responseText.data[i].genderId.description + "</td>"+
+       
+       "<td>"+ responseText.data[i].countyCode.description + "</td> "+
+       
+       "<td>"+ responseText.data[i].fileId + "</td> "+
+       
+       "<td>"+ responseText.data[i].status.description + "</td></tr> "      );
+		 
+	
+	 
+  });
+   
 });
 
 $(document).ready(function(){
@@ -61,7 +78,7 @@ $(document).ready(function(){
 	 alert('testing');
 	 
 	  //how much items per page to show
-	  var show_per_page = 5; 
+	  var show_per_page = 3; 
 	  //getting the amount of elements inside content div
 	  var number_of_items = $('#content').children().size();
 	  //calculate the number of pages we are going to have
@@ -143,11 +160,24 @@ $(document).ready(function(){
 	  
 	}
 
-</script>
- 
-</head> 
+	$(document).ready(function() {
 
-<div class="container">
+	    $('#tab tr').click(function() {
+	        var href = $(this).find("a").attr("href");
+	        if(href) {
+	        	alert(href)
+	            window.location = href;
+	        }
+	    });
+
+	});
+
+</script>
+ </head>
+
+<body>
+
+<form:form action="membership.html" commandName="membership">
   <h2>Membership Details</h2>
   <div class="panel-group">
     <div class="panel panel-primary">
@@ -155,7 +185,7 @@ $(document).ready(function(){
       <div class="panel-body" id="tablediv">
          
          
-		<table id="tab" class="table table-striped"> 
+		<table id="tab" class="table table-striped table-hover"> 
 			<thead> 
 				<tr>
 	 				<th  scope="col">First Name</th>  
@@ -182,7 +212,6 @@ $(document).ready(function(){
     </div>
     </div>
   </div>
-</div>
 
 </form:form>
       	
