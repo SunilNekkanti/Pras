@@ -2,12 +2,16 @@ package com.pfchoice.core.dao.impl;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.InsuranceDao;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.Membership;
 
 /**
  *
@@ -60,4 +64,10 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
         return Insurance.class;
     }
 
+    @SuppressWarnings("unchecked")
+	public List<Insurance> findAll()
+    {
+    	List<Insurance> list =	find("from Insurance i",null);
+    	return list;
+    }
 }
