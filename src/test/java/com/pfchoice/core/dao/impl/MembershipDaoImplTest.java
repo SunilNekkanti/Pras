@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.pfchoice.JUnitSpringTestBase;
 import com.pfchoice.core.dao.MembershipDao;
+import com.pfchoice.core.entity.County;
+import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipStatus;
 
 /**
  *
@@ -52,11 +55,12 @@ public class MembershipDaoImplTest extends JUnitSpringTestBase
         bean.setDob(Date.valueOf(LocalDate.of(1985,1,1)));
         bean.setFirstName("FirstName");
         bean.setLastName("lastName");
-        bean.setCountyCode(1);
+        bean.setCountyCode(new County(1));
         bean.setActiveInd('Y');
         bean.setFileId(1);
-        bean.setGenderId((byte)1);
-        bean.setStatus((byte)1);
+        bean.setGenderId(new Gender((byte)1));
+      //  bean.setStatus((byte)1);
+        bean.setStatus(new MembershipStatus((byte)1));
         bean.setCreatedBy("sarath");
         Membership result = membershipDao.save(bean);
     }
