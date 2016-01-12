@@ -124,9 +124,9 @@ public class MembershipAction
     public Message retrieve(@PathVariable("id") Integer id)
     {
         Membership bean = membershipService.findById(id);
-        Gender 	genderBean = genderService.findById(bean.getGenderId());
-        MembershipStatus statusBean = membershipStatusService.findById(bean.getStatus());
-        County countyBean = countyService.findById(bean.getCountyCode());
+        Gender 	genderBean = genderService.findById(bean.getGenderId().getId());
+        MembershipStatus statusBean = membershipStatusService.findById( bean.getStatus().getId());
+        County countyBean = countyService.findById(bean.getCountyCode().getCode());
         bean.setGenderDescription(genderBean.getDescription());
         bean.setStatusDescription(statusBean.getDescription());
         bean.setCountyDescription(countyBean.getDescription());
