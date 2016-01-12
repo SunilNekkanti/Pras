@@ -39,17 +39,17 @@
         <put-attribute name="body" value="/WEB-INF/jsp/loginform.jsp" />  
     </definition> 
   
-   <definition name="membership" extends="base.definition">  
+   <definition name="membership" extends="base1.definition">  
         <put-attribute name="title" value="Membership Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membership.jsp" />  
     </definition>  
     
-       <definition name="provider" extends="base.definition">  
+       <definition name="provider" extends="base1.definition">  
         <put-attribute name="title" value="Membership Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/provider.jsp" />  
     </definition>  
     
-       <definition name="insurance" extends="base.definition">  
+       <definition name="insurance" extends="base1.definition">  
         <put-attribute name="title" value="Membership Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insurance.jsp" />  
     </definition>  
