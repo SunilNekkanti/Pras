@@ -1,6 +1,9 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.Membership;
 
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -20,5 +23,7 @@ public interface InsuranceService
     Insurance save(Insurance bean);
 
     Insurance update(Insurance bean);
+    
+    List<Insurance> findAll();
 
 }
