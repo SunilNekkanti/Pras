@@ -125,9 +125,9 @@ public class MembershipAction
     {
         Membership bean = membershipService.findById(id);
         Gender 	genderBean = genderService.findById(bean.getGenderId().getId());
+        bean.setGenderDescription(genderBean.getDescription());
         MembershipStatus statusBean = membershipStatusService.findById( bean.getStatus().getId());
         County countyBean = countyService.findById(bean.getCountyCode().getCode());
-        bean.setGenderDescription(genderBean.getDescription());
         bean.setStatusDescription(statusBean.getDescription());
         bean.setCountyDescription(countyBean.getDescription());
         return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, bean);
@@ -141,7 +141,7 @@ public class MembershipAction
      * @return
      */
     @ResponseBody
-    @RequestMapping( method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Message retrieveAll()
     {
         List<Membership> listBean = membershipService.findAll();
