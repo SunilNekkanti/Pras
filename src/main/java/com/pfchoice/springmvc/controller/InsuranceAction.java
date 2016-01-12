@@ -2,6 +2,8 @@ package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.service.InsuranceService;
 
 
@@ -112,5 +115,22 @@ public class InsuranceAction
         
               
         return Message.successMessage(CommonMessageContent.GET_INSURANCE, bean);
+    }
+    
+    /**
+     * GET all Insurance records from database.
+     *
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping( method = RequestMethod.GET)
+    public Message retrieveAll()
+    {
+        List<Insurance> listBean = insuranceService.findAll();
+          for( Insurance i : listBean){
+        	  System.out.println(i.getName());
+          }
+        return Message.successMessage(CommonMessageContent.GET_INSURANCE, listBean);
     }
 }
