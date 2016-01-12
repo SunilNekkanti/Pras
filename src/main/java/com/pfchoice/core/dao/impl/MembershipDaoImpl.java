@@ -6,6 +6,9 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.mapping.Property;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -66,7 +69,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     @SuppressWarnings("unchecked")
 	public List<Membership> findAll()
     {
-    	List<Membership> list =	find("from Membership m",null);
+    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	cr.setFetchMode("Gender", FetchMode.JOIN);
+    	cr.setFetchMode("MembershipStatus", FetchMode.JOIN);
+    	List list = cr.list();
+    	//List<Membership> list =	find("from Membership m, Gender g, MembershipStatus ms where m.genderId = g.id and m.status =ms.id",null);
     	return list;
     }
 }
