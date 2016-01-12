@@ -2,7 +2,11 @@ package com.pfchoice.core.dao.impl;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +62,17 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     protected Class<Provider> getEntityClass()
     {
         return Provider.class;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<Provider> findAll()
+    {
+    	
+    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	cr.setFetchMode("ProviderContract", FetchMode.JOIN);
+    	List<Provider> list = cr.list();
+    
+    	return list;
     }
 
 }
