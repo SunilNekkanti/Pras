@@ -8,13 +8,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 /**
  *
  * @author Mohanasundharam
  */
-@Entity(name = "lu_membership_status")
+@Entity
+@Table(name = "lu_membership_status")
 public class MembershipStatus implements Serializable
 {
 
@@ -180,7 +182,7 @@ public class MembershipStatus implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.Student[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.Membership[ id=" + id + " ]";
     }
 
 }

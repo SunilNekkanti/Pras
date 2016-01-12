@@ -8,6 +8,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -34,11 +36,13 @@ public class Membership implements Serializable
     @Column(name="mbr_lastname")
     private String lastName;
 
-    @Column(name="mbr_genderid")
-    private Byte genderId;
-
-    @Column(name="mbr_countycode")
-    private Integer countyCode;
+    @ManyToOne
+    @JoinColumn(name="mbr_genderid", referencedColumnName="gender_id")
+    private Gender genderId;
+    
+    @ManyToOne
+    @JoinColumn(name="mbr_countycode", referencedColumnName="code")
+    private County countyCode;
     
     @Column(name="mbr_dob")
     private Date dob;
@@ -67,8 +71,14 @@ public class Membership implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-    @Column(name="mbr_status", columnDefinition = "TINYINT(1)")
+   /* @Column(name="mbr_status", columnDefinition = "TINYINT(1)")
     private Byte status;
+    
+   */ 
+    @ManyToOne
+    @JoinColumn(name="mbr_status", referencedColumnName="code")
+    private MembershipStatus status;
+
     
     @Column(name="Mbr_ethinic_code", columnDefinition = "TINYINT(1)")
     private Byte ethinicCode;
@@ -132,28 +142,28 @@ public class Membership implements Serializable
 	/**
 	 * @return the genderId
 	 */
-	public Byte getGenderId() {
+	public Gender getGenderId() {
 		return genderId;
 	}
 
 	/**
 	 * @param genderId the genderId to set
 	 */
-	public void setGenderId(Byte genderId) {
+	public void setGenderId(Gender genderId) {
 		this.genderId = genderId;
 	}
 
 	/**
 	 * @return the countyCode
 	 */
-	public Integer getCountyCode() {
+	public County getCountyCode() {
 		return countyCode;
 	}
 
 	/**
 	 * @param countyCode the countyCode to set
 	 */
-	public void setCountyCode(Integer countyCode) {
+	public void setCountyCode(County countyCode) {
 		this.countyCode = countyCode;
 	}
 
@@ -188,14 +198,14 @@ public class Membership implements Serializable
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public MembershipStatus getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(MembershipStatus status) {
 		this.status = status;
 	}
 

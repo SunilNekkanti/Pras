@@ -6,13 +6,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 /**
  *
  * @author Mohanasundharam
  */
-@Entity(name = "insurance")
+@Entity
+@Table(name = "insurance") 
 public class Insurance implements Serializable
 {
 	

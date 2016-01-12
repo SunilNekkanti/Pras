@@ -7,12 +7,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author sarath
  */
-@Entity(name = "lu_gender")
+@Entity
+@Table(name = "lu_gender")
 public class Gender implements Serializable
 {
 

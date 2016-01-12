@@ -7,12 +7,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author sarath
  */
-@Entity(name = "lu_county")
+@Entity
+@Table(name = "lu_county")
 public class County implements Serializable
 {
 
