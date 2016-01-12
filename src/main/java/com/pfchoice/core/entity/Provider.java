@@ -2,21 +2,30 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
  *
  * @author Mohanasundharam
  */
-@Entity(name = "provider")
+@Entity
+@Table(name = "provider") 
 public class Provider implements Serializable
 {
 	
     private static final long serialVersionUID = 1L;
+    
+    //private Set<ProviderContract> providerContract = new HashSet<ProviderContract>(0);
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +53,10 @@ public class Provider implements Serializable
     
     @Column(name="active_ind")
     private char activeInd;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "providerId")
+    private Set<ProviderContract> providerContract = new HashSet<ProviderContract>();
+    
     
       
     public Provider()
@@ -163,7 +176,19 @@ public class Provider implements Serializable
 		this.activeInd = activeInd;
 	}
 
-	
+	/**
+	 * @return the providerContract
+	 */
+	public Set<ProviderContract> getProviderContract() {
+		return providerContract;
+	}
+
+	/**
+	 * @param providerContract the providerContract to set
+	 */
+	public void setProviderContract(Set<ProviderContract> providerContract) {
+		this.providerContract = providerContract;
+	}
 	
 
 	@Override
