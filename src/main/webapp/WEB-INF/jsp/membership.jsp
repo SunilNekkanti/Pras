@@ -30,9 +30,7 @@ pageEncoding="ISO-8859-1"%>
 
 
 <script>
-
-
-	
+$(document).ready(function(){	
 $.get('membership',null,function(responseText) { 
 	
 	 for(var i=0;i<responseText.data.length;i++) {
@@ -56,10 +54,8 @@ $.get('membership',null,function(responseText) {
 	 
    });
    
+});
 
-
-
- 
 $(document).ready(function(){
 	
 	 alert('testing');
@@ -110,7 +106,6 @@ $(document).ready(function(){
 	  if($('.active').prev('.page_link').length==true){
 	    go_to_page(new_page);
 	  }
-
 	}
 
 	function next(){
@@ -146,12 +141,7 @@ $(document).ready(function(){
 	  //update the current page input field
 	  $('#current_page').val(page_num);
 	  
-	
 	}
-
-
-
-
 
 </script>
  
@@ -177,14 +167,16 @@ $(document).ready(function(){
 			        <th  scope="col">Status</th>  
 				</tr>   
 			</thead> 
-		<tbody id="content"> 
-		<div id="show_per_page"></div>
-		</tbody> 
-		<tfoot > 
-		<div class="col-md-12 text-center" id="page_navigation">
-      		
-      	</div>
-		</tfoot> 
+			
+			<tbody id="content"> 
+				<div id="show_per_page"></div>
+				<div id="current_page"></div>
+			</tbody> 
+			
+			<tfoot > 
+				<div class="col-md-12 text-center" id="page_navigation"> </div>
+			</tfoot> 
+			
 		</table> 
  
     </div>
@@ -193,10 +185,6 @@ $(document).ready(function(){
 </div>
 
 </form:form>
-      	
-      <script type="text/javascript">
-
-</script>
       	
 </body>
 </html>
