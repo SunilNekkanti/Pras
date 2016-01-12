@@ -2,6 +2,8 @@ package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.ProviderService;
 
@@ -112,5 +115,19 @@ public class ProvideAction
         
               
         return Message.successMessage(CommonMessageContent.GET_PROVIDER, bean);
+    }
+    /**
+     * GET all Provider record from database.
+     *
+     * @param id primary key of target Provider.
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Message retrieveAll()
+    {
+        List<Provider> listBean = providerService.findAll();
+        return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, listBean);
     }
 }
