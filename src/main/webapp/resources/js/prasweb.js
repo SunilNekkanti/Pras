@@ -85,14 +85,67 @@ function prasPagination(){
 	  
 	}
 
-	$(document).ready(function() {
+	function openMembershipForm() {
+	$('#tab tr').click(
+			function() {
+				// get the link location that was clicked
+				var href = $(this).find("a").attr("href");
+				// $("#tab").hide();
+				// $("#page_navigation").hide();
+				if (href) {
+					// window.location =
+					// "http://localhost:8080/Pras/membership.html";
 
-	    $('#tab tr').click(function() {
-	        var href = $(this).find("a").attr("href");
-	        if(href) {
-	        	alert(href)
-	            window.location = href;
-	        }
-	    });
+					$.ajax({
+						type : "GET",
+						url : "http://localhost:8080/Pras/" + href,
+						data : '$format=json',
+						dataType : 'json',
+						success : function(response) {
+							$.each(response.data, function(key, value) {
+								if (key == "status" || key == "genderId"
+										|| key == "countyCode") {
+									$('#' + key).val(value.description);
+								} else {
+									$('#' + key).val(value);
+								}
+							})
+						},
 
-	});
+						error : function(xhr) {
+							alert("AJAX request failed: " + xhr.status);
+						}
+
+					});
+
+					// to change the browser URL to the given link location
+					if (href != window.location) {
+						// alert( 'new url')
+						// window.history.pushState({path:href},'',href);
+					}
+
+				}
+		});
+
+	}
+	
+	
+	function populateMembershipListData (){
+		$.get('membership/list',null,function(responseText) { 
+		 for(var i=0;i<responseText.data.length;i++) {
+			 $("#tab tbody").append(
+			    "<tr>" +
+			   "<td> <a href= membership/"+responseText.data[i].id + " rel='tab'] >"+responseText.data[i].firstName +"</a></td> " +
+	        "<td>"+ responseText.data[i].lastName + "</td> " +
+	        "<td>"+ responseText.data[i].dob + "</td> " +
+	        "<td>"+ responseText.data[i].genderId.description + "</td>"+
+	        "<td>"+ responseText.data[i].countyCode.description + "</td> "+
+	        "<td>"+ responseText.data[i].fileId + "</td> "+
+	        "<td>"+ responseText.data[i].status.description + "</td></tr> "      );
+		 }
+	   });
+	}
+	
+	
+	
+	
