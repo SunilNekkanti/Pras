@@ -1,6 +1,8 @@
 package config;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentResolver;
@@ -16,7 +18,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerAdapter;
@@ -77,21 +81,35 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer)
     {
-        configurer.favorPathExtension(false).favorParameter(false);
-        configurer.defaultContentType(MediaType.APPLICATION_JSON);
+        configurer.favorPathExtension(false).favorParameter(false).parameterName("mediaType").ignoreAcceptHeader(true);
+        configurer.defaultContentType( MediaType.APPLICATION_JSON);
         configurer.mediaType("json", MediaType.APPLICATION_JSON);
+        configurer.mediaType("json", MediaType.APPLICATION_FORM_URLENCODED);
+        configurer.mediaType("html", MediaType.APPLICATION_FORM_URLENCODED);
     }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
     {
+     
+        
+        FormHttpMessageConverter converter = new FormHttpMessageConverter();
+        MediaType mediaType = new MediaType("application","x-www-form-urlencoded", Charset.forName("UTF-8"));
+        converter.setSupportedMediaTypes(Arrays.asList(mediaType));
+        converters.add(converter);
+       
         GsonHttpMessageConverter messageConverter = new GsonHttpMessageConverter();
         List<MediaType> supportedMediaTypes = new ArrayList<>();
         supportedMediaTypes.add(MediaType.APPLICATION_JSON);
         messageConverter.setSupportedMediaTypes(supportedMediaTypes);
         converters.add(messageConverter);
+        
+        converters.add(new FormHttpMessageConverter()); 
+        converters.add(new StringHttpMessageConverter(Charset.forName("UTF-8"))); 
+ 
+        
+       // super.configureMessageConverters(converters);
     }
-
 
     public @Bean TilesViewResolver tilesViewResolver() {
         return new TilesViewResolver();
