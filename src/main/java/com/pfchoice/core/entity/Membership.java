@@ -5,13 +5,19 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -36,13 +42,18 @@ public class Membership implements Serializable
     @Column(name="mbr_lastname")
     private String lastName;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_genderid", referencedColumnName="gender_id")
     private Gender genderId;
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
+    
+    
+    @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
+    private MembershipInsurance mbrInsurance;
     
     @Column(name="mbr_dob")
     private Date dob;
@@ -355,6 +366,21 @@ public class Membership implements Serializable
 	 */
 	public String getCountyDescription() {
 		return countyDescription;
+	}
+
+	
+	/**
+	 * @return the mbrInsurance
+	 */
+	public MembershipInsurance getMbrInsurance() {
+		return mbrInsurance;
+	}
+
+	/**
+	 * @param mbrInsurance the mbrInsurance to set
+	 */
+	public void setMbrInsurance(MembershipInsurance mbrInsurance) {
+		this.mbrInsurance = mbrInsurance;
 	}
 
 	/**
