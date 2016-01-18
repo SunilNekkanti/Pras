@@ -40,12 +40,12 @@ public class MembershipServiceImplTest extends JUnitSpringTestBase
     public void testFindById()
     {
         System.out.println("findById");
-        Integer id = 3;
+        Integer id = 1;
         membershipService.findById(id);
     }
 
-    @Test
-    @Ignore
+//    @Test
+//    @Ignore
     public void testSave()
     {
         System.out.println("save");

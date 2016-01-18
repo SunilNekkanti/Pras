@@ -27,7 +27,7 @@ public class MembershipActionTest extends ControllerClientSideTestBase
     {
     }
 
-    @Test
+  //  @Test
     public void testRegisterMembership() throws Exception
     {
         System.out.println("registerMembership");
@@ -41,36 +41,35 @@ public class MembershipActionTest extends ControllerClientSideTestBase
         System.out.println("sarath");
     }
 
- //   @Test
+  //  @Test
     public void testUpdateMembershipProfile()
     {
         System.out.println("updateMembershipProfile");
         Integer id = 3;
         Membership bean = null;
-       
-        MembershipAction instance = new MembershipAction();
+        //MembershipAction instance = new MembershipAction();
         Message expResult = null;
-        Message result = instance.updateMembershipProfile(id, bean);
+        Message result = membershipAction.updateMembershipProfile(id, bean);
     }
 
-//    @Test
+    @Test
     public void testDeregister()
     {
         System.out.println("cancelOrder");
-        Integer id = 3;
-        MembershipAction instance = new MembershipAction();
+        Integer id = 175;
+       // MembershipAction instance = new MembershipAction();
         Message expResult = null;
-        Message result = instance.deregister(id);
+        Message result = membershipAction.deregister(id);
     }
 
-//    @Test
+ //   @Test
     public void testRetrieve()
     {
         System.out.println("retrieve");
-        Integer id = null;
-        MembershipAction instance = new MembershipAction();
+        Integer id =174;
+    //    MembershipAction instance = new MembershipAction();
         Message expResult = null;
-        Message result = instance.retrieve(id);
+        Message result = membershipAction.retrieve(id);
     }
 
 }
