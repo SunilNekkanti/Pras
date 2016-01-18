@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
+import com.pfchoice.core.service.impl.MembershipServiceImpl;
 
 
 
@@ -79,7 +81,7 @@ public class MembershipAction
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE , MediaType.APPLICATION_JSON_VALUE})
     public Message updateMembershipProfile(@PathVariable("id") Integer id, @RequestBody Membership bean)
     {
         Membership dbMembership = membershipService.findById(id);
@@ -124,12 +126,6 @@ public class MembershipAction
     public Message retrieve(@PathVariable("id") Integer id)
     {
         Membership bean = membershipService.findById(id);
-        Gender 	genderBean = genderService.findById(bean.getGenderId().getId());
-        bean.setGenderDescription(genderBean.getDescription());
-        MembershipStatus statusBean = membershipStatusService.findById( bean.getStatus().getId());
-        County countyBean = countyService.findById(bean.getCountyCode().getCode());
-        bean.setStatusDescription(statusBean.getDescription());
-        bean.setCountyDescription(countyBean.getDescription());
         return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, bean);
     }
     
