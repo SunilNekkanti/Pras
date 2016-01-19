@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.Provider;
 
 /**
  *
@@ -70,10 +71,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	public List<Membership> findAll()
     {
     	Criteria cr = getSession().createCriteria(getEntityClass());
-    	cr.setFetchMode("Gender", FetchMode.JOIN);
-    	cr.setFetchMode("MembershipStatus", FetchMode.JOIN);
-    	List list = cr.list();
-    	//List<Membership> list =	find("from Membership m, Gender g, MembershipStatus ms where m.genderId = g.id and m.status =ms.id",null);
+    	List<Membership> list = cr.list();
     	return list;
     }
 }
