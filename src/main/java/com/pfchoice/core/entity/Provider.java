@@ -6,11 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -55,10 +57,9 @@ public class Provider implements Serializable
     private char activeInd;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "providerId")
-    private Set<ProviderContract> providerContract = new HashSet<ProviderContract>();
+    private Set<ProviderContract> providerContracts = new HashSet<ProviderContract>();
     
-    
-      
+     
     public Provider()
     {
     }
@@ -179,15 +180,15 @@ public class Provider implements Serializable
 	/**
 	 * @return the providerContract
 	 */
-	public Set<ProviderContract> getProviderContract() {
-		return providerContract;
+	public Set<ProviderContract> getProviderContracts() {
+		return providerContracts;
 	}
 
 	/**
 	 * @param providerContract the providerContract to set
 	 */
-	public void setProviderContract(Set<ProviderContract> providerContract) {
-		this.providerContract = providerContract;
+	public void setProviderContracts(Set<ProviderContract> providerContracts) {
+		this.providerContracts = providerContracts;
 	}
 	
 
