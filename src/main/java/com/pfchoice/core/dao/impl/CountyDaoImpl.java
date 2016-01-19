@@ -2,6 +2,9 @@ package com.pfchoice.core.dao.impl;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -58,6 +61,14 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
     protected Class<County> getEntityClass()
     {
         return County.class;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<County> findAll()
+    {
+    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	List<County> list = cr.list();
+    	return list;
     }
 
 }

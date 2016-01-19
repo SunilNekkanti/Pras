@@ -2,6 +2,9 @@ package com.pfchoice.core.dao.impl;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -60,4 +63,11 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
         return Gender.class;
     }
 
+    @SuppressWarnings("unchecked")
+	public List<Gender> findAll()
+    {
+    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	List<Gender> list = cr.list();
+    	return list;
+    }
 }

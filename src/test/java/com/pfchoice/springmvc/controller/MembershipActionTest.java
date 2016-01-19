@@ -49,7 +49,7 @@ public class MembershipActionTest extends ControllerClientSideTestBase
         Membership bean = null;
         //MembershipAction instance = new MembershipAction();
         Message expResult = null;
-        Message result = membershipAction.updateMembershipProfile(id, bean);
+       // Message result = membershipAction.updateMembershipProfile(id, bean);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class MembershipActionTest extends ControllerClientSideTestBase
         Integer id =174;
     //    MembershipAction instance = new MembershipAction();
         Message expResult = null;
-        Message result = membershipAction.retrieve(id);
+      //  Message result = membershipAction.retrieve(id);
     }
 
 }

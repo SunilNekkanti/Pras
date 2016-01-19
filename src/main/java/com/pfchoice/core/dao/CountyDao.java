@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.County;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -21,5 +23,7 @@ public interface CountyDao
     County save(County bean);
 
     County updateByUpdater(Updater<County> updater);
+    
+    List<County> findAll();
 
 }

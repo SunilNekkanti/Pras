@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Gender;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -21,5 +23,7 @@ public interface GenderDao
     Gender save(Gender bean);
 
     Gender updateByUpdater(Updater<Gender> updater);
+    
+    List<Gender> findAll();
 
 }

@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.MembershipStatus;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -22,4 +24,5 @@ public interface MembershipStatusDao
 
     MembershipStatus updateByUpdater(Updater<MembershipStatus> updater);
 
+	List<MembershipStatus> findAll();
 }

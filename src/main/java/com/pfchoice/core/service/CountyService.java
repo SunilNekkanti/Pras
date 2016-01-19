@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.County;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -20,5 +22,7 @@ public interface CountyService
     County save(County bean);
 
     County update(County bean);
+    
+    List<County> findAll();
 
 }
