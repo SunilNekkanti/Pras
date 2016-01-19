@@ -101,28 +101,39 @@ public class MembershipController{
         return "membershipEditSuccess";
     }
 	
-	@ModelAttribute("countyList")
-	public List<County> populateCountyList() {
+	@ModelAttribute("countyMap")
+	public Map<Integer,String> populateCountyList() {
 		
 		//Data referencing for county list box
 		List<County> countyList = countyService.findAll();
-		return countyList;
+		Map<Integer,String> countyMap = new HashMap<Integer,String>();
+		for(County c:countyList){
+			countyMap.put(c.getCode(),c.getDescription());
+		}
+		return countyMap;
 	}
 
-	@ModelAttribute("genderList")
-	public List<Gender> populateGenderList() {
+	@ModelAttribute("genderMap")
+	public Map<Byte,String> populateGenderList() {
 		
 		//Data referencing for gender list box
 		List<Gender> genderList = genderService.findAll();
-		return genderList;
+		Map<Byte,String> genderMap = new HashMap<Byte,String>();
+		for(Gender g:genderList){
+			genderMap.put(g.getId(),g.getDescription());
+		}
+		return genderMap;
 	}
 	
-	@ModelAttribute("statusList")
-	public List<MembershipStatus> populateStatusList() {
+	@ModelAttribute("statusMap")
+	public Map<Byte,String> populateStatusList() {
 		
 		//Data referencing for Membership Status list box
 		List<MembershipStatus> mbrStatusList = membershipStatusService.findAll();
-		
-		return mbrStatusList;
+		Map<Byte,String> mbrStatusMap = new HashMap<Byte,String>();
+		for(MembershipStatus ms:mbrStatusList){
+			mbrStatusMap.put(ms.getId(),ms.getDescription());
+		}
+		return mbrStatusMap;
 	}
 }
