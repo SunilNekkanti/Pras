@@ -41,9 +41,10 @@ public class LoginController {
 				|| !loginForm.getPassword().equals(password)) {
 			return "loginform";
 		}
-		MembershipForm membershipForm = new MembershipForm();
-		model.put("membership", membershipForm);
-		return "membership";
+		//MembershipForm membershipForm = new MembershipForm();
+		//model.put("membershipForm", membershipForm);
+		System.out.println("before membershipList page");
+		return "redirect:membershipTmpList";
 	}
 
 }

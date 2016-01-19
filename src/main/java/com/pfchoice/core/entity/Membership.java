@@ -50,7 +50,6 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
     
-    
     @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
     private MembershipInsurance mbrInsurance;
@@ -82,26 +81,13 @@ public class Membership implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-   /* @Column(name="mbr_status", columnDefinition = "TINYINT(1)")
-    private Byte status;
-    
-   */ 
-    @ManyToOne
+    @OneToOne(cascade=CascadeType.DETACH )
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
     
     @Column(name="Mbr_ethinic_code", columnDefinition = "TINYINT(1)")
     private Byte ethinicCode;
-    
-   @Transient
-   private String genderDescription;
-   
-   @Transient
-   private String statusDescription;
-   
-   @Transient
-   private String countyDescription;
     
     public Membership()
     {
@@ -334,42 +320,6 @@ public class Membership implements Serializable
 
 	
 	/**
-	 * @return the genderDescription
-	 */
-	public String getGenderDescription() {
-		return genderDescription;
-	}
-
-	/**
-	 * @param genderDescription the genderDescription to set
-	 */
-	public void setGenderDescription(String genderDescription) {
-		this.genderDescription = genderDescription;
-	}
-	
-	/**
-	 * @return the statusDescription
-	 */
-	public String getStatusDescription() {
-		return statusDescription;
-	}
-
-	/**
-	 * @param statusDescription the statusDescription to set
-	 */
-	public void setStatusDescription(String statusDescription) {
-		this.statusDescription = statusDescription;
-	}
-	
-	/**
-	 * @return the countyDescription
-	 */
-	public String getCountyDescription() {
-		return countyDescription;
-	}
-
-	
-	/**
 	 * @return the mbrInsurance
 	 */
 	public MembershipInsurance getMbrInsurance() {
@@ -381,13 +331,6 @@ public class Membership implements Serializable
 	 */
 	public void setMbrInsurance(MembershipInsurance mbrInsurance) {
 		this.mbrInsurance = mbrInsurance;
-	}
-
-	/**
-	 * @param countyDescription the countyDescription to set
-	 */
-	public void setCountyDescription(String countyDescription) {
-		this.countyDescription = countyDescription;
 	}
 
 	@Override

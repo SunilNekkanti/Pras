@@ -15,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.google.gson.annotations.Expose;
 /**
  *
  * @author sarath
@@ -37,7 +40,8 @@ public class MembershipInsurance implements Serializable
     @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
     private Insurance insId;
     
-    @OneToOne( fetch=FetchType.EAGER , cascade = CascadeType.ALL, orphanRemoval=true)
+    
+    @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
     

@@ -33,39 +33,9 @@ $(document).ready(function(){
 populateMembershipListData();
 prasPagination();
 openMembershipForm();
-
-$("#updateButton").click(function(){
-	
-	alert('clicked update button');
-    var bean = {"id":"158", "firstName": $("#firstName").val(),  "lastName":$("#lastName").val() };
-    $.ajax({
-        url: "http://localhost:8080/Pras/membership/158",
-        contentType : "application/json; charset=utf-8",
-        type: 'PUT',
-        dataType: 'json',
-        success: function (data) {alert(JSON.parse(data));},
-        data: JSON.stringify(bean),
-        error:function(){alert("ajax post call failed");}
-    });
-});
-
-$("#cancelButton").click(function(){
-	
-	alert('clicked cancel button');
-    var bean = {"id":"175"};
-    $.ajax({
-        url: "http://localhost:8080/Pras/membership/175",
-        contentType : "application/json;charset=UTF-8",
-        type: 'DELETE',
-        dataType: 'json',
-        success: function (data) {alert(JSON.parse(data));},
-        data: JSON.stringify(bean),
-        error:function(){alert("ajax delete call failed");}
-    });
-});
-
-
-
+updatedMembershipForm();
+deleteMembershipForm();
+resetMembershipForm('form-ajax');
 });
 </script>
 
@@ -80,7 +50,7 @@ $("#cancelButton").click(function(){
 			<div class="panel-heading">Membership List</div>
 			<div class="panel-body" id="tablediv">
 				<div id="formdiv">
-					<form id="form-ajax" class="form-horizontal" role="form" method="post" accept-charset="utf-8"> 
+					<form id="form-ajax" class="form-horizontal" role="form" method="post" accept-charset="utf-8" action="membership"> 
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="lastName">Last
 								Name:</label>

@@ -68,10 +68,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 	public List<MembershipInsurance> findAll()
     {
     	Criteria cr = getSession().createCriteria(getEntityClass());
-    	cr.setFetchMode("Membership", FetchMode.JOIN);
-    	cr.setFetchMode("Insurance", FetchMode.JOIN);
-    	List list = cr.list();
-    	//List<Membership> list =	find("from Membership m, Gender g, MembershipStatus ms where m.genderId = g.id and m.status =ms.id",null);
+    	List<MembershipInsurance> list = cr.list();
     	return list;
     }
 }
