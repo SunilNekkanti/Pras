@@ -17,7 +17,7 @@
         <li><a href="providerList">Provider</a></li>
         <li><a href="membershipTmpList">Membership</a></li>
         <li><a href="hedis">Hedis</a></li>
-        <li><a href="reports.html">Hedis</a></li>
+        <li><a href="reports.html">Reports</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
