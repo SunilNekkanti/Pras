@@ -40,8 +40,6 @@ prasPagination();
 
 <body>
 
-	<%-- <form:form action="membership.html" commandName="membership" > --%>
-	<h2>Membership Details</h2>
 	<div class="panel-group">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Membership List</div>
@@ -62,23 +60,16 @@ prasPagination();
 					<tbody id="content">
 						<div id="show_per_page"></div>
 						<div id="current_page"></div>
-
-	<h1>Membership List</h1>
- 
-	<c:forEach items="${membershipList}" var="mbr">
-		    <tr>
-			   <td> <a href="membership/${mbr.id}"   rel='tab' > ${mbr.firstName}</a></td> 
-	        <td> ${mbr.lastName} </td> 
-	        <td> ${mbr.dob}  </td> 
-	        <td> ${mbr.genderId.description }</td>
-	        <td> ${mbr.countyCode.description} </td> 
-	        <td> ${mbr.fileId} </td> 
-	        <td> ${mbr.status.description}  </td></tr>     
-	        
-		<br />
-	</c:forEach>
- 
-
+						<c:forEach items="${membershipList}" var="mbr">
+							    <tr>
+								   <td> <a href="membership/${mbr.id}"   rel='tab' > ${mbr.firstName}</a></td> 
+						        <td> ${mbr.lastName} </td> 
+						        <td> ${mbr.dob}  </td> 
+						        <td> ${mbr.genderId.description }</td>
+						        <td> ${mbr.countyCode.description} </td> 
+						        <td> ${mbr.fileId} </td> 
+						        <td> ${mbr.status.description}  </td></tr>     
+						</c:forEach>
 					</tbody>
 
 					<tfoot>
@@ -91,7 +82,6 @@ prasPagination();
 		</div>
 	</div>
 
-	<%-- </form:form> --%>
 
 </body>
 </html>
