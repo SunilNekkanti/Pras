@@ -72,7 +72,7 @@ public class InsuranceAction
      *
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Message updateMembershipProfile(@PathVariable("id") Integer id, @RequestBody Insurance bean)
     {
@@ -81,11 +81,11 @@ public class InsuranceAction
         {
         	insuranceService.update(bean);
         }
-        /*
+        
          * Here we need to push message to client
-         */
+         
         return Message.successMessage(CommonMessageContent.INSURANCE_UPDATED, bean);
-    }
+    }*/
 
     /**
      * DELETE a Membership record from database.
@@ -94,7 +94,7 @@ public class InsuranceAction
      *
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Message deregister(@PathVariable("id") Integer id)
     {
@@ -105,7 +105,7 @@ public class InsuranceAction
         }
         return Message.successMessage(CommonMessageContent.INSURANCE_DELETED, bean);
     }
-
+*/
     /**
      * GET a Membership record from database.
      *
@@ -113,7 +113,7 @@ public class InsuranceAction
      *
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Message retrieve(@PathVariable("id") Integer id)
     {
@@ -121,7 +121,7 @@ public class InsuranceAction
         
               
         return Message.successMessage(CommonMessageContent.GET_INSURANCE, bean);
-    }
+    }*/
     
     /**
      * GET all Insurance records from database.
