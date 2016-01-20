@@ -14,8 +14,8 @@
         <li class="active"><a href="home.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="insurance.html">Insurance</a></li>
-        <li><a href="provider.html">Provider</a></li>
-        <li><a href="membership.html">Membership</a></li>
+        <li><a href="providerList">Provider</a></li>
+        <li><a href="membershipTmpList">Membership</a></li>
         <li><a href="reports.html">Reports</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
