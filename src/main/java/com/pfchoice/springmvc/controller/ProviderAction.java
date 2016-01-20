@@ -1,3 +1,5 @@
+
+
 package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
@@ -66,7 +68,7 @@ public class ProviderAction
      *
      * @return
      */
-    @ResponseBody
+   /* @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Message updateMembershipProfile(@PathVariable("id") Integer id, @RequestBody Provider bean)
     {
@@ -75,11 +77,11 @@ public class ProviderAction
         {
         	providerService.update(bean);
         }
-        /*
+        
          * Here we need to push message to client
-         */
+         
         return Message.successMessage(CommonMessageContent.PROVIDER_UPDATED, bean);
-    }
+    }*/
 
     /**
      * DELETE a Membership record from database.
@@ -107,7 +109,7 @@ public class ProviderAction
      *
      * @return
      */
-    @ResponseBody
+   /* @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Message retrieve(@PathVariable("id") Integer id)
     {
@@ -115,7 +117,7 @@ public class ProviderAction
         
               
         return Message.successMessage(CommonMessageContent.GET_PROVIDER, bean);
-    }
+    }*/
     /**
      * GET all Provider record from database.
      *
