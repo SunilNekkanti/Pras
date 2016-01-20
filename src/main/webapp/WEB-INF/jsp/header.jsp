@@ -13,10 +13,11 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="home.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="insurance.html">Insurance</a></li>
+        <li><a href="insuranceList">Insurance</a></li>
         <li><a href="providerList">Provider</a></li>
         <li><a href="membershipTmpList">Membership</a></li>
-        <li><a href="reports.html">Reports</a></li>
+        <li><a href="hedis">Hedis</a></li>
+        <li><a href="reports.html">Hedis</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
