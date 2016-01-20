@@ -2,10 +2,15 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -44,6 +49,9 @@ public class Insurance implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "insuranceId")
+    private Set<InsuranceContract> insuranceContracts = new HashSet<InsuranceContract>();
+   
       
     public Insurance()
     {
@@ -148,8 +156,19 @@ public class Insurance implements Serializable
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	/**
+	 * @return the insuranceContracts
+	 */
+	public Set<InsuranceContract> getInsuranceContracts() {
+		return insuranceContracts;
+	}
+
+	/**
+	 * @param insuranceContracts the insuranceContracts to set
+	 */
+	public void setInsuranceContracts(Set<InsuranceContract> insuranceContracts) {
+		this.insuranceContracts = insuranceContracts;
+	}
 
 	@Override
     public int hashCode()
