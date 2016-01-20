@@ -49,11 +49,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipList.jsp" />  
     </definition>  
     
-     <definition name="providerList" extends="base1.definition">  
-        <put-attribute name="title" value="Provider List" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/providerList.jsp" />  
-    </definition>
-    
     <definition name="membershipEdit" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEdit.jsp" />  
@@ -64,6 +59,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEditSuccess.jsp" />  
     </definition>  
     
+    
+     <definition name="providerList" extends="base1.definition">  
+        <put-attribute name="title" value="Provider List" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/providerList.jsp" />  
+    </definition>
     
    <definition name="provider" extends="base1.definition">  
         <put-attribute name="title" value="Membership Profile" />  
@@ -80,9 +80,24 @@
         <put-attribute name="body" value="/WEB-INF/jsp/providerEditSuccess.jsp" />  
     </definition>  
     
+     <definition name="insuranceList" extends="base1.definition">  
+        <put-attribute name="title" value="Provider List" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/insuranceList.jsp" />  
+    </definition>
+    
        <definition name="insurance" extends="base1.definition">  
         <put-attribute name="title" value="Membership Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insurance.jsp" />  
+    </definition>  
+    
+    <definition name="insuranceEdit" extends="base.definition">  
+        <put-attribute name="title" value="Insurance Profile" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/insuranceEdit.jsp" />  
+    </definition>  
+    
+    <definition name="insuranceEditSuccess" extends="base.definition">  
+        <put-attribute name="title" value="Insurance Profile" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/insuranceEditSuccess.jsp" />  
     </definition>  
     
 </tiles-definitions>  
