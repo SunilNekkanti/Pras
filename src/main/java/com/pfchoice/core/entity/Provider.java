@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,9 +32,9 @@ public class Provider implements Serializable
     //private Set<ProviderContract> providerContract = new HashSet<ProviderContract>(0);
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name="prvdr_Id", nullable = false)
+    @Column(name="prvdr_Id",unique=true, nullable = false)
     private Integer id;
     
     @Column(name="code")
