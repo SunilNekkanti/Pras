@@ -13,13 +13,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/resources/css/prasPanel.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
+      padding: 15px;
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -51,9 +54,30 @@
 
 </head>  
 <body>  
+<script>
+
+$(document).ready(function(){	
+	alert("before tab");
+
+
+
+$('[data-toggle="tab"]').click(function(e) {
+	alert("inside tab");
+    e.preventDefault();
+    var loadurl = $(this).attr('href');
+    var targ = $(this).attr('data-target');
+    $.get(loadurl, function(data) {
+        $(targ).html(data);
+
+    });
+    $(this).tab('show')
+});
+
+});
+</script>
        <div> <tiles:insertAttribute name="header" /> </div>  
        <div class="container-fluid text-center">    
-  			<div class="row content">
+  			<div class="row content" style="padding:15px;">
     			<div class="col-sm-12 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>
       </div>

@@ -9,44 +9,43 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
+
 <script src="resources/js/prasweb.js"></script>
+
 <script>
-	$(document).ready(function(){	
-		
-	prasPagination();
+
+$(document).ready(function(){	
 	
-	});
+prasPagination();
+
+});
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Insurance List</div>
+		<div class="panel-heading">Provider List</div>
 		<div class="panel-body" id="tablediv">
-				<table id="tab" class="table table-striped table-hover">
-					<thead>
+			<table id="tab" class="table table-striped table-hover">
+				<thead>
+					<tr>
+							<th scope="col">Name</th>
+							<th scope="col">Code</th>
+					</tr>
+				</thead>
+
+				<tbody id="content">
+					<div id="show_per_page"></div>
+					<div id="current_page"></div>
+					<c:forEach items="${providerList}" var="provider">
 						<tr>
-							<th  scope="col">Insurance Name</th>  
-					        <th  scope="col">PMPM</th>  
-						</tr>
-					</thead>
-
-					<tbody id="content">
-						<div id="show_per_page"></div>
-						<div id="current_page"></div>
-						<c:forEach items="${insuranceList}" var="ins">
-						    <c:forEach items="${ins.insuranceContracts}" var="insContract">
-							    <tr>
-								   	<td> <a href="insurance/${ins.id}"   rel='tab' > ${ins.name}</a></td> 
-						        	<td> ${insContract.pmpm}</td>
-						       </tr>     
-						        
-							</c:forEach>
-						</c:forEach>
-					</tbody>
-
-					<tfoot>
+							<td> <a href="provider/${provider.id}"   rel='tab' > ${provider.name}</a></td> 
+						    <td> ${provider.code}  </td> 
+						 </tr>     
+					</c:forEach>
+				</tbody>
+				<tfoot>
 						<div class="col-md-12 text-center" id="page_navigation"></div>
-					</tfoot>
-				</table>
+				</tfoot>
+			</table>
 		</div>
 	</div>
 </div>

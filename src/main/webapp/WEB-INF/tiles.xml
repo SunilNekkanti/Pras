@@ -49,16 +49,34 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipList.jsp" />  
     </definition>  
     
-    <definition name="membershipEdit" extends="base.definition">  
-        <put-attribute name="title" value="Membership Profile" />  
+    <definition name="membershipEdit" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEdit.jsp" />  
     </definition>  
     
-    <definition name="membershipEditSuccess" extends="base.definition">  
+    <definition name="membershipEditSuccess" extends="base1.definition">  
         <put-attribute name="title" value="Membership Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEditSuccess.jsp" />  
     </definition>  
     
+    <definition name="membershipDisplay" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDisplay.jsp" />  
+    </definition>  
+    
+    <definition name="membershipDetailsList" extends="base1.definition">  
+        <put-attribute name="title" value="MembershipDetails List" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsList.jsp" />  
+    </definition>  
+    
+    <definition name="membershipDetailsDisplay" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Details" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsDisplay.jsp" />  
+    </definition> 
     
      <definition name="providerList" extends="base1.definition">  
         <put-attribute name="title" value="Provider List" />  
@@ -70,13 +88,15 @@
         <put-attribute name="body" value="/WEB-INF/jsp/provider.jsp" />  
     </definition>  
     
-    <definition name="providerEdit" extends="base.definition">  
+    <definition name="providerEdit" extends="base1.definition">  
         <put-attribute name="title" value="Provider Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/providerEdit.jsp" />  
     </definition>  
     
-    <definition name="providerEditSuccess" extends="base.definition">  
+    <definition name="providerEditSuccess" extends="base1.definition">  
         <put-attribute name="title" value="Provider Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/providerEditSuccess.jsp" />  
     </definition>  
     
@@ -86,17 +106,19 @@
     </definition>
     
        <definition name="insurance" extends="base1.definition">  
-        <put-attribute name="title" value="Membership Profile" />  
+        <put-attribute name="title" value="Insurnace Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insurance.jsp" />  
     </definition>  
     
-    <definition name="insuranceEdit" extends="base.definition">  
+    <definition name="insuranceEdit" extends="base1.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEdit.jsp" />  
     </definition>  
     
-    <definition name="insuranceEditSuccess" extends="base.definition">  
+    <definition name="insuranceEditSuccess" extends="base1.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEditSuccess.jsp" />  
     </definition>  
     

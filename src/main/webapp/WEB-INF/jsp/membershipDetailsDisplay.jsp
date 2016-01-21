@@ -6,10 +6,10 @@
 	<div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
-                            <li class="active"><a href="Pras/membership/{id}" data-toggle="tab">Profile</a></li>
-                            <li><a href="/Pras/membership/{id}/membershipDetails" data-toggle="tab">Other Details</a></li>
-                            <li><a href="/Pras/membership/{id}/contact" data-toggle="tab">Contact</a></li>
-                            <li><a href="/Pras/membership/{id}/problem" data-toggle="tab">Problem</a></li>
+                            <li class="active"><a href="Pras/membership/display/${id}" data-toggle="tab">Profile</a></li>
+                            <li><a href="/Pras/membership/${id}/membershipDetails" data-toggle="tab">Other Details</a></li>
+                            <li><a href="/Pras/membership/${id}/contact" data-toggle="tab">Contact</a></li>
+                            <li><a href="/Pras/membership/${id}/problem" data-toggle="tab">Problem</a></li>
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
@@ -69,8 +69,7 @@
 				</div>
 				 		 
 				<div class="col-sm-offset-6 col-sm-4">
-					<button type="submit" class="btn btn-primary" id="updateButton">Update</button>
-					<button type="submit" class="btn btn-primary" id="deleteButton">Delete</button>
+				<a href="http://localhost:8080/Pras/membership/${id}">Click Here</a> Edit membership profile
 				</div>
 			</springForm:form>
 		</div>
