@@ -24,5 +24,7 @@ public interface MembershipInsuranceService
     MembershipInsurance update(MembershipInsurance bean);
     
     List<MembershipInsurance> findAll();
+    
+    List<MembershipInsurance> findAllByMbrId(Integer id);
 
 }

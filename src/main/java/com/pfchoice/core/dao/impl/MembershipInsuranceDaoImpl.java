@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -69,6 +70,17 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     {
     	Criteria cr = getSession().createCriteria(getEntityClass());
     	List<MembershipInsurance> list = cr.list();
+    	return list;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<MembershipInsurance> findAllByMbrId(Integer id)
+    {
+    	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrIns")
+    			.createAlias("mbrIns.mbr","mbr")
+    			.add(Restrictions.eq("mbr.id", id));
+    	List<MembershipInsurance> list = cr.list();
+    	System.out.println("findAllByMbrId list size is"+ list.size());
     	return list;
     }
 }

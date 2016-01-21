@@ -68,4 +68,10 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
     {
     	return membershipInsuranceDao.findAll();
     }
+    
+    @Override
+    public List<MembershipInsurance> findAllByMbrId(Integer id)
+    {
+    	return membershipInsuranceDao.findAllByMbrId(id);
+    }
 }

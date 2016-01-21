@@ -25,5 +25,7 @@ public interface MembershipInsuranceDao
     MembershipInsurance updateByUpdater(Updater<MembershipInsurance> updater);
     
     List<MembershipInsurance> findAll();
+    
+    List<MembershipInsurance> findAllByMbrId(Integer id);
 
 }
