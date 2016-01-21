@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +21,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipStatus;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.GenderService;
+import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
 import com.pfchoice.form.MembershipForm;
@@ -44,6 +50,9 @@ public class MembershipController{
     @Autowired
     MembershipService membershipService;
     
+    @Autowired
+    MembershipInsuranceService membershipInsuranceService;
+    
  /*   @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
@@ -53,13 +62,11 @@ public class MembershipController{
         binder.setValidator(validator);
     }
  */   
-    private Map<Integer, Membership> mbrs = null;
     private static final Logger logger = LoggerFactory
             .getLogger(MembershipController.class);
  
 	public MembershipController() {
-	       mbrs = new HashMap<Integer, Membership>();
-	    }
+    }
 	
 	
 	@ModelAttribute("membership")
@@ -75,8 +82,18 @@ public class MembershipController{
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
 	       
 		model.addAttribute("membership", dbMembership);
-        logger.info("Returning membershipSave.jsp page");
+        logger.info("Returning membershipEdit.jsp page");
         return "membershipEdit";
+    }
+	
+	@RequestMapping(value = "/membership/display/{id}", method = RequestMethod.GET)
+    public String displayMembershipPage(@PathVariable Integer id,Model model) {
+		Membership dbMembership = membershipService.findById(id);
+		 logger.info("Returning membership.getId()"+dbMembership.getId());
+	       
+		model.addAttribute("membership", dbMembership);
+        logger.info("Returning membershipDisplay.jsp page");
+        return "membershipDisplay";
     }
 	
 	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST)
@@ -97,9 +114,52 @@ public class MembershipController{
         }
         
         model.addAttribute("membership", membership);
-        mbrs.put(membership.getId(), membership);
         return "membershipEditSuccess";
     }
+	
+	@RequestMapping(value = "/membership/details/display/{id}", method = RequestMethod.GET)
+    public String displayMembershipDetailsPage(@PathVariable Integer id,Model model) {
+		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(id);
+		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
+	       
+		model.addAttribute("dbMembershipInsurance", dbMembershipInsurance);
+        logger.info("Returning membershipDetailsDisplay.jsp page");
+        return "membershipDetailsDisplay";
+    }
+	
+	
+	@RequestMapping(value = "/membership/details/save.do", method = RequestMethod.POST)
+    public String saveMembershipInsuranceAction( @Validated MembershipInsurance membershipInsurance,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning membershipDetailsEdit.jsp page");
+            return "membershipDetailsEdit";
+        }
+        logger.info("Returning MembershipDetailsEditSuccess.jsp page");
+        if (null != membershipInsurance.getId())
+        {
+        	
+            membershipInsuranceService.update(membershipInsurance);
+        }
+        
+        model.addAttribute("membershipInsurance", membershipInsurance);
+        return "membershipDetailsEditSuccess";
+    }
+	
+	@RequestMapping(value = "/membership/detailsList/{id}")
+    public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
+ 
+    	List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
+    	System.out.println("MembershipInsurance list bean sze "+listBean.size());
+		ModelAndView modelAndView = new ModelAndView("membershipDetailsList");
+		modelAndView.addObject("membershipDetailsList", listBean);
+ 
+		return modelAndView;
+	}
+    
 	
 	@ModelAttribute("countyMap")
 	public Map<Integer,String> populateCountyList() {
