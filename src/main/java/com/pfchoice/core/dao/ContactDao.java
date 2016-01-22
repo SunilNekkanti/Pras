@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Contact;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -21,5 +23,9 @@ public interface ContactDao
     Contact save(Contact bean);
 
     Contact updateByUpdater(Updater<Contact> updater);
+    
+    List<Contact> findAllContactsByRefId(String refString, Integer id);
+    
+    Contact findActiveContactByRefId(String refString, Integer id);
 
 }
