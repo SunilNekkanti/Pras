@@ -14,7 +14,8 @@
     
     <definition name="base1.definition" template="/WEB-INF/jsp/layout1.jsp">  
         <put-attribute name="title" value="" />  
-        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />  
+        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" /> 
+        <put-attribute name="menubar" value="" />   
         <put-attribute name="body" value="" />  
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
     </definition>  
@@ -61,14 +62,28 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEditSuccess.jsp" />  
     </definition>  
     
-    <definition name="membershipDisplay" extends="base1.definition">  
+    <definition name="membershipDisplay" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" /> 
         <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDisplay.jsp" />  
     </definition>  
     
-    <definition name="membershipDetailsList" extends="base1.definition">  
+       <definition name="membershipDisplayNoTab" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" /> 
+        <put-attribute name="menubar" value="/WEB-INF/jsp/membershipTabMenu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDisplayNoTab.jsp" />  
+    </definition> 
+    
+     <definition name="membershipDisplayWithTab" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" /> 
+        <put-attribute name="menubar" value="/WEB-INF/jsp/membershipDisplay.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDisplayNoTab.jsp" />  
+    </definition>
+    
+    <definition name="membershipDetailsList" extends="base.definition">  
         <put-attribute name="title" value="MembershipDetails List" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="menubar" value="" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsList.jsp" />  
     </definition>  
     
@@ -88,13 +103,13 @@
         <put-attribute name="body" value="/WEB-INF/jsp/provider.jsp" />  
     </definition>  
     
-    <definition name="providerEdit" extends="base1.definition">  
+    <definition name="providerEdit" extends="base.definition">  
         <put-attribute name="title" value="Provider Profile" />  
         <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/providerEdit.jsp" />  
     </definition>  
     
-    <definition name="providerEditSuccess" extends="base1.definition">  
+    <definition name="providerEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="Provider Profile" />  
         <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/providerEditSuccess.jsp" />  
@@ -121,5 +136,28 @@
         <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEditSuccess.jsp" />  
     </definition>  
+    
+       <definition name="membershipTabMenu" extends="base1.definition">  
+        <put-attribute name="title" value="Insurance Profile" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipTabMenu.jsp" />  
+    </definition> 
+    
+    <definition name="contactList" extends="base.definition">  
+        <put-attribute name="title" value="Membership Contact List" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/contactList.jsp" />  
+    </definition>  
+    
+    <definition name="contactEdit" extends="base.definition">  
+        <put-attribute name="title" value="Membership Contact" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/contactEdit.jsp" />  
+    </definition>  
+    
+    <definition name="contactEditSuccess" extends="base.definition">  
+        <put-attribute name="title" value="Membership Contact Success" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/contactEditSuccess.jsp" />  
+    </definition>   
     
 </tiles-definitions>  

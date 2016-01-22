@@ -38,13 +38,14 @@
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
-
-
 			<springForm:form method="POST" commandName="contact" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="homePhone">Home Phone:</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
+						<springForm:hidden path="refContact.id" />
+						<springForm:hidden path="fileId" value="3"/>
+						<springForm:hidden path="refContact.createdBy" value="sarath"/>
 						<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
 						<springForm:errors path="homePhone" cssClass="error" />
 					</div>
@@ -60,13 +61,58 @@
 				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="faxNumber">Fax Number:</label>
 					<div class="col-sm-6">
-						<springForm:input path="faxNumber" class="form-control" id="dob" placeholder="Fax Number" />
+						<springForm:input path="faxNumber" class="form-control" id="fax" placeholder="Fax Number" />
 						<springForm:errors path="faxNumber" cssClass="error" />
 					</div>
 				</div>
 				 
+				 <div class="form-group">
+				 	<label class="control-label col-sm-2" for="faxNumber">Address 1:</label>
+					<div class="col-sm-6">
+						<springForm:input path="address1" class="form-control" id="address1" placeholder="Address 1" />
+						<springForm:errors path="address1" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="address2">Address 2:</label>
+					<div class="col-sm-6">
+						<springForm:input path="address2" class="form-control" id="address2" placeholder="Address 2" />
+						<springForm:errors path="address2" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="city">City:</label>
+					<div class="col-sm-6">
+						<springForm:input path="city" class="form-control" id="city" placeholder="city"/>
+						<springForm:errors path="city" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="zip">Zip:</label>
+					<div class="col-sm-6">
+						<springForm:select path="zipCode.code" class="form-control" id="zip">
+				    		<springForm:options items="${zipCodeMap}"   />
+						</springForm:select>
+						<springForm:errors path="zipCode.code" cssClass="error" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="state">State:</label>
+					<div class="col-sm-6">
+						<springForm:select path="stateCode.code" class="form-control" id="state">
+				    		<springForm:options items="${stateMap}"    />
+						</springForm:select>
+						<springForm:errors path="stateCode.code" cssClass="error" />
+					  </div>
+				</div>
+				
 				<div class="col-sm-offset-6 col-sm-4">
-				<a href="http://localhost:8080/Pras/membership/${id}">Click Here</a> Edit membership profile
+					<button type="submit" class="btn btn-primary" id="updateButton">Add</button>
+					<button type="submit" class="btn btn-primary" id="deleteButton">Delete</button>
 				</div>
 			</springForm:form>
  	</div>

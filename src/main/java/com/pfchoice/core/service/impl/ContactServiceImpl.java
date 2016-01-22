@@ -2,12 +2,16 @@ package com.pfchoice.core.service.impl;
 
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pfchoice.core.dao.ContactDao;
 import com.pfchoice.core.entity.Contact;
+import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.service.ContactService;
 
 /**
@@ -60,4 +64,15 @@ public class ContactServiceImpl implements ContactService
         return contactDao.updateByUpdater(updater);
     }
 
+    @Override
+    public List<Contact> findAllContactsByRefId(String refString, Integer id)
+    {
+    	return contactDao.findAllContactsByRefId(refString, id);
+    }
+
+    @Override
+    public Contact findActiveContactByRefId(String refString, Integer id)
+    {
+    	return contactDao.findActiveContactByRefId(refString, id);
+    }
 }

@@ -62,7 +62,7 @@ prasPagination();
 						<div id="current_page"></div>
 						<c:forEach items="${membershipList}" var="mbr">
 							    <tr>
-								   <td> <a href="membership/display/${mbr.id}"   rel='tab' > ${mbr.firstName}</a></td> 
+								   <td> <a href="membership/${mbr.id}/display"   rel='tab' > ${mbr.firstName}</a></td> 
 						        <td> ${mbr.lastName} </td> 
 						        <td> ${mbr.dob}  </td> 
 						        <td> ${mbr.genderId.description }</td>

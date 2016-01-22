@@ -1,14 +1,20 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -21,7 +27,7 @@ public class Contact implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="cnt_Id", nullable = false)
     private Integer id;
@@ -47,23 +53,28 @@ public class Contact implements Serializable
     @Column(name="city")
     private String city;
     
-    @Column(name="zipcode")
-    private Integer zipCode;
+    @OneToOne(  fetch = FetchType.LAZY,  orphanRemoval = true)
+    @JoinColumn(name="zipcode", referencedColumnName="zipcode")
+    private ZipCode zipCode;
     
-    @Column(name="statecode")
-    private Integer stateCode;
+    @OneToOne(  fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name="statecode", referencedColumnName="code")
+    private State stateCode;
     
-    @Column(name="ref_cnt_Id")
-    private Integer refCntId;
+    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
+    private ReferenceContact refContact;
     
     @Column(name="file_id")
     private Integer fileId;
     
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
-    private Timestamp createdDate;
+    private Date createdDate;
     
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
-    private Timestamp updatedDate;
+    private Date updatedDate;
     
     @Column(name="created_by")
     private String createdBy;
@@ -196,43 +207,29 @@ public class Contact implements Serializable
 	/**
 	 * @return the zipCode
 	 */
-	public Integer getZipCode() {
+	public ZipCode getZipCode() {
 		return zipCode;
 	}
 
 	/**
 	 * @param zipCode the zipCode to set
 	 */
-	public void setZipCode(Integer zipCode) {
+	public void setZipCode(ZipCode zipCode) {
 		this.zipCode = zipCode;
 	}
 
 	/**
 	 * @return the stateCode
 	 */
-	public Integer getStateCode() {
+	public State getStateCode() {
 		return stateCode;
 	}
 
 	/**
 	 * @param stateCode the stateCode to set
 	 */
-	public void setStateCode(Integer stateCode) {
+	public void setStateCode(State stateCode) {
 		this.stateCode = stateCode;
-	}
-
-	/**
-	 * @return the refCntId
-	 */
-	public Integer getRefCntId() {
-		return refCntId;
-	}
-
-	/**
-	 * @param refCntId the refCntId to set
-	 */
-	public void setRefCntId(Integer refCntId) {
-		this.refCntId = refCntId;
 	}
 
 	/**
@@ -249,31 +246,46 @@ public class Contact implements Serializable
 		this.fileId = fileId;
 	}
 
+	
+	/**
+	 * @return the refContact
+	 */
+	public ReferenceContact getRefContact() {
+		return refContact;
+	}
+
+	/**
+	 * @param refContact the refContact to set
+	 */
+	public void setRefContact(ReferenceContact refContact) {
+		this.refContact = refContact;
+	}
+
 	/**
 	 * @return the createdDate
 	 */
-	public Timestamp getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
 	/**
 	 * @return the updatedDate
 	 */
-	public Timestamp getUpdatedDate() {
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Timestamp updatedDate) {
+	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 

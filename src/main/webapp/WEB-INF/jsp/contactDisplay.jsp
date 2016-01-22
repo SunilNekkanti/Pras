@@ -66,7 +66,7 @@
 				</div>
 				 
 				<div class="col-sm-offset-6 col-sm-4">
-				<a href="http://localhost:8080/Pras/membership/${id}">Click Here</a> Edit membership profile
+				<a href="http://localhost:8080/Pras/membership/${id}/contact">Click Here</a> Edit membership Contact
 				</div>
 			</springForm:form>
  	</div>

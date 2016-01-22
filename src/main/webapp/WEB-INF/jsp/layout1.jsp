@@ -59,13 +59,21 @@
 $(document).ready(function(){	
 	alert("before tab");
 
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        localStorage.setItem('lastTab', $(this).attr('href'));
+    });
+
+    var lastTab = localStorage.getItem('lastTab');
+    if (lastTab) {
+        $('[href="' + lastTab + '"]').tab('show');
+    }
 
 
 $('[data-toggle="tab"]').click(function(e) {
-	alert("inside tab");
     e.preventDefault();
     var loadurl = $(this).attr('href');
     var targ = $(this).attr('data-target');
+    alert("inside tab loadurl "+loadurl);
     $.get(loadurl, function(data) {
         $(targ).html(data);
 
@@ -75,7 +83,8 @@ $('[data-toggle="tab"]').click(function(e) {
 
 });
 </script>
-       <div> <tiles:insertAttribute name="header" /> </div>  
+       <div> <tiles:insertAttribute name="header" /> </div> 
+       <div> <tiles:insertAttribute name="menubar" /> </div>  
        <div class="container-fluid text-center">    
   			<div class="row content" style="padding:15px;">
     			<div class="col-sm-12 text-left"><tiles:insertAttribute name="body" /></div>  

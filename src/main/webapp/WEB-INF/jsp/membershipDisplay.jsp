@@ -3,18 +3,43 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
- 
-	<div class="panel with-nav-tabs panel-primary">
+
+<!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+
+<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"-->
+
+<title>Spring3Example</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script
+	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
+
+<script src="resources/js/prasweb.js"></script>
+
+
+
+</head>
+
+<body>
+<div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
-                            <li ><a href="/Pras/membership/display/${id}" data-toggle="tab">Profile</a></li>
-                            <li class="active"><a href="/Pras/membership/detailsList/${id}" data-toggle="tab">Other Details</a></li>
-                            <li><a href="/Pras/membership/${id}/contact" data-toggle="tab">Contact</a></li>
-                            <li><a href="/Pras/membership/${id}/problem" data-toggle="tab">Problem</a></li>
+                            <li class="active"><a href="#" data-toggle="tab">Profile</a></li>
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
+
+
 			<springForm:form method="POST" commandName="membership" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="firstName">First Name:</label>
@@ -74,6 +99,7 @@
 				<a href="http://localhost:8080/Pras/membership/${id}">Click Here</a> Edit membership profile
 				</div>
 			</springForm:form>
-		</div>
+ 	</div>
 	</div>
- 
+</body>
+</html>

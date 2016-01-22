@@ -86,7 +86,7 @@ public class MembershipController{
         return "membershipEdit";
     }
 	
-	@RequestMapping(value = "/membership/display/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/membership/{id}/display", method = RequestMethod.GET)
     public String displayMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
@@ -94,6 +94,16 @@ public class MembershipController{
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipDisplay.jsp page");
         return "membershipDisplay";
+    }
+	
+	@RequestMapping(value = "/membership/{id}/displayNoTab", method = RequestMethod.GET)
+    public String displayMembershipPageWithNoTab(@PathVariable Integer id,Model model) {
+		Membership dbMembership = membershipService.findById(id);
+		 logger.info("Returning membership.getId()"+dbMembership.getId());
+	       
+		model.addAttribute("membership", dbMembership);
+        logger.info("Returning membershipDisplayNoTab.jsp page");
+        return "membershipDisplayNoTab";
     }
 	
 	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST)
@@ -117,9 +127,9 @@ public class MembershipController{
         return "membershipEditSuccess";
     }
 	
-	@RequestMapping(value = "/membership/details/display/{id}", method = RequestMethod.GET)
-    public String displayMembershipDetailsPage(@PathVariable Integer id,Model model) {
-		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(id);
+	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/display", method = RequestMethod.GET)
+    public String displayMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,Model model) {
+		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
 		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
 	       
 		model.addAttribute("dbMembershipInsurance", dbMembershipInsurance);
@@ -149,7 +159,7 @@ public class MembershipController{
         return "membershipDetailsEditSuccess";
     }
 	
-	@RequestMapping(value = "/membership/detailsList/{id}")
+	@RequestMapping(value = "/membership/{id}/detailsList")
     public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
  
     	List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
@@ -160,7 +170,6 @@ public class MembershipController{
 		return modelAndView;
 	}
     
-	
 	@ModelAttribute("countyMap")
 	public Map<Integer,String> populateCountyList() {
 		

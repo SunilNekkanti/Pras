@@ -31,24 +31,12 @@
 </head>
 
 <body>
-
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
-                            <li ><a data-target="#profile" href="/Pras/membership/display/${id}" data-toggle="tab">Profile</a></li>
-                            <li class="active"><a data-target="#other" href="/Pras/membership/${id}/membershipDetails" data-toggle="tab">Other Details</a></li>
-                            <li><a href="#contact"  data-target="/Pras/membership/${id}/contact" data-toggle="tab">Contact</a></li>
-                            <li><a href="#problem"  data-target="/Pras/membership/${id}/problem" data-toggle="tab">Problem</a></li>
+                            <li class="active"><a href="#" data-toggle="tab">Insurance Details</a></li>
                         </ul>
           </div>
-			<div class="tab-content">
-			 <div class="tab-pane" id="profile">
-			    home tab!
-			  </div>
-			  <div class="tab-pane" id="other">
-			    profile tab!
-			  </div>
-			
 			<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
@@ -94,9 +82,7 @@
 				</table>
 
 			</div>
-			</div>
 		</div>
-
 
 </body>
 </html>
