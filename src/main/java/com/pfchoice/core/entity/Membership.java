@@ -62,7 +62,6 @@ public class Membership implements Serializable
     
     @Expose
     @Column(name="mbr_dob")
-    @Temporal(TemporalType.DATE)
     private Date dob;
     
     @Expose
