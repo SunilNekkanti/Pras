@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 /**
@@ -30,6 +29,7 @@ public class MembershipInsurance implements Serializable
 
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -45,30 +45,37 @@ public class MembershipInsurance implements Serializable
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
     
+    @Expose
     @Column(name="New_Medicare_Bene_Medicaid_Flag")
     private char newBenifits;
 
-    @Temporal(TemporalType.DATE)
+    @Expose
     @Column(name="activitydate")
     private Date activityDate;
     
+    @Expose
     @Column(name="activityMonth")
     private Integer activityMonth;
     
+    @Expose
     @Temporal(TemporalType.DATE)
     @Column(name="effective_strt_dt")
     private Date effStartDate;
     
+    @Expose
     @Temporal(TemporalType.DATE)
     @Column(name="effecctive_end_dt")
     private Date effEndDate;
     
+    @Expose
     @Column(name="product")
     private String product;
     
+    @Expose
     @Column(name="product_label")
     private String productLabel;
    
+    @Expose
     @Column(name="planID")
     private String planId;
     
