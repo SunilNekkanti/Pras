@@ -1,8 +1,7 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,10 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import com.google.gson.annotations.Expose;
 
 /**
  *
@@ -30,62 +30,81 @@ public class Membership implements Serializable
 
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="mbr_id", nullable = false)
     private Integer id;
 
+    @Expose
     @Column(name="mbr_firstname")
     private String firstName;
     
+    @Expose
     @Column(name="mbr_lastname")
     private String lastName;
 
+    @Expose
     @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_genderid", referencedColumnName="gender_id")
     private Gender genderId;
     
+    @Expose
     @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
     
+    @Expose
     @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
     private MembershipInsurance mbrInsurance;
     
+    @Expose
     @Column(name="mbr_dob")
+    @Temporal(TemporalType.DATE)
     private Date dob;
     
+    @Expose
     @Column(name="mbr_medicaidno")
     private String medicaidNo;
     
+    @Expose
     @Column(name="mbr_medicareno")
     private String medicareNo;
     
+    @Expose
     @Column(name="file_id")
     private Integer fileId;
     
+    @Expose
     @Column(name="created_date")
-    private Timestamp createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
     
+    @Expose
     @Column(name="updated_date")
-    private Timestamp updatedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
+    @Expose
     @OneToOne(cascade=CascadeType.DETACH )
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
-    
+    @Expose
     @Column(name="Mbr_ethinic_code", columnDefinition = "TINYINT(1)")
     private Byte ethinicCode;
     
@@ -251,28 +270,28 @@ public class Membership implements Serializable
 	/**
 	 * @return the createdDate
 	 */
-	public Timestamp getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
 	/**
 	 * @return the updatedDate
 	 */
-	public Timestamp getUpdatedDate() {
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Timestamp updatedDate) {
+	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
