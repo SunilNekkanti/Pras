@@ -7,9 +7,32 @@
 		})
 	})
 	</script>
- <ul class="nav nav-tabs nav-stacked">
-  <li role="presentation" class="active"><a href="/Pras/membership/${id}/display">Profile</a></li>
-  <li role="presentation"><a href="/Pras/membership/${id}/detailsList">Insurance</a></li>
-  <li role="presentation"><a href="/Pras/membership/${id}/contact">Contact</a></li>
-  <li role="presentation"><a href="/Pras/membership/${id}/problem">Problem</a></li>
-</ul>
+
+
+<link rel="stylesheet" href="/Pras/resources/css/side_menu.css">
+<div class="row">
+  <div class="col-sm-12 side-menu">
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/Pras/membership/${id}/display">Profile <span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="/Pras/membership/${id}/detailsList">Insurance</a></li>
+            <li><a href="/Pras/membership/${id}/contactList">Contact</a></li>
+             <li><a href="/Pras/membership/${id}/problem">Problem</a></li>
+            <li><a href="/Pras/insurance/${id}/contractList">Provider Contract List</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+ </div>
+ </div> 

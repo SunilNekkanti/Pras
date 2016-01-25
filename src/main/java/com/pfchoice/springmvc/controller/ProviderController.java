@@ -106,6 +106,7 @@ public class ProviderController{
 	        	model.addAttribute("provider", provider);
 	        	provider.setCreatedBy("Mohanasundharam");
 	 	      	providerService.save(provider);
+	 	       return "providerAddSuccess";
 	 	      	
 	        }
 	       
@@ -113,9 +114,40 @@ public class ProviderController{
         }    
     }
 	
-	@RequestMapping(value = "/provider/new/save.do", method = RequestMethod.POST)
-    public String saveProviderContractAction( @Validated ProviderContract providerContract,
-            BindingResult bindingResult, Model model) {
+	
+	
+	
+	
+	/*
+	 * Provider New Contract Details
+	 * 
+	 * 
+	 */
+	@RequestMapping(value = "/provider/{id}/newProviderContract", method = RequestMethod.GET)
+    public String newProviderContractPage(@PathVariable Integer id,Model model) {
+		
+		 Provider dbProvider = providerService.findById(id);
+		 logger.info("Returning provider.getId()"+dbProvider.getId());
+		 
+			       
+		model.addAttribute("provider", dbProvider);
+		ProviderContract providerContract = new ProviderContract();
+		model.addAttribute("providerContract", providerContract);
+		
+        logger.info("Returning providerSave.jsp page");
+        return "providerNewContract";
+    }
+	
+	
+	
+	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST)
+    public String saveProviderContractAction( @Validated@PathVariable Integer id, ProviderContract providerContract,
+    		Provider provider, BindingResult bindingResult, Model model) {
+		
+		
+		 Provider dbProvider = providerService.findById(id);
+		 
+		System.out.println("Provider Id "+providerContract.getProviderId());
         if (bindingResult.hasErrors()) {
         	for( ObjectError oe :bindingResult.getAllErrors()){
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
@@ -133,6 +165,7 @@ public class ProviderController{
 	        }
 	        else
 	        {
+	        	providerContract.setProviderId(provider);
 	        	model.addAttribute("providerContract", providerContract);
 	        	providerContract.setCreatedBy("Mohanasundharam");
 	        	providerContractService.save(providerContract);
@@ -146,10 +179,12 @@ public class ProviderController{
         }    
     }
 	
+	
+	
 	@ModelAttribute("activeIndMap")
 	public Map<String,String> populateActiveIndList() {
 		
-		//Data referencing for county list box
+		//Data referencing for ActiveMap box
 		
 		Map<String,String> activeIndMap = new HashMap<String,String>();
 		activeIndMap.put("Y","Yes");

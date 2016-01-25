@@ -55,7 +55,7 @@
 <body>  
        <div> <tiles:insertAttribute name="header" /> </div>  
        <div class="container-fluid text-center">    
-  			<div class="row content">
+  			<div class="row content"  style="padding:15px;">
     			<div class="col-sm-3 sidenav"> <tiles:insertAttribute name="menu" /></div> 
     			<div class="col-sm-9 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>

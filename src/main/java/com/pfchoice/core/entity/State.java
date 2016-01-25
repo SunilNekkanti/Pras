@@ -6,7 +6,10 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,6 +54,8 @@ public class State implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
+    @OneToOne(mappedBy="stateCode",  fetch = FetchType.EAGER)
+    private ZipCode zipCode;
     
     public State()
     {
@@ -97,6 +102,21 @@ public class State implements Serializable
 	 */
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+
+	
+	/**
+	 * @return the zipCode
+	 */
+	public ZipCode getZipCode() {
+		return zipCode;
+	}
+
+	/**
+	 * @param zipCode the zipCode to set
+	 */
+	public void setZipCode(ZipCode zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	/**

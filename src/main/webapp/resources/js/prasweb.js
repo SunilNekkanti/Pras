@@ -90,12 +90,7 @@ function prasPagination(){
 			function() {
 				// get the link location that was clicked
 				var href = $(this).find("a").attr("href");
-				// $("#tab").hide();
-				// $("#page_navigation").hide();
 				if (href) {
-					// window.location =
-					// "http://localhost:8080/Pras/membership.html";
-
 					$.ajax({
 						type : "GET",
 						url : "http://localhost:8080/Pras/" + href,
@@ -103,8 +98,8 @@ function prasPagination(){
 						dataType : 'json',
 						success : function(response) {
 							$.each(response.data, function(key, value) {
-								if (key == "status" || key == "genderId"
-										|| key == "countyCode") {
+								alert("key is"+key);
+								if (key == "status" || key == "genderId" || key == "countyCode") {
 									$('#' + key).val(value.description);
 								} else {
 									$('#' + key).val(value);
@@ -120,15 +115,13 @@ function prasPagination(){
 
 					// to change the browser URL to the given link location
 					if (href != window.location) {
-						// alert( 'new url')
-						// window.history.pushState({path:href},'',href);
+						 window.history.pushState({path:href},'',href);
 					}
 
 				}
 		});
 
 	}
-	
 	
 	function populateMembershipListData (){
 		$.get('membership/list',null,function(responseText) { 
@@ -146,6 +139,48 @@ function prasPagination(){
 	   });
 	}
 	
+	function updateMembershipForm (){
+		$("#updateButton").click(function(){
+			
+			alert('clicked update button');
+		    var bean = {"id":"158", "firstName": $("#firstName").val(),  "lastName":$("#lastName").val() };
+		    $.ajax({
+		        url: "http://localhost:8080/Pras/membership/176",
+		        contentType : "application/json; charset=utf-8",
+		        type: 'PUT',
+		        dataType: 'json',
+		        success: function (data) {alert(JSON.parse(data));},
+		        data: JSON.stringify(bean),
+		        error:function(){alert("ajax post call failed");}
+		    });
+		});
+	}
+
+	function deleteMembershipForm (){
+		$("#deleteButton").click(function(){
+			
+			alert('clicked cancel button');
+		    var bean = {"id":"175"};
+		    $.ajax({
+		        url: "http://localhost:8080/Pras/membership/175",
+		        contentType : "application/json;charset=UTF-8",
+		        type: 'DELETE',
+		        dataType: 'json',
+		        success: function (data) {alert(JSON.parse(data));},
+		        data: JSON.stringify(bean),
+		        error:function(){alert("ajax delete call failed");}
+		    });
+		});
+	}
 	
+	function resetMembershipForm (formid){
+		$("#cancelButton").click(function(){
+			alert('clicked cancel button');
+			$('#form-ajax').ajaxForm(function() {
+			    this.reset();
+			});
+		});
+	}
+
 	
 	

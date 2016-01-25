@@ -52,18 +52,18 @@ public class Contact implements Serializable
     
     @Column(name="city")
     private String city;
+
+    @OneToOne(  fetch = FetchType.LAZY, cascade =CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
+    private ReferenceContact refContact;
     
-    @OneToOne(  fetch = FetchType.LAZY,  orphanRemoval = true)
-    @JoinColumn(name="zipcode", referencedColumnName="zipcode")
-    private ZipCode zipCode;
-    
-    @OneToOne(  fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="statecode", referencedColumnName="code")
     private State stateCode;
     
-    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
-    private ReferenceContact refContact;
+    @OneToOne(  fetch = FetchType.LAZY)
+    @JoinColumn(name="zipcode", referencedColumnName="zipcode")
+    private ZipCode zipCode;
     
     @Column(name="file_id")
     private Integer fileId;
@@ -83,7 +83,7 @@ public class Contact implements Serializable
     private String updatedBy;
     
     @Column(name="active_ind")
-    private char activeInd;
+    private Character activeInd;
     
       
     public Contact()
@@ -320,14 +320,14 @@ public class Contact implements Serializable
 	/**
 	 * @return the activeInd
 	 */
-	public char getActiveInd() {
+	public Character getActiveInd() {
 		return activeInd;
 	}
 
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(Character activeInd) {
 		this.activeInd = activeInd;
 	}
 

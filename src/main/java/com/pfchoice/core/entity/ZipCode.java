@@ -49,7 +49,7 @@ public class ZipCode implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-    @OneToOne(  fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(  fetch = FetchType.EAGER)
     @JoinColumn(name="statecode", referencedColumnName="code")
     private State stateCode;
     
@@ -184,7 +184,7 @@ public class ZipCode implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.State[ code=" + code + " ]";
+        return "com.pfchoice.core.entity.ZipCode[ code=" + code + " ]";
     }
 
 }

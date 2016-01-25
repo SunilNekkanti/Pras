@@ -18,10 +18,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author sarath
+ * @author Mohanasundharam
  */
-@Entity(name = "reference_contact")
-public class ReferenceContact implements Serializable
+@Entity(name = "reference_contract")
+public class ReferenceContract implements Serializable
 {
 	
     private static final long serialVersionUID = 1L;
@@ -29,19 +29,16 @@ public class ReferenceContact implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name="ref_cnt_Id", nullable = false)
+    @Column(name="ref_contract_Id", nullable = false)
     private Integer id;
 
-    @OneToOne( fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_id",  referencedColumnName="mbr_id")
-    private Membership mbr;
-    
-    @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name="insurance_id",  referencedColumnName="insurance_id")
+      
+    @OneToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="insurance_id", referencedColumnName="insurance_id")
     private Insurance ins;
     
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="prvdr_id",  referencedColumnName="prvdr_id")
+    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="prvdr_id", referencedColumnName="prvdr_id")
     private Provider prvdr;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,11 +59,11 @@ public class ReferenceContact implements Serializable
     private char activeInd;
     
       
-    public ReferenceContact()
+    public ReferenceContract()
     {
     }
 
-    public ReferenceContact(Integer id)
+    public ReferenceContract(Integer id)
     {
         this.id = id;
     }
@@ -82,21 +79,6 @@ public class ReferenceContact implements Serializable
     }
 
     
-	
-	/**
-	 * @return the mbr
-	 */
-	public Membership getMbr() {
-		return mbr;
-	}
-
-	/**
-	 * @param mbr the mbr to set
-	 */
-	public void setMbr(Membership mbr) {
-		this.mbr = mbr;
-	}
-
 	/**
 	 * @return the ins
 	 */
@@ -210,11 +192,11 @@ public class ReferenceContact implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReferenceContact))
+        if (!(object instanceof ReferenceContract))
         {
             return false;
         }
-        ReferenceContact other = (ReferenceContact) object;
+        ReferenceContract other = (ReferenceContract) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
         {
             return false;
@@ -225,7 +207,7 @@ public class ReferenceContact implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.Contact[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.Contract[ id=" + id + " ]";
     }
 
 }

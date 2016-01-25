@@ -26,8 +26,6 @@
 
 <script src="resources/js/prasweb.js"></script>
 
-
-
 </head>
 
 <body>
@@ -44,7 +42,18 @@
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:hidden path="refContact.id" />
-						<springForm:hidden path="fileId" value="3"/>
+						 <c:choose>
+						 <c:when test="${contact.refContact.mbr != null}"> 
+							<springForm:hidden path="refContact.mbr.id" />
+						 </c:when>
+						 <c:when test="${contact.refContact.prvdr != null}">
+							<springForm:hidden path="refContact.prvdr.id" />
+						</c:when>
+						<c:otherwise>
+							<springForm:hidden path="refContact.ins.id" />
+						</c:otherwise>
+						</c:choose>
+						
 						<springForm:hidden path="refContact.createdBy" value="sarath"/>
 						<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
 						<springForm:errors path="homePhone" cssClass="error" />
@@ -91,22 +100,21 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="zip">Zip:</label>
-					<div class="col-sm-6">
-						<springForm:select path="zipCode.code" class="form-control" id="zip">
-				    		<springForm:options items="${zipCodeMap}"   />
-						</springForm:select>
-						<springForm:errors path="zipCode.code" cssClass="error" />
-					  </div>
-				</div>
-				
-				<div class="form-group">
 					<label class="control-label col-sm-2" for="state">State:</label>
 					<div class="col-sm-6">
 						<springForm:select path="stateCode.code" class="form-control" id="state">
-				    		<springForm:options items="${stateMap}"    />
+				    		<springForm:options items="${stateList}" itemValue="code" itemLabel="shortName"     />
 						</springForm:select>
 						<springForm:errors path="stateCode.code" cssClass="error" />
+					  </div>
+				</div>
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="zip">Zip:</label>
+					<div class="col-sm-6">
+						<springForm:select path="zipCode.code" class="form-control" id="zip">
+				    		<springForm:options items="${zipCodeList}" itemValue="code"  itemLabel="code" />
+						</springForm:select>
+						<springForm:errors path="zipCode.code" cssClass="error" />
 					  </div>
 				</div>
 				

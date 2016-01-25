@@ -18,10 +18,10 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author sarath
+ * @author Mohanasundharam
  */
-@Entity(name = "reference_contact")
-public class ReferenceContact implements Serializable
+@Entity(name = "contract")
+public class Contract implements Serializable
 {
 	
     private static final long serialVersionUID = 1L;
@@ -29,21 +29,26 @@ public class ReferenceContact implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name="ref_cnt_Id", nullable = false)
+    @Column(name="contract_Id", nullable = false)
     private Integer id;
 
-    @OneToOne( fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_id",  referencedColumnName="mbr_id")
-    private Membership mbr;
+    @Column(name="contract_NBR")
+    private String contractNBR;
     
-    @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name="insurance_id",  referencedColumnName="insurance_id")
-    private Insurance ins;
+    @Column(name="PMPM")
+    private Double PMPM;
+
+    @Column(name="start_date")
+    private Date startDate;
     
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="prvdr_id",  referencedColumnName="prvdr_id")
-    private Provider prvdr;
+    @Column(name="end_date")
+    private Date endDate;
     
+    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="ref_contract_id", referencedColumnName="ref_contract_id")
+    private ReferenceContract referenceContract;
+    
+      
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
@@ -62,11 +67,11 @@ public class ReferenceContact implements Serializable
     private char activeInd;
     
       
-    public ReferenceContact()
+    public Contract()
     {
     }
 
-    public ReferenceContact(Integer id)
+    public Contract(Integer id)
     {
         this.id = id;
     }
@@ -81,48 +86,74 @@ public class ReferenceContact implements Serializable
         this.id = id;
     }
 
-    
-	
-	/**
-	 * @return the mbr
+    	/**
+	 * @return the contractNBR
 	 */
-	public Membership getMbr() {
-		return mbr;
+	public String getContractNBR() {
+		return contractNBR;
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param contractNBR the contractNBR to set
 	 */
-	public void setMbr(Membership mbr) {
-		this.mbr = mbr;
+	public void setContractNBR(String contractNBR) {
+		this.contractNBR = contractNBR;
 	}
 
 	/**
-	 * @return the ins
+	 * @return the pMPM
 	 */
-	public Insurance getIns() {
-		return ins;
+	public Double getPMPM() {
+		return PMPM;
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param pMPM the pMPM to set
 	 */
-	public void setIns(Insurance ins) {
-		this.ins = ins;
+	public void setPMPM(Double pMPM) {
+		PMPM = pMPM;
 	}
 
 	/**
-	 * @return the prvdr
+	 * @return the startDate
 	 */
-	public Provider getPrvdr() {
-		return prvdr;
+	public Date getStartDate() {
+		return startDate;
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param startDate the startDate to set
 	 */
-	public void setPrvdr(Provider prvdr) {
-		this.prvdr = prvdr;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the referenceContract
+	 */
+	public ReferenceContract getReferenceContract() {
+		return referenceContract;
+	}
+
+	/**
+	 * @param referenceContract the referenceContract to set
+	 */
+	public void setReferenceContract(ReferenceContract referenceContract) {
+		this.referenceContract = referenceContract;
 	}
 
 	/**
@@ -210,11 +241,11 @@ public class ReferenceContact implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReferenceContact))
+        if (!(object instanceof Contract))
         {
             return false;
         }
-        ReferenceContact other = (ReferenceContact) object;
+        Contract other = (Contract) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
         {
             return false;
