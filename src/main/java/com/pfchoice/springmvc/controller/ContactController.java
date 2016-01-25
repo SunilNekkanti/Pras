@@ -137,14 +137,44 @@ public class ContactController{
     public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
-		ModelAndView modelAndView = new ModelAndView("contactList");
+		ModelAndView modelAndView = new ModelAndView("membershipContactList");
 		modelAndView.addObject("contactList", listBean);
  
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"add"})
+	public String addMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning contactEdit.jsp page");
+            return "contactEdit";
+        }
+        
+    	Membership dbMembership = membershipService.findById(id);
+	 	logger.info("Returning membership.getId()"+dbMembership.getId());
+
+	 	model.addAttribute("contact", contact);
+    	contact.setCreatedBy("sarath");
+    	contact.setActiveInd('Y');
+    	contact.setFileId(3);
+    	ReferenceContact refCnt = createRefContactModel();
+    	refCnt.setCreatedBy("sarath");
+    	refCnt.setMbr(dbMembership);
+    	contact.setRefContact(refCnt);
+    	
+    	logger.info("Returning contactEditSuccess.jsp page after create");
+      	contactService.save(contact);
+   
+    return "contactEditSuccess";
+    }
+	
+	
+	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -154,39 +184,33 @@ public class ContactController{
             logger.info("Returning contactEdit.jsp page");
             return "contactEdit";
         }
-        else
-        {
 	        
-	        if (null != contact.getId())
-	        {
-	        	logger.info("Returning ContactEditSuccess.jsp page after update");
-	        	contactService.update(contact);
-	        }
-	        else
-	        {
-	        	
-	        	Membership dbMembership = membershipService.findById(id);
-	   		 	logger.info("Returning membership.getId()"+dbMembership.getId());
-
-	   		 	model.addAttribute("contact", contact);
-	        	contact.setCreatedBy("sarath");
-	        	contact.setActiveInd('Y');
-	        	contact.setFileId(3);
-	        	ReferenceContact refCnt = createRefContactModel();
-	        	refCnt.setCreatedBy("sarath");
-	        	refCnt.setMbr(dbMembership);
-	        	contact.setRefContact(refCnt);
-	        	
-	        	logger.info("Returning contactEditSuccess.jsp page after create");
-	 	      	contactService.save(contact);
-	        }
-	       
-	        return "contactEditSuccess";
-        }    
+        if (null != contact.getId())
+        {
+        	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contactService.update(contact);
+        	return "contactEditSuccess";
+        }
+       
+        return "contactEdit";
     }
 	
 
-
+	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"delete"})
+	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
+            BindingResult bindingResult, Model model) {
+       
+            
+	        if (null != contact.getId())
+	        {
+	        	logger.info("Returning ContactEditSuccess.jsp page after update");
+	        	contact.setActiveInd('N');
+	        	contactService.update(contact);
+	        }
+	        return "contactList";
+    }
+	
+       
 	
 	@RequestMapping(value = "/provider/{id}/contact/new")
     public String addProviderContactPage(Model model) {
@@ -197,6 +221,7 @@ public class ContactController{
 		model.addAttribute("contact", contact);
         return "contactEdit";
     }
+	
 	
 	@RequestMapping(value = "/provider/{id}/contact/{cntId}", method = RequestMethod.GET)
     public String updateProviderContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
@@ -224,14 +249,65 @@ public class ContactController{
     public ModelAndView providerContactList(@PathVariable Integer id) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("provider",id);
-		ModelAndView modelAndView = new ModelAndView("contactList");
+		ModelAndView modelAndView = new ModelAndView("providerContactList");
 		modelAndView.addObject("contactList", listBean);
  
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"add"})
+	public String addProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning contactEdit.jsp page");
+            return "contactEdit";
+        }
+           
+    	Provider dbProvider = providerService.findById(id);
+	 	logger.info("Returning provider.getId()"+dbProvider.getId());
+
+	 	model.addAttribute("contact", contact);
+    	contact.setCreatedBy("sarath");
+    	contact.setActiveInd('Y');
+    	contact.setFileId(3);
+    	ReferenceContact refCnt = createRefContactModel();
+    	refCnt.setCreatedBy("sarath");
+    	refCnt.setPrvdr(dbProvider);
+    	contact.setRefContact(refCnt);
+    	
+    	logger.info("Returning contactEditSuccess.jsp page after create");
+      	contactService.save(contact);
+	       
+	        return "contactEditSuccess";
+    }
+
+	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"update"})
+	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning contactEdit.jsp page");
+            return "contactEdit";
+        }
+	        
+        if (null != contact.getId())
+        {
+        	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	System.out.println("contact"+contact.getRefContact().getPrvdr());
+        	contactService.update(contact);
+        	return "contactEditSuccess";
+        }
+       
+        return "contactEdit";
+    }
+	
+	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"delete"})
 	public String saveProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -241,39 +317,18 @@ public class ContactController{
             logger.info("Returning contactEdit.jsp page");
             return "contactEdit";
         }
-        else
-        {
 	        
 	        if (null != contact.getId())
 	        {
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	System.out.println("contact"+contact.getRefContact().getPrvdr());
+	        	contact.setActiveInd('N');
 	        	contactService.update(contact);
-	        }
-	        else
-	        {
-	        	
-	        	Provider dbProvider = providerService.findById(id);
-	   		 	logger.info("Returning provider.getId()"+dbProvider.getId());
-
-	   		 	model.addAttribute("contact", contact);
-	        	contact.setCreatedBy("sarath");
-	        	contact.setActiveInd('Y');
-	        	contact.setFileId(3);
-	        	ReferenceContact refCnt = createRefContactModel();
-	        	refCnt.setCreatedBy("sarath");
-	        	refCnt.setPrvdr(dbProvider);
-	        	contact.setRefContact(refCnt);
-	        	
-	        	logger.info("Returning contactEditSuccess.jsp page after create");
-	 	      	contactService.save(contact);
+	        	return "contactEditSuccess";
 	        }
 	       
-	        return "contactEditSuccess";
-        }    
+	        return "contactEdit";
     }
-
-	
 	
 	@RequestMapping(value = "/insurance/{id}/contact/new")
     public String addInsuranceContactPage(Model model) {
@@ -311,14 +366,64 @@ public class ContactController{
     public ModelAndView insuranceContactList(@PathVariable Integer id) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
-		ModelAndView modelAndView = new ModelAndView("contactList");
+		ModelAndView modelAndView = new ModelAndView("insuranceContactList");
 		modelAndView.addObject("contactList", listBean);
  
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"add"})
+	public String addInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning contactEdit.jsp page");
+            return "contactEdit";
+        }
+	        	
+    	Insurance dbInsurance = insuranceService.findById(id);
+	 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
+
+	 	model.addAttribute("contact", contact);
+    	contact.setCreatedBy("sarath");
+    	contact.setActiveInd('Y');
+    	contact.setFileId(3);
+    	ReferenceContact refCnt = createRefContactModel();
+    	refCnt.setCreatedBy("sarath");
+    	refCnt.setIns(dbInsurance);
+    	contact.setRefContact(refCnt);
+    	
+    	logger.info("Returning contactEditSuccess.jsp page after create");
+      	contactService.save(contact);
+   
+      	return "contactEditSuccess";
+    }
+
+	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"update"})
+	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning contactEdit.jsp page");
+            return "contactEdit";
+        }
+	        
+        if (null != contact.getId())
+        {
+        	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contactService.update(contact);
+        	return "contactEditSuccess";
+        }
+       
+        return "contactEdit";
+    }
+
+	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"delete"})
 	public String saveInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -328,35 +433,16 @@ public class ContactController{
             logger.info("Returning contactEdit.jsp page");
             return "contactEdit";
         }
-        else
-        {
 	        
-	        if (null != contact.getId())
-	        {
-	        	logger.info("Returning ContactEditSuccess.jsp page after update");
-	        	contactService.update(contact);
-	        }
-	        else
-	        {
-	        	
-	        	Insurance dbInsurance = insuranceService.findById(id);
-	   		 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
-
-	   		 	model.addAttribute("contact", contact);
-	        	contact.setCreatedBy("sarath");
-	        	contact.setActiveInd('Y');
-	        	contact.setFileId(3);
-	        	ReferenceContact refCnt = createRefContactModel();
-	        	refCnt.setCreatedBy("sarath");
-	        	refCnt.setIns(dbInsurance);
-	        	contact.setRefContact(refCnt);
-	        	
-	        	logger.info("Returning contactEditSuccess.jsp page after create");
-	 	      	contactService.save(contact);
-	        }
-	       
-	        return "contactEditSuccess";
-        }    
+        if (null != contact.getId())
+        {
+        	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contact.setActiveInd('N');
+        	contactService.update(contact);
+        	return "contactEditSuccess";
+        }
+       
+        return "contactEdit";
     }
 
 }

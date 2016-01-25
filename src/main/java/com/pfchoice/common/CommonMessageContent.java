@@ -22,7 +22,9 @@ public interface CommonMessageContent
     String MEMBERSHIP_UPDATED = "Membership profile updated";
 
     String MEMBERSHIP_DELETED = "Membership profile deleted";
-
+    
+    String MEMBERSHIP_LIST = "Membership List";
+    
     String GET_MEMBERSHIP = "Get Membership profile";
 
     String ACCESS_FORBIDDEN = "Unmatched combination of username and credential";
