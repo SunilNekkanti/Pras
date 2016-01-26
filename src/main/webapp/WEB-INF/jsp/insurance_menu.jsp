@@ -26,9 +26,9 @@
             <li class="active">
             			<a href="/Pras/insurance/${id}">Edit Insurance <span class="glyphicon glyphicon-play"></span></a>
             </li>
-            <li><a href="/Pras/insurance/${id}/contactList">Provider Contact List</a></li>
-             <li><a href="/Pras/provider/${id}/contractList">Provider Contract List</a></li>
-            <li><a href="/Pras/insurance/${id}/contractList">Provider Contract List</a></li>
+            <li><a href="/Pras/insurance/${id}/contactList">Insurance Contact List</a></li>
+             <li><a href="/Pras/insurance/${id}/contractList">Insurance Contract List</a></li>
+            <li><a href="/Pras/insurance/${id}/providerList">Insurance's Provider List</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

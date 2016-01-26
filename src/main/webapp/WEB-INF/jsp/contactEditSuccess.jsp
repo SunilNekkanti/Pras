@@ -14,10 +14,10 @@
 					 		<p> <strong>Name:${contact.refContact.mbr.firstName}  ${contact.refContact.mbr.lastName}</strong> </p>
 						 </c:when>
 						 <c:when test="${contact.refContact.prvdr != null}">
-							<p> <strong>Name:${contact.refContact.prvdr.name}  ${contact.refContact.mbr.lastName}</strong> </p>
+							<p> <strong>Name:${contact.refContact.prvdr.name}  </strong> </p>
 						</c:when>
 						 <c:when test="${contact.refContact.ins != null}">
-							<p> <strong>Name:${contact.refContact.ins.name}  ${contact.refContact.mbr.lastName}</strong> </p>
+							<p> <strong>Name:${contact.refContact.ins.name}  </strong> </p>
 						</c:when>
 						<c:otherwise>
 							issue

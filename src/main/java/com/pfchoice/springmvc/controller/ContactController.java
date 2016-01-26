@@ -123,9 +123,9 @@ public class ContactController{
         return "contactEdit";
     }
 		
-	@RequestMapping(value = "/membership/contact/{id}/display", method = RequestMethod.GET)
-    public String displayMembershipContactPage(@PathVariable Integer id,Model model) {
-		Contact dbContact = contactService.findById(id);
+	@RequestMapping(value = "/membership/{id}/contact/{cntId}/display", method = RequestMethod.GET)
+    public String displayMembershipContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
+		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
 	       
 		model.addAttribute("contact", dbContact);
@@ -235,9 +235,9 @@ public class ContactController{
         return "contactEdit";
     }
 		
-	@RequestMapping(value = "/provider/contact/{id}/display", method = RequestMethod.GET)
-    public String displayProviderContactPage(@PathVariable Integer id,Model model) {
-		Contact dbContact = contactService.findById(id);
+	@RequestMapping(value = "/provider/{id}/contact/{cntId}/display", method = RequestMethod.GET)
+    public String displayProviderContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
+		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
 	       
 		model.addAttribute("contact", dbContact);
@@ -352,9 +352,9 @@ public class ContactController{
         return "contactEdit";
     }
 		
-	@RequestMapping(value = "/insurance/contact/{id}/display", method = RequestMethod.GET)
-    public String displayInsuranceContactPage(@PathVariable Integer id,Model model) {
-		Contact dbContact = contactService.findById(id);
+	@RequestMapping(value = "/insurance/{id}/contact/{cntId}/display", method = RequestMethod.GET)
+    public String displayInsuranceContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
+		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
 	       
 		model.addAttribute("contact", dbContact);

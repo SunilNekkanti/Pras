@@ -61,13 +61,13 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									 <c:when test="${cntct.refContact.mbr != null}"> 
-										<a href="/Pras/membership/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="/Pras/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
 									 </c:when>
 									 <c:when test="${cntct.refContact.prvdr != null}">
-										<a href="/Pras/provider/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="/Pras/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.refContact.ins != null}">
-										<a href="/Pras/insurance/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="/Pras/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue

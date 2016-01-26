@@ -66,7 +66,21 @@
 				</div>
 				 
 				<div class="col-sm-offset-6 col-sm-4">
-				<a href="http://localhost:8080/Pras/membership/${id}/contact">Click Here</a> Edit membership Contact
+				<c:choose>
+					 	<c:when test="${contact.refContact.mbr != null}"> 
+					 		<a href="http://localhost:8080/Pras/membership/${contact.refContact.mbr.id}/contactList">Click Here</a>Membership Contact List
+						 </c:when>
+						 <c:when test="${contact.refContact.prvdr != null}">
+							<a href="http://localhost:8080/Pras/provider/${contact.refContact.prvdr.id}/contactList">Click Here</a> Provider Contact List
+						</c:when>
+						 <c:when test="${contact.refContact.ins != null}">
+							<a href="http://localhost:8080/Pras/insurance/${contact.refContact.ins.id}/contactList">Click Here</a> Insurance Contact List
+						</c:when>
+						<c:otherwise>
+							issue
+						</c:otherwise>
+					</c:choose>
+				
 				</div>
 			</springForm:form>
  	</div>
