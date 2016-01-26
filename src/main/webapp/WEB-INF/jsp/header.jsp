@@ -282,7 +282,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>                        
       </button>
       <a class="navbar-brand" href="#">
-      <img src="resources/images/mdbillinglogo.png" class="img-responsive" alt="Cinque Terre" ></img></a>
+      <img src="/Pras/resources/images/mdbillinglogo.png" class="img-responsive" alt="Cinque Terre" ></img></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">

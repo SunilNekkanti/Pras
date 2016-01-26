@@ -2,11 +2,7 @@ package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,21 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.pfchoice.common.CommonMessageContent;
-import com.pfchoice.core.entity.County;
-import com.pfchoice.core.entity.Gender;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.Membership;
-import com.pfchoice.core.entity.MembershipStatus;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
-import com.pfchoice.core.service.impl.MembershipServiceImpl;
-
 
 
 
@@ -43,24 +32,16 @@ import com.pfchoice.core.service.impl.MembershipServiceImpl;
  * @author sarath
  */
 @Controller
-@RequestMapping(value = "/membership")
+@RequestMapping(value = "/membership1")
 public class MembershipAction
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(MembershipAction.class.getName());
-    public static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     
     @Autowired
     private MembershipService membershipService;
 
-    @Autowired
-    private GenderService genderService;
     
-    @Autowired
-    private MembershipStatusService membershipStatusService;
-
-    @Autowired
-    private CountyService countyService;
     /**
      * Persist a Membership bean into database.
      *
@@ -87,7 +68,7 @@ public class MembershipAction
      *
      * @return
      */
-   /* @ResponseBody
+   @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE , MediaType.APPLICATION_JSON_VALUE})
     public Message updateMembershipProfile(@PathVariable("id") Integer id, @RequestBody Membership bean)
     {
@@ -97,10 +78,12 @@ public class MembershipAction
             membershipService.update(bean);
         }
         
-         * Here we need to push message to client
+        Membership bean1 = JsonConverter.getJsonObject(bean);
+        
+            //* Here we need to push message to client
          
-        return Message.successMessage(CommonMessageContent.MEMBERSHIP_UPDATED, bean);
-    }*/
+        return Message.successMessage(CommonMessageContent.MEMBERSHIP_UPDATED, bean1);
+    }
 
     /**
      * DELETE a Membership record from database.
@@ -128,14 +111,15 @@ public class MembershipAction
      *
      * @return
      */
-   /* @ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Message retrieve(@PathVariable("id") Integer id)
     {
         Membership bean = membershipService.findById(id);
-        return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, bean);
+        Membership bean1 = JsonConverter.getJsonObject(bean);
+        return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, bean1);
     }
-    */
+    
     /**
      * GET all Membership record from database.
      *
@@ -155,18 +139,10 @@ public class MembershipAction
     public Message retrieveAllList()
     {
         List<Membership> listBean = membershipService.findAll();
-        return Message.successMessage(CommonMessageContent.GET_MEMBERSHIP, listBean);
+        List<Membership> listBean1 = JsonConverter.getJsonObject(listBean);
+        
+        //* Here we need to push message to client
+        return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, listBean1);
     }
     
-   /* @RequestMapping(value = "/membershipList1", method = RequestMethod.GET)
-    public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
- 
-    	List<Membership> listBean = membershipService.findAll();
-		ModelAndView modelAndView = new ModelAndView("membershipList");
-		modelAndView.addObject("membershipList", listBean);
- 
-		return modelAndView;
-	}*/
-
 }

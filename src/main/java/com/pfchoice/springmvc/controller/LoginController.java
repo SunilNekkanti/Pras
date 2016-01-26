@@ -44,7 +44,7 @@ public class LoginController {
 		//MembershipForm membershipForm = new MembershipForm();
 		//model.put("membershipForm", membershipForm);
 		System.out.println("before membershipList page");
-		return "redirect:membershipTmpList";
+		return "mbrList";
 	}
 
 }

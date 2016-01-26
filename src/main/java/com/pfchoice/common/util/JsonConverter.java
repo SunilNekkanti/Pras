@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 public class JsonConverter {
 	
 	@SuppressWarnings("unchecked")
-	public static <T> List<T> getJsonObject(List<T> bean){
+	public static <T extends Object> List<T> getJsonObject(List<T> bean){
 		
 		Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()

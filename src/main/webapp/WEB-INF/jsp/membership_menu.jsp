@@ -26,10 +26,9 @@
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/Pras/membership/${id}/display">Profile <span class="glyphicon glyphicon-play"></span></a></li>
-            <li><a href="/Pras/membership/${id}/detailsList">Insurance</a></li>
-            <li><a href="/Pras/membership/${id}/contactList">Contact</a></li>
-             <li><a href="/Pras/membership/${id}/problem">Problem</a></li>
-            <li><a href="/Pras/insurance/${id}/contractList">Provider Contract List</a></li>
+            <li><a href="/Pras/membership/${id}/detailsList">Insurance Details</a></li>
+            <li><a href="/Pras/membership/${id}/contactList">Contact Details</a></li>
+             <li><a href="/Pras/membership/${id}/problem">Problem Details</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

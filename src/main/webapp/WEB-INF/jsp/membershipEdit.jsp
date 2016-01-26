@@ -6,7 +6,7 @@
 	<div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
-                            <li class="active"><a href="Pras/membership/{id}" data-toggle="tab">Profile</a></li>
+                            <li class="active"><a href="/Pras/membership/{id}" data-toggle="tab">Profile</a></li>
                             <li><a href="/Pras/membership/{id}/membershipDetails" data-toggle="tab">Other Details</a></li>
                             <li><a href="/Pras/membership/{id}/contact" data-toggle="tab">Contact</a></li>
                             <li><a href="/Pras/membership/{id}/problem" data-toggle="tab">Problem</a></li>
