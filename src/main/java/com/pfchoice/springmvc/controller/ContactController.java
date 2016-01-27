@@ -101,6 +101,7 @@ public class ContactController{
 		List<ZipCode> zipCodeList = zipCodeService.findAll();
 		return zipCodeList;
 	}
+	
 	@RequestMapping(value = "/membership/{id}/contact/new")
     public String addContactPage(Model model) {
 		

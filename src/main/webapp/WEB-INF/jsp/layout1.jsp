@@ -26,7 +26,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
+    .row.content {height: 550px}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -86,7 +86,7 @@ $('[data-toggle="tab"]').click(function(e) {
        <div> <tiles:insertAttribute name="header" /> </div> 
        <div> <tiles:insertAttribute name="menubar" /> </div>  
        <div class="container-fluid text-center">    
-  			<div class="row content" style="padding:15px;">
+  			<div class="row content" style="padding:25px;">
     			<div class="col-sm-12 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>
       </div>

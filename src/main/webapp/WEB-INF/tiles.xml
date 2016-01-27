@@ -232,4 +232,30 @@
         <put-attribute name="body" value="/WEB-INF/jsp/mbrList.jsp" />  
     </definition> 
     
+            
+    <definition name="hedisMeasureList" extends="base1.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureList.jsp" />  
+    </definition>  
+    
+    
+    <definition name="hedisMeasureEdit" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureEdit.jsp" />  
+    </definition>  
+    
+    <definition name="hedisMeasureEditSuccess" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure Edit Success" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureEditSuccess.jsp" />  
+    </definition>   
+    
+     <definition name="hedisMeasureDisplay" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure Info" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureDisplay.jsp" />  
+    </definition> 
+
+    
+    
 </tiles-definitions>  

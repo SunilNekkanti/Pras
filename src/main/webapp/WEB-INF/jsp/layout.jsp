@@ -25,7 +25,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
+    .row.content {height: 550px}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -55,7 +55,7 @@
 <body>  
        <div> <tiles:insertAttribute name="header" /> </div>  
        <div class="container-fluid text-center">    
-  			<div class="row content"  style="padding:15px;">
+  			<div class="row content"  style="padding:25px;">
     			<div class="col-sm-3 sidenav"> <tiles:insertAttribute name="menu" /></div> 
     			<div class="col-sm-9 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>

@@ -291,7 +291,7 @@ $(document).ready(function () {
         <li><a href="/Pras/insuranceList">Insurance</a></li>
         <li><a href="/Pras/providerList">Provider</a></li>
         <li><a href="/Pras/membershipTmpList">Membership</a></li>
-        <li><a href="/Pras/hedis">Hedis</a></li>
+        <li><a href="/Pras//hedis/hedisMeasureList">Hedis</a></li>
         <li><a href="/Pras/reports">Reports</a></li>
         <li><a href="#">Help</a></li>
       </ul>

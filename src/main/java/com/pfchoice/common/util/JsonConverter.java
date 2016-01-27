@@ -16,23 +16,24 @@ import com.google.gson.GsonBuilder;
 public class JsonConverter {
 	
 	@SuppressWarnings("unchecked")
-	public static <T extends Object> List<T> getJsonObject(List<T> bean){
+	public static <T> List<T> getJsonObject(List<T> bean){
 		
 		Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 	     String json = gson.toJson(bean);
-	     List<T> listBean= gson.fromJson(json, List.class);
+	     List<T> listBean = gson.fromJson(json, List.class);
 	     return  listBean;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static <T> T getJsonObject(T bean){
 		
 		Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 	     String json = gson.toJson(bean);
-	     T bean1= gson.fromJson(json, bean.getClass());
+	     T bean1= (T) gson.fromJson(json, bean.getClass());
 	     return  bean1;
 	}
 
