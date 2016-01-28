@@ -1,18 +1,36 @@
 package com.pfchoice.springmvc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.validation.BindingResult;
+
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 
+import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.Provider;
+import com.pfchoice.core.service.InsuranceService;
+import com.pfchoice.core.service.MembershipService;
+import com.pfchoice.core.service.ProviderService;
 import com.pfchoice.form.LoginForm;
-import com.pfchoice.form.MembershipForm;
 
 @Controller
 @RequestMapping(value = "*")
 public class LoginController {
+	
+	@Autowired
+    MembershipService membershipService;
+	
+	@Autowired
+    ProviderService providerService;
+	
+	@Autowired
+    InsuranceService insuranceService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showForm(Map<String,Object> model) {
@@ -41,10 +59,32 @@ public class LoginController {
 				|| !loginForm.getPassword().equals(password)) {
 			return "loginform";
 		}
-		//MembershipForm membershipForm = new MembershipForm();
-		//model.put("membershipForm", membershipForm);
-		System.out.println("before membershipList page");
-		return "mbrList";
+		return "home";
+	}
+	
+	
+	@ModelAttribute("membershipList")
+	public List<Membership> populateMembershipList() {
+		
+		//Data referencing for Membership Status list box
+		List<Membership> mbrList = membershipService.findAll();
+		return mbrList;
+	}
+	
+	@ModelAttribute("providerList")
+	public List<Provider> populateProviderList() {
+		
+		//Data referencing for Membership Status list box
+		List<Provider> prvdrList = providerService.findAll();
+		return prvdrList;
+	}
+	
+	@ModelAttribute("insuranceList")
+	public List<Insurance> populateInsuranceList() {
+		
+		//Data referencing for Membership Status list box
+		List<Insurance> insList = insuranceService.findAll();
+		return insList;
 	}
 
 }
