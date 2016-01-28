@@ -147,7 +147,7 @@
      <!--  Insurance Section -->
     
      <definition name="insuranceList" extends="base1.definition">  
-        <put-attribute name="title" value="Provider List" />  
+        <put-attribute name="title" value="Insurance List" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceList.jsp" />  
     </definition>
     
@@ -173,12 +173,8 @@
         <put-attribute name="title" value="New Insurance Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEdit.jsp" />  
     </definition>  
-    
-    
-    
-    
-    
     <!-- End of  Insurance Section -->
+    
     
        <definition name="membershipTabMenu" extends="base1.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
@@ -237,7 +233,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureList.jsp" />  
     </definition>  
     
-    
     <definition name="hedisMeasureEdit" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure" /> 
         <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
@@ -256,6 +251,72 @@
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureDisplay.jsp" />  
     </definition> 
 
+    
+    <definition name="cptMeasureList" extends="base1.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureList.jsp" />  
+    </definition>  
+    
+    <definition name="cptMeasureEdit" extends="base.definition">  
+        <put-attribute name="title" value="CPT Measure" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureEdit.jsp" />  
+    </definition>  
+    
+    <definition name="cptMeasureEditSuccess" extends="base.definition">  
+        <put-attribute name="title" value="CPT Measure Edit Success" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureEditSuccess.jsp" />  
+    </definition>   
+    
+     <definition name="cptMeasureDisplay" extends="base.definition">  
+        <put-attribute name="title" value="CPT Measure Info" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureDisplay.jsp" />  
+    </definition> 
+    
+        <definition name="icdMeasureList" extends="base1.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureList.jsp" />  
+    </definition>  
+    
+    <definition name="icdMeasureEdit" extends="base.definition">  
+        <put-attribute name="title" value="ICD Measure" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureEdit.jsp" />  
+    </definition>  
+    
+    <definition name="icdMeasureEditSuccess" extends="base.definition">  
+        <put-attribute name="title" value="ICD Measure Edit Success" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureEditSuccess.jsp" />  
+    </definition>   
+    
+     <definition name="icdMeasureDisplay" extends="base.definition">  
+        <put-attribute name="title" value="ICD Measure Info" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureDisplay.jsp" />  
+    </definition> 
+    
+        <definition name="hedisMeasureRuleList" extends="base1.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleList.jsp" />  
+    </definition>  
+    
+    <definition name="hedisMeasureRuleEdit" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure Rule" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEdit.jsp" />  
+    </definition>  
+    
+    <definition name="hedisMeasureRuleEditSuccess" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure Rule Edit Success" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEditSuccess.jsp" />  
+    </definition>   
+    
+     <definition name="hedisMeasureRuleDisplay" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure Rule Info" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleDisplay.jsp" />  
+    </definition> 
     
     
 </tiles-definitions>  
