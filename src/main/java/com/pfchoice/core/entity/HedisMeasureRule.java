@@ -12,61 +12,89 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.pfchoice.core.entity.Insurance;
-import com.pfchoice.core.entity.Provider;
+
+import com.google.gson.annotations.Expose;
 
 /**
  *
- * @author Mohanasundharam
+ * @author sarath
  */
-@Entity(name = "reference_contract")
-public class ReferenceContract implements Serializable
+@Entity
+@Table(name = "hedis_measure_rule") 
+public class HedisMeasureRule implements Serializable
 {
-	
+
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name="ref_contract_Id", nullable = false)
+    @Column(name="hedis_msr_rule_Id", nullable = false)
     private Integer id;
 
-      
-    @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name="insurance_id", referencedColumnName="insurance_id")
-    private Insurance ins;
+    @Expose
+    @OneToOne(fetch=FetchType.LAZY )
+    @JoinColumn(name="hedis_id", referencedColumnName="qlty_msr_id")
+    private HedisMeasure hedisMeasure;
     
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="prvdr_id", referencedColumnName="prvdr_id")
-    private Provider prvdr;
+    @Expose
+    @OneToOne(fetch=FetchType.LAZY )
+    @JoinColumn(name="cpt_id", referencedColumnName="cpt_id")
+    private CPTMeasure cptMeasure;
     
-    @Temporal(TemporalType.TIMESTAMP)
+    @Expose
+    @OneToOne(fetch=FetchType.LAZY )
+    @JoinColumn(name="icd_id", referencedColumnName="icd_id")
+    private ICDMeasure icdMeasure;
+    
+    
+    @Expose
+    @Column(name="effective_year")
+    private Integer	effectiveYear;
+    
+    @Expose
+    @Column(name="due_date")
+    private Date dueDate;
+    
+    @Expose
+    @Column(name="visit_date")
+    private Date vistDate;
+    
+    @Expose
     @Column(name="created_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     
-    @Temporal(TemporalType.TIMESTAMP)
+    @Expose
     @Column(name="updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
-      
-    public ReferenceContract()
+    public HedisMeasureRule()
     {
     }
 
-    public ReferenceContract(Integer id)
+    public HedisMeasureRule(Integer id)
     {
         this.id = id;
     }
@@ -80,34 +108,90 @@ public class ReferenceContract implements Serializable
     {
         this.id = id;
     }
-
+    
     
 	/**
-	 * @return the ins
+	 * @return the hedisMeasure
 	 */
-	public Insurance getIns() {
-		return ins;
+	public HedisMeasure getHedisMeasure() {
+		return hedisMeasure;
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param hedisMeasure the hedisMeasure to set
 	 */
-	public void setIns(Insurance ins) {
-		this.ins = ins;
+	public void setHedisMeasure(HedisMeasure hedisMeasure) {
+		this.hedisMeasure = hedisMeasure;
 	}
 
 	/**
-	 * @return the prvdr
+	 * @return the cptMeasure
 	 */
-	public Provider getPrvdr() {
-		return prvdr;
+	public CPTMeasure getCptMeasure() {
+		return cptMeasure;
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param cptMeasure the cptMeasure to set
 	 */
-	public void setPrvdr(Provider prvdr) {
-		this.prvdr = prvdr;
+	public void setCptMeasure(CPTMeasure cptMeasure) {
+		this.cptMeasure = cptMeasure;
+	}
+
+	/**
+	 * @return the icdMeasure
+	 */
+	public ICDMeasure getIcdMeasure() {
+		return icdMeasure;
+	}
+
+	/**
+	 * @param icdMeasure the icdMeasure to set
+	 */
+	public void setIcdMeasure(ICDMeasure icdMeasure) {
+		this.icdMeasure = icdMeasure;
+	}
+
+	/**
+	 * @return the effectiveYear
+	 */
+	public Integer getEffectiveYear() {
+		return effectiveYear;
+	}
+
+	/**
+	 * @param effectiveYear the effectiveYear to set
+	 */
+	public void setEffectiveYear(Integer effectiveYear) {
+		this.effectiveYear = effectiveYear;
+	}
+
+	/**
+	 * @return the dueDate
+	 */
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	/**
+	 * @param dueDate the dueDate to set
+	 */
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	/**
+	 * @return the vistDate
+	 */
+	public Date getVistDate() {
+		return vistDate;
+	}
+
+	/**
+	 * @param vistDate the vistDate to set
+	 */
+	public void setVistDate(Date vistDate) {
+		this.vistDate = vistDate;
 	}
 
 	/**
@@ -180,9 +264,6 @@ public class ReferenceContract implements Serializable
 		this.activeInd = activeInd;
 	}
 
-	
-	
-
 	@Override
     public int hashCode()
     {
@@ -195,11 +276,11 @@ public class ReferenceContract implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReferenceContract))
+        if (!(object instanceof HedisMeasureRule))
         {
             return false;
         }
-        ReferenceContract other = (ReferenceContract) object;
+        HedisMeasureRule other = (HedisMeasureRule) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
         {
             return false;
@@ -210,7 +291,7 @@ public class ReferenceContract implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.Contract[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.HedisMeasureRule[ id=" + id + " ]";
     }
 
 }

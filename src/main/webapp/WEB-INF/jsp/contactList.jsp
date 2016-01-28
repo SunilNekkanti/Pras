@@ -19,7 +19,7 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Contact List</div>
+		<div class="panel-heading">Contact List <span class="badge">${contactList.size()}</span> </div>
 		<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>

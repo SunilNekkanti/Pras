@@ -175,7 +175,7 @@ public class HedisMeasureController{
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	hedisMeasure.setActiveInd('N');
 	        	hedisMeasureService.update(hedisMeasure);
-	        	return "hedisMeasureList";
+	        	return "redirect:hedisMeasureList";
 	        }
 	        return "hedisMeasureEdit";
     }

@@ -48,6 +48,7 @@ public class Contract implements Serializable
     @JoinColumn(name="ref_contract_id", referencedColumnName="ref_contract_id")
     private ReferenceContract referenceContract;
     
+    
       
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")

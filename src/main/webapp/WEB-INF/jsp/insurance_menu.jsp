@@ -28,7 +28,8 @@
             </li>
             <li><a href="/Pras/insurance/${id}/contactList">Insurance Contact List</a></li>
              <li><a href="/Pras/insurance/${id}/contractList">Insurance Contract List</a></li>
-            <li><a href="/Pras/insurance/${id}/providerList">Insurance's Provider List</a></li>
+           <li><a href="/Pras/insurance/${id}/contact/new">New Insurance Contact </a></li>
+            <li><a href="/Pras/insurance/${id}/contract/new">New Insurance Contract </a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

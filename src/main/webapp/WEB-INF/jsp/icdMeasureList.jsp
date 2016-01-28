@@ -3,6 +3,7 @@
 		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -19,45 +20,44 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Hedis Measure List <span class="badge">${hedisMeasureList.size()}</span> </div>
+		<div class="panel-heading">ICD Measure List <span class="badge">${icdMeasureList.size()}</span> </div>
 		<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 
-							<th  scope="col">Hedis Code</th> 
+							<th  scope="col">ICD Code</th> 
 							<th  scope="col">Description</th>  
-					        <th  scope="col">Hedis Group</th> 
 						</tr>
 					</thead>
 
 					<tbody id="content">
-						<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
+						<c:forEach items="${icdMeasureList}" var="icdMeasure">
 							    <tr>
 							    <td> 
 							    <c:choose>
-							    	<c:when test="${hedisMeasure.activeInd == 89}">
-									 		<a href="/Pras/hedis/${hedisMeasure.id}"   rel='tab' >Edit</a> 
+							    	<c:when test="${fn:contains(icdMeasure.activeInd, 'Y')}">
+									 		<a href="/Pras/icd/${icdMeasure.id}"   rel='tab' >Edit</a> 
+									</c:when>
+									<c:when test="${fn:contains(icdMeasure.activeInd, 'y')}">
+									 		<a href="/Pras/icd/${icdMeasure.id}"   rel='tab' >Edit</a> 
 									</c:when>
 									<c:otherwise>
-											<a href="/Pras/hedis/${hedisMeasure.id}/display"   rel='tab' >View</a>
+											<a href="/Pras/icd/${icdMeasure.id}/display"   rel='tab' >View</a>
 									</c:otherwise>
 								</c:choose>
 							    </td>
-								   	<td>  ${hedisMeasure.code}</td> 
-						        	<td> ${hedisMeasure.description}</td>
-						        	<td> ${hedisMeasure.hedisMsrGrp.description}</td>
+								   	<td>  ${icdMeasure.code}</td> 
+						        	<td> ${icdMeasure.description}</td>
 						       </tr>     
 						        
 						</c:forEach>
 					</tbody>
-
-						
 				</table>
 		</div>
 		<div class="col-md-12 text-center" id="page_navigation"></div>
 		<div id="show_per_page"></div>
 		<div id="current_page"></div>
-					
+				
 	</div>
 </div>

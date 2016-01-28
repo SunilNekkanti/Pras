@@ -3,6 +3,7 @@
 		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -19,34 +20,39 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Hedis Measure List <span class="badge">${hedisMeasureList.size()}</span> </div>
+		<div class="panel-heading">Hedis Measure Rule List <span class="badge">${hedisMeasureRuleList.size()}</span> </div>
 		<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 
 							<th  scope="col">Hedis Code</th> 
-							<th  scope="col">Description</th>  
-					        <th  scope="col">Hedis Group</th> 
+							<th  scope="col">CPT Code</th>  
+					        <th  scope="col">ICD Code</th> 
+					        <th  scope="col">Effective Year</th> 
 						</tr>
 					</thead>
 
 					<tbody id="content">
-						<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
+						<c:forEach items="${hedisMeasureRuleList}" var="hedisMeasureRule">
 							    <tr>
 							    <td> 
 							    <c:choose>
-							    	<c:when test="${hedisMeasure.activeInd == 89}">
-									 		<a href="/Pras/hedis/${hedisMeasure.id}"   rel='tab' >Edit</a> 
+							    	<c:when test="${fn:contains(hedisMeasureRule.activeInd, 'Y')}">
+									 		<a href="/Pras/hedisMeasureRule/${hedisMeasureRule.id}"   rel='tab' >Edit</a> 
+									</c:when>
+									<c:when test="${fn:contains(hedisMeasureRule.activeInd, 'y')}">
+									 		<a href="/Pras/hedisMeasureRule/${hedisMeasureRule.id}"   rel='tab' >Edit</a> 
 									</c:when>
 									<c:otherwise>
-											<a href="/Pras/hedis/${hedisMeasure.id}/display"   rel='tab' >View</a>
+											<a href="/Pras/hedisMeasureRule/${hedisMeasureRule.id}/display"   rel='tab' >View</a>
 									</c:otherwise>
 								</c:choose>
 							    </td>
-								   	<td>  ${hedisMeasure.code}</td> 
-						        	<td> ${hedisMeasure.description}</td>
-						        	<td> ${hedisMeasure.hedisMsrGrp.description}</td>
+								   	<td>  ${hedisMeasureRule.hedisMeasure.code}</td> 
+						        	<td> ${hedisMeasureRule.cptMeasure.code}</td>
+						        	<td> ${hedisMeasureRule.icdMeasure.code}</td>
+						        	<td> ${hedisMeasureRule.effectiveYear}</td>
 						       </tr>     
 						        
 						</c:forEach>

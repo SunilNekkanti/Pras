@@ -26,21 +26,17 @@
 
 <script src="/Pras/resources/js/prasweb.js"></script>
 
-
-
 </head>
 
 <body>
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">Hedis Measure</a></li>
+                            <li class="active"><a href="#" data-toggle="tab">CPT Measure</a></li>
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
-
-
-			<springForm:form method="POST" commandName="hedisMeasure" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="cptMeasure" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-6">
@@ -57,24 +53,21 @@
 						<springForm:errors path="description" cssClass="error" />
 					</div>
 				</div>
-				<div class="form-group">
-				 	<label class="control-label col-sm-2" for="hedisMsrGrp">Group:</label>
-					<div class="col-sm-6">
-						<springForm:input path="hedisMsrGrp.description" class="form-control" id="hedisMsrGrp" placeholder="Group" />
-						<springForm:errors path="hedisMsrGrp.description" cssClass="error" />
-					</div>
-				</div>
-				 
-				<div class="col-sm-offset-6 col-sm-4">
-				<c:choose>
-					 	<c:when test="${not empty hedisMeasure.id}"> 
-					 		<a href="http://localhost:8080/Pras/hedis/hedisMeasureList">Click Here</a>Hedis Measure List
-						 </c:when>
-						<c:otherwise>
-							issue
-						</c:otherwise>
-					</c:choose>
 				
+					
+				<div class="col-sm-offset-6 col-sm-4">
+					<c:choose>
+						 <c:when test="${cptMeasure.id != null}"> 
+						 	<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
+						 	<button type="submit" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
+						 </c:when>
+						 <c:otherwise>
+							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
+							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+						</c:otherwise>
+						</c:choose>
+					
+					
 				</div>
 			</springForm:form>
  	</div>

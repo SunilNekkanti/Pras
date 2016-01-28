@@ -33,13 +33,14 @@
 						<div id="show_per_page"></div>
 						<div id="current_page"></div>
 						<c:forEach items="${insuranceList}" var="ins">
-						    <c:forEach items="${ins.insuranceContracts}" var="insContract">
-							    <tr>
-								   	<td> <a href="insurance/${ins.id}"   rel='tab' > ${ins.name}</a></td> 
-						        	<td> ${insContract.pmpm}</td>
-						       </tr>     
+							<tr>
+								<td> <a href="insurance/${ins.id}"   rel='tab' > ${ins.name}</a></td> 
+								    <c:forEach items="${ins.insuranceContracts}" var="insContract">
+									    <td> ${insContract.pmpm}</td>
+									</c:forEach>    
+							</tr>     
 						        
-							</c:forEach>
+							
 						</c:forEach>
 					</tbody>
 

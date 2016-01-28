@@ -45,6 +45,16 @@
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:hidden path="referenceContract.id" />
+						<springForm:hidden path="referenceContract.activeInd" value="Y" />
+						 <c:choose>
+						 	 <c:when test="${contract.referenceContract.prvdr != null}">
+								<springForm:hidden path="referenceContract.prvdr.id" />
+							</c:when>
+							<c:when test="${contract.referenceContract.ins != null}">
+								<springForm:hidden path="referenceContract.ins.id" />
+							</c:when>
+						</c:choose>
+						
 					
 						<springForm:hidden path="referenceContract.createdBy" value="Mohanasundharam"/>
 						<springForm:input path="contractNBR" class="form-control" id="contractNBR" placeholder="Contract NBR" />
@@ -74,11 +84,23 @@
 						<springForm:errors path="endDate" cssClass="error" />
 					</div>
 				</div>
-				
-				<div class="col-sm-offset-6 col-sm-4">
-					<button type="submit" class="btn btn-primary" id="updateButton">Add</button>
-					<button type="submit" class="btn btn-primary" id="deleteButton">Delete</button>
-				</div>
+			 
+					<div class="col-sm-offset-6 col-sm-4">
+					
+					 
+					 	<c:choose>
+						 		<c:when test="${contract.id != null}"> 
+								 	<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
+								 	<button type="submit" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
+								 </c:when>
+								 <c:otherwise>
+									<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
+									<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+								</c:otherwise>
+						</c:choose>
+					</div>
+			
+			
 			</springForm:form>
  	</div>
 	</div>

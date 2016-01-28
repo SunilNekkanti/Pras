@@ -324,7 +324,7 @@ public class HedisMeasure implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.QualityMeasure[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.HedisMeasure[ id=" + id + " ]";
     }
 
 }

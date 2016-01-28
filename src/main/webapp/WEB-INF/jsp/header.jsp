@@ -291,7 +291,18 @@ $(document).ready(function () {
         <li><a href="/Pras/insuranceList">Insurance</a></li>
         <li><a href="/Pras/providerList">Provider</a></li>
         <li><a href="/Pras/membershipTmpList">Membership</a></li>
-        <li><a href="/Pras//hedis/hedisMeasureList">Hedis</a></li>
+        
+     <!--    <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quality Measures <span class="caret"></span></a>
+          <ul class="dropdown-menu"> -->
+            <li><a href="/Pras/hedis/hedisMeasureList">Hedis</a></li>
+            <li><a href="/Pras/cpt/cptMeasureList">CPT</a></li>
+            <li><a href="/Pras/icd/icdMeasureList">ICD</a></li>
+            <li><a href="/Pras/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
+         <!--  </ul>
+        </li> -->
+        
+        
         <li><a href="/Pras/reports">Reports</a></li>
         <li><a href="#">Help</a></li>
       </ul>

@@ -42,7 +42,7 @@ prasPagination();
 
 	<div class="panel-group">
 		<div class="panel panel-primary">
-			<div class="panel-heading">Membership List</div>
+			<div class="panel-heading">Membership List <span class="badge">${membershipList.size()}</span> </div>
 			<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
@@ -58,8 +58,6 @@ prasPagination();
 					</thead>
 
 					<tbody id="content">
-						<div id="show_per_page"></div>
-						<div id="current_page"></div>
 						<c:forEach items="${membershipList}" var="mbr">
 							    <tr>
 								   <td> <a href="membership/${mbr.id}/display"   rel='tab' > ${mbr.firstName}</a></td> 
@@ -72,13 +70,12 @@ prasPagination();
 						</c:forEach>
 					</tbody>
 
-					<tfoot>
-						<div class="col-md-12 text-center" id="page_navigation"></div>
-					</tfoot>
-
 				</table>
-
+				<div class="col-md-12 text-center" id="page_navigation"></div>
+				<div id="show_per_page"></div>
+				<div id="current_page"></div>
 			</div>
+			
 		</div>
 	</div>
 
