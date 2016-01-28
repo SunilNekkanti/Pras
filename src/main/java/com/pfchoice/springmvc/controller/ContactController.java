@@ -109,7 +109,7 @@ public class ContactController{
 		contact.setCreatedBy("sarath");
 		contact.setFileId(3);
 		model.addAttribute("contact", contact);
-        return "contactEdit";
+        return "membershipContactEdit";
     }
 	
 	@RequestMapping(value = "/membership/{id}/contact/{cntId}", method = RequestMethod.GET)
@@ -121,7 +121,7 @@ public class ContactController{
 	       }
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactEdit.jsp page");
-        return "contactEdit";
+        return "membershipContactEdit";
     }
 		
 	@RequestMapping(value = "/membership/{id}/contact/{cntId}/display", method = RequestMethod.GET)
@@ -131,7 +131,7 @@ public class ContactController{
 	       
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactDisplay.jsp page");
-        return "contactDisplay";
+        return "membershipContactDisplay";
     }
 	
 	@RequestMapping(value = "/membership/{id}/contactList")
@@ -153,7 +153,7 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "membershipContactEdit";
         }
         
     	Membership dbMembership = membershipService.findById(id);
@@ -171,7 +171,7 @@ public class ContactController{
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
    
-    return "contactEditSuccess";
+    return "membershipContactEditSuccess";
     }
 	
 	
@@ -183,17 +183,17 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "membershipContactEdit";
         }
 	        
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contactService.update(contact);
-        	return "contactEditSuccess";
+        	return "membershipContactEditSuccess";
         }
        
-        return "contactEdit";
+        return "membershipContactEdit";
     }
 	
 
@@ -214,13 +214,13 @@ public class ContactController{
        
 	
 	@RequestMapping(value = "/provider/{id}/contact/new")
-    public String addProviderContactPage(Model model) {
+    public String addProviderContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
 		contact.setCreatedBy("sarath");
 		contact.setFileId(3);
 		model.addAttribute("contact", contact);
-        return "contactEdit";
+        return "providerContactEdit";
     }
 	
 	
@@ -233,7 +233,7 @@ public class ContactController{
 	       }
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactEdit.jsp page");
-        return "contactEdit";
+        return "providerContactEdit";
     }
 		
 	@RequestMapping(value = "/provider/{id}/contact/{cntId}/display", method = RequestMethod.GET)
@@ -243,7 +243,7 @@ public class ContactController{
 	       
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactDisplay.jsp page");
-        return "contactDisplay";
+        return "providerContactDisplay";
     }
 	
 	@RequestMapping(value = "/provider/{id}/contactList")
@@ -265,7 +265,7 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "providerContactEdit";
         }
            
     	Provider dbProvider = providerService.findById(id);
@@ -283,7 +283,7 @@ public class ContactController{
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
 	       
-	        return "contactEditSuccess";
+	        return "providerContactEditSuccess";
     }
 
 	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"update"})
@@ -294,7 +294,7 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "providerContactEdit";
         }
 	        
         if (null != contact.getId())
@@ -302,10 +302,10 @@ public class ContactController{
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	System.out.println("contact"+contact.getRefContact().getPrvdr());
         	contactService.update(contact);
-        	return "contactEditSuccess";
+        	return "providerContactEditSuccess";
         }
        
-        return "contactEdit";
+        return "providerContactEdit";
     }
 	
 	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"delete"})
@@ -316,7 +316,7 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "providerContactEdit";
         }
 	        
 	        if (null != contact.getId())
@@ -325,20 +325,20 @@ public class ContactController{
 	        	System.out.println("contact"+contact.getRefContact().getPrvdr());
 	        	contact.setActiveInd('N');
 	        	contactService.update(contact);
-	        	return "contactEditSuccess";
+	        	return "providerContactEditSuccess";
 	        }
 	       
-	        return "contactEdit";
+	        return "providerContactEdit";
     }
 	
 	@RequestMapping(value = "/insurance/{id}/contact/new")
-    public String addInsuranceContactPage(Model model) {
+    public String addInsuranceContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
 		contact.setCreatedBy("sarath");
 		contact.setFileId(3);
 		model.addAttribute("contact", contact);
-        return "contactEdit";
+        return "insuranceContactEdit";
     }
 	
 	@RequestMapping(value = "/insurance/{id}/contact/{cntId}", method = RequestMethod.GET)
@@ -350,7 +350,7 @@ public class ContactController{
 	       }
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactEdit.jsp page");
-        return "contactEdit";
+        return "insuranceContactEdit";
     }
 		
 	@RequestMapping(value = "/insurance/{id}/contact/{cntId}/display", method = RequestMethod.GET)
@@ -360,7 +360,7 @@ public class ContactController{
 	       
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactDisplay.jsp page");
-        return "contactDisplay";
+        return "insuranceContactDisplay";
     }
 	
 	@RequestMapping(value = "/insurance/{id}/contactList")
@@ -382,7 +382,7 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "insuranceContactEdit";
         }
 	        	
     	Insurance dbInsurance = insuranceService.findById(id);
@@ -400,7 +400,7 @@ public class ContactController{
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
    
-      	return "contactEditSuccess";
+      	return "insuranceContactEditSuccess";
     }
 
 	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"update"})
@@ -411,17 +411,17 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "insuranceContactEdit";
         }
 	        
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contactService.update(contact);
-        	return "contactEditSuccess";
+        	return "insuranceContactEditSuccess";
         }
        
-        return "contactEdit";
+        return "insuranceContactEdit";
     }
 
 	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"delete"})
@@ -432,7 +432,7 @@ public class ContactController{
         		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
         	}
             logger.info("Returning contactEdit.jsp page");
-            return "contactEdit";
+            return "insuranceContactEdit";
         }
 	        
         if (null != contact.getId())
@@ -440,10 +440,10 @@ public class ContactController{
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setActiveInd('N');
         	contactService.update(contact);
-        	return "contactEditSuccess";
+        	return "insuranceContactEditSuccess";
         }
        
-        return "contactEdit";
+        return "insuranceContactEdit";
     }
 
 }

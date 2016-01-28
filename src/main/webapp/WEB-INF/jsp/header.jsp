@@ -1,5 +1,13 @@
-
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Example of Bootstrap 3 Dropdowns within a Navbar</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style type="text/css">
 
 .panel.with-nav-tabs .panel-heading{
     padding: 5px 5px 0 5px;
@@ -272,6 +280,8 @@ $(document).ready(function () {
 	    });
 });
 </script>
+</head>
+<body>
 
 <nav class="navbar navbar-inverse ">
   <div class="container-fluid">
@@ -292,17 +302,17 @@ $(document).ready(function () {
         <li><a href="/Pras/providerList">Provider</a></li>
         <li><a href="/Pras/membershipTmpList">Membership</a></li>
         
-     <!--    <li class="dropdown">
+         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quality Measures <span class="caret"></span></a>
-          <ul class="dropdown-menu"> -->
+          <ul class="dropdown-menu"> 
             <li><a href="/Pras/hedis/hedisMeasureList">Hedis</a></li>
             <li><a href="/Pras/cpt/cptMeasureList">CPT</a></li>
             <li><a href="/Pras/icd/icdMeasureList">ICD</a></li>
             <li><a href="/Pras/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
-         <!--  </ul>
-        </li> -->
+         </ul>
+        </li> 
         
-        
+            
         <li><a href="/Pras/reports">Reports</a></li>
         <li><a href="#">Help</a></li>
       </ul>
