@@ -76,7 +76,7 @@ public class ProviderController{
 		Provider provider = createProviderModel();
 		provider.setCreatedBy("sarath");
 		model.addAttribute("provider", provider);
-        return "providerEdit";
+        return "providerNew";
     }
 	
  
@@ -96,7 +96,31 @@ public class ProviderController{
         return "providerEdit";
     }
 	
-	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST, params ={"add"})
+    public String newProviderAction( @Validated Provider provider,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning providerEdit.jsp page");
+            return "providerNew";
+        }
+        else
+        {
+	        
+	       
+	        	logger.info("Returning ProviderSuccess.jsp page after create");
+	        	model.addAttribute("provider", provider);
+	        	provider.setCreatedBy("Mohanasundharam");
+	 	      	providerService.save(provider);
+	 	       return "providerNewSuccess";
+	 	      	
+	       
+        }    
+    }
+	
+	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST, params ={"update"})
     public String saveProviderAction( @Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -112,18 +136,9 @@ public class ProviderController{
 	        if (null != provider.getId())
 	        {
 	        	logger.info("Returning ProviderSuccess.jsp page after update");
+	        	provider.setUpdatedBy("Mohanasundharam");
 	        	providerService.update(provider);
 	        }
-	        else
-	        {
-	        	logger.info("Returning ProviderSuccess.jsp page after create");
-	        	model.addAttribute("provider", provider);
-	        	provider.setCreatedBy("Mohanasundharam");
-	 	      	providerService.save(provider);
-	 	       return "providerEditSuccess";
-	 	      	
-	        }
-	       
 	        return "providerEditSuccess";
         }    
     }

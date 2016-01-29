@@ -5,6 +5,6 @@
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <jsp:include page="/WEB-INF/jsp/contractList.jsp">
- <jsp:param name="contactList" value="${contractList}"/>
+ <jsp:param name="contractList" value="${contractList}"/>
 </jsp:include>
 

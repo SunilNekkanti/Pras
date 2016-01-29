@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,7 +33,7 @@ public class MembershipInsurance implements Serializable
 
     @Expose
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="mbr_ins_id", nullable = false)
     private Integer id;
@@ -41,7 +43,7 @@ public class MembershipInsurance implements Serializable
     private Insurance insId;
     
     
-    @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
     
@@ -147,7 +149,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param mbrId the mbrId to set
 	 */
-	public void setMbrId(Membership mbr) {
+	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
 	}
 

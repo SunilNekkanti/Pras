@@ -3,15 +3,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="/Pras/membership/{id}" data-toggle="tab">Profile</a></li>
-                            <li><a href="/Pras/membership/{id}/membershipDetails" data-toggle="tab">Other Details</a></li>
-                            <li><a href="/Pras/membership/{id}/contact" data-toggle="tab">Contact</a></li>
-                            <li><a href="/Pras/membership/{id}/problem" data-toggle="tab">Problem</a></li>
-                        </ul>
-          </div>
+ <div class="panel-group">
+	<div class="panel panel-primary">
+		<div class="panel-heading">Profile</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="membership" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
@@ -69,10 +63,14 @@
 				</div>
 				 		 
 				<div class="col-sm-offset-6 col-sm-4">
-					<button type="submit" class="btn btn-primary" id="updateButton">Update</button>
-					<button type="submit" class="btn btn-primary" id="deleteButton">Delete</button>
+				<c:choose>
+						 <c:when test="${membership.id != null && membership.activeInd == 89}"> 
+								<button type="submit" class="btn btn-primary" name = "update" id="updateButton">Update</button>
+								<button type="submit" class="btn btn-primary" name ="delete"id="deleteButton">Delete</button>
+						</c:when>
+				</c:choose>				
 				</div>
 			</springForm:form>
 		</div>
 	</div>
- 
+</div> 

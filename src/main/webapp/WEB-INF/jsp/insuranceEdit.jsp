@@ -16,11 +16,26 @@
 					</div>
 				 </div>			
 				<div class="col-sm-offset-2 col-sm-4">
-					<button type="submit" class="btn btn-primary" id="updateButton">Update</button>
-					<button type="submit" class="btn btn-primary" name="delete" id="deleteButton">Delete</button>
+					<c:choose>
+						 <c:when test="${insurance.id != null && insurance.activeInd == 89}"> 
+						 	<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
+						 	<button type="submit" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
+						 </c:when>
+						 <c:when test="${insurance.id == null}"> 
+							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
+							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+						</c:when>
+					</c:choose>
+					
 				</div>
+				
 			</springForm:form>
+			<div class="row col-sm-12">
+				<div class="col-sm-12" style="padding-top:2px;">
+					<a href="/Pras/insuranceList">Click Here</a> to see Insurance List
+				</div>	
+			</div>
 		</div>
-	</div>
+	</div>	
 </div>						    
  		    	

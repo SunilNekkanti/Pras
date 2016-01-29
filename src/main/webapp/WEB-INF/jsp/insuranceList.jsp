@@ -19,35 +19,29 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Insurance List</div>
+		<div class="panel-heading">Insurance List <span class="badge">${insuranceList.size()}</span></div>
 		<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th  scope="col">Insurance Name</th>  
-					        <th  scope="col">PMPM</th>  
+					       <!--  <th  scope="col">PMPM</th>  -->  
 						</tr>
 					</thead>
 
 					<tbody id="content">
-						<div id="show_per_page"></div>
-						<div id="current_page"></div>
+						
 						<c:forEach items="${insuranceList}" var="ins">
 							<tr>
 								<td> <a href="insurance/${ins.id}"   rel='tab' > ${ins.name}</a></td> 
-								    <c:forEach items="${ins.insuranceContracts}" var="insContract">
-									    <td> ${insContract.pmpm}</td>
-									</c:forEach>    
-							</tr>     
-						        
-							
+								
+							</tr>
 						</c:forEach>
 					</tbody>
-
-					<tfoot>
-						<div class="col-md-12 text-center" id="page_navigation"></div>
-					</tfoot>
 				</table>
+				<div class="col-md-12 text-center" id="page_navigation"></div>
+				<div id="show_per_page"></div>
+				<div id="current_page"></div>
 		</div>
 	</div>
 </div>

@@ -31,58 +31,52 @@
 </head>
 
 <body>
-<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">Insurance Details</a></li>
-                        </ul>
-          </div>
+<div class="panel-group">
+	<div class="panel panel-primary">
+		<div class="panel-heading">Insurance Details</div>
 			<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th scope="col">Insurance Name</th>
 							<th scope="col">New Benefits</th>
-							<th scope="col">Last Name</th>
+							
 							<th scope="col">Activity Date</th>
 							<th scope="col">Activity Month</th>
 							<th scope="col">Effective Start Date</th>
 							<th scope="col">Effective End Date</th>
-							<th scope="col">Product</th>
-							<th scope="col">Product Label</th>
+							
+							
 							<th scope="col">Plan Id</th>
-							<th scope="col">SRC_SYS_MBR_NBR</th>
+							
 							<th scope="col">Risk</th>
 						</tr>
 					</thead>
 
 					<tbody id="content">
-						<div id="show_per_page"></div>
-						<div id="current_page"></div>
+						
 						<c:forEach items="${membershipDetailsList}" var="mbrDetails">
 							    <tr>
-								   <td> <a href="/Pras/membership/details/display/${mbrDetails.id}"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
+								   <td> <a href="/Pras/membership/${id}/details/${mbrDetails.id}/display"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
 						        <td> ${mbrDetails.newBenifits} </td> 
 						        <td> ${mbrDetails.activityDate}  </td> 
 						        <td> ${mbrDetails.activityMonth}</td>
 						        <td> ${mbrDetails.effStartDate} </td> 
 						        <td> ${mbrDetails.effEndDate} </td> 
-						        <td> ${mbrDetails.product} </td> 
-						        <td> ${mbrDetails.productLabel} </td> 
+						        
+						         
 						        <td> ${mbrDetails.planId} </td> 
-						        <td> ${mbrDetails.srcSysMbrNbr} </td> 
+						       
 						        <td> ${mbrDetails.riskFlag}  </td></tr>     
 						</c:forEach>
 					</tbody>
 
-					<tfoot>
-						<div class="col-md-12 text-center" id="page_navigation"></div>
-					</tfoot>
+					
 
 				</table>
-
+				<div class="col-md-12 text-center" id="page_navigation"></div>
+				<div id="show_per_page"></div>
+				<div id="current_page"></div>
 			</div>
 		</div>
-
-</body>
-</html>
+</div>

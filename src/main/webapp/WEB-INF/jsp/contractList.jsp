@@ -19,7 +19,7 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Contact List</div>
+		<div class="panel-heading">Contact List<span class="badge">${contractList.size()}</span></div>
 		<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
@@ -33,8 +33,7 @@
 					</thead>
 
 					<tbody id="content">
-						<div id="show_per_page"></div>
-						<div id="current_page"></div>
+						
 						<c:forEach items="${contractList}" var="cntct">
 							    <tr>
 							    <td> 
@@ -46,7 +45,7 @@
 											<a href="/Pras/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.referenceContract.ins != null}">
-											<a href="/Pras/provider/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
+											<a href="/Pras/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue
@@ -57,10 +56,10 @@
 							    	<c:choose>
 									
 									 <c:when test="${cntct.referenceContract.prvdr != null}">
-										<a href="/Pras/provider/contract/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="/Pras/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.referenceContract.ins != null}">
-										<a href="/Pras/insurance/contract/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="/Pras/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue
@@ -77,11 +76,10 @@
 						        
 						</c:forEach>
 					</tbody>
-
-					<tfoot>
-						<div class="col-md-12 text-center" id="page_navigation"></div>
-					</tfoot>
 				</table>
+				<div class="col-md-12 text-center" id="page_navigation"></div>
+				<div id="show_per_page"></div>
+				<div id="current_page"></div>
 		</div>
 	</div>
 </div>

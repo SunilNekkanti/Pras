@@ -75,7 +75,7 @@ public class InsuranceController{
 		Insurance insurance = createInsuranceModel();
 		insurance.setCreatedBy("sarath");
 		model.addAttribute("insurance", insurance);
-        return "insuranceEdit";
+        return "insuranceNew";
     }
 	
  
@@ -95,8 +95,35 @@ public class InsuranceController{
         return "insuranceEdit";
     }
 	
-	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST)
-    public String saveInsuranceAction( @Validated Insurance insurance,
+	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"add"})
+    public String newInsuranceAction(@Validated Insurance insurance,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+            logger.info("Returning insuranceEdit.jsp page");
+            return "insuranceNew";
+        }
+        else
+        {
+	        
+	       
+	        	logger.info("Returning InsuranceSuccess.jsp page after create");
+	        	model.addAttribute("insurance", insurance);
+	        	insurance.setActiveInd('Y');
+	        	insurance.setCreatedBy("Mohanasundharam");
+	 	      	insuranceService.save(insurance);
+	 	       return "insuranceNewSuccess";
+	 	      	
+	        
+	       
+	       
+        }    
+    }
+	
+	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"update"})
+    public String saveInsuranceAction(@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
         	for( ObjectError oe :bindingResult.getAllErrors()){
@@ -112,19 +139,11 @@ public class InsuranceController{
 	        {
 	        	logger.info("Returning InsuranceSuccess.jsp page after update");
 	        	insurance.setActiveInd('Y');
+	        	insurance.setUpdatedBy("Mohanasundharam");
 	        	insuranceService.update(insurance);
+	        	
 	        }
-	        else
-	        {
-	        	logger.info("Returning InsuranceSuccess.jsp page after create");
-	        	model.addAttribute("insurance", insurance);
-	        	insurance.setActiveInd('Y');
-	        	insurance.setCreatedBy("Mohanasundharam");
-	 	      	insuranceService.save(insurance);
-	 	       return "insuranceEditSuccess";
-	 	      	
-	        }
-	       
+	           
 	        return "insuranceEditSuccess";
         }    
     }
@@ -143,8 +162,9 @@ public class InsuranceController{
         {
 	        	logger.info("Returning InsuranceSuccess.jsp page after update");
 	        	insurance.setActiveInd('N');
+	        	insurance.setUpdatedBy("Mohanasundharam");
 	        	insuranceService.update(insurance);
-	        return "insuranceEditSuccess";
+	        return "insuranceDeleteSuccess";
         }    
     }
 	

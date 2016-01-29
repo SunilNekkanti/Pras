@@ -3,75 +3,123 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="/Pras/membership/display/${id}" data-toggle="tab">Profile</a></li>
-                            <li><a href="/Pras/membership/${id}/membershipDetails" data-toggle="tab">Other Details</a></li>
-                            <li><a href="/Pras/membership/${id}/contact" data-toggle="tab">Contact</a></li>
-                            <li><a href="/Pras/membership/${id}/problem" data-toggle="tab">Problem</a></li>
-                        </ul>
-          </div>
+<div class="panel-group">
+	<div class="panel panel-primary">
+		<div class="panel-heading">Profile</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="membership" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="dbMembershipInsurance" action="save.do" class="form-horizontal" role="form">
+							
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="firstName">First Name:</label>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for=insId>insId:</label>
 					<div class="col-sm-6">
+						<springForm:select path="insId.id"  class="form-control" id="insId">
+				    		<springForm:options items="${insMap}"    />
+						</springForm:select>
+						
+					</div>
+				</div>
+				
+				
+				 	<label class="control-label col-sm-2" for="dob">New Benifits:</label>
+					<div class="col-sm-6">
+						<springForm:hidden path="mbr.id" />
 						<springForm:hidden path="id" />
-						<springForm:input path="firstName" class="form-control" id="firstName" placeholder="First Name" />
-						<springForm:errors path="firstName" cssClass="error" />
-					</div>
-				</div>
-				 		 
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="lastName">Last Name:</label>
-					<div class="col-sm-6">
-						<springForm:input path="lastName" class="form-control" id="lastName" placeholder="Last Name" />
-						<springForm:errors path="lastName" cssClass="error" />
-					</div>
-				</div>
-				<div class="form-group">
-				 	<label class="control-label col-sm-2" for="dob">DOB:</label>
-					<div class="col-sm-6">
-						<springForm:input path="dob" class="form-control" id="dob" placeholder="DOB" />
-						<springForm:errors path="dob" cssClass="error" />
-					</div>
-				</div>
-				 
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="status">Status:</label>
-					<div class="col-sm-6">
-						<springForm:select path="status.id" class="form-control" id="status">
-				    		<springForm:options items="${statusMap}"    />
-						</springForm:select>
-						<springForm:errors path="status.description" cssClass="error" />
-					  </div>
-				</div>
-				 		 
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="gender">Gender:</label>
-					<div class="col-sm-6">
-						<springForm:select path="genderId.id"  class="form-control" id="gender">
-				    		<springForm:options items="${genderMap}"    />
-						</springForm:select>
-						<springForm:errors path="genderId.description" cssClass="error" />
+						<springForm:input path="newBenifits" class="form-control" id="newBenifits" placeholder="newBenifits" />
+						<springForm:errors path="newBenifits" cssClass="error" />
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="county">County:</label>
+				 	<label class="control-label col-sm-2" for="activityDate">Activity Date:</label>
 					<div class="col-sm-6">
-						<springForm:select path="countyCode.code" class="form-control" id="county" >
-				    		<springForm:options items="${countyMap}"    />
-						</springForm:select>
-						<springForm:errors path="countyCode.description" cssClass="error" />
+						<springForm:input path="activityDate" class="form-control" id="activityDate" placeholder="activityDate" />
+						<springForm:errors path="activityDate" cssClass="error" />
 					</div>
 				</div>
-				 		 
-				<div class="col-sm-offset-6 col-sm-4">
-				<a href="http://localhost:8080/Pras/membership/${id}">Click Here</a> Edit membership profile
+				
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="activityMonth">Activity Month:</label>
+					<div class="col-sm-6">
+						<springForm:input path="activityMonth" class="form-control" id="activityMonth" placeholder="activityMonth" />
+						<springForm:errors path="activityMonth" cssClass="error" />
+					</div>
 				</div>
+				
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="effStartDate">Effective Start Date:</label>
+					<div class="col-sm-6">
+						<springForm:input path="effStartDate" class="form-control" id="effStartDate" placeholder="effStartDate" />
+						<springForm:errors path="effStartDate" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="effEndDate">Effective End Date:</label>
+					<div class="col-sm-6">
+						<springForm:input path="effEndDate" class="form-control" id="effEndDate" placeholder="effEndDate" />
+						<springForm:errors path="effEndDate" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="product">Product:</label>
+					<div class="col-sm-6">
+						<springForm:input path="product" class="form-control" id="product" placeholder="product" />
+						<springForm:errors path="product" cssClass="error" />
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="productLabel">Product Label:</label>
+					<div class="col-sm-6">
+						<springForm:input path="productLabel" class="form-control" id="productLabel" placeholder="productLabel" />
+						<springForm:errors path="productLabel" cssClass="error" />
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="planId">Plan Id:</label>
+					<div class="col-sm-6">
+						<springForm:input path="planId" class="form-control" id="planId" placeholder="planId" />
+						<springForm:errors path="planId" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="dob">Src Sys Mbr Nbr:</label>
+					<div class="col-sm-6">
+						<springForm:input path="srcSysMbrNbr" class="form-control" id="srcSysMbrNbr" placeholder="srcSysMbrNbr" />
+						<springForm:errors path="srcSysMbrNbr" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="dob">Risk Flag:</label>
+					<div class="col-sm-6">
+						<springForm:input path="riskFlag" class="form-control" id="riskFlag" placeholder="riskFlag" />
+						<springForm:errors path="riskFlag" cssClass="error" />
+					</div>
+				</div>
+				<div class="col-sm-offset-6 col-sm-4">
+					<c:choose>
+						 <c:when test="${dbMembershipInsurance.id != null && dbMembershipInsurance.activeInd == 89}"> 
+								<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
+								<button type="submit" class="btn btn-primary" id="deleteButton" class="delete" name="delete" >Delete</button>
+						</c:when>
+						 <c:when test="${dbMembershipInsurance.id == null}"> 
+							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
+							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+						</c:when>
+					</c:choose>			
+				</div>	
 			</springForm:form>
+
 		</div>
 	</div>
- 
+ </div>

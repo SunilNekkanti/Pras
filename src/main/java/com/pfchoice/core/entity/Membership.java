@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -55,10 +56,12 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
     
-    @Expose
-    @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+   /* @Expose
+    @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
     private MembershipInsurance mbrInsurance;
+  */  
+    
     
     @Expose
     @Column(name="mbr_dob")
@@ -339,18 +342,19 @@ public class Membership implements Serializable
 	
 	/**
 	 * @return the mbrInsurance
-	 */
+	 
 	public MembershipInsurance getMbrInsurance() {
 		return mbrInsurance;
 	}
+	*/
 
 	/**
 	 * @param mbrInsurance the mbrInsurance to set
-	 */
+	 
 	public void setMbrInsurance(MembershipInsurance mbrInsurance) {
 		this.mbrInsurance = mbrInsurance;
 	}
-
+	 */
 	@Override
     public int hashCode()
     {

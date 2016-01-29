@@ -22,19 +22,18 @@ prasPagination();
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<a href="http://localhost:8080/Pras/provider/new" class="btn btn-info btn-danger" role="button">New Provider</a>
-		</div>
+		<div class="panel-heading">New Provider <span class="badge">${membershipList.size()}</span></div>
 		<div class="panel-body" id="tablediv">
 			<table id="tab" class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th scope="col">Name</th>
-						<th scope="col">Code</th>
+							<th scope="col">Name</th>
+							<th scope="col">Code</th>
 					</tr>
 				</thead>
 
 				<tbody id="content">
+					
 					<c:forEach items="${providerList}" var="provider">
 						<tr>
 							<td> <a href="provider/${provider.id}"   rel='tab' > ${provider.name}</a></td> 
@@ -43,10 +42,9 @@ prasPagination();
 					</c:forEach>
 				</tbody>
 			</table>
+			<div class="col-md-12 text-center" id="page_navigation"></div>
+			<div id="show_per_page"></div>
+			<div id="current_page"></div>
 		</div>
-		<div class="col-md-12 text-center" id="page_navigation"></div>
-		<div id="show_per_page"></div>
-		<div id="current_page"></div>
-				
 	</div>
 </div>
