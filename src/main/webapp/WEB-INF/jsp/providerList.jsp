@@ -29,14 +29,12 @@ prasPagination();
 			<table id="tab" class="table table-striped table-hover">
 				<thead>
 					<tr>
-							<th scope="col">Name</th>
-							<th scope="col">Code</th>
+						<th scope="col">Name</th>
+						<th scope="col">Code</th>
 					</tr>
 				</thead>
 
 				<tbody id="content">
-					<div id="show_per_page"></div>
-					<div id="current_page"></div>
 					<c:forEach items="${providerList}" var="provider">
 						<tr>
 							<td> <a href="provider/${provider.id}"   rel='tab' > ${provider.name}</a></td> 
@@ -44,10 +42,11 @@ prasPagination();
 						 </tr>     
 					</c:forEach>
 				</tbody>
-				<tfoot>
-						<div class="col-md-12 text-center" id="page_navigation"></div>
-				</tfoot>
 			</table>
 		</div>
+		<div class="col-md-12 text-center" id="page_navigation"></div>
+		<div id="show_per_page"></div>
+		<div id="current_page"></div>
+				
 	</div>
 </div>
