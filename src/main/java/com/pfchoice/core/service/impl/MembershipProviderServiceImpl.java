@@ -74,4 +74,10 @@ public class MembershipProviderServiceImpl implements MembershipProviderService
     {
     	return membershipProviderDao.findAllByMbrId(id);
     }
+    
+    @Override
+    public MembershipProvider findByMbrId(final Integer id)
+    {
+    	return membershipProviderDao.findByMbrId(id);
+    }
 }

@@ -62,8 +62,12 @@ public class Membership implements Serializable
     private MembershipInsurance mbrInsurance;
   */  
     
-    
-    @Expose
+     @Expose
+    @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
+    private MembershipProvider mbrProvider;
+
+     @Expose
     @Column(name="mbr_dob")
     private Date dob;
     
@@ -183,6 +187,20 @@ public class Membership implements Serializable
 	 */
 	public void setCountyCode(County countyCode) {
 		this.countyCode = countyCode;
+	}
+
+	/**
+	 * @return the mbrProvider
+	 */
+	public MembershipProvider getMbrProvider() {
+		return mbrProvider;
+	}
+
+	/**
+	 * @param mbrProvider the mbrProvider to set
+	 */
+	public void setMbrProvider(MembershipProvider mbrProvider) {
+		this.mbrProvider = mbrProvider;
 	}
 
 	/**

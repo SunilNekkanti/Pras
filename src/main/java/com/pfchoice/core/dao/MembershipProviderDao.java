@@ -27,5 +27,7 @@ public interface MembershipProviderDao
     List<MembershipProvider> findAll();
     
     List<MembershipProvider> findAllByMbrId(Integer id);
+    
+    MembershipProvider findByMbrId(Integer id);
 
 }

@@ -26,7 +26,7 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -34,21 +34,21 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
     }
 
     @Override
-    public MembershipProvider findById(Integer id)
+    public MembershipProvider findById(final Integer id)
     {
     	MembershipProvider entity = get(id);
         return entity;
     }
 
     @Override
-    public MembershipProvider save(MembershipProvider bean)
+    public MembershipProvider save(final MembershipProvider bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public MembershipProvider deleteById(Integer id)
+    public MembershipProvider deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	MembershipProvider entity = super.get(id);
@@ -74,13 +74,34 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
     }
     
     @SuppressWarnings("unchecked")
-	public List<MembershipProvider> findAllByMbrId(Integer id)
+	public List<MembershipProvider> findAllByMbrId(final Integer id)
     {
     	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr")
     			.createAlias("mbrPrvdr.mbr","mbr")
     			.add(Restrictions.eq("mbr.id", id));
     	List<MembershipProvider> list = cr.list();
-    	System.out.println("findAllByMbrId list size is"+ list.size());
+
+    	final String msg = "findAllByMbrId list size is %d";
+    	final String fmt = String.format(msg, list.size());
+    	LOG.info(fmt);
+    	
     	return list;
+    }
+        
+    @SuppressWarnings("unchecked")
+	public MembershipProvider findByMbrId(final Integer id)
+    {
+    	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr")
+    			.createAlias("mbrPrvdr.mbr","mbr")
+    			.add(Restrictions.eq("mbr.id", id))	
+    			.add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
+    			.add(Restrictions.eq("mbr.activeInd", 'Y'));
+    	List<MembershipProvider> list = cr.list();
+    	
+    	final String msg = "findByMbrId list size is %d";
+    	final String fmt = String.format(msg, list.size());
+    	LOG.info(fmt);
+    		
+    	return list.get(0);
     }
 }

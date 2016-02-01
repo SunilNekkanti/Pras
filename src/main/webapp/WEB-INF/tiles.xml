@@ -423,4 +423,10 @@
         <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/membershipContactDisplay.jsp" />  
     </definition>
+    
+    <definition name="membershipProviderEdit" extends="base.definition">  
+        <put-attribute name="title" value="Membership Provider Info" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipProviderEdit.jsp" />  
+    </definition>
 </tiles-definitions>  

@@ -5,39 +5,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pfchoice.core.entity.Contract;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipInsurance;
+import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
-import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipInsuranceService;
+import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
-import com.pfchoice.form.MembershipForm;
 
 @Controller
 public class MembershipController{
@@ -60,7 +60,11 @@ public class MembershipController{
     @Autowired
     InsuranceService insuranceService;
     
- /*   @Autowired
+    @Autowired
+    MembershipProviderService membershipProviderService;
+    
+    
+    @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
  
@@ -68,7 +72,7 @@ public class MembershipController{
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
- */   
+   
     private static final Logger logger = LoggerFactory
             .getLogger(MembershipController.class);
  
@@ -303,6 +307,21 @@ public class MembershipController{
 		return modelAndView;
 	}
     
+	@RequestMapping(value = "/membership/{id}/providerDetails", method = RequestMethod.GET)
+    public String displayMembershipProviderDetailsPage(@PathVariable Integer id,  @Validated MembershipProvider membershipProvider,
+    				BindingResult bindingResult, Model model)throws Exception {
+		MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
+		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipProvider.getId());
+	       
+		model.addAttribute("dbMembershipProvider", dbMembershipProvider);
+        logger.info("Returning membershipProviderEdit.jsp page");
+        logger.info("dbMembershipProvider.getPrvdr() membershipProviderEdit.jsp page" + dbMembershipProvider.getPrvdr());
+        logger.info("dbMembershipProvider.getPrvdr().getName() membershipProviderEdit.jsp page" + dbMembershipProvider.getPrvdr().getName());
+        
+        
+        return "membershipProviderEdit";
+    }
+	
 	@ModelAttribute("countyMap")
 	public Map<Integer,String> populateCountyList() {
 		
