@@ -21,6 +21,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Contact List<span class="badge">${contractList.size()}</span></div>
 		<div class="panel-body" id="tablediv">
+			<div class="table-responsive">
 				<table id="tab" class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -74,12 +75,13 @@
 						        	
 						       </tr>     
 						        
-						</c:forEach>
-					</tbody>
+							</c:forEach>
+						</tbody>
 				</table>
-				<div class="col-md-12 text-center" id="page_navigation"></div>
-				<div id="show_per_page"></div>
-				<div id="current_page"></div>
+			</div>
+			<div class="col-md-12 text-center" id="page_navigation"></div>
+			<div id="show_per_page"></div>
+			<div id="current_page"></div>
 		</div>
 	</div>
 </div>

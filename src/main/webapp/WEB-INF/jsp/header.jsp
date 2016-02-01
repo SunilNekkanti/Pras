@@ -296,7 +296,7 @@ $(document).ready(function () {
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="home.html">Home</a></li>
+        <li><a href="/Pras/home">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="/Pras/insuranceList">Insurance</a></li>
         <li><a href="/Pras/providerList">Provider</a></li>
@@ -317,7 +317,7 @@ $(document).ready(function () {
         <li><a href="#">Help</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>

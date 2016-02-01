@@ -31,7 +31,7 @@
 
 $(document).ready(function(){	
 	
-prasPagination();
+prasPagination('membership');
 
 });
 </script>
@@ -44,36 +44,38 @@ prasPagination();
 		<div class="panel panel-primary">
 			<div class="panel-heading">Membership List <span class="badge">${membershipList.size()}</span> </div>
 			<div class="panel-body" id="tablediv">
-				<table id="tab" class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th scope="col">First Name</th>
-							<th scope="col">Last Name</th>
-							<th scope="col">Date Of Birth</th>
-							<th scope="col">Gender</th>
-							<th scope="col">County</th>
-							<th scope="col">File Number</th>
-							<th scope="col">Status</th>
-						</tr>
-					</thead>
-
-					<tbody id="content">
-						<c:forEach items="${membershipList}" var="mbr">
-							    <tr>
-								   <td> <a href="membership/${mbr.id}/display"   rel='tab' > ${mbr.firstName}</a></td> 
-						        <td> ${mbr.lastName} </td> 
-						        <td> ${mbr.dob}  </td> 
-						        <td> ${mbr.genderId.description }</td>
-						        <td> ${mbr.countyCode.description} </td> 
-						        <td> ${mbr.fileId} </td> 
-						        <td> ${mbr.status.description}  </td></tr>     
-						</c:forEach>
-					</tbody>
-
-				</table>
-				<div class="col-md-12 text-center" id="page_navigation"></div>
-				<div id="show_per_page"></div>
-				<div id="current_page"></div>
+				<div class="table-responsive">
+					<table id="tab" class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th scope="col">First Name</th>
+								<th scope="col">Last Name</th>
+								<th scope="col">Date Of Birth</th>
+								<th scope="col">Gender</th>
+								<th scope="col">County</th>
+								<th scope="col">File Number</th>
+								<th scope="col">Status</th>
+							</tr>
+						</thead>
+	
+						<tbody id="contentmembership">
+							<c:forEach items="${membershipList}" var="mbr">
+								    <tr>
+									   <td> <a href="membership/${mbr.id}/display"   rel='tab' > ${mbr.firstName}</a></td> 
+							        <td> ${mbr.lastName} </td> 
+							        <td> ${mbr.dob}  </td> 
+							        <td> ${mbr.genderId.description }</td>
+							        <td> ${mbr.countyCode.description} </td> 
+							        <td> ${mbr.fileId} </td> 
+							        <td> ${mbr.status.description}  </td></tr>     
+							</c:forEach>
+						</tbody>
+	
+					</table>
+				</div>	
+				<div class="col-md-12 text-center" id="page_navigationmembership"></div>
+				<div id="show_per_pagemembership"></div>
+				<div id="current_pagemembership"></div>
 			</div>
 			
 		</div>

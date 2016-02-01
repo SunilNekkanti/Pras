@@ -16,7 +16,7 @@
 
 $(document).ready(function(){	
 	
-prasPagination();
+prasPagination('provider');
 
 });
 </script>
@@ -32,7 +32,7 @@ prasPagination();
 					</tr>
 				</thead>
 
-				<tbody id="content">
+				<tbody id="contentprovider">
 					
 					<c:forEach items="${providerList}" var="provider">
 						<tr>
@@ -42,9 +42,9 @@ prasPagination();
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="col-md-12 text-center" id="page_navigation"></div>
-			<div id="show_per_page"></div>
-			<div id="current_page"></div>
+			<div class="col-md-12 text-center" id="page_navigationprovider"></div>
+			<div id="show_per_pageprovider"></div>
+			<div id="current_pageprovider"></div>
 		</div>
 	</div>
 </div>

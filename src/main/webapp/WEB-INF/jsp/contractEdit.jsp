@@ -44,15 +44,15 @@
 				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="startDate">Start Date:</label>
 					<div class="col-sm-6">
-						<springForm:input path="startDate" class="form-control" id="startDate" placeholder="Start Date" />
-						<springForm:errors path="startDate" cssClass="error" />
+						<springForm:input type="date" var="startDate" path="startDate" class="form-control" id="startDate" placeholder="Start Date" />
+						
 					</div>
 				</div>
 				
 				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="startDate">End Date:</label>
 					<div class="col-sm-6">
-						<springForm:input path="endDate" class="form-control" id="endDate" placeholder="End Date" />
+						<springForm:input type="date" path="endDate" class="form-control" id="endDate" placeholder="End Date" />
 						<springForm:errors path="endDate" cssClass="error" />
 					</div>
 				</div>
@@ -76,3 +76,4 @@
 			</springForm:form>
  	</div>
 </div>
+

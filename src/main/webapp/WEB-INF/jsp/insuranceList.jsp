@@ -13,7 +13,7 @@
 <script>
 	$(document).ready(function(){	
 		
-	prasPagination();
+	prasPagination('insurance');
 	
 	});
 </script>
@@ -29,7 +29,7 @@
 						</tr>
 					</thead>
 
-					<tbody id="content">
+					<tbody id="contentinsurance">
 						
 						<c:forEach items="${insuranceList}" var="ins">
 							<tr>
@@ -39,9 +39,9 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="col-md-12 text-center" id="page_navigation"></div>
-				<div id="show_per_page"></div>
-				<div id="current_page"></div>
+				<div class="col-md-12 text-center" id="page_navigationinsurance"></div>
+				<div id="show_per_pageinsurance"></div>
+				<div id="current_pageinsurance"></div>
 		</div>
 	</div>
 </div>

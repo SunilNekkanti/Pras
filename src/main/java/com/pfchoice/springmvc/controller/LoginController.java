@@ -62,6 +62,10 @@ public class LoginController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String homePage(Map<String,Object> model) {
+		return "home";
+	}
 	
 	@ModelAttribute("membershipList")
 	public List<Membership> populateMembershipList() {

@@ -1,16 +1,15 @@
-function prasPagination(){
+function prasPagination(listname){
 	
-	 alert('in pagination call');
 	 
 	  //how much items per page to show
 	  var show_per_page = 3; 
 	  //getting the amount of elements inside content div
-	  var number_of_items = $('#content').children().size();
+	  var number_of_items = $('#content'+listname).children().size();
 	  //calculate the number of pages we are going to have
 	  var number_of_pages = Math.ceil(number_of_items/show_per_page);
 	  //set the value of our hidden input fields
-	  $('#current_page').val(0);
-	  $('#show_per_page').val(show_per_page);
+	  $('#current_page'+listname).val(0);
+	  $('#show_per_page'+listname).val(show_per_page);
 
 	  var navigation_html = '<ul class="pagination">';
 
@@ -28,22 +27,22 @@ function prasPagination(){
 	  navigation_html += '<a class="next_link" href="javascript:next();">Next &rarr;</a>';
 	  navigation_html += '</li>';
 	  navigation_html += '</ul>';
-	  $('#page_navigation').html(navigation_html);
+	  $('#page_navigation'+listname).html(navigation_html);
 
 	  //add active class to the first page link
-	  $('#page_navigation .page_link:first').addClass('active');
+	  $('#page_navigation'+listname+' .page_link:first').addClass('active');
 
 	  //hide all the elements inside content div
-	  $('#content').children().css('display', 'none');
+	  $('#content'+listname).children().css('display', 'none');
 
 	  //and show the first n (show_per_page) elements
-	  $('#content').children().slice(0, show_per_page).css('display', 'table-row');
+	  $('#content'+listname).children().slice(0, show_per_page).css('display', 'table-row');
 
   }
 
 	function previous(){
 
-	  new_page = parseInt($('#current_page').val()) - 1;
+	  new_page = parseInt($('#current_page'+listname).val()) - 1;
 	  //if there is an item before the current active link run the function
 	  if($('.active').prev('.page_link').length==true){
 	    go_to_page(new_page);
@@ -51,7 +50,7 @@ function prasPagination(){
 	}
 
 	function next(){
-	  new_page = parseInt($('#current_page').val()) + 1;
+	  new_page = parseInt($('#current_page'+listname).val()) + 1;
 	  //if there is an item after the current active link run the function
 	  if($('.active').next('.page_link').length==true){
 	    go_to_page(new_page);
@@ -61,7 +60,7 @@ function prasPagination(){
 
 	function go_to_page(page_num){
 	  //get the number of items shown per page
-	  var show_per_page = parseInt($('#show_per_page').val());
+	  var show_per_page = parseInt($('#show_per_page'+listname).val());
 
 	  //get the element number where to start the slice from
 	  start_from = page_num * show_per_page;
@@ -72,11 +71,11 @@ function prasPagination(){
 	  activate_id = page_num;
 	  var get_box = document.getElementById("id"+page_num);
 	  //hide all children elements of content div, get specific items and show them
-	  $('#content').children().css('display', 'none').slice(start_from, end_on).css('display', 'table-row');
+	  $('#content'+listname).children().css('display', 'none').slice(start_from, end_on).css('display', 'table-row');
 
 	  /*get the page link that has longdesc attribute of the current page and add active class to it
 	  and remove that class from previously active page link*/
-	  $("#page_navigation").find('li.active').removeClass("active");
+	  $("#page_navigation"+listname).find('li.active').removeClass("active");
 	  $(get_box).addClass("active");
 
 
