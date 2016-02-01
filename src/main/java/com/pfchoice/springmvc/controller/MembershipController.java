@@ -68,14 +68,16 @@ public class MembershipController{
     @Qualifier("membershipValidator")
     private Validator validator;
  
+    private static final Logger logger = LoggerFactory
+            .getLogger(MembershipController.class);
+    
+    
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
    
-    private static final Logger logger = LoggerFactory
-            .getLogger(MembershipController.class);
- 
+   
 	public MembershipController() {
     }
 	

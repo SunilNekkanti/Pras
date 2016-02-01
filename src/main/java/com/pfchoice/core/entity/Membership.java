@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -67,8 +66,9 @@ public class Membership implements Serializable
 //    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
     private MembershipProvider mbrProvider;
 
-     @Expose
+    @Expose
     @Column(name="mbr_dob")
+    @Temporal(TemporalType.DATE)
     private Date dob;
     
     @Expose
@@ -128,7 +128,7 @@ public class Membership implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -143,7 +143,7 @@ public class Membership implements Serializable
 	/**
 	 * @param firstName the firstName to set
 	 */
-	public void setFirstName(String firstName) {
+	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
 	}
 
@@ -157,7 +157,7 @@ public class Membership implements Serializable
 	/**
 	 * @param lastName the lastName to set
 	 */
-	public void setLastName(String lastName) {
+	public void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -171,7 +171,7 @@ public class Membership implements Serializable
 	/**
 	 * @param genderId the genderId to set
 	 */
-	public void setGenderId(Gender genderId) {
+	public void setGenderId(final Gender genderId) {
 		this.genderId = genderId;
 	}
 
@@ -185,7 +185,7 @@ public class Membership implements Serializable
 	/**
 	 * @param countyCode the countyCode to set
 	 */
-	public void setCountyCode(County countyCode) {
+	public void setCountyCode(final County countyCode) {
 		this.countyCode = countyCode;
 	}
 
@@ -199,7 +199,7 @@ public class Membership implements Serializable
 	/**
 	 * @param mbrProvider the mbrProvider to set
 	 */
-	public void setMbrProvider(MembershipProvider mbrProvider) {
+	public void setMbrProvider(final MembershipProvider mbrProvider) {
 		this.mbrProvider = mbrProvider;
 	}
 
@@ -227,7 +227,7 @@ public class Membership implements Serializable
 	/**
 	 * @param ethinicCode the ethinicCode to set
 	 */
-	public void setEthinicCode(Byte ethinicCode) {
+	public void setEthinicCode(final Byte ethinicCode) {
 		this.ethinicCode = ethinicCode;
 	}
 
@@ -241,7 +241,7 @@ public class Membership implements Serializable
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(MembershipStatus status) {
+	public void setStatus(final MembershipStatus status) {
 		this.status = status;
 	}
 
@@ -255,7 +255,7 @@ public class Membership implements Serializable
 	/**
 	 * @param medicaidNo the medicaidNo to set
 	 */
-	public void setMedicaidNo(String medicaidNo) {
+	public void setMedicaidNo(final String medicaidNo) {
 		this.medicaidNo = medicaidNo;
 	}
 
@@ -269,7 +269,7 @@ public class Membership implements Serializable
 	/**
 	 * @param medicareNo the medicareNo to set
 	 */
-	public void setMedicareNo(String medicareNo) {
+	public void setMedicareNo(final String medicareNo) {
 		this.medicareNo = medicareNo;
 	}
 
@@ -283,7 +283,7 @@ public class Membership implements Serializable
 	/**
 	 * @param fileId the fileId to set
 	 */
-	public void setFileId(Integer fileId) {
+	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
 	}
 
@@ -297,7 +297,7 @@ public class Membership implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -311,7 +311,7 @@ public class Membership implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -325,7 +325,7 @@ public class Membership implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -339,7 +339,7 @@ public class Membership implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -353,7 +353,7 @@ public class Membership implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

@@ -28,7 +28,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -36,21 +36,21 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     }
 
     @Override
-    public Membership findById(Integer id)
+    public Membership findById(final Integer id)
     {
         Membership entity = get(id);
         return entity;
     }
 
     @Override
-    public Membership save(Membership bean)
+    public Membership save(final Membership bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public Membership deleteById(Integer id)
+    public Membership deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
         Membership entity = super.get(id);

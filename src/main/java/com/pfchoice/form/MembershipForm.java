@@ -32,7 +32,7 @@ public class MembershipForm {
 	/**
 	 * @param firstName the firstName to set
 	 */
-	public void setFirstName(String firstName) {
+	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
 	}
 	/**
@@ -44,7 +44,7 @@ public class MembershipForm {
 	/**
 	 * @param lastName the lastName to set
 	 */
-	public void setLastName(String lastName) {
+	public void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 	/**
@@ -56,7 +56,7 @@ public class MembershipForm {
 	/**
 	 * @param genderId the genderId to set
 	 */
-	public void setGenderId(Byte genderId) {
+	public void setGenderId(final Byte genderId) {
 		this.genderId = genderId;
 	}
 	/**
@@ -68,7 +68,7 @@ public class MembershipForm {
 	/**
 	 * @param countyCode the countyCode to set
 	 */
-	public void setCountyCode(Integer countyCode) {
+	public void setCountyCode(final Integer countyCode) {
 		this.countyCode = countyCode;
 	}
 	/**
@@ -80,7 +80,7 @@ public class MembershipForm {
 	/**
 	 * @param dob the dob to set
 	 */
-	public void setDob(Date dob) {
+	public void setDob(final Date dob) {
 		this.dob = dob;
 	}
 	/**
@@ -92,7 +92,7 @@ public class MembershipForm {
 	/**
 	 * @param medicaidNo the medicaidNo to set
 	 */
-	public void setMedicaidNo(String medicaidNo) {
+	public void setMedicaidNo(final String medicaidNo) {
 		this.medicaidNo = medicaidNo;
 	}
 	/**
@@ -104,7 +104,7 @@ public class MembershipForm {
 	/**
 	 * @param medicareNo the medicareNo to set
 	 */
-	public void setMedicareNo(String medicareNo) {
+	public void setMedicareNo(final String medicareNo) {
 		this.medicareNo = medicareNo;
 	}
 	/**
@@ -116,7 +116,7 @@ public class MembershipForm {
 	/**
 	 * @param fileId the fileId to set
 	 */
-	public void setFileId(Integer fileId) {
+	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
 	}
 	/**
@@ -128,7 +128,7 @@ public class MembershipForm {
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 	/**
@@ -140,7 +140,7 @@ public class MembershipForm {
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(final Byte status) {
 		this.status = status;
 	}
 	/**
@@ -152,7 +152,7 @@ public class MembershipForm {
 	/**
 	 * @param ethinicCode the ethinicCode to set
 	 */
-	public void setEthinicCode(Byte ethinicCode) {
+	public void setEthinicCode(final Byte ethinicCode) {
 		this.ethinicCode = ethinicCode;
 	}
 	
