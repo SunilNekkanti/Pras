@@ -26,7 +26,7 @@ public class MembershipStatusServiceImpl implements MembershipStatusService
     private MembershipStatusDao membershipStatusDao;
 
     @Override
-    public MembershipStatus deleteById(Byte id)
+    public MembershipStatus deleteById(final Byte id)
     {
         //Used for transaction test
         return membershipStatusDao.deleteById(id);
@@ -35,20 +35,20 @@ public class MembershipStatusServiceImpl implements MembershipStatusService
 
     @Override
     @Transactional(readOnly = true)
-    public MembershipStatus findById(Byte id)
+    public MembershipStatus findById(final Byte id)
     {
         return membershipStatusDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return membershipStatusDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public MembershipStatus save(MembershipStatus bean)
+    public MembershipStatus save(final MembershipStatus bean)
     {
         //Used for transaction test
         return membershipStatusDao.save(bean);
@@ -57,7 +57,7 @@ public class MembershipStatusServiceImpl implements MembershipStatusService
     }
 
     @Override
-    public MembershipStatus update(MembershipStatus bean)
+    public MembershipStatus update(final MembershipStatus bean)
     {
         Updater<MembershipStatus> updater = new Updater<>(bean);
         return membershipStatusDao.updateByUpdater(updater);

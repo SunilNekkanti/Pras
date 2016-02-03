@@ -23,7 +23,7 @@ public class TrackModelServiceImpl implements TrackModelService
     private TrackModelDao trackModelDao;
 
     @Override
-    public TrackModel deleteById(Integer id)
+    public TrackModel deleteById(final Integer id)
     {
         //Used for transaction test
         return trackModelDao.deleteById(id);
@@ -32,20 +32,20 @@ public class TrackModelServiceImpl implements TrackModelService
 
     @Override
     @Transactional(readOnly = true)
-    public TrackModel findById(Integer id)
+    public TrackModel findById(final Integer id)
     {
         return trackModelDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return trackModelDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public TrackModel save(TrackModel bean)
+    public TrackModel save(final TrackModel bean)
     {
         //Used for transaction test
         return trackModelDao.save(bean);
@@ -54,7 +54,7 @@ public class TrackModelServiceImpl implements TrackModelService
     }
 
     @Override
-    public TrackModel update(TrackModel bean)
+    public TrackModel update(final TrackModel bean)
     {
         Updater<TrackModel> updater = new Updater<>(bean);
         return trackModelDao.updateByUpdater(updater);

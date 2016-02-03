@@ -23,7 +23,7 @@ public class ProviderContractServiceImpl implements ProviderContractService
     private ProviderContractDao providerContractDao;
 
     @Override
-    public ProviderContract deleteById(Integer id)
+    public ProviderContract deleteById(final Integer id)
     {
         //Used for transaction test
         return providerContractDao.deleteById(id);
@@ -32,20 +32,20 @@ public class ProviderContractServiceImpl implements ProviderContractService
 
     @Override
     @Transactional(readOnly = true)
-    public ProviderContract findById(Integer id)
+    public ProviderContract findById(final Integer id)
     {
         return providerContractDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return providerContractDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public ProviderContract save(ProviderContract bean)
+    public ProviderContract save(final ProviderContract bean)
     {
         //Used for transaction test
         return providerContractDao.save(bean);
@@ -54,7 +54,7 @@ public class ProviderContractServiceImpl implements ProviderContractService
     }
 
     @Override
-    public ProviderContract update(ProviderContract bean)
+    public ProviderContract update(final ProviderContract bean)
     {
         Updater<ProviderContract> updater = new Updater<>(bean);
         return providerContractDao.updateByUpdater(updater);

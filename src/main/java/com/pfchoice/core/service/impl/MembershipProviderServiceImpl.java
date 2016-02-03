@@ -26,7 +26,7 @@ public class MembershipProviderServiceImpl implements MembershipProviderService
     private MembershipProviderDao membershipProviderDao;
 
     @Override
-    public MembershipProvider deleteById(Integer id)
+    public MembershipProvider deleteById(final Integer id)
     {
         //Used for transaction test
         return membershipProviderDao.deleteById(id);
@@ -35,20 +35,20 @@ public class MembershipProviderServiceImpl implements MembershipProviderService
 
     @Override
     @Transactional(readOnly = true)
-    public MembershipProvider findById(Integer id)
+    public MembershipProvider findById(final Integer id)
     {
         return membershipProviderDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return membershipProviderDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public MembershipProvider save(MembershipProvider bean)
+    public MembershipProvider save(final MembershipProvider bean)
     {
         //Used for transaction test
         return membershipProviderDao.save(bean);
@@ -57,7 +57,7 @@ public class MembershipProviderServiceImpl implements MembershipProviderService
     }
 
     @Override
-    public MembershipProvider update(MembershipProvider bean)
+    public MembershipProvider update(final MembershipProvider bean)
     {
         Updater<MembershipProvider> updater = new Updater<>(bean);
         return membershipProviderDao.updateByUpdater(updater);
@@ -70,7 +70,7 @@ public class MembershipProviderServiceImpl implements MembershipProviderService
     }
     
     @Override
-    public List<MembershipProvider> findAllByMbrId(Integer id)
+    public List<MembershipProvider> findAllByMbrId(final Integer id)
     {
     	return membershipProviderDao.findAllByMbrId(id);
     }

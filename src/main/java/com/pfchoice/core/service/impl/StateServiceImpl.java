@@ -26,7 +26,7 @@ public class StateServiceImpl implements StateService
     private StateDao stateDao;
 
     @Override
-    public State deleteById(Integer id)
+    public State deleteById(final Integer id)
     {
         //Used for transaction test
         return stateDao.deleteById(id);
@@ -35,20 +35,20 @@ public class StateServiceImpl implements StateService
 
     @Override
     @Transactional(readOnly = true)
-    public State findById(Integer id)
+    public State findById(final Integer id)
     {
         return stateDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return stateDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public State save(State bean)
+    public State save(final State bean)
     {
         //Used for transaction test
         return stateDao.save(bean);
@@ -57,7 +57,7 @@ public class StateServiceImpl implements StateService
     }
 
     @Override
-    public State update(State bean)
+    public State update(final State bean)
     {
         Updater<State> updater = new Updater<>(bean);
         return stateDao.updateByUpdater(updater);

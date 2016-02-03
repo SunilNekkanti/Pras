@@ -26,7 +26,7 @@ public class ZipCodeServiceImpl implements ZipCodeService
     private ZipCodeDao zipCodeDao;
 
     @Override
-    public ZipCode deleteById(Integer id)
+    public ZipCode deleteById(final Integer id)
     {
         //Used for transaction test
         return zipCodeDao.deleteById(id);
@@ -35,20 +35,20 @@ public class ZipCodeServiceImpl implements ZipCodeService
 
     @Override
     @Transactional(readOnly = true)
-    public ZipCode findById(Integer id)
+    public ZipCode findById(final Integer id)
     {
         return zipCodeDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return zipCodeDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public ZipCode save(ZipCode bean)
+    public ZipCode save(final ZipCode bean)
     {
         //Used for transaction test
         return zipCodeDao.save(bean);
@@ -57,7 +57,7 @@ public class ZipCodeServiceImpl implements ZipCodeService
     }
 
     @Override
-    public ZipCode update(ZipCode bean)
+    public ZipCode update(final ZipCode bean)
     {
         Updater<ZipCode> updater = new Updater<>(bean);
         return zipCodeDao.updateByUpdater(updater);

@@ -26,7 +26,7 @@ public class ProviderServiceImpl implements ProviderService
     private ProviderDao providerDao;
 
     @Override
-    public Provider deleteById(Integer id)
+    public Provider deleteById(final Integer id)
     {
         //Used for transaction test
         return providerDao.deleteById(id);
