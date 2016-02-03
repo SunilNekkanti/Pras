@@ -1,9 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
-
-
 import java.util.List;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +47,7 @@ public class ContractController{
     @Qualifier("contractValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("contract")
     private void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
@@ -96,6 +93,17 @@ public class ContractController{
         logger.info("Returning contractEdit.jsp page");
         return "providerContractEdit";
     }
+	
+	@RequestMapping(value = "/provider/{id}/contractList")
+    public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
+ 
+    	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
+    	System.out.println("contract list bean sze "+listBean.size());
+		ModelAndView modelAndView = new ModelAndView("providerContractList");
+		modelAndView.addObject("contractList", listBean);
+ 
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "/provider/{id}/contractDisplay", method = RequestMethod.GET)
     public String displayProviderContractPage(@PathVariable Integer id,Model model) {
@@ -187,6 +195,16 @@ public class ContractController{
 	        return "providerContractEditSuccess";
     }
 	
+	
+	@RequestMapping(value = "/insurance/{id}/contractList")
+    public ModelAndView handleInsuranceRequest(@PathVariable Integer id) throws Exception {
+ 
+    	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
+    	System.out.println("insurance list bean sze "+listBean.size());
+		ModelAndView modelAndView = new ModelAndView ("insuranceContractList","contractList", listBean);
+ 
+		return modelAndView;
+	}
 	
 	/** contract Display where activeInd =N  **/
 	
@@ -315,8 +333,6 @@ public class ContractController{
 	        logger.info("Returning insuranceContractEdit.jsp page");
 	        return "insuranceContractEdit";
 	    }
-		
-		
 		
 		@RequestMapping(value = "/insurance/{id}/contract/{cntId}/display", method = RequestMethod.GET)
 	    public String displayInsuranceContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {

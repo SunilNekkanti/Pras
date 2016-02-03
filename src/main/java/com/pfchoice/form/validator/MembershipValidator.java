@@ -24,8 +24,6 @@ public class MembershipValidator implements Validator {
         if(mbr.getId() <=0){
             errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
         }
-       
-       
 
         if (mbr.getFirstName().length() < 6) {
             errors.rejectValue("firstName", "firstName.tooshort", "FirstName must be at least 6 characters.");
@@ -39,8 +37,6 @@ public class MembershipValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo", "error.medicaidNo",	"Medicaid Number Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId", 	"error.genderId",	"Gender Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "countyCode",	"error.countyCode",	"County Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ethinicCode","error.ethinicCode","Ethinicity Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fileId",     "error.fileId",     "File Id  Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
