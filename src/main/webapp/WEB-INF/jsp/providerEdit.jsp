@@ -53,7 +53,7 @@
 			
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="/Pras/ProviderList">Click Here</a> to see Provider List
+					<a href="/Pras/providerList">Click Here</a> to see Provider List
 				</div>	
 			</div>
 			

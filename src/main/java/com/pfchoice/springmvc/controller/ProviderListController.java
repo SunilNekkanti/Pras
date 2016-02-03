@@ -37,7 +37,6 @@ public class ProviderListController
 			HttpServletResponse arg1) throws Exception {
  
     	List<Provider> listBean = providerService.findAll();
-    	System.out.println("Provider list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView("providerList");
 		modelAndView.addObject("providerList", listBean);
  
