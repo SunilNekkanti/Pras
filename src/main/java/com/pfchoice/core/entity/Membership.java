@@ -55,6 +55,11 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
     
+    @Expose
+    @ManyToOne(fetch=FetchType.EAGER )
+    @JoinColumn(name="mbr_ethinic_code", referencedColumnName="code")
+    private Ethinicity ethinicCode;
+    
    /* @Expose
     @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
@@ -110,9 +115,7 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
-    @Expose
-    @Column(name="Mbr_ethinic_code", columnDefinition = "TINYINT(1)")
-    private Byte ethinicCode;
+   
     
     public Membership()
     {
@@ -220,14 +223,14 @@ public class Membership implements Serializable
 	/**
 	 * @return the ethinicCode
 	 */
-	public Byte getEthinicCode() {
+	public Ethinicity getEthinicCode() {
 		return ethinicCode;
 	}
 
 	/**
 	 * @param ethinicCode the ethinicCode to set
 	 */
-	public void setEthinicCode(final Byte ethinicCode) {
+	public void setEthinicCode(final Ethinicity ethinicCode) {
 		this.ethinicCode = ethinicCode;
 	}
 

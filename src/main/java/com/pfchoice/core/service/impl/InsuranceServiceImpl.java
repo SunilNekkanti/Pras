@@ -27,7 +27,7 @@ public class InsuranceServiceImpl implements InsuranceService
     private InsuranceDao insuranceDao;
 
     @Override
-    public Insurance deleteById(Integer id)
+    public Insurance deleteById(final Integer id)
     {
         //Used for transaction test
         return insuranceDao.deleteById(id);
@@ -36,20 +36,20 @@ public class InsuranceServiceImpl implements InsuranceService
 
     @Override
     @Transactional(readOnly = true)
-    public Insurance findById(Integer id)
+    public Insurance findById(final Integer id)
     {
         return insuranceDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return insuranceDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public Insurance save(Insurance bean)
+    public Insurance save(final Insurance bean)
     {
         //Used for transaction test
         return insuranceDao.save(bean);
@@ -58,7 +58,7 @@ public class InsuranceServiceImpl implements InsuranceService
     }
 
     @Override
-    public Insurance update(Insurance bean)
+    public Insurance update(final Insurance bean)
     {
         Updater<Insurance> updater = new Updater<>(bean);
         return insuranceDao.updateByUpdater(updater);

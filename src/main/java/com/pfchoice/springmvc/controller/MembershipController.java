@@ -1,9 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,41 +41,41 @@ import com.pfchoice.core.service.MembershipStatusService;
 public class MembershipController{
 	
     @Autowired
-	CountyService  countyService;
+	private CountyService  countyService;
     
     @Autowired
-	GenderService  genderService;
+    private GenderService  genderService;
     
     @Autowired
-   	MembershipStatusService  membershipStatusService;
+    private MembershipStatusService  membershipStatusService;
     
     @Autowired
-    MembershipService membershipService;
+    private MembershipService membershipService;
     
     @Autowired
-    MembershipInsuranceService membershipInsuranceService;
+    private MembershipInsuranceService membershipInsuranceService;
     
     @Autowired
-    InsuranceService insuranceService;
+    private InsuranceService insuranceService;
     
     @Autowired
-    MembershipProviderService membershipProviderService;
+    private MembershipProviderService membershipProviderService;
     
-    
-    @Autowired
+   /* @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
- 
+ */
     private static final Logger logger = LoggerFactory
             .getLogger(MembershipController.class);
     
     
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
+     //   binder.setValidator(validator);
+    	
     }
    
-   
+    
 	public MembershipController() {
     }
 	
@@ -99,6 +97,7 @@ public class MembershipController{
         return "membershipEdit";
     }
 	
+	
 	@RequestMapping(value = "/membership/{id}/display", method = RequestMethod.GET)
     public String displayMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
@@ -109,28 +108,18 @@ public class MembershipController{
         return "membershipDisplay";
     }
 	
-	@RequestMapping(value = "/membership/{id}/displayNoTab", method = RequestMethod.GET)
-    public String displayMembershipPageWithNoTab(@PathVariable Integer id,Model model) {
-		Membership dbMembership = membershipService.findById(id);
-		 logger.info("Returning membership.getId()"+dbMembership.getId());
-	       
-		model.addAttribute("membership", dbMembership);
-        logger.info("Returning membershipDisplayNoTab.jsp page");
-        return "membershipDisplayNoTab";
-    }
+	
 	
 	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST)
-    public String saveMembershipAction( @Validated Membership membership,
+    public String saveMembershipAction( @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model) {
 		
 		
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
         }
+        
         logger.info("Returning MembershipSuccess.jsp page");
         if (null != membership.getId())
         {
@@ -138,8 +127,9 @@ public class MembershipController{
         	membership.setUpdatedBy("Mohanasundharam");
             membershipService.update(membership);
         }
-        
-        model.addAttribute("membership", membership);
+        Membership dbMembership  = membershipService.findById(membership.getId()); 
+        model.addAttribute("membership", dbMembership);
+
         return "membershipEditSuccess";
     }
 	
@@ -149,9 +139,6 @@ public class MembershipController{
 		
 		
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
         }
@@ -167,12 +154,13 @@ public class MembershipController{
         return "membershipEditSuccess";
     }
 	
+	
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/display", method = RequestMethod.GET)
     public String displayMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,Model model) {
 		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
 		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
 	       
-		model.addAttribute("dbMembershipInsurance", dbMembershipInsurance);
+		model.addAttribute("membershipInsurance", dbMembershipInsurance);
         logger.info("Returning membershipDetailsDisplay.jsp page");
         return "membershipDetailsDisplay";
     }
@@ -181,99 +169,90 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/{id}/details/new")
     public String newMembershipInsDetailsPage(@PathVariable Integer id,Model model) {
 		
-		
 		Membership dbMembership = membershipService.findById(id);
 		
 		MembershipInsurance  dbMembershipInsurance = new MembershipInsurance();
 		dbMembershipInsurance.setCreatedBy("Mohanasundharam");
 		dbMembershipInsurance.setMbr(dbMembership);
-		model.addAttribute("dbMembershipInsurance", dbMembershipInsurance);
+		model.addAttribute("membershipInsurance", dbMembershipInsurance);
 		
         logger.info("Returning membershipDetailsDisplay.jsp page");
         return "membershipDetailsDisplay";
     }
 	
+	
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"update"})
     public String saveMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
-    		@Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
-		
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
+		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
+		Membership dbMembership = membershipService.findById(id);
+        
 		 if (bindingResult.hasErrors()) {
-	        	for( ObjectError oe :bindingResult.getAllErrors()){
-	        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-	        	}
-	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
-	   		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
+	   		 	logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
 	   	       
-	   		model.addAttribute("dbMembershipInsurance", dbMembershipInsurance);
-	           return "membershipDetailsDisplay";
+	   		 	model.addAttribute("membershipInsurance", dbMembershipInsurance);
 	          
-	        }
-	        else
-	        {
+	   			return "membershipDetailsDisplay";
+	      }
+	      else
+	      {
 	        	membershipInsurance.setActiveInd('Y');
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	        	
 	            membershipInsuranceService.update(membershipInsurance);
-		        return "membershipEditSuccess";
-	        }    
-		
-		
+	             System.out.println("mbrInsId in save method "+mbrInsId);
+	             model.addAttribute("membershipInsurance", dbMembershipInsurance);
+	             model.addAttribute("membership", dbMembership);
+		          
+	             System.out.println("dbMembership.getFirstName()"+dbMembership.getFirstName());
+	     		
+		        return "membershipDetailsEditSuccess";
+	       }    
         
     }
 	
+	
 	@RequestMapping(value = "/membership/{id}/details/save.do", method = RequestMethod.POST,params={"add"})
     public String newMembershipInDetailsPage(@PathVariable Integer id,
-    		@Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
 		
 		 if (bindingResult.hasErrors()) {
-	        	for( ObjectError oe :bindingResult.getAllErrors()){
-	        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-	        	}
-	        
-	   	       
-	   	
+	        	
 	           return "membershipDetailsDisplay";
-	          
 	        }
 	        else
 	        {
-	        	
 	        	membershipInsurance.setActiveInd('Y');
 	        	membershipInsurance.setCreatedBy("Mohanasundharam");
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	            membershipInsuranceService.save(membershipInsurance);
-		        return "membershipEditSuccess";
+		        return "membershipDetailsEditSuccess";
 	        }    
-		
-		
-        
     }
+	
 	
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipInsDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
-    		@Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
-		
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
+	 	
+		System.out.println("membershipInsurance.getMbr().getFirstName()"+membershipInsurance.getMbr().getFirstName());
+		//MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
+	   	
 		 if (bindingResult.hasErrors()) {
-	        	for( ObjectError oe :bindingResult.getAllErrors()){
-	        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-	        	}
-	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
-	   		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
-	   	       
-	   		model.addAttribute("dbMembershipInsurance", dbMembershipInsurance);
+	       	// logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
+	   	//	model.addAttribute("membershipInsurance", dbMembershipInsurance);
 	           return "membershipDetailsDisplay";
-	          
 	        }
 	        else
 	        {
 	        	membershipInsurance.setActiveInd('N');
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	            membershipInsuranceService.update(membershipInsurance);
-		        return "membershipEditSuccess";
+		        
 	        }    
-		
-		
-        
+		//  dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
+		   
+		 return "membershipEditSuccess";
     }
 	
 	
@@ -281,9 +260,6 @@ public class MembershipController{
     public String saveMembershipInsuranceAction( @Validated MembershipInsurance membershipInsurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning membershipDetailsEdit.jsp page");
             return "membershipDetailsEdit";
         }
@@ -298,6 +274,8 @@ public class MembershipController{
         return "membershipDetailsEditSuccess";
     }
 	
+	
+	
 	@RequestMapping(value = "/membership/{id}/detailsList")
     public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
  
@@ -309,6 +287,7 @@ public class MembershipController{
 		return modelAndView;
 	}
     
+	
 	@RequestMapping(value = "/membership/{id}/providerDetails", method = RequestMethod.GET)
     public String displayMembershipProviderDetailsPage(@PathVariable Integer id,  @Validated MembershipProvider membershipProvider,
     				BindingResult bindingResult, Model model)throws Exception {
@@ -324,51 +303,41 @@ public class MembershipController{
         return "membershipProviderEdit";
     }
 	
-	@ModelAttribute("countyMap")
-	public Map<Integer,String> populateCountyList() {
+	
+	@ModelAttribute("countyList")
+	public List<County> populateCountyList() {
 		
 		//Data referencing for county list box
 		List<County> countyList = countyService.findAll();
-		Map<Integer,String> countyMap = new HashMap<Integer,String>();
-		for(County c:countyList){
-			countyMap.put(c.getCode(),c.getDescription());
-		}
-		return countyMap;
+
+		return countyList;
 	}
 
-	@ModelAttribute("genderMap")
-	public Map<Byte,String> populateGenderList() {
+	
+	@ModelAttribute("genderList")
+	public List<Gender> populateGenderList() {
 		
 		//Data referencing for gender list box
 		List<Gender> genderList = genderService.findAll();
-		Map<Byte,String> genderMap = new HashMap<Byte,String>();
-		for(Gender g:genderList){
-			genderMap.put(g.getId(),g.getDescription());
-		}
-		return genderMap;
-	}
-	
-	@ModelAttribute("insMap")
-	public Map<Integer,String> populateInsuranceList() {
 		
-		//Data referencing for gender list box
-		List<Insurance> insList = insuranceService.findAll();
-		Map<Integer,String> insMap = new HashMap<Integer,String>();
-		for(Insurance g:insList){
-			insMap.put(g.getId(),g.getName());
-		}
-		return insMap;
+		return genderList;
 	}
 	
-	@ModelAttribute("statusMap")
-	public Map<Byte,String> populateStatusList() {
+	
+	@ModelAttribute("insList")
+	public List<Insurance> populateInsuranceList() {
+		
+		//Data referencing for Insurance list box
+		List<Insurance> insList = insuranceService.findAll();
+		return insList;
+	}
+	
+	
+	@ModelAttribute("statusList")
+	public List<MembershipStatus> populateStatusList1() {
 		
 		//Data referencing for Membership Status list box
 		List<MembershipStatus> mbrStatusList = membershipStatusService.findAll();
-		Map<Byte,String> mbrStatusMap = new HashMap<Byte,String>();
-		for(MembershipStatus ms:mbrStatusList){
-			mbrStatusMap.put(ms.getId(),ms.getDescription());
-		}
-		return mbrStatusMap;
+		return mbrStatusList;
 	}
 }

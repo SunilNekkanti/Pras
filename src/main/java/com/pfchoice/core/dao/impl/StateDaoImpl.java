@@ -24,7 +24,7 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
     }
 
     @Override
-    public State findById(Integer id)
+    public State findById(final Integer id)
     {
     	State entity = get(id);
         return entity;
     }
 
     @Override
-    public State save(State bean)
+    public State save(final State bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public State deleteById(Integer id)
+    public State deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	State entity = super.get(id);

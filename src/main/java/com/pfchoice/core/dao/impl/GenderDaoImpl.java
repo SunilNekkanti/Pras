@@ -24,7 +24,7 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
     }
 
     @Override
-    public Gender findById(Byte id)
+    public Gender findById(final Byte id)
     {
     	Gender entity = get(id);
         return entity;
     }
 
     @Override
-    public Gender save(Gender bean)
+    public Gender save(final Gender bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public Gender deleteById(Byte id)
+    public Gender deleteById(final Byte id)
     {
 //        throw new UnsupportedOperationException();
     	Gender entity = super.get(id);

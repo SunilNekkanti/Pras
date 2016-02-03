@@ -24,7 +24,7 @@ public class InsuranceContractDaoImpl extends HibernateBaseDao<InsuranceContract
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class InsuranceContractDaoImpl extends HibernateBaseDao<InsuranceContract
     }
 
     @Override
-    public InsuranceContract findById(Integer id)
+    public InsuranceContract findById(final Integer id)
     {
     	InsuranceContract entity = get(id);
         return entity;
     }
 
     @Override
-    public InsuranceContract save(InsuranceContract bean)
+    public InsuranceContract save(final InsuranceContract bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public InsuranceContract deleteById(Integer id)
+    public InsuranceContract deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	InsuranceContract entity = super.get(id);

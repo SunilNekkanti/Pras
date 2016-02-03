@@ -44,8 +44,8 @@
 			<div class="form-group">
 					<label class="control-label col-sm-2" for="hedis">Hedis Code:</label>
 					<div class="col-sm-6">
-						<springForm:select path="hedisMeasure.id" class="form-control" id="hedisCode" >
-				    		<springForm:options items="${hedisMeasureList}"  itemLabel="code"   />
+						<springForm:select path="hedisMeasure" class="form-control" id="hedisCode" >
+				    		<springForm:options items="${hedisMeasureList}" itemValue="id" itemLabel="code"   />
 						</springForm:select>
 						<springForm:errors path="hedisMeasure.code" cssClass="error" />
 					</div>
@@ -54,8 +54,8 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="cpt">CPT Code:</label>
 					<div class="col-sm-6">
-						<springForm:select path="cptMeasure.id" class="form-control" id="cptCode" >
-				    		<springForm:options items="${cptMeasureList}"  itemLabel="code"   />
+						<springForm:select path="cptMeasure" class="form-control" id="cptCode" >
+				    		<springForm:options items="${cptMeasureList}" itemValue="id" itemLabel="code"   />
 						</springForm:select>
 						<springForm:errors path="cptMeasure.code" cssClass="error" />
 					</div>
@@ -64,8 +64,8 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="cpt">ICD Code:</label>
 					<div class="col-sm-6">
-						<springForm:select path="icdMeasure.id" class="form-control" id="icdCode" >
-				    		<springForm:options items="${icdMeasureList}"  itemLabel="code"  />
+						<springForm:select path="icdMeasured" class="form-control" id="icdCode" >
+				    		<springForm:options items="${icdMeasureList}" itemValue="id" itemLabel="code"  />
 						</springForm:select>
 						<springForm:errors path="icdMeasure.code" cssClass="error" />
 					</div>

@@ -102,7 +102,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="state">State:</label>
 					<div class="col-sm-6">
-						<springForm:select path="stateCode.code" class="form-control" id="state">
+						<springForm:select path="stateCode" class="form-control" id="state">
 				    		<springForm:options items="${stateList}" itemValue="code" itemLabel="shortName"     />
 						</springForm:select>
 						<springForm:errors path="stateCode.code" cssClass="error" />
@@ -111,7 +111,7 @@
 					<div class="form-group">
 					<label class="control-label col-sm-2" for="zip">Zip:</label>
 					<div class="col-sm-6">
-						<springForm:select path="zipCode.code" class="form-control" id="zip">
+						<springForm:select path="zipCode" class="form-control" id="zip">
 				    		<springForm:options items="${zipCodeList}" itemValue="code"  itemLabel="code" />
 						</springForm:select>
 						<springForm:errors path="zipCode.code" cssClass="error" />

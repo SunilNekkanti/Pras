@@ -24,7 +24,7 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
     }
 
     @Override
-    public ZipCode findById(Integer id)
+    public ZipCode findById(final Integer id)
     {
     	ZipCode entity = get(id);
         return entity;
     }
 
     @Override
-    public ZipCode save(ZipCode bean)
+    public ZipCode save(final ZipCode bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public ZipCode deleteById(Integer id)
+    public ZipCode deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	ZipCode entity = super.get(id);

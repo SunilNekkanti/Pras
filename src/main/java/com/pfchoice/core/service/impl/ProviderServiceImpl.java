@@ -35,20 +35,20 @@ public class ProviderServiceImpl implements ProviderService
 
     @Override
     @Transactional(readOnly = true)
-    public Provider findById(Integer id)
+    public Provider findById(final Integer id)
     {
         return providerDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return providerDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public Provider save(Provider bean)
+    public Provider save(final Provider bean)
     {
         //Used for transaction test
         return providerDao.save(bean);
@@ -57,7 +57,7 @@ public class ProviderServiceImpl implements ProviderService
     }
 
     @Override
-    public Provider update(Provider bean)
+    public Provider update(final Provider bean)
     {
         Updater<Provider> updater = new Updater<>(bean);
         return providerDao.updateByUpdater(updater);

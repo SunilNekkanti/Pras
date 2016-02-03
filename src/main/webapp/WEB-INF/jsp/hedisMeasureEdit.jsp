@@ -56,9 +56,9 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="hedisMsrGrp">State:</label>
+					<label class="control-label col-sm-2" for="hedisMsrGrp">Group Id:</label>
 					<div class="col-sm-6">
-						<springForm:select path="hedisMsrGrp.id" class="form-control" id="hedisMsrGrp">
+						<springForm:select path="hedisMsrGrp" class="form-control" id="hedisMsrGrp">
 				    		<springForm:options items="${hedisMeasureGroupList}" itemValue="id" itemLabel="description"     />
 						</springForm:select>
 						<springForm:errors path="hedisMsrGrp.code" cssClass="error" />

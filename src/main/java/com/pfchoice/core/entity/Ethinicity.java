@@ -47,7 +47,7 @@ public class Ethinicity implements Serializable
     {
     }
 
-    public Ethinicity(Byte id)
+    public Ethinicity(final Byte id)
     {
         this.id = id;
     }
@@ -57,7 +57,7 @@ public class Ethinicity implements Serializable
         return id;
     }
 
-    public void setId(Byte id)
+    public void setId(final Byte id)
     {
         this.id = id;
     }
@@ -73,7 +73,7 @@ public class Ethinicity implements Serializable
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -87,7 +87,7 @@ public class Ethinicity implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -101,7 +101,7 @@ public class Ethinicity implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Timestamp updatedDate) {
+	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -115,7 +115,7 @@ public class Ethinicity implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -129,7 +129,7 @@ public class Ethinicity implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -143,7 +143,7 @@ public class Ethinicity implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

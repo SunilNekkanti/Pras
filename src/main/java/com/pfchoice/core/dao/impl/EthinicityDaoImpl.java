@@ -21,7 +21,7 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -29,21 +29,21 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
     }
 
     @Override
-    public Ethinicity findById(Byte id)
+    public Ethinicity findById(final Byte id)
     {
     	Ethinicity entity = get(id);
         return entity;
     }
 
     @Override
-    public Ethinicity save(Ethinicity bean)
+    public Ethinicity save(final Ethinicity bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public Ethinicity deleteById(Byte id)
+    public Ethinicity deleteById(final Byte id)
     {
 //        throw new UnsupportedOperationException();
     	Ethinicity entity = super.get(id);

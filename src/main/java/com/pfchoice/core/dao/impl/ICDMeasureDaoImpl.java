@@ -24,7 +24,7 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     }
 
     @Override
-    public ICDMeasure findById(Integer id)
+    public ICDMeasure findById(final Integer id)
     {
     	ICDMeasure entity = get(id);
         return entity;
     }
 
     @Override
-    public ICDMeasure save(ICDMeasure bean)
+    public ICDMeasure save(final ICDMeasure bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public ICDMeasure deleteById(Integer id)
+    public ICDMeasure deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	ICDMeasure entity = super.get(id);

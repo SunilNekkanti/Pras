@@ -49,7 +49,7 @@ public class File implements Serializable
     {
     }
 
-    public File(Integer id)
+    public File(final Integer id)
     {
         this.id = id;
     }
@@ -59,7 +59,7 @@ public class File implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -74,7 +74,7 @@ public class File implements Serializable
 	/**
 	 * @param fileName the fileName to set
 	 */
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
 
@@ -88,7 +88,7 @@ public class File implements Serializable
 	/**
 	 * @param fileTypeCode the fileTypeCode to set
 	 */
-	public void setFileTypeCode(Integer fileTypeCode) {
+	public void setFileTypeCode(final Integer fileTypeCode) {
 		this.fileTypeCode = fileTypeCode;
 	}
 
@@ -102,7 +102,7 @@ public class File implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -116,7 +116,7 @@ public class File implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Timestamp updatedDate) {
+	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -130,7 +130,7 @@ public class File implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -144,7 +144,7 @@ public class File implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -158,7 +158,7 @@ public class File implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 	

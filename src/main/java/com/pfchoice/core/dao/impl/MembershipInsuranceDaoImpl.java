@@ -26,7 +26,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -34,21 +34,21 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     }
 
     @Override
-    public MembershipInsurance findById(Integer id)
+    public MembershipInsurance findById(final Integer id)
     {
     	MembershipInsurance entity = get(id);
         return entity;
     }
 
     @Override
-    public MembershipInsurance save(MembershipInsurance bean)
+    public MembershipInsurance save(final MembershipInsurance bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public MembershipInsurance deleteById(Integer id)
+    public MembershipInsurance deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	MembershipInsurance entity = super.get(id);
@@ -74,7 +74,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     }
     
     @SuppressWarnings("unchecked")
-	public List<MembershipInsurance> findAllByMbrId(Integer id)
+	public List<MembershipInsurance> findAllByMbrId(final Integer id)
     {
     	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrIns")
     			.createAlias("mbrIns.mbr","mbr")

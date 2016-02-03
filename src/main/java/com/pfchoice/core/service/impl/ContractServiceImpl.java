@@ -26,7 +26,7 @@ public class ContractServiceImpl implements ContractService
     private ContractDao contractDao;
 
     @Override
-    public Contract deleteById(Integer id)
+    public Contract deleteById(final Integer id)
     {
         //Used for transaction test
         return contractDao.deleteById(id);
@@ -35,20 +35,20 @@ public class ContractServiceImpl implements ContractService
 
     @Override
     @Transactional(readOnly = true)
-    public Contract findById(Integer id)
+    public Contract findById(final Integer id)
     {
         return contractDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return contractDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public Contract save(Contract bean)
+    public Contract save(final Contract bean)
     {
         //Used for transaction test
         return contractDao.save(bean);
@@ -57,20 +57,20 @@ public class ContractServiceImpl implements ContractService
     }
 
     @Override
-    public Contract update(Contract bean)
+    public Contract update(final Contract bean)
     {
         Updater<Contract> updater = new Updater<>(bean);
         return contractDao.updateByUpdater(updater);
     }
 
     @Override
-    public List<Contract> findAllContractsByRefId(String refString, Integer id)
+    public List<Contract> findAllContractsByRefId(final String refString, Integer id)
     {
     	return contractDao.findAllContractsByRefId(refString, id);
     }
 
     @Override
-    public Contract findActiveContractByRefId(String refString, Integer id)
+    public Contract findActiveContractByRefId(final String refString, Integer id)
     {
     	return contractDao.findActiveContractByRefId(refString, id);
     }

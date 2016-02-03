@@ -21,7 +21,7 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -29,21 +29,21 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
     }
 
     @Override
-    public FileType findById(Integer id)
+    public FileType findById(final Integer id)
     {
     	FileType entity = get(id);
         return entity;
     }
 
     @Override
-    public FileType save(FileType bean)
+    public FileType save(final FileType bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public FileType deleteById(Integer id)
+    public FileType deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	FileType entity = super.get(id);

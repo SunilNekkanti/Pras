@@ -24,7 +24,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
     }
 
     @Override
-    public Insurance findById(Integer id)
+    public Insurance findById(final Integer id)
     {
     	Insurance entity = get(id);
         return entity;
     }
 
     @Override
-    public Insurance save(Insurance bean)
+    public Insurance save(final Insurance bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public Insurance deleteById(Integer id)
+    public Insurance deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	Insurance entity = super.get(id);

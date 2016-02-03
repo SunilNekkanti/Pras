@@ -18,6 +18,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.google.gson.annotations.Expose;
 /**
  *
@@ -43,8 +46,9 @@ public class MembershipInsurance implements Serializable
     private Insurance insId;
     
     
-    @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne( fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Membership mbr;
     
     @Expose
@@ -53,6 +57,7 @@ public class MembershipInsurance implements Serializable
 
     @Expose
     @Column(name="activitydate")
+    @Temporal(TemporalType.DATE)
     private Date activityDate;
     
     @Expose

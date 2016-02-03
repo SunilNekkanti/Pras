@@ -24,7 +24,7 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
     }
 
     @Override
-    public County findById(Integer id)
+    public County findById(final Integer id)
     {
     	County entity = get(id);
         return entity;
     }
 
     @Override
-    public County save(County bean)
+    public County save(final County bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public County deleteById(Integer id)
+    public County deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	County entity = super.get(id);

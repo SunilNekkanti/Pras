@@ -25,7 +25,7 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -33,21 +33,21 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
     }
 
     @Override
-    public Contact findById(Integer id)
+    public Contact findById(final Integer id)
     {
     	Contact entity = get(id);
         return entity;
     }
 
     @Override
-    public Contact save(Contact bean)
+    public Contact save(final Contact bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public Contact deleteById(Integer id)
+    public Contact deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	Contact entity = super.get(id);
@@ -65,7 +65,7 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
     }
 
     @SuppressWarnings("unchecked")
- 	public List<Contact> findAllContactsByRefId(String refString, Integer id)
+ 	public List<Contact> findAllContactsByRefId(final String refString, final Integer id)
      {
     	String refRestrictionString = null;
     	if("membership".equals(refString)){
@@ -85,7 +85,7 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
      }
     
     @SuppressWarnings("unchecked")
- 	public Contact findActiveContactByRefId(String refString, Integer id)
+ 	public Contact findActiveContactByRefId(final String refString, final Integer id)
      {
     	Contact contact  = null;
     	String refRestrictionString = null;

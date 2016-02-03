@@ -1,9 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pfchoice.core.entity.Contact;
-import com.pfchoice.core.entity.County;
-import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;
@@ -179,9 +175,6 @@ public class ContactController{
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "membershipContactEdit";
         }
@@ -200,7 +193,6 @@ public class ContactController{
 	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
-       
             
 	        if (null != contact.getId())
 	        {
@@ -290,9 +282,6 @@ public class ContactController{
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "providerContactEdit";
         }
@@ -312,9 +301,6 @@ public class ContactController{
 	public String saveProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "providerContactEdit";
         }

@@ -72,7 +72,7 @@ public class Contract implements Serializable
     {
     }
 
-    public Contract(Integer id)
+    public Contract(final Integer id)
     {
         this.id = id;
     }
@@ -82,7 +82,7 @@ public class Contract implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -97,7 +97,7 @@ public class Contract implements Serializable
 	/**
 	 * @param contractNBR the contractNBR to set
 	 */
-	public void setContractNBR(String contractNBR) {
+	public void setContractNBR(final String contractNBR) {
 		this.contractNBR = contractNBR;
 	}
 
@@ -111,7 +111,7 @@ public class Contract implements Serializable
 	/**
 	 * @param pMPM the pMPM to set
 	 */
-	public void setPMPM(Double pMPM) {
+	public void setPMPM(final Double pMPM) {
 		PMPM = pMPM;
 	}
 
@@ -125,7 +125,7 @@ public class Contract implements Serializable
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(final Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -139,7 +139,7 @@ public class Contract implements Serializable
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(final Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -153,7 +153,7 @@ public class Contract implements Serializable
 	/**
 	 * @param referenceContract the referenceContract to set
 	 */
-	public void setReferenceContract(ReferenceContract referenceContract) {
+	public void setReferenceContract(final ReferenceContract referenceContract) {
 		this.referenceContract = referenceContract;
 	}
 
@@ -167,7 +167,7 @@ public class Contract implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -181,7 +181,7 @@ public class Contract implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -195,7 +195,7 @@ public class Contract implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -209,7 +209,7 @@ public class Contract implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -223,7 +223,7 @@ public class Contract implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

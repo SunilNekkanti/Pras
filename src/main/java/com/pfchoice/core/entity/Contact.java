@@ -90,7 +90,7 @@ public class Contact implements Serializable
     {
     }
 
-    public Contact(Integer id)
+    public Contact(final Integer id)
     {
         this.id = id;
     }
@@ -100,7 +100,7 @@ public class Contact implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -116,7 +116,7 @@ public class Contact implements Serializable
 	/**
 	 * @param homePhone the homePhone to set
 	 */
-	public void setHomePhone(String homePhone) {
+	public void setHomePhone(final String homePhone) {
 		this.homePhone = homePhone;
 	}
 
@@ -130,7 +130,7 @@ public class Contact implements Serializable
 	/**
 	 * @param mobilePhone the mobilePhone to set
 	 */
-	public void setMobilePhone(String mobilePhone) {
+	public void setMobilePhone(final String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
 
@@ -144,7 +144,7 @@ public class Contact implements Serializable
 	/**
 	 * @param faxNumber the faxNumber to set
 	 */
-	public void setFaxNumber(String faxNumber) {
+	public void setFaxNumber(final String faxNumber) {
 		this.faxNumber = faxNumber;
 	}
 
@@ -158,7 +158,7 @@ public class Contact implements Serializable
 	/**
 	 * @param email the email to set
 	 */
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
@@ -172,7 +172,7 @@ public class Contact implements Serializable
 	/**
 	 * @param address1 the address1 to set
 	 */
-	public void setAddress1(String address1) {
+	public void setAddress1(final String address1) {
 		this.address1 = address1;
 	}
 
@@ -186,7 +186,7 @@ public class Contact implements Serializable
 	/**
 	 * @param address2 the address2 to set
 	 */
-	public void setAddress2(String address2) {
+	public void setAddress2(final String address2) {
 		this.address2 = address2;
 	}
 
@@ -200,7 +200,7 @@ public class Contact implements Serializable
 	/**
 	 * @param city the city to set
 	 */
-	public void setCity(String city) {
+	public void setCity(final String city) {
 		this.city = city;
 	}
 
@@ -214,7 +214,7 @@ public class Contact implements Serializable
 	/**
 	 * @param zipCode the zipCode to set
 	 */
-	public void setZipCode(ZipCode zipCode) {
+	public void setZipCode(final ZipCode zipCode) {
 		this.zipCode = zipCode;
 	}
 
@@ -228,7 +228,7 @@ public class Contact implements Serializable
 	/**
 	 * @param stateCode the stateCode to set
 	 */
-	public void setStateCode(State stateCode) {
+	public void setStateCode(final State stateCode) {
 		this.stateCode = stateCode;
 	}
 
@@ -242,7 +242,7 @@ public class Contact implements Serializable
 	/**
 	 * @param fileId the fileId to set
 	 */
-	public void setFileId(Integer fileId) {
+	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
 	}
 
@@ -257,7 +257,7 @@ public class Contact implements Serializable
 	/**
 	 * @param refContact the refContact to set
 	 */
-	public void setRefContact(ReferenceContact refContact) {
+	public void setRefContact(final ReferenceContact refContact) {
 		this.refContact = refContact;
 	}
 
@@ -271,7 +271,7 @@ public class Contact implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -285,7 +285,7 @@ public class Contact implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -299,7 +299,7 @@ public class Contact implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -313,7 +313,7 @@ public class Contact implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -327,7 +327,7 @@ public class Contact implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(Character activeInd) {
+	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 

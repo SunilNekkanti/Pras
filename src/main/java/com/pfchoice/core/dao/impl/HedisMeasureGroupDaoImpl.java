@@ -24,7 +24,7 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
     }
 
     @Override
-    public HedisMeasureGroup findById(Integer id)
+    public HedisMeasureGroup findById(final Integer id)
     {
     	HedisMeasureGroup entity = get(id);
         return entity;
     }
 
     @Override
-    public HedisMeasureGroup save(HedisMeasureGroup bean)
+    public HedisMeasureGroup save(final HedisMeasureGroup bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public HedisMeasureGroup deleteById(Integer id)
+    public HedisMeasureGroup deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	HedisMeasureGroup entity = super.get(id);

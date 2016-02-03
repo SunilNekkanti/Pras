@@ -7,21 +7,18 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Profile</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="dbMembershipInsurance" action="save.do" class="form-horizontal" role="form">
-							
-				<div class="form-group">
-				
+			<springForm:form method="POST" commandName="membershipInsurance" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for=insId>insId:</label>
 					<div class="col-sm-6">
-						<springForm:select path="insId.id"  class="form-control" id="insId">
-				    		<springForm:options items="${insMap}"    />
+						<springForm:select path="insId"  class="form-control" id="insId">
+				    		<springForm:options items="${insList}" itemValue="id" itemLabel="name"    />
 						</springForm:select>
 						
 					</div>
 				</div>
 				
-				
+				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="dob">New Benifits:</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="mbr.id" />
@@ -108,11 +105,11 @@
 				</div>
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>
-						 <c:when test="${dbMembershipInsurance.id != null && dbMembershipInsurance.activeInd == 89}"> 
+						 <c:when test="${membershipInsurance.id != null && membershipInsurance.activeInd == 89}"> 
 								<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
 								<button type="submit" class="btn btn-primary" id="deleteButton" class="delete" name="delete" >Delete</button>
 						</c:when>
-						 <c:when test="${dbMembershipInsurance.id == null}"> 
+						 <c:when test="${membershipInsurance.id == null}"> 
 							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
 							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
 						</c:when>

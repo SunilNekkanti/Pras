@@ -24,7 +24,7 @@ public class ProviderContractDaoImpl extends HibernateBaseDao<ProviderContract, 
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class ProviderContractDaoImpl extends HibernateBaseDao<ProviderContract, 
     }
 
     @Override
-    public ProviderContract findById(Integer id)
+    public ProviderContract findById(final Integer id)
     {
     	ProviderContract entity = get(id);
         return entity;
     }
 
     @Override
-    public ProviderContract save(ProviderContract bean)
+    public ProviderContract save(final ProviderContract bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public ProviderContract deleteById(Integer id)
+    public ProviderContract deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	ProviderContract entity = super.get(id);

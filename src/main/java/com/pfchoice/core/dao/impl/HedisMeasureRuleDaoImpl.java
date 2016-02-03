@@ -24,7 +24,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     }
 
     @Override
-    public HedisMeasureRule findById(Integer id)
+    public HedisMeasureRule findById(final Integer id)
     {
     	HedisMeasureRule entity = get(id);
         return entity;
     }
 
     @Override
-    public HedisMeasureRule save(HedisMeasureRule bean)
+    public HedisMeasureRule save(final HedisMeasureRule bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public HedisMeasureRule deleteById(Integer id)
+    public HedisMeasureRule deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	HedisMeasureRule entity = super.get(id);

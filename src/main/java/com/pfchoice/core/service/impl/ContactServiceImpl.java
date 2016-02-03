@@ -27,7 +27,7 @@ public class ContactServiceImpl implements ContactService
     private ContactDao contactDao;
 
     @Override
-    public Contact deleteById(Integer id)
+    public Contact deleteById(final Integer id)
     {
         //Used for transaction test
         return contactDao.deleteById(id);
@@ -36,20 +36,20 @@ public class ContactServiceImpl implements ContactService
 
     @Override
     @Transactional(readOnly = true)
-    public Contact findById(Integer id)
+    public Contact findById(final Integer id)
     {
         return contactDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return contactDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public Contact save(Contact bean)
+    public Contact save(final Contact bean)
     {
         //Used for transaction test
         return contactDao.save(bean);
@@ -58,20 +58,20 @@ public class ContactServiceImpl implements ContactService
     }
 
     @Override
-    public Contact update(Contact bean)
+    public Contact update(final Contact bean)
     {
         Updater<Contact> updater = new Updater<>(bean);
         return contactDao.updateByUpdater(updater);
     }
 
     @Override
-    public List<Contact> findAllContactsByRefId(String refString, Integer id)
+    public List<Contact> findAllContactsByRefId(final String refString, final Integer id)
     {
     	return contactDao.findAllContactsByRefId(refString, id);
     }
 
     @Override
-    public Contact findActiveContactByRefId(String refString, Integer id)
+    public Contact findActiveContactByRefId(final String refString, final Integer id)
     {
     	return contactDao.findActiveContactByRefId(refString, id);
     }

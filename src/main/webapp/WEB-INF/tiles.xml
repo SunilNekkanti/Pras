@@ -95,6 +95,17 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsDisplay.jsp" />  
     </definition> 
     
+     <definition name="membershipDetailsEditSuccess" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsEditSuccess.jsp" />  
+    </definition>  
+    
+     <definition name="membershipDetailsEdit" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsEdit.jsp" />  
+    </definition> 
     
      <!--   Provider Section  -->
      <definition name="providerList" extends="base1.definition">  

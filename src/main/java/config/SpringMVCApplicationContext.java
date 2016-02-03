@@ -1,26 +1,24 @@
 package config;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentResolver;
 
+import com.pfchoice.core.entity.formatter.*;
+
 import com.pfchoice.springmvc.interceptor.AuthenticationInterceptor;
-
-
-import org.apache.tiles.Attribute;
-import org.apache.tiles.Definition;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ConversionServiceFactoryBean;
+import org.springframework.core.convert.ConversionService;
+
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerAdapter;
@@ -33,10 +31,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.AbstractHandlerMapping;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
@@ -61,7 +57,44 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	
  //   @Autowired
  //   private AuthenticationInterceptor authenticationInterceptor;
-    
+	
+	@Autowired
+	private MembershipStatusFormatter membershipStatusFormatter;
+
+	@Autowired
+	private GenderFormatter genderFormatter;
+	
+	@Autowired
+	private CountyFormatter countyFormatter;
+	
+	@Autowired
+	private InsuranceFormatter insuranceFormatter;
+	
+	@Autowired
+	private MembershipFormatter membershipFormatter;
+	
+	@Autowired
+	private CPTMeasureFormatter cptMeasureFormatter;
+	
+	@Autowired
+	private FileTypeFormatter fileTypeFormatter;
+	
+	@Autowired
+	private HedisMeasureFormatter hedisMeasureFormatter;
+	
+	@Autowired
+	private ICDMeasureFormatter icdFormatter;
+	
+	@Autowired
+	private ProviderFormatter providerFormatter;
+	
+	@Autowired
+	private StateFormatter stateFormatter;
+	
+	@Autowired
+	private ZipCodeFormatter zipCodeFormatter;
+	
+	
 //	private static final Map<String, Definition> tiles = new HashMap<String,Definition>();
 //	private static final Attribute TEMPLATE = new Attribute("/WEB-INF/jsp/layout.jsp");
 
@@ -171,18 +204,31 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     }
 
 
-    /**
-     * <code>Configures Apache tiles definitions bean used by Apache TilesViewResolver to resolve views selected for rendering by @Controllers</code>
-     */ 
-   /* @Bean
-    public TilesConfigurer getTilesConfigurer() {
-     TilesConfigurer tilesConfigurer = new TilesConfigurer();
-     tilesConfigurer.setCheckRefresh(true);
-     tilesConfigurer.setDefinitionsFactoryClass(TilesDefinitionsConfig.class);
-     
-     // Add apache tiles definitions
-     TilesDefinitionsConfig.addDefinitions();
-     
-     return tilesConfigurer;
-    }*/
+    @Bean(name="conversionService") 
+    public ConversionService getConversionService() {
+        ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
+        bean.afterPropertiesSet();
+        ConversionService object = bean.getObject();
+        return object;
+    }
+
+    
+    @Override
+    public void addFormatters(FormatterRegistry formatterRegistry)
+    {
+    	formatterRegistry.addFormatter(membershipStatusFormatter);
+    	formatterRegistry.addFormatter(countyFormatter);
+    	formatterRegistry.addFormatter(genderFormatter);
+    	formatterRegistry.addFormatter(insuranceFormatter);
+    	formatterRegistry.addFormatter(membershipFormatter);
+    	formatterRegistry.addFormatter(cptMeasureFormatter);
+    	formatterRegistry.addFormatter(hedisMeasureFormatter);
+    	formatterRegistry.addFormatter(fileTypeFormatter);
+    	formatterRegistry.addFormatter(icdFormatter);
+    	formatterRegistry.addFormatter(providerFormatter);
+    	formatterRegistry.addFormatter(stateFormatter);
+    	formatterRegistry.addFormatter(zipCodeFormatter);
+    }
+
+  
 }

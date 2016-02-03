@@ -21,7 +21,7 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -29,21 +29,21 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
     }
 
     @Override
-    public TrackModel findById(Integer id)
+    public TrackModel findById(final Integer id)
     {
     	TrackModel entity = get(id);
         return entity;
     }
 
     @Override
-    public TrackModel save(TrackModel bean)
+    public TrackModel save(final TrackModel bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public TrackModel deleteById(Integer id)
+    public TrackModel deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	TrackModel entity = super.get(id);

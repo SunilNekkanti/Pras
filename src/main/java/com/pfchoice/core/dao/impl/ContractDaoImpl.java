@@ -25,7 +25,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -33,21 +33,21 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
     }
 
     @Override
-    public Contract findById(Integer id)
+    public Contract findById(final Integer id)
     {
     	Contract entity = get(id);
         return entity;
     }
 
     @Override
-    public Contract save(Contract bean)
+    public Contract save(final Contract bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public Contract deleteById(Integer id)
+    public Contract deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	Contract entity = super.get(id);
@@ -65,7 +65,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
     }
 
     @SuppressWarnings("unchecked")
- 	public List<Contract> findAllContractsByRefId(String refString, Integer id)
+ 	public List<Contract> findAllContractsByRefId(final String refString, final Integer id)
      {
     	String refRestrictionString = null;
     	 if("provider".equals(refString)){
@@ -89,7 +89,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      }
     
     @SuppressWarnings("unchecked")
- 	public Contract findActiveContractByRefId(String refString, Integer id)
+ 	public Contract findActiveContractByRefId(final String refString, final Integer id)
      {
     	Contract contract  = null;
     	String refRestrictionString = null;

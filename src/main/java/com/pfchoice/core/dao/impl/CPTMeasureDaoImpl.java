@@ -24,7 +24,7 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -32,21 +32,21 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
     }
 
     @Override
-    public CPTMeasure findById(Integer id)
+    public CPTMeasure findById(final Integer id)
     {
     	CPTMeasure entity = get(id);
         return entity;
     }
 
     @Override
-    public CPTMeasure save(CPTMeasure bean)
+    public CPTMeasure save(final CPTMeasure bean)
     {
         getSession().save(bean);
         return bean;
     }
 
     @Override
-    public CPTMeasure deleteById(Integer id)
+    public CPTMeasure deleteById(final Integer id)
     {
 //        throw new UnsupportedOperationException();
     	CPTMeasure entity = super.get(id);
