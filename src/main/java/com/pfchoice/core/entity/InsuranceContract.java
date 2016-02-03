@@ -66,7 +66,7 @@ public class InsuranceContract implements Serializable
     {
     }
 
-    public InsuranceContract(Integer id)
+    public InsuranceContract(final Integer id)
     {
         this.id = id;
     }
@@ -76,7 +76,7 @@ public class InsuranceContract implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -91,7 +91,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param insuranceId the insuranceId to set
 	 */
-	public void setInsuranceId(Insurance insuranceId) {
+	public void setInsuranceId(final Insurance insuranceId) {
 		this.insuranceId = insuranceId;
 	}
 
@@ -105,7 +105,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param contract the contract to set
 	 */
-	public void setContract(String contract) {
+	public void setContract(final String contract) {
 		this.contract = contract;
 	}
 
@@ -119,7 +119,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param pmpm the pmpm to set
 	 */
-	public void setPmpm(Double pmpm) {
+	public void setPmpm(final Double pmpm) {
 		this.pmpm = pmpm;
 	}
 
@@ -133,7 +133,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(final Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -147,7 +147,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(final Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -161,7 +161,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -175,7 +175,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Timestamp updatedDate) {
+	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -189,7 +189,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -203,7 +203,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -217,7 +217,7 @@ public class InsuranceContract implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

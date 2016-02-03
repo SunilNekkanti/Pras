@@ -86,7 +86,7 @@ public class HedisMeasure implements Serializable
     {
     }
 
-    public HedisMeasure(Integer id)
+    public HedisMeasure(final Integer id)
     {
         this.id = id;
     }
@@ -101,7 +101,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
@@ -110,7 +110,7 @@ public class HedisMeasure implements Serializable
         return code;
     }
 
-    public void setCode(String code)
+    public void setCode(final String code)
     {
         this.code = code;
     }
@@ -125,7 +125,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -139,7 +139,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param qltyMsrGrpId the qltyMsrGrpId to set
 	 */
-	public void setHedisMsrGrpId(HedisMeasureGroup hedisMsrGrp) {
+	public void setHedisMsrGrpId(final HedisMeasureGroup hedisMsrGrp) {
 		this.hedisMsrGrp = hedisMsrGrp;
 	}
 
@@ -153,7 +153,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param genderId the genderId to set
 	 */
-	public void setGenderId(Gender genderId) {
+	public void setGenderId(final Gender genderId) {
 		this.genderId = genderId;
 	}
 
@@ -167,7 +167,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param lowerAgeLimit the lowerAgeLimit to set
 	 */
-	public void setLowerAgeLimit(Integer lowerAgeLimit) {
+	public void setLowerAgeLimit(final Integer lowerAgeLimit) {
 		this.lowerAgeLimit = lowerAgeLimit;
 	}
 
@@ -181,7 +181,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param upperAgeLimit the upperAgeLimit to set
 	 */
-	public void setUpperAgeLimit(Integer upperAgeLimit) {
+	public void setUpperAgeLimit(final Integer upperAgeLimit) {
 		this.upperAgeLimit = upperAgeLimit;
 	}
 
@@ -195,7 +195,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param ageEffectiveFrom the ageEffectiveFrom to set
 	 */
-	public void setAgeEffectiveFrom(Date ageEffectiveFrom) {
+	public void setAgeEffectiveFrom(final Date ageEffectiveFrom) {
 		this.ageEffectiveFrom = ageEffectiveFrom;
 	}
 
@@ -209,7 +209,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param ageEffectiveTo the ageEffectiveTo to set
 	 */
-	public void setAgeEffectiveTo(Date ageEffectiveTo) {
+	public void setAgeEffectiveTo(final Date ageEffectiveTo) {
 		this.ageEffectiveTo = ageEffectiveTo;
 	}
 
@@ -237,7 +237,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -251,7 +251,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -265,7 +265,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -279,7 +279,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -293,7 +293,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

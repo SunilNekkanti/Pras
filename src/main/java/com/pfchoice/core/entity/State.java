@@ -61,7 +61,7 @@ public class State implements Serializable
     {
     }
 
-    public State(Integer code)
+    public State(final Integer code)
     {
         this.code = code;
     }
@@ -71,7 +71,7 @@ public class State implements Serializable
         return code;
     }
 
-    public void setCode(Integer code)
+    public void setCode(final Integer code)
     {
         this.code = code;
     }
@@ -86,7 +86,7 @@ public class State implements Serializable
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -100,7 +100,7 @@ public class State implements Serializable
 	/**
 	 * @param shortName the shortName to set
 	 */
-	public void setShortName(String shortName) {
+	public void setShortName(final String shortName) {
 		this.shortName = shortName;
 	}
 
@@ -115,7 +115,7 @@ public class State implements Serializable
 	/**
 	 * @param zipCode the zipCode to set
 	 */
-	public void setZipCode(ZipCode zipCode) {
+	public void setZipCode(final ZipCode zipCode) {
 		this.zipCode = zipCode;
 	}
 
@@ -129,7 +129,7 @@ public class State implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -143,7 +143,7 @@ public class State implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -157,7 +157,7 @@ public class State implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -171,7 +171,7 @@ public class State implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -185,7 +185,7 @@ public class State implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

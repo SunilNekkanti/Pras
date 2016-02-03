@@ -66,7 +66,7 @@ public class ReferenceContact implements Serializable
     {
     }
 
-    public ReferenceContact(Integer id)
+    public ReferenceContact(final Integer id)
     {
         this.id = id;
     }
@@ -76,7 +76,7 @@ public class ReferenceContact implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -93,7 +93,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param mbr the mbr to set
 	 */
-	public void setMbr(Membership mbr) {
+	public void setMbr(final Membership mbr) {
 		this.mbr = mbr;
 	}
 
@@ -107,7 +107,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param ins the ins to set
 	 */
-	public void setIns(Insurance ins) {
+	public void setIns(final Insurance ins) {
 		this.ins = ins;
 	}
 
@@ -121,7 +121,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param prvdr the prvdr to set
 	 */
-	public void setPrvdr(Provider prvdr) {
+	public void setPrvdr(final Provider prvdr) {
 		this.prvdr = prvdr;
 	}
 
@@ -135,7 +135,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -149,7 +149,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -163,7 +163,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -177,7 +177,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -191,7 +191,7 @@ public class ReferenceContact implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

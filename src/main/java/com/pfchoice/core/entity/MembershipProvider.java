@@ -77,7 +77,7 @@ public class MembershipProvider implements Serializable
     {
     }
 
-    public MembershipProvider(Integer id)
+    public MembershipProvider(final Integer id)
     {
         this.id = id;
     }
@@ -87,7 +87,7 @@ public class MembershipProvider implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -103,7 +103,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param mbr the mbr to set
 	 */
-	public void setMbr(Membership mbr) {
+	public void setMbr(final Membership mbr) {
 		this.mbr = mbr;
 	}
 	
@@ -119,7 +119,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param prvdr the prvdr to set
 	 */
-	public void setPrvdr(Provider prvdr) {
+	public void setPrvdr(final Provider prvdr) {
 		this.prvdr = prvdr;
 	}
 
@@ -133,7 +133,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param effStartDate the effStartDate to set
 	 */
-	public void setEffStartDate(Date effStartDate) {
+	public void setEffStartDate(final Date effStartDate) {
 		this.effStartDate = effStartDate;
 	}
 
@@ -147,7 +147,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param effEndDate the effEndDate to set
 	 */
-	public void setEffEndDate(Date effEndDate) {
+	public void setEffEndDate(final Date effEndDate) {
 		this.effEndDate = effEndDate;
 	}
 
@@ -161,7 +161,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -175,7 +175,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -189,7 +189,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -203,7 +203,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -217,7 +217,7 @@ public class MembershipProvider implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

@@ -114,7 +114,7 @@ public class MembershipInsurance implements Serializable
     {
     }
 
-    public MembershipInsurance(Integer id)
+    public MembershipInsurance(final Integer id)
     {
         this.id = id;
     }
@@ -124,7 +124,7 @@ public class MembershipInsurance implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -140,7 +140,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param insId the insId to set
 	 */
-	public void setInsId(Insurance insId) {
+	public void setInsId(final Insurance insId) {
 		this.insId = insId;
 	}
 
@@ -154,7 +154,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param mbrId the mbrId to set
 	 */
-	public void setMbr(Membership mbr) {
+	public void setMbr(final Membership mbr) {
 		this.mbr = mbr;
 	}
 
@@ -168,7 +168,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param newBenifits the newBenifits to set
 	 */
-	public void setNewBenifits(char newBenifits) {
+	public void setNewBenifits(final char newBenifits) {
 		this.newBenifits = newBenifits;
 	}
 
@@ -182,7 +182,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param activityDate the activityDate to set
 	 */
-	public void setActivityDate(Date activityDate) {
+	public void setActivityDate(final Date activityDate) {
 		this.activityDate = activityDate;
 	}
 
@@ -196,7 +196,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param activityMonth the activityMonth to set
 	 */
-	public void setActivityMonth(Integer activityMonth) {
+	public void setActivityMonth(final Integer activityMonth) {
 		this.activityMonth = activityMonth;
 	}
 
@@ -210,7 +210,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param effStartDate the effStartDate to set
 	 */
-	public void setEffStartDate(Date effStartDate) {
+	public void setEffStartDate(final Date effStartDate) {
 		this.effStartDate = effStartDate;
 	}
 
@@ -224,7 +224,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param effEndDate the effEndDate to set
 	 */
-	public void setEffEndDate(Date effEndDate) {
+	public void setEffEndDate(final Date effEndDate) {
 		this.effEndDate = effEndDate;
 	}
 
@@ -238,7 +238,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param product the product to set
 	 */
-	public void setProduct(String product) {
+	public void setProduct(final String product) {
 		this.product = product;
 	}
 
@@ -252,7 +252,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param productLabel the productLabel to set
 	 */
-	public void setProductLabel(String productLabel) {
+	public void setProductLabel(final String productLabel) {
 		this.productLabel = productLabel;
 	}
 
@@ -266,7 +266,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param planId the planId to set
 	 */
-	public void setPlanId(String planId) {
+	public void setPlanId(final String planId) {
 		this.planId = planId;
 	}
 
@@ -280,7 +280,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param srcSysMbrNbr the srcSysMbrNbr to set
 	 */
-	public void setSrcSysMbrNbr(String srcSysMbrNbr) {
+	public void setSrcSysMbrNbr(final String srcSysMbrNbr) {
 		this.srcSysMbrNbr = srcSysMbrNbr;
 	}
 
@@ -294,7 +294,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param riskFlag the riskFlag to set
 	 */
-	public void setRiskFlag(char riskFlag) {
+	public void setRiskFlag(final char riskFlag) {
 		this.riskFlag = riskFlag;
 	}
 
@@ -308,7 +308,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -322,7 +322,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -336,7 +336,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -350,7 +350,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -364,7 +364,7 @@ public class MembershipInsurance implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

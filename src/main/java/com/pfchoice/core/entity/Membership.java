@@ -121,7 +121,7 @@ public class Membership implements Serializable
     {
     }
 
-    public Membership(Integer id)
+    public Membership(final Integer id)
     {
         this.id = id;
     }

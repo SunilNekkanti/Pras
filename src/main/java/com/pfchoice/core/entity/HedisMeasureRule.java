@@ -94,7 +94,7 @@ public class HedisMeasureRule implements Serializable
     {
     }
 
-    public HedisMeasureRule(Integer id)
+    public HedisMeasureRule(final Integer id)
     {
         this.id = id;
     }
@@ -104,7 +104,7 @@ public class HedisMeasureRule implements Serializable
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(final Integer id)
     {
         this.id = id;
     }
@@ -120,7 +120,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param hedisMeasure the hedisMeasure to set
 	 */
-	public void setHedisMeasure(HedisMeasure hedisMeasure) {
+	public void setHedisMeasure(final HedisMeasure hedisMeasure) {
 		this.hedisMeasure = hedisMeasure;
 	}
 
@@ -134,7 +134,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param cptMeasure the cptMeasure to set
 	 */
-	public void setCptMeasure(CPTMeasure cptMeasure) {
+	public void setCptMeasure(final CPTMeasure cptMeasure) {
 		this.cptMeasure = cptMeasure;
 	}
 
@@ -148,7 +148,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param icdMeasure the icdMeasure to set
 	 */
-	public void setIcdMeasure(ICDMeasure icdMeasure) {
+	public void setIcdMeasure(final ICDMeasure icdMeasure) {
 		this.icdMeasure = icdMeasure;
 	}
 
@@ -162,7 +162,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param effectiveYear the effectiveYear to set
 	 */
-	public void setEffectiveYear(Integer effectiveYear) {
+	public void setEffectiveYear(final Integer effectiveYear) {
 		this.effectiveYear = effectiveYear;
 	}
 
@@ -176,7 +176,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param dueDate the dueDate to set
 	 */
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(final Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -190,7 +190,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param vistDate the vistDate to set
 	 */
-	public void setVistDate(Date vistDate) {
+	public void setVistDate(final Date vistDate) {
 		this.vistDate = vistDate;
 	}
 
@@ -204,7 +204,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -218,7 +218,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -232,7 +232,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -246,7 +246,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -260,7 +260,7 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 

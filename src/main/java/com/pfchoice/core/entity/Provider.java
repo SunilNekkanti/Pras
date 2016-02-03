@@ -66,7 +66,7 @@ public class Provider implements Serializable
     {
     }
 
-    public Provider(Integer id)
+    public Provider(final Integer id)
     {
         this.id = id;
     }

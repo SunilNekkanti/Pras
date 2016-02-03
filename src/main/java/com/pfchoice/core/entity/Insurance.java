@@ -58,7 +58,7 @@ public class Insurance implements Serializable
     {
     }
 
-    public Insurance(Integer id)
+    public Insurance(final Integer id)
     {
         this.id = id;
     }

@@ -58,7 +58,7 @@ public class ICDMeasure implements Serializable
     {
     }
 
-    public ICDMeasure(Integer id)
+    public ICDMeasure(final Integer id)
     {
         this.id = id;
     }
@@ -73,7 +73,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
@@ -82,7 +82,7 @@ public class ICDMeasure implements Serializable
         return code;
     }
 
-    public void setCode(String code)
+    public void setCode(final String code)
     {
         this.code = code;
     }
@@ -97,7 +97,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -111,7 +111,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -125,7 +125,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -139,7 +139,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param credtedBy the credtedBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -153,7 +153,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param updatedBy the updatedBy to set
 	 */
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -167,7 +167,7 @@ public class ICDMeasure implements Serializable
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(char activeInd) {
+	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
 
