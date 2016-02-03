@@ -366,7 +366,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureDisplay.jsp" />  
     </definition> 
     
-        <definition name="hedisMeasureRuleList" extends="base1.definition">  
+    <definition name="hedisMeasureRuleList" extends="base1.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleList.jsp" />  
     </definition>  
     
@@ -442,4 +442,16 @@
         <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/membershipContactDisplay.jsp" />  
     </definition>
+    
+    <definition name="membershipProviderEdit" extends="base.definition">  
+        <put-attribute name="title" value="Membership Provider Details" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipProviderEdit.jsp" />  
+    </definition>  
+    
+    <definition name="membershipProviderList" extends="base.definition">  
+        <put-attribute name="title" value="Membership Provider List" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipProviderList.jsp" />  
+    </definition>  
 </tiles-definitions>  

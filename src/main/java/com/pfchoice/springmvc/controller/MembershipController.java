@@ -72,7 +72,7 @@ public class MembershipController{
     @Qualifier("membershipValidator")
     private Validator validator;
     
-    @InitBinder
+    @InitBinder("membership")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
@@ -274,9 +274,30 @@ public class MembershipController{
     				BindingResult bindingResult, Model model)throws Exception {
 		
 		MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
-		model.addAttribute("dbMembershipProvider", dbMembershipProvider);
+		model.addAttribute("membershipProvider", dbMembershipProvider);
         logger.info("Returning membershipProviderEdit.jsp page");
         return "membershipProviderEdit";
+    }
+	
+	@RequestMapping(value = "/membership/{id}/memberProvider/{mbrPrvdrId}", method = RequestMethod.GET)
+    public String displayInactiveMembershipProviderDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrPrvdrId, 
+    				@ModelAttribute @Validated  MembershipProvider membershipProvider,
+    				BindingResult bindingResult, Model model)throws Exception {
+		
+		MembershipProvider dbMembershipProvider = membershipProviderService.findById(mbrPrvdrId);
+		model.addAttribute("membershipProvider", dbMembershipProvider);
+        logger.info("Returning membershipProviderEdit.jsp page");
+        return "membershipProviderEdit";
+    }
+	
+	@RequestMapping(value = "/membership/{id}/providerDetailsList", method = RequestMethod.GET)
+    public String displayMembershipProviderDetailsListPage(@PathVariable Integer id,  @Validated MembershipProvider membershipProvider,
+    				BindingResult bindingResult, Model model)throws Exception {
+		
+		List<MembershipProvider> mbrPrvdrList = membershipProviderService.findAllByMbrId(id);
+		model.addAttribute("membershipProviderList", mbrPrvdrList);
+        logger.info("Returning membershipProviderList.jsp page");
+        return "membershipProviderList";
     }
 	
 	@RequestMapping(value = "/membership/{id}/complete", method = RequestMethod.GET)

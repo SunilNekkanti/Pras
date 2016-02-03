@@ -8,26 +8,28 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Provider Info</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="GET" commandName="membershipProvider" action="save.do">
+			<springForm:form  commandName="membershipProvider" action="save.do">
+				<springForm:hidden path="id" />
+						      	
 				<div class="form-group col-sm-12">
 						    <label class="control-label col-sm-2" for="name">Name:</label>
 						    <div class="col-sm-6">
-						    	<springForm:hidden path="id" />
-						    	<springForm:hidden path="prvdr.id" />
-						      	<springForm:input path="prvdr.name" class="form-control" id="name" placeholder="${membershipProvider.prvdr.name}" />
+						    	<springForm:input path="prvdr.name" class="form-control" id="name" placeholder="${membershipProvider.prvdr.name}" />
 						      	<springForm:errors path="prvdr.name" cssClass="error" />
-						      	<c:out value="${membershipProvider.prvdr.id}"> issue</c:out>
-						      	
 						    </div>
 				 </div>
-				
-				 
+				 <div class="form-group col-sm-12">
+						    <label class="control-label col-sm-2" for="name">Code:</label>
+						    <div class="col-sm-6">
+						      	<springForm:input path="prvdr.code" class="form-control" id="code" placeholder="${membershipProvider.prvdr.code}" />
+						      	<springForm:errors path="prvdr.name" cssClass="error" />
+						    </div>
+				 </div>
 			</springForm:form>
-			
 			
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="/Pras/ProviderList">Click Here</a> to see Provider List
+					<a href="/Pras/membership/${membershipProvider.mbr.id}/providerDetailsList">Click Here</a> to see Membership Provider List
 				</div>	
 			</div>
 			

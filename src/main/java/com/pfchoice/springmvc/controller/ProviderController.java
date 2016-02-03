@@ -35,7 +35,7 @@ public class ProviderController{
     @Qualifier("providerValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("provider")
     private void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
