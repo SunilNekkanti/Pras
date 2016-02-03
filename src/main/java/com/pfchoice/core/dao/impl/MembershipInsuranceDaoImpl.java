@@ -37,6 +37,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     public MembershipInsurance findById(final Integer id)
     {
     	MembershipInsurance entity = get(id);
+    	System.out.println("in daoimpl entity.getMbr().getFirstName()"+entity.getMbr().getFirstName());
         return entity;
     }
 

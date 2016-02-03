@@ -6,9 +6,9 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="well well-sm">
-								<p><strong>First Name:${membership.firstName}</strong></p>
-								<p><strong>Last Name:${membership.lastName}</strong></p>
-								<p><strong>Status:${membership.status.description}</strong></p>
+								<p><strong>First Name:${membershipInsurance.mbr.firstName}</strong></p>
+								<p><strong>Last Name:${membershipInsurance.mbr.lastName}</strong></p>
+								<p><strong>Status:${membershipInsurance.mbr.status.description}</strong></p>
 								 <p>Updated Successfully </p>
 								<a href="http://localhost:8080/Pras/membership/${membershipInsurance.mbr.id}/membershipDetailsList">Click Here</a> Move to membership Insurance list
 	 					</div>	

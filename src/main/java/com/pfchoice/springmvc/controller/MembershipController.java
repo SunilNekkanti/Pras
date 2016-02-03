@@ -184,31 +184,20 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"update"})
     public String saveMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
-		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
-		Membership dbMembership = membershipService.findById(id);
         
 		 if (bindingResult.hasErrors()) {
-	   		 	logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
-	   	       
-	   		 	model.addAttribute("membershipInsurance", dbMembershipInsurance);
-	          
+	   		 	logger.info("Returning membershipDetailsDisplay");
 	   			return "membershipDetailsDisplay";
 	      }
 	      else
 	      {
 	        	membershipInsurance.setActiveInd('Y');
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
-	        	
-	            membershipInsuranceService.update(membershipInsurance);
-	             System.out.println("mbrInsId in save method "+mbrInsId);
-	             model.addAttribute("membershipInsurance", dbMembershipInsurance);
-	             model.addAttribute("membership", dbMembership);
-		          
-	             System.out.println("dbMembership.getFirstName()"+dbMembership.getFirstName());
-	     		
+	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
+	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
+	             
 		        return "membershipDetailsEditSuccess";
 	       }    
-        
     }
 	
 	
@@ -217,7 +206,7 @@ public class MembershipController{
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
 		
 		 if (bindingResult.hasErrors()) {
-	        	
+			 logger.info("Returning membershipDetailsDisplay");	
 	           return "membershipDetailsDisplay";
 	        }
 	        else
@@ -225,7 +214,8 @@ public class MembershipController{
 	        	membershipInsurance.setActiveInd('Y');
 	        	membershipInsurance.setCreatedBy("Mohanasundharam");
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
-	            membershipInsuranceService.save(membershipInsurance);
+	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.save(membershipInsurance);
+	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
 		        return "membershipDetailsEditSuccess";
 	        }    
     }
@@ -235,12 +225,8 @@ public class MembershipController{
     public String deleteMembershipInsDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
 	 	
-		System.out.println("membershipInsurance.getMbr().getFirstName()"+membershipInsurance.getMbr().getFirstName());
-		//MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
-	   	
 		 if (bindingResult.hasErrors()) {
-	       	// logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
-	   	//	model.addAttribute("membershipInsurance", dbMembershipInsurance);
+	       	 logger.info("Returning membershipDetailsDisplay");
 	           return "membershipDetailsDisplay";
 	        }
 	        else
@@ -248,11 +234,8 @@ public class MembershipController{
 	        	membershipInsurance.setActiveInd('N');
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	            membershipInsuranceService.update(membershipInsurance);
-		        
+	            return "membershipEditSuccess";
 	        }    
-		//  dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
-		   
-		 return "membershipEditSuccess";
     }
 	
 	
@@ -266,8 +249,7 @@ public class MembershipController{
         logger.info("Returning MembershipDetailsEditSuccess.jsp page");
         if (null != membershipInsurance.getId())
         {
-        	
-            membershipInsuranceService.update(membershipInsurance);
+        	membershipInsurance =  membershipInsuranceService.update(membershipInsurance);
         }
         
         model.addAttribute("membershipInsurance", membershipInsurance);
@@ -283,7 +265,6 @@ public class MembershipController{
     	System.out.println("MembershipInsurance list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView("membershipDetailsList");
 		modelAndView.addObject("membershipDetailsList", listBean);
- 
 		return modelAndView;
 	}
     
@@ -291,15 +272,10 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/{id}/providerDetails", method = RequestMethod.GET)
     public String displayMembershipProviderDetailsPage(@PathVariable Integer id,  @Validated MembershipProvider membershipProvider,
     				BindingResult bindingResult, Model model)throws Exception {
+		
 		MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
-		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipProvider.getId());
-	       
 		model.addAttribute("dbMembershipProvider", dbMembershipProvider);
         logger.info("Returning membershipProviderEdit.jsp page");
-        logger.info("dbMembershipProvider.getPrvdr() membershipProviderEdit.jsp page" + dbMembershipProvider.getPrvdr());
-        logger.info("dbMembershipProvider.getPrvdr().getName() membershipProviderEdit.jsp page" + dbMembershipProvider.getPrvdr().getName());
-        
-        
         return "membershipProviderEdit";
     }
 	
@@ -309,7 +285,6 @@ public class MembershipController{
 		
 		//Data referencing for county list box
 		List<County> countyList = countyService.findAll();
-
 		return countyList;
 	}
 
@@ -319,7 +294,6 @@ public class MembershipController{
 		
 		//Data referencing for gender list box
 		List<Gender> genderList = genderService.findAll();
-		
 		return genderList;
 	}
 	

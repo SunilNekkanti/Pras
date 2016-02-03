@@ -34,7 +34,7 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
     }
 
     @Override
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     public MembershipInsurance findById(final Integer id)
     {
         return membershipInsuranceDao.findById(id);

@@ -46,9 +46,8 @@ public class MembershipInsurance implements Serializable
     private Insurance insId;
     
     
-    @ManyToOne( fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Membership mbr;
     
     @Expose

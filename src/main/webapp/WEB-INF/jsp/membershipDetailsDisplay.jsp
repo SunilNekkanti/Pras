@@ -21,7 +21,7 @@
 				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="dob">New Benifits:</label>
 					<div class="col-sm-6">
-						<springForm:hidden path="mbr.id" />
+						
 						<springForm:hidden path="id" />
 						<springForm:input path="newBenifits" class="form-control" id="newBenifits" placeholder="newBenifits" />
 						<springForm:errors path="newBenifits" cssClass="error" />

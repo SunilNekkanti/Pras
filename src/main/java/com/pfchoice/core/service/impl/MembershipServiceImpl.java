@@ -34,7 +34,7 @@ public class MembershipServiceImpl implements MembershipService
     }
 
     @Override
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     public Membership findById(final Integer id)
     {
         return membershipDao.findById(id);
