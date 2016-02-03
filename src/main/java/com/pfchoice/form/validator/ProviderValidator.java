@@ -21,10 +21,12 @@ public class ProviderValidator implements Validator {
        
          
         Provider prvdr = (Provider) obj;
-        if(prvdr.getId() <=0){
-            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
+        if(prvdr.getId() != null)
+        {
+	        if(prvdr.getId() <=0){
+	            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
+	        }
         }
-        
 
         if (prvdr.getName().length() < 6) {
             errors.rejectValue("name", "name.tooshort", "Name must be at least 6 characters.");
@@ -34,12 +36,11 @@ public class ProviderValidator implements Validator {
         }
         
        
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate", "createdDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate", "updatedDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy", "createdBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy", "updatedBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd", "activeInd.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
         
         
         System.out.println("end of validation");

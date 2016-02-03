@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pfchoice.core.entity.County;
+import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
@@ -30,6 +30,7 @@ import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
 import com.pfchoice.core.service.CountyService;
+import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipInsuranceService;
@@ -40,6 +41,9 @@ import com.pfchoice.core.service.MembershipStatusService;
 @Controller
 public class MembershipController{
 	
+	private static final Logger logger = LoggerFactory
+            .getLogger(MembershipController.class);
+    
     @Autowired
 	private CountyService  countyService;
     
@@ -59,23 +63,20 @@ public class MembershipController{
     private InsuranceService insuranceService;
     
     @Autowired
+    private EthinicityService ethinicityService;
+    
+    @Autowired
     private MembershipProviderService membershipProviderService;
     
-   /* @Autowired
+    @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
- */
-    private static final Logger logger = LoggerFactory
-            .getLogger(MembershipController.class);
-    
     
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-     //   binder.setValidator(validator);
-    	
+        binder.setValidator(validator);
     }
    
-    
 	public MembershipController() {
     }
 	
@@ -262,7 +263,6 @@ public class MembershipController{
     public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
  
     	List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
-    	System.out.println("MembershipInsurance list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView("membershipDetailsList");
 		modelAndView.addObject("membershipDetailsList", listBean);
 		return modelAndView;
@@ -277,6 +277,22 @@ public class MembershipController{
 		model.addAttribute("dbMembershipProvider", dbMembershipProvider);
         logger.info("Returning membershipProviderEdit.jsp page");
         return "membershipProviderEdit";
+    }
+	
+	@RequestMapping(value = "/membership/{id}/complete", method = RequestMethod.GET)
+    public String completeMembershipProviderDetailsPage(@PathVariable Integer id,Model model)throws Exception {
+		
+		Membership membership = membershipService.findById(id);
+		model.addAttribute("membership", membership);
+		
+		List<MembershipInsurance> dbMembershipInsurance = membershipInsuranceService.findAllByMbrId(membership.getId());
+		List<MembershipProvider>  dbMembershipProvider  = membershipProviderService.findAllByMbrId(membership.getId());
+		
+		model.addAttribute("membershipInsurance", dbMembershipInsurance);
+		model.addAttribute("membershipProvider", dbMembershipProvider);
+		model.addAttribute("membership", membership);
+        return "membershipCompleteDetails";
+           
     }
 	
 	
@@ -313,5 +329,13 @@ public class MembershipController{
 		//Data referencing for Membership Status list box
 		List<MembershipStatus> mbrStatusList = membershipStatusService.findAll();
 		return mbrStatusList;
+	}
+	
+	@ModelAttribute("ethinicityList")
+	public List<Ethinicity> populateethinicityList1() {
+		
+		//Data referencing for Membership Status list box
+		List<Ethinicity> mbrethinicityList = ethinicityService.findAll();
+		return mbrethinicityList;
 	}
 }

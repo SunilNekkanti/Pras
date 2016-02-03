@@ -6,6 +6,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -84,7 +85,6 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      		cr.add(Restrictions.eq(refRestrictionString, id));
      	}		
      	List<Contract> list = cr.list();
-     	System.out.println("findAllByRefId list size is"+ list.size());
      	return list;
      }
     
@@ -108,7 +108,6 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
    				
        			cr.add(Restrictions.eq("contract.activeInd", 'Y'));
      	List<Contract> list = cr.list();
-     	System.out.println("findActiveRefId list size is"+ list.size());
      	if(list.size()>0)
      		contract =list.get(0);
      	return contract;

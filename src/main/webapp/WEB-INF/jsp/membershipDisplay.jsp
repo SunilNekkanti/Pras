@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="panel-group">
 	<div class="panel panel-primary">
@@ -40,7 +41,8 @@
 							<div class="form-group">
 							 	<label class="control-label col-sm-4" for="dob">DOB:</label>
 								<div class="col-sm-8">
-									<springForm:input path="dob" class="form-control" id="dob" placeholder="DOB" />
+									<fmt:formatDate value="${membership.dob}" var="dateString" pattern="MM/dd/yyyy" />
+									<springForm:input path="dob" value="${dateString}" class="form-control" id="dob" placeholder="DOB" />
 									<springForm:errors path="dob" cssClass="error" />
 								</div>
 							</div>
@@ -49,9 +51,9 @@
 								<label class="control-label col-sm-4" for="ethinicCode">Ethinicity:</label>
 								<div class="col-sm-8">
 									<springForm:select path="ethinicCode.id" class="form-control" id="ethinicCode" >
-							    		<springForm:options items="${ethinicMap}"    />
+							    		<springForm:options items="${ethinicityList}" itemValue="id" itemLabel="description"/>
 									</springForm:select>
-									<springForm:errors path="ethinicCode.description" cssClass="error" />
+									<springForm:errors path="ethinicCode" cssClass="error text-danger" />
 								</div>
 							</div>
 				 
@@ -99,16 +101,17 @@
 							<div class="form-group">
 								<label class="control-label col-sm-4" for="createdDate">Created Date:</label>
 								<div class="col-sm-8">
-									
-									<springForm:input path="createdDate" class="form-control" id="createdDate" placeholder="createdDate" />
+									<fmt:formatDate value="${membership.createdDate}" var="dateString" pattern="MM/dd/yyyy HH:mm:ss" />
+									<springForm:input path="createdDate" value="${dateString}" class="form-control" id="createdDate" placeholder="createdDate" />
 									<springForm:errors path="createdDate" cssClass="error" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-sm-4" for="updatedDate">UpdatedDate:</label>
 								<div class="col-sm-8">
-								
-									<springForm:input path="updatedDate" class="form-control" id="updatedDate" placeholder="Updated Date" />
+								<fmt:formatDate value="${membership.updatedDate}" var="dateString" pattern="MM/dd/yyyy HH:mm:ss" />
+									<springForm:input path="updatedDate" value="${dateString}" class="form-control" id="updatedDate" placeholder="updatedDate" />
+									
 									<springForm:errors path="updatedDate" cssClass="error" />
 								</div>
 							</div>

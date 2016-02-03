@@ -31,13 +31,11 @@ public class InsuranceValidator implements Validator {
             errors.rejectValue("name", "name.tooshort", "Name must be at least 6 characters.");
         }
         
-       
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate", "createdDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updateDate", "updatedDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy", "createdBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy", "updatedBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd", "activeInd.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
         
         
         System.out.println("end of validation");

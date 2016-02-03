@@ -18,14 +18,14 @@ public class MembershipValidator implements Validator {
  
     @Override
     public void validate(Object obj, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required");
+       
          
         Membership mbr = (Membership) obj;
         if(mbr.getId() <=0){
             errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.required"); 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required");
+       
+       
 
         if (mbr.getFirstName().length() < 6) {
             errors.rejectValue("firstName", "firstName.tooshort", "FirstName must be at least 6 characters.");
@@ -35,12 +35,18 @@ public class MembershipValidator implements Validator {
             errors.rejectValue("lastName", "lasttName.tooshort", "LasttName must be at least 6 characters.");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "dob.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo", "medicaidNo.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo", "medicareNo.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId", "genderId.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "countyCode", "countyCode.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ethinicCode", "ethinicCode.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", 		"error.dob",		"DOB Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo", "error.medicaidNo",	"Medicaid Number Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId", 	"error.genderId",	"Gender Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "countyCode",	"error.countyCode",	"County Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ethinicCode","error.ethinicCode","Ethinicity Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fileId",     "error.fileId",     "File Id  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
         
         System.out.println("end of validation");
     }

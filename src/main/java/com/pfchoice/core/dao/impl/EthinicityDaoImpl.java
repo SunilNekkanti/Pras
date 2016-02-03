@@ -2,6 +2,9 @@ package com.pfchoice.core.dao.impl;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -60,4 +63,11 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
         return Ethinicity.class;
     }
 
+    @SuppressWarnings("unchecked")
+	public List<Ethinicity> findAll()
+    {
+    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	List<Ethinicity> list = cr.list();
+    	return list;
+    }
 }

@@ -23,9 +23,13 @@ public class ContactValidator implements Validator {
        
          
         Contact cnt = (Contact) obj;
-        if(cnt.getId() <=0){
-            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
-        }
+        if(cnt.getId() != null)
+        {	
+	        if(cnt.getId() <=0){
+	            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
+	        }
+	        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "refContact","error.refContact", "ReferenceContact Required");
+        }    
         
 
         if (cnt.getHomePhone().length() < 6) {
@@ -36,15 +40,18 @@ public class ContactValidator implements Validator {
         }
         
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faxNumber", "faxNumber.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address1", "address1.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address2", "address2.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "city.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "refContact", "refContact.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode", "stateCode.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode", "zipCode.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fileId", "fileId.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faxNumber","error.faxNumber", "FaxNumber Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "error.email","Email Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address1","address1", "Address1 Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "error.city","city.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode","error.stateCode", "StateCode Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode","error.zipCode", "zipCodeRequired");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
+        
         
         if (cnt.getAddress1().length() < 10) {
             errors.rejectValue("address1", "address1.tooshort", "Address1 must be at least 10 characters.");
@@ -59,11 +66,7 @@ public class ContactValidator implements Validator {
         }
         
        
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate", "createdDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updateDate", "updatedDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy", "createdBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy", "updatedBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd", "activeInd.required");
+       
         
         System.out.println("end of validation");
     }

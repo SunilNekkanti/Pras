@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Ethinicity;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -22,4 +24,5 @@ public interface EthinicityDao
 
     Ethinicity updateByUpdater(Updater<Ethinicity> updater);
 
+    List<Ethinicity> findAll();
 }

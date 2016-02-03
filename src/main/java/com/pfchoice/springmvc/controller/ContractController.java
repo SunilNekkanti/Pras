@@ -8,12 +8,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +40,21 @@ public class ContractController{
     @Autowired
     ContractService contractService;
     
-     
-    
     @Autowired
     ProviderService providerService;
     
     @Autowired
     InsuranceService insuranceService;
     
-
+    @Autowired
+    @Qualifier("contractValidator")
+    private Validator validator;
+ 
+    @InitBinder
+    private void initBinder(final WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
+    
     private static final Logger logger = LoggerFactory
             .getLogger(ContractController.class);
  
@@ -97,33 +107,16 @@ public class ContractController{
         return "contractDisplay";
     }
 	
-	@RequestMapping(value = "/provider/{id}/contractList")
-    public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
- 
-    	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
-    	System.out.println("contract list bean sze "+listBean.size());
-		ModelAndView modelAndView = new ModelAndView("providerContractList");
-		modelAndView.addObject("contractList", listBean);
- 
-		return modelAndView;
-	}
-	
-	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 	public String newproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
+        	
             logger.info("Returning contractEdit.jsp page");
             return "providerContractEdit";
         }
         else
         {
-	        
-	       
-	        	
 	        	Provider dbProvider = providerService.findById(id);
 	   		 	logger.info("Returning provider.getId()"+dbProvider.getId());
 
@@ -148,9 +141,6 @@ public class ContractController{
 	public String saveproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contractEdit.jsp page");
             return "providerContractEdit";
         }
@@ -216,18 +206,6 @@ public class ContractController{
 	
 	/* -- Insurance Contract   */
 	
-		@RequestMapping(value = "/insurance/{id}/contractList")
-	    public ModelAndView handleInsuranceRequest(@PathVariable Integer id) throws Exception {
-	 
-	    	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
-	    	System.out.println("insurance list bean sze "+listBean.size());
-			ModelAndView modelAndView = new ModelAndView("insuranceContractList");
-			modelAndView.addObject("contractList", listBean);
-	 
-			return modelAndView;
-		}
-		
-		
 		@RequestMapping(value = "/insurance/{id}/contract/new")
 	    public String addProviderContractPage(Model model) {
 			

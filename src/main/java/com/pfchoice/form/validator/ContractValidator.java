@@ -35,13 +35,12 @@ public class ContractValidator implements Validator {
         
         
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "PMPM", "PMPM.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "refContract", "refContract.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate", "createdDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updateDate", "updatedDate.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy", "createdBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy", "updatedBy.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd", "activeInd.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "PMPM", "error.PMPM", "PMPM.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
         
         System.out.println("end of validation");
     }
