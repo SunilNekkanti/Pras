@@ -26,7 +26,7 @@ public class CPTMeasureServiceImpl implements CPTMeasureService
     private CPTMeasureDao cptMeasureDao;
 
     @Override
-    public CPTMeasure deleteById(Integer id)
+    public CPTMeasure deleteById(final Integer id)
     {
         //Used for transaction test
         return cptMeasureDao.deleteById(id);
@@ -35,20 +35,20 @@ public class CPTMeasureServiceImpl implements CPTMeasureService
 
     @Override
     @Transactional(readOnly = true)
-    public CPTMeasure findById(Integer id)
+    public CPTMeasure findById(final Integer id)
     {
         return cptMeasureDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return cptMeasureDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public CPTMeasure save(CPTMeasure bean)
+    public CPTMeasure save(final CPTMeasure bean)
     {
         //Used for transaction test
         return cptMeasureDao.save(bean);
@@ -57,7 +57,7 @@ public class CPTMeasureServiceImpl implements CPTMeasureService
     }
 
     @Override
-    public CPTMeasure update(CPTMeasure bean)
+    public CPTMeasure update(final CPTMeasure bean)
     {
         Updater<CPTMeasure> updater = new Updater<>(bean);
         return cptMeasureDao.updateByUpdater(updater);

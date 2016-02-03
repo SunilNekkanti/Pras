@@ -26,7 +26,7 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService
     private HedisMeasureGroupDao hedisMeasureGroupDao;
 
     @Override
-    public HedisMeasureGroup deleteById(Integer id)
+    public HedisMeasureGroup deleteById(final Integer id)
     {
         //Used for transaction test
         return hedisMeasureGroupDao.deleteById(id);
@@ -35,20 +35,20 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService
 
     @Override
     @Transactional(readOnly = true)
-    public HedisMeasureGroup findById(Integer id)
+    public HedisMeasureGroup findById(final Integer id)
     {
         return hedisMeasureGroupDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return hedisMeasureGroupDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public HedisMeasureGroup save(HedisMeasureGroup bean)
+    public HedisMeasureGroup save(final HedisMeasureGroup bean)
     {
         //Used for transaction test
         return hedisMeasureGroupDao.save(bean);
@@ -57,7 +57,7 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService
     }
 
     @Override
-    public HedisMeasureGroup update(HedisMeasureGroup bean)
+    public HedisMeasureGroup update(final HedisMeasureGroup bean)
     {
         Updater<HedisMeasureGroup> updater = new Updater<>(bean);
         return hedisMeasureGroupDao.updateByUpdater(updater);

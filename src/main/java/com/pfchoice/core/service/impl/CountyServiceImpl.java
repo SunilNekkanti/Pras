@@ -26,7 +26,7 @@ public class CountyServiceImpl implements CountyService
     private CountyDao countyDao;
 
     @Override
-    public County deleteById(Integer id)
+    public County deleteById(final Integer id)
     {
         //Used for transaction test
         return countyDao.deleteById(id);
@@ -35,20 +35,20 @@ public class CountyServiceImpl implements CountyService
 
     @Override
     @Transactional(readOnly = true)
-    public County findById(Integer id)
+    public County findById(final Integer id)
     {
         return countyDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return countyDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public County save(County bean)
+    public County save(final County bean)
     {
         //Used for transaction test
         return countyDao.save(bean);
@@ -57,7 +57,7 @@ public class CountyServiceImpl implements CountyService
     }
 
     @Override
-    public County update(County bean)
+    public County update(final County bean)
     {
         Updater<County> updater = new Updater<>(bean);
         return countyDao.updateByUpdater(updater);

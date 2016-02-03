@@ -26,7 +26,7 @@ public class HedisMeasureServiceImpl implements HedisMeasureService
     private HedisMeasureDao qualityMeasureDao;
 
     @Override
-    public HedisMeasure deleteById(Integer id)
+    public HedisMeasure deleteById(final Integer id)
     {
         //Used for transaction test
         return qualityMeasureDao.deleteById(id);
@@ -35,20 +35,20 @@ public class HedisMeasureServiceImpl implements HedisMeasureService
 
     @Override
     @Transactional(readOnly = true)
-    public HedisMeasure findById(Integer id)
+    public HedisMeasure findById(final Integer id)
     {
         return qualityMeasureDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return qualityMeasureDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public HedisMeasure save(HedisMeasure bean)
+    public HedisMeasure save(final HedisMeasure bean)
     {
         //Used for transaction test
         return qualityMeasureDao.save(bean);
@@ -57,7 +57,7 @@ public class HedisMeasureServiceImpl implements HedisMeasureService
     }
 
     @Override
-    public HedisMeasure update(HedisMeasure bean)
+    public HedisMeasure update(final HedisMeasure bean)
     {
         Updater<HedisMeasure> updater = new Updater<>(bean);
         return qualityMeasureDao.updateByUpdater(updater);

@@ -26,7 +26,7 @@ public class ICDMeasureServiceImpl implements ICDMeasureService
     private ICDMeasureDao icdMeasureDao;
 
     @Override
-    public ICDMeasure deleteById(Integer id)
+    public ICDMeasure deleteById(final Integer id)
     {
         //Used for transaction test
         return icdMeasureDao.deleteById(id);
@@ -35,20 +35,20 @@ public class ICDMeasureServiceImpl implements ICDMeasureService
 
     @Override
     @Transactional(readOnly = true)
-    public ICDMeasure findById(Integer id)
+    public ICDMeasure findById(final Integer id)
     {
         return icdMeasureDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return icdMeasureDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public ICDMeasure save(ICDMeasure bean)
+    public ICDMeasure save(final ICDMeasure bean)
     {
         //Used for transaction test
         return icdMeasureDao.save(bean);
@@ -57,7 +57,7 @@ public class ICDMeasureServiceImpl implements ICDMeasureService
     }
 
     @Override
-    public ICDMeasure update(ICDMeasure bean)
+    public ICDMeasure update(final ICDMeasure bean)
     {
         Updater<ICDMeasure> updater = new Updater<>(bean);
         return icdMeasureDao.updateByUpdater(updater);

@@ -26,7 +26,7 @@ public class GenderServiceImpl implements GenderService
     private GenderDao genderDao;
 
     @Override
-    public Gender deleteById(Byte id)
+    public Gender deleteById(final Byte id)
     {
         //Used for transaction test
         return genderDao.deleteById(id);
@@ -35,20 +35,20 @@ public class GenderServiceImpl implements GenderService
 
     @Override
     @Transactional(readOnly = true)
-    public Gender findById(Byte id)
+    public Gender findById(final Byte id)
     {
         return genderDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return genderDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public Gender save(Gender bean)
+    public Gender save(final Gender bean)
     {
         //Used for transaction test
         return genderDao.save(bean);
@@ -57,7 +57,7 @@ public class GenderServiceImpl implements GenderService
     }
 
     @Override
-    public Gender update(Gender bean)
+    public Gender update(final Gender bean)
     {
         Updater<Gender> updater = new Updater<>(bean);
         return genderDao.updateByUpdater(updater);

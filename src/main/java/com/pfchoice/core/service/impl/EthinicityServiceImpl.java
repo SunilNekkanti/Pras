@@ -32,20 +32,20 @@ public class EthinicityServiceImpl implements EthinicityService
 
     @Override
     @Transactional(readOnly = true)
-    public Ethinicity findById(Byte id)
+    public Ethinicity findById(final Byte id)
     {
         return ethinicityDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return ethinicityDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public Ethinicity save(Ethinicity bean)
+    public Ethinicity save(final Ethinicity bean)
     {
         //Used for transaction test
         return ethinicityDao.save(bean);
@@ -54,7 +54,7 @@ public class EthinicityServiceImpl implements EthinicityService
     }
 
     @Override
-    public Ethinicity update(Ethinicity bean)
+    public Ethinicity update(final Ethinicity bean)
     {
         Updater<Ethinicity> updater = new Updater<>(bean);
         return ethinicityDao.updateByUpdater(updater);

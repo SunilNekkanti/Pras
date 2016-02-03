@@ -26,7 +26,7 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
     private MembershipInsuranceDao membershipInsuranceDao;
 
     @Override
-    public MembershipInsurance deleteById(Integer id)
+    public MembershipInsurance deleteById(final Integer id)
     {
         //Used for transaction test
         return membershipInsuranceDao.deleteById(id);
@@ -35,20 +35,20 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 
     @Override
     @Transactional(readOnly = true)
-    public MembershipInsurance findById(Integer id)
+    public MembershipInsurance findById(final Integer id)
     {
         return membershipInsuranceDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return membershipInsuranceDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public MembershipInsurance save(MembershipInsurance bean)
+    public MembershipInsurance save(final MembershipInsurance bean)
     {
         //Used for transaction test
         return membershipInsuranceDao.save(bean);
@@ -57,7 +57,7 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
     }
 
     @Override
-    public MembershipInsurance update(MembershipInsurance bean)
+    public MembershipInsurance update(final MembershipInsurance bean)
     {
         Updater<MembershipInsurance> updater = new Updater<>(bean);
         return membershipInsuranceDao.updateByUpdater(updater);

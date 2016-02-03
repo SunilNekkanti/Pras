@@ -23,7 +23,7 @@ public class FileServiceImpl implements FileService
     private FileDao fileDao;
 
     @Override
-    public File deleteById(Integer id)
+    public File deleteById(final Integer id)
     {
         //Used for transaction test
         return fileDao.deleteById(id);
@@ -32,20 +32,20 @@ public class FileServiceImpl implements FileService
 
     @Override
     @Transactional(readOnly = true)
-    public File findById(Integer id)
+    public File findById(final Integer id)
     {
         return fileDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize)
     {
         return fileDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public File save(File bean)
+    public File save(final File bean)
     {
         //Used for transaction test
         return fileDao.save(bean);
@@ -54,7 +54,7 @@ public class FileServiceImpl implements FileService
     }
 
     @Override
-    public File update(File bean)
+    public File update(final File bean)
     {
         Updater<File> updater = new Updater<>(bean);
         return fileDao.updateByUpdater(updater);

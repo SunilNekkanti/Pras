@@ -23,7 +23,7 @@ public class InsuranceContractServiceImpl implements InsuranceContractService
     private InsuranceContractDao insuranceContractDao;
 
     @Override
-    public InsuranceContract deleteById(Integer id)
+    public InsuranceContract deleteById(final Integer id)
     {
         //Used for transaction test
         return insuranceContractDao.deleteById(id);
@@ -32,20 +32,20 @@ public class InsuranceContractServiceImpl implements InsuranceContractService
 
     @Override
     @Transactional(readOnly = true)
-    public InsuranceContract findById(Integer id)
+    public InsuranceContract findById(final Integer id)
     {
         return insuranceContractDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return insuranceContractDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public InsuranceContract save(InsuranceContract bean)
+    public InsuranceContract save(final InsuranceContract bean)
     {
         //Used for transaction test
         return insuranceContractDao.save(bean);
@@ -54,7 +54,7 @@ public class InsuranceContractServiceImpl implements InsuranceContractService
     }
 
     @Override
-    public InsuranceContract update(InsuranceContract bean)
+    public InsuranceContract update(final InsuranceContract bean)
     {
         Updater<InsuranceContract> updater = new Updater<>(bean);
         return insuranceContractDao.updateByUpdater(updater);

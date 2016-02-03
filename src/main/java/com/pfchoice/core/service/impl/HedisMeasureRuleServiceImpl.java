@@ -26,7 +26,7 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
     private HedisMeasureRuleDao hedisMeasureMeasureDao;
 
     @Override
-    public HedisMeasureRule deleteById(Integer id)
+    public HedisMeasureRule deleteById(final Integer id)
     {
         //Used for transaction test
         return hedisMeasureMeasureDao.deleteById(id);
@@ -35,20 +35,20 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
 
     @Override
     @Transactional(readOnly = true)
-    public HedisMeasureRule findById(Integer id)
+    public HedisMeasureRule findById(final Integer id)
     {
         return hedisMeasureMeasureDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(int pageNo, int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize)
     {
         return hedisMeasureMeasureDao.getPage(pageNo, pageSize);
     }
 
     @Override
-    public HedisMeasureRule save(HedisMeasureRule bean)
+    public HedisMeasureRule save(final HedisMeasureRule bean)
     {
         //Used for transaction test
         return hedisMeasureMeasureDao.save(bean);
@@ -57,7 +57,7 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
     }
 
     @Override
-    public HedisMeasureRule update(HedisMeasureRule bean)
+    public HedisMeasureRule update(final HedisMeasureRule bean)
     {
         Updater<HedisMeasureRule> updater = new Updater<>(bean);
         return hedisMeasureMeasureDao.updateByUpdater(updater);
