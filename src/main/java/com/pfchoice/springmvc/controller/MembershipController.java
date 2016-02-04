@@ -93,6 +93,8 @@ public class MembershipController{
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
 	       
+		 System.out.println("dbMembership.getMbrHedisMeasureList().size() "+dbMembership.getMbrHedisMeasureList().size());
+		 
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipEdit.jsp page");
         return "membershipEdit";
