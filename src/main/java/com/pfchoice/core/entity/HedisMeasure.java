@@ -139,7 +139,7 @@ public class HedisMeasure implements Serializable
 	/**
 	 * @param qltyMsrGrpId the qltyMsrGrpId to set
 	 */
-	public void setHedisMsrGrpId(final HedisMeasureGroup hedisMsrGrp) {
+	public void setHedisMsrGrp(final HedisMeasureGroup hedisMsrGrp) {
 		this.hedisMsrGrp = hedisMsrGrp;
 	}
 
