@@ -32,7 +32,7 @@ public class ICDMeasureController{
     
     
     @Autowired
-    @Qualifier("icdMeasureValidator")
+    @Qualifier("iCDMeasureValidator")
     private Validator validator;
  
     @InitBinder

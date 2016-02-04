@@ -6,7 +6,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import com.pfchoice.core.entity.ICDMeasure;
 
-@Component
+@Component("iCDMeasureValidator")
 public class ICDMeasureValidator implements Validator {
  
     //which objects can be validated by this validator

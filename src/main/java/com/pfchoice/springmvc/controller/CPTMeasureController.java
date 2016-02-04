@@ -31,8 +31,8 @@ public class CPTMeasureController{
     CPTMeasureService cptMeasureService;
     
     
-   @Autowired
-    @Qualifier("cptMeasureValidator")
+    @Autowired
+    @Qualifier("cPTMeasureValidator")
     private Validator validator;
  
     @InitBinder

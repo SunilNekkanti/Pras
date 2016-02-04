@@ -8,7 +8,7 @@ import com.pfchoice.core.entity.CPTMeasure;
 
 
 
-@Component
+@Component("cPTMeasureValidator")
 public class CPTMeasureValidator implements Validator {
  
     //which objects can be validated by this validator
