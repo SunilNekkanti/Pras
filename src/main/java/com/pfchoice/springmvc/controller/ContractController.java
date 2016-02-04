@@ -1,16 +1,18 @@
 package com.pfchoice.springmvc.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -49,6 +51,9 @@ public class ContractController{
  
     @InitBinder("contract")
     private void initBinder(final WebDataBinder binder) {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	dateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.setValidator(validator);
     }
     
@@ -98,7 +103,6 @@ public class ContractController{
     public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
-    	System.out.println("contract list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView("providerContractList");
 		modelAndView.addObject("contractList", listBean);
  
@@ -200,7 +204,6 @@ public class ContractController{
     public ModelAndView handleInsuranceRequest(@PathVariable Integer id) throws Exception {
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
-    	System.out.println("insurance list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView ("insuranceContractList","contractList", listBean);
  
 		return modelAndView;
@@ -211,14 +214,11 @@ public class ContractController{
 	@RequestMapping(value = "/provider/{id}/contract/{cntId}/display", method = RequestMethod.GET)
     public String displayProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contract dbContract = contractService.findById(cntId);
-		 logger.info("Returning contract.getId()"+dbContract.getId());
-	       
+		logger.info("Returning contract.getId()"+dbContract.getId());
 		model.addAttribute("contract", dbContract);
         logger.info("Returning contractDisplay.jsp page");
         return "providerContractEdit";
     }
-	
-	
 	/**  End of contract display **/
 	
 	
@@ -226,10 +226,8 @@ public class ContractController{
 	
 		@RequestMapping(value = "/insurance/{id}/contract/new")
 	    public String addProviderContractPage(Model model) {
-			
 			Contract contract = createContractModel();
 			contract.setCreatedBy("Mohanasundharam");
-			
 			model.addAttribute("contract", contract);
 	        return "insuranceContractEdit";
 	    }
@@ -237,13 +235,8 @@ public class ContractController{
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 		public String addMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
 	            BindingResult bindingResult, Model model) {
-			
-			 
 				
 	        if (bindingResult.hasErrors()) {
-	        	for( ObjectError oe :bindingResult.getAllErrors()){
-	        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-	        	}
 	            logger.info("Returning insuranceContractEdit.jsp page");
 	            return "insuranceContractEdit";
 	        }
@@ -272,12 +265,7 @@ public class ContractController{
 		public String saveMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
 	            BindingResult bindingResult, Model model) {
 			
-			 
-			
 	        if (bindingResult.hasErrors()) {
-	        	for( ObjectError oe :bindingResult.getAllErrors()){
-	        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-	        	}
 	            logger.info("Returning insuranceContractEdit.jsp page");
 	            return "insuranceContractEdit";
 	        }
@@ -298,12 +286,8 @@ public class ContractController{
 		public String deleteInsuranceContractAction(@PathVariable Integer id, @Validated Contract contract,
 	            BindingResult bindingResult, Model model) {
 	
-			
 			if (bindingResult.hasErrors())
 			{
-	        	for( ObjectError oe :bindingResult.getAllErrors()){
-	        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-	        	}
 	            logger.info("Returning insuranceContractEdit.jsp page");
 	            return "insuranceContractEdit";
 	        }
@@ -319,8 +303,6 @@ public class ContractController{
 		        return "insuranceContractEdit";
 		        
 	    }
-		
-				
 		
 		@RequestMapping(value = "/insurance/{id}/contract/{cntId}", method = RequestMethod.GET)
 	    public String updateInsuranceContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
@@ -343,10 +325,6 @@ public class ContractController{
 	        logger.info("Returning contractDisplay.jsp page");
 	        return "insuranceContractEdit";
 	    }
-		
-		
-		
-		
 	
 	/* -- End of Insurance Contract   */
 

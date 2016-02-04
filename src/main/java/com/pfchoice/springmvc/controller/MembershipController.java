@@ -1,12 +1,15 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -72,9 +75,25 @@ public class MembershipController{
     @Qualifier("membershipValidator")
     private Validator validator;
     
+    @Autowired
+    @Qualifier("membershipInsuranceValidator")
+    private Validator insValidator;
+    
     @InitBinder("membership")
     private void initBinder(WebDataBinder binder) {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	dateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.setValidator(validator);
+    }
+    
+    
+    @InitBinder("membershipInsurance")
+    private void initInsBinder(WebDataBinder binder) {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	dateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+        binder.setValidator(insValidator);
     }
    
 	public MembershipController() {
@@ -93,8 +112,6 @@ public class MembershipController{
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
 	       
-		 System.out.println("dbMembership.getMbrHedisMeasureList().size() "+dbMembership.getMbrHedisMeasureList().size());
-		 
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipEdit.jsp page");
         return "membershipEdit";
@@ -308,12 +325,12 @@ public class MembershipController{
 		Membership membership = membershipService.findById(id);
 		model.addAttribute("membership", membership);
 		
-		List<MembershipInsurance> dbMembershipInsurance = membershipInsuranceService.findAllByMbrId(membership.getId());
-		List<MembershipProvider>  dbMembershipProvider  = membershipProviderService.findAllByMbrId(membership.getId());
+		List<MembershipInsurance> dbMembershipInsurance = membershipInsuranceService.findAllByMbrId(id);
+		List<MembershipProvider>  dbMembershipProvider  = membershipProviderService.findAllByMbrId(id);
 		
-		model.addAttribute("membershipInsurance", dbMembershipInsurance);
-		model.addAttribute("membershipProvider", dbMembershipProvider);
-		model.addAttribute("membership", membership);
+		//model.addAttribute("membershipInsurance", dbMembershipInsurance);
+		//model.addAttribute("membershipProvider", dbMembershipProvider);
+	//	model.addAttribute("membership", membership);
         return "membershipCompleteDetails";
            
     }
@@ -361,4 +378,6 @@ public class MembershipController{
 		List<Ethinicity> mbrethinicityList = ethinicityService.findAll();
 		return mbrethinicityList;
 	}
+	
+	
 }

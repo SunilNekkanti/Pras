@@ -24,24 +24,19 @@ public class ContractValidator implements Validator {
        
          
         Contract contract = (Contract) obj;
-        if(contract.getId() <=0){
-            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
+        if(contract.getId() != null)
+        {
+	        if(contract.getId() <=0){
+	            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
+	        }
+        }    
+       if (contract.getContractNBR().length() < 5) {
+            errors.rejectValue("contractNBR", "contractNBR.tooshort",     "Contract NBR must be at least 5 characters and less than 20 characters.");
         }
+                 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "PMPM", 		"error.PMPM", 		"PMPM Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate",  "error.startDate",  "Start Date Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", 	"error.endDate",    "End Date Required");
         
-
-        if (contract.getContractNBR().length() < 5) {
-            errors.rejectValue("contractNBR", "contractNBR.tooshort",     "Contract NBR must be at least 5 characters.");
-        }
-        
-        
-        
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "PMPM", "error.PMPM", "PMPM.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
-        
-        System.out.println("end of validation");
     }
 }

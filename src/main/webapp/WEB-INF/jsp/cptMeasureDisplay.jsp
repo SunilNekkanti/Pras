@@ -46,7 +46,7 @@
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
-						<springForm:errors path="code" cssClass="error" />
+						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
@@ -54,7 +54,7 @@
 					<label class="control-label col-sm-2" for="description">Description:</label>
 					<div class="col-sm-6">
 						<springForm:input path="description" class="form-control" id="description" placeholder="Description" />
-						<springForm:errors path="description" cssClass="error" />
+						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>
 				<div class="col-sm-offset-6 col-sm-4">

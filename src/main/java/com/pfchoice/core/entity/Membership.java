@@ -118,13 +118,9 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
-   /*@OneToMany
-   @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
-    private List<Membership>*/
-    
-    @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+   /* @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembershipHedisMeasure> mbrHedisMeasureList;
-  
+  */
     
     public Membership()
     {
@@ -389,17 +385,17 @@ public class Membership implements Serializable
 	/**
 	 * @return the mbrHedisMeasureList
 	 */
-	public List<MembershipHedisMeasure> getMbrHedisMeasureList() {
+	/*public List<MembershipHedisMeasure> getMbrHedisMeasureList() {
 		System.out.println("getMbrHedisMeasureList size "+mbrHedisMeasureList.size());
 		return mbrHedisMeasureList;
-	}
+	}*/
 
 	/**
 	 * @param mbrHedisMeasureList the mbrHedisMeasureList to set
 	 */
-	public void setMbrHedisMeasureList(List<MembershipHedisMeasure> mbrHedisMeasureList) {
+	/*public void setMbrHedisMeasureList(List<MembershipHedisMeasure> mbrHedisMeasureList) {
 		this.mbrHedisMeasureList = mbrHedisMeasureList;
-	}
+	}*/
 	
 	@Override
     public int hashCode()

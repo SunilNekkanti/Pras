@@ -16,7 +16,7 @@
 					<div class="col-sm-12">
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label class="control-label col-sm-4" for="firstName">First Name:</label>
+								<label class="control-label required col-sm-4" for="firstName">First Name:</label>
 								<div class="col-sm-8">
 									<springForm:hidden path="id" />
 									<springForm:input path="firstName" class="form-control" id="firstName" placeholder="First Name" />
@@ -25,14 +25,14 @@
 							</div>
 				 		 
 							<div class="form-group">
-								<label class="control-label col-sm-4" for="lastName">Last Name:</label>
+								<label class="control-label required col-sm-4" for="lastName">Last Name:</label>
 								<div class="col-sm-8">
 									<springForm:input path="lastName" class="form-control" id="lastName" placeholder="Last Name" />
 									<springForm:errors path="lastName" cssClass="error text-danger" />
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-sm-4" for="gender">Gender:</label>
+								<label class="control-label required col-sm-4" for="gender">Gender:</label>
 								<div class="col-sm-8">
 									<springForm:select path="genderId"  class="form-control" id="gender">
 							    		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
@@ -41,7 +41,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-							 	<label class="control-label col-sm-4" for="dob">DOB:</label>
+							 	<label class="control-label required col-sm-4" for="dob">DOB:</label>
 								<div class="col-sm-8">
 									<fmt:formatDate value="${membership.dob}" var="dateString" pattern="MM/dd/yyyy" />
 									<springForm:input path="dob" value="${dateString}" class="form-control" id="dob" placeholder="DOB" />
@@ -59,8 +59,12 @@
 								</div>
 							</div>
 				 
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="status">Status:</label>
+							
+				 		 
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group required">
+								<label class="control-label required col-sm-4" for="status">Status:</label>
 								<div class="col-sm-8">
 									<springForm:select path="status" class="form-control" id="status">
 							    		<springForm:options items="${statusList}" itemValue="id" itemLabel="description"   />
@@ -68,9 +72,7 @@
 									<springForm:errors path="status" cssClass="error text-danger" />
 								  </div>
 							</div>
-				 		 
-							
-				
+				 					
 							<div class="form-group">
 								<label class="control-label col-sm-4" for="county">County:</label>
 								<div class="col-sm-8">
@@ -80,12 +82,8 @@
 									<springForm:errors path="countyCode" cssClass="error text-danger" />
 								</div>
 							</div>
-				 		 
-							
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="medicaidNo">Medicaid No:</label>
+							<div class="form-group drequired">
+								<label class="control-label  drequired col-sm-4" for="medicaidNo">Medicaid No:</label>
 								<div class="col-sm-8">
 									
 									<springForm:input path="medicaidNo" class="form-control" id="medicaidNo" placeholder="Medicaid No" />
@@ -93,64 +91,17 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-sm-4" for="medicareNo">Medicare No:</label>
+								<label class="control-label drequired col-sm-4" for="medicareNo">Medicare No:</label>
 								<div class="col-sm-8">
 									<springForm:input path="medicareNo" class="form-control" id="medicareNo" placeholder="medicare No" />
 									<springForm:errors path="medicareNo" cssClass="error text-danger" />
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="file_id">File ID:</label>
-								<div class="col-sm-8">
-									
-									<springForm:input path="fileId" class="form-control" id="fileId" placeholder="fileId" />
-									<springForm:errors path="fileId" cssClass="error text-danger" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="createdDate">Created Date:</label>
-								<div class="col-sm-8">
-									<fmt:formatDate value="${membership.createdDate}" var="dateString" pattern="MM/dd/yyyy HH:mm:ss" />
-									<springForm:input path="createdDate" value="${dateString}" class="form-control" id="createdDate" placeholder="createdDate" />
-									<springForm:errors path="createdDate" cssClass="error text-danger" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="updatedDate">UpdatedDate:</label>
-								<div class="col-sm-8">
-									<fmt:formatDate value="${membership.updatedDate}" var="dateString" pattern="MM/dd/yyyy HH:mm:ss" />
-									<springForm:input path="updatedDate" value="${dateString}" class="form-control" id="updatedDate" placeholder="updatedDate" />
-									<springForm:errors path="updatedDate" cssClass="error text-danger" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="createdBy">CreatedBy:</label>
-								<div class="col-sm-8">
-									
-									<springForm:input path="createdBy" class="form-control" id="createdBy" placeholder="Created By" />
-									<springForm:errors path="createdBy" cssClass="error text-danger" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="updatedBy">UpdatedBY:</label>
-								<div class="col-sm-8">
-									
-									<springForm:input path="updatedBy" class="form-control" id="updatedBy" placeholder="Updated By" />
-									<springForm:errors path="updatedBy" cssClass="error text-danger" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="active_ind">ActiveInd:</label>
-								<div class="col-sm-8">
-									
-									<springForm:input path="activeInd" class="form-control" id="activeInd" placeholder="Active IND" />
-									<springForm:errors path="activeInd" cssClass="error text-danger" />
-								</div>
-							</div>
-						
+							
 						</div>
 					</div>
 				</div>
+				
 			
 			
 			<div class="col-sm-12">	 
@@ -163,7 +114,13 @@
 				</c:choose>				
 				</div>
 			</div>	
+		
+			
 			</springForm:form>
 		</div>
 	</div>
-</div> 
+</div>
+<style>
+	.form-group .required:before  {  content:"*";color:red; }
+	.form-group .drequired:after  {  content:"**";color:red; }
+</style> 

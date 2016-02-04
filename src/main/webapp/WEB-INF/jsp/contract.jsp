@@ -46,7 +46,7 @@
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:input path="contractNBR" class="form-control" id="contractNBR" placeholder="Contact NBR" />
-						<springForm:errors path="contractNBR" cssClass="error" />
+						<springForm:errors path="contractNBR" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
@@ -54,14 +54,14 @@
 					<label class="control-label col-sm-2" for="PMPM">PMPM:</label>
 					<div class="col-sm-6">
 						<springForm:input path="PMPM" class="form-control" id="mobilePhone" placeholder="PMPM" />
-						<springForm:errors path="PMPM" cssClass="error" />
+						<springForm:errors path="PMPM" cssClass="error text-danger" />
 					</div>
 				</div>
 				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="startDate">Start Date:</label>
 					<div class="col-sm-6">
 						<springForm:input path="startDate" class="form-control" id="startDate" placeholder="Start Date" />
-						<springForm:errors path="startDate" cssClass="error" />
+						<springForm:errors path="startDate" cssClass="error text-danger" />
 					</div>
 				</div>
 				
@@ -69,7 +69,7 @@
 				 	<label class="control-label col-sm-2" for="startDate">End Date:</label>
 					<div class="col-sm-6">
 						<springForm:input path="endDate" class="form-control" id="endDate" placeholder="End Date" />
-						<springForm:errors path="endDate" cssClass="error" />
+						<springForm:errors path="endDate" cssClass="error text-danger" />
 					</div>
 				</div>
 				 

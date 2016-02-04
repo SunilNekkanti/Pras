@@ -46,7 +46,7 @@
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
-						<springForm:errors path="homePhone" cssClass="error" />
+						<springForm:errors path="homePhone" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
@@ -54,14 +54,14 @@
 					<label class="control-label col-sm-2" for="mobilePhone">Mobile Phone:</label>
 					<div class="col-sm-6">
 						<springForm:input path="mobilePhone" class="form-control" id="mobilePhone" placeholder="Mobile Phone" />
-						<springForm:errors path="mobilePhone" cssClass="error" />
+						<springForm:errors path="mobilePhone" cssClass="error text-danger" />
 					</div>
 				</div>
 				<div class="form-group">
 				 	<label class="control-label col-sm-2" for="faxNumber">Fax Number:</label>
 					<div class="col-sm-6">
 						<springForm:input path="faxNumber" class="form-control" id="dob" placeholder="Fax Number" />
-						<springForm:errors path="faxNumber" cssClass="error" />
+						<springForm:errors path="faxNumber" cssClass="error text-danger" />
 					</div>
 				</div>
 				 

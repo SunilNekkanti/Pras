@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -61,6 +60,9 @@ public class ReferenceContact implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
+    @OneToOne( fetch = FetchType.LAZY,mappedBy="refContact")
+    private Contact cnt;
+    
       
     public ReferenceContact()
     {
@@ -81,8 +83,6 @@ public class ReferenceContact implements Serializable
         this.id = id;
     }
 
-    
-	
 	/**
 	 * @return the mbr
 	 */
@@ -194,9 +194,20 @@ public class ReferenceContact implements Serializable
 	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
+	
+	/**
+	 * @return the cnt
+	 */
+	public Contact getCnt() {
+		return cnt;
+	}
 
-	
-	
+	/**
+	 * @param cnt the cnt to set
+	 */
+	public void setCnt(final Contact cnt) {
+		this.cnt = cnt;
+	}
 
 	@Override
     public int hashCode()

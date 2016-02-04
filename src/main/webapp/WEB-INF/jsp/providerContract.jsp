@@ -14,7 +14,7 @@
 						    <div class="col-sm-6">
 						    	
 						      	<springForm:input path="contractNBR" class="form-control" id="contractNBR" placeholder="contractNBR" />
-						      	<springForm:errors path="contractNBR" cssClass="error" />
+						      	<springForm:errors path="contractNBR" cssClass="error text-danger" />
 						    </div>
 				 </div>
 				 
@@ -22,7 +22,7 @@
 						    <label class="control-label col-sm-2" for="code">PMPM:</label>
 						    <div class="col-sm-6">
 						    	<springForm:input path="pmpm" class="form-control" id="pmpm" placeholder="PMPM" />
-						      	<springForm:errors path="pmpm" cssClass="error" />
+						      	<springForm:errors path="pmpm" cssClass="error text-danger" />
 						    </div>
 				</div>
 				

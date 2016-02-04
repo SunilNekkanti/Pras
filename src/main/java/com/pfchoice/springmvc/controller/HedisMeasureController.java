@@ -6,12 +6,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,22 +40,21 @@ public class HedisMeasureController{
     
     @Autowired
     GenderService genderService;
-    
-   /* @Autowired
-    @Qualifier("qualityMeasureValidator")
+ /*  
+    @Autowired
+    @Qualifier("hedisMeasure")
     private Validator validator;
  
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
-    }*/
-    
+    }
+    */
     private static final Logger logger = LoggerFactory
             .getLogger(HedisMeasureController.class);
  
 	public HedisMeasureController() {
     }
-	
 	
 	@ModelAttribute("hedisMeasure")
     public HedisMeasure createHedisMeasureModel() {
@@ -66,9 +69,9 @@ public class HedisMeasureController{
     }
 	
 	@ModelAttribute("genderList")
-	public List<Gender> populateStateList() {
+	public List<Gender> populateGenderList() {
 		
-		//Data referencing for Gender list box
+		//Data referencing for gender list box
 		List<Gender> genderList = genderService.findAll();
 		return genderList;
 	}
@@ -124,9 +127,6 @@ public class HedisMeasureController{
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning hedisMeasureEdit.jsp page");
             return "hedisMeasureEdit";
         }
@@ -146,9 +146,6 @@ public class HedisMeasureController{
 	public String saveHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning  hedisMeasureEdit.jsp page");
             return "hedisMeasureEdit";
         }
@@ -168,7 +165,6 @@ public class HedisMeasureController{
 	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
-       
             
 	        if (null != hedisMeasure.getId())
 	        {
@@ -179,4 +175,5 @@ public class HedisMeasureController{
 	        }
 	        return "hedisMeasureEdit";
     }
+	
 }

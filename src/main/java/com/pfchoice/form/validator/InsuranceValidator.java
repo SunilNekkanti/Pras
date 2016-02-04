@@ -22,10 +22,12 @@ public class InsuranceValidator implements Validator {
      
          
         Insurance ins = (Insurance) obj;
-        if(ins.getId() <=0){
-            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
-        }
-        
+        if(ins.getId() != null)
+        {	
+        	if(ins.getId() <=0){
+        		errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
+        	}
+        }       
 
         if (ins.getName().length() < 6) {
             errors.rejectValue("name", "name.tooshort", "Name must be at least 6 characters.");
@@ -37,7 +39,5 @@ public class InsuranceValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
         
-        
-        System.out.println("end of validation");
     }
 }

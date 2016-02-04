@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 import com.pfchoice.core.entity.Membership;
 
 @Component
-public class MembershipValidator implements Validator {
+public class MembershipInsuranceValidator implements Validator {
  
     //which objects can be validated by this validator
     @Override

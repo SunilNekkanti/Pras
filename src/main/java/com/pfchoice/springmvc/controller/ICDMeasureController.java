@@ -6,12 +6,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,21 +31,20 @@ public class ICDMeasureController{
     ICDMeasureService icdMeasureService;
     
     
-   /* @Autowired
-    @Qualifier("qualityMeasureValidator")
+    @Autowired
+    @Qualifier("icdMeasureValidator")
     private Validator validator;
  
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
-    }*/
+    }
     
     private static final Logger logger = LoggerFactory
             .getLogger(ICDMeasureController.class);
  
 	public ICDMeasureController() {
     }
-	
 	
 	@ModelAttribute("icdMeasure")
     public ICDMeasure createICDMeasureModel() {
@@ -93,9 +95,6 @@ public class ICDMeasureController{
 	public String addICDMeasureAction(@Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning icdMeasureEdit.jsp page");
             return "icdMeasureEdit";
         }
@@ -116,9 +115,6 @@ public class ICDMeasureController{
 	public String saveICDMeasureAction(@Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning  icdMeasureEdit.jsp page");
             return "icdMeasureEdit";
         }
@@ -140,7 +136,6 @@ public class ICDMeasureController{
 	public String deleteICDMeasureAction(@Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
        
-            
 	        if (null != icdMeasure.getId())
 	        {
 	        	logger.info("Returning icdMeasureEditSuccess.jsp page after update");

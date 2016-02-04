@@ -58,10 +58,10 @@ public class Provider implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-   /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "providerId")
-    private Set<ProviderContract> providerContracts = new HashSet<ProviderContract>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "prvdr")
+    private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
-     */
+     
     public Provider()
     {
     }
@@ -178,22 +178,22 @@ public class Provider implements Serializable
 	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
+	
+	
+	/**
+	 * @return the refContact
+	 */
+	public Set<ReferenceContact> getRefContacts() {
+		return refContacts;
+	}
 
 	/**
-	 * @return the providerContract
-	 
-	public Set<ProviderContract> getProviderContracts() {
-		return providerContracts;
+	 * @param refContact the refContact to set
+	 */
+	public void setRefContacts(Set<ReferenceContact> refContacts) {
+		this.refContacts = refContacts;
 	}
-*/
-	/**
-	 * @param providerContract the providerContract to set
-	
-	public void setProviderContracts(Set<ProviderContract> providerContracts) {
-		this.providerContracts = providerContracts;
-	}
-	
- */
+
 	@Override
     public int hashCode()
     {

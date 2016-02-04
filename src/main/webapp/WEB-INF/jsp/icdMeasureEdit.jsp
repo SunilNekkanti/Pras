@@ -3,32 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
-
-<head>
-
-<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"-->
-
-<title>Spring3Example</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script
-	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-
-<script src="/Pras/resources/js/prasweb.js"></script>
-
-</head>
-
-<body>
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
@@ -41,16 +15,16 @@
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
-						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
-						<springForm:errors path="code" cssClass="error" />
+						<springForm:input path="code" class="form-control required" id="code" placeholder="Code" />
+						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="description">Description:</label>
+					<label class="control-label col-sm-2" for="description required">Description:</label>
 					<div class="col-sm-6">
 						<springForm:input path="description" class="form-control" id="description" placeholder="Description" />
-						<springForm:errors path="description" cssClass="error" />
+						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>
 				
@@ -71,6 +45,4 @@
 				</div>
 			</springForm:form>
  	</div>
-	</div>
-</body>
-</html>
+</div>

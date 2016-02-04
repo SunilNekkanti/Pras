@@ -4,31 +4,7 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 
-<html>
-
-<head>
-
-<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"-->
-
-<title>Spring3Example</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script
-	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-
-<script src="/Pras/resources/js/prasweb.js"></script>
-
-</head>
-
-<body>
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
@@ -38,30 +14,74 @@
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="hedisMeasure" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="code">Code:</label>
+					<label class="control-label required col-sm-2" for="code">Code:</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:hidden path="hedisMsrGrp.id" />
-						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
-						<springForm:errors path="code" cssClass="error" />
+						<springForm:input path="code" class="form-control " id="code" placeholder="Code" />
+						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="description">Code:</label>
+					<label class="control-label required col-sm-2" for="description required">Description:</label>
 					<div class="col-sm-6">
 						<springForm:input path="description" class="form-control" id="description" placeholder="Description" />
-						<springForm:errors path="description" cssClass="error" />
+						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="hedisMsrGrp">Group Id:</label>
+								<label class="control-label required col-sm-4" for="gender">Gender:</label>
+								<div class="col-sm-8">
+									<springForm:select path="genderId"  class="form-control" id="gender">
+							    		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
+									</springForm:select>
+									<springForm:errors path="genderId" cssClass="error text-danger" />
+								</div>
+							</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="hedisMsrGrp required">Group Id:</label>
 					<div class="col-sm-6">
 						<springForm:select path="hedisMsrGrp" class="form-control" id="hedisMsrGrp">
 				    		<springForm:options items="${hedisMeasureGroupList}" itemValue="id" itemLabel="description"     />
 						</springForm:select>
-						<springForm:errors path="hedisMsrGrp.code" cssClass="error" />
+						<springForm:errors path="hedisMsrGrp.code" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="lowerAgeLimit required">Lower Age Limit:</label>
+					<div class="col-sm-6">
+						<springForm:input path="lowerAgeLimit" class="form-control" id="lowerAgeLimit" placeholder="lowerAgeLimit" />
+						<springForm:errors path="lowerAgeLimit" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="upperAgeLimit required">Upper Age Limit:</label>
+					<div class="col-sm-6">
+						upperAgeLimit
+						<springForm:input path="upperAgeLimit" class="form-control" id="upperAgeLimit" placeholder="upperAgeLimit" />
+						<springForm:errors path="upperAgeLimit" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="ageEffectiveFrom required">Age Effective From:</label>
+					<div class="col-sm-6">
+						
+						<springForm:input path="ageEffectiveFrom" class="form-control" id="ageEffectiveFrom" placeholder="ageEffectiveFrom" />
+						<springForm:errors path="ageEffectiveFrom" cssClass="error text-danger" />
+					  </div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="ageEffectiveTo required">Age Effective To:</label>
+					<div class="col-sm-6">
+						
+						<springForm:input path="ageEffectiveTo" class="form-control" id="ageEffectiveTo" placeholder="ageEffectiveTo" />
+						<springForm:errors path="ageEffectiveTo" cssClass="error text-danger" />
 					  </div>
 				</div>
 				
@@ -81,6 +101,4 @@
 				</div>
 			</springForm:form>
  	</div>
-	</div>
-</body>
-</html>
+</div>

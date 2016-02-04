@@ -6,12 +6,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,22 +31,18 @@ public class CPTMeasureController{
     CPTMeasureService cptMeasureService;
     
     
-   /* @Autowired
-    @Qualifier("qualityMeasureValidator")
+   @Autowired
+    @Qualifier("cptMeasureValidator")
     private Validator validator;
  
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
-    }*/
+    }
     
     private static final Logger logger = LoggerFactory
             .getLogger(CPTMeasureController.class);
  
-	public CPTMeasureController() {
-    }
-	
-	
 	@ModelAttribute("cptMeasure")
     public CPTMeasure createCPTMeasureModel() {
         // ModelAttribute value should be same as used in the CPTMeasureEdit.jsp
@@ -93,9 +92,6 @@ public class CPTMeasureController{
 	public String addCPTMeasureAction(@Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning cptMeasureEdit.jsp page");
             return "cptMeasureEdit";
         }
@@ -113,12 +109,10 @@ public class CPTMeasureController{
 	
 	
 	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveCPTMeasureAction(@Validated CPTMeasure cptMeasure,
+	public String saveCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
+        
+		if (bindingResult.hasErrors()) {
             logger.info("Returning  cptMeasureEdit.jsp page");
             return "cptMeasureEdit";
         }

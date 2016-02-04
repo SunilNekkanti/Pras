@@ -50,6 +50,11 @@ public class ProviderController{
         return new Provider();
     }
 	
+	@ModelAttribute("activeIndMap")
+	public Map<String,String> populateActiveIndList() {
+		//Data referencing for ActiveMap box
+		return PrasUtil.getActiveIndMap();
+	}
 	
 	@RequestMapping(value = "/provider/new")
     public String addProviderPage(final Model model) {
@@ -88,6 +93,7 @@ public class ProviderController{
         {
 	        	logger.info("Returning ProviderSuccess.jsp page after create");
 	        	model.addAttribute("provider", provider);
+	        	provider.setActiveInd('Y');
 	        	provider.setCreatedBy("Mohanasundharam");
 	 	      	providerService.save(provider);
 	 	       return "providerNewSuccess";
@@ -98,19 +104,16 @@ public class ProviderController{
     public String saveProviderAction( @Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning providerEdit.jsp page");
             return "providerEdit";
         }
         else
         {
-	        
 	        if (null != provider.getId())
 	        {
 	        	logger.info("Returning ProviderSuccess.jsp page after update");
 	        	provider.setUpdatedBy("Mohanasundharam");
+	        	provider.setActiveInd('Y');
 	        	providerService.update(provider);
 	        }
 	        return "providerEditSuccess";
@@ -122,9 +125,6 @@ public class ProviderController{
     public String deleteInsuranceAction( @Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning insuranceEdit.jsp page");
             return "insuranceEdit";
         }
@@ -136,11 +136,5 @@ public class ProviderController{
 	        return "providerEditSuccess";
         }    
     }
-	
-	@ModelAttribute("activeIndMap")
-	public Map<String,String> populateActiveIndList() {
-		//Data referencing for ActiveMap box
-		return PrasUtil.getActiveIndMap();
-	}
 	
 }

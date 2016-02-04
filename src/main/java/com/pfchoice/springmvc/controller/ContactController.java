@@ -6,12 +6,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,15 +58,15 @@ public class ContactController{
     @Autowired
     InsuranceService insuranceService;
     
- /*   @Autowired
+    @Autowired
     @Qualifier("contactValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("contact")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
- */   
+  
     private static final Logger logger = LoggerFactory
             .getLogger(ContactController.class);
  
@@ -111,8 +115,7 @@ public class ContactController{
 	@RequestMapping(value = "/membership/{id}/contact/{cntId}", method = RequestMethod.GET)
     public String updateMembershipContact1Page(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
-		// logger.info("Returning contact.getId()"+dbContact.getId());
-	       if(dbContact == null){
+		if(dbContact == null){
 	    	   dbContact = createContactModel();
 	       }
 		model.addAttribute("contact", dbContact);
@@ -145,9 +148,6 @@ public class ContactController{
 	public String addMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "membershipContactEdit";
         }
@@ -253,9 +253,7 @@ public class ContactController{
 	public String addProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
+        	
             logger.info("Returning contactEdit.jsp page");
             return "providerContactEdit";
         }
@@ -382,11 +380,9 @@ public class ContactController{
     	refCnt.setCreatedBy("sarath");
     	refCnt.setIns(dbInsurance);
     	contact.setRefContact(refCnt);
-    	
-    	logger.info("Returning contactEditSuccess.jsp page after create");
+     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
-   
-      	return "insuranceContactEditSuccess";
+       	return "insuranceContactEditSuccess";
     }
 
 	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"update"})
@@ -414,9 +410,6 @@ public class ContactController{
 	public String saveInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "insuranceContactEdit";
         }
