@@ -14,7 +14,7 @@
 		<springForm:form  commandName="membershipProvider" action="save.do">
 			
 				<div class="panel panel-primary">
-					<div class="panel-heading">Provider Details</div>
+					
 					<div class="panel-body" id="tablediv">
 						<springForm:hidden path="id" />
 						      	
@@ -36,7 +36,6 @@
 					</div>
 				
 					<div class="panel panel-primary">
-						<div class="panel-heading">Contact Details</div>
 						<div class="panel-body" id="tablediv">			 
 							 <c:forEach items="${membershipProvider.prvdr.refContacts}" var="refCnt" varStatus = "status">
 							     <c:choose>

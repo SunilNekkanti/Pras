@@ -83,6 +83,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	private HedisMeasureFormatter hedisMeasureFormatter;
 	
 	@Autowired
+	private HedisMeasureGroupFormatter hedisMeasureGroupFormatter;
+	
+	@Autowired
 	private ICDMeasureFormatter icdFormatter;
 	
 	@Autowired
@@ -216,15 +219,16 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     @Override
     public void addFormatters(FormatterRegistry formatterRegistry)
     {
-    	formatterRegistry.addFormatter(membershipStatusFormatter);
     	formatterRegistry.addFormatter(countyFormatter);
+    	formatterRegistry.addFormatter(cptMeasureFormatter);
+    	formatterRegistry.addFormatter(fileTypeFormatter);
     	formatterRegistry.addFormatter(genderFormatter);
+    	formatterRegistry.addFormatter(hedisMeasureFormatter);
+    	formatterRegistry.addFormatter(hedisMeasureGroupFormatter);
+    	formatterRegistry.addFormatter(icdFormatter);
     	formatterRegistry.addFormatter(insuranceFormatter);
     	formatterRegistry.addFormatter(membershipFormatter);
-    	formatterRegistry.addFormatter(cptMeasureFormatter);
-    	formatterRegistry.addFormatter(hedisMeasureFormatter);
-    	formatterRegistry.addFormatter(fileTypeFormatter);
-    	formatterRegistry.addFormatter(icdFormatter);
+    	formatterRegistry.addFormatter(membershipStatusFormatter);
     	formatterRegistry.addFormatter(providerFormatter);
     	formatterRegistry.addFormatter(stateFormatter);
     	formatterRegistry.addFormatter(zipCodeFormatter);

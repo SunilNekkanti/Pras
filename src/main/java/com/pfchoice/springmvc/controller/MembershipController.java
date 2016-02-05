@@ -27,8 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
+import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
@@ -37,6 +39,7 @@ import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
+import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
@@ -82,6 +85,9 @@ public class MembershipController{
     private MembershipProviderService membershipProviderService;
     
     @Autowired
+    private HedisMeasureService hedisMeasureService;
+  
+    @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
     
@@ -116,20 +122,7 @@ public class MembershipController{
         return new Membership();
     }
 	
-	@ModelAttribute("stateList")
-	public List<State> populateStateList() {
-	  //Data referencing for county list box
-		List<State> stateList = stateService.findAll();
-		return stateList;
-	}
-
-	@ModelAttribute("zipCodeList")
-	public List<ZipCode> populateZipCodeList() {
-		//Data referencing for gender list box
-		List<ZipCode> zipCodeList = zipCodeService.findAll();
-		return zipCodeList;
-	}
- 
+	
 	@RequestMapping(value = "/membership/{id}", method = RequestMethod.GET)
     public String updateMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
@@ -342,8 +335,8 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/{id}/complete", method = RequestMethod.GET)
     public String completeMembershipProviderDetailsPage(@PathVariable Integer id,Model model)throws Exception {
 		
-		Membership membership = membershipService.findById(id);
-		model.addAttribute("membership", membership);
+		Membership dbMembership = membershipService.findById(id);
+		model.addAttribute("membership", dbMembership);
 		
 		//membership.getRefContacts().getR
 		
@@ -369,8 +362,20 @@ public class MembershipController{
 		     }
 		   }  
 		
+		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
+		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
 		return "membershipCompleteDetails";
            
+    }
+	
+	@RequestMapping(value = "/membership/{id}/hedisMeasure", method = RequestMethod.GET)
+    public String displayMembershipHedisMeasurePage(@PathVariable Integer id, Model model)throws Exception {
+		
+		Membership dbMembership = membershipService.findById(id);
+		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
+		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
+        logger.info("Returning membershipHedisMeasure.jsp page");
+        return "membershipHedisMeasure";
     }
 	
 	
@@ -417,5 +422,27 @@ public class MembershipController{
 		return mbrethinicityList;
 	}
 	
-	
+	@ModelAttribute("stateList")
+	public List<State> populateStateList() {
+	  //Data referencing for county list box
+		List<State> stateList = stateService.findAll();
+		return stateList;
+	}
+
+	@ModelAttribute("zipCodeList")
+	public List<ZipCode> populateZipCodeList() {
+		//Data referencing for gender list box
+		List<ZipCode> zipCodeList = zipCodeService.findAll();
+		return zipCodeList;
+	}
+ 
+
+	@ModelAttribute("hedisMeasureList")
+	public List<HedisMeasure> populateHedisMeasureList() {
+		
+		//Data referencing for Hedis Measure Codes list box
+		List<HedisMeasure> hedisMeasureList = hedisMeasureService.findAll();
+		return hedisMeasureList;
+	}
+		
 }

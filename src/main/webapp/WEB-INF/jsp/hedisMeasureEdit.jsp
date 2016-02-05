@@ -17,7 +17,6 @@
 					<label class="control-label col-sm-2" for="code">Code</label>
 					<div class="col-sm-8">
 						<springForm:hidden path="id" />
-						<springForm:hidden path="hedisMsrGrp.id" />
 						<springForm:input path="code" class="form-control " id="code" placeholder="Code" />
 						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>

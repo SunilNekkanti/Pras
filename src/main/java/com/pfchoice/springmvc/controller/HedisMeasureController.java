@@ -136,6 +136,7 @@ public class HedisMeasureController{
         
 	 	model.addAttribute("hedisMeasure", hedisMeasure);
 	 	hedisMeasure.setCreatedBy("sarath");
+	 	hedisMeasure.setUpdatedBy("sarath");
 	 	hedisMeasure.setActiveInd('Y');
     	
     	logger.info("Returning contactEditSuccess.jsp page after create");

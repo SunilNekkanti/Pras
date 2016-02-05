@@ -8,7 +8,7 @@
 
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Membership Profile</div>
+		<div class="panel-heading">Membership Contact</div>
 		<div class="panel-body" id="tablediv">
 			 <c:forEach items="${membership.refContacts}" var="refCnt" varStatus = "status">
 				 <c:choose>

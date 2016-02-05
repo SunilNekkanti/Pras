@@ -39,12 +39,9 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="col-sm-6">
-			<div class="panel-group">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Hedis Measure</div>
-					<div class="panel-body"></div>
-				</div>
-			</div>
+				<jsp:include page="/WEB-INF/jsp/membershipHedisMeasure.jsp">
+ 					<jsp:param name="mbrHedisMeasureList" value="${mbrHedisMeasureList}"/>
+				</jsp:include>
 		</div>
 		<div class="col-sm-6">
 			<div class="panel-group">

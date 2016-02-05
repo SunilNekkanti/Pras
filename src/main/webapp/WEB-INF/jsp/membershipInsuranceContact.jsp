@@ -14,7 +14,6 @@
 		<springForm:form  commandName="membershipInsurance" action="save.do">
 				<springForm:hidden path="id" />
 						<div class="panel panel-primary">
-							<div class="panel-heading">Insurance Details</div>
 							<div class="panel-body" id="tablediv">      	
 								<div class="form-group col-sm-12">
 										    <label class="control-label col-sm-4" for="name">Name:</label>
@@ -29,7 +28,6 @@
 				     <c:choose>
 					 	<c:when test="${fn:contains(refCnt.cnt.activeInd, 'Y')}">
 							 	<div class="panel panel-primary">
-									<div class="panel-heading">Insurance Details</div>
 									<div class="panel-body" id="tablediv">   
 								 		<div class="form-group col-sm-12">
 											<label class="control-label col-sm-4" for="homePhone">Home Phone:</label>
