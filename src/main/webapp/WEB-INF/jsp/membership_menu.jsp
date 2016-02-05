@@ -30,6 +30,7 @@
             <li><a href="/Pras/membership/${id}/contactList">Contact Details</a></li>
              <li><a href="/Pras/membership/${id}/problem">Problem Details</a></li>
              <li><a href="/Pras/membership/${id}/providerDetails">Provider Details</a></li>
+             <li><a href="/Pras/membership/${id}/hedisMeasure">Hedis Measure <span class="badge"> ${mbrHedisMeasureList.size()}</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

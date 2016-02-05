@@ -27,14 +27,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
+import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
+import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
@@ -70,6 +73,10 @@ public class MembershipController{
     
     @Autowired
     private MembershipProviderService membershipProviderService;
+    
+    @Autowired
+    private HedisMeasureService hedisMeasureService;
+  
     
     @Autowired
     @Qualifier("membershipValidator")
@@ -111,7 +118,7 @@ public class MembershipController{
     public String updateMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
-	       
+		 System.out.println("dbMembership.getMbrHedisMeasureList().size() "+dbMembership.getMbrHedisMeasureList().size());
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipEdit.jsp page");
         return "membershipEdit";
@@ -122,7 +129,7 @@ public class MembershipController{
     public String displayMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
-	       
+	       System.out.println("dbMembership.getMbrHedisMeasureList().size() "+dbMembership.getMbrHedisMeasureList().size());
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipDisplay.jsp page");
         return "membershipDisplay";
@@ -335,6 +342,16 @@ public class MembershipController{
            
     }
 	
+	@RequestMapping(value = "/membership/{id}/hedisMeasure", method = RequestMethod.GET)
+    public String displayMembershipHedisMeasurePage(@PathVariable Integer id, Model model)throws Exception {
+		
+		Membership dbMembership = membershipService.findById(id);
+		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
+		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
+        logger.info("Returning membershipHedisMeasure.jsp page");
+        return "membershipHedisMeasure";
+    }
+	
 	
 	@ModelAttribute("countyList")
 	public List<County> populateCountyList() {
@@ -364,7 +381,7 @@ public class MembershipController{
 	
 	
 	@ModelAttribute("statusList")
-	public List<MembershipStatus> populateStatusList1() {
+	public List<MembershipStatus> populateStatusList() {
 		
 		//Data referencing for Membership Status list box
 		List<MembershipStatus> mbrStatusList = membershipStatusService.findAll();
@@ -372,12 +389,19 @@ public class MembershipController{
 	}
 	
 	@ModelAttribute("ethinicityList")
-	public List<Ethinicity> populateethinicityList1() {
+	public List<Ethinicity> populateEthinicityList() {
 		
 		//Data referencing for Membership Status list box
 		List<Ethinicity> mbrethinicityList = ethinicityService.findAll();
 		return mbrethinicityList;
 	}
 	
+	@ModelAttribute("hedisMeasureList")
+	public List<HedisMeasure> populateHedisMeasureList() {
+		
+		//Data referencing for Hedis Measure Codes list box
+		List<HedisMeasure> hedisMeasureList = hedisMeasureService.findAll();
+		return hedisMeasureList;
+	}
 	
 }

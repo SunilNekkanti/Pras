@@ -311,10 +311,9 @@ $(document).ready(function () {
             <li><a href="/Pras/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
          </ul>
         </li> 
-        
-            
         <li><a href="/Pras/reports">Reports</a></li>
         <li><a href="#">Help</a></li>
+        <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

@@ -15,7 +15,7 @@
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:hidden path="refContact.id" />
-						 <c:choose id="testtest">
+						 <c:choose>
 						 <c:when test="${contact.refContact.mbr != null}"> 
 							<springForm:hidden path="refContact.mbr.id" />
 						 </c:when>
