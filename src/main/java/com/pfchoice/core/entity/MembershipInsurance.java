@@ -18,8 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.google.gson.annotations.Expose;
 /**
@@ -46,9 +44,10 @@ public class MembershipInsurance implements Serializable
     private Insurance insId;
     
     
-    @ManyToOne( fetch = FetchType.EAGER)
+    @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
+    
     
     @Expose
     @Column(name="New_Medicare_Bene_Medicaid_Flag")

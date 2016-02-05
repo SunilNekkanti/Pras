@@ -12,14 +12,9 @@
 				
 		</div>						
 		<div class="col-sm-6">
-			<div class="panel-group">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Membership Contact</div>
-					<div class="panel-body">
-							
-					</div>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/jsp/membershipContact.jsp">
+ 				<jsp:param name="membershipContact" value="${membershipContact}"/>
+			</jsp:include>
 		</div>
 	</div>
 </div>	
@@ -27,21 +22,15 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="col-sm-6">
-			<div class="panel-group">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Provider Details</div>
-					<div class="panel-body">
-					
-					</div>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/jsp/membershipProviderContact.jsp">
+ 				<jsp:param name="membershipProviderContact" value="${membershipProviderContact}"/>
+			</jsp:include>
 		</div>
 		<div class="col-sm-6">
 			<div class="panel-group">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Insurance Details</div>
-					<div class="panel-body"></div>
-				</div>
+				<jsp:include page="/WEB-INF/jsp/membershipInsuranceContact.jsp">
+ 				<jsp:param name="membershipInsuranceContact" value="${membershipInsuranceContact}"/>
+			</jsp:include>
 			</div>
 		</div>
 	</div>

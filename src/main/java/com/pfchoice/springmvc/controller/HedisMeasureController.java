@@ -40,16 +40,16 @@ public class HedisMeasureController{
     
     @Autowired
     GenderService genderService;
- /*  
+   
     @Autowired
-    @Qualifier("hedisMeasure")
+    @Qualifier("hedisMeasureValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("hedisMeasure")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
-    */
+    
     private static final Logger logger = LoggerFactory
             .getLogger(HedisMeasureController.class);
  
@@ -127,6 +127,9 @@ public class HedisMeasureController{
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
             logger.info("Returning hedisMeasureEdit.jsp page");
             return "hedisMeasureEdit";
         }

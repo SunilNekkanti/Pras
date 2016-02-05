@@ -27,22 +27,23 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
-import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
-import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
+import com.pfchoice.core.entity.State;
+import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
-import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
+import com.pfchoice.core.service.StateService;
+import com.pfchoice.core.service.ZipCodeService;
 
 @Controller
 public class MembershipController{
@@ -55,6 +56,12 @@ public class MembershipController{
     
     @Autowired
     private GenderService  genderService;
+    
+    @Autowired
+    StateService stateService;
+    
+    @Autowired
+    ZipCodeService zipCodeService;
     
     @Autowired
     private MembershipStatusService  membershipStatusService;
@@ -75,10 +82,6 @@ public class MembershipController{
     private MembershipProviderService membershipProviderService;
     
     @Autowired
-    private HedisMeasureService hedisMeasureService;
-  
-    
-    @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
     
@@ -94,7 +97,7 @@ public class MembershipController{
         binder.setValidator(validator);
     }
     
-    
+   /* 
     @InitBinder("membershipInsurance")
     private void initInsBinder(WebDataBinder binder) {
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -102,23 +105,36 @@ public class MembershipController{
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.setValidator(insValidator);
     }
-   
+*/
+    
 	public MembershipController() {
     }
-	
 	
 	@ModelAttribute("membership")
     public Membership createMembershipModel() {
         // ModelAttribute value should be same as used in the empSave.jsp
         return new Membership();
     }
- 
 	
+	@ModelAttribute("stateList")
+	public List<State> populateStateList() {
+	  //Data referencing for county list box
+		List<State> stateList = stateService.findAll();
+		return stateList;
+	}
+
+	@ModelAttribute("zipCodeList")
+	public List<ZipCode> populateZipCodeList() {
+		//Data referencing for gender list box
+		List<ZipCode> zipCodeList = zipCodeService.findAll();
+		return zipCodeList;
+	}
+ 
 	@RequestMapping(value = "/membership/{id}", method = RequestMethod.GET)
     public String updateMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
-		 System.out.println("dbMembership.getMbrHedisMeasureList().size() "+dbMembership.getMbrHedisMeasureList().size());
+	       
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipEdit.jsp page");
         return "membershipEdit";
@@ -129,7 +145,7 @@ public class MembershipController{
     public String displayMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
-	       System.out.println("dbMembership.getMbrHedisMeasureList().size() "+dbMembership.getMbrHedisMeasureList().size());
+	       
 		model.addAttribute("membership", dbMembership);
         logger.info("Returning membershipDisplay.jsp page");
         return "membershipDisplay";
@@ -140,8 +156,7 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST)
     public String saveMembershipAction( @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model) {
-		
-		
+			
         if (bindingResult.hasErrors()) {
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
@@ -163,8 +178,7 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipAction( @Validated Membership membership,
             BindingResult bindingResult, Model model) {
-		
-		
+				
         if (bindingResult.hasErrors()) {
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
@@ -222,8 +236,7 @@ public class MembershipController{
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
-	             
-		        return "membershipDetailsEditSuccess";
+	            return "membershipDetailsEditSuccess";
 	       }    
     }
 	
@@ -332,24 +345,32 @@ public class MembershipController{
 		Membership membership = membershipService.findById(id);
 		model.addAttribute("membership", membership);
 		
-		List<MembershipInsurance> dbMembershipInsurance = membershipInsuranceService.findAllByMbrId(id);
-		List<MembershipProvider>  dbMembershipProvider  = membershipProviderService.findAllByMbrId(id);
+		//membership.getRefContacts().getR
 		
-		//model.addAttribute("membershipInsurance", dbMembershipInsurance);
-		//model.addAttribute("membershipProvider", dbMembershipProvider);
-	//	model.addAttribute("membership", membership);
-        return "membershipCompleteDetails";
+		List<MembershipInsurance> dbMembershipInsuranceList = membershipInsuranceService.findAllByMbrId(id);
+		
+		List<MembershipProvider>  dbMembershipProviderList  = membershipProviderService.findAllByMbrId(id);
+		
+		for(MembershipProvider s:dbMembershipProviderList){  
+		     System.out.println("s.getActiveInd() "+s.getActiveInd()); 
+		     if(s.getActiveInd() == 'Y')
+		     {
+		    	 MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
+		 		 model.addAttribute("membershipProvider", dbMembershipProvider);
+		     }
+		   }  
+		for(MembershipInsurance s:dbMembershipInsuranceList){  
+		     System.out.println("s.getActiveInd() "+s.getActiveInd()); 
+		     if(s.getActiveInd() == 'Y')
+		     {
+		    	 System.out.println("s.getActiveInd() "+s.getInsId().getName()); 
+		    	 MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findByMbrId(id);
+		 		 model.addAttribute("membershipInsurance", dbMembershipInsurance);
+		     }
+		   }  
+		
+		return "membershipCompleteDetails";
            
-    }
-	
-	@RequestMapping(value = "/membership/{id}/hedisMeasure", method = RequestMethod.GET)
-    public String displayMembershipHedisMeasurePage(@PathVariable Integer id, Model model)throws Exception {
-		
-		Membership dbMembership = membershipService.findById(id);
-		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
-		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
-        logger.info("Returning membershipHedisMeasure.jsp page");
-        return "membershipHedisMeasure";
     }
 	
 	
@@ -381,7 +402,7 @@ public class MembershipController{
 	
 	
 	@ModelAttribute("statusList")
-	public List<MembershipStatus> populateStatusList() {
+	public List<MembershipStatus> populateStatusList1() {
 		
 		//Data referencing for Membership Status list box
 		List<MembershipStatus> mbrStatusList = membershipStatusService.findAll();
@@ -389,19 +410,12 @@ public class MembershipController{
 	}
 	
 	@ModelAttribute("ethinicityList")
-	public List<Ethinicity> populateEthinicityList() {
+	public List<Ethinicity> populateethinicityList1() {
 		
 		//Data referencing for Membership Status list box
 		List<Ethinicity> mbrethinicityList = ethinicityService.findAll();
 		return mbrethinicityList;
 	}
 	
-	@ModelAttribute("hedisMeasureList")
-	public List<HedisMeasure> populateHedisMeasureList() {
-		
-		//Data referencing for Hedis Measure Codes list box
-		List<HedisMeasure> hedisMeasureList = hedisMeasureService.findAll();
-		return hedisMeasureList;
-	}
 	
 }

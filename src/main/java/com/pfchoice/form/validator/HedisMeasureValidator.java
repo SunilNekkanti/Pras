@@ -30,15 +30,15 @@ public class HedisMeasureValidator implements Validator {
         	}
         }       
 
-        if (hedisMeasure.getCode().length() < 3) {
+        if (hedisMeasure.getCode().length() < 3 && hedisMeasure.getCode().length() >= 1) {
             errors.rejectValue("code", "code.tooshort", "Code must be at least 3 characters.");
         }
-        else if (hedisMeasure.getCode().length() > 15) {
+        else if (hedisMeasure.getCode().length() > 15 && hedisMeasure.getCode().length() > 1) {
             errors.rejectValue("code", "code.toolong", "Code must be at less than 15 characters.");
         }
         
-        if (hedisMeasure.getDescription().length() < 5) {
-            errors.rejectValue("code", "description.tooshort", "Description must be at least 5 characters.");
+        if (hedisMeasure.getDescription().length() < 5 && hedisMeasure.getDescription().length()>= 1) {
+            errors.rejectValue("description", "description.tooshort", "Description must be at least 5 characters.");
         }
         
         if (hedisMeasure.getDescription().length() > 50) {
@@ -47,7 +47,6 @@ public class HedisMeasureValidator implements Validator {
        
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code",  "error.code",  "Code Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description",  "error.description",  "Description Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description",  "error.description",  "Description Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId",  "error.genderId",  "Gender Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "hedisMsrGrp",  "error.hedisMsrGrp",  "Hedis Measure Group Required");

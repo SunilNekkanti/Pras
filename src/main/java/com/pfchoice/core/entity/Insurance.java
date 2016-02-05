@@ -51,7 +51,8 @@ public class Insurance implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-   
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ins")
+    private Set<ReferenceContact> refInsContacts = new HashSet<ReferenceContact>();
    
       
     public Insurance()
@@ -157,7 +158,19 @@ public class Insurance implements Serializable
 		this.activeInd = activeInd;
 	}
 
-	
+	/**
+	 * @return the refInsContacts
+	 */
+	public Set<ReferenceContact> getRefInsContacts() {
+		return refInsContacts;
+	}
+
+	/**
+	 * @param refInsContacts the refInsContacts to set
+	 */
+	public void setRefInsContacts(Set<ReferenceContact> refInsContacts) {
+		this.refInsContacts = refInsContacts;
+	}
 
 	@Override
     public int hashCode()

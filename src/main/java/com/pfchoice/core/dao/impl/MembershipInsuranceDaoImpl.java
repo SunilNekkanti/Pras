@@ -82,4 +82,21 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     	List<MembershipInsurance> list = cr.list();
     	return list;
     }
+    
+    @SuppressWarnings("unchecked")
+  	public MembershipInsurance findByMbrId(final Integer id)
+      {
+      	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrIns")
+      			.createAlias("mbrIns.mbr","mbr")
+      			.add(Restrictions.eq("mbr.id", id))	
+      			.add(Restrictions.eq("mbrIns.activeInd", 'Y'))
+      			.add(Restrictions.eq("mbr.activeInd", 'Y'));
+      	List<MembershipInsurance> list = cr.list();
+      	
+      	final String msg = "findByMbrId list size is %d";
+      	final String fmt = String.format(msg, list.size());
+      	LOG.info(fmt);
+      		
+      	return list.get(0);
+      }
 }

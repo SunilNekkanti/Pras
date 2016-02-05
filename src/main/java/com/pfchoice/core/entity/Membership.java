@@ -2,7 +2,9 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -62,12 +64,10 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_ethinic_code", referencedColumnName="code")
     private Ethinicity ethinicCode;
     
-   // 
-  //  @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  
-//    @JoinColumn(name="mbr_id", referencedColumnName="mbr_id")
-  //  private MembershipInsurance mbrInsurance;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mbr")
+    private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
     
+     
      
     @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private MembershipProvider mbrProvider;
@@ -362,23 +362,21 @@ public class Membership implements Serializable
 	public void setActiveInd(final char activeInd) {
 		this.activeInd = activeInd;
 	}
-
 	
 	/**
-	 * @return the mbrInsurance
-	 
-	public MembershipInsurance getMbrInsurance() {
-		return mbrInsurance;
+	 * @return the refContacts
+	 */
+	public Set<ReferenceContact> getRefContacts() {
+		return refMbrContacts;
 	}
-	*/
 
 	/**
-	 * @param mbrInsurance the mbrInsurance to set
-	 
-	public void setMbrInsurance(MembershipInsurance mbrInsurance) {
-		this.mbrInsurance = mbrInsurance;
-	}
+	 * @param refContacts the refContacts to set
 	 */
+	public void setRefContacts(Set<ReferenceContact> refContacts) {
+		this.refMbrContacts = refContacts;
+	}
+	
 	
 	/**
 	 * @return the mbrHedisMeasureList

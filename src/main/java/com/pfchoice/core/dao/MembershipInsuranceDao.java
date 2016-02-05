@@ -27,5 +27,7 @@ public interface MembershipInsuranceDao
     List<MembershipInsurance> findAll();
     
     List<MembershipInsurance> findAllByMbrId(Integer id);
+    
+    MembershipInsurance findByMbrId(Integer id);
 
 }

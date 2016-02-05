@@ -26,5 +26,7 @@ public interface MembershipInsuranceService
     List<MembershipInsurance> findAll();
     
     List<MembershipInsurance> findAllByMbrId(Integer id);
+    
+    MembershipInsurance findByMbrId(final Integer id);
 
 }
