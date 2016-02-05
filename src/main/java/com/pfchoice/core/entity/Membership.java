@@ -64,7 +64,7 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_ethinic_code", referencedColumnName="code")
     private Ethinicity ethinicCode;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mbr")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
     private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
     
      

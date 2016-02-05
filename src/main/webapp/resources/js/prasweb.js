@@ -1,8 +1,8 @@
 function prasPagination(listname){
 	
-	 
+	
 	  //how much items per page to show
-	  var show_per_page = 3; 
+	  var show_per_page = 2; 
 	  //getting the amount of elements inside content div
 	  var number_of_items = $('#content'+listname).children().size();
 	  //calculate the number of pages we are going to have
@@ -10,23 +10,24 @@ function prasPagination(listname){
 	  //set the value of our hidden input fields
 	  $('#current_page'+listname).val(0);
 	  $('#show_per_page'+listname).val(show_per_page);
-
 	  var navigation_html = '<ul class="pagination">';
 
 	  navigation_html += '<li class="previous_link">';
-	  navigation_html += '<a href="javascript:previous();">&larr; Previous</a>';
+	  navigation_html += '<a href="javascript:previous(\''+listname+'\');">&larr; Previous</a>';
 	  navigation_html += '</li>';
+	 
 	  var current_link = 0;
 	  while(number_of_pages > current_link){
-	    navigation_html += '<li class="page_link" id="id' + current_link +'">';
-	    navigation_html += '<a href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a>';
+	    navigation_html += '<li class="page_link" id="id' + current_link +listname+'">';
+	    navigation_html += '<a href="javascript:go_to_page(' + current_link +',\''+listname+'\')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a>';
 	    current_link++;
 	    navigation_html += '</li>';
 	  }
 	  navigation_html += '<li>';
-	  navigation_html += '<a class="next_link" href="javascript:next();">Next &rarr;</a>';
+	  navigation_html += '<a class="next_link" href="javascript:next(\''+listname+'\');">Next &rarr;</a>';
 	  navigation_html += '</li>';
 	  navigation_html += '</ul>';
+	  
 	  $('#page_navigation'+listname).html(navigation_html);
 
 	  //add active class to the first page link
@@ -40,36 +41,34 @@ function prasPagination(listname){
 
   }
 
-	function previous(){
-
+	function previous(listname){
 	  new_page = parseInt($('#current_page'+listname).val()) - 1;
+	  
 	  //if there is an item before the current active link run the function
 	  if($('.active').prev('.page_link').length==true){
-	    go_to_page(new_page);
+	    go_to_page(new_page,listname);
 	  }
 	}
 
-	function next(){
+	function next(listname){
 	  new_page = parseInt($('#current_page'+listname).val()) + 1;
+	
 	  //if there is an item after the current active link run the function
 	  if($('.active').next('.page_link').length==true){
-	    go_to_page(new_page);
+	    go_to_page(new_page, listname);
 	  }
-
 	}
 
-	function go_to_page(page_num){
+	function go_to_page(page_num,listname){
 	  //get the number of items shown per page
 	  var show_per_page = parseInt($('#show_per_page'+listname).val());
-
 	  //get the element number where to start the slice from
 	  start_from = page_num * show_per_page;
-
 	  //get the element number where to end the slice
 	  end_on = start_from + show_per_page;
-
 	  activate_id = page_num;
-	  var get_box = document.getElementById("id"+page_num);
+	 
+	  var get_box = document.getElementById("id"+page_num+listname);
 	  //hide all children elements of content div, get specific items and show them
 	  $('#content'+listname).children().css('display', 'none').slice(start_from, end_on).css('display', 'table-row');
 
@@ -78,9 +77,8 @@ function prasPagination(listname){
 	  $("#page_navigation"+listname).find('li.active').removeClass("active");
 	  $(get_box).addClass("active");
 
-
 	  //update the current page input field
-	  $('#current_page').val(page_num);
+	  $('#current_page'+listname).val(page_num);
 	  
 	}
 

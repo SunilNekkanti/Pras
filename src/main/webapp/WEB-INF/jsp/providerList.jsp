@@ -22,7 +22,7 @@ prasPagination('provider');
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">New Provider <span class="badge">${membershipList.size()}</span></div>
+		<div class="panel-heading">New Provider <span class="badge">${providerList.size()}</span></div>
 		<div class="panel-body" id="tablediv">
 			<table id="tab" class="table table-striped table-hover">
 				<thead>

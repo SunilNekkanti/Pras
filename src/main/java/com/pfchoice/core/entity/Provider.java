@@ -58,7 +58,7 @@ public class Provider implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "prvdr")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
      

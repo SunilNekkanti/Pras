@@ -51,7 +51,7 @@ public class Insurance implements Serializable
     @Column(name="active_ind")
     private char activeInd;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ins")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ins")
     private Set<ReferenceContact> refInsContacts = new HashSet<ReferenceContact>();
    
       
