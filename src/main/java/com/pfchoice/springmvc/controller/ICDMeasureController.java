@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.ICDMeasureService;
 
+import ml.rugal.sshcommon.page.Pagination;
+
 @Controller
 public class ICDMeasureController{
 	
@@ -83,7 +85,10 @@ public class ICDMeasureController{
 	@RequestMapping(value = "/icd/icdMeasureList")
     public ModelAndView icdMeasureList() throws Exception {
  
-    	List<ICDMeasure> listBean = icdMeasureService.findAll();
+		Pagination pagination = icdMeasureService.getPage(42, 20);
+		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
+		
+    	//List<ICDMeasure> listBean = icdMeasureService.findAll();
 		ModelAndView modelAndView = new ModelAndView("icdMeasureList");
 		modelAndView.addObject("icdMeasureList", listBean);
  

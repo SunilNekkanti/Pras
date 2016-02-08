@@ -14,7 +14,7 @@
 <script>
 	$(document).ready(function(){	
 		
-	prasPagination();
+	prasPagination('icd');
 	
 	});
 </script>
@@ -31,7 +31,7 @@
 						</tr>
 					</thead>
 
-					<tbody id="content">
+					<tbody id="contenticd">
 						<c:forEach items="${icdMeasureList}" var="icdMeasure">
 							    <tr>
 							    <td> 
@@ -55,9 +55,9 @@
 					</tbody>
 				</table>
 		</div>
-		<div class="col-md-12 text-center" id="page_navigation"></div>
-		<div id="show_per_page"></div>
-		<div id="current_page"></div>
+		<div class="col-md-12 text-center" id="page_navigationicd"></div>
+		<div id="show_per_pageicd"></div>
+		<div id="current_pageicd"></div>
 				
 	</div>
 </div>

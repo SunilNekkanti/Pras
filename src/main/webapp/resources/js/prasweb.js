@@ -2,7 +2,7 @@ function prasPagination(listname){
 	
 	
 	  //how much items per page to show
-	  var show_per_page = 2; 
+	  var show_per_page = 100; 
 	  //getting the amount of elements inside content div
 	  var number_of_items = $('#content'+listname).children().size();
 	  //calculate the number of pages we are going to have
