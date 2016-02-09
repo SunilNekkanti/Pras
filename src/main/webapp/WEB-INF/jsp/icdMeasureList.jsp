@@ -18,22 +18,31 @@
                     "deferRender": true,
                     "data":function(d) {
                         var table = $('#myTable').DataTable()
-                        d.pageNo = (table != undefined)?(table.page.info().page+1):1
-                        d.pageSize = 25
+                        d.pageNo = (table != undefined)?table.page.info().page+1:0
+                        d.pageSize = (table != undefined)?table.page.info().length:25
                         d.sort = d.columns[d.order[0].column].data + ',' + d.order[0].dir
-                      //  alert('d.pageNo :'+d.pageNo + 'd.pageSize :'+d.pageSize)
+                       // alert('d.pageNo :'+d.pageNo + 'd.pageSize :'+d.pageSize)
                     }
                 },
                 "processing": true,
                 "serverSide": true,
                 "columns": [
-                    { "data": "code" },
+                    { "data": "" },
                     { "data": "code" },
                     { "data": "description" }
                 ],
-               
+                "columnDefs": [
+                {
+                  "data": null,
+                  "defaultContent": '<button> Edit</button>',
+                  "targets": 0
+                }
+              ],
                 "pagingType": "full_numbers",
-                "bLengthChange": false
+                "bLengthChange": false,
+                "pageLength": 25,
+                "iTotalRecords": 69825,
+                "iTotalDisplayRecords": 69825
  
             } );
  
