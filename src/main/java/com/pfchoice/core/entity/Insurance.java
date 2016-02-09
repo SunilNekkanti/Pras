@@ -2,6 +2,7 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -37,13 +40,18 @@ public class Insurance implements Serializable
     private String name;
        
     @Column(name="created_date")
-    private Timestamp createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    
     
     @Column(name="updated_date")
-    private Timestamp updatedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+    
     
     @Column(name="created_by")
     private String createdBy;
+    
     
     @Column(name="updated_by")
     private String updatedBy;
@@ -91,7 +99,7 @@ public class Insurance implements Serializable
 	/**
 	 * @return the createdDate
 	 */
-	public Timestamp getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
@@ -105,7 +113,7 @@ public class Insurance implements Serializable
 	/**
 	 * @return the updatedDate
 	 */
-	public Timestamp getUpdatedDate() {
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
