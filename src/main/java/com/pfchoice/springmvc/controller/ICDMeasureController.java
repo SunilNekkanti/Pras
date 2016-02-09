@@ -3,6 +3,8 @@ package com.pfchoice.springmvc.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.ICDMeasureService;
 
 import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
 public class ICDMeasureController{
@@ -82,18 +90,47 @@ public class ICDMeasureController{
         return "icdMeasureDisplay";
     }
 	
-	@RequestMapping(value = "/icd/icdMeasureList")
-    public ModelAndView icdMeasureList() throws Exception {
- 
-		Pagination pagination = icdMeasureService.getPage(42, 20);
-		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/icd/icdMeasureList", method = RequestMethod.GET)
+	public String viewICDMeasureAction(Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					HttpServletRequest request) throws Exception{
+		final Integer pageNumber = (pageNo != null)?pageNo:1;
+		final Integer pageDisplayNo = (pageSize != null)?pageSize:25;
 		
-    	//List<ICDMeasure> listBean = icdMeasureService.findAll();
-		ModelAndView modelAndView = new ModelAndView("icdMeasureList");
-		modelAndView.addObject("icdMeasureList", listBean);
- 
-		return modelAndView;
-	}
+		System.out.println("pageNumber is"+pageNumber);
+		System.out.println("pageDisplayNo is"+pageDisplayNo);
+		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo);
+		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPage", pagination.getTotalPage());
+	 	model.addAttribute("icdMeasureList", listBean);
+	 	logger.info("Returning view.jsp page after create");
+        return "icdMeasureList";
+    }
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(value = "/icd/icdMeasureLists", method = RequestMethod.GET)
+	public Message viewICDMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					HttpServletRequest request) throws Exception{
+		final Integer pageNumber = (pageNo != null)?((pageNo != 0)?pageNo:1):1;
+		final Integer pageDisplayNo = (pageSize != null)?pageSize:50;
+		
+		System.out.println(" icdMeasureLists pageNumber is"+pageNumber);
+		System.out.println(" icdMeasureLists pageDisplayNo is"+pageDisplayNo);
+		
+		
+		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo);
+		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPage", pagination.getTotalPage());
+	 	model.addAttribute("icdMeasureList", listBean);
+	 	logger.info("Returning view.jsp page after create");
+	
+        return Message.successMessage(CommonMessageContent.MEMBERSHIP_DELETED, pagination);
+    }
 	
 	
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"add"})

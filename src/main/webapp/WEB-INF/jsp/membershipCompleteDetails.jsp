@@ -47,7 +47,10 @@
 			<div class="panel-group">
 				<div class="panel panel-primary">
 					<div class="panel-heading">Problem</div>
-					<div class="panel-body"></div>
+					<div class="panel-body">
+						<div class="col-sm-12 fdl">
+					</div>
+					
 				</div>
 			</div>
 		</div>

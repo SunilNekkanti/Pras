@@ -97,3 +97,8 @@
 			</springForm:form>
  	</div>
 </div>
+<c:choose>
+ 	<c:when test="${hedisMeasure.id != null}">  
+	  <script src="/Pras/resources/js/placeHolder.js"></script>
+	</c:when>
+</c:choose>	

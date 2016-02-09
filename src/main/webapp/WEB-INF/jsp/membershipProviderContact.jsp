@@ -10,84 +10,80 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Membership Provider Details</div>
 		<div class="panel-body" id="tablediv">
-		
-		<springForm:form  commandName="membershipProvider" action="save.do">
-			
-				<div class="panel panel-primary">
-					
-					<div class="panel-body" id="tablediv">
-						<springForm:hidden path="id" />
-						      	
+			<div class="col-sm-12 fdl">
+				<springForm:form  commandName="membershipProvider" action="save.do">
+					<div class="panel panel-primary">
+						<div class="panel-body" id="tablediv">
+							<springForm:hidden path="id" />
 							<div class="form-group col-sm-12">
-									    <label class="control-label col-sm-4" for="name">Name:</label>
+								    <label class="control-label col-sm-4" for="name">Name:</label>
 									    <div class="col-sm-8">
 									    	<springForm:input path="prvdr.name" class="form-control" id="name" placeholder="${membershipProvider.prvdr.name}" />
 									      	<springForm:errors path="prvdr.name" cssClass="error text-danger" />
 									    </div>
-							 </div>
-							 <div class="form-group col-sm-12">
-									    <label class="control-label col-sm-4" for="name">Code:</label>
-									    <div class="col-sm-8">
-									      	<springForm:input path="prvdr.code" class="form-control" id="code" placeholder="${membershipProvider.prvdr.code}" />
-									      	<springForm:errors path="prvdr.name" cssClass="error text-danger" />
-									    </div>
+							</div>
+							<div class="form-group col-sm-12">
+								<label class="control-label col-sm-4" for="name">Code:</label>
+								<div class="col-sm-8">
+								 	<springForm:input path="prvdr.code" class="form-control" id="code" placeholder="${membershipProvider.prvdr.code}" />
+								   	<springForm:errors path="prvdr.name" cssClass="error text-danger" />
+								</div>
 							 </div>
 						</div>
 					</div>
-				
 					<div class="panel panel-primary">
 						<div class="panel-body" id="tablediv">			 
-							 <c:forEach items="${membershipProvider.prvdr.refContacts}" var="refCnt" varStatus = "status">
-							     <c:choose>
-								 	<c:when test="${fn:contains(refCnt.cnt.activeInd, 'Y')}">
-								 		<div class="form-group col-sm-12">
+							<c:forEach items="${membershipProvider.prvdr.refContacts}" var="refCnt" varStatus = "status">
+								<c:choose>
+									<c:when test="${fn:contains(refCnt.cnt.activeInd, 'Y')}">
+										<div class="form-group col-sm-12">
 											<label class="control-label col-sm-4" for="homePhone">Home Phone:</label>
-											 <div class="col-sm-8">
+											<div class="col-sm-8">
 												<springForm:input path="prvdr.refContacts[${status.index}].cnt.homePhone" class="form-control" id="code"  />
 												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.homePhone" cssClass="error text-danger" />
-											 </div>
+											</div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="mobilePhone">Mobile Phone:</label>
-											 <div class="col-sm-8">
-												<springForm:input path="prvdr.refContacts[${status.index}].cnt.mobilePhone" class="form-control" id="code"  />
-												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.mobilePhone" cssClass="error text-danger" />
-											 </div>
+												<label class="control-label col-sm-4" for="mobilePhone">Mobile Phone:</label>
+												 <div class="col-sm-8">
+													<springForm:input path="prvdr.refContacts[${status.index}].cnt.mobilePhone" class="form-control" id="code"  />
+													<springForm:errors path="prvdr.refContacts[${status.index}].cnt.mobilePhone" cssClass="error text-danger" />
+										</div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="faxNumber">FaxNumber:</label>
-											 <div class="col-sm-8">
-												<springForm:input path="prvdr.refContacts[${status.index}].cnt.faxNumber" class="form-control" id="code"  />
-												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.faxNumber" cssClass="error text-danger" />
-											 </div>
+												<label class="control-label col-sm-4" for="faxNumber">FaxNumber:</label>
+												 <div class="col-sm-8">
+													<springForm:input path="prvdr.refContacts[${status.index}].cnt.faxNumber" class="form-control" id="code"  />
+													<springForm:errors path="prvdr.refContacts[${status.index}].cnt.faxNumber" cssClass="error text-danger" />
+												 </div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="email">Email:</label>
-											 <div class="col-sm-8">
-												<springForm:input path="prvdr.refContacts[${status.index}].cnt.email" class="form-control" id="code"  />
-												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.email" cssClass="error text-danger" />
-											 </div>
+												<label class="control-label col-sm-4" for="email">Email:</label>
+												 <div class="col-sm-8">
+													<springForm:input path="prvdr.refContacts[${status.index}].cnt.email" class="form-control" id="code"  />
+													<springForm:errors path="prvdr.refContacts[${status.index}].cnt.email" cssClass="error text-danger" />
+												 </div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="address1">Address 1:</label>
-											 <div class="col-sm-8">
-												<springForm:input path="prvdr.refContacts[${status.index}].cnt.address1" class="form-control" id="code"  />
-												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.address1" cssClass="error text-danger" />
-											 </div>
+												<label class="control-label col-sm-4" for="address1">Address 1:</label>
+												 <div class="col-sm-8">
+													<springForm:input path="prvdr.refContacts[${status.index}].cnt.address1" class="form-control" id="code"  />
+													<springForm:errors path="prvdr.refContacts[${status.index}].cnt.address1" cssClass="error text-danger" />
+												 </div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="address2">Address 2</label>
-											 <div class="col-sm-8">
-												<springForm:input path="prvdr.refContacts[${status.index}].cnt.address2" class="form-control" id="code"  />
-												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.address2" cssClass="error text-danger" />
-											 </div>
+												<label class="control-label col-sm-4" for="address2">Address 2</label>
+												 <div class="col-sm-8">
+													<springForm:input path="prvdr.refContacts[${status.index}].cnt.address2" class="form-control" id="code"  />
+													<springForm:errors path="prvdr.refContacts[${status.index}].cnt.address2" cssClass="error text-danger" />
+												 </div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="city">City:</label>
-											 <div class="col-sm-8">
-												<springForm:input path="prvdr.refContacts[${status.index}].cnt.city" class="form-control" id="code"  />
-												<springForm:errors path="prvdr.refContacts[${status.index}].cnt.city" cssClass="error text-danger" />
-											 </div>
+												<label class="control-label col-sm-4" for="city">City:</label>
+												 <div class="col-sm-8">
+													<springForm:input path="prvdr.refContacts[${status.index}].cnt.city" class="form-control" id="code"  />
+													<springForm:errors path="prvdr.refContacts[${status.index}].cnt.city" cssClass="error text-danger" />
+												 </div>
 										</div> 
 										<div class="form-group col-sm-12">
 											<label class="control-label col-sm-4" for="stateCode">State Code:</label>
@@ -117,10 +113,8 @@
 							</c:forEach>
 						</div>
 					</div>
-						
-			</springForm:form>					
-			
+				</springForm:form>	
+			</div>					
 		</div>
 	</div>
 </div>		
-

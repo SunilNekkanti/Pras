@@ -51,4 +51,9 @@
 			
  		</div>
 	</div>
-</div>		
+</div>	
+<c:choose>
+	<c:when test="${provider.id != null}"> 
+	  <script src="/Pras/resources/js/placeHolder.js"></script>
+	</c:when>
+</c:choose>		

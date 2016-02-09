@@ -47,3 +47,8 @@
 			</springForm:form>
  	</div>
 </div>
+<c:choose>
+ 	<c:when test="${cptMeasure.id != null}"> 
+	  <script src="/Pras/resources/js/placeHolder.js"></script>
+	</c:when>
+</c:choose>	

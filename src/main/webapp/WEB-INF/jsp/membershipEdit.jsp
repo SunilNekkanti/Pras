@@ -120,7 +120,9 @@
 		</div>
 	</div>
 </div>
-<style>
-	.form-group .required:before  {  content:"*";color:red; }
-	.form-group .drequired:after  {  content:"**";color:red; }
-</style> 
+<c:choose>
+ 	<c:when test="${membership.id != null}"> 
+	  <script src="/Pras/resources/js/placeHolder.js"></script>
+	</c:when>
+</c:choose>
+

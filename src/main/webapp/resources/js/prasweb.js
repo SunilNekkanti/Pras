@@ -180,4 +180,7 @@ function prasPagination(listname){
 	}
 
 	
+	function  removePlaceHolder(){
+		$("input").removeAttr('placeholder');
+	}
 	

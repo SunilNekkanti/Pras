@@ -25,50 +25,52 @@ prasPagination('provider');
 	<div class="panel panel-primary">
 		<div class="panel-heading">Membership Hedis Measure</span></div>
 		<div class="panel-body" id="tablediv">
-			<table id="tab" class="table table-striped table-hover">
-				<thead>
-					<tr>
-							<th scope="col">Hedis Measure Code</th>
-							<th scope="col">Description</th>
-							<th scope="col">Due Date</th>
-							<th scope="col">Date of Service</th>
-							<th scope="col">Status</th>
-					</tr>
-				</thead>
-
-				<tbody id="contentprovider">
-					
-					<c:forEach items="${mbrHedisMeasureList}" var="mbrHedisMeasure">
+			<div class="col-sm-12 fdl">
+				<table id="tab" class="table table-striped table-hover">
+					<thead>
 						<tr>
-						    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
-						    		 	
-									<c:choose>
-								 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
-								 		<td>${hedisMeasure.code}</td>
-								 		<td>${hedisMeasure.description}</td>
-										<td>	<a href="/Pras/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
-								 		<td>${mbrHedisMeasure.dos}</td>
-								 		
-								 		 <c:choose>
-									    	<c:when test="${not empty mbrHedisMeasure.dos}">
-											 		<td>Completed</td>
-											</c:when>
-											<c:otherwise>
-													<td>Pending</td>
-											</c:otherwise>
+								<th scope="col">Hedis Measure Code</th>
+								<th scope="col">Description</th>
+								<th scope="col">Due Date</th>
+								<th scope="col">Date of Service</th>
+								<th scope="col">Status</th>
+						</tr>
+					</thead>
+	
+					<tbody id="contentprovider">
+						
+						<c:forEach items="${mbrHedisMeasureList}" var="mbrHedisMeasure">
+							<tr>
+							    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
+							    		 	
+										<c:choose>
+									 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
+									 		<td>${hedisMeasure.code}</td>
+									 		<td>${hedisMeasure.description}</td>
+											<td>	<a href="/Pras/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
+									 		<td>${mbrHedisMeasure.dos}</td>
+									 		
+									 		 <c:choose>
+										    	<c:when test="${not empty mbrHedisMeasure.dos}">
+												 		<td>Completed</td>
+												</c:when>
+												<c:otherwise>
+														<td>Pending</td>
+												</c:otherwise>
+											</c:choose>
+									
+									 		</c:when>
 										</c:choose>
-								
-								 		</c:when>
-									</c:choose>
-								</c:forEach>
-						    
-						 </tr>     
-					</c:forEach>
-				</tbody>
-			</table>
-			<div class="col-md-12 text-center" id="page_navigationprovider"></div>
-			<div id="show_per_pageprovider"></div>
-			<div id="current_pageprovider"></div>
+									</c:forEach>
+							    
+							 </tr>     
+						</c:forEach>
+					</tbody>
+				</table>
+				<div class="col-md-12 text-center" id="page_navigationprovider"></div>
+				<div id="show_per_pageprovider"></div>
+				<div id="current_pageprovider"></div>
+			</div>	
 		</div>
 	</div>
 </div>

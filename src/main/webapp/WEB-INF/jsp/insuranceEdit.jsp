@@ -38,5 +38,10 @@
 			</div>
 		</div>
 	</div>	
-</div>						    
+</div>	
+<c:choose>
+ 	   <c:when test="${insurance.id != null}"> 
+	  <script src="/Pras/resources/js/placeHolder.js"></script>
+	</c:when>
+</c:choose>						    
  		    	
