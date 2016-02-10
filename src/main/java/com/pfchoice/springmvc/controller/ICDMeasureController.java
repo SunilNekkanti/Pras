@@ -87,44 +87,25 @@ public class ICDMeasureController{
         return "icdMeasureDisplay";
     }
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/icd/icdMeasureList", method = RequestMethod.GET)
-	public String viewICDMeasureAction(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
+	public String viewICDMeasureAction(Model model,
 					HttpServletRequest request) throws Exception{
-		final Integer pageNumber = (pageNo != null)?pageNo:1;
-		final Integer pageDisplayNo = (pageSize != null)?pageSize:25;
-		
-		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo);
-		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
-		model.addAttribute("currentPage", pageNo);
-		model.addAttribute("totalPage", pagination.getTotalPage());
-	 	model.addAttribute("icdMeasureList", listBean);
-	 	logger.info("Returning view.jsp page after create");
+		logger.info("Returning view.jsp page after create");
         return "icdMeasureList";
     }
 	
-	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(value = "/icd/icdMeasureLists", method = RequestMethod.GET)
 	public Message viewICDMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
 					HttpServletRequest request) throws Exception{
 		final Integer pageNumber = (pageNo != null)?((pageNo != 0)?pageNo:1):1;
 		final Integer pageDisplayNo = (pageSize != null)?pageSize:100;
+		final String searchText  = (sSearch != null)?sSearch:"";
 		
-		System.out.println(" icdMeasureLists pageNumber is"+pageNumber);
-		System.out.println(" icdMeasureLists pageDisplayNo is"+pageDisplayNo);
-		
-		
-		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo);
-		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
-		model.addAttribute("currentPage", pageNo);
-		model.addAttribute("totalPage", pagination.getTotalPage());
-		model.addAttribute("totalRecord",pagination.getTotalCount());
-	 	model.addAttribute("icdMeasureList", listBean);
-	 	logger.info("Returning view.jsp page after create");
-	
+		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo, searchText);
+
         return Message.successMessage(CommonMessageContent.MEMBERSHIP_DELETED, pagination);
     }
 	

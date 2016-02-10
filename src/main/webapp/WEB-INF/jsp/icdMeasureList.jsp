@@ -19,7 +19,8 @@
         		'sAjaxSource': '/Pras/icd/icdMeasureLists',
         		"fnServerParams": function ( aoData ) {
 		            aoData.push( { "name": "pageNo", "value": $('#myTable').DataTable().page.info().page + 1 },
-		            			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length } );
+		            			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length },
+		            			 { "name": "sSearch", "value":  $('.dataTables_filter input').val()} );
 		        },
         		"fnServerData": function ( sSource, aoData, fnCallback ) {
         			 $.ajax( {
@@ -49,8 +50,8 @@
         		"bAutoWidth": false,
         		"aoColumns": [
                               { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "20%", "asSorting" : [ "asc" ]  },
-                              { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "30%"},
-                              { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "50%"  }
+                              { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                              { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%"  }
                           ],
         		"aoColumnDefs": [ 
         		    { "sName": "id", "aTargets": [ 0 ] ,
@@ -62,19 +63,15 @@
         		]
 
         		})
-        		.columnFilter({ 	
-	        	sPlaceHolder: "head:before",
-	        	sRangeFormat : "From {from} to {to}",
-	        	sRangeSeparator : "✏",
-				aoColumns: [
-							{ "mDataProp": "code" },
-							{ "mDataProp": "description" }
-				           ]
-			});
+        		.columnFilter({ 	sPlaceHolder: "head:after",
+					aoColumns: [ 	{ type: "number-range" },
+				    	 			{ type: "text" },
+                                    { type: "text" }
+						]
 
-        	$(".filterColumn, .filter_column").on("click", function(e){
-  			  e.stopPropagation();
-  			});
+				});
+
+        	
 
         } );
     </script>

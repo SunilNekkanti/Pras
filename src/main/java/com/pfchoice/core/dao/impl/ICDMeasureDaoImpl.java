@@ -6,6 +6,9 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -24,11 +27,25 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(final int pageNo,final  int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize, final String sSearch)
     {
-        Criteria crit = createCriteria();
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
+    	if(sSearch != null && !"".equals(sSearch))
+    	{
+    		Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
+    		Criterion description   = Restrictions.ilike("description","%"+sSearch+"%");
+    		LogicalExpression orExp = Restrictions.or(code, description);
+    		
+    		Criteria crit = createCriteria();
+    		crit.add(orExp);
+
+    		Pagination page = findByCriteria(crit, pageNo, pageSize);
+            return page;
+    	}
+    	
+    	Criteria crit = createCriteria();
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
+        
     }
 
     @Override
@@ -66,7 +83,7 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     @SuppressWarnings("unchecked")
 	public List<ICDMeasure> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<ICDMeasure> list = cr.list();
     	return list;
     }

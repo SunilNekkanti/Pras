@@ -70,7 +70,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     @SuppressWarnings("unchecked")
 	public List<Membership> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<Membership> list = cr.list();
     	return list;
     }
