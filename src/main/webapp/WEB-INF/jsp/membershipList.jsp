@@ -20,7 +20,7 @@ $(document).ready(function(){
 	$("#myTable").dataTable( {
 		"bProcessing": true,
 		"bServerSide": true,
-		'sAjaxSource': '/Pras/membership/list',
+		'sAjaxSource': '/Pras//membership/list/',
 		"fnServerParams": function ( aoData ) {
             aoData.push( { "name": "pageNo", "value": $('#myTable').DataTable().page.info().page + 1 },
             			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length },
@@ -102,7 +102,7 @@ $(document).ready(function(){
 			<div class="panel-heading">Membership List  </div>
 			<div class="panel-body" id="tablediv">
 				<div class="table-responsive">
-					<table id="myTable" class="display table-responsive  table table-striped table-hover">
+					<table id="myTable" class=" table-responsive  table table-striped table-hover">
 					
 						<thead>
 							<tr>

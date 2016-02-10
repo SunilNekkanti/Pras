@@ -26,9 +26,6 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 
-
-
-
 /**
  *
  * A Membership controller class for GET/DELETE/POST/PUT.
