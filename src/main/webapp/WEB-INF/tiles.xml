@@ -299,6 +299,7 @@
     
             
     <definition name="hedisMeasureList" extends="base1.definition">  
+     	<put-attribute name="title" value="Hedis Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureList.jsp" />  
     </definition>  
     
@@ -322,7 +323,8 @@
     </definition> 
 
     
-        <definition name="cptMeasureList" extends="base1.definition">  
+    <definition name="cptMeasureList" extends="base1.definition">  
+         <put-attribute name="title" value="CPT Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureList.jsp" />  
     </definition>  
     
@@ -344,7 +346,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureDisplay.jsp" />  
     </definition> 
     
-        <definition name="icdMeasureList" extends="base1.definition">  
+    <definition name="icdMeasureList" extends="base1.definition">  
+     	<put-attribute name="title" value="ICD Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureList.jsp" />  
     </definition>  
     

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author sarath
@@ -20,36 +22,41 @@ public class County implements Serializable
 
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="code", nullable = false)
     private Integer code;
 
+    @Expose
     @Column(name="description")
     private String description;
 
+    @Expose
     @Column(name="short_name")
     private String shortName;
     
+    @Expose
     @Column(name="created_date")
     private Timestamp createdDate;
     
+    @Expose
     @Column(name="updated_date")
     private Timestamp updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
-   
-    
-   
     
     public County()
     {

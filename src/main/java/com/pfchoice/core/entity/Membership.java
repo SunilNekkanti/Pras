@@ -34,32 +34,32 @@ public class Membership implements Serializable
 
     private static final long serialVersionUID = 1L;
 
-    
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="mbr_id", nullable = false)
     private Integer id;
 
-    
+    @Expose
     @Column(name="mbr_firstname")
     private String firstName;
     
-    
+    @Expose
     @Column(name="mbr_lastname")
     private String lastName;
 
-    
+    @Expose
     @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_genderid", referencedColumnName="gender_id")
     private Gender genderId;
     
-    
+    @Expose
     @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
     
-    
+    @Expose
     @ManyToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="mbr_ethinic_code", referencedColumnName="code")
     private Ethinicity ethinicCode;
@@ -68,50 +68,49 @@ public class Membership implements Serializable
     private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
     
      
-     
     @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private MembershipProvider mbrProvider;
 
-    
+    @Expose
     @Column(name="mbr_dob")
     @Temporal(TemporalType.DATE)
     private Date dob;
     
-    
+    @Expose
     @Column(name="mbr_medicaidno")
     private String medicaidNo;
     
-    
+    @Expose
     @Column(name="mbr_medicareno")
     private String medicareNo;
     
-    
+    @Expose
     @Column(name="file_id")
     private Integer fileId;
     
-    
+    @Expose
     @Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     
-    
+    @Expose
     @Column(name="updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     
-    
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
-    
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
-    
+    @Expose
     @OneToOne
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;

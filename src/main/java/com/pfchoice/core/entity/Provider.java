@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  *
@@ -31,30 +33,38 @@ public class Provider implements Serializable
     
     //private Set<ProviderContract> providerContract = new HashSet<ProviderContract>(0);
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="prvdr_Id",unique=true, nullable = false)
     private Integer id;
     
+    @Expose
     @Column(name="code")
     private String code;
 
+    @Expose
     @Column(name="name")
     private String name;
-       
+      
+    @Expose
     @Column(name="created_date")
     private Timestamp createdDate;
     
+    @Expose
     @Column(name="updated_date")
     private Timestamp updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     

@@ -47,7 +47,7 @@ public class MembershipDaoImplTest extends JUnitSpringTestBase
         System.out.println("getPage");
         int pageNo = 0;
         int pageSize = 0;
-        Pagination result = membershipDao.getPage(pageNo, pageSize);
+        Pagination result = membershipDao.getPage(pageNo, pageSize, "");
     }
 
     @Test

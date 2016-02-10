@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  *
@@ -25,47 +27,55 @@ public class ProviderContract implements Serializable
 	
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="prvdr_contract_id", nullable = false)
     private Integer id;
     
-    
+    @Expose
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prvdr_id", nullable = false)    
     private Provider providerId;
 
+    @Expose
     @Column(name="contract_NBR")
     private String contractNBR;
     
+    @Expose
     @Column(name="PMPM")
     private Double pmpm;
     
+    @Expose
     @Column(name="startdate")
     private Date startDate;
     
+    @Expose
     @Column(name="enddate")
     private Date endDate;
        
+    @Expose
     @Column(name="created_date")
     private Timestamp createdDate;
     
+    @Expose
     @Column(name="updated_date")
     private Timestamp updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
    
-    
-      
     public ProviderContract()
     {
     }

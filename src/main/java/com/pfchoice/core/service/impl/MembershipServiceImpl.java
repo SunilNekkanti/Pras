@@ -42,9 +42,9 @@ public class MembershipServiceImpl implements MembershipService
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final int pageSize)
+    public Pagination getPage(final int pageNo,final int pageSize, final String sSearch)
     {
-        return membershipDao.getPage(pageNo, pageSize);
+        return membershipDao.getPage(pageNo, pageSize, sSearch);
     }
 
     @Override

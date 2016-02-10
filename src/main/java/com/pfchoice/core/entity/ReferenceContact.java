@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author sarath
@@ -25,38 +27,47 @@ public class ReferenceContact implements Serializable
 	
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="ref_cnt_Id", nullable = false)
     private Integer id;
 
+    @Expose
     @OneToOne( fetch=FetchType.LAZY )
     @JoinColumn(name="mbr_id",  referencedColumnName="mbr_id")
     private Membership mbr;
     
+    @Expose
     @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="insurance_id",  referencedColumnName="insurance_id")
     private Insurance ins;
     
+    @Expose
     @OneToOne(  fetch = FetchType.LAZY)
     @JoinColumn(name="prvdr_id",  referencedColumnName="prvdr_id")
     private Provider prvdr;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     

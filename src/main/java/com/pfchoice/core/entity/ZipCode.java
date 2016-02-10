@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author sarath
@@ -26,29 +28,36 @@ public class ZipCode implements Serializable
 
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="zipcode", nullable = false)
     private Integer code;
 
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
+    @Expose
     @OneToOne(  fetch = FetchType.EAGER)
     @JoinColumn(name="statecode", referencedColumnName="code")
     private State stateCode;

@@ -16,6 +16,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author sarath
@@ -26,62 +28,79 @@ public class Contact implements Serializable
 	
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="cnt_Id", nullable = false)
     private Integer id;
 
+    @Expose
     @Column(name="home_phone")
     private String homePhone;
     
+    @Expose
     @Column(name="mobile_phone")
     private String mobilePhone;
 
+    @Expose
     @Column(name="fax_number")
     private String faxNumber;
     
+    @Expose
     @Column(name="email")
     private String email;
     
+    @Expose
     @Column(name="address1")
     private String address1;
     
+    @Expose
     @Column(name="address2")
     private String address2;
     
+    @Expose
     @Column(name="city")
     private String city;
 
+    @Expose
     @OneToOne(  fetch = FetchType.LAZY, cascade =CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
     private ReferenceContact refContact;
     
+    @Expose
     @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="statecode", referencedColumnName="code")
     private State stateCode;
     
+    @Expose
     @OneToOne(  fetch = FetchType.LAZY)
     @JoinColumn(name="zipcode", referencedColumnName="zipcode")
     private ZipCode zipCode;
     
+    @Expose
     @Column(name="file_id")
     private Integer fileId;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private Character activeInd;
     

@@ -28,7 +28,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(final int pageNo, final int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize, final String sSearch)
     {
         Criteria crit = createCriteria();
         Pagination page = findByCriteria(crit, pageNo, pageSize);

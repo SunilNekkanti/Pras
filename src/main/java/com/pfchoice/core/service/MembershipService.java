@@ -17,7 +17,7 @@ public interface MembershipService
 
 	Membership findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+    Pagination getPage(int pageNo, int pageSize, String sSearch);
 
     Membership save(Membership bean);
 

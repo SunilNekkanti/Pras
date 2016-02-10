@@ -36,11 +36,12 @@ public class MembershipProvider implements Serializable
     @Column(name="mbr_prvdr_id", nullable = false)
     private Integer id;
 
+    @Expose
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="prvdr_id", nullable = false, referencedColumnName="prvdr_id")
     private Provider prvdr;
     
-    
+    @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
@@ -55,20 +56,25 @@ public class MembershipProvider implements Serializable
     @Column(name="eff_end_date")
     private Date effEndDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     

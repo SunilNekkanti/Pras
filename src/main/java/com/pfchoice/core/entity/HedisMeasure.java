@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author sarath
@@ -29,32 +31,40 @@ public class HedisMeasure implements Serializable
 
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="qlty_msr_id", nullable = false)
     private Integer id;
     
+    @Expose
     @Column(name="code", nullable = false)
     private String code;
 
+    @Expose
     @Column(name="description")
     private String description;
 
+    @Expose
     @OneToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="gender_id", referencedColumnName="gender_id")
     private Gender genderId;
     
+    @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="qlty_msr_group_id", nullable = false, referencedColumnName="qlty_msr_group_id")
     private HedisMeasureGroup hedisMsrGrp;
     
+    @Expose
     @Column(name="lower_age_limit")
     private Integer lowerAgeLimit;
     
+    @Expose
     @Column(name="upper_age_limit")
     private Integer upperAgeLimit;
     
+    @Expose
     @Temporal(TemporalType.DATE)
     @Column(name="age_effective_from")
     private Date ageEffectiveFrom;
@@ -66,20 +76,25 @@ public class HedisMeasure implements Serializable
    // @Column(name="goal")
     //private Double goal;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     

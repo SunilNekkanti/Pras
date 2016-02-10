@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  *
@@ -30,32 +32,36 @@ public class Insurance implements Serializable
 	
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="Insurance_Id", nullable = false)
     private Integer id;
 
+    @Expose
     @Column(name="name")
     private String name;
-       
+      
+    @Expose
     @Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     
-    
+    @Expose
     @Column(name="updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     
-    
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
-    
+
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     

@@ -39,11 +39,12 @@ public class MembershipInsurance implements Serializable
     @Column(name="mbr_ins_id", nullable = false)
     private Integer id;
 
+    @Expose
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
     private Insurance insId;
     
-    
+    @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
@@ -84,26 +85,33 @@ public class MembershipInsurance implements Serializable
     @Column(name="planID")
     private String planId;
     
+    @Expose
     @Column(name="SRC_SYS_MBR_NBR")
     private String srcSysMbrNbr;
    
+    @Expose
     @Column(name="risk_flag")
     private char riskFlag;
    
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
+    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     

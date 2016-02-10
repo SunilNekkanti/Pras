@@ -10,29 +10,86 @@
 
 <head>
 
-<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"-->
-
-<title>Spring3Example</title>
+<title>Membership List</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script
-	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-
-<script src="/Pras/resources/js/prasweb.js"></script>
-
-
 <script>
 
 $(document).ready(function(){	
 	
-prasPagination('membership');
+	$("#myTable").dataTable( {
+		"bProcessing": true,
+		"bServerSide": true,
+		'sAjaxSource': '/Pras/membership/list',
+		"fnServerParams": function ( aoData ) {
+            aoData.push( { "name": "pageNo", "value": $('#myTable').DataTable().page.info().page + 1 },
+            			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length },
+            			 { "name": "sSearch", "value":  $('.dataTables_filter input').val()} );
+        },
+		"fnServerData": function ( sSource, aoData, fnCallback ) {
+			 $.ajax( {
+	                dataType: 'json',
+	                contentType: "application/json;charset=UTF-8",
+	                type: 'GET',
+	                url: sSource,
+	                data: aoData,
+	                success: function (res) {
+	                		fnCallback( { 
+                 	 "recordsTotal": res.data.totalCount,
+   	                 "recordsFiltered": res.data.totalCount,
+   	                 "data": res.data.list
+	                		});
+	                },
+	                error : function (e) {
+	                	
+	                }
+	            } );
+        },
+		"bLengthChange": false,
+		"bFilter" : true,
+		"bRetrieve" :true,
+		"aaSorting": [[ 0, "asc" ]],
+		"iDisplayLength": 5,
+		"sPaginationType": "full_numbers",
+		"bAutoWidth": false,
+		"aoColumns": [
+                      { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "10%", "asSorting" : [ "asc" ]  },
+                      { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "25%", "sDefaultContent": ""},
+                      { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "25%", "sDefaultContent": ""  },
+                      { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
+                      { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
+                      { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
+                      { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  }
+                  ],
+		"aoColumnDefs": [ 
+		    { "sName": "id", "aTargets": [ 0 ] ,
+		      "render": function ( data, type, full, meta ) {
+                return '<a href="/Pras/membership/'+data+'">Edit</a>';
+              }},
+		    { "sName": "firstName", "aTargets": [ 1 ] },
+		    { "sName": "lastName", "aTargets": [ 2 ] },
+		    { "sName": "dob", "aTargets": [ 3 ] },
+		    { "sName": "genderId.id", "aTargets": [ 4 ] },
+		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
+		    { "sName": "status.id", "aTargets": [ 6 ] }
+		]
 
+		})
+		.columnFilter({ 	sPlaceHolder: "head:after",
+			aoColumns: [ 	{ type: "number-range" },
+		    	 			{ type: "text" },
+		    	 			{ type: "text" },
+		    	 			{ type: "text" },
+		    	 			{ type: "text" },
+                            { type: "text" },
+                            { type: "text" }
+				]
+
+		});
+
+	
+
+	
 });
 </script>
 
@@ -42,40 +99,30 @@ prasPagination('membership');
 
 	<div class="panel-group">
 		<div class="panel panel-primary">
-			<div class="panel-heading">Membership List <span class="badge">${membershipList.size()}</span> </div>
+			<div class="panel-heading">Membership List  </div>
 			<div class="panel-body" id="tablediv">
 				<div class="table-responsive">
-					<table id="tab" class="table table-striped table-hover">
+					<table id="myTable" class="display table-responsive  table table-striped table-hover">
+					
 						<thead>
 							<tr>
+								<th scope="col">Action</th>
 								<th scope="col">First Name</th>
 								<th scope="col">Last Name</th>
 								<th scope="col">Date Of Birth</th>
 								<th scope="col">Gender</th>
 								<th scope="col">County</th>
-								<th scope="col">File Number</th>
 								<th scope="col">Status</th>
 							</tr>
 						</thead>
 	
-						<tbody id="contentmembership">
-							<c:forEach items="${membershipList}" var="mbr">
-								    <tr>
-									   <td> <a href="membership/${mbr.id}/display"   rel='tab' > ${mbr.firstName}</a></td> 
-							        <td> ${mbr.lastName} </td> 
-							        <td> ${mbr.dob}  </td> 
-							        <td> ${mbr.genderId.description }</td>
-							        <td> ${mbr.countyCode.description} </td> 
-							        <td> ${mbr.fileId} </td> 
-							        <td> ${mbr.status.description}  </td></tr>     
-							</c:forEach>
+						<tbody >
+							
 						</tbody>
 	
 					</table>
 				</div>	
-				<div class="col-md-12 text-center" id="page_navigationmembership"></div>
-				<div id="show_per_pagemembership"></div>
-				<div id="current_pagemembership"></div>
+				
 			</div>
 			
 		</div>

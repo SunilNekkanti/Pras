@@ -98,10 +98,6 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	private ZipCodeFormatter zipCodeFormatter;
 	
 	
-//	private static final Map<String, Definition> tiles = new HashMap<String,Definition>();
-//	private static final Attribute TEMPLATE = new Attribute("/WEB-INF/jsp/layout.jsp");
-
-
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
     {

@@ -45,7 +45,6 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     	Criteria crit = createCriteria();
 		Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
-        
     }
 
     @Override

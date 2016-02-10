@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  *
@@ -24,40 +26,50 @@ public class InsuranceContract implements Serializable
 	
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="Ins_contract_Id", nullable = false)
     private Integer id;
 
+    @Expose
     @ManyToOne
     @JoinColumn(name="ins_id", referencedColumnName="Insurance_Id")
     private Insurance insuranceId;
     
+    @Expose
     @Column(name="contract")
     private String contract;
     
+    @Expose
     @Column(name="PMPM")
     private Double pmpm;
     
+    @Expose
     @Column(name="start_date")
     private Date startDate;
     
+    @Expose
     @Column(name="end_date")
     private Date endDate;
        
+    @Expose
     @Column(name="created_date")
     private Timestamp createdDate;
     
+    @Expose
     @Column(name="updated_date")
     private Timestamp updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind")
     private char activeInd;
     
