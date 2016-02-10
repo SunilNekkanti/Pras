@@ -12,10 +12,12 @@
   <title>Physicians' First Choice</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
   <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
 <link rel="stylesheet" 
 href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 <script type="text/javascript" 
@@ -63,7 +65,16 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
     }
   </style>
 
-</head>  
+</head> 
+<script>
+$(document).ready(function() {
+	   $(function() {
+	      $(".datepicker").datepicker({
+	         dateFormat: 'mm/dd/yy'
+	      });
+	   });
+	});
+</script> 
 <body>  
 <script>
 

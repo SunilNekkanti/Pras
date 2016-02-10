@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.ICDMeasureService;
@@ -98,8 +95,6 @@ public class ICDMeasureController{
 		final Integer pageNumber = (pageNo != null)?pageNo:1;
 		final Integer pageDisplayNo = (pageSize != null)?pageSize:25;
 		
-		System.out.println("pageNumber is"+pageNumber);
-		System.out.println("pageDisplayNo is"+pageDisplayNo);
 		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo);
 		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
 		model.addAttribute("currentPage", pageNo);
@@ -116,7 +111,7 @@ public class ICDMeasureController{
 					@RequestParam(required = false) Integer pageSize,
 					HttpServletRequest request) throws Exception{
 		final Integer pageNumber = (pageNo != null)?((pageNo != 0)?pageNo:1):1;
-		final Integer pageDisplayNo = (pageSize != null)?pageSize:50;
+		final Integer pageDisplayNo = (pageSize != null)?pageSize:100;
 		
 		System.out.println(" icdMeasureLists pageNumber is"+pageNumber);
 		System.out.println(" icdMeasureLists pageDisplayNo is"+pageDisplayNo);
@@ -126,6 +121,7 @@ public class ICDMeasureController{
 		List<ICDMeasure> listBean = (List<ICDMeasure> ) pagination.getList();
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPage", pagination.getTotalPage());
+		model.addAttribute("totalRecord",pagination.getTotalCount());
 	 	model.addAttribute("icdMeasureList", listBean);
 	 	logger.info("Returning view.jsp page after create");
 	
@@ -134,7 +130,7 @@ public class ICDMeasureController{
 	
 	
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"add"})
-	public String addICDMeasureAction(@Validated ICDMeasure icdMeasure,
+	public String addICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning icdMeasureEdit.jsp page");
@@ -154,7 +150,7 @@ public class ICDMeasureController{
 	
 	
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveICDMeasureAction(@Validated ICDMeasure icdMeasure,
+	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning  icdMeasureEdit.jsp page");
@@ -175,7 +171,7 @@ public class ICDMeasureController{
 	
 
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteICDMeasureAction(@Validated ICDMeasure icdMeasure,
+	public String deleteICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
        
 	        if (null != icdMeasure.getId())

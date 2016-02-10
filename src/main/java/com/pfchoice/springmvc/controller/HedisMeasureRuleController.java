@@ -7,12 +7,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,14 +47,14 @@ public class HedisMeasureRuleController{
     @Autowired
     ICDMeasureService icdMeasureService;
     
-   /* @Autowired
+    @Autowired
     @Qualifier("hedisMeasureRuleValidator")
     private Validator validator;
  
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
-    }*/
+    }
     
     private static final Logger logger = LoggerFactory
             .getLogger(HedisMeasureRuleController.class);
@@ -130,12 +134,9 @@ public class HedisMeasureRuleController{
 	
 	
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"add"})
-	public String addHedisMeasureAction(@Validated HedisMeasureRule hedisMeasureRule,
+	public String addHedisMeasureAction(@ModelAttribute("hedisMeasureRule")  @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning hedisMeasureRuleEdit.jsp page");
             return "hedisMeasureRuleEdit";
         }
@@ -155,12 +156,9 @@ public class HedisMeasureRuleController{
 	
 	
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveHedisMeasureRuleAction(@Validated HedisMeasureRule hedisMeasureRule,
+	public String saveHedisMeasureRuleAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning  hedisMeasureRuleEdit.jsp page");
             return "hedisMeasureRuleEdit";
         }
@@ -178,7 +176,7 @@ public class HedisMeasureRuleController{
 	
 
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteHedisMeasureAction(@Validated HedisMeasureRule hedisMeasureRule,
+	public String deleteHedisMeasureAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model) {
        
             

@@ -89,7 +89,7 @@ public class CPTMeasureController{
 	
 	
 	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"add"})
-	public String addCPTMeasureAction(@Validated CPTMeasure cptMeasure,
+	public String addCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning cptMeasureEdit.jsp page");
@@ -113,6 +113,7 @@ public class CPTMeasureController{
             BindingResult bindingResult, Model model) {
         
 		if (bindingResult.hasErrors()) {
+			cptMeasure.setActiveInd('Y');
             logger.info("Returning  cptMeasureEdit.jsp page");
             return "cptMeasureEdit";
         }
@@ -131,10 +132,14 @@ public class CPTMeasureController{
 	
 
 	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteCPTMeasureAction(@Validated CPTMeasure cptMeasure,
+	public String deleteCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model) {
        
-            
+			if (bindingResult.hasErrors()) {
+				cptMeasure.setActiveInd('Y');
+	            logger.info("Returning  cptMeasureEdit.jsp page");
+	            return "cptMeasureEdit";
+	        }
 	        if (null != cptMeasure.getId())
 	        {
 	        	logger.info("Returning cptMeasureEditSuccess.jsp page after update");

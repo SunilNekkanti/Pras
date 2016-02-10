@@ -10,8 +10,8 @@
 		<div class="panel-heading">Provider Profile</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="provider" action="save.do">
-				<div class="form-group col-sm-12">
-						    <label class="control-label required col-sm-2" for="name">Name:</label>
+				<div class="form-group required col-sm-12">
+						    <label class="control-label  col-sm-2" for="name">Name:</label>
 						    <div class="col-sm-6">
 						    	<springForm:hidden path="id" />
 						      	<springForm:input path="name" class="form-control" id="name" placeholder="Name" />
@@ -19,8 +19,8 @@
 						    </div>
 				 </div>
 				 
-				 <div class="form-group col-sm-12">
-						    <label class="control-label required col-sm-2" for="code">Code:</label>
+				 <div class="form-group required col-sm-12">
+						    <label class="control-label  col-sm-2" for="code">Code:</label>
 						    <div class="col-sm-6">
 						    	<springForm:input path="code" class="form-control" id="code" placeholder="code" />
 						      	<springForm:errors path="code" cssClass="error text-danger" />
@@ -52,8 +52,4 @@
  		</div>
 	</div>
 </div>	
-<c:choose>
-	<c:when test="${provider.id != null}"> 
-	  <script src="/Pras/resources/js/placeHolder.js"></script>
-	</c:when>
-</c:choose>		
+

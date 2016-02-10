@@ -1,4 +1,3 @@
-.required .control-label:after {
-  content:"*";color:red;
-}
+.required .control-label:after {  content: " *";color:red; }
+.drequired .control-label:after {  content: " **";color:red; }
 .fdl {height: 400px;overflow-y: scroll;}

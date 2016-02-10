@@ -83,9 +83,6 @@ public class ProviderController{
     public String newProviderAction( @Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning providerEdit.jsp page");
             return "providerNew";
         }

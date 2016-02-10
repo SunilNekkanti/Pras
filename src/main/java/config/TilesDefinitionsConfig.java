@@ -22,7 +22,6 @@ private static final Attribute BASE_TEMPLATE = new Attribute("/WEB-INF/jsp/layou
 
 @Override
 public Definition getDefinition(String name, Request tilesContext) {
-	System.out.println("getDefinition for "+name);
  return tilesDefinitions.get(name);
 }
 

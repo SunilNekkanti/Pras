@@ -1,7 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -76,9 +75,6 @@ public class InsuranceController{
     public String newInsuranceAction(@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning insuranceEdit.jsp page");
             return "insuranceNew";
         }
@@ -96,11 +92,10 @@ public class InsuranceController{
 	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"update"})
     public String saveInsuranceAction(@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
+		insurance.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
-            logger.info("Returning insuranceEdit.jsp page");
+        	logger.info("Returning insuranceEdit.jsp page");
+        	insurance.setActiveInd('Y');
             return "insuranceEdit";
         }
         else

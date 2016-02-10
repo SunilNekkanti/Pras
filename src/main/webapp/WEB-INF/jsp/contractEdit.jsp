@@ -5,7 +5,23 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
-
+<c:choose>
+ 	<c:when test="${contract.id != null && contract.activeInd != 89}">
+	<script>
+		$(document).ready(function(){	 
+			removeRequired();
+			removePlaceHolder();
+		});
+	</script>
+	</c:when>
+	<c:when test="${contract.id != null}"> 	
+	<script>
+		$(document).ready(function(){				
+			removePlaceHolder();
+		});
+	</script>
+	</c:when>
+</c:choose>
 <div class="panel with-nav-tabs panel-primary">
 	<div class="panel-heading">
 						<ul class="nav nav-tabs">
@@ -14,8 +30,8 @@
 	</div>
 	<div class="panel-body id="tablediv" >
 		<springForm:form method="POST" commandName="contract" action="save.do" class="form-horizontal" role="form">
-			<div class="form-group">
-				<label class="control-label required col-sm-2" for="contractNBR">Contract NBR:</label>
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="contractNBR">Contract NBR</label>
 				<div class="col-sm-6">
 					<springForm:hidden path="id" />
 					<springForm:hidden path="referenceContract.id" />
@@ -33,23 +49,23 @@
 					<springForm:errors path="contractNBR" cssClass="error text-danger" />
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label required col-sm-2" for="PMPM">PMPM:</label>
+			<div class="form-group required">
+				<label class="control-label required col-sm-2" for="PMPM">PMPM</label>
 				<div class="col-sm-6">
 					<springForm:input path="PMPM" class="form-control" id="mobilePhone" placeholder="PMPM" />
 					<springForm:errors path="PMPM" cssClass="error text-danger" />
 				</div>
 			</div>
-			<div class="form-group">
-			 	<label class="control-label col-sm-2 required" for="startDate">Start Date:</label>
+			<div class="form-group required">
+			 	<label class="control-label col-sm-2" for="startDate">Start Date</label>
 				<div class="col-sm-6">
 					<fmt:formatDate value="${contract.startDate}" var="dateString" pattern="MM/dd/yyyy" />
 					<springForm:input  value="${dateString}" var="startDate" path="startDate" class="form-control" id="startDate" placeholder="Start Date" />
 					<springForm:errors path="startDate" cssClass="error text-danger" />
 				</div>
 			</div>
-			<div class="form-group">
-			 	<label class="control-label col-sm-2 required" for="endDate">End Date:</label>
+			<div class="form-group required">
+			 	<label class="control-label col-sm-2" for="endDate">End Date</label>
 				<div class="col-sm-6">
 					<fmt:formatDate value="${contract.endDate}" var="dateString" pattern="MM/dd/yyyy" />
 					<springForm:input value="${dateString}"  path="endDate" class="form-control" id="endDate" placeholder="End Date" />
@@ -71,10 +87,3 @@
 		</springForm:form>
  	</div>
 </div>
-<c:choose>
- 	<c:when test="${id != null}">
-	  <script src="/Pras/resources/js/placeHolder.js"></script>
-	</c:when>
-</c:choose>	
-			
-

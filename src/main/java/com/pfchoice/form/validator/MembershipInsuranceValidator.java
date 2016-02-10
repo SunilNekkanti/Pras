@@ -49,7 +49,6 @@ public class MembershipInsuranceValidator implements Validator {
         {
         	 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo", "error.medicaidNo",	"Medicaid / Medicare Number Required");
         }
-    	System.out.println("mbr.getMedicaidNo()" +mbr.getMedicaidNo().length()+ " mbr.getMedicareNo() " +mbr.getMedicareNo().length());
         if(mbr.getMedicaidNo() != null && mbr.getMedicaidNo().length() < 10)
     	{
     		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number must be  at least 10 characters");

@@ -41,7 +41,6 @@ public class MembershipListController
 			HttpServletResponse arg1) throws Exception {
  
     	List<Membership> listBean = membershipService.findAll();
-    	System.out.println("Membership list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView("membershipList");
 		modelAndView.addObject("membershipList", listBean);
  

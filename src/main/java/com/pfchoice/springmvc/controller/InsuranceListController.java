@@ -38,7 +38,6 @@ public class InsuranceListController
 			HttpServletResponse arg1) throws Exception {
  
     	List<Insurance> listBean = insuranceService.findAll();
-    	System.out.println("Insurance list bean sze "+listBean.size());
 		ModelAndView modelAndView = new ModelAndView("insuranceList");
 		modelAndView.addObject("insuranceList", listBean);
  

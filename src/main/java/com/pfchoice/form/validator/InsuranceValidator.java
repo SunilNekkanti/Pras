@@ -2,7 +2,6 @@ package com.pfchoice.form.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.pfchoice.core.entity.Insurance;
@@ -29,15 +28,8 @@ public class InsuranceValidator implements Validator {
         	}
         }       
 
-        if (ins.getName().length() < 6) {
-            errors.rejectValue("name", "name.tooshort", "Name must be at least 6 characters.");
+        if (ins.getName().length() < 2) {
+            errors.rejectValue("name", "name.tooshort", "Name must be at least 3 characters.");
         }
-        
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
-        
     }
 }

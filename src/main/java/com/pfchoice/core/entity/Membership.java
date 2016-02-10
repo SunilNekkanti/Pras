@@ -382,7 +382,6 @@ public class Membership implements Serializable
 	 * @return the mbrHedisMeasureList
 	 */
 	public List<MembershipHedisMeasure> getMbrHedisMeasureList() {
-		System.out.println("getMbrHedisMeasureList size "+mbrHedisMeasureList.size());
 		return mbrHedisMeasureList;
 	}
 

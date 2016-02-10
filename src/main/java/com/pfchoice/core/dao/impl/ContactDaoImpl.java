@@ -80,7 +80,6 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
      			.createAlias("contact.refContact","refContact")
      			.add(Restrictions.eq(refRestrictionString, id));
      	List<Contact> list = cr.list();
-     	System.out.println("findAllByRefId list size is"+ list.size());
      	return list;
      }
     
@@ -103,7 +102,6 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
      			
      			 .add(Restrictions.eq("contact.activeInd", 'Y'));
      	List<Contact> list = cr.list();
-     	System.out.println("findAllByRefId list size is"+ list.size());
      	if(list.size()>0)
      		contact =list.get(0);
      	return contact;

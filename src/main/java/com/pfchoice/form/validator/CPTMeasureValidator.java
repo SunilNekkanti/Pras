@@ -31,13 +31,12 @@ public class CPTMeasureValidator implements Validator {
              
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "error.code","Code Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description","error.description", "Description Required");
-        if(cptMeasure.getCode().length() <=5){
+        if(cptMeasure.getCode().length() <=5 && cptMeasure.getCode().length() >= 1){
         	
         	  errors.rejectValue("code", "code.tooShort","Code must be atleast 5 characters");
         	 
         }
-        if(cptMeasure.getDescription().length() <=5){
-        	System.out.println("Description must be atleast 5 characters");
+        if(cptMeasure.getDescription().length() <=5 && cptMeasure.getCode().length() >= 1){
         	  errors.rejectValue("description", "error.description", "Description must be atleast 5 characters");
         }
               

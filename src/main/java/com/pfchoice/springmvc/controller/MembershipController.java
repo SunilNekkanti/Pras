@@ -345,7 +345,6 @@ public class MembershipController{
 		List<MembershipProvider>  dbMembershipProviderList  = membershipProviderService.findAllByMbrId(id);
 		
 		for(MembershipProvider s:dbMembershipProviderList){  
-		     System.out.println("s.getActiveInd() "+s.getActiveInd()); 
 		     if(s.getActiveInd() == 'Y')
 		     {
 		    	 MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
@@ -353,10 +352,8 @@ public class MembershipController{
 		     }
 		   }  
 		for(MembershipInsurance s:dbMembershipInsuranceList){  
-		     System.out.println("s.getActiveInd() "+s.getActiveInd()); 
 		     if(s.getActiveInd() == 'Y')
 		     {
-		    	 System.out.println("s.getActiveInd() "+s.getInsId().getName()); 
 		    	 MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findByMbrId(id);
 		 		 model.addAttribute("membershipInsurance", dbMembershipInsurance);
 		     }

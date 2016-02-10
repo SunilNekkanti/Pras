@@ -35,11 +35,11 @@ public class ContactValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode","error.stateCode", "StateCode Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode","error.zipCode", "zipCodeRequired");
               
-        if (cnt.getAddress1().length() < 10  && cnt.getAddress1() != null) {
+        if (cnt.getAddress1().length() < 10  && cnt.getAddress1().length() >= 1) {
             errors.rejectValue("address1", "address1.tooshort", "Address1 must be at least 10 characters.");
         }
         
-        if (cnt.getCity().length() < 5  && cnt.getCity() != null) {
+        if (cnt.getCity().length() < 5  && cnt.getCity().length() >= 1) {
             errors.rejectValue("city", "city.tooshort", "city must be at least 5 characters.");
         }
        

@@ -30,7 +30,8 @@ public class ContractValidator implements Validator {
 	            errors.rejectValue("id", "negativeValue", new Object[]{"'id'"}, "id can't be negative");
 	        }
         }    
-       if (contract.getContractNBR().length() < 5) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contractNBR", 		"error.contractNBR", 		"Contract NBR Required");
+       if (contract.getContractNBR().length() < 5 && contract.getContractNBR().length() >=1) {
             errors.rejectValue("contractNBR", "contractNBR.tooshort",     "Contract NBR must be at least 5 characters and less than 20 characters.");
         }
                  

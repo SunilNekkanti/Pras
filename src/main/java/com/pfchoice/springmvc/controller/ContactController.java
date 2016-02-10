@@ -287,7 +287,6 @@ public class ContactController{
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
-        	System.out.println("contact"+contact.getRefContact().getPrvdr());
         	contactService.update(contact);
         	return "providerContactEditSuccess";
         }
@@ -306,7 +305,6 @@ public class ContactController{
 	        if (null != contact.getId())
 	        {
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
-	        	System.out.println("contact"+contact.getRefContact().getPrvdr());
 	        	contact.setActiveInd('N');
 	        	contactService.update(contact);
 	        	return "providerContactEditSuccess";
@@ -362,9 +360,6 @@ public class ContactController{
 	public String addInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "insuranceContactEdit";
         }
@@ -389,9 +384,6 @@ public class ContactController{
 	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning contactEdit.jsp page");
             return "insuranceContactEdit";
         }

@@ -45,29 +45,19 @@ public class MembershipValidator implements Validator {
     			errors.rejectValue("dob", "error.date.future","Date must be less than current date");
         }	
     	
-        if(mbr.getMedicaidNo() == null && mbr.getMedicareNo() == null)
+        if(mbr.getMedicaidNo().length() < 1 && mbr.getMedicareNo().length() < 1)
         {
         	 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo", "error.medicaidNo",	"Medicaid / Medicare Number Required");
         }
-    	System.out.println("mbr.getMedicaidNo()" +mbr.getMedicaidNo().length()+ " mbr.getMedicareNo() " +mbr.getMedicareNo().length());
-        if(mbr.getMedicaidNo() != null && mbr.getMedicaidNo().length() < 10)
+            if(mbr.getMedicaidNo().length() >= 1 && mbr.getMedicaidNo().length() < 10)
     	{
     		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number must be  at least 10 characters");
     	}
         
-        if(mbr.getMedicareNo() != null && mbr.getMedicareNo().length() < 10)
+        if(mbr.getMedicareNo().length() >= 1 && mbr.getMedicareNo().length() < 10)
     	{
     		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number must be at least 10 characters");
     	}
-       
-        
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId", 	"error.genderId",	"Gender Required");
-      /*  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fileId",     "error.fileId",     "File Id  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
-       */ 
-    }
+     }
 }

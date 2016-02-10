@@ -127,9 +127,6 @@ public class HedisMeasureController{
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
             logger.info("Returning hedisMeasureEdit.jsp page");
             return "hedisMeasureEdit";
         }
@@ -151,6 +148,7 @@ public class HedisMeasureController{
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning  hedisMeasureEdit.jsp page");
+            hedisMeasure.setActiveInd('Y');
             return "hedisMeasureEdit";
         }
 	        
@@ -169,6 +167,11 @@ public class HedisMeasureController{
 	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
+		 	if (bindingResult.hasErrors()) {
+	            logger.info("Returning  hedisMeasureEdit.jsp page");
+	            hedisMeasure.setActiveInd('Y');
+	            return "hedisMeasureEdit";
+	        }
             
 	        if (null != hedisMeasure.getId())
 	        {

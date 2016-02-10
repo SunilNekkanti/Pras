@@ -4,6 +4,15 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ <c:choose>
+ 	<c:when test="${membership.id != null}"> 
+	<script>
+		$(document).ready(function(){	 
+		removePlaceHolder();
+		});
+	</script>
+	</c:when>
+</c:choose>
  <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Profile</div>
@@ -15,8 +24,8 @@
 			<div class="row">
 					<div class="col-sm-12">
 						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="control-label required col-sm-4" for="firstName">First Name:</label>
+							<div class="form-group required">
+								<label class="control-label col-sm-4" for="firstName">First Name</label>
 								<div class="col-sm-8">
 									<springForm:hidden path="id" />
 									<springForm:input path="firstName" class="form-control" id="firstName" placeholder="First Name" />
@@ -24,15 +33,15 @@
 								</div>
 							</div>
 				 		 
-							<div class="form-group">
-								<label class="control-label required col-sm-4" for="lastName">Last Name:</label>
+							<div class="form-group required">
+								<label class="control-label col-sm-4" for="lastName">Last Name</label>
 								<div class="col-sm-8">
 									<springForm:input path="lastName" class="form-control" id="lastName" placeholder="Last Name" />
 									<springForm:errors path="lastName" cssClass="error text-danger" />
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label required col-sm-4" for="gender">Gender:</label>
+							<div class="form-group required">
+								<label class="control-label col-sm-4" for="gender">Gender</label>
 								<div class="col-sm-8">
 									<springForm:select path="genderId"  class="form-control" id="gender">
 							    		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
@@ -40,17 +49,17 @@
 									<springForm:errors path="genderId" cssClass="error text-danger" />
 								</div>
 							</div>
-							<div class="form-group">
-							 	<label class="control-label required col-sm-4" for="dob">DOB:</label>
+							<div class="form-group required">
+							 	<label class="control-label col-sm-4" for="dob">DOB</label>
 								<div class="col-sm-8">
 									<fmt:formatDate value="${membership.dob}" var="dateString" pattern="MM/dd/yyyy" />
-									<springForm:input path="dob" value="${dateString}" class="form-control" id="dob" placeholder="DOB" />
+									<springForm:input path="dob" value="${dateString}" class="form-control datepicker" id="dob" placeholder="DOB" />
 									<springForm:errors path="dob" cssClass="error text-danger" />
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-sm-4" for="ethinicCode">Ethinicity:</label>
+								<label class="control-label col-sm-4" for="ethinicCode">Ethinicity</label>
 								<div class="col-sm-8">
 									<springForm:select path="ethinicCode.id" class="form-control" id="ethinicCode" >
 							    		<springForm:options items="${ethinicityList}" itemValue="id" itemLabel="description"/>
@@ -64,7 +73,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group required">
-								<label class="control-label required col-sm-4" for="status">Status:</label>
+								<label class="control-label col-sm-4" for="status">Status</label>
 								<div class="col-sm-8">
 									<springForm:select path="status" class="form-control" id="status">
 							    		<springForm:options items="${statusList}" itemValue="id" itemLabel="description"   />
@@ -73,8 +82,8 @@
 								  </div>
 							</div>
 				 					
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="county">County:</label>
+							<div class="form-group required">
+								<label class="control-label col-sm-4" for="county">County</label>
 								<div class="col-sm-8">
 									<springForm:select path="countyCode" class="form-control" id="county" >
 							    		<springForm:options items="${countyList}"  itemValue="code" itemLabel="description"  />
@@ -83,15 +92,15 @@
 								</div>
 							</div>
 							<div class="form-group drequired">
-								<label class="control-label  drequired col-sm-4" for="medicaidNo">Medicaid No:</label>
+								<label class="control-label  drequired col-sm-4" for="medicaidNo">Medicaid No</label>
 								<div class="col-sm-8">
 									
 									<springForm:input path="medicaidNo" class="form-control" id="medicaidNo" placeholder="Medicaid No" />
 									<springForm:errors path="medicaidNo" cssClass="error text-danger" />
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label drequired col-sm-4" for="medicareNo">Medicare No:</label>
+							<div class="form-group drequired">
+								<label class="control-label col-sm-4" for="medicareNo">Medicare No</label>
 								<div class="col-sm-8">
 									<springForm:input path="medicareNo" class="form-control" id="medicareNo" placeholder="medicare No" />
 									<springForm:errors path="medicareNo" cssClass="error text-danger" />
@@ -114,15 +123,7 @@
 				</c:choose>				
 				</div>
 			</div>	
-		
-			
-			</springForm:form>
+		</springForm:form>
 		</div>
 	</div>
 </div>
-<c:choose>
- 	<c:when test="${membership.id != null}"> 
-	  <script src="/Pras/resources/js/placeHolder.js"></script>
-	</c:when>
-</c:choose>
-

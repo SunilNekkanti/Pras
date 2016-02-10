@@ -3,87 +3,121 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+<c:choose>
+ 	<c:when test="${contact.id != null && contract.activeInd != 89}">
+	<script>
+		$(document).ready(function(){	 
+			removeRequired();
+			removePlaceHolder();
+		});
+	</script>
+	</c:when>
+	<c:when test="${contact.id != null}"> 	
+	<script>
+		$(document).ready(function(){				
+			removePlaceHolder();
+		});
+	</script>
+	</c:when>
+</c:choose>
 
-<html>
-
-<head>
-
-<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"-->
-
-<title>Spring3Example</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script
-	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-
-<script src="/Pras/resources/js/prasweb.js"></script>
-
-
-
-</head>
-
-<body>
-<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">Contact</a></li>
-                        </ul>
-          </div>
+<div class="panel-group">
+	<div class="panel panel-primary">
+		<div class="panel-heading">Contact</div>
 		<div class="panel-body" id="tablediv">
-
-
 			<springForm:form method="POST" commandName="contact" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="homePhone">Home Phone:</label>
+					<label class="control-label col-sm-2" for="homePhone">Home Phone</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
+						<springForm:hidden path="refContact.id" />
+						 <c:choose>
+						 <c:when test="${contact.refContact.mbr != null}"> 
+							<springForm:hidden path="refContact.mbr.id" />
+						 </c:when>
+						 <c:when test="${contact.refContact.prvdr != null}">
+							<springForm:hidden path="refContact.prvdr.id" />
+						</c:when>
+						<c:otherwise>
+							<springForm:hidden path="refContact.ins.id" />
+						</c:otherwise>
+						</c:choose>
+						
+						<springForm:hidden path="refContact.createdBy" value="sarath"/>
 						<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
 						<springForm:errors path="homePhone" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="mobilePhone">Mobile Phone:</label>
+					<label class="control-label col-sm-2" for="mobilePhone">Mobile Phone</label>
 					<div class="col-sm-6">
 						<springForm:input path="mobilePhone" class="form-control" id="mobilePhone" placeholder="Mobile Phone" />
 						<springForm:errors path="mobilePhone" cssClass="error text-danger" />
 					</div>
 				</div>
 				<div class="form-group">
-				 	<label class="control-label col-sm-2" for="faxNumber">Fax Number:</label>
+				 	<label class="control-label col-sm-2" for="faxNumber">Fax Number</label>
 					<div class="col-sm-6">
-						<springForm:input path="faxNumber" class="form-control" id="dob" placeholder="Fax Number" />
+						<springForm:input path="faxNumber" class="form-control" id="fax" placeholder="Fax Number" />
 						<springForm:errors path="faxNumber" cssClass="error text-danger" />
 					</div>
 				</div>
-				 
-				<div class="col-sm-offset-6 col-sm-4">
-				<c:choose>
-					 	<c:when test="${contact.refContact.mbr != null}"> 
-					 		<a href="http://localhost:8080/Pras/membership/${contact.refContact.mbr.id}/contactList">Click Here</a>Membership Contact List
-						 </c:when>
-						 <c:when test="${contact.refContact.prvdr != null}">
-							<a href="http://localhost:8080/Pras/provider/${contact.refContact.prvdr.id}/contactList">Click Here</a> Provider Contact List
-						</c:when>
-						 <c:when test="${contact.refContact.ins != null}">
-							<a href="http://localhost:8080/Pras/insurance/${contact.refContact.ins.id}/contactList">Click Here</a> Insurance Contact List
-						</c:when>
-						<c:otherwise>
-							issue
-						</c:otherwise>
-					</c:choose>
 				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="email">Email</label>
+					<div class="col-sm-6">
+						<springForm:input path="email" class="form-control" id="email" placeholder="email" />
+						<springForm:errors path="email" cssClass="error text-danger" />
+					</div>
+				</div>
+				 
+				 <div class="form-group required">
+				 	<label class="control-label  col-sm-2" for="faxNumber">Address 1</label>
+					<div class="col-sm-6">
+						<springForm:input path="address1" class="form-control" id="address1" placeholder="Address 1" />
+						<springForm:errors path="address1" cssClass="error text-danger" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+				 	<label class="control-label col-sm-2" for="address2">Address 2</label>
+					<div class="col-sm-6">
+						<springForm:input path="address2" class="form-control" id="address2" placeholder="Address 2" />
+						<springForm:errors path="address2" cssClass="error text-danger" />
+					</div>
+				</div>
+				
+				<div class="form-group required">
+				 	<label class="control-label  col-sm-2" for="city">City</label>
+					<div class="col-sm-6">
+						<springForm:input path="city" class="form-control" id="city" placeholder="city"/>
+						<springForm:errors path="city" cssClass="error text-danger" />
+					</div>
+				</div>
+				
+				<div class="form-group required">
+					<label class="control-label col-sm-2" for="state">State</label>
+					<div class="col-sm-6">
+						<springForm:select path="stateCode" class="form-control" id="state">
+				    		<springForm:options items="${stateList}" itemValue="code" itemLabel="shortName"     />
+						</springForm:select>
+						<springForm:errors path="stateCode.code" cssClass="error text-danger" />
+					  </div>
+				</div>
+					<div class="form-group required">
+					<label class="control-label  col-sm-2" for="zip">Zip</label>
+					<div class="col-sm-6">
+						<springForm:select path="zipCode" class="form-control" id="zip">
+				    		<springForm:options items="${zipCodeList}" itemValue="code"  itemLabel="code" />
+						</springForm:select>
+						<springForm:errors path="zipCode.code" cssClass="error text-danger" />
+					  </div>
 				</div>
 			</springForm:form>
- 	</div>
+ 		</div>
 	</div>
-</body>
-</html>
+</div>
+

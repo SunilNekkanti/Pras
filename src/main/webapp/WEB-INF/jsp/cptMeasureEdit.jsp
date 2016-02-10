@@ -3,7 +3,23 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<c:choose>
+ 	<c:when test="${cptMeasure.id != null && cptMeasure.activeInd != 89}">
+	<script>
+		$(document).ready(function(){	 
+			removeRequired();
+			removePlaceHolder();
+		});
+	</script>
+	</c:when>
+	<c:when test="${cptMeasure.id != null}"> 	
+	<script>
+		$(document).ready(function(){				
+			removePlaceHolder();
+		});
+	</script>
+	</c:when>
+</c:choose>
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
@@ -12,8 +28,8 @@
           </div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="cptMeasure" action="save.do" class="form-horizontal" role="form">
-				<div class="form-group">
-					<label class="control-label required col-sm-2" for="code">Code:</label>
+				<div class="form-group required">
+					<label class="control-label col-sm-2" for="code">Code</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
@@ -21,8 +37,8 @@
 					</div>
 				</div>
 				 		 
-				<div class="form-group">
-					<label class="control-label required col-sm-2" for="description required">Description:</label>
+				<div class="form-group required">
+					<label class="control-label col-sm-2" for="description required">Description</label>
 					<div class="col-sm-6">
 						<springForm:input path="description" class="form-control" id="description" placeholder="Description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
@@ -32,23 +48,17 @@
 					
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>
-						 <c:when test="${cptMeasure.id != null}"> 
+						 <c:when test="${cptMeasure.id != null && cptMeasure.activeInd == 89}"> 
 						 	<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
 						 	<button type="submit" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
 						 </c:when>
-						 <c:otherwise>
+						 <c:when test="${cptMeasure.id == null}">
 							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
 							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
-						</c:otherwise>
+						</c:when>
 						</c:choose>
-					
-					
 				</div>
 			</springForm:form>
  	</div>
 </div>
-<c:choose>
- 	<c:when test="${cptMeasure.id != null}"> 
-	  <script src="/Pras/resources/js/placeHolder.js"></script>
-	</c:when>
-</c:choose>	
+

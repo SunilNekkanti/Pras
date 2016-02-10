@@ -7,58 +7,87 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="/Pras/resources/js/prasweb.js"></script>  
 
 <script>
+
         $(document).ready(function() {
-            $('#myTable').dataTable( {
-                "ajax": {
-                    "url":"/Pras/icd/icdMeasureLists",
-                    "dataSrc": 'data.list',
-                    "deferRender": true,
-                    "data":function(d) {
-                        var table = $('#myTable').DataTable()
-                        d.pageNo = (table != undefined)?table.page.info().page+1:0
-                        d.pageSize = (table != undefined)?table.page.info().length:25
-                        d.sort = d.columns[d.order[0].column].data + ',' + d.order[0].dir
-                       // alert('d.pageNo :'+d.pageNo + 'd.pageSize :'+d.pageSize)
-                    }
+        	
+        	$("#myTable").dataTable( {
+        		"bProcessing": true,
+        		"bServerSide": true,
+        		'sAjaxSource': '/Pras/icd/icdMeasureLists',
+        		"fnServerParams": function ( aoData ) {
+		            aoData.push( { "name": "pageNo", "value": $('#myTable').DataTable().page.info().page + 1 },
+		            			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length } );
+		        },
+        		"fnServerData": function ( sSource, aoData, fnCallback ) {
+        			 $.ajax( {
+ 		                dataType: 'json',
+ 		                contentType: "application/json;charset=UTF-8",
+ 		                type: 'GET',
+ 		                url: sSource,
+ 		                data: aoData,
+ 		                success: function (res) {
+ 		                		fnCallback( { 
+ 	                    	 "recordsTotal": res.data.totalCount,
+ 	      	                 "recordsFiltered": res.data.totalCount,
+ 	      	                 "data": res.data.list
+ 		                		});
+ 		                },
+ 		                error : function (e) {
+ 		                	
+ 		                }
+ 		            } );
                 },
-                "processing": true,
-                "serverSide": true,
-                "columns": [
-                    { "data": "" },
-                    { "data": "code" },
-                    { "data": "description" }
-                ],
-                "columnDefs": [
-                {
-                  "data": null,
-                  "defaultContent": '<button> Edit</button>',
-                  "targets": 0
-                }
-              ],
-                "pagingType": "full_numbers",
-                "bLengthChange": false,
-                "pageLength": 25,
-                "iTotalRecords": 69825,
-                "iTotalDisplayRecords": 69825
- 
-            } );
- 
+        		"bLengthChange": false,
+        		"bFilter" : true,
+        		"bRetrieve" :true,
+        		"aaSorting": [[ 0, "asc" ]],
+        		"iDisplayLength": 25,
+        		"sPaginationType": "full_numbers",
+        		"bAutoWidth": false,
+        		"aoColumns": [
+                              { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "20%", "asSorting" : [ "asc" ]  },
+                              { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "30%"},
+                              { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "50%"  }
+                          ],
+        		"aoColumnDefs": [ 
+        		    { "sName": "id", "aTargets": [ 0 ] ,
+        		      "render": function ( data, type, full, meta ) {
+                        return '<a href="/Pras/icd/'+data+'">Edit</a>';
+                      }},
+        		    { "sName": "code", "aTargets": [ 1 ] },
+        		    { "sName": "description", "aTargets": [ 2 ] }
+        		]
+
+        		})
+        		.columnFilter({ 	
+	        	sPlaceHolder: "head:before",
+	        	sRangeFormat : "From {from} to {to}",
+	        	sRangeSeparator : "✏",
+				aoColumns: [
+							{ "mDataProp": "code" },
+							{ "mDataProp": "description" }
+				           ]
+			});
+
+        	$(".filterColumn, .filter_column").on("click", function(e){
+  			  e.stopPropagation();
+  			});
+
         } );
- 
     </script>
 
 
 
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">ICD Measure List <span class="badge">${icdMeasureList.size()}</span> </div>
+		<div class="panel-heading">ICD Measure List  </div>
 		<div class="panel-body" id="tablediv">
 		<div class="table-responsive">
 		
-				<table id="myTable" class="display table-responsive table-bordered "> 
+				<table id="myTable" class="display table-responsive  table table-striped table-hover"> 
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 
@@ -74,8 +103,6 @@
 				</table>
 				</div>
 		</div>
-		<div class="col-md-12 text-center">
-      <ul class="pagination pagination-lg pager" id="myPager"></ul>
-      </div>
+		
 	</div>
 </div>

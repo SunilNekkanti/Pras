@@ -154,11 +154,11 @@ public class ContractController{
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contractEdit.jsp page");
+            contract.setActiveInd('Y');
             return "providerContractEdit";
         }
         else
         {
-	        
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
@@ -188,7 +188,11 @@ public class ContractController{
 	public String deleteMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
             BindingResult bindingResult, Model model) {
        
-            
+			if (bindingResult.hasErrors()) {
+				contract.setActiveInd('N');
+	            logger.info("Returning insuranceContractEdit.jsp page");
+	             return "providerContractEdit";
+	        }
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
@@ -238,7 +242,7 @@ public class ContractController{
 				
 	        if (bindingResult.hasErrors()) {
 	            logger.info("Returning insuranceContractEdit.jsp page");
-	            return "insuranceContractEdit";
+	             return "insuranceContractEdit";
 	        }
 	        Insurance dbInsurance = insuranceService.findById(id);
    		 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
@@ -259,14 +263,13 @@ public class ContractController{
 	      	return "insuranceContractEditSuccess";
 	    }
 		
-		
-		
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"update"})
 		public String saveMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
 	            BindingResult bindingResult, Model model) {
 			
 	        if (bindingResult.hasErrors()) {
 	            logger.info("Returning insuranceContractEdit.jsp page");
+	            contract.setActiveInd('Y');
 	            return "insuranceContractEdit";
 	        }
 		        
@@ -289,6 +292,7 @@ public class ContractController{
 			if (bindingResult.hasErrors())
 			{
 	            logger.info("Returning insuranceContractEdit.jsp page");
+	            contract.setActiveInd('Y');
 	            return "insuranceContractEdit";
 	        }
 	            
