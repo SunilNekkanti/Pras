@@ -66,7 +66,7 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
     @SuppressWarnings("unchecked")
 	public List<Ethinicity> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<Ethinicity> list = cr.list();
     	return list;
     }

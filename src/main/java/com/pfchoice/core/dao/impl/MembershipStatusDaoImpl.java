@@ -65,7 +65,7 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
     @SuppressWarnings("unchecked")
 	public List<MembershipStatus> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<MembershipStatus>  list = cr.list();
     	return list;
     }

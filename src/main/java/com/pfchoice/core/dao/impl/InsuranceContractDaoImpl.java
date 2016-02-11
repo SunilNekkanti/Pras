@@ -67,7 +67,7 @@ public class InsuranceContractDaoImpl extends HibernateBaseDao<InsuranceContract
 	public List<InsuranceContract> findAll()
     {
     	
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	cr.setFetchMode("Insurance", FetchMode.JOIN);
     	List<InsuranceContract> list = cr.list();
     

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
@@ -31,12 +32,19 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     {
     	if(sSearch != null && !"".equals(sSearch))
     	{
+    		Disjunction or = Restrictions.disjunction();
+
     		Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
     		Criterion description   = Restrictions.ilike("description","%"+sSearch+"%");
-    		LogicalExpression orExp = Restrictions.or(code, description);
+    		Criterion hcc   = Restrictions.ilike("hcc","%"+sSearch+"%");
+    		Criterion rxhcc   = Restrictions.ilike("rxhcc","%"+sSearch+"%");
+    		or.add(code);
+    		or.add(description);
+    		or.add(hcc);
+    		or.add(rxhcc);
     		
     		Criteria crit = createCriteria();
-    		crit.add(orExp);
+    		crit.add(or);
 
     		Pagination page = findByCriteria(crit, pageNo, pageSize);
             return page;

@@ -68,7 +68,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     @SuppressWarnings("unchecked")
 	public List<MembershipInsurance> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<MembershipInsurance> list = cr.list();
     	return list;
     }

@@ -66,7 +66,7 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
     @SuppressWarnings("unchecked")
 	public List<HedisMeasure> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<HedisMeasure> list = cr.list();
     	return list;
     }

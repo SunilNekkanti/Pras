@@ -66,7 +66,7 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
     @SuppressWarnings("unchecked")
 	public List<County> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<County> list = cr.list();
     	return list;
     }

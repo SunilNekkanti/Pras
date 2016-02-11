@@ -66,7 +66,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
     @SuppressWarnings("unchecked")
 	public List<Insurance> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<Insurance> list = cr.list();
     	return list;
     }

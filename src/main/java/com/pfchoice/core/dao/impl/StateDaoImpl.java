@@ -66,7 +66,7 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
     @SuppressWarnings("unchecked")
 	public List<State> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<State> list = cr.list();
     	return list;
     }

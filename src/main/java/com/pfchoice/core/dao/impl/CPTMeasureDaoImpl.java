@@ -66,7 +66,7 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
     @SuppressWarnings("unchecked")
 	public List<CPTMeasure> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<CPTMeasure> list = cr.list();
     	return list;
     }

@@ -49,9 +49,11 @@
         		"sPaginationType": "full_numbers",
         		"bAutoWidth": false,
         		"aoColumns": [
-                              { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "20%", "asSorting" : [ "asc" ]  },
+                              { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "10%", "asSorting" : [ "asc" ]  },
                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                              { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%"  }
+                              { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "50%",  },
+                              { "mDataProp": "hcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sDefaultContent": "" },
+                              { "mDataProp": "rxhcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%","sDefaultContent": ""  }
                           ],
         		"aoColumnDefs": [ 
         		    { "sName": "id", "aTargets": [ 0 ] ,
@@ -90,6 +92,8 @@
 							<th  scope="col">Action</th> 
 							<th  scope="col">ICD Code</th> 
 							<th  scope="col">Description</th>  
+							<th  scope="col">HCC</th>  
+							<th  scope="col">RxHCC</th>  
 						</tr>
 					</thead>
 

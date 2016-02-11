@@ -40,6 +40,14 @@ public class ICDMeasure implements Serializable
     @Expose
     @Column(name="description")
     private String description;
+    
+    @Expose
+    @Column(name="hcc")
+    private String hcc;
+    
+    @Expose
+    @Column(name="rxhcc")
+    private String rxhcc;
 
     @Expose
     @Temporal(TemporalType.TIMESTAMP)
@@ -109,6 +117,34 @@ public class ICDMeasure implements Serializable
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the hcc
+	 */
+	public String getHcc() {
+		return hcc;
+	}
+
+	/**
+	 * @param hcc the hcc to set
+	 */
+	public void setHcc(String hcc) {
+		this.hcc = hcc;
+	}
+
+	/**
+	 * @return the rxhcc
+	 */
+	public String getRxhcc() {
+		return rxhcc;
+	}
+
+	/**
+	 * @param rxhcc the rxhcc to set
+	 */
+	public void setRxhcc(String rxhcc) {
+		this.rxhcc = rxhcc;
 	}
 
 	/**

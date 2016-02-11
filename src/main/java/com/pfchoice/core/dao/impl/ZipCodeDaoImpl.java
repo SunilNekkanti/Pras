@@ -66,7 +66,7 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
     @SuppressWarnings("unchecked")
 	public List<ZipCode> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<ZipCode> list = cr.list();
     	return list;
     }

@@ -66,7 +66,7 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
     @SuppressWarnings("unchecked")
 	public List<HedisMeasureGroup> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<HedisMeasureGroup> list = cr.list();
     	return list;
     }

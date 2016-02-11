@@ -66,7 +66,7 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
     @SuppressWarnings("unchecked")
 	public List<Gender> findAll()
     {
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	List<Gender> list = cr.list();
     	return list;
     }

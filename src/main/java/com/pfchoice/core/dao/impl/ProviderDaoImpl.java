@@ -68,7 +68,7 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 	public List<Provider> findAll()
     {
     	
-    	Criteria cr = getSession().createCriteria(getEntityClass());
+    	Criteria cr = createCriteria();
     	cr.setFetchMode("ProviderContract", FetchMode.JOIN);
     	List<Provider> list = cr.list();
     
