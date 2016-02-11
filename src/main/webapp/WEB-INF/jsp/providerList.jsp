@@ -72,7 +72,6 @@
                            		    { "sName": "code", "aTargets": [ 2 ] }
                   ],          
         	     "bLengthChange": false,
-        	     "iDisplayLength": 25,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,

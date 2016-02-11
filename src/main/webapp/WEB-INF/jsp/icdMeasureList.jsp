@@ -57,22 +57,21 @@
         	     "sAjaxSource" : '/Pras/icd/icdMeasureLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-                               { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "10%", "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "50%",  },
-                               { "mDataProp": "hcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sDefaultContent": "" },
-                               { "mDataProp": "rxhcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%","sDefaultContent": ""  }
+                               { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%",  },
+                               { "mDataProp": "hcc","bSearchable" : true, "bSortable": true,"sWidth" : "15%" ,"sDefaultContent": "" },
+                               { "mDataProp": "rxhcc","bSearchable" : true, "bSortable": true,"sWidth" : "15%","sDefaultContent": ""  }
                            ],
                   "aoColumnDefs": [ 
-                           		    { "sName": "id", "aTargets": [ 0 ] ,
+                           		    { "sName": "id", "aTargets": [ 0 ] },
+                           		    { "sName": "code", "aTargets": [ 1 ],
                            		      "render": function ( data, type, full, meta ) {
-                                           return '<a href="/Pras/icd/'+data+'">Edit</a>';
-                                         }},
-                           		    { "sName": "code", "aTargets": [ 1 ] },
+                                            return '<a href="/Pras/icd/'+full.id+'">'+data+'</a>';
+                           		      }},
                            		    { "sName": "description", "aTargets": [ 2 ] }
                   ],          
         	     "bLengthChange": false,
-        	     "iDisplayLength": 25,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
