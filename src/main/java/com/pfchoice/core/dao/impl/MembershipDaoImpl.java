@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.Property;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,29 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     @Override
     public Pagination getPage(final int pageNo, final int pageSize, final String sSearch)
     {
-        Criteria crit = createCriteria();
+    	Disjunction or = Restrictions.disjunction();
+
+    	if( sSearch != null && !"".equals(sSearch))
+    	{
+    		Criterion firstName   = Restrictions.ilike("firstName","%"+sSearch+"%");
+    		Criterion lastName   = Restrictions.ilike("lastName","%"+sSearch+"%");
+    		Criterion gender   = Restrictions.ilike("gender.description","%"+sSearch+"%");
+    		Criterion county   = Restrictions.ilike("county.description","%"+sSearch+"%");
+    		//Criterion dob   = Restrictions.ilike("dob","%"+sSearch+"%");
+    		Criterion stats   = Restrictions.ilike("status.description","%"+sSearch+"%");
+    		
+    		or.add(firstName);
+    		or.add(lastName);
+    		or.add(gender);
+    		or.add(county);
+    		//or.add(dob);
+    		or.add(stats);
+    	}
+        Criteria crit = createCriteria()
+        		.createAlias("genderId", "gender")
+        		.createAlias("countyCode", "county")
+        		.createAlias("status", "status");
+        crit.add(or);
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

@@ -7,75 +7,80 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<script src="/Pras/resources/js/prasweb.js"></script>  
-
 <script>
-
         $(document).ready(function() {
         	
-        	$("#myTable").dataTable( {
-        		"bProcessing": true,
-        		"bServerSide": true,
-        		'sAjaxSource': '/Pras/icd/icdMeasureLists',
-        		"fnServerParams": function ( aoData ) {
-		            aoData.push( { "name": "pageNo", "value": $('#myTable').DataTable().page.info().page + 1 },
-		            			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length },
-		            			 { "name": "sSearch", "value":  $('.dataTables_filter input').val()} );
-		        },
-        		"fnServerData": function ( sSource, aoData, fnCallback ) {
-        			 $.ajax( {
- 		                dataType: 'json',
- 		                contentType: "application/json;charset=UTF-8",
- 		                type: 'GET',
- 		                url: sSource,
- 		                data: aoData,
- 		                success: function (res) {
- 		                		fnCallback( { 
- 	                    	 "recordsTotal": res.data.totalCount,
- 	      	                 "recordsFiltered": res.data.totalCount,
- 	      	                 "data": res.data.list
- 		                		});
- 		                },
- 		                error : function (e) {
- 		                	
- 		                }
- 		            } );
-                },
-        		"bLengthChange": false,
-        		"bFilter" : true,
-        		"bRetrieve" :true,
-        		"aaSorting": [[ 0, "asc" ]],
-        		"iDisplayLength": 25,
-        		"sPaginationType": "full_numbers",
-        		"bAutoWidth": false,
-        		"aoColumns": [
-                              { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "10%", "asSorting" : [ "asc" ]  },
-                              { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                              { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "50%",  },
-                              { "mDataProp": "hcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sDefaultContent": "" },
-                              { "mDataProp": "rxhcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%","sDefaultContent": ""  }
-                          ],
-        		"aoColumnDefs": [ 
-        		    { "sName": "id", "aTargets": [ 0 ] ,
-        		      "render": function ( data, type, full, meta ) {
-                        return '<a href="/Pras/icd/'+data+'">Edit</a>';
-                      }},
-        		    { "sName": "code", "aTargets": [ 1 ] },
-        		    { "sName": "description", "aTargets": [ 2 ] }
-        		]
+        	var datatable2Rest = function(sSource, aoData, fnCallback) {
+        		//extract name/value pairs into a simpler map for use later
+  			  var paramMap = {};
+  			  for ( var i = 0; i < aoData.length; i++) {
+  			      paramMap[aoData[i].name] = aoData[i].value;
+  			  }
+  			 
+  			   //page calculations
+  			   var pageSize = paramMap.iDisplayLength;
+  			   var start = paramMap.iDisplayStart;
+  			   var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
+  			 
+  			   // extract sort information
+  			   var sortCol = paramMap.iSortCol_0;
+  			   var sortDir = paramMap.sSortDir_0;
+  			   var sortName = paramMap['mDataProp_' + sortCol];
+  			 
+  			   //create new json structure for parameters for REST request
+  			   var restParams = new Array();
+  			   restParams.push({"name" : "pageSize", "value" : pageSize});
+  			   restParams.push({"name" : "pageNo", "value" : pageNum });
+  			   restParams.push({"name" : "sort", "value" : sortName });
+  			   restParams.push({"name" : sortName + ".dir", "value" : sortDir });
+  			   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
 
-        		})
-        		.columnFilter({ 	sPlaceHolder: "head:after",
-					aoColumns: [ 	{ type: "number-range" },
-				    	 			{ type: "text" },
-                                    { type: "text" }
-						]
-
-				});
+  			   
+  			 $.ajax( {
+	                dataType: 'json',
+	                contentType: "application/json;charset=UTF-8",
+	                type: 'GET',
+	                url: sSource,
+	                data: restParams,
+	                success: function(res) {
+	                    res.iTotalRecords = res.data.totalCount;
+	                    res.iTotalDisplayRecords = res.data.totalCount;
+	               		fnCallback(res);
+	                },
+	                error : function (e) {
+	                	alert('failed');
+	                }
+	            } );
+        	}
+        	
+        	$('#myTable').dataTable({
+        	     "sAjaxSource" : '/Pras/icd/icdMeasureLists',
+        	     "sAjaxDataProp" : 'data.list',
+        	     "aoColumns": [
+                               { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "10%", "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "50%",  },
+                               { "mDataProp": "hcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sDefaultContent": "" },
+                               { "mDataProp": "rxhcc","bSearchable" : true, "bSortable": true,"sWidth" : "10%","sDefaultContent": ""  }
+                           ],
+                  "aoColumnDefs": [ 
+                           		    { "sName": "id", "aTargets": [ 0 ] ,
+                           		      "render": function ( data, type, full, meta ) {
+                                           return '<a href="/Pras/icd/'+data+'">Edit</a>';
+                                         }},
+                           		    { "sName": "code", "aTargets": [ 1 ] },
+                           		    { "sName": "description", "aTargets": [ 2 ] }
+                  ],          
+        	     "bLengthChange": false,
+        	     "iDisplayLength": 25,
+        	     "sPaginationType": "full_numbers",
+        	     "bProcessing": true,
+        	     "bServerSide" : true,
+        	     "fnServerData" : datatable2Rest
+        	});
 
         	
-
-        } );
+        	        } );
     </script>
 
 
