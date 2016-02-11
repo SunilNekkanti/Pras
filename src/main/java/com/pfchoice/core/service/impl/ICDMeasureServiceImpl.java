@@ -42,9 +42,10 @@ public class ICDMeasureServiceImpl implements ICDMeasureService
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize, final String sSearch)
+    public Pagination getPage(final int pageNo,final  int pageSize,
+    		final String sSearch, final String sort, final String sortdir)
     {
-        return icdMeasureDao.getPage(pageNo, pageSize, sSearch);
+        return icdMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
 
     @Override

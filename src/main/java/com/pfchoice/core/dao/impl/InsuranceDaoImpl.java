@@ -6,6 +6,10 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -24,11 +28,34 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
         .getName());
 
     @Override
-    public Pagination getPage(final int pageNo, final int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize, 
+    		final String sSearch, final String sort, final String sortdir)
     {
+    	Disjunction or = Restrictions.disjunction();
+
+    	if( sSearch != null && !"".equals(sSearch))
+    	{
+    		Criterion name   = Restrictions.ilike("name","%"+sSearch+"%");
+    		or.add(name);
+    	}
         Criteria crit = createCriteria();
+        crit.add(or);
+        
+        if(sort != null && !"".equals(sort)) 
+		{
+			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
+			{
+				crit.addOrder(Order.desc(sort));
+			}
+			else 
+			{
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+        
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
+        
     }
 
     @Override

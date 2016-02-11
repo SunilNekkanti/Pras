@@ -103,7 +103,7 @@ public class MembershipController{
         binder.setValidator(validator);
     }
     
-   /* 
+    
     @InitBinder("membershipInsurance")
     private void initInsBinder(WebDataBinder binder) {
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -111,7 +111,7 @@ public class MembershipController{
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.setValidator(insValidator);
     }
-*/
+
     
 	public MembershipController() {
     }
@@ -146,11 +146,12 @@ public class MembershipController{
 	
 	
 	
-	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST)
     public String saveMembershipAction( @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model) {
 			
         if (bindingResult.hasErrors()) {
+        	membership.setActiveInd('Y');
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
         }
@@ -173,6 +174,7 @@ public class MembershipController{
             BindingResult bindingResult, Model model) {
 				
         if (bindingResult.hasErrors()) {
+        	membership.setActiveInd('Y');
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
         }
@@ -214,13 +216,14 @@ public class MembershipController{
         return "membershipDetailsDisplay";
     }
 	
-	
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"update"})
     public String saveMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
-    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,BindingResult bindingResult
+    		,Model model) {
         
 		 if (bindingResult.hasErrors()) {
 	   		 	logger.info("Returning membershipDetailsDisplay");
+	   		    membershipInsurance.setActiveInd('Y');
 	   			return "membershipDetailsDisplay";
 	      }
 	      else
@@ -240,6 +243,7 @@ public class MembershipController{
 		
 		 if (bindingResult.hasErrors()) {
 			 logger.info("Returning membershipDetailsDisplay");	
+			 membershipInsurance.setActiveInd('Y');
 	           return "membershipDetailsDisplay";
 	        }
 	        else
@@ -260,6 +264,7 @@ public class MembershipController{
 	 	
 		 if (bindingResult.hasErrors()) {
 	       	 logger.info("Returning membershipDetailsDisplay");
+	       	 membershipInsurance.setActiveInd('Y');
 	           return "membershipDetailsDisplay";
 	        }
 	        else

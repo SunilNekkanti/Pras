@@ -2,6 +2,7 @@ package com.pfchoice.form.validator;
 
 import java.util.Date;
 
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -11,6 +12,8 @@ import com.pfchoice.core.entity.Membership;
 
 @Component
 public class MembershipValidator implements Validator {
+	
+	
  
     //which objects can be validated by this validator
     @Override
@@ -51,7 +54,7 @@ public class MembershipValidator implements Validator {
         }
             if(mbr.getMedicaidNo().length() >= 1 && mbr.getMedicaidNo().length() < 10)
     	{
-    		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number must be  at least 10 characters");
+    		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo",	"error.medicaidNo",	"Medicaid Number must be  at least 10 characters");
     	}
         
         if(mbr.getMedicareNo().length() >= 1 && mbr.getMedicareNo().length() < 10)
@@ -59,5 +62,6 @@ public class MembershipValidator implements Validator {
     		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicareNo",	"error.medicareNo",	"Medicare Number must be at least 10 characters");
     	}
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId", 	"error.genderId",	"Gender Required");
-     }
-}
+
+    }
+} 

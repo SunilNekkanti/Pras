@@ -18,7 +18,7 @@ public interface ICDMeasureDao
 
 	ICDMeasure findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize, String sSearch);
+    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
     
     ICDMeasure save(ICDMeasure bean);
 

@@ -17,7 +17,7 @@ public interface InsuranceService
 
 	Insurance findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
     Insurance save(Insurance bean);
 

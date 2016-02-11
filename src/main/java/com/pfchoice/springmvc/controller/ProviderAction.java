@@ -134,7 +134,7 @@ public class ProviderAction
     }
     
     @ResponseBody
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list1", method = RequestMethod.GET)
     public Message retrieveAllList()
     {
         List<Provider> listBean = providerService.findAll();

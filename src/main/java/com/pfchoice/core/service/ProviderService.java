@@ -17,7 +17,7 @@ public interface ProviderService
 
 	Provider findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
     Provider save(Provider bean);
 

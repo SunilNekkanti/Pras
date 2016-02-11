@@ -43,9 +43,10 @@ public class InsuranceServiceImpl implements InsuranceService
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize, final String sSearch,
+    		final String sort, final String sortdir)
     {
-        return insuranceDao.getPage(pageNo, pageSize);
+        return insuranceDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
 
     @Override

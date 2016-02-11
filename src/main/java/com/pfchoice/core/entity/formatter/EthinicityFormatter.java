@@ -25,6 +25,7 @@ public class EthinicityFormatter implements  Formatter<Ethinicity> {
  
      @Override
       public Ethinicity parse(String id, Locale arg1) throws ParseException {
+    	 System.out.println("ethinic id "+id);
            return ethinicityService.findById(Byte.parseByte(id));
            //Else you can just return a new object by setting some values
            //which you deem fit.

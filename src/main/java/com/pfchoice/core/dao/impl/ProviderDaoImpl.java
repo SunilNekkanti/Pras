@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -25,11 +29,36 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
         .getName());
 
     @Override
-    public Pagination getPage(final int pageNo, final int pageSize)
+    public Pagination getPage(final int pageNo, final int pageSize, 
+    		final String sSearch, final String sort, final String sortdir)
     {
+    	Disjunction or = Restrictions.disjunction();
+
+    	if( sSearch != null && !"".equals(sSearch))
+    	{
+    		Criterion name   = Restrictions.ilike("name","%"+sSearch+"%");
+    		Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
+    		
+    		or.add(name);
+    		or.add(code);
+    	}
         Criteria crit = createCriteria();
+        crit.add(or);
+        
+        if(sort != null && !"".equals(sort)) 
+		{
+			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
+			{
+				crit.addOrder(Order.desc(sort));
+			}
+			else 
+			{
+				crit.addOrder(Order.asc(sort));
+			}
+		}
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
+        
     }
 
     @Override

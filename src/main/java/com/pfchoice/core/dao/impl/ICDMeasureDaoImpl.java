@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,12 +29,13 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(final int pageNo,final  int pageSize, final String sSearch)
+    public Pagination getPage(final int pageNo,final  int pageSize, 
+    					final String sSearch, final String sort, final String sortdir)
     {
+    	Disjunction or = Restrictions.disjunction();
+    	
     	if(sSearch != null && !"".equals(sSearch))
     	{
-    		Disjunction or = Restrictions.disjunction();
-
     		Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
     		Criterion description   = Restrictions.ilike("description","%"+sSearch+"%");
     		Criterion hcc   = Restrictions.ilike("hcc","%"+sSearch+"%");
@@ -42,15 +44,23 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     		or.add(description);
     		or.add(hcc);
     		or.add(rxhcc);
-    		
-    		Criteria crit = createCriteria();
-    		crit.add(or);
-
-    		Pagination page = findByCriteria(crit, pageNo, pageSize);
-            return page;
     	}
-    	
-    	Criteria crit = createCriteria();
+
+		Criteria crit = createCriteria();
+		crit.add(or);
+	
+		if(sort != null && !"".equals(sort)) 
+		{
+			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
+			{
+				crit.addOrder(Order.desc(sort));
+			}
+			else 
+			{
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+
 		Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

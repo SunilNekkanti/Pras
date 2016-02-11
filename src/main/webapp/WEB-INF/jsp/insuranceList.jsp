@@ -4,44 +4,96 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+
+<title>Insurance List</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-<script src="/Pras/resources/js/prasweb.js"></script>
+
 <script>
-	$(document).ready(function(){	
-		
-	prasPagination('insurance');
-	
-	});
-</script>
+        $(document).ready(function() {
+        	var datatable2RestInsurance = function(sSource, aoData, fnCallback) {
+        		//extract name/value pairs into a simpler map for use later
+  			  var paramMap = {};
+  			  for ( var i = 0; i < aoData.length; i++) {
+  			      paramMap[aoData[i].name] = aoData[i].value;
+  			  }
+  			 
+  			   //page calculations
+  			   var pageSize = paramMap.iDisplayLength;
+  			   var start = paramMap.iDisplayStart;
+  			   var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
+  			 
+  			   // extract sort information
+  			   var sortCol = paramMap.iSortCol_0;
+  			   var sortDir = paramMap.sSortDir_0;
+  			   var sortName = paramMap['mDataProp_' + sortCol];
+  			 
+  			   //create new json structure for parameters for REST request
+  			   var restParams = new Array();
+  			   restParams.push({"name" : "pageSize", "value" : pageSize});
+  			   restParams.push({"name" : "pageNo", "value" : pageNum });
+  			   restParams.push({"name" : "sort", "value" : sortName });
+  			   restParams.push({"name" : "sortdir", "value" : sortDir });
+  			   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
+
+  			   
+  			 $.ajax( {
+	                dataType: 'json',
+	                contentType: "application/json;charset=UTF-8",
+	                type: 'GET',
+	                url: sSource,
+	                data: restParams,
+	                success: function(res) {
+	                    res.iTotalRecords = res.data.totalCount;
+	                    res.iTotalDisplayRecords = res.data.totalCount;
+	               		fnCallback(res);
+	                },
+	                error : function (e) {
+	                	alert('failed');
+	                }
+	            } );
+        	}
+        	
+        	$('#insuranceTable').dataTable({
+        	     "sAjaxSource" : '/Pras/insurance/list',
+        	     "sAjaxDataProp" : 'data.list',
+        	     "aoColumns": [
+                               { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
+                           ],
+                  "aoColumnDefs": [ 
+                           		    { "sName": "id", "aTargets": [ 0 ] },
+                           		    { "sName": "name", "aTargets": [ 1 ],
+                             		   "render": function ( data, type, full, meta ) {
+                                              return '<a href="/Pras/insurance/'+full.id+'">'+data+'</a>';
+                                     } }
+                  ],          
+        	     "bLengthChange": false,
+        	     "iDisplayLength": 25,
+        	     "sPaginationType": "full_numbers",
+        	     "bProcessing": true,
+        	     "bServerSide" : true,
+        	     "fnServerData" : datatable2RestInsurance
+        	});
+
+        	
+    } );
+    </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Insurance List <span class="badge">${insuranceList.size()}</span></div>
-		<div class="panel-body" id="tablediv">
-				<table id="tab" class="table table-striped table-hover">
+		<div class="panel-heading">Insurance List </div>
+		<div class="panel-body" >
+				<table id="insuranceTable" class="table table-striped table-hover table-responsive">
 					<thead>
 						<tr>
+							<th  scope="col">Action</th>  
 							<th  scope="col">Insurance Name</th>  
-					       <!--  <th  scope="col">PMPM</th>  -->  
 						</tr>
 					</thead>
 
-					<tbody id="contentinsurance">
-						
-						<c:forEach items="${insuranceList}" var="ins">
-							<tr>
-								<td> <a href="insurance/${ins.id}"   rel='tab' > ${ins.name}</a></td> 
-								
-							</tr>
-						</c:forEach>
+					<tbody >
 					</tbody>
 				</table>
-				<div class="col-md-12 text-center" id="page_navigationinsurance"></div>
-				<div id="show_per_pageinsurance"></div>
-				<div id="current_pageinsurance"></div>
 		</div>
 	</div>
 </div>

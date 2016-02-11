@@ -46,9 +46,7 @@ public class MembershipListController
     public ModelAndView handleRequest(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
  
-    	List<Membership> listBean = membershipService.findAll();
 		ModelAndView modelAndView = new ModelAndView("membershipList");
-		modelAndView.addObject("membershipList", listBean);
  
 		return modelAndView;
 	}
@@ -58,15 +56,14 @@ public class MembershipListController
 	public Message viewMembershipListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir,
 					HttpServletRequest request) throws Exception{
-		final Integer pageNumber = (pageNo != null)?((pageNo != 0)?pageNo:1):1;
-		final Integer pageDisplayNo = (pageSize != null)?pageSize:100;
-		final String searchText  = (sSearch != null)?sSearch:"";
 		
 		
-		Pagination pagination = membershipService.getPage(pageNumber, pageDisplayNo, searchText);
+		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		System.out.println("page size========================"+ pagination.getList().size());
 		
-       return Message.successMessage(CommonMessageContent.MEMBERSHIP_DELETED, JsonConverter.getJsonObject(pagination));
+       return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
    }
 }

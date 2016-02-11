@@ -137,7 +137,7 @@ public class InsuranceAction
     }
     
     @ResponseBody
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list1", method = RequestMethod.GET)
     public Message retrieveAllList()
     {
     	List<InsuranceContract> listBean = insuranceContractService.findAll();

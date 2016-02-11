@@ -13,85 +13,88 @@
 <title>Membership List</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
 
-$(document).ready(function(){	
-	
-	$("#myTable").dataTable( {
-		"bProcessing": true,
-		"bServerSide": true,
-		'sAjaxSource': '/Pras//membership/list/',
-		"fnServerParams": function ( aoData ) {
-            aoData.push( { "name": "pageNo", "value": $('#myTable').DataTable().page.info().page + 1 },
-            			 { "name": "pageSize", "value": $('#myTable').DataTable().page.info().length },
-            			 { "name": "sSearch", "value":  $('.dataTables_filter input').val()} );
-        },
-		"fnServerData": function ( sSource, aoData, fnCallback ) {
-			 $.ajax( {
+<script>
+        $(document).ready(function() {
+        	
+        	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
+        		//extract name/value pairs into a simpler map for use later
+  			  var paramMap = {};
+  			  for ( var i = 0; i < aoData.length; i++) {
+  			      paramMap[aoData[i].name] = aoData[i].value;
+  			  }
+  			 
+  			   //page calculations
+  			   var pageSize = paramMap.iDisplayLength;
+  			   var start = paramMap.iDisplayStart;
+  			   var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
+  			 
+  			   // extract sort information
+  			   var sortCol = paramMap.iSortCol_0;
+  			   var sortDir = paramMap.sSortDir_0;
+  			   var sortName = paramMap['mDataProp_' + sortCol];
+  			 
+  			   //create new json structure for parameters for REST request
+  			   var restParams = new Array();
+  			   restParams.push({"name" : "pageSize", "value" : pageSize});
+  			   restParams.push({"name" : "pageNo", "value" : pageNum });
+  			   restParams.push({"name" : "sort", "value" : sortName });
+  			   restParams.push({"name" : "sortdir", "value" : sortDir });
+  			   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
+
+  			   
+  			 $.ajax( {
 	                dataType: 'json',
 	                contentType: "application/json;charset=UTF-8",
 	                type: 'GET',
 	                url: sSource,
-	                data: aoData,
-	                success: function (res) {
-	                		fnCallback( { 
-                 	 "recordsTotal": res.data.totalCount,
-   	                 "recordsFiltered": res.data.totalCount,
-   	                 "data": res.data.list
-	                		});
+	                data: restParams,
+	                success: function(res) {
+	                    res.iTotalRecords = res.data.totalCount;
+	                    res.iTotalDisplayRecords = res.data.totalCount;
+	               		fnCallback(res);
 	                },
 	                error : function (e) {
-	                	
+	                	alert('failed');
 	                }
 	            } );
-        },
-		"bLengthChange": false,
-		"bFilter" : true,
-		"bRetrieve" :true,
-		"aaSorting": [[ 0, "asc" ]],
-		"iDisplayLength": 5,
-		"sPaginationType": "full_numbers",
-		"bAutoWidth": false,
-		"aoColumns": [
-                      { "mDataProp": "id", 	"bSearchable" : false, "sWidth" : "10%", "asSorting" : [ "asc" ]  },
-                      { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "25%", "sDefaultContent": ""},
-                      { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "25%", "sDefaultContent": ""  },
-                      { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-                      { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-                      { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-                      { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  }
-                  ],
-		"aoColumnDefs": [ 
-		    { "sName": "id", "aTargets": [ 0 ] ,
-		      "render": function ( data, type, full, meta ) {
-                return '<a href="/Pras/membership/'+data+'">Edit</a>';
-              }},
-		    { "sName": "firstName", "aTargets": [ 1 ] },
-		    { "sName": "lastName", "aTargets": [ 2 ] },
-		    { "sName": "dob", "aTargets": [ 3 ] },
-		    { "sName": "genderId.id", "aTargets": [ 4 ] },
-		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
-		    { "sName": "status.id", "aTargets": [ 6 ] }
-		]
+        	}
+        	
+        	$('#membershipTable').dataTable({
+        	     "sAjaxSource" : '/Pras/membership/list',
+        	     "sAjaxDataProp" : 'data.list',
+                 "aoColumns": [
+                               { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
+                               { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
+                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
+                               { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
+                               { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
+                             ],
+                  "aoColumnDefs": [ 
+                  		   		    { "sName": "id", "aTargets": [ 0 ] },
+                  		   		    { "sName": "firstName", "aTargets": [ 1 ],
+                  		               "render": function ( data, type, full, meta ) {
+               		                   return '<a href="/Pras/membership/'+full.id+'">'+data+'</a>';
+             		                 }},
+                  		   		    { "sName": "lastName", "aTargets": [ 2 ] },
+                  		   		    { "sName": "dob", "aTargets": [ 3 ] },
+                  		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
+                  		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
+                  		   		    { "sName": "status.id", "aTargets": [ 6 ] }
+                  ],          
+        	     "bLengthChange": false,
+        	     "iDisplayLength": 25,
+        	     "sPaginationType": "full_numbers",
+        	     "bProcessing": true,
+        	     "bServerSide" : true,
+        	     "fnServerData" : datatable2RestMembership
+        	});
 
-		})
-		.columnFilter({ 	sPlaceHolder: "head:after",
-			aoColumns: [ 	{ type: "number-range" },
-		    	 			{ type: "text" },
-		    	 			{ type: "text" },
-		    	 			{ type: "text" },
-		    	 			{ type: "text" },
-                            { type: "text" },
-                            { type: "text" }
-				]
-
-		});
-
-	
-
-	
-});
-</script>
+        	
+    } );
+    </script>
 
 </head>
 
@@ -100,9 +103,9 @@ $(document).ready(function(){
 	<div class="panel-group">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Membership List  </div>
-			<div class="panel-body" id="tablediv">
+			<div class="panel-body" >
 				<div class="table-responsive">
-					<table id="myTable" class=" table-responsive  table table-striped table-hover">
+					<table id="membershipTable" class=" table-responsive  table table-striped table-hover">
 					
 						<thead>
 							<tr>

@@ -44,5 +44,11 @@ public interface CommonMessageContent
     String PROVIDER_DELETED = "Provider profile deleted";
 
     String GET_PROVIDER = "Get Provider profile";
+    
+    String ICD_LIST = "ICD codes list";
+    
+    String PROVIDER_LIST = "Provider List";
+    
+    String INSURANCE_LIST = "Insurance List";
 
 }

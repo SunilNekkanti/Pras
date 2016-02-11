@@ -7,10 +7,13 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.Property;
+import org.hibernate.sql.JoinType;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +33,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
         .getName());
 
     @Override
-    public Pagination getPage(final int pageNo, final int pageSize, final String sSearch)
+    public Pagination getPage(final int pageNo, final int pageSize, 
+    		final String sSearch, final String sort, final String sortdir)
     {
     	Disjunction or = Restrictions.disjunction();
 
@@ -38,8 +42,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	{
     		Criterion firstName   = Restrictions.ilike("firstName","%"+sSearch+"%");
     		Criterion lastName   = Restrictions.ilike("lastName","%"+sSearch+"%");
-    		Criterion gender   = Restrictions.ilike("gender.description","%"+sSearch+"%");
-    		Criterion county   = Restrictions.ilike("county.description","%"+sSearch+"%");
+    		Criterion gender   = Restrictions.ilike("genderId.description","%"+sSearch+"%");
+    		Criterion county   = Restrictions.ilike("countyCode.description","%"+sSearch+"%");
     		//Criterion dob   = Restrictions.ilike("dob","%"+sSearch+"%");
     		Criterion stats   = Restrictions.ilike("status.description","%"+sSearch+"%");
     		
@@ -51,10 +55,23 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		or.add(stats);
     	}
         Criteria crit = createCriteria()
-        		.createAlias("genderId", "gender")
-        		.createAlias("countyCode", "county")
+        		.createAlias("genderId", "genderId")
+        		.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
         		.createAlias("status", "status");
         crit.add(or);
+        
+        if(sort != null && !"".equals(sort)) 
+		{
+			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
+			{
+				crit.addOrder(Order.desc(sort));
+			}
+			else 
+			{
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+        
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

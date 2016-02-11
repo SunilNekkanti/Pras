@@ -18,7 +18,7 @@ public interface MembershipDao
 
 	Membership findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize, String sSearch);
+    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
     Membership save(Membership bean);
 

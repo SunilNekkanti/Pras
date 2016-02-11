@@ -32,7 +32,7 @@
   			   restParams.push({"name" : "pageSize", "value" : pageSize});
   			   restParams.push({"name" : "pageNo", "value" : pageNum });
   			   restParams.push({"name" : "sort", "value" : sortName });
-  			   restParams.push({"name" : sortName + ".dir", "value" : sortDir });
+  			   restParams.push({"name" : "sortdir", "value" : sortDir });
   			   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
 
   			   

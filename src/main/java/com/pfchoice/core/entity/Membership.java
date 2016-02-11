@@ -378,6 +378,20 @@ public class Membership implements Serializable
 	
 	
 	/**
+	 * @return the refMbrContacts
+	 */
+	public Set<ReferenceContact> getRefMbrContacts() {
+		return refMbrContacts;
+	}
+
+	/**
+	 * @param refMbrContacts the refMbrContacts to set
+	 */
+	public void setRefMbrContacts(Set<ReferenceContact> refMbrContacts) {
+		this.refMbrContacts = refMbrContacts;
+	}
+
+	/**
 	 * @return the mbrHedisMeasureList
 	 */
 	public List<MembershipHedisMeasure> getMbrHedisMeasureList() {

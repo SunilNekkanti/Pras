@@ -2,6 +2,7 @@ package com.pfchoice.springmvc.controller;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,14 +101,13 @@ public class ICDMeasureController{
 	public Message viewICDMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir,
 					HttpServletRequest request) throws Exception{
-		final Integer pageNumber = (pageNo != null)?((pageNo != 0)?pageNo:1):1;
-		final Integer pageDisplayNo = (pageSize != null)?pageSize:100;
-		final String searchText  = (sSearch != null)?sSearch:"";
 		
-		Pagination pagination = icdMeasureService.getPage(pageNumber, pageDisplayNo, searchText);
+		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
 
-        return Message.successMessage(CommonMessageContent.MEMBERSHIP_DELETED, pagination);
+        return Message.successMessage(CommonMessageContent.ICD_LIST, pagination);
     }
 	
 	
