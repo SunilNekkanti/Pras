@@ -104,7 +104,7 @@
 			<div class="panel-heading">Membership List  </div>
 			<div class="panel-body" >
 				<div class="table-responsive">
-					<table id="membershipTable" class=" table-responsive  table table-striped table-hover">
+					<table id="membershipTable" class="table table-striped table-hover table-responsive">
 					
 						<thead>
 							<tr>
