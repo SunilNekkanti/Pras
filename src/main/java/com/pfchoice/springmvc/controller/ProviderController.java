@@ -97,10 +97,14 @@ public class ProviderController{
         }    
     }
 	
-	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST, params ={"update"})
-    public String saveProviderAction( @Validated Provider provider,
+	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+    public String updateProviderAction( @PathVariable Integer id,@Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	for( ObjectError oe :bindingResult.getAllErrors()){
+        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
+        	}
+        	provider.setActiveInd('Y');
             logger.info("Returning providerEdit.jsp page");
             return "providerEdit";
         }
@@ -118,8 +122,8 @@ public class ProviderController{
     }
 	
 	
-	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction( @Validated Provider provider,
+	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+    public String deleteInsuranceAction(@PathVariable Integer id, @Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning insuranceEdit.jsp page");

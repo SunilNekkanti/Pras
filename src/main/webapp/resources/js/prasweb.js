@@ -90,7 +90,7 @@ function prasPagination(listname){
 				if (href) {
 					$.ajax({
 						type : "GET",
-						url : "http://localhost:8080/Pras/" + href,
+						url : "/Pras/" + href,
 						data : '$format=json',
 						dataType : 'json',
 						success : function(response) {
@@ -142,7 +142,7 @@ function prasPagination(listname){
 			alert('clicked update button');
 		    var bean = {"id":"158", "firstName": $("#firstName").val(),  "lastName":$("#lastName").val() };
 		    $.ajax({
-		        url: "http://localhost:8080/Pras/membership/176",
+		        url: "/Pras/membership/176",
 		        contentType : "application/json; charset=utf-8",
 		        type: 'PUT',
 		        dataType: 'json',
@@ -159,7 +159,7 @@ function prasPagination(listname){
 			alert('clicked cancel button');
 		    var bean = {"id":"175"};
 		    $.ajax({
-		        url: "http://localhost:8080/Pras/membership/175",
+		        url: "/Pras/membership/175",
 		        contentType : "application/json;charset=UTF-8",
 		        type: 'DELETE',
 		        dataType: 'json',

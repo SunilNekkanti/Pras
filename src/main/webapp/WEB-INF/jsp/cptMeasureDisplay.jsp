@@ -60,7 +60,7 @@
 				<div class="col-sm-offset-6 col-sm-4">
 				<c:choose>
 					 	<c:when test="${not empty cptMeasure.id}"> 
-					 		<a href="http://localhost:8080/Pras/cpt/cptMeasureList">Click Here</a>CPT Measure List
+					 		<a href="/Pras/cpt/cptMeasureList">Click Here</a>CPT Measure List
 						 </c:when>
 						<c:otherwise>
 							issue

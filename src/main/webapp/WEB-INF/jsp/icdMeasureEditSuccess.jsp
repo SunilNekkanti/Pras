@@ -13,7 +13,7 @@
   					<p><strong>Description:${icdMeasure.description}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="http://localhost:8080/Pras/icd/icdMeasureList">Click Here </a> Move to ICD Measure list
+			 		<a href="/Pras/icd/icdMeasureList">Click Here </a> Move to ICD Measure list
 					
 				</div>	
 			</div>

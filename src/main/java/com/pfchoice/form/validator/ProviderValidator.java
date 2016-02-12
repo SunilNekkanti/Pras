@@ -2,7 +2,6 @@ package com.pfchoice.form.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import com.pfchoice.core.entity.Provider;
 
@@ -34,13 +33,5 @@ public class ProviderValidator implements Validator {
         if (prvdr.getCode().length() < 2) {
             errors.rejectValue("code", "cpde.tooshort", "Code must be at least 6 characters.");
         }
-        
-       
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activeInd",  "error.activeInd",  "ActiveIndicator Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdDate",  "error.createdDate",  "Created Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedDate",  "error.updatedDate",  "Updated Date  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "createdBy",  "error.createdBy",  "Created By  Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatedBy",  "error.updatedBy",   "Updated By  Required");
-        
     }
 }

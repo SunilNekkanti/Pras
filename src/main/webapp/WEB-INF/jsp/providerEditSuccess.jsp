@@ -11,7 +11,7 @@
   					<p> <strong>Name:${provider.name}</strong>  </p>
   					<p><strong>Code:${provider.code}</strong>  </p>
   					<p> Updated Successfully  </p>
-					<a href="http://localhost:8080/Pras/providerList">Click Here</a> Move to Provider list
+					<a href="/Pras/providerList">Click Here</a> Move to Provider list
 				</div>	
 			</div>
 		</div>

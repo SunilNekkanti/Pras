@@ -54,7 +54,7 @@
 	            } );
         	}
         	
-        	$('#insuranceTable').dataTable({
+        	var insuranceTable =	$('#insuranceTable').dataTable({
         	     "sAjaxSource" : '/Pras/insurance/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
@@ -75,7 +75,6 @@
         	     "fnServerData" : datatable2RestInsurance
         	});
 
-        	
     } );
     </script>
 <div class="panel-group">

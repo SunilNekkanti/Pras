@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
-import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.service.InsuranceService;
 
 import ml.rugal.sshcommon.page.Pagination;

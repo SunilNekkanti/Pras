@@ -74,7 +74,7 @@
 				</div>
 				 
 				<div class="col-sm-offset-6 col-sm-4">
-				<a href="http://localhost:8080/Pras/provider/${id}">Click Here</a> Edit Provider profile
+				<a href="/Pras/provider/${id}">Click Here</a> Edit Provider profile
 				</div>
 			</springForm:form>
  	</div>

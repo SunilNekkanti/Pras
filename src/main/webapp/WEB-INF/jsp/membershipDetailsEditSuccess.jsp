@@ -10,7 +10,7 @@
 						<p><strong>Last Name:${membershipInsurance.mbr.lastName}</strong></p>
 						<p><strong>Status:${membershipInsurance.mbr.status.description}</strong></p>
 						 <p>Updated Successfully </p>
-						<a href="http://localhost:8080/Pras/membership/${membershipInsurance.mbr.id}/detailsList">Click Here</a> Move to membership Insurance list
+						<a href="/Pras/membership/${membershipInsurance.mbr.id}/detailsList">Click Here</a> Move to membership Insurance list
  				</div>	
 			</div>
 		</div>

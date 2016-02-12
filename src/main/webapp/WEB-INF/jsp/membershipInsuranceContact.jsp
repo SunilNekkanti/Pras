@@ -15,7 +15,7 @@
 					<div class="panel panel-primary">
 						<div class="panel-body" id="tablediv">      	
 							<div class="form-group col-sm-12">
-								<label class="control-label col-sm-4" for="name">Name:</label>
+								<label class="control-label col-sm-4" for="name">Name</label>
 								<div class="col-sm-8">
 									<springForm:input path="insId.name" class="form-control" id="name" placeholder="${membershipInsurance.insId.name}" />
 									<springForm:errors path="insId.name" cssClass="error text-danger" />
@@ -29,79 +29,92 @@
 								<div class="panel panel-primary">
 									<div class="panel-body" id="tablediv">   
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="homePhone">Home Phone:</label>
+											<label class="control-label col-sm-4" for="newBenifits">New Benifits</label>
 											<div class="col-sm-8">
-												<springForm:input path="insId.refInsContacts[${status.index}].cnt.homePhone" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.homePhone" cssClass="error text-danger" />
+												<springForm:input path="newBenifits" class="form-control" id="newBenifits"  />
+												<springForm:errors path="newBenifits" cssClass="error text-danger" />
 											 </div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="mobilePhone">Mobile Phone:</label>
+											<label class="control-label col-sm-4" for="activityDate">Activity Date</label>
 											<div class="col-sm-8">
-												<springForm:input path="insId.refInsContacts[${status.index}].cnt.mobilePhone" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.mobilePhone" cssClass="error text-danger" />
+												<springForm:input  path="activityDate" class="form-control" id="activityDate"  />
+												<springForm:errors path="activityDate" cssClass="error text-danger" />
 											</div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="faxNumber">FaxNumber:</label>
+											<label class="control-label col-sm-4" for="activityMonth">Activity Month</label>
 											<div class="col-sm-8">
-												<springForm:input path="insId.refInsContacts[${status.index}].cnt.faxNumber" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.faxNumber" cssClass="error text-danger" />
+												<springForm:input path="activityMonth" class="form-control" id="activityMonth"  />
+												<springForm:errors path="activityMonth" cssClass="error text-danger" />
 											</div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="email">Email:</label>
+											<label class="control-label col-sm-4" for="effStartDate">Effective Start Date</label>
 											<div class="col-sm-8">
-											 	<springForm:input path="insId.refInsContacts[${status.index}].cnt.email" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.email" cssClass="error text-danger" />
+											 	<springForm:input path="effStartDate" class="form-control" id="effStartDate"  />
+												<springForm:errors path="effStartDate" cssClass="error text-danger" />
 											</div>
 										</div> 
 										<div class="form-group col-sm-12">
-													<label class="control-label col-sm-4" for="address1">Address 1:</label>
-													 <div class="col-sm-8">
-														<springForm:input path="insId.refInsContacts[${status.index}].cnt.address1" class="form-control" id="code"  />
-														<springForm:errors path="insId.refInsContacts[${status.index}].cnt.address1" cssClass="error text-danger" />
-													 </div>
-										</div> 
-										<div class="form-group col-sm-12">
-													<label class="control-label col-sm-4" for="address2">Address 2</label>
-													 <div class="col-sm-8">
-														<springForm:input path="insId.refInsContacts[${status.index}].cnt.address2" class="form-control" id="code"  />
-														<springForm:errors path="insId.refInsContacts[${status.index}].cnt.address2" cssClass="error text-danger" />
-													 </div>
-										</div> 
-										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="city">City:</label>
+											<label class="control-label col-sm-4" for="effEndDate">Effective End Date</label>
 											<div class="col-sm-8">
-												<springForm:input path="insId.refInsContacts[${status.index}].cnt.city" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.city" cssClass="error text-danger" />
+											 	<springForm:input path="effEndDate" class="form-control" id="effEndDate"  />
+												<springForm:errors path="effEndDate" cssClass="error text-danger" />
 											</div>
 										</div> 
 										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="stateCode">State Code:</label>
-											 <div class="col-sm-8">
-												<springForm:input path="insId.refInsContacts[${status.index}].cnt.stateCode" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.stateCode" cssClass="error text-danger" />
-											 </div>
-										</div> 
-										<div class="form-group col-sm-12">
-											<label class="control-label col-sm-4" for="zipCode">Zip Code:</label>
+											<label class="control-label col-sm-4" for="effEndDate">Effective End Date</label>
 											<div class="col-sm-8">
-												<springForm:input path="insId.refInsContacts[${status.index}].cnt.zipCode" class="form-control" id="code"  />
-												<springForm:errors path="insId.refInsContacts[${status.index}].cnt.zipCode" cssClass="error text-danger" />
+											 	<springForm:input path="effEndDate" class="form-control" id="effEndDate"  />
+												<springForm:errors path="effEndDate" cssClass="error text-danger" />
 											</div>
 										</div> 
+										<div class="form-group col-sm-12">
+											<label class="control-label col-sm-4" for="effEndDate">Effective End Date</label>
+											<div class="col-sm-8">
+											 	<springForm:input path="effEndDate" class="form-control" id="effEndDate"  />
+												<springForm:errors path="effEndDate" cssClass="error text-danger" />
+											</div>
+										</div> 
+										<div class="form-group col-sm-12">
+											<label class="control-label col-sm-4" for="product">Product</label>
+											<div class="col-sm-8">
+											 	<springForm:input path="product" class="form-control" id="product"  />
+												<springForm:errors path="product" cssClass="error text-danger" />
+											</div>
+										</div> 
+										<div class="form-group col-sm-12">
+											<label class="control-label col-sm-4" for="productLabel">Product Label</label>
+											<div class="col-sm-8">
+											 	<springForm:input path="productLabel" class="form-control" id="productLabel"  />
+												<springForm:errors path="productLabel" cssClass="error text-danger" />
+											</div>
+										</div> 
+										<div class="form-group col-sm-12">
+											<label class="control-label col-sm-4" for="planId">Plan Id</label>
+											<div class="col-sm-8">
+											 	<springForm:input path="planId" class="form-control" id="productLabel"  />
+												<springForm:errors path="planId" cssClass="error text-danger" />
+											</div>
+										</div> 
+										<div class="form-group col-sm-12">
+											<label class="control-label col-sm-4" for="srcSysMbrNbr">SrcSysMbrNbr</label>
+											<div class="col-sm-8">
+											 	<springForm:input path="srcSysMbrNbr" class="form-control" id="srcSysMbrNbr"  />
+												<springForm:errors path="srcSysMbrNbr" cssClass="error text-danger" />
+											</div>
+										</div> 
+										<div class="form-group col-sm-12">
+											<label class="control-label col-sm-4" for="riskFlag">Risk Flag</label>
+											<div class="col-sm-8">
+											 	<springForm:input path="riskFlag" class="form-control" id="riskFlag"  />
+												<springForm:errors path="riskFlag" cssClass="error text-danger" />
+											</div>
+										</div> 
+										
 									</div>
 								</div>
-							</c:when>
-							<c:when test="${fn:contains(refCnt.cnt.activeInd, 'y')}">
-								<div class="form-group col-sm-12">
-									<label class="control-label col-sm-4" for="address2">Contact:</label>
-									<div class="col-sm-6">
-										<springForm:input path="insId.refInsContacts[${status.index}].cnt.address2" class="form-control" id="code"  />
-										<springForm:errors path="insId.refInsContacts[${status.index}].cnt.address2" cssClass="error text-danger" />
-									</div>
-								</div> 
 							</c:when>
 						</c:choose>
 					</c:forEach>

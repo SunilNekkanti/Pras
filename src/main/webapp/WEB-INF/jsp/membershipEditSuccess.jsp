@@ -13,7 +13,7 @@
 								<p><strong>Gender:${membership.genderId.description}</strong></p>
 								<p><strong>county:${membership.countyCode.description}</strong></p>
 								 <p>Updated Successfully </p>
-								<a href="http://localhost:8080/Pras/membershipTmpList">Click Here</a> Move to membership list
+								<a href="/Pras/membershipTmpList">Click Here</a> Move to membership list
 	 					</div>	
 					</div>
 				</div>

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.validation.annotation.Validated;
@@ -75,6 +74,7 @@ public class InsuranceController{
     public String newInsuranceAction(@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	insurance.setActiveInd('Y');
             logger.info("Returning insuranceEdit.jsp page");
             return "insuranceNew";
         }
@@ -89,8 +89,10 @@ public class InsuranceController{
         }    
     }
 	
-	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"update"})
-    public String saveInsuranceAction(@Validated Insurance insurance,
+	
+	
+	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+    public String updateInsuranceAction( @PathVariable Integer id,@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
 		insurance.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
@@ -113,8 +115,8 @@ public class InsuranceController{
         }    
     }
 	
-	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction( @Validated Insurance insurance,
+	@RequestMapping(value = "/insurance/${id}/save.do", method = RequestMethod.POST, params ={"delete"})
+    public String deleteInsuranceAction(@PathVariable Integer id, @Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning insuranceEdit.jsp page");

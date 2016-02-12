@@ -13,7 +13,7 @@
   					<p><strong>Description:${cptMeasure.description}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="http://localhost:8080/Pras/cpt/cptMeasureList">Click Here </a> Move to CPT Measure list
+			 		<a href="/Pras/cpt/cptMeasureList">Click Here </a> Move to CPT Measure list
 										
 					
 				</div>	

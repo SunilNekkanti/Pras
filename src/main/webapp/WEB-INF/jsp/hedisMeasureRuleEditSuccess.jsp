@@ -15,7 +15,7 @@
   					<p><strong>Effective Year:${hedisMeasureRule.effectiveYear}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="http://localhost:8080/Pras/hedisMeasureRule/hedisMeasureRuleList">Click Here </a> Move to Hedis Measure Rule list
+			 		<a href="/Pras/hedisMeasureRule/hedisMeasureRuleList">Click Here </a> Move to Hedis Measure Rule list
 										
 					
 				</div>	

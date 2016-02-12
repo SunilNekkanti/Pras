@@ -14,7 +14,7 @@
   					<p><strong>Group:${hedisMeasure.hedisMsrGrp.description}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="http://localhost:8080/Pras/hedis/hedisMeasureList">Click Here </a> Move to Hedis Measure list
+			 		<a href="/Pras/hedis/hedisMeasureList">Click Here </a> Move to Hedis Measure list
 										
 					
 				</div>	

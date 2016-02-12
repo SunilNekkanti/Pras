@@ -7,9 +7,9 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Profile</div>
 		<div class="panel-body">
-			<springForm:form method="POST" commandName="insurance" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="insurance" action="/Pras/insurance/${id}/save.do" class="form-horizontal" role="form">
 			     <div class="form-group required">
-				 	<label class="control-label col-sm-2" for="name">Name:</label>
+				 	<label class="control-label col-sm-2" for="name">Name</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:input path="name" class="form-control" id="name" placeholder="name" />

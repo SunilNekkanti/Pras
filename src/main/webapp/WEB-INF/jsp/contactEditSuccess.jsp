@@ -31,13 +31,13 @@
   					
   					<c:choose>
 					 	<c:when test="${contact.refContact.mbr != null}"> 
-					 		<a href="http://localhost:8080/Pras/membership/${id}/contactList">Click Here</a> Move to contact list
+					 		<a href="/Pras/membership/${id}/contactList">Click Here</a> Move to contact list
 						 </c:when>
 						 <c:when test="${contact.refContact.prvdr != null}">
-							<a href="http://localhost:8080/Pras/provider/${id}/contactList">Click Here</a> Move to contact list
+							<a href="/Pras/provider/${id}/contactList">Click Here</a> Move to contact list
 						</c:when>
 						 <c:when test="${contact.refContact.ins != null}">
-							<a href="http://localhost:8080/Pras/insurance/${id}/contactList">Click Here</a> Move to contact list
+							<a href="/Pras/insurance/${id}/contactList">Click Here</a> Move to contact list
 						</c:when>
 						<c:otherwise>
 							issue

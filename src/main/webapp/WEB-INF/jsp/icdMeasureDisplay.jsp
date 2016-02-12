@@ -60,7 +60,7 @@
 				<div class="col-sm-offset-6 col-sm-4">
 				<c:choose>
 					 	<c:when test="${not empty icdMeasure.id}"> 
-					 		<a href="http://localhost:8080/Pras/icd/icdMeasureList">Click Here</a>ICD Measure List
+					 		<a href="/Pras/icd/icdMeasureList">Click Here</a>ICD Measure List
 						 </c:when>
 						<c:otherwise>
 							issue

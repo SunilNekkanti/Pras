@@ -10,7 +10,7 @@
 				<div class="well well-sm">
 					<p><strong>Name:${insurance.name}</strong></p>
 					<p> Updated Successfully  </p>
-					<a href="http://localhost:8080/Pras/insuranceList">Click Here</a> Move to Insurance list
+					<a href="/Pras/insuranceList">Click Here</a> Move to Insurance list
 				</div>	
 			</div>
 		</div>
