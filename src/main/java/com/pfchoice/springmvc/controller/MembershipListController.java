@@ -62,7 +62,6 @@ public class MembershipListController
 		
 		
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-		System.out.println("page size========================"+ pagination.getList().size());
 		
        return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
    }

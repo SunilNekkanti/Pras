@@ -101,9 +101,6 @@ public class ProviderController{
     public String updateProviderAction( @PathVariable Integer id,@Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	for( ObjectError oe :bindingResult.getAllErrors()){
-        		System.out.println("oe "+oe.getObjectName() +""+oe.getCode());
-        	}
         	provider.setActiveInd('Y');
             logger.info("Returning providerEdit.jsp page");
             return "providerEdit";

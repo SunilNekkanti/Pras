@@ -61,7 +61,6 @@ public class ProviderListController
 		
 		
 		Pagination pagination = providerService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-		System.out.println("provider page size========================"+ pagination.getList().size());
 		
       return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
   }

@@ -60,7 +60,6 @@ public class InsuranceListController
 		
 		
 		Pagination pagination = insuranceService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-		System.out.println("insurance page size========================"+ pagination.getList().size());
 		
      return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
  }
