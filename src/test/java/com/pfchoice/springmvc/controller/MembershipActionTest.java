@@ -1,6 +1,8 @@
 package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -52,17 +54,18 @@ public class MembershipActionTest extends ControllerClientSideTestBase
        // Message result = membershipAction.updateMembershipProfile(id, bean);
     }
 
-    @Test
+   // @Test
     public void testDeregister()
     {
         System.out.println("cancelOrder");
-        Integer id = 175;
+        Integer id = 1;
        // MembershipAction instance = new MembershipAction();
         Message expResult = null;
         Message result = membershipAction.deregister(id);
     }
 
- //   @Test
+    @Test
+    @Ignore
     public void testRetrieve()
     {
         System.out.println("retrieve");

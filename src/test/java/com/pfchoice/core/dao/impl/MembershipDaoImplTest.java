@@ -13,10 +13,7 @@ import com.pfchoice.core.dao.CountyDao;
 import com.pfchoice.core.dao.GenderDao;
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.dao.MembershipStatusDao;
-import com.pfchoice.core.entity.County;
-import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.Membership;
-import com.pfchoice.core.entity.MembershipStatus;
 
 /**
  *
@@ -41,7 +38,7 @@ public class MembershipDaoImplTest extends JUnitSpringTestBase
     {
     }
 
-//    @Test
+    @Test
     public void testGetPage()
     {
         System.out.println("getPage");
@@ -58,7 +55,7 @@ public class MembershipDaoImplTest extends JUnitSpringTestBase
         Membership result = membershipDao.findById(id);
     }
 
-   @Test
+ //  @Test
     public void testSave()
     {
         System.out.println("testSave start");
@@ -77,7 +74,7 @@ public class MembershipDaoImplTest extends JUnitSpringTestBase
         System.out.println("testSave end");
     }
 
-//    @Test
+  //  @Test
     public void testDeleteById()
     {
         System.out.println("deleteById");
