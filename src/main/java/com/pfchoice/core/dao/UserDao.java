@@ -23,4 +23,7 @@ public interface UserDao
 
     User updateByUpdater(Updater<User> updater);
     
+    User findByLogin(String login);
+
+    boolean isValidUser(String login, String password);
 }

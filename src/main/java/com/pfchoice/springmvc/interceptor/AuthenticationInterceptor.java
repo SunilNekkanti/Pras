@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.pfchoice.common.CommonLogContent;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
+import com.pfchoice.core.entity.User;
+import com.pfchoice.core.service.UserService;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -13,6 +15,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -39,18 +42,26 @@ public class AuthenticationInterceptor implements HandlerInterceptor
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationInterceptor.class.getName());
 
+    @Autowired
+    UserService userService;
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
     {
-        String id = request.getHeader(SystemDefaultProperties.ID);
-        String credential = request.getHeader(SystemDefaultProperties.CREDENTIAL);
+        String id = (String) request.getSession().getAttribute(SystemDefaultProperties.ID);
+        String credential = (String) request.getSession().getAttribute(SystemDefaultProperties.CREDENTIAL);
         boolean status = true;
         LOG.info(MessageFormat.format(CommonLogContent.USER_TRY_ACCESS,
                                       id,
                                       request.getRequestURI(),
                                       request.getRemoteAddr()));
 
-        if (!isAuthenticatedUser(id, credential))
+        
+        if(!request.getRequestURI().equals("/Pras/") && 
+        	!request.getRequestURI().equals("/Pras/loginform") &&
+        	!request.getRequestURI().equals("/Pras/loginform.html") &&	
+            !request.getRequestURI().equals("/Pras/index") && 
+            !isAuthenticatedUser(id, credential))
         {
             status = false;
             forbiddenResponse(response);
@@ -99,7 +110,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor
      */
     private boolean isAuthenticatedUser(String username, String credential)
     {
-        return StringUtils.equals(username, "rugal") && StringUtils.equals(credential, "123456");
+    	User dbUser = userService.findByLogin(username);
+    	final String login = (dbUser!= null)?dbUser.getLogin():"tst";
+    	final String password = (dbUser!= null)?dbUser.getPassword():"";
+        return StringUtils.equals(username, login) && StringUtils.equals(credential, password);
     }
 
     @Override

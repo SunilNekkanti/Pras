@@ -22,4 +22,7 @@ public interface UserService
 
     User update(User bean);
 
+    User findByLogin(String login);
+    
+    boolean isValidUser(String login, String password);
 }

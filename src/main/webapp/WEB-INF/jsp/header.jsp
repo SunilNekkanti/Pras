@@ -313,7 +313,7 @@ $(document).ready(function () {
         <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a href="/Pras/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>

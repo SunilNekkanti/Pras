@@ -60,5 +60,19 @@ public class UserServiceImpl implements UserService
         Updater<User> updater = new Updater<>(bean);
         return userDao.updateByUpdater(updater);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public User findByLogin(final String login)
+    {
+        return userDao.findByLogin(login);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isValidUser(final String login, final String password)
+    {
+        return userDao.isValidUser(login, password);
+    }
 
 }

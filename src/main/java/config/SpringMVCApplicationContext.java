@@ -55,8 +55,8 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 {
 	
- //   @Autowired
- //   private AuthenticationInterceptor authenticationInterceptor;
+    @Autowired
+    private AuthenticationInterceptor authenticationInterceptor;
 	
 	@Autowired
 	private MembershipStatusFormatter membershipStatusFormatter;
@@ -157,7 +157,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     public void addInterceptors(InterceptorRegistry registry)
     {
         //This is a very important interceptor for authentication usage
-     //  registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
+       registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
     }
     
       @Bean

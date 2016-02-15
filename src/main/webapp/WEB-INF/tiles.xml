@@ -479,4 +479,10 @@
         <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/userEdit.jsp" />  
     </definition> 
+    
+     <definition name="userEditSuccess" extends="base1.definition">  
+        <put-attribute name="title" value="User Profile Update" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/userEditSuccess.jsp" />  
+    </definition>  
+    
 </tiles-definitions>  

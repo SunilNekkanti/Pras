@@ -13,10 +13,10 @@ pageEncoding="ISO-8859-1"%>
 					<h2>Please Sign In</h2>
 					<hr class="colorgraph">
 					<div class="form-group">
-	                    <form:input path="username" class="form-control input-lg"  value="sarath" placeholder="User Name" />
+	                    <form:input path="username" class="form-control input-lg"   placeholder="User Name" />
 					</div>
 					<div class="form-group">
-	                  <form:password path="password" class="form-control input-lg" value="password" placeholder="Password" />
+	                  <form:password path="password" class="form-control input-lg"  placeholder="Password" />
 					</div>
 					<span class="button-checkbox">
 						<button type="button" class="btn" data-color="info">Remember Me</button>

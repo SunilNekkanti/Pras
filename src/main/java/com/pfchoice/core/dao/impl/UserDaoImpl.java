@@ -63,4 +63,29 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
     {
         return User.class;
     }
+    
+    @Override
+    public User findByLogin(final String login)
+    {
+    	 Criteria crit = createCriteria();
+    	 crit.add(Restrictions.eq("login", login));
+    	 
+    	User entity = (User) crit.uniqueResult();
+
+        return entity;
+    }
+    
+    @Override
+    public boolean isValidUser(final String login, final String password)
+    {
+    
+    	Criteria crit = createCriteria();
+    	crit.add(Restrictions.eq("login", login));
+    	crit.add(Restrictions.eq("password", password));
+    	
+    	User entity = (User) crit.uniqueResult();
+    	
+    	return (entity != null)?true:false;
+    		
+    }
 }
