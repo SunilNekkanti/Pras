@@ -469,4 +469,14 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipCompleteDetails.jsp" />  
     </definition>  
     
+     <definition name="userList" extends="base1.definition">  
+     	<put-attribute name="title" value="User List" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/userList.jsp" />  
+    </definition>  
+    
+    <definition name="userEdit" extends="base.definition">  
+        <put-attribute name="title" value="User Profile" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/userEdit.jsp" />  
+    </definition> 
 </tiles-definitions>  

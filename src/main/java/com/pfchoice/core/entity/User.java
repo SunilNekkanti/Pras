@@ -49,7 +49,7 @@ public class User implements Serializable
     @JoinTable(name="user_roles",  
     joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},  
     inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}) 
-    public Set<Role> role;
+    public Set<Role> roles;
     
     @Expose
     @Temporal(TemporalType.TIMESTAMP)
@@ -124,15 +124,15 @@ public class User implements Serializable
 	/**
 	 * @return the role
 	 */
-	public Set<Role> getRole() {
-		return role;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(Set<Role> role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	/**

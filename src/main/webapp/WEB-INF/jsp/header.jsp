@@ -308,6 +308,7 @@ $(document).ready(function () {
          </ul>
         </li> 
         <li><a href="/Pras/reports">Reports</a></li>
+         <li><a href="/Pras/userList">User</a></li>
         <li><a href="#">Help</a></li>
         <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
       </ul>

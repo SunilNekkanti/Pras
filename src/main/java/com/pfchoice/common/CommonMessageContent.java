@@ -50,5 +50,7 @@ public interface CommonMessageContent
     String PROVIDER_LIST = "Provider List";
     
     String INSURANCE_LIST = "Insurance List";
+    
+    String  USER_LIST = "User List";
 
 }

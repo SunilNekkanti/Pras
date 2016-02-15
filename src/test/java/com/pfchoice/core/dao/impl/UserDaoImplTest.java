@@ -55,7 +55,7 @@ public class UserDaoImplTest extends JUnitSpringTestBase
         bean.setId(1);
         bean.setLogin("sara");
         Role role = roleDao.findById(3);
-        bean.setRole(Collections.singleton(role));
+        bean.setRoles(Collections.singleton(role));
         bean.setPassword("sara");
         bean.setCreatedBy("sarath");
         bean.setUpdatedBy("sarath");

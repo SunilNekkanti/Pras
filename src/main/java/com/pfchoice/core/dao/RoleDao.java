@@ -1,6 +1,8 @@
 package com.pfchoice.core.dao;
 
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Role;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -22,5 +24,7 @@ public interface RoleDao
     Role save(Role bean);
 
     Role updateByUpdater(Updater<Role> updater);
+    
+    List<Role> findAll();
     
 }

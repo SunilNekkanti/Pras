@@ -3,6 +3,7 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.slf4j.LoggerFactory;
@@ -61,4 +62,15 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
     {
         return Role.class;
     }
+    
+    @SuppressWarnings("unchecked")
+	public List<Role> findAll()
+    {
+    	
+    	Criteria cr = createCriteria();
+    	List<Role> list = cr.list();
+    
+    	return list;
+    }
+
 }

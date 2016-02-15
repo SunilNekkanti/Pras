@@ -92,6 +92,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	private ProviderFormatter providerFormatter;
 	
 	@Autowired
+	private RoleFormatter roleFormatter;
+	
+	@Autowired
 	private StateFormatter stateFormatter;
 	
 	@Autowired
@@ -226,6 +229,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     	formatterRegistry.addFormatter(membershipFormatter);
     	formatterRegistry.addFormatter(membershipStatusFormatter);
     	formatterRegistry.addFormatter(providerFormatter);
+    	formatterRegistry.addFormatter(roleFormatter);
     	formatterRegistry.addFormatter(stateFormatter);
     	formatterRegistry.addFormatter(zipCodeFormatter);
     }
