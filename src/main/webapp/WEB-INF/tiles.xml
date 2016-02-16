@@ -485,4 +485,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/userEditSuccess.jsp" />  
     </definition>  
     
+    <definition name="userNew" extends="base.definition">  
+        <put-attribute name="title" value="New User Profile" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/userNew.jsp" />  
+    </definition> 
+    
 </tiles-definitions>  

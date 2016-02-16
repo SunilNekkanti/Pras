@@ -54,7 +54,7 @@ public class UserController{
             .getLogger(UserController.class);
  
 	
-	@ModelAttribute("user")
+	@ModelAttribute("newUser")
     public User createUserModel() {
         // ModelAttribute value should be same as used in the empSave.jsp
         return new User();
@@ -72,8 +72,9 @@ public class UserController{
 		User user = createUserModel();
 		user.setCreatedBy("sarath");
 		user.setUpdatedBy("sarath");
+		user.setActiveInd('Y');
 		model.addAttribute("user", user);
-        return "userEdit";
+        return "userNew";
     }
  
 	
@@ -89,7 +90,7 @@ public class UserController{
     }
 	
 	@RequestMapping(value = "/user/save.do", method = RequestMethod.POST, params ={"add"})
-    public String newUserAction(@ModelAttribute("user") @Validated User user,
+    public String newUserAction(@Validated User user,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning userEdit.jsp page");
@@ -100,6 +101,7 @@ public class UserController{
 	        	logger.info("Returning userSuccess.jsp page after create");
 	        	user.setCreatedBy("sarath");
 	        	user.setUpdatedBy("sarath");
+	        	user.setActiveInd('Y');
 	 	      	userService.save(user);
 	 	       return "userEditSuccess";
         }    
