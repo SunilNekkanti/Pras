@@ -23,13 +23,13 @@ public class HedisMeasureServiceImpl implements HedisMeasureService
 {
 
     @Autowired
-    private HedisMeasureDao qualityMeasureDao;
+    private HedisMeasureDao hedisMeasureDao;
 
     @Override
     public HedisMeasure deleteById(final Integer id)
     {
         //Used for transaction test
-        return qualityMeasureDao.deleteById(id);
+        return hedisMeasureDao.deleteById(id);
 //        throw new UnsupportedOperationException();
     }
 
@@ -37,21 +37,22 @@ public class HedisMeasureServiceImpl implements HedisMeasureService
     @Transactional(readOnly = true)
     public HedisMeasure findById(final Integer id)
     {
-        return qualityMeasureDao.findById(id);
+        return hedisMeasureDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize,
+    		final String sSearch, final String sort, final String sortdir)
     {
-        return qualityMeasureDao.getPage(pageNo, pageSize);
+        return hedisMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
 
     @Override
     public HedisMeasure save(final HedisMeasure bean)
     {
         //Used for transaction test
-        return qualityMeasureDao.save(bean);
+        return hedisMeasureDao.save(bean);
 //        this.deleteById(1);
 //        return null;
     }
@@ -60,12 +61,12 @@ public class HedisMeasureServiceImpl implements HedisMeasureService
     public HedisMeasure update(final HedisMeasure bean)
     {
         Updater<HedisMeasure> updater = new Updater<>(bean);
-        return qualityMeasureDao.updateByUpdater(updater);
+        return hedisMeasureDao.updateByUpdater(updater);
     }
 
     @Override
     public List<HedisMeasure> findAll()
     {
-    	return qualityMeasureDao.findAll();
+    	return hedisMeasureDao.findAll();
     }
 }

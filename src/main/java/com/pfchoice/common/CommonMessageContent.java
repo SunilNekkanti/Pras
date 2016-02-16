@@ -52,5 +52,11 @@ public interface CommonMessageContent
     String INSURANCE_LIST = "Insurance List";
     
     String  USER_LIST = "User List";
+    
+    String  CPT_LIST = "CPT List";
+    
+    String  HEDIS_LIST = "Hedis List";
+    
+    String HEDIS_RULE_LIST = "Hedis Rule List";
 
 }

@@ -4,6 +4,8 @@ package com.pfchoice.springmvc.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
@@ -31,6 +35,9 @@ import com.pfchoice.core.service.CPTMeasureService;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.ICDMeasureService;
+
+import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
 public class HedisMeasureRuleController{
@@ -123,14 +130,25 @@ public class HedisMeasureRuleController{
     }
 	
 	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleList")
-    public ModelAndView hedisMeasureRuleList() throws Exception {
- 
-    	List<HedisMeasureRule> listBean = hedisMeasureRuleService.findAll();
-		ModelAndView modelAndView = new ModelAndView("hedisMeasureRuleList");
-		modelAndView.addObject("hedisMeasureRuleList", listBean);
- 
-		return modelAndView;
+	public String viewHedisMeasureRuleAction(Model model,
+			HttpServletRequest request) throws Exception{
+				logger.info("Returning view.jsp page after create");
+				return "hedisMeasureRuleList";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleLists", method = RequestMethod.GET)
+	public Message viewHedisMeasureRuleActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir,
+					HttpServletRequest request) throws Exception{
+		
+		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+
+        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, pagination);
+    }
 	
 	
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"add"})

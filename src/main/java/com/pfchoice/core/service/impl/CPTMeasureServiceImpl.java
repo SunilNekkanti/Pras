@@ -40,12 +40,15 @@ public class CPTMeasureServiceImpl implements CPTMeasureService
         return cptMeasureDao.findById(id);
     }
 
+    
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize,
+    		final String sSearch, final String sort, final String sortdir)
     {
-        return cptMeasureDao.getPage(pageNo, pageSize);
+    	 return cptMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
+    
 
     @Override
     public CPTMeasure save(final CPTMeasure bean)

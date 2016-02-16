@@ -2,6 +2,7 @@ package com.pfchoice.springmvc.controller;
 
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureGroup;
@@ -29,9 +31,13 @@ import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureGroupService;
 import com.pfchoice.core.service.HedisMeasureService;
 
+import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
+
 @Controller
 public class HedisMeasureController{
 	
+    
     @Autowired
     HedisMeasureService hedisMeasureService;
     
@@ -52,13 +58,10 @@ public class HedisMeasureController{
     
     private static final Logger logger = LoggerFactory
             .getLogger(HedisMeasureController.class);
- 
-	public HedisMeasureController() {
-    }
 	
 	@ModelAttribute("hedisMeasure")
     public HedisMeasure createHedisMeasureModel() {
-        // ModelAttribute value should be same as used in the hedisMeasureEdit.jsp
+        // ModelAttribute value should be same as used in the HedisMeasureEdit.jsp
         return new HedisMeasure();
     }
 	
@@ -83,7 +86,7 @@ public class HedisMeasureController{
 		List<HedisMeasureGroup> hedisMeasureGroupList = hedisMeasureGroupService.findAll();
 		return hedisMeasureGroupList;
 	}
-
+	
 	@RequestMapping(value = "/hedis/new")
     public String addHedisMeasurePage(Model model) {
 		
@@ -112,15 +115,26 @@ public class HedisMeasureController{
         return "hedisMeasureDisplay";
     }
 	
-	@RequestMapping(value = "/hedis/hedisMeasureList")
-    public ModelAndView hedisMeasureList() throws Exception {
- 
-    	List<HedisMeasure> listBean = hedisMeasureService.findAll();
-		ModelAndView modelAndView = new ModelAndView("hedisMeasureList");
-		modelAndView.addObject("hedisMeasureList", listBean);
- 
-		return modelAndView;
-	}
+	@RequestMapping(value = "/hedis/hedisMeasureList", method = RequestMethod.GET)
+	public String viewHedisMeasureAction(Model model,
+					HttpServletRequest request) throws Exception{
+		logger.info("Returning view.jsp page after create");
+        return "hedisMeasureList";
+    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/hedis/hedisMeasureLists", method = RequestMethod.GET)
+	public Message viewHedisMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir,
+					HttpServletRequest request) throws Exception{
+		
+		Pagination pagination = hedisMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+
+        return Message.successMessage(CommonMessageContent.HEDIS_LIST, pagination);
+    }
 	
 	
 	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"add"})

@@ -1,7 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
-
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +18,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.service.CPTMeasureService;
+
+import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
 public class CPTMeasureController{
@@ -43,6 +47,9 @@ public class CPTMeasureController{
     private static final Logger logger = LoggerFactory
             .getLogger(CPTMeasureController.class);
  
+	public CPTMeasureController() {
+    }
+	
 	@ModelAttribute("cptMeasure")
     public CPTMeasure createCPTMeasureModel() {
         // ModelAttribute value should be same as used in the CPTMeasureEdit.jsp
@@ -77,15 +84,26 @@ public class CPTMeasureController{
         return "cptMeasureDisplay";
     }
 	
-	@RequestMapping(value = "/cpt/cptMeasureList")
-    public ModelAndView cptMeasureList() throws Exception {
- 
-    	List<CPTMeasure> listBean = cptMeasureService.findAll();
-		ModelAndView modelAndView = new ModelAndView("cptMeasureList");
-		modelAndView.addObject("cptMeasureList", listBean);
- 
-		return modelAndView;
-	}
+	@RequestMapping(value = "/cpt/cptMeasureList", method = RequestMethod.GET)
+	public String viewCPTMeasureAction(Model model,
+					HttpServletRequest request) throws Exception{
+		logger.info("Returning view.jsp page after create");
+        return "cptMeasureList";
+    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/cpt/cptMeasureLists", method = RequestMethod.GET)
+	public Message viewCPTMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir,
+					HttpServletRequest request) throws Exception{
+		
+		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+
+        return Message.successMessage(CommonMessageContent.CPT_LIST, pagination);
+    }
 	
 	
 	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"add"})

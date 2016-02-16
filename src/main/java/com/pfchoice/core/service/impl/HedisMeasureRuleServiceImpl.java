@@ -42,9 +42,10 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
 
     @Override
     @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize)
+    public Pagination getPage(final int pageNo,final  int pageSize,
+    		final String sSearch, final String sort, final String sortdir)
     {
-        return hedisMeasureMeasureDao.getPage(pageNo, pageSize);
+        return hedisMeasureMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
 
     @Override

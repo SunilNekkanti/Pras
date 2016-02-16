@@ -17,8 +17,8 @@ public interface HedisMeasureService
 
 	HedisMeasure findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
-
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	
     HedisMeasure save(HedisMeasure bean);
 
     HedisMeasure update(HedisMeasure bean);

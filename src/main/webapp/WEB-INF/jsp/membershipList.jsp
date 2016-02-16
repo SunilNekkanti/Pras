@@ -79,7 +79,12 @@
                		                   return '<a href="/Pras/membership/'+full.id+'">'+data+'</a>';
              		                 }},
                   		   		    { "sName": "lastName", "aTargets": [ 2 ] },
-                  		   		    { "sName": "dob", "aTargets": [ 3 ] },
+                  		   		    { "sName": "dob", "aTargets": [ 3 ] ,
+                  		   		   	   "render": function (data) {
+                  		   		        		var date = new Date(data);
+                  		   	        			var month = date.getMonth() + 1;
+                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+                  		   		   	 }},
                   		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
                   		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
                   		   		    { "sName": "status.id", "aTargets": [ 6 ] }
