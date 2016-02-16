@@ -52,22 +52,26 @@
 	            } );
         	}
         	
-        	$('#myTable').dataTable({
+        	$('#hedisMeasureRuleTable').dataTable({
         	     "sAjaxSource" : '/Pras/hedisMeasureRule/hedisMeasureRuleLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%",  },
+                               { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "cptMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "icdMeasure.code","bSearchable" : true, "bSortable": true,"sWidth" : "20%",  },
+                               { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "20%",  }
                               
                            ],
                   "aoColumnDefs": [ 
                            		    { "sName": "id", "aTargets": [ 0 ] },
-                           		    { "sName": "code", "aTargets": [ 1 ],
+                           		    { "sName": "hedisMeasure.code", "aTargets": [ 1 ],
                            		      "render": function ( data, type, full, meta ) {
                                             return '<a href="/Pras/hedisMeasureRule/'+full.id+'">'+data+'</a>';
                            		      }},
-                           		    { "sName": "description", "aTargets": [ 2 ] }
+                           		    { "sName": "cptMeasure.code", "aTargets": [ 2 ] },
+                           			{ "sName": "icdMeasure.code", "aTargets": [ 3] },
+                           			{ "sName": "effectiveYear", "aTargets": [ 4] }
                   ],          
         	     "bLengthChange": false,
         	     "sPaginationType": "full_numbers",
@@ -79,20 +83,13 @@
         	
         	        } );
     </script>
-<script src="/Pras/resources/js/prasweb.js"></script>
-<script>
-	$(document).ready(function(){	
-		
-	prasPagination();
-	
-	});
-</script>
+
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Hedis Measure Rule List <span class="badge">${hedisMeasureRuleList.size()}</span> </div>
+		<div class="panel-heading">Hedis Measure Rule List  </div>
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
-				<table id="myTable" class="display table-responsive  table table-striped table-hover"> 
+				<table id="hedisMeasureRuleTable" class="display table-responsive  table table-striped table-hover"> 
 				
 					<thead>
 						<tr>

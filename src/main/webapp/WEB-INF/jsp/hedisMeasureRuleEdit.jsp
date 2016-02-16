@@ -50,23 +50,6 @@
 						<springForm:errors path="effectiveYear" cssClass="error text-danger" />
 					</div>
 				</div>
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="dueDate">Due Date (MM/DDYYYY)</label>
-					<div class="col-sm-6">
-						<fmt:formatDate value="${hedisMeasureRule.dueDate}" var="dateString" pattern="MM/dd/yyyy" />
-						<springForm:input path="dueDate" value="${dateString}" class="form-control datepicker"  id="dueDate" placeholder="Due Date" />
-						<springForm:errors path="dueDate" cssClass="error text-danger" />
-					</div>
-				</div>
-				
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="year">Vist Date (MM/DDYYYY)</label>
-					<div class="col-sm-6">
-						<fmt:formatDate value="${hedisMeasureRule.vistDate}" var="dateString" pattern="MM/dd/yyyy" />
-						<springForm:input path="vistDate" value="${dateString}" class="form-control datepicker"  id="vistDate" placeholder="VistDate" />
-						<springForm:errors path="vistDate" cssClass="error text-danger" />
-					</div>
-				</div>
 				
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>

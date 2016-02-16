@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
@@ -14,6 +15,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.Property;
 import org.hibernate.sql.JoinType;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.Type;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -36,29 +39,30 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     public Pagination getPage(final int pageNo, final int pageSize, 
     		final String sSearch, final String sort, final String sortdir)
     {
+    	Criteria crit = createCriteria()
+         		.createAlias("genderId", "genderId")
+         		.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
+         		.createAlias("status", "status");
+       
     	Disjunction or = Restrictions.disjunction();
 
     	if( sSearch != null && !"".equals(sSearch))
     	{
-    		Criterion firstName   = Restrictions.ilike("firstName","%"+sSearch+"%");
-    		Criterion lastName   = Restrictions.ilike("lastName","%"+sSearch+"%");
-    		Criterion gender   = Restrictions.ilike("genderId.description","%"+sSearch+"%");
-    		Criterion county   = Restrictions.ilike("countyCode.description","%"+sSearch+"%");
-    		//Criterion dob   = Restrictions.ilike("dob","%"+sSearch+"%");
-    		Criterion stats   = Restrictions.ilike("status.description","%"+sSearch+"%");
+    		or.add(Restrictions.ilike("firstName","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("lastName","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("genderId.description","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("countyCode.description","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("status.description","%"+sSearch+"%"));
     		
-    		or.add(firstName);
-    		or.add(lastName);
-    		or.add(gender);
-    		or.add(county);
-    		//or.add(dob);
-    		or.add(stats);
+    		try {
+    			or.add(Restrictions.eq("year(dob)",sSearch))
+        		  .add(Restrictions.eq("month(dob)",sSearch))
+        		  .add(Restrictions.eq("day(dob)",sSearch));
+    		} catch(Exception e){
+    			
+    		}
     	}
-        Criteria crit = createCriteria()
-        		.createAlias("genderId", "genderId")
-        		.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
-        		.createAlias("status", "status");
-        crit.add(or);
+         crit.add(or);
         
         if(sort != null && !"".equals(sort)) 
 		{

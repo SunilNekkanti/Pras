@@ -61,14 +61,6 @@ public class HedisMeasureRule implements Serializable
     private Integer	effectiveYear;
     
     @Expose
-    @Column(name="due_date")
-    private Date dueDate;
-    
-    @Expose
-    @Column(name="visit_date")
-    private Date vistDate;
-    
-    @Expose
     @Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -164,34 +156,6 @@ public class HedisMeasureRule implements Serializable
 	 */
 	public void setEffectiveYear(final Integer effectiveYear) {
 		this.effectiveYear = effectiveYear;
-	}
-
-	/**
-	 * @return the dueDate
-	 */
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	/**
-	 * @param dueDate the dueDate to set
-	 */
-	public void setDueDate(final Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	/**
-	 * @return the vistDate
-	 */
-	public Date getVistDate() {
-		return vistDate;
-	}
-
-	/**
-	 * @param vistDate the vistDate to set
-	 */
-	public void setVistDate(final Date vistDate) {
-		this.vistDate = vistDate;
 	}
 
 	/**

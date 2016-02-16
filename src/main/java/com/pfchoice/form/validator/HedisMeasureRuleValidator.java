@@ -34,8 +34,6 @@ public class HedisMeasureRuleValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cptMeasure",  	"error.cptMeasure",  	"CPT Measure Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "icdMeasure",  	"error.icdMeasure",  	"ICD Measure Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "effectiveYear",  "error.effectiveYear",  "Effective Year Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dueDate",  		"error.dueDate",  		"Due Date Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vistDate",  		"error.vistDate",  		"Vist Date Required");
        
     }
 }

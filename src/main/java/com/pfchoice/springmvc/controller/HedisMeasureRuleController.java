@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
@@ -145,9 +146,9 @@ public class HedisMeasureRuleController{
 					@RequestParam(required = false) String sortdir,
 					HttpServletRequest request) throws Exception{
 		
-		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort, sortdir);
 
-        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, pagination);
+        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(pagination));
     }
 	
 	
@@ -163,7 +164,6 @@ public class HedisMeasureRuleController{
 	 	hedisMeasureRule.setCreatedBy("sarath");
 	 	hedisMeasureRule.setUpdatedBy("sarath");
 	 	Date d = new Date();
-	 	hedisMeasureRule.setDueDate( new java.sql.Date(d.getTime()));
 	 	hedisMeasureRule.setActiveInd('Y');
     	
     	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
