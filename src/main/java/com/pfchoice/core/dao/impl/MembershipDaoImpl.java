@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.Property;
 import org.hibernate.sql.JoinType;
 import org.hibernate.type.IntegerType;
+import org.hibernate.type.StringType;
 import org.hibernate.type.Type;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -52,15 +53,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		  .add(Restrictions.ilike("lastName","%"+sSearch+"%"))
     		  .add(Restrictions.ilike("genderId.description","%"+sSearch+"%"))
     		  .add(Restrictions.ilike("countyCode.description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("status.description","%"+sSearch+"%"));
-    		
-    		try {
-    			or.add(Restrictions.eq("year(dob)",sSearch))
-        		  .add(Restrictions.eq("month(dob)",sSearch))
-        		  .add(Restrictions.eq("day(dob)",sSearch));
-    		} catch(Exception e){
-    			
-    		}
+    		  .add(Restrictions.ilike("status.description","%"+sSearch+"%"))
+    		  .add(Restrictions.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     	}
          crit.add(or);
         
