@@ -39,13 +39,13 @@ public class HedisMeasureController{
 	
     
     @Autowired
-    HedisMeasureService hedisMeasureService;
+    private HedisMeasureService hedisMeasureService;
     
     @Autowired
-    HedisMeasureGroupService hedisMeasureGroupService;
+    private HedisMeasureGroupService hedisMeasureGroupService;
     
     @Autowired
-    GenderService genderService;
+    private GenderService genderService;
    
     @Autowired
     @Qualifier("hedisMeasureValidator")
@@ -142,7 +142,7 @@ public class HedisMeasureController{
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning hedisMeasureEdit.jsp page");
-            return "hedisMeasureEdit";
+            return "hedisMeasureNew";
         }
         
 	 	model.addAttribute("hedisMeasure", hedisMeasure);
@@ -157,8 +157,8 @@ public class HedisMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
+	@RequestMapping(value = "/hedis/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	public String saveHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning  hedisMeasureEdit.jsp page");
@@ -178,8 +178,8 @@ public class HedisMeasureController{
     }
 	
 
-	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
+	@RequestMapping(value = "/hedis/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	public String deleteHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model) {
 		 	if (bindingResult.hasErrors()) {
 	            logger.info("Returning  hedisMeasureEdit.jsp page");

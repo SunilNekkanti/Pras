@@ -30,7 +30,7 @@
 				<div class="form-group required col-sm-12">
 							<label class="control-label col-sm-2" for="role">Roles</label>
 							<div class="col-sm-6">
-								<springForm:select multiple="true" path="roles" class="form-control"  items="${roles}" itemLabel="role" itemValue="id" />
+								<springForm:select multiple="true" path="roles" class="form-control"  items="${rolesList}" itemLabel="role" itemValue="id" />
 								<springForm:errors path="roles" cssClass="error text-danger" />
 							</div>
 				</div>

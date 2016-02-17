@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -29,7 +28,7 @@ import com.pfchoice.core.service.ProviderService;
 public class ProviderController{
 	
     @Autowired
-    ProviderService providerService;
+    private ProviderService providerService;
     
     @Autowired
     @Qualifier("providerValidator")
@@ -70,8 +69,7 @@ public class ProviderController{
     public String updateProviderPage(@PathVariable Integer id,Model model) {
 		
 		Provider dbProvider = providerService.findById(id);
-		 logger.info("Returning provider.getId()"+dbProvider.getId());
-		 
+		logger.info("Returning provider.getId()"+dbProvider.getId());
 			       
 		model.addAttribute("provider", dbProvider);
 			

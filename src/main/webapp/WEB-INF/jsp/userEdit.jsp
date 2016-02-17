@@ -20,7 +20,7 @@
 				 </div>
 				 
 				 <div class="form-group required col-sm-12">
-						    <label class="control-label  col-sm-2" for="code">Password</label>
+						    <label class="control-label  col-sm-2" for="password">Password</label>
 						    <div class="col-sm-6">
 						    	<springForm:input path="password" class="form-control" id="password" placeholder="Password" />
 						      	<springForm:errors path="password" cssClass="error text-danger" />
@@ -28,13 +28,13 @@
 				</div>
 				
 				<div class="form-group required col-sm-12">
-							<label class="control-label col-sm-2" for="role">Roles</label>
+							<label class="control-label col-sm-2" for="roles">Roles</label>
 							<div class="col-sm-6">
-								<springForm:select multiple="true" path="roles" class="form-control"  items="${roles}" itemLabel="role" itemValue="id" />
+								<springForm:select multiple="true" path="roles" class="form-control"  items="${rolesList}" itemLabel="role" itemValue="id" />
 								<springForm:errors path="roles" cssClass="error text-danger" />
 							</div>
 				</div>
-							
+				
 				<div class="col-sm-offset-2 col-sm-6">
 					<c:choose>
 						 <c:when test="${user.id != null && user.activeInd == 89}"> 

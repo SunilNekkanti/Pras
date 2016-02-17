@@ -2,7 +2,20 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"    prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<script src="/Pras/resources/js/validation.js"></script>
+ <c:choose>
+ 	<c:when test="${insurance.id != null}"> 
+	<script>
+		$(document).ready(function(){	 
+		removePlaceHolder();
+		insuranceValidation();
+		});
+	</script>
+	</c:when>	
+	<c:otherwise>
+		<script>$(document).ready(function(){insuranceValidation();});</script>
+	</c:otherwise>
+</c:choose>
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Profile</div>

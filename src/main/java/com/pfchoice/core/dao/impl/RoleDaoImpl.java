@@ -6,6 +6,8 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.transform.Transformers;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -68,8 +70,14 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
     {
     	
     	Criteria cr = createCriteria();
-    	List<Role> list = cr.list();
-    
+    	cr.setProjection(
+    		    Projections.distinct(Projections.projectionList()
+    		    	    .add(Projections.property("role"), "role")
+    		    	    .add(Projections.property("id"), "id")))
+    	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
+
+    	List<Role> list =  cr.list();
+      System.out.println("role size "+list.size());
     	return list;
     }
 

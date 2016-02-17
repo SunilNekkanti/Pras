@@ -27,13 +27,12 @@ import com.pfchoice.core.service.InsuranceService;
 @Controller
 public class InsuranceController{
 	
-	   private static final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 	            .getLogger(InsuranceController.class);
 	   
     @Autowired
-    InsuranceService insuranceService;
+    private InsuranceService insuranceService;
     
-     
     @Autowired
     @Qualifier("insuranceValidator")
     private Validator validator;

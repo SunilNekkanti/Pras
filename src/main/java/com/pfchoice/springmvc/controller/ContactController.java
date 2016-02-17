@@ -39,23 +39,23 @@ import com.pfchoice.core.service.ZipCodeService;
 public class ContactController{
 	
     @Autowired
-    ContactService contactService;
+    private ContactService contactService;
     
     @Autowired
-    StateService stateService;
+    private StateService stateService;
     
     @Autowired
-    ZipCodeService zipCodeService;
+    private ZipCodeService zipCodeService;
     
     
     @Autowired
-    MembershipService membershipService;
+    private MembershipService membershipService;
     
     @Autowired
-    ProviderService providerService;
+    private ProviderService providerService;
     
     @Autowired
-    InsuranceService insuranceService;
+    private InsuranceService insuranceService;
     
     @Autowired
     @Qualifier("contactValidator")

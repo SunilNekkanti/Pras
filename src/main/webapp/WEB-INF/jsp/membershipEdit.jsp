@@ -13,14 +13,13 @@
 		membershipValidation();
 		});
 	</script>
-	</c:when>
-	 
+	</c:when>	 
 </c:choose>
  <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Profile</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" data-toggle="validator" commandName="membership" action="/Pras/membership/${membership.id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" id="membership" data-toggle="validator" commandName="membership" action="/Pras/membership/${membership.id}/save.do" class="form-horizontal" role="form">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="col-sm-6">

@@ -4,22 +4,25 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<script src="/Pras/resources/js/validation.js"></script>
 <c:choose>
  	<c:when test="${contact.id != null}"> 	
 	<script>
 		$(document).ready(function(){				
-			removePlaceHolder();
+			removePlaceHolder();contactValidation();
 		});
 	</script>
 	</c:when>
+	<c:otherwise>
+		<script>$(document).ready(function(){contactValidation();});</script>
+	</c:otherwise>
 </c:choose>
 
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Contact</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="contact" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" id="contact" commandName="contact" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="homePhone">Home Phone</label>
 					<div class="col-sm-6">

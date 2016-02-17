@@ -4,19 +4,12 @@
     prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:choose>
- 	<c:when test="${hedisMeasure.id != null && hedisMeasure.activeInd != 89}">
-	<script>$(document).ready(function(){removeRequired();	removePlaceHolder();});	</script>
-	</c:when>
-	<c:when test="${hedisMeasure.id != null}"> 	
-	<script>$(document).ready(function(){removePlaceHolder();});</script>
-	</c:when>
-</c:choose>
+
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Hedis Measure</div>
-        <div class="panel-body">
-			<springForm:form method="POST" commandName="hedisMeasure" action="/Pras/insurance/${id}/save.do" class="form-horizontal" role="form">
+        <div class="panel-body" id="tablediv">
+			<springForm:form method="POST" commandName="hedisMeasure" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-3" for="code">Code</label>
 					<div class="col-sm-8">

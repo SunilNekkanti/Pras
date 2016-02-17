@@ -61,10 +61,10 @@ public class MembershipController{
     private GenderService  genderService;
     
     @Autowired
-    StateService stateService;
+    private StateService stateService;
     
     @Autowired
-    ZipCodeService zipCodeService;
+    private ZipCodeService zipCodeService;
     
     @Autowired
     private MembershipStatusService  membershipStatusService;
@@ -147,7 +147,7 @@ public class MembershipController{
 	
 	
 	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST)
-    public String saveMembershipAction( @ModelAttribute("membership") @Validated  Membership membership,
+    public String saveMembershipAction(@PathVariable Integer id, @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model) {
 			
         if (bindingResult.hasErrors()) {
@@ -169,8 +169,8 @@ public class MembershipController{
         return "membershipEditSuccess";
     }
 	
-	@RequestMapping(value = "/membership/save.do", method = RequestMethod.POST,params={"delete"})
-    public String deleteMembershipAction( @Validated Membership membership,
+	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST,params={"delete"})
+    public String deleteMembershipAction(@PathVariable Integer id, @Validated Membership membership,
             BindingResult bindingResult, Model model) {
 				
         if (bindingResult.hasErrors()) {

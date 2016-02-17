@@ -37,13 +37,13 @@ import com.pfchoice.core.service.ProviderService;
 public class ContractController{
 	
     @Autowired
-    ContractService contractService;
+    private ContractService contractService;
     
     @Autowired
-    ProviderService providerService;
+    private ProviderService providerService;
     
     @Autowired
-    InsuranceService insuranceService;
+    private InsuranceService insuranceService;
     
     @Autowired
     @Qualifier("contractValidator")

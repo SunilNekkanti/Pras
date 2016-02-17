@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +32,6 @@ import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Role;
 import com.pfchoice.core.entity.User;
-import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.RoleService;
 import com.pfchoice.core.service.UserService;
 
@@ -39,16 +42,19 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 public class UserController{
 	
     @Autowired
-    UserService userService;
+    private UserService userService;
     
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     
- 
-   /* @InitBinder("provider")
+    @Autowired
+    @Qualifier("userValidator")
+    private Validator validator;
+    
+    @InitBinder
     private void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
-    }*/
+    }
     
     private static final Logger logger = LoggerFactory
             .getLogger(UserController.class);
@@ -90,11 +96,11 @@ public class UserController{
     }
 	
 	@RequestMapping(value = "/user/save.do", method = RequestMethod.POST, params ={"add"})
-    public String newUserAction(@Validated User user,
+	public String newUserAction( @ModelAttribute("user") @Validated User user,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning userEdit.jsp page");
-            return "userEdit";
+            return "userNew";
         }
         else
         {
@@ -169,7 +175,7 @@ public class UserController{
       return Message.successMessage(CommonMessageContent.USER_LIST, JsonConverter.getJsonObject(pagination));
   }
     
-	@ModelAttribute("roles")
+	@ModelAttribute("rolesList")
 	public List<Role> populateRoles() {
 		//Data referencing for Role list box
 		List<Role> rolesList = roleService.findAll();

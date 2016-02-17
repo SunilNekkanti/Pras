@@ -4,12 +4,25 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<script src="/Pras/resources/js/validation.js"></script>
+ <c:choose>
+ 	<c:when test="${provider.id != null}"> 
+	<script>
+		$(document).ready(function(){	 
+		removePlaceHolder();
+		providerValidation();
+		});
+	</script>
+	</c:when>
+	<c:otherwise>
+		<script>$(document).ready(function(){providerValidation();});</script>
+	</c:otherwise>	 
+</c:choose>
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Provider Profile</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="provider" action="/Pras/provider/${id}/save.do">
+			<springForm:form method="POST" id="provider" commandName="provider" action="/Pras/provider/${id}/save.do">
 				<div class="form-group required col-sm-12">
 						    <label class="control-label  col-sm-2" for="name">Name</label>
 						    <div class="col-sm-6">

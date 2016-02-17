@@ -2,12 +2,17 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"    prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="/Pras/resources/js/validation.js"></script>
+<script>
+	$(document).ready(function(){	insuranceValidation();	});
+</script>
+
 
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Profile</div>
 		<div class="panel-body">
-			<springForm:form method="POST" commandName="insurance" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="insurance" id="insurance" action="save.do" class="form-horizontal" role="form">
 			     <div class="form-group required">
 				 	<label class="control-label col-sm-2" for="name">Name</label>
 					<div class="col-sm-6">

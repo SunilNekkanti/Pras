@@ -21,7 +21,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Contact List <span class="badge">${contactList.size()}</span> </div>
 		<div class="panel-body" id="tablediv">
-				<table id="tab" class="table table-striped table-hover">
+				<table id="tab" class="table table-striped table-hover table-responsive">
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 

@@ -24,7 +24,7 @@ src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" 
 src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="/resources/css/prasPanel.css">
+  
   <link rel="stylesheet" href="/Pras/resources/css/common.css">
   
   

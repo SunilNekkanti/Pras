@@ -22,7 +22,7 @@
 		<div class="panel-heading">Contact List<span class="badge">${contractList.size()}</span></div>
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
-				<table id="tab" class="table table-striped table-hover">
+				<table id="tab" class="table table-striped table-hover table-responsive">
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 

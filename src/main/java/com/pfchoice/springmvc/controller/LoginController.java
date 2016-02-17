@@ -44,10 +44,6 @@ public class LoginController {
 	private UserService userService;
 	
 	
-	@Autowired
-	private HttpServletRequest request;
-
-	
 	@RequestMapping(value = { "/",  "/index"}, method = RequestMethod.GET)
 	public String showForm(Map<String,Object> model) {
 		LoginForm loginForm = new LoginForm();
@@ -57,7 +53,7 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "/loginform", method = {RequestMethod.GET, RequestMethod.POST})
-	public String processForm(@Valid LoginForm loginForm, BindingResult result,
+	public String processForm(HttpServletRequest request, @Valid LoginForm loginForm, BindingResult result,
 			Map<String,Object> model) {
 		
 		if (result.hasErrors()) 

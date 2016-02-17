@@ -44,9 +44,9 @@ public class ContactValidator implements Validator {
         }    
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address1","address1", "Address1 Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "error.city","city.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "error.city","City Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode","error.stateCode", "StateCode Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode","error.zipCode", "zipCodeRequired");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode","error.zipCode", "zipCode Required");
               
         if (cnt.getAddress1().length() < 10  && cnt.getAddress1().length() >= 1) {
             errors.rejectValue("address1", "address1.tooshort", "Address1 must be at least 10 characters.");

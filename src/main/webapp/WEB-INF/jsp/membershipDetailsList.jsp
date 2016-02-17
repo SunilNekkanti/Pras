@@ -35,7 +35,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Details</div>
 			<div class="panel-body" id="tablediv">
-				<table id="tab" class="table table-striped table-hover">
+				<table id="tab" class="table table-striped table-hover table-responsive">
 					<thead>
 						<tr>
 							<th scope="col">Insurance Name</th>

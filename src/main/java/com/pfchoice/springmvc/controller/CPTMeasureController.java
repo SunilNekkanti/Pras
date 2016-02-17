@@ -32,7 +32,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 public class CPTMeasureController{
 	
     @Autowired
-    CPTMeasureService cptMeasureService;
+    private CPTMeasureService cptMeasureService;
     
     
     @Autowired

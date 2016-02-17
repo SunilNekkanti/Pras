@@ -1,9 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,8 +33,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 public class ICDMeasureController{
 	
     @Autowired
-    ICDMeasureService icdMeasureService;
-    
+    private ICDMeasureService icdMeasureService;
     
     @Autowired
     @Qualifier("iCDMeasureValidator")

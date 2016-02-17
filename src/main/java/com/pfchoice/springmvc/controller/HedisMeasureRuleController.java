@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -44,16 +43,16 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 public class HedisMeasureRuleController{
 	
     @Autowired
-    HedisMeasureService hedisMeasureService;
+    private HedisMeasureService hedisMeasureService;
     
     @Autowired
-    HedisMeasureRuleService hedisMeasureRuleService;
+    private HedisMeasureRuleService hedisMeasureRuleService;
     
     @Autowired
-    CPTMeasureService cptMeasureService;
+    private CPTMeasureService cptMeasureService;
     
     @Autowired
-    ICDMeasureService icdMeasureService;
+    private ICDMeasureService icdMeasureService;
     
     @Autowired
     @Qualifier("hedisMeasureRuleValidator")
@@ -196,7 +195,6 @@ public class HedisMeasureRuleController{
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model) {
-       
             
 	        if (null != hedisMeasureRule.getId())
 	        {
