@@ -23,15 +23,15 @@ public class UserValidator implements Validator {
          
         User user = (User) obj;
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", 	"error.login",	"Login Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", 	"error.username",	"Username Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", 	"error.password",	"Password Required");
-        if(user.getLogin().length() >= 1 && user.getLogin().length() < 3)
+        if(user.getUsername().length() >= 1 && user.getUsername().length() < 3)
         {
-        	 errors.rejectValue("login", "error.login", "Login must be at least 3 characters.");
+        	 errors.rejectValue("username", "error.username", "Username must be at least 3 characters.");
         }
-        else if(user.getLogin().length() >= 1 && user.getLogin().length() > 9)
+        else if(user.getUsername().length() >= 1 && user.getUsername().length() > 9)
         {
-       	 errors.rejectValue("login", "error.login", "Login must be less than  9 characters.");
+       	 errors.rejectValue("username", "error.username", "Username must be less than  9 characters.");
        }
        if(user.getPassword().length() >= 1 && user.getPassword().length() < 4)
        {

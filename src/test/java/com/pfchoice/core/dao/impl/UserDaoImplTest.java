@@ -53,7 +53,7 @@ public class UserDaoImplTest extends JUnitSpringTestBase
         System.out.println("testSave start");
         User bean = new User();
         bean.setId(1);
-        bean.setLogin("sara");
+        bean.setUsername("sara");
         Role role = roleDao.findById(3);
         bean.setRoles(Collections.singleton(role));
         bean.setPassword("sara");

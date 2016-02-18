@@ -111,7 +111,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor
     private boolean isAuthenticatedUser(String username, String credential)
     {
     	User dbUser = userService.findByLogin(username);
-    	final String login = (dbUser!= null)?dbUser.getLogin():"tst";
+    	final String login = (dbUser!= null)?dbUser.getUsername():"tst";
     	final String password = (dbUser!= null)?dbUser.getPassword():"";
         return StringUtils.equals(username, login) && StringUtils.equals(credential, password);
     }

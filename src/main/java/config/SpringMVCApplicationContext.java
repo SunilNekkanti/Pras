@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.ConversionService;
 
@@ -52,6 +53,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
     {
         "com.pfchoice.springmvc.controller"    
     })
+@Import({SecurityConfig.class})
 public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 {
 	
@@ -157,7 +159,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     public void addInterceptors(InterceptorRegistry registry)
     {
         //This is a very important interceptor for authentication usage
-       registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
+      // registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
     }
     
       @Bean

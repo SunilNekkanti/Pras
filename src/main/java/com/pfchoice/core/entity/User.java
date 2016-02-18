@@ -38,8 +38,8 @@ public class User implements Serializable
     private Integer id;
 
     @Expose
-    @Column(name="login")
-    private String login;
+    @Column(name="username")
+    private String username;
     
     @Expose
     @Column(name="password")
@@ -96,15 +96,15 @@ public class User implements Serializable
 	/**
 	 * @return the login
 	 */
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
 	 * @param login the login to set
 	 */
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**

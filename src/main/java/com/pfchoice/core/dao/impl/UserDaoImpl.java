@@ -68,7 +68,7 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
     public User findByLogin(final String login)
     {
     	 Criteria crit = createCriteria();
-    	 crit.add(Restrictions.eq("login", login));
+    	 crit.add(Restrictions.eq("username", login));
     	 
     	User entity = (User) crit.uniqueResult();
 
@@ -80,7 +80,7 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
     {
     
     	Criteria crit = createCriteria();
-    	crit.add(Restrictions.eq("login", login));
+    	crit.add(Restrictions.eq("username", login));
     	crit.add(Restrictions.eq("password", password));
     	
     	User entity = (User) crit.uniqueResult();

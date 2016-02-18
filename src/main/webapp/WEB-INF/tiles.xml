@@ -491,4 +491,9 @@
         <put-attribute name="body" value="/WEB-INF/jsp/userNew.jsp" />  
     </definition> 
     
+        <definition name="ad403" extends="base.definition">  
+        <put-attribute name="title" value="Access Denied" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/ad403.jsp" />  
+    </definition> 
+    
 </tiles-definitions>  

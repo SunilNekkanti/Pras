@@ -1,10 +1,12 @@
 package config;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -22,7 +24,11 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
         servletContext.addFilter("openSessionInViewFilter", openSessionInViewFilter()).addMappingForUrlPatterns(null, false, "/*");
         servletContext.addFilter("characterEncodingFilter", characterEncodingFilter()).addMappingForUrlPatterns(null, true, "/*");
         servletContext.addFilter("hiddenHttpMethodFilter", hiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
+        
+        FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+        securityFilter.addMappingForUrlPatterns(null, false, "/*");
         super.onStartup(servletContext);
+        
     }
 
     /**
@@ -31,10 +37,7 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
     @Override
     protected Class<?>[] getRootConfigClasses()
     {
-        return new Class[]
-        {
-            ApplicationContext.class
-        };
+    	return new Class[]{ApplicationContext.class, SecurityConfig.class};
     }
 
     /**
@@ -43,10 +46,9 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
     @Override
     protected Class<?>[] getServletConfigClasses()
     {
-        return new Class[]
-        {
-            SpringMVCApplicationContext.class
-        };
+
+    	
+        return new Class<?>[] {SpringMVCApplicationContext.class};
     }
 
     @Override
