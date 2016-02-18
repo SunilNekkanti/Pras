@@ -162,9 +162,7 @@ public class HedisMeasureRuleController{
 	 	model.addAttribute("hedisMeasureRule", hedisMeasureRule);
 	 	hedisMeasureRule.setCreatedBy("sarath");
 	 	hedisMeasureRule.setUpdatedBy("sarath");
-	 	Date d = new Date();
-	 	hedisMeasureRule.setActiveInd('Y');
-    	
+	 	   	
     	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
       	hedisMeasureRuleService.save(hedisMeasureRule);
    
@@ -176,6 +174,7 @@ public class HedisMeasureRuleController{
 	public String saveHedisMeasureRuleAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	hedisMeasureRule.setActiveInd('Y');
             logger.info("Returning  hedisMeasureRuleEdit.jsp page");
             return "hedisMeasureRuleEdit";
         }
@@ -183,7 +182,6 @@ public class HedisMeasureRuleController{
         if (null != hedisMeasureRule.getId())
         {
         	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
-        	hedisMeasureRule.setActiveInd('Y');
         	hedisMeasureRuleService.update(hedisMeasureRule);
           	return "hedisMeasureRuleEditSuccess";
         }
@@ -195,6 +193,12 @@ public class HedisMeasureRuleController{
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model) {
+			
+			if (bindingResult.hasErrors()) {
+	        	hedisMeasureRule.setActiveInd('Y');
+	        	logger.info("Returning  hedisMeasureRuleEdit.jsp page");
+	            return "hedisMeasureRuleEdit";
+	        }
             
 	        if (null != hedisMeasureRule.getId())
 	        {

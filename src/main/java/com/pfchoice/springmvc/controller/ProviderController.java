@@ -88,7 +88,6 @@ public class ProviderController{
         {
 	        	logger.info("Returning ProviderSuccess.jsp page after create");
 	        	model.addAttribute("provider", provider);
-	        	provider.setActiveInd('Y');
 	        	provider.setCreatedBy("Mohanasundharam");
 	 	      	providerService.save(provider);
 	 	       return "providerNewSuccess";
@@ -109,7 +108,6 @@ public class ProviderController{
 	        {
 	        	logger.info("Returning ProviderSuccess.jsp page after update");
 	        	provider.setUpdatedBy("Mohanasundharam");
-	        	provider.setActiveInd('Y');
 	        	providerService.update(provider);
 	        }
 	        return "providerEditSuccess";
@@ -121,6 +119,7 @@ public class ProviderController{
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated Provider provider,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	provider.setActiveInd('Y');
             logger.info("Returning insuranceEdit.jsp page");
             return "insuranceEdit";
         }

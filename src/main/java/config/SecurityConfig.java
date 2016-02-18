@@ -30,10 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	
 		http.authorizeRequests()
 		 .antMatchers("/resources/**","/index").permitAll()
-		 .antMatchers("/home").access("hasRole('ADMIN')")
-		 .antMatchers("/membership**").access("hasRole('USER')")
-		 .antMatchers("/provider**").access("hasRole('USER')")
-		 .antMatchers("/insurance**").access("hasRole('ADMIN')")
+		 .antMatchers("/membership**","/membership/**",
+				 	"/provider**","/provider/**", "/home").hasAnyAuthority("ROLE_USER" ,"ROLE_ADMIN")
+		 .antMatchers("/**").hasAuthority("ROLE_ADMIN")
 		 .anyRequest().permitAll()
 		 .and()
 		 .formLogin().loginPage("/index")
@@ -45,8 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		  .logout().logoutSuccessUrl("/index?logout")
 		  .and()
 		  .exceptionHandling().accessDeniedPage("/403")
-		 .and()
-		  .csrf().disable();
+		  .and()
+		  .csrf().disable()
+		  
+		  .sessionManagement().maximumSessions(1) ;
 		
 	}
 	

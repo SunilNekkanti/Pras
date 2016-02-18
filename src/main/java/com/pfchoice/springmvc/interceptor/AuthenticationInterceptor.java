@@ -70,6 +70,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor
                                           credential,
                                           request.getRequestURI(),
                                           request.getRemoteAddr()));
+            response.sendRedirect("/Pras/");
+            
         }
         return status;
     }
@@ -120,7 +122,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception
     {
         LOG.info(MessageFormat.format(CommonLogContent.USER_ACCESS_SUCCEEDED,
-                                      request.getHeader(SystemDefaultProperties.ID),
+                                      request.getSession().getAttribute(SystemDefaultProperties.ID),
                                       request.getRequestURI(),
                                       request.getRemoteAddr()));
     }

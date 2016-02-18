@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,26 +53,41 @@ public class LoginController {
 	private UserService userService;
 	
 	
-	@RequestMapping(value = { "/",  "/index"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public String showForm(Map<String,Object> model) {
-	//	System.out.print("user name is "+getPrincipal());
+	
+	@RequestMapping(value = { "/",  "/index"}, method = RequestMethod.GET)
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+		@RequestParam(value = "logout", required = false) String logout) {
+
 		LoginForm loginForm = new LoginForm();
-		model.put("loginForm", loginForm);
-		return "loginform";
+
+		ModelAndView model = new ModelAndView();
+		if (error != null) {
+			model.addObject("error", "Invalid username and password!");
+		}
+	
+		if (logout != null) {
+			model.addObject("msg", "You've been logged out successfully.");
+		}
+		model.setViewName("loginform");
+		model.addObject("loginForm",loginForm);
+	
+		return model;
+
 	}
 	
 	
-	@RequestMapping(value = "/loginform", method = {RequestMethod.GET, RequestMethod.POST})
-	public String processForm(HttpServletRequest request, @Valid LoginForm loginForm, BindingResult result,
-			Map<String,Object> model) {
+	@RequestMapping(value = "/loginform.do", method =  RequestMethod.POST)
+	public String processForm(@RequestParam(required = false) String error,
+			@RequestParam(required = false) String logout,
+			HttpServletRequest request, @Valid LoginForm loginForm, BindingResult result,
+			ModelAndView model) {
 		
-		System.out.print("====user name is ======="+getPrincipal() +" ==== role is "+getPrincipalRole());
 		if (result.hasErrors()) 
 		{
 			return "loginform";
 		}
 		
-		loginForm = (LoginForm) model.get("loginForm");
+		loginForm = (LoginForm) model.getModel().get("loginForm");
 		final String login = loginForm.getUsername();
 		final String password =  loginForm.getPassword();
 		if ("".equals(login)|| "".equals(password)) 
@@ -84,12 +100,15 @@ public class LoginController {
 		{
 			return "loginform";
 		}
+		
+		//enable below commented section is authentication interceptor is enabled
 	//	request.getSession().setAttribute(SystemDefaultProperties.ID, login);
 	//	request.getSession().setAttribute(SystemDefaultProperties.CREDENTIAL, password);
 		
-		return "home";
+		return "forward:/home";
 	}
 	
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(Map<String,Object> model) {
 		
@@ -115,37 +134,22 @@ public class LoginController {
 	@ModelAttribute("insuranceList")
 	public List<Insurance> populateInsuranceList() {
 		
-		//Data referencing for Membership Status list box
+		//Data referencing for Insurance  list box
 		List<Insurance> insList = insuranceService.findAll();
 		return insList;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String page( WebRequest request,  SessionStatus status) {
+		
 	    status.setComplete();
-	    request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
-	    request.removeAttribute(SystemDefaultProperties.CREDENTIAL, WebRequest.SCOPE_SESSION);
-	  //  store.cleanupAttribute(request, "user");
+	          ///uncomment below section if you enable authentication interceptor
+	  //  request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
+	  //  request.removeAttribute(SystemDefaultProperties.CREDENTIAL, WebRequest.SCOPE_SESSION);
+	    
 	    return "redirect:/loginform";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-		@RequestParam(value = "logout", required = false) String logout) {
-
-	  ModelAndView model = new ModelAndView();
-	  if (error != null) {
-		model.addObject("error", "Invalid username and password!");
-	  }
-
-	  if (logout != null) {
-		model.addObject("msg", "You've been logged out successfully.");
-	  }
-	  model.setViewName("loginform");
-
-	  return model;
-
-	}
 	
 	//for 403 access denied page
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
@@ -165,33 +169,4 @@ public class LoginController {
 
 	}
 
-	private String getPrincipal(){
-	    String userName = null;
-	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	
-	    if (principal instanceof UserDetails) {
-	        userName = ((UserDetails)principal).getUsername();
-	    } else {
-	        userName = principal.toString();
-	    }
-	    return userName;
-	}
-		
-	private String getPrincipalRole(){
-	    StringBuilder role = new StringBuilder();
-	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	
-	    if (principal instanceof UserDetails) {
-	       Collection<GrantedAuthority> gaList= (Collection<GrantedAuthority>) ((UserDetails) principal).getAuthorities();
-	       for( GrantedAuthority ga: gaList)
-	       {
-	    	   role.append(" "+ga.getAuthority());
-	       }
-	       
-	    } else {
-	        role = new StringBuilder("no user details");
-	    }
-	    return role.toString();
-	}
-		
 }

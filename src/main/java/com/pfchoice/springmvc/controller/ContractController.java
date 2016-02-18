@@ -131,12 +131,9 @@ public class ContractController{
         {
 	        	Provider dbProvider = providerService.findById(id);
 	   		 	logger.info("Returning provider.getId()"+dbProvider.getId());
-
 	   		 	model.addAttribute("contract", contract);
-	   		 	contract.setActiveInd('Y');
-	        	contract.setCreatedBy("Mohanasundharam");
+	   		   	contract.setCreatedBy("Mohanasundharam");
 	        	ReferenceContract refContract = createRefContractModel();
-	        	refContract.setActiveInd('Y');
 	        	refContract.setCreatedBy("Mohanasundharam");
 	        	refContract.setPrvdr(dbProvider);
 	        	contract.setReferenceContract(refContract);
@@ -163,7 +160,6 @@ public class ContractController{
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
 	        	contract.setUpdatedBy("Mohanasundharam");
-	        	contract.setActiveInd('Y');
 	        	contractService.update(contract);
 	        }
 	       
@@ -189,7 +185,7 @@ public class ContractController{
             BindingResult bindingResult, Model model) {
        
 			if (bindingResult.hasErrors()) {
-				contract.setActiveInd('N');
+				contract.setActiveInd('Y');
 	            logger.info("Returning insuranceContractEdit.jsp page");
 	             return "providerContractEdit";
 	        }
@@ -246,16 +242,12 @@ public class ContractController{
 	        }
 	        Insurance dbInsurance = insuranceService.findById(id);
    		 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
-	        
 	        model.addAttribute("contract", contract);
 	    	contract.setCreatedBy("Mohanasundharam");
-	    	contract.setActiveInd('Y');
-	    	
 	    	ReferenceContract refCnt = createRefContractModel();
 	    	refCnt.setCreatedBy("Mohanasundharam");
 	    	refCnt.setIns(dbInsurance);
-	    	refCnt.setActiveInd('Y');
-	       	contract.setReferenceContract(refCnt);
+	    	contract.setReferenceContract(refCnt);
 	    	
 	    	logger.info("Returning insuranceContractEditSuccess.jsp page after create");
 	      	contractService.save(contract);
@@ -277,7 +269,6 @@ public class ContractController{
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
 	        	contract.setUpdatedBy("Mohanasundharam");
-	        	contract.setActiveInd('Y');
 	        	contractService.update(contract);
 	        	return "insuranceContractEditSuccess";
 	        }
@@ -299,7 +290,6 @@ public class ContractController{
 		        if (null != contract.getId())
 		        {
 		        	logger.info("Returning ContractEditSuccess.jsp page after update");
-		        	contract.setActiveInd('N');
 		        	contract.setUpdatedBy("Mohanasundharam");
 		        	contractService.update(contract);
 		        	return "insuranceContractEditSuccess";

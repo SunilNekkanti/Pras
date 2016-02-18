@@ -107,8 +107,7 @@ public class UserController{
 	        	logger.info("Returning userSuccess.jsp page after create");
 	        	user.setCreatedBy("sarath");
 	        	user.setUpdatedBy("sarath");
-	        	user.setActiveInd('Y');
-	 	      	userService.save(user);
+	        	userService.save(user);
 	 	       return "userEditSuccess";
         }    
     }
@@ -127,7 +126,6 @@ public class UserController{
 	        {
 	        	logger.info("Returning UserSuccess.jsp page after update");
 	        	user.setUpdatedBy("Mohanasundharam");
-	        	user.setActiveInd('Y');
 	        	userService.update(user);
 	        }
 	        return "userEditSuccess";
@@ -139,6 +137,7 @@ public class UserController{
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated User user,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	user.setActiveInd('Y');
             logger.info("Returning userEdit.jsp page");
             return "userEdit";
         }

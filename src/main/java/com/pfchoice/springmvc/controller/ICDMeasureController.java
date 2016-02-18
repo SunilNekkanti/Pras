@@ -117,8 +117,7 @@ public class ICDMeasureController{
 	 	model.addAttribute("icdMeasure", icdMeasure);
 	 	icdMeasure.setCreatedBy("sarath");
 	 	icdMeasure.setUpdatedBy("sarath");
-	 	icdMeasure.setActiveInd('Y');
-    	
+	 	
     	logger.info("Returning icdEditSuccess.jsp page after create");
       	icdMeasureService.save(icdMeasure);
    
@@ -130,14 +129,14 @@ public class ICDMeasureController{
 	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            logger.info("Returning  icdMeasureEdit.jsp page");
+        	icdMeasure.setActiveInd('Y');
+        	 logger.info("Returning  icdMeasureEdit.jsp page");
             return "icdMeasureEdit";
         }
 	        
         if (null != icdMeasure.getId())
         {
         	logger.info("Returning icdMeasureEditSuccess.jsp page after update");
-        	icdMeasure.setActiveInd('Y');
         	icdMeasureService.update(icdMeasure);
         	model.addAttribute("icdMeasure", icdMeasure);
         	return "icdMeasureEditSuccess";
@@ -151,6 +150,11 @@ public class ICDMeasureController{
 	public String deleteICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model) {
        
+			if (bindingResult.hasErrors()) {
+	        	icdMeasure.setActiveInd('Y');
+	        	 logger.info("Returning  icdMeasureEdit.jsp page");
+	             return "icdMeasureEdit";
+	        }
 	        if (null != icdMeasure.getId())
 	        {
 	        	logger.info("Returning icdMeasureEditSuccess.jsp page after update");

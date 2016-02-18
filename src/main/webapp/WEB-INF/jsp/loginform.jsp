@@ -1,16 +1,22 @@
-<%@  page  language="java" contentType="text/html; charset=ISO-8859-1"
- 
-pageEncoding="ISO-8859-1"%>
+<%@  page  language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@  taglib  prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container">
 
 	
 	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-			<form:form action="loginform.html" commandName="loginForm">
+			<form:form action="loginform.do" commandName="loginForm">
 				<fieldset>
 					<h2>Please Sign In</h2>
+					
+					<c:if test="${not empty error}">
+						<div class="error"> <h3> <p class="text-danger"> ${error}</p> </h3> </div> 
+				    </c:if>
+					<c:if test="${not empty msg}">
+						<div class="msg"> <h3> <p class="text-success"> ${msg}</p> </h3> </div>
+					</c:if>
+					
 					<hr class="colorgraph">
 					<div class="form-group">
 	                    <form:input path="username" class="form-control input-lg"   placeholder="User Name" />

@@ -159,7 +159,6 @@ public class MembershipController{
         logger.info("Returning MembershipSuccess.jsp page");
         if (null != membership.getId())
         {
-        	membership.setActiveInd('Y');
         	membership.setUpdatedBy("Mohanasundharam");
             membershipService.update(membership);
         }
@@ -228,7 +227,6 @@ public class MembershipController{
 	      }
 	      else
 	      {
-	        	membershipInsurance.setActiveInd('Y');
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
@@ -248,7 +246,6 @@ public class MembershipController{
 	        }
 	        else
 	        {
-	        	membershipInsurance.setActiveInd('Y');
 	        	membershipInsurance.setCreatedBy("Mohanasundharam");
 	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.save(membershipInsurance);

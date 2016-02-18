@@ -68,7 +68,7 @@ public class ReferenceContact implements Serializable
     private String updatedBy;
     
     @Expose
-    @Column(name="active_ind")
+    @Column(name="active_ind",insertable=false)
     private char activeInd;
     
     @OneToOne( fetch = FetchType.LAZY,mappedBy="refContact")

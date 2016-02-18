@@ -148,8 +148,7 @@ public class HedisMeasureController{
 	 	model.addAttribute("hedisMeasure", hedisMeasure);
 	 	hedisMeasure.setCreatedBy("sarath");
 	 	hedisMeasure.setUpdatedBy("sarath");
-	 	hedisMeasure.setActiveInd('Y');
-    	
+	 	
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	hedisMeasureService.save(hedisMeasure);
    
@@ -169,7 +168,6 @@ public class HedisMeasureController{
         if (null != hedisMeasure.getId())
         {
         	logger.info("Returning hedisMeasureEditSuccess.jsp page after update");
-        	hedisMeasure.setActiveInd('Y');
         	hedisMeasureService.update(hedisMeasure);
         	return "hedisMeasureEditSuccess";
         }

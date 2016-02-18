@@ -156,7 +156,6 @@ public class ContactController{
 
 	 	model.addAttribute("contact", contact);
     	contact.setCreatedBy("sarath");
-    	contact.setActiveInd('Y');
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
     	refCnt.setCreatedBy("sarath");
@@ -174,6 +173,7 @@ public class ContactController{
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
             return "membershipContactEdit";
         }
@@ -262,7 +262,6 @@ public class ContactController{
 
 	 	model.addAttribute("contact", contact);
     	contact.setCreatedBy("sarath");
-    	contact.setActiveInd('Y');
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
     	refCnt.setCreatedBy("sarath");
@@ -279,6 +278,7 @@ public class ContactController{
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
             return "providerContactEdit";
         }
@@ -298,6 +298,7 @@ public class ContactController{
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
+            contact.setActiveInd('Y');
             return "providerContactEdit";
         }
 	        
@@ -368,7 +369,6 @@ public class ContactController{
 
 	 	model.addAttribute("contact", contact);
     	contact.setCreatedBy("sarath");
-    	contact.setActiveInd('Y');
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
     	refCnt.setCreatedBy("sarath");
@@ -384,6 +384,7 @@ public class ContactController{
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
+            contact.setActiveInd('Y');
             return "insuranceContactEdit";
         }
 	        
@@ -402,6 +403,7 @@ public class ContactController{
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
+            contact.setActiveInd('Y');
             return "insuranceContactEdit";
         }
 	        

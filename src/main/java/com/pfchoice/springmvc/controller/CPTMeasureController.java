@@ -117,9 +117,7 @@ public class CPTMeasureController{
 	 	model.addAttribute("cptMeasure", cptMeasure);
 	 	cptMeasure.setCreatedBy("sarath");
 	 	cptMeasure.setUpdatedBy("sarath");
-	 	cptMeasure.setActiveInd('Y');
-    	
-    	logger.info("Returning cptEditSuccess.jsp page after create");
+	 	logger.info("Returning cptEditSuccess.jsp page after create");
       	cptMeasureService.save(cptMeasure);
    
     return "cptMeasureEditSuccess";
@@ -139,7 +137,6 @@ public class CPTMeasureController{
         if (null != cptMeasure.getId())
         {
         	logger.info("Returning cptMeasureEditSuccess.jsp page after update");
-        	cptMeasure.setActiveInd('Y');
         	cptMeasureService.update(cptMeasure);
         	model.addAttribute("cptMeasure", cptMeasure);
         	return "cptMeasureEditSuccess";

@@ -64,7 +64,7 @@ public class Contract implements Serializable
     @Column(name="updated_by")
     private String updatedBy;
     
-    @Column(name="active_ind")
+    @Column(name="active_ind",insertable=false)
     private char activeInd;
     
       

@@ -73,15 +73,13 @@ public class InsuranceController{
     public String newInsuranceAction(@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	insurance.setActiveInd('Y');
-            logger.info("Returning insuranceEdit.jsp page");
+        	logger.info("Returning insuranceEdit.jsp page");
             return "insuranceNew";
         }
         else
         {
 	        	logger.info("Returning InsuranceSuccess.jsp page after create");
 	        	model.addAttribute("insurance", insurance);
-	        	insurance.setActiveInd('Y');
 	        	insurance.setCreatedBy("Mohanasundharam");
 	 	      	insuranceService.save(insurance);
 	 	       return "insuranceNewSuccess";
@@ -93,7 +91,7 @@ public class InsuranceController{
 	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"update"})
     public String updateInsuranceAction( @PathVariable Integer id,@Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
-		insurance.setActiveInd('Y');
+		
         if (bindingResult.hasErrors()) {
         	logger.info("Returning insuranceEdit.jsp page");
         	insurance.setActiveInd('Y');
@@ -105,7 +103,6 @@ public class InsuranceController{
 	        if (null != insurance.getId())
 	        {
 	        	logger.info("Returning InsuranceSuccess.jsp page after update");
-	        	insurance.setActiveInd('Y');
 	        	insurance.setUpdatedBy("Mohanasundharam");
 	        	insuranceService.update(insurance);
 	        }
@@ -118,6 +115,7 @@ public class InsuranceController{
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated Insurance insurance,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+        	insurance.setActiveInd('Y');
             logger.info("Returning insuranceEdit.jsp page");
             return "insuranceEdit";
         }
