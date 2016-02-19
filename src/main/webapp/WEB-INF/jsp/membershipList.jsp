@@ -55,7 +55,6 @@
 	               		fnCallback(res);
 	                },
 	                error : function (e) {
-	                	alert('failed');
 	                }
 	            } );
         	}

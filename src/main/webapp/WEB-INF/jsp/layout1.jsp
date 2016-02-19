@@ -94,7 +94,6 @@ $('[data-toggle="tab"]').click(function(e) {
     e.preventDefault();
     var loadurl = $(this).attr('href');
     var targ = $(this).attr('data-target');
-    alert("inside tab loadurl "+loadurl);
     $.get(loadurl, function(data) {
         $(targ).html(data);
 
