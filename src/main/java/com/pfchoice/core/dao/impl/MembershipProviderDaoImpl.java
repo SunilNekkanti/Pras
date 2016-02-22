@@ -101,7 +101,8 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
     	final String msg = "findByMbrId list size is %d";
     	final String fmt = String.format(msg, list.size());
     	LOG.info(fmt);
-    		
+    		if(list.size() == 0)
+    			return null;
     	return list.get(0);
     }
 }

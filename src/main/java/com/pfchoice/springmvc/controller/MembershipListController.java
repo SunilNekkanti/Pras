@@ -43,12 +43,9 @@ public class MembershipListController
     private MembershipService membershipService;
 
    @RequestMapping(value = "/membershipTmpList")
-    public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
+    public String handleRequest() throws Exception {
  
-		ModelAndView modelAndView = new ModelAndView("membershipList");
- 
-		return modelAndView;
+		return "membershipList";
 	}
     
    @ResponseBody

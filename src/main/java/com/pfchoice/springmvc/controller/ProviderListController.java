@@ -42,12 +42,9 @@ public class ProviderListController
     private ProviderService providerService;
 
    @RequestMapping(value = "/providerList")
-    public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
+    public String handleRequest() throws Exception {
  
-		ModelAndView modelAndView = new ModelAndView("providerList");
- 
-		return modelAndView;
+		return "providerList";
 	}
    
     @ResponseBody

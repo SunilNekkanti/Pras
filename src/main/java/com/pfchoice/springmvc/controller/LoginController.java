@@ -2,11 +2,13 @@ package com.pfchoice.springmvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,6 +31,7 @@ import javax.validation.Valid;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.entity.User;
 import com.pfchoice.core.service.InsuranceService;
@@ -55,62 +59,29 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = { "/",  "/index"}, method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-		@RequestParam(value = "logout", required = false) String logout) {
+	public String login(@RequestParam(value = "error", required = false) String error,
+		@RequestParam(value = "logout", required = false) String logout, Model model) {
 
 		LoginForm loginForm = new LoginForm();
 
-		ModelAndView model = new ModelAndView();
 		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
+			model.addAttribute("error", "Invalid username and password!");
 		}
 	
 		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
+			model.addAttribute("msg", "You've been logged out successfully.");
 		}
-		model.setViewName("loginform");
-		model.addObject("loginForm",loginForm);
+		model.addAttribute("loginForm",loginForm);
 	
-		return model;
+		return "loginForm";
 
 	}
 	
 	
-	@RequestMapping(value = "/loginform.do", method =  RequestMethod.POST)
-	public String processForm(@RequestParam(required = false) String error,
-			@RequestParam(required = false) String logout,
-			HttpServletRequest request, @Valid LoginForm loginForm, BindingResult result,
-			ModelAndView model) {
-		
-		if (result.hasErrors()) 
-		{
-			return "loginform";
-		}
-		
-		loginForm = (LoginForm) model.getModel().get("loginForm");
-		final String login = loginForm.getUsername();
-		final String password =  loginForm.getPassword();
-		if ("".equals(login)|| "".equals(password)) 
-		{
-			return "loginform";
-		}
-		
-		final boolean isValidUser = userService.isValidUser(login, password);
-		if(!isValidUser)
-		{
-			return "loginform";
-		}
-		
-		//enable below commented section is authentication interceptor is enabled
-	//	request.getSession().setAttribute(SystemDefaultProperties.ID, login);
-	//	request.getSession().setAttribute(SystemDefaultProperties.CREDENTIAL, password);
-		
-		return "forward:/home";
-	}
-	
-
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homePage(Map<String,Object> model) {
+	public String homePage(HttpServletRequest request, Map<String,Object> model) {
+		
+		request.getSession().setAttribute(SystemDefaultProperties.ID, getPricipal());
 		
 		return "home";
 	}
@@ -143,8 +114,9 @@ public class LoginController {
 	public String page( WebRequest request,  SessionStatus status) {
 		
 	    status.setComplete();
+	    request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
+	    
 	          ///uncomment below section if you enable authentication interceptor
-	  //  request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
 	  //  request.removeAttribute(SystemDefaultProperties.CREDENTIAL, WebRequest.SCOPE_SESSION);
 	    
 	    return "redirect:/loginform";
@@ -153,20 +125,23 @@ public class LoginController {
 	
 	//for 403 access denied page
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied() {
+	public String accesssDenied(Model model) {
 
-	  ModelAndView model = new ModelAndView();
-		
 	  //check if user is login
-	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	  if (!(auth instanceof AnonymousAuthenticationToken)) {
-		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
-		model.addObject("username", userDetail.getUsername());
-	  }
+		model.addAttribute("username", getPricipal());
 		
-	  model.setViewName("ad403");
-	  return model;
+	  return "ad403";
 
 	}
-
+	
+	private String getPricipal(){
+	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	  if (!(auth instanceof AnonymousAuthenticationToken)) {
+		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
+		final String  loginUser = userDetail.getUsername();
+		return loginUser;
+	  }
+      
+	  return null;
+	}
 }

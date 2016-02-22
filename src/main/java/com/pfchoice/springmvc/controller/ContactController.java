@@ -133,13 +133,12 @@ public class ContactController{
     }
 	
 	@RequestMapping(value = "/membership/{id}/contactList")
-    public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
+    public String handleRequest(@PathVariable Integer id, Model model) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
-		ModelAndView modelAndView = new ModelAndView("membershipContactList");
-		modelAndView.addObject("contactList", listBean);
+		model.addAttribute("contactList", listBean);
  
-		return modelAndView;
+		return "membershipContactList";
 	}
 	
 	
@@ -238,13 +237,12 @@ public class ContactController{
     }
 	
 	@RequestMapping(value = "/provider/{id}/contactList")
-    public ModelAndView providerContactList(@PathVariable Integer id) throws Exception {
+    public String providerContactList(@PathVariable Integer id, Model model) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("provider",id);
-		ModelAndView modelAndView = new ModelAndView("providerContactList");
-		modelAndView.addObject("contactList", listBean);
+		model.addAttribute("contactList", listBean);
  
-		return modelAndView;
+		return "providerContactList";
 	}
 	
 	
@@ -346,13 +344,12 @@ public class ContactController{
     }
 	
 	@RequestMapping(value = "/insurance/{id}/contactList")
-    public ModelAndView insuranceContactList(@PathVariable Integer id) throws Exception {
+    public String insuranceContactList(@PathVariable Integer id,Model model) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
-		ModelAndView modelAndView = new ModelAndView("insuranceContactList");
-		modelAndView.addObject("contactList", listBean);
+		model.addAttribute("contactList", listBean);
  
-		return modelAndView;
+		return "insuranceContactList";
 	}
 	
 	

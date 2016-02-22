@@ -26,7 +26,6 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 
 <link rel="stylesheet" href="/Pras/resources/css/common.css">
  
-  <script src="/Pras/resources/js/prasweb.js"></script>
   
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 

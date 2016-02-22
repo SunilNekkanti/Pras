@@ -59,11 +59,11 @@
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "login","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
+                               { "mDataProp": "username","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
                            ],
                   "aoColumnDefs": [ 
                            		    { "sName": "id", "aTargets": [ 0 ] },
-                           		    { "sName": "login", "aTargets": [ 1 ],
+                           		    { "sName": "username", "aTargets": [ 1 ],
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="/Pras/user/'+full.id+'">'+data+'</a>';
                                     }}

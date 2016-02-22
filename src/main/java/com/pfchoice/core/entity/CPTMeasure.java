@@ -38,6 +38,11 @@ public class CPTMeasure implements Serializable
     private String code;
 
     @Expose
+    @Column(name="short_description")
+    private String shortDescription;
+
+    
+    @Expose
     @Column(name="description")
     private String description;
 
@@ -97,6 +102,21 @@ public class CPTMeasure implements Serializable
         this.code = code;
     }
     
+    
+	/**
+	 * @return the shortDescription
+	 */
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	/**
+	 * @param shortDescription the shortDescription to set
+	 */
+	public void setShortDescription(final String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+
 	/**
 	 * @return the description
 	 */

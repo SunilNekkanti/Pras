@@ -151,12 +151,9 @@ public class UserController{
     }
 	
 	@RequestMapping(value = "/userList")
-    public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
+    public String handleRequest() throws Exception {
  
-		ModelAndView modelAndView = new ModelAndView("userList");
- 
-		return modelAndView;
+		return "userList";
 	}
    
     @ResponseBody

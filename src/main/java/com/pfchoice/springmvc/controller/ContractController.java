@@ -100,13 +100,12 @@ public class ContractController{
     }
 	
 	@RequestMapping(value = "/provider/{id}/contractList")
-    public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
+    public String handleRequest(@PathVariable Integer id, Model model) throws Exception {
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
-		ModelAndView modelAndView = new ModelAndView("providerContractList");
-		modelAndView.addObject("contractList", listBean);
+		model.addAttribute("contractList", listBean);
  
-		return modelAndView;
+		return "providerContractList";
 	}
 	
 	@RequestMapping(value = "/provider/{id}/contractDisplay", method = RequestMethod.GET)
@@ -201,12 +200,12 @@ public class ContractController{
 	
 	
 	@RequestMapping(value = "/insurance/{id}/contractList")
-    public ModelAndView handleInsuranceRequest(@PathVariable Integer id) throws Exception {
+    public String handleInsuranceRequest(@PathVariable Integer id,Model model) throws Exception {
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
-		ModelAndView modelAndView = new ModelAndView ("insuranceContractList","contractList", listBean);
+		model.addAttribute("contractList", listBean);
  
-		return modelAndView;
+		return "insuranceContractList";
 	}
 	
 	/** contract Display where activeInd =N  **/

@@ -58,6 +58,7 @@
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                               { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
                                { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%",  }
                              
                            ],
@@ -67,7 +68,8 @@
                            		      "render": function ( data, type, full, meta ) {
                                             return '<a href="/Pras/cpt/'+full.id+'">'+data+'</a>';
                            		      }},
-                           		    { "sName": "description", "aTargets": [ 2 ] }
+                           		    { "sName": "shortDescription", "aTargets": [ 2 ] },
+                           		    { "sName": "description", "aTargets": [ 3 ] }
                   ],          
         	     "bLengthChange": false,
         	     "sPaginationType": "full_numbers",
@@ -92,7 +94,8 @@
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 
-							<th  scope="col">ICD Code</th> 
+							<th  scope="col">CPT Code</th> 
+							<th  scope="col">Short Description</th> 
 							<th  scope="col">Description</th>  
 						</tr>
 					</thead>

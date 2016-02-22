@@ -294,20 +294,21 @@ public class MembershipController{
 	
 	
 	@RequestMapping(value = "/membership/{id}/detailsList")
-    public ModelAndView handleRequest(@PathVariable Integer id) throws Exception {
+    public String handleRequest(@PathVariable Integer id,Model model) throws Exception {
  
     	List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
-		ModelAndView modelAndView = new ModelAndView("membershipDetailsList");
-		modelAndView.addObject("membershipDetailsList", listBean);
-		return modelAndView;
+    	model.addAttribute("membershipDetailsList", listBean);
+    	logger.info("Returning membershipDetailsList.jsp page");
+		return "membershipDetailsList";
 	}
     
 	
 	@RequestMapping(value = "/membership/{id}/providerDetails", method = RequestMethod.GET)
-    public String displayMembershipProviderDetailsPage(@PathVariable Integer id,  @Validated MembershipProvider membershipProvider,
-    				BindingResult bindingResult, Model model)throws Exception {
+    public String displayMembershipProviderDetailsPage(@PathVariable Integer id, 
+    				Model model)throws Exception {
 		
 		MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
+		dbMembershipProvider = (dbMembershipProvider != null) ?dbMembershipProvider :new MembershipProvider();
 		model.addAttribute("membershipProvider", dbMembershipProvider);
         logger.info("Returning membershipProviderEdit.jsp page");
         return "membershipProviderEdit";

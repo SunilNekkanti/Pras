@@ -41,12 +41,9 @@ public class InsuranceListController
     private InsuranceService insuranceService;
 
    @RequestMapping(value = "/insuranceList")
-    public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
+    public String handleRequest( Model model) throws Exception {
  
-		ModelAndView modelAndView = new ModelAndView("insuranceList");
- 
-		return modelAndView;
+		return "insuranceList";
 	}
     
    @ResponseBody
