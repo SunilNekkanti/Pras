@@ -76,8 +76,8 @@ public class UserController{
     public String addUserPage(final Model model) {
 		
 		User user = createUserModel();
-		user.setCreatedBy("sarath");
-		user.setUpdatedBy("sarath");
+		user.setCreatedBy(PrasUtil.getPricipal());
+		user.setUpdatedBy(PrasUtil.getPricipal());
 		user.setActiveInd('Y');
 		model.addAttribute("user", user);
         return "userNew";
@@ -105,8 +105,8 @@ public class UserController{
         else
         {
 	        	logger.info("Returning userSuccess.jsp page after create");
-	        	user.setCreatedBy("sarath");
-	        	user.setUpdatedBy("sarath");
+	        	user.setCreatedBy(PrasUtil.getPricipal());
+	        	user.setUpdatedBy(PrasUtil.getPricipal());
 	        	userService.save(user);
 	 	       return "userEditSuccess";
         }    
@@ -125,7 +125,7 @@ public class UserController{
 	        if (null != user.getId())
 	        {
 	        	logger.info("Returning UserSuccess.jsp page after update");
-	        	user.setUpdatedBy("Mohanasundharam");
+	        	user.setUpdatedBy(PrasUtil.getPricipal());
 	        	userService.update(user);
 	        }
 	        return "userEditSuccess";

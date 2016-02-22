@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureGroup;
@@ -91,7 +92,7 @@ public class HedisMeasureController{
     public String addHedisMeasurePage(Model model) {
 		
 		HedisMeasure hedisMeasure = createHedisMeasureModel();
-		hedisMeasure.setCreatedBy("sarath");
+		hedisMeasure.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("hedisMeasure", hedisMeasure);
         return "hedisMeasureEdit";
     }
@@ -146,8 +147,8 @@ public class HedisMeasureController{
         }
         
 	 	model.addAttribute("hedisMeasure", hedisMeasure);
-	 	hedisMeasure.setCreatedBy("sarath");
-	 	hedisMeasure.setUpdatedBy("sarath");
+	 	hedisMeasure.setCreatedBy(PrasUtil.getPricipal());
+	 	hedisMeasure.setUpdatedBy(PrasUtil.getPricipal());
 	 	
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	hedisMeasureService.save(hedisMeasure);

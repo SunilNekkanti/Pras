@@ -6,6 +6,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -67,6 +68,7 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
 	public List<State> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.addOrder(Order.asc("shortName"));
     	List<State> list = cr.list();
     	return list;
     }

@@ -59,7 +59,7 @@ public class ProviderController{
     public String addProviderPage(final Model model) {
 		
 		Provider provider = createProviderModel();
-		provider.setCreatedBy("sarath");
+		provider.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("provider", provider);
         return "providerNew";
     }
@@ -88,7 +88,7 @@ public class ProviderController{
         {
 	        	logger.info("Returning ProviderSuccess.jsp page after create");
 	        	model.addAttribute("provider", provider);
-	        	provider.setCreatedBy("Mohanasundharam");
+	        	provider.setCreatedBy(PrasUtil.getPricipal());
 	 	      	providerService.save(provider);
 	 	       return "providerNewSuccess";
         }    
@@ -107,7 +107,7 @@ public class ProviderController{
 	        if (null != provider.getId())
 	        {
 	        	logger.info("Returning ProviderSuccess.jsp page after update");
-	        	provider.setUpdatedBy("Mohanasundharam");
+	        	provider.setUpdatedBy(PrasUtil.getPricipal());
 	        	providerService.update(provider);
 	        }
 	        return "providerEditSuccess";

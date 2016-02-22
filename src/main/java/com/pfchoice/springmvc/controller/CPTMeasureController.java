@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.service.CPTMeasureService;
 
@@ -60,7 +61,7 @@ public class CPTMeasureController{
     public String addCPTMeasurePage(Model model) {
 		
 		CPTMeasure cptMeasure = createCPTMeasureModel();
-		cptMeasure.setCreatedBy("sarath");
+		cptMeasure.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("cptMeasure", cptMeasure);
         return "cptMeasureEdit";
     }
@@ -115,8 +116,8 @@ public class CPTMeasureController{
         }
         
 	 	model.addAttribute("cptMeasure", cptMeasure);
-	 	cptMeasure.setCreatedBy("sarath");
-	 	cptMeasure.setUpdatedBy("sarath");
+	 	cptMeasure.setCreatedBy(PrasUtil.getPricipal());
+	 	cptMeasure.setUpdatedBy(PrasUtil.getPricipal());
 	 	logger.info("Returning cptEditSuccess.jsp page after create");
       	cptMeasureService.save(cptMeasure);
    

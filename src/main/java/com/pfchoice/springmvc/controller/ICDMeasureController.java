@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.ICDMeasureService;
 
@@ -60,7 +61,7 @@ public class ICDMeasureController{
     public String addICDMeasurePage(Model model) {
 		
 		ICDMeasure icdMeasure = createICDMeasureModel();
-		icdMeasure.setCreatedBy("sarath");
+		icdMeasure.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("icdMeasure", icdMeasure);
         return "icdMeasureEdit";
     }
@@ -115,8 +116,8 @@ public class ICDMeasureController{
         }
         
 	 	model.addAttribute("icdMeasure", icdMeasure);
-	 	icdMeasure.setCreatedBy("sarath");
-	 	icdMeasure.setUpdatedBy("sarath");
+	 	icdMeasure.setCreatedBy(PrasUtil.getPricipal());
+	 	icdMeasure.setUpdatedBy(PrasUtil.getPricipal());
 	 	
     	logger.info("Returning icdEditSuccess.jsp page after create");
       	icdMeasureService.save(icdMeasure);

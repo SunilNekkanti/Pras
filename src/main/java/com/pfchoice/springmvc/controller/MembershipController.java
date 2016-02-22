@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
@@ -159,7 +160,7 @@ public class MembershipController{
         logger.info("Returning MembershipSuccess.jsp page");
         if (null != membership.getId())
         {
-        	membership.setUpdatedBy("Mohanasundharam");
+        	membership.setUpdatedBy(PrasUtil.getPricipal());
             membershipService.update(membership);
         }
         Membership dbMembership  = membershipService.findById(membership.getId()); 
@@ -181,7 +182,7 @@ public class MembershipController{
         if (null != membership.getId())
         {
         	membership.setActiveInd('N');
-        	membership.setUpdatedBy("Mohanasundharam");
+        	membership.setUpdatedBy(PrasUtil.getPricipal());
             membershipService.update(membership);
         }
         
@@ -207,7 +208,7 @@ public class MembershipController{
 		Membership dbMembership = membershipService.findById(id);
 		
 		MembershipInsurance  dbMembershipInsurance = new MembershipInsurance();
-		dbMembershipInsurance.setCreatedBy("Mohanasundharam");
+		dbMembershipInsurance.setCreatedBy(PrasUtil.getPricipal());
 		dbMembershipInsurance.setMbr(dbMembership);
 		model.addAttribute("membershipInsurance", dbMembershipInsurance);
 		
@@ -227,7 +228,7 @@ public class MembershipController{
 	      }
 	      else
 	      {
-	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
+	        	membershipInsurance.setUpdatedBy(PrasUtil.getPricipal());
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
 	            return "membershipDetailsEditSuccess";
@@ -246,8 +247,8 @@ public class MembershipController{
 	        }
 	        else
 	        {
-	        	membershipInsurance.setCreatedBy("Mohanasundharam");
-	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
+	        	membershipInsurance.setCreatedBy(PrasUtil.getPricipal());
+	        	membershipInsurance.setUpdatedBy(PrasUtil.getPricipal());
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.save(membershipInsurance);
 	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
 		        return "membershipDetailsEditSuccess";
@@ -267,7 +268,7 @@ public class MembershipController{
 	        else
 	        {
 	        	membershipInsurance.setActiveInd('N');
-	        	membershipInsurance.setUpdatedBy("Mohanasundharam");
+	        	membershipInsurance.setUpdatedBy(PrasUtil.getPricipal());
 	            membershipInsuranceService.update(membershipInsurance);
 	            return "membershipEditSuccess";
 	        }    

@@ -101,6 +101,7 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 	public List<ICDMeasure> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.addOrder(Order.asc("code"));
     	List<ICDMeasure> list = cr.list();
     	return list;
     }

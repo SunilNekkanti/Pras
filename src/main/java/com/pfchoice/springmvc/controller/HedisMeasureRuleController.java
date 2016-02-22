@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
@@ -104,8 +105,8 @@ public class HedisMeasureRuleController{
     public String addHedisMeasureRulePage(Model model) {
 		
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
-		hedisMeasureRule.setCreatedBy("sarath");
-		hedisMeasureRule.setUpdatedBy("sarath");
+		hedisMeasureRule.setCreatedBy(PrasUtil.getPricipal());
+		hedisMeasureRule.setUpdatedBy(PrasUtil.getPricipal());
 		model.addAttribute("hedisMeasureRule", hedisMeasureRule);
         return "hedisMeasureRuleEdit";
     }
@@ -160,8 +161,8 @@ public class HedisMeasureRuleController{
         }
         
 	 	model.addAttribute("hedisMeasureRule", hedisMeasureRule);
-	 	hedisMeasureRule.setCreatedBy("sarath");
-	 	hedisMeasureRule.setUpdatedBy("sarath");
+	 	hedisMeasureRule.setCreatedBy(PrasUtil.getPricipal());
+	 	hedisMeasureRule.setUpdatedBy(PrasUtil.getPricipal());
 	 	   	
     	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
       	hedisMeasureRuleService.save(hedisMeasureRule);

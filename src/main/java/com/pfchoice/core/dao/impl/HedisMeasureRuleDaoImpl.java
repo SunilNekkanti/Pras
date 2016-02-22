@@ -100,6 +100,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 	public List<HedisMeasureRule> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.addOrder(Order.asc("code"));
     	List<HedisMeasureRule> list = cr.list();
     	return list;
     }

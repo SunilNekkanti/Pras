@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.pfchoice.common.SystemDefaultProperties;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipProvider;
@@ -81,7 +82,7 @@ public class LoginController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(HttpServletRequest request, Map<String,Object> model) {
 		
-		request.getSession().setAttribute(SystemDefaultProperties.ID, getPricipal());
+		request.getSession().setAttribute(SystemDefaultProperties.ID, PrasUtil.getPricipal());
 		
 		return "home";
 	}
@@ -116,9 +117,6 @@ public class LoginController {
 	    status.setComplete();
 	    request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
 	    
-	          ///uncomment below section if you enable authentication interceptor
-	  //  request.removeAttribute(SystemDefaultProperties.CREDENTIAL, WebRequest.SCOPE_SESSION);
-	    
 	    return "redirect:/loginform";
 	}
 	
@@ -127,21 +125,11 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accesssDenied(Model model) {
 
-	  //check if user is login
-		model.addAttribute("username", getPricipal());
+		model.addAttribute("username", PrasUtil.getPricipal());
 		
 	  return "ad403";
 
 	}
 	
-	private String getPricipal(){
-	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	  if (!(auth instanceof AnonymousAuthenticationToken)) {
-		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
-		final String  loginUser = userDetail.getUsername();
-		return loginUser;
-	  }
-      
-	  return null;
-	}
+	
 }

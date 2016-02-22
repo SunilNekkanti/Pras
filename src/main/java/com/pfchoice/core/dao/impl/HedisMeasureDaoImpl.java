@@ -99,6 +99,7 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 	public List<HedisMeasure> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.addOrder(Order.asc("id"));
     	List<HedisMeasure> list = cr.list();
     	return list;
     }

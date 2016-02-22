@@ -6,6 +6,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -67,6 +68,7 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
 	public List<County> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.addOrder(Order.asc("description"));
     	List<County> list = cr.list();
     	return list;
     }

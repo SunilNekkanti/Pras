@@ -52,7 +52,7 @@ public class InsuranceController{
     public String addInsurancePage(Model model) {
 		
 		Insurance insurance = createInsuranceModel();
-		insurance.setCreatedBy("sarath");
+		insurance.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("insurance", insurance);
         return "insuranceNew";
     }
@@ -80,7 +80,7 @@ public class InsuranceController{
         {
 	        	logger.info("Returning InsuranceSuccess.jsp page after create");
 	        	model.addAttribute("insurance", insurance);
-	        	insurance.setCreatedBy("Mohanasundharam");
+	        	insurance.setCreatedBy(PrasUtil.getPricipal());
 	 	      	insuranceService.save(insurance);
 	 	       return "insuranceNewSuccess";
         }    
@@ -103,7 +103,7 @@ public class InsuranceController{
 	        if (null != insurance.getId())
 	        {
 	        	logger.info("Returning InsuranceSuccess.jsp page after update");
-	        	insurance.setUpdatedBy("Mohanasundharam");
+	        	insurance.setUpdatedBy(PrasUtil.getPricipal());
 	        	insuranceService.update(insurance);
 	        }
 	           
@@ -123,7 +123,7 @@ public class InsuranceController{
         {
 	        	logger.info("Returning InsuranceSuccess.jsp page after update");
 	        	insurance.setActiveInd('N');
-	        	insurance.setUpdatedBy("Mohanasundharam");
+	        	insurance.setUpdatedBy(PrasUtil.getPricipal());
 	        	insuranceService.update(insurance);
 	        return "insuranceDeleteSuccess";
         }    

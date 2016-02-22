@@ -16,7 +16,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Hedis Measure</div>
         <div class="panel-body">
-			<springForm:form method="POST" commandName="hedisMeasure" action="/Pras/insurance/${id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="hedisMeasure" action="/Pras/hedis/${id}/save.do" class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-3" for="code">Code</label>
 					<div class="col-sm-8">

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Contact;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
@@ -105,7 +106,7 @@ public class ContactController{
     public String addContactPage(Model model) {
 		
 		Contact contact = createContactModel();
-		contact.setCreatedBy("sarath");
+		contact.setCreatedBy(PrasUtil.getPricipal());
 		contact.setFileId(3);
 		model.addAttribute("contact", contact);
         return "membershipContactEdit";
@@ -154,10 +155,10 @@ public class ContactController{
 	 	logger.info("Returning membership.getId()"+dbMembership.getId());
 
 	 	model.addAttribute("contact", contact);
-    	contact.setCreatedBy("sarath");
+    	contact.setCreatedBy(PrasUtil.getPricipal());
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
-    	refCnt.setCreatedBy("sarath");
+    	refCnt.setCreatedBy(PrasUtil.getPricipal());
     	refCnt.setMbr(dbMembership);
     	contact.setRefContact(refCnt);
     	
@@ -207,7 +208,7 @@ public class ContactController{
     public String addProviderContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
-		contact.setCreatedBy("sarath");
+		contact.setCreatedBy(PrasUtil.getPricipal());
 		contact.setFileId(3);
 		model.addAttribute("contact", contact);
         return "providerContactEdit";
@@ -259,10 +260,10 @@ public class ContactController{
 	 	logger.info("Returning provider.getId()"+dbProvider.getId());
 
 	 	model.addAttribute("contact", contact);
-    	contact.setCreatedBy("sarath");
+    	contact.setCreatedBy(PrasUtil.getPricipal());
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
-    	refCnt.setCreatedBy("sarath");
+    	refCnt.setCreatedBy(PrasUtil.getPricipal());
     	refCnt.setPrvdr(dbProvider);
     	contact.setRefContact(refCnt);
     	
@@ -315,7 +316,7 @@ public class ContactController{
     public String addInsuranceContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
-		contact.setCreatedBy("sarath");
+		contact.setCreatedBy(PrasUtil.getPricipal());
 		contact.setFileId(3);
 		model.addAttribute("contact", contact);
         return "insuranceContactEdit";
@@ -365,10 +366,10 @@ public class ContactController{
 	 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
 
 	 	model.addAttribute("contact", contact);
-    	contact.setCreatedBy("sarath");
+    	contact.setCreatedBy(PrasUtil.getPricipal());
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
-    	refCnt.setCreatedBy("sarath");
+    	refCnt.setCreatedBy(PrasUtil.getPricipal());
     	refCnt.setIns(dbInsurance);
     	contact.setRefContact(refCnt);
      	logger.info("Returning contactEditSuccess.jsp page after create");

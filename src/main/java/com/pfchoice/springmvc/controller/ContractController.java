@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Contract;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Provider;
@@ -81,7 +81,7 @@ public class ContractController{
     public String addContractPage(@PathVariable Integer id,Model model) {
 		
 		Contract contract = createContractModel();
-		contract.setCreatedBy("Mohanasundharam");
+		contract.setCreatedBy(PrasUtil.getPricipal());
 	
 		model.addAttribute("contract", contract);
         return "providerContractEdit";
@@ -131,9 +131,9 @@ public class ContractController{
 	        	Provider dbProvider = providerService.findById(id);
 	   		 	logger.info("Returning provider.getId()"+dbProvider.getId());
 	   		 	model.addAttribute("contract", contract);
-	   		   	contract.setCreatedBy("Mohanasundharam");
+	   		   	contract.setCreatedBy(PrasUtil.getPricipal());
 	        	ReferenceContract refContract = createRefContractModel();
-	        	refContract.setCreatedBy("Mohanasundharam");
+	        	refContract.setCreatedBy(PrasUtil.getPricipal());
 	        	refContract.setPrvdr(dbProvider);
 	        	contract.setReferenceContract(refContract);
 	        	
@@ -158,7 +158,7 @@ public class ContractController{
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy("Mohanasundharam");
+	        	contract.setUpdatedBy(PrasUtil.getPricipal());
 	        	contractService.update(contract);
 	        }
 	       
@@ -191,7 +191,7 @@ public class ContractController{
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy("Mohanasundharam");
+	        	contract.setUpdatedBy(PrasUtil.getPricipal());
 	        	contract.setActiveInd('N');
 	        	contractService.update(contract);
 	        }
@@ -226,7 +226,7 @@ public class ContractController{
 		@RequestMapping(value = "/insurance/{id}/contract/new")
 	    public String addProviderContractPage(Model model) {
 			Contract contract = createContractModel();
-			contract.setCreatedBy("Mohanasundharam");
+			contract.setCreatedBy(PrasUtil.getPricipal());
 			model.addAttribute("contract", contract);
 	        return "insuranceContractEdit";
 	    }
@@ -242,9 +242,9 @@ public class ContractController{
 	        Insurance dbInsurance = insuranceService.findById(id);
    		 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
 	        model.addAttribute("contract", contract);
-	    	contract.setCreatedBy("Mohanasundharam");
+	    	contract.setCreatedBy(PrasUtil.getPricipal());
 	    	ReferenceContract refCnt = createRefContractModel();
-	    	refCnt.setCreatedBy("Mohanasundharam");
+	    	refCnt.setCreatedBy(PrasUtil.getPricipal());
 	    	refCnt.setIns(dbInsurance);
 	    	contract.setReferenceContract(refCnt);
 	    	
@@ -267,7 +267,7 @@ public class ContractController{
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy("Mohanasundharam");
+	        	contract.setUpdatedBy(PrasUtil.getPricipal());
 	        	contractService.update(contract);
 	        	return "insuranceContractEditSuccess";
 	        }
@@ -289,7 +289,7 @@ public class ContractController{
 		        if (null != contract.getId())
 		        {
 		        	logger.info("Returning ContractEditSuccess.jsp page after update");
-		        	contract.setUpdatedBy("Mohanasundharam");
+		        	contract.setUpdatedBy(PrasUtil.getPricipal());
 		        	contractService.update(contract);
 		        	return "insuranceContractEditSuccess";
 		        }
