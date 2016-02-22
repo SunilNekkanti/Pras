@@ -5,13 +5,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="${context}/resources/js/prasweb.js"></script>
 
 <script>
 
@@ -47,7 +48,7 @@ prasPagination('provider');
 									 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
 									 		<td>${hedisMeasure.code}</td>
 									 		<td>${hedisMeasure.description}</td>
-											<td>	<a href="/Pras/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
+											<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
 									 		<td>${mbrHedisMeasure.dos}</td>
 									 		
 									 		 <c:choose>

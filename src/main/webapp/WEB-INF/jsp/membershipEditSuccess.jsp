@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <%@ page session="false" %>
 <div class="panel-group">
 		<div class="panel panel-primary">
@@ -13,7 +15,7 @@
 								<p><strong>Gender:${membership.genderId.description}</strong></p>
 								<p><strong>county:${membership.countyCode.description}</strong></p>
 								 <p>Updated Successfully </p>
-								<a href="/Pras/membershipTmpList">Click Here</a> Move to membership list
+								<a href="${context}/membershipTmpList">Click Here</a> Move to membership list
 	 					</div>	
 					</div>
 				</div>

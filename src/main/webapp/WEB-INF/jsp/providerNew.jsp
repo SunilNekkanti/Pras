@@ -4,7 +4,10 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="/Pras/resources/js/validation.js"></script>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
+
+<script src="${context}/resources/js/validation.js"></script>
 <script>
 	$(document).ready(function(){	providerValidation();	});
 </script>
@@ -48,7 +51,7 @@
 			
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="/Pras/providerList">Click Here</a> to see Provider List
+					<a href="${context}/providerList">Click Here</a> to see Provider List
 				</div>	
 			</div>
 			

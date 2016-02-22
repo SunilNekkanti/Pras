@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
  <h2> Contact Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
@@ -31,13 +32,13 @@
   					
   					<c:choose>
 					 	<c:when test="${contact.refContact.mbr != null}"> 
-					 		<a href="/Pras/membership/${id}/contactList">Click Here</a> Move to contact list
+					 		<a href="${context}/membership/${id}/contactList">Click Here</a> Move to contact list
 						 </c:when>
 						 <c:when test="${contact.refContact.prvdr != null}">
-							<a href="/Pras/provider/${id}/contactList">Click Here</a> Move to contact list
+							<a href="${context}/provider/${id}/contactList">Click Here</a> Move to contact list
 						</c:when>
 						 <c:when test="${contact.refContact.ins != null}">
-							<a href="/Pras/insurance/${id}/contactList">Click Here</a> Move to contact list
+							<a href="${context}/insurance/${id}/contactList">Click Here</a> Move to contact list
 						</c:when>
 						<c:otherwise>
 							issue

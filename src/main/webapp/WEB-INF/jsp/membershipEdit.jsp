@@ -4,7 +4,9 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-  <script src="/Pras/resources/js/validation.js"></script>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
+  <script src="${context}/resources/js/validation.js"></script>
  <c:choose>
  	<c:when test="${membership.id != null}"> 
 	<script>
@@ -19,7 +21,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Profile</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" id="membership" data-toggle="validator" commandName="membership" action="/Pras/membership/${membership.id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" id="membership" data-toggle="validator" commandName="membership" action="${context}/membership/${membership.id}/save.do" class="form-horizontal" role="form">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="col-sm-6">

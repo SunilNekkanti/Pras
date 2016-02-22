@@ -4,6 +4,8 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
  <c:choose>
  	<c:when test="${membership.id != null}"> 
 	<script>
@@ -13,7 +15,7 @@
 	</script>
 	</c:when>
 </c:choose>	
-<div class="panel-group">
+<div class="panel-group" style="padding-left:0px;">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Membership Profile</div>
 		<div class="panel-body" id="tablediv">
@@ -109,10 +111,12 @@
 					</div>
 				</springForm:form>
 				<div class="col-sm-offset-2 col-sm-10">
-					<a href="/Pras/membership/${id}">Click Here</a> Edit membership profile
+					<a href="${context}/membership/${id}">Click Here</a> Edit membership profile
 				</div>
 			</div>	
  		</div>
 	</div>
 </div>
+
+
 

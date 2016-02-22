@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -43,10 +44,10 @@
 							    	<c:choose>
 									 	
 										 <c:when test="${cntct.referenceContract.prvdr != null}">
-											<a href="/Pras/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
+											<a href="${context}/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.referenceContract.ins != null}">
-											<a href="/Pras/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
+											<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue
@@ -57,10 +58,10 @@
 							    	<c:choose>
 									
 									 <c:when test="${cntct.referenceContract.prvdr != null}">
-										<a href="/Pras/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >View</a>
+										<a href="${context}/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.referenceContract.ins != null}">
-										<a href="/Pras/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >View</a>
+										<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue

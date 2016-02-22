@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -24,7 +25,7 @@
 <script
 	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="${context}/resources/js/prasweb.js"></script>
 
 
 
@@ -35,10 +36,10 @@
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
-                            <li ><a data-target="#profile" href="/Pras/membership/display/${id}" data-toggle="tab">Profile</a></li>
-                            <li class="active"><a data-target="#other" href="/Pras/membership/details/display/${id}" data-toggle="tab">Other Details</a></li>
-                            <li><a data-target="#contact"  href="/Pras/membership/${id}/contact" data-toggle="tab">Contact</a></li>
-                            <li><a data-target="#problem"  href="/Pras/membership/${id}/problem" data-toggle="tab">Problem</a></li>
+                            <li ><a data-target="#profile" href="${context}/membership/display/${id}" data-toggle="tab">Profile</a></li>
+                            <li class="active"><a data-target="#other" href="${context}/membership/details/display/${id}" data-toggle="tab">Other Details</a></li>
+                            <li><a data-target="#contact"  href="${context}/membership/${id}/contact" data-toggle="tab">Contact</a></li>
+                            <li><a data-target="#problem"  href="${context}/membership/${id}/problem" data-toggle="tab">Problem</a></li>
                         </ul>
           </div>
 			

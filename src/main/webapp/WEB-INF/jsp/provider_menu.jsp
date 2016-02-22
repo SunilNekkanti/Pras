@@ -1,3 +1,6 @@
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
 	<script type="text/javascript">
 	$(function(){
 		$('.nav a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active')
@@ -8,7 +11,7 @@
 	</script>
 
 
-	<link rel="stylesheet" href="/Pras/resources/css/side_menu.css">
+	<link rel="stylesheet" href="${context}/resources/css/side_menu.css">
 	<div class="row">
   <div class="col-sm-12 side-menu">
     <div class="sidebar-nav">
@@ -24,10 +27,10 @@
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/Pras/provider/${id}/display">Edit Provider Details <span class="glyphicon glyphicon-play"></span></a></li>
-            <li><a href="/Pras/provider/${id}/contactList">Provider Contact List</a></li>
-             <li><a href="/Pras/provider/${id}/contractList">Provider Contract List</a></li>
-            <li><a href="/Pras/provider/${id}/contract/new">New Provider Contract </a></li>
+            <li class="active"><a href="${context}/provider/${id}/display">Edit Provider Details <span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="${context}/provider/${id}/contactList">Provider Contact List</a></li>
+             <li><a href="${context}/provider/${id}/contractList">Provider Contract List</a></li>
+            <li><a href="${context}/provider/${id}/contract/new">New Provider Contract </a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

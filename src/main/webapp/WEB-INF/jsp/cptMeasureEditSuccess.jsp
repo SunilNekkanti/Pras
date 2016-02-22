@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
  <h2> CPT Measure Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
@@ -13,7 +14,7 @@
   					<p><strong>Description:${cptMeasure.description}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="/Pras/cpt/cptMeasureList">Click Here </a> Move to CPT Measure list
+			 		<a href="${context}/cpt/cptMeasureList">Click Here </a> Move to CPT Measure list
 										
 					
 				</div>	

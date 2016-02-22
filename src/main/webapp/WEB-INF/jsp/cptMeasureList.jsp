@@ -53,7 +53,7 @@
         	}
         	
         	$('#myTable').dataTable({
-        	     "sAjaxSource" : '/Pras/cpt/cptMeasureLists',
+        	     "sAjaxSource" : getContextPath()+'/cpt/cptMeasureLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
@@ -66,7 +66,7 @@
                            		    { "sName": "id", "aTargets": [ 0 ] },
                            		    { "sName": "code", "aTargets": [ 1 ],
                            		      "render": function ( data, type, full, meta ) {
-                                            return '<a href="/Pras/cpt/'+full.id+'">'+data+'</a>';
+                                            return '<a href="cpt/'+full.id+'">'+data+'</a>';
                            		      }},
                            		    { "sName": "shortDescription", "aTargets": [ 2 ] },
                            		    { "sName": "description", "aTargets": [ 3 ] }

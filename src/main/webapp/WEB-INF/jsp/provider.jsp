@@ -1,6 +1,8 @@
 <%@  page  language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@  taglib  prefix="form" uri="http://www.springframework.org/tags/form"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 
 <title>Spring3Example</title>
 
@@ -10,7 +12,7 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
  <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
     
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="${context}/resources/js/prasweb.js"></script>
 
 <script>
 $(document).ready(function(){

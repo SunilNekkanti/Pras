@@ -5,6 +5,8 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
+
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Provider Info</div>
@@ -53,7 +55,7 @@
 			
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="/Pras/membership/${membershipProvider.mbr.id}/providerDetailsList">Click Here</a> to see Membership Provider List
+					<a href="${context}/membership/${membershipProvider.mbr.id}/providerDetailsList">Click Here</a> to see Membership Provider List
 				</div>	
 			</div>
 			

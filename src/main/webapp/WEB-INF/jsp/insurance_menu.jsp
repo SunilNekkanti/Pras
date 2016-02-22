@@ -1,3 +1,6 @@
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
 	<script type="text/javascript">
 	$(function(){
 		$('.nav a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active')
@@ -7,7 +10,7 @@
 	})
 	</script>
 
-<link rel="stylesheet" href="/Pras/resources/css/side_menu.css">
+<link rel="stylesheet" href="${context}/resources/css/side_menu.css">
 <div class="row">
   <div class="col-sm-12 side-menu">
     <div class="sidebar-nav">
@@ -24,12 +27,12 @@
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active">
-            			<a href="/Pras/insurance/${id}">Edit Insurance <span class="glyphicon glyphicon-play"></span></a>
+            			<a href="${context}/insurance/${id}">Edit Insurance <span class="glyphicon glyphicon-play"></span></a>
             </li>
-            <li><a href="/Pras/insurance/${id}/contactList">Insurance Contact List</a></li>
-             <li><a href="/Pras/insurance/${id}/contractList">Insurance Contract List</a></li>
-           <li><a href="/Pras/insurance/${id}/contact/new">New Insurance Contact </a></li>
-            <li><a href="/Pras/insurance/${id}/contract/new">New Insurance Contract </a></li>
+            <li><a href="${context}/insurance/${id}/contactList">Insurance Contact List</a></li>
+             <li><a href="${context}/insurance/${id}/contractList">Insurance Contract List</a></li>
+           <li><a href="${context}/insurance/${id}/contact/new">New Insurance Contact </a></li>
+            <li><a href="${context}/insurance/${id}/contract/new">New Insurance Contract </a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -24,7 +26,7 @@
 <script
 	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="${context}/resources/js/prasweb.js"></script>
 
 
 
@@ -57,7 +59,7 @@
 						
 						<c:forEach items="${membershipDetailsList}" var="mbrDetails">
 							    <tr>
-								   <td> <a href="/Pras/membership/${id}/details/${mbrDetails.id}/display"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
+								   <td> <a href="${context}/membership/${id}/details/${mbrDetails.id}/display"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
 						        <td> ${mbrDetails.newBenifits} </td> 
 						        <td> ${mbrDetails.activityDate}  </td> 
 						        <td> ${mbrDetails.activityMonth}</td>

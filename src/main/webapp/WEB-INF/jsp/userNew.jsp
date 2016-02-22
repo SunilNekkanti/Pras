@@ -5,17 +5,18 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">User Profile</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="user" action="save.do">
 				<div class="form-group required col-sm-12">
-						    <label class="control-label  col-sm-2" for="name">Login</label>
+						    <label class="control-label  col-sm-2" for="username">Login</label>
 						    <div class="col-sm-6">
 						    	<springForm:hidden path="id" />
-						      	<springForm:input path="login" class="form-control" id="login" placeholder="User Id" />
-						      	<springForm:errors path="login" cssClass="error text-danger" />
+						      	<springForm:input path="username" class="form-control" id="username" placeholder="User Id" />
+						      	<springForm:errors path="username" cssClass="error text-danger" />
 						    </div>
 				 </div>
 				 
@@ -53,7 +54,7 @@
 			
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="/Pras/userList">Click Here</a> to see User List
+					<a href="${context}/userList">Click Here</a> to see User List
 				</div>	
 			</div>
 			

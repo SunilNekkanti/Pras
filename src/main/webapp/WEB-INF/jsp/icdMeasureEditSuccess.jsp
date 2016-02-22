@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
  <h2> ICD Measure Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
@@ -13,7 +14,7 @@
   					<p><strong>Description:${icdMeasure.description}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="/Pras/icd/icdMeasureList">Click Here </a> Move to ICD Measure list
+			 		<a href="${context}/icd/icdMeasureList">Click Here </a> Move to ICD Measure list
 					
 				</div>	
 			</div>

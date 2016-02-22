@@ -4,7 +4,9 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="/Pras/resources/js/validation.js"></script>
+ 
+<c:set var="context" value="${pageContext.request.contextPath}" />
+<script src="${context}/resources/js/validation.js"></script>
 <c:choose>
  	<c:when test="${contact.id != null}"> 	
 	<script>

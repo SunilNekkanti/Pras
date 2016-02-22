@@ -1,3 +1,6 @@
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -369,6 +372,12 @@
 
 </style>
 <script>
+function getContextPath() {
+    var ctx = window.location.pathname,
+        path = '/' !== ctx ? ctx.substring(0, ctx.indexOf('/', 1) + 1) : ctx;
+    return path + (/\/$/.test(path) ? '' : '/');
+}
+
 $(document).ready(function () {
 	    $('.nav li a').click(function(e) {
 
@@ -394,33 +403,33 @@ $(document).ready(function () {
         <span class="icon-bar"></span>                        
       </button>
       <a class="navbar-brand" href="#">
-      <img src="/Pras/resources/images/mdbillinglogo.png" class="img-responsive" alt="Cinque Terre" ></img></a>
+      <img src="${context}/resources/images/mdbillinglogo.png" class="img-responsive" alt="Cinque Terre" ></img></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="/Pras/home">Home</a></li>
+        <li><a href="${context}/home">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="/Pras/insuranceList">Insurance</a></li>
-        <li><a href="/Pras/providerList">Provider</a></li>
-        <li><a href="/Pras/membershipTmpList">Membership</a></li>
+        <li><a href="${context}/insuranceList">Insurance</a></li>
+        <li><a href="${context}/providerList">Provider</a></li>
+        <li><a href="${context}/membershipTmpList">Membership</a></li>
         
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quality Measures <span class="caret"></span></a>
           <ul class="dropdown-menu"> 
-            <li><a href="/Pras/hedis/hedisMeasureList">Hedis</a></li>
-            <li><a href="/Pras/cpt/cptMeasureList">CPT</a></li>
-            <li><a href="/Pras/icd/icdMeasureList">ICD</a></li>
-            <li><a href="/Pras/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
+            <li><a href="${context}/hedis/hedisMeasureList">Hedis</a></li>
+            <li><a href="${context}/cpt/cptMeasureList">CPT</a></li>
+            <li><a href="${context}/icd/icdMeasureList">ICD</a></li>
+            <li><a href="${context}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
          </ul>
         </li> 
-        <li><a href="/Pras/reports">Reports</a></li>
-         <li><a href="/Pras/userList">User</a></li>
+        <li><a href="${context}/reports">Reports</a></li>
+         <li><a href="${context}/userList">User</a></li>
         <li><a href="#">Help</a></li>
         <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li> <a disabled="true"> <span class="glyphicon glyphicon-user"></span> <%= session.getAttribute("id") %> </a></li>
-        <li><a href="/Pras/logout"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
+        <li><a href="${context}/logout"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
       </ul>
     </div>
   </div>

@@ -4,6 +4,7 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -62,7 +63,7 @@
 				</div>
 				 
 				<div class="col-sm-offset-6 col-sm-4">
-				<a href="/Pras/membership/${id}">Click Here</a> Edit membership profile
+				<a href="${context}/membership/${id}">Click Here</a> Edit membership profile
 				</div>
 			</springForm:form>
  	</div>

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
  <h2> Hedis Measure Rule Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
@@ -15,7 +16,7 @@
   					<p><strong>Effective Year:${hedisMeasureRule.effectiveYear}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
-			 		<a href="/Pras/hedisMeasureRule/hedisMeasureRuleList">Click Here </a> Move to Hedis Measure Rule list
+			 		<a href="${context}/hedisMeasureRule/hedisMeasureRuleList">Click Here </a> Move to Hedis Measure Rule list
 										
 					
 				</div>	

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
  <h2> Contract Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
@@ -12,7 +13,7 @@
   					<p><strong>PMPM:${contract.PMPM}</strong>  </p>
   					<p><strong>Contract NBR:${contract.contractNBR}</strong>  </p>
   					<p> Updated Successfully  </p>
-					<a href="/Pras/insurance/${id}/contractList">Click Here</a> Move to insurance contract list
+					<a href="${context}/insurance/${id}/contractList">Click Here</a> Move to insurance contract list
 				</div>	
 			</div>
 		</div>

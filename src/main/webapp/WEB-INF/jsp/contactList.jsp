@@ -4,12 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="${context}/resources/js/prasweb.js"></script>
 <script>
 	$(document).ready(function(){	
 		
@@ -45,13 +46,13 @@
 							    <c:when test="${cntct.activeInd == 89}">
 							    	<c:choose>
 									 	<c:when test="${cntct.refContact.mbr != null}"> 
-									 		<a href="/Pras/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
+									 		<a href="${context}/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
 										 </c:when>
 										 <c:when test="${cntct.refContact.prvdr != null}">
-											<a href="/Pras/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
+											<a href="${context}/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.refContact.ins != null}">
-											<a href="/Pras/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
+											<a href="${context}/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue
@@ -61,13 +62,13 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									 <c:when test="${cntct.refContact.mbr != null}"> 
-										<a href="/Pras/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="${context}/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
 									 </c:when>
 									 <c:when test="${cntct.refContact.prvdr != null}">
-										<a href="/Pras/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="${context}/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.refContact.ins != null}">
-										<a href="/Pras/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a href="${context}/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue

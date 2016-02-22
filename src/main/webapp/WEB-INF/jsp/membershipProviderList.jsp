@@ -5,13 +5,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
-<script src="/Pras/resources/js/prasweb.js"></script>
+<script src="${context}/resources/js/prasweb.js"></script>
 
 <script>
 
@@ -41,14 +42,14 @@ prasPagination('provider');
 							<td> 
 							    <c:choose>
 							    <c:when test="${fn:contains(mbrProvider.activeInd, 'Y')}">
-									 	<a href="/Pras/membership/${mbrProvider.mbr.id}/memberProvider/${mbrProvider.id}"   rel='tab' >Edit</a> 
+									 	<a href="${context}/membership/${mbrProvider.mbr.id}/memberProvider/${mbrProvider.id}"   rel='tab' >Edit</a> 
 							    </c:when>
 							    <c:otherwise> 
-										<a href="/Pras/membership/${mbrProvider.mbr.id}/memberProvider/${mbrProvider.id}/display"   rel='tab' >View</a>
+										<a href="${context}/membership/${mbrProvider.mbr.id}/memberProvider/${mbrProvider.id}/display"   rel='tab' >View</a>
 							    </c:otherwise>
 							    </c:choose>
 							    </td>
-							<td> <a href="provider/${mbrProvider.id}"   rel='tab' > ${mbrProvider.prvdr.name}</a></td> 
+							<td> <a href="${context}/provider/${mbrProvider.id}"   rel='tab' > ${mbrProvider.prvdr.name}</a></td> 
 						    <td> ${mbrProvider.prvdr.code}  </td> 
 						 </tr>     
 					</c:forEach>

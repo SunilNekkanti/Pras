@@ -1,4 +1,6 @@
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:set var="context" value="${pageContext.request.contextPath}" />
 	<script type="text/javascript">
 	$(function(){
 		$('.nav a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active')
@@ -9,7 +11,7 @@
 	</script>
 
 
-<link rel="stylesheet" href="/Pras/resources/css/side_menu.css">
+<link rel="stylesheet" href="${context}/resources/css/side_menu.css">
 <div class="row">
   <div class="col-sm-12 side-menu">
     <div class="sidebar-nav">
@@ -25,12 +27,12 @@
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/Pras/membership/${id}/display">Profile <span class="glyphicon glyphicon-play"></span></a></li>
-            <li><a href="/Pras/membership/${id}/detailsList">Insurance Details</a></li>
-            <li><a href="/Pras/membership/${id}/contactList">Contact Details</a></li>
-             <li><a href="/Pras/membership/${id}/problem">Problem Details</a></li>
-             <li><a href="/Pras/membership/${id}/providerDetails">Provider Details</a></li>
-             <li><a href="/Pras/membership/${id}/hedisMeasure">Hedis Measure <span class="badge"> ${mbrHedisMeasureList.size()}</a></li>
+            <li class="active"><a href="${context}/membership/${id}/display">Profile <span class="glyphicon glyphicon-play"></span></a></li>
+            <li><a href="${context}/membership/${id}/detailsList">Insurance Details</a></li>
+            <li><a href="${context}/membership/${id}/contactList">Contact Details</a></li>
+             <li><a href="${context}/membership/${id}/problem">Problem Details</a></li>
+             <li><a href="${context}/membership/${id}/providerDetails">Provider Details</a></li>
+             <li><a href="${context}/membership/${id}/hedisMeasure">Hedis Measure <span class="badge"> ${mbrHedisMeasureList.size()}</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
