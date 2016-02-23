@@ -39,7 +39,7 @@ public class CPTMeasureController{
     @Qualifier("cPTMeasureValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("cptMeasure")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }

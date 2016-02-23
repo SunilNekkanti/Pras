@@ -57,7 +57,7 @@ public class HedisMeasureRuleController{
     @Qualifier("hedisMeasureRuleValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("hedisMeasureRule")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }

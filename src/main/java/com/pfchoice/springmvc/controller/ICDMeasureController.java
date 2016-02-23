@@ -39,7 +39,7 @@ public class ICDMeasureController{
     @Qualifier("iCDMeasureValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("icdMeasure")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
