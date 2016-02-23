@@ -39,7 +39,7 @@ public class InsuranceController{
     @Qualifier("insuranceValidator")
     private Validator validator;
  
-    @InitBinder
+    @InitBinder("insurance")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
