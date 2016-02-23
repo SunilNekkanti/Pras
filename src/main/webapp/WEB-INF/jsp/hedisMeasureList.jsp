@@ -53,7 +53,7 @@
         	}
         	
         	$('#myTable').dataTable({
-        	     "sAjaxSource" : '/Pras/hedis/hedisMeasureLists',
+        	     "sAjaxSource" : getContextPath()+'/hedis/hedisMeasureLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
@@ -66,7 +66,7 @@
                            		    { "sName": "id", "aTargets": [ 0 ] },
                            		    { "sName": "code", "aTargets": [ 1 ],
                            		      "render": function ( data, type, full, meta ) {
-                                            return '<a href="/Pras/hedis/'+full.id+'">'+data+'</a>';
+                                            return '<a href="hedis/'+full.id+'">'+data+'</a>';
                            		      }},
                            		    { "sName": "description", "aTargets": [ 2 ] }
                   ],          

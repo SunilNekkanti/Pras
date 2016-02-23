@@ -2,7 +2,6 @@ package com.pfchoice.springmvc.controller;
 
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureGroup;
@@ -36,6 +35,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
+@SessionAttributes("username")
 public class HedisMeasureController{
 	
     
@@ -92,13 +92,13 @@ public class HedisMeasureController{
     public String addHedisMeasurePage(Model model) {
 		
 		HedisMeasure hedisMeasure = createHedisMeasureModel();
-		hedisMeasure.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("hedisMeasure", hedisMeasure);
         return "hedisMeasureEdit";
     }
 	
 	@RequestMapping(value = "/hedis/{id}", method = RequestMethod.GET)
     public String updateHedisMeasurePage(@PathVariable Integer id,Model model) {
+		
 		HedisMeasure dbHedisMeasure = hedisMeasureService.findById(id);
 	    logger.info("Returning hedisMeasure.getId()"+dbHedisMeasure.getId());
 		model.addAttribute("hedisMeasure", dbHedisMeasure);
@@ -108,6 +108,7 @@ public class HedisMeasureController{
 		
 	@RequestMapping(value = "/hedis/{id}/display", method = RequestMethod.GET)
     public String displayHedisMeasurePage(@PathVariable Integer id,Model model) {
+		
 		HedisMeasure dbHedisMeasure = hedisMeasureService.findById(id);
 		 logger.info("Returning hedisMeasure.getId()"+dbHedisMeasure.getId());
 	       
@@ -117,8 +118,8 @@ public class HedisMeasureController{
     }
 	
 	@RequestMapping(value = "/hedis/hedisMeasureList", method = RequestMethod.GET)
-	public String viewHedisMeasureAction(Model model,
-					HttpServletRequest request) throws Exception{
+	public String viewHedisMeasureAction(Model model) throws Exception{
+		
 		logger.info("Returning view.jsp page after create");
         return "hedisMeasureList";
     }
@@ -129,8 +130,7 @@ public class HedisMeasureController{
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir,
-					HttpServletRequest request) throws Exception{
+					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		Pagination pagination = hedisMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
 
@@ -140,15 +140,15 @@ public class HedisMeasureController{
 	
 	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning hedisMeasureEdit.jsp page");
             return "hedisMeasureNew";
         }
         
 	 	model.addAttribute("hedisMeasure", hedisMeasure);
-	 	hedisMeasure.setCreatedBy(PrasUtil.getPricipal());
-	 	hedisMeasure.setUpdatedBy(PrasUtil.getPricipal());
+	 	hedisMeasure.setCreatedBy(username);
+	 	hedisMeasure.setUpdatedBy(username);
 	 	
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	hedisMeasureService.save(hedisMeasure);
@@ -159,10 +159,12 @@ public class HedisMeasureController{
 	
 	@RequestMapping(value = "/hedis/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
-            BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+       
+		if (bindingResult.hasErrors()) {
             logger.info("Returning  hedisMeasureEdit.jsp page");
             hedisMeasure.setActiveInd('Y');
+            hedisMeasure.setUpdatedBy(username);
             return "hedisMeasureEdit";
         }
 	        
@@ -179,8 +181,9 @@ public class HedisMeasureController{
 
 	@RequestMapping(value = "/hedis/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
-            BindingResult bindingResult, Model model) {
-		 	if (bindingResult.hasErrors()) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		 
+		if (bindingResult.hasErrors()) {
 	            logger.info("Returning  hedisMeasureEdit.jsp page");
 	            hedisMeasure.setActiveInd('Y');
 	            return "hedisMeasureEdit";
@@ -190,6 +193,7 @@ public class HedisMeasureController{
 	        {
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	hedisMeasure.setActiveInd('N');
+	        	hedisMeasure.setUpdatedBy(username);
 	        	hedisMeasureService.update(hedisMeasure);
 	        	return "redirect:hedisMeasureList";
 	        }

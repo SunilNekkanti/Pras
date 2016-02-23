@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.service.InsuranceService;
 
 @Controller
+@SessionAttributes("username")
 public class InsuranceController{
 	
 	private static final Logger logger = LoggerFactory
@@ -52,13 +54,12 @@ public class InsuranceController{
     public String addInsurancePage(Model model) {
 		
 		Insurance insurance = createInsuranceModel();
-		insurance.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("insurance", insurance);
         return "insuranceNew";
     }
 	
 	@RequestMapping(value = "/insurance/{id}", method = RequestMethod.GET)
-    public String updateInsurancePage(@PathVariable Integer id,Model model) {
+    public String updateInsurancePage(@PathVariable Integer id,Model model, @ModelAttribute("username") String username) {
 		
 		Insurance dbInsurance = insuranceService.findById(id);
 		 logger.info("Returning insurance.getId()"+dbInsurance.getId());
@@ -71,62 +72,60 @@ public class InsuranceController{
 	
 	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"add"})
     public String newInsuranceAction(@Validated Insurance insurance,
-            BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+       
+		if (bindingResult.hasErrors()) {
         	logger.info("Returning insuranceEdit.jsp page");
             return "insuranceNew";
         }
-        else
-        {
-	        	logger.info("Returning InsuranceSuccess.jsp page after create");
-	        	model.addAttribute("insurance", insurance);
-	        	insurance.setCreatedBy(PrasUtil.getPricipal());
-	 	      	insuranceService.save(insurance);
-	 	       return "insuranceNewSuccess";
-        }    
+        
+    	logger.info("Returning InsuranceSuccess.jsp page after create");
+    	model.addAttribute("insurance", insurance);
+    	insurance.setCreatedBy(username);
+    	insurance.setUpdatedBy(username);
+      	insuranceService.save(insurance);
+       return "insuranceNewSuccess";
     }
 	
 	
 	
 	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"update"})
     public String updateInsuranceAction( @PathVariable Integer id,@Validated Insurance insurance,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		
         if (bindingResult.hasErrors()) {
         	logger.info("Returning insuranceEdit.jsp page");
         	insurance.setActiveInd('Y');
             return "insuranceEdit";
         }
-        else
-        {
 	        
-	        if (null != insurance.getId())
-	        {
-	        	logger.info("Returning InsuranceSuccess.jsp page after update");
-	        	insurance.setUpdatedBy(PrasUtil.getPricipal());
-	        	insuranceService.update(insurance);
-	        }
-	           
-	        return "insuranceEditSuccess";
-        }    
+        if (null != insurance.getId())
+        {
+        	logger.info("Returning InsuranceSuccess.jsp page after update");
+        	insurance.setUpdatedBy(username);
+        	insuranceService.update(insurance);
+        }
+           
+        return "insuranceEditSuccess";
     }
 	
 	@RequestMapping(value = "/insurance/${id}/save.do", method = RequestMethod.POST, params ={"delete"})
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated Insurance insurance,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	insurance.setActiveInd('Y');
             logger.info("Returning insuranceEdit.jsp page");
             return "insuranceEdit";
         }
-        else
+        
+        if (null != insurance.getId())
         {
-	        	logger.info("Returning InsuranceSuccess.jsp page after update");
 	        	insurance.setActiveInd('N');
-	        	insurance.setUpdatedBy(PrasUtil.getPricipal());
+	        	insurance.setUpdatedBy(username);
 	        	insuranceService.update(insurance);
-	        return "insuranceDeleteSuccess";
         }    
+        logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
+        return "insuranceDeleteSuccess";
     }
 	
 	@ModelAttribute("activeIndMap")

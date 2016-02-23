@@ -77,7 +77,6 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
     	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
 
     	List<Role> list =  cr.list();
-      System.out.println("role size "+list.size());
     	return list;
     }
 

@@ -22,9 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
@@ -50,6 +49,7 @@ import com.pfchoice.core.service.StateService;
 import com.pfchoice.core.service.ZipCodeService;
 
 @Controller
+@SessionAttributes("username")
 public class MembershipController{
 	
 	private static final Logger logger = LoggerFactory
@@ -149,7 +149,7 @@ public class MembershipController{
 	
 	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST)
     public String saveMembershipAction(@PathVariable Integer id, @ModelAttribute("membership") @Validated  Membership membership,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
         if (bindingResult.hasErrors()) {
         	membership.setActiveInd('Y');
@@ -160,7 +160,7 @@ public class MembershipController{
         logger.info("Returning MembershipSuccess.jsp page");
         if (null != membership.getId())
         {
-        	membership.setUpdatedBy(PrasUtil.getPricipal());
+        	membership.setUpdatedBy(username);
             membershipService.update(membership);
         }
         Membership dbMembership  = membershipService.findById(membership.getId()); 
@@ -171,7 +171,7 @@ public class MembershipController{
 	
 	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipAction(@PathVariable Integer id, @Validated Membership membership,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 				
         if (bindingResult.hasErrors()) {
         	membership.setActiveInd('Y');
@@ -182,7 +182,7 @@ public class MembershipController{
         if (null != membership.getId())
         {
         	membership.setActiveInd('N');
-        	membership.setUpdatedBy(PrasUtil.getPricipal());
+        	membership.setUpdatedBy(username);
             membershipService.update(membership);
         }
         
@@ -208,7 +208,6 @@ public class MembershipController{
 		Membership dbMembership = membershipService.findById(id);
 		
 		MembershipInsurance  dbMembershipInsurance = new MembershipInsurance();
-		dbMembershipInsurance.setCreatedBy(PrasUtil.getPricipal());
 		dbMembershipInsurance.setMbr(dbMembership);
 		model.addAttribute("membershipInsurance", dbMembershipInsurance);
 		
@@ -219,7 +218,7 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"update"})
     public String saveMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,BindingResult bindingResult
-    		,Model model) {
+    		,Model model, @ModelAttribute("username") String username) {
         
 		 if (bindingResult.hasErrors()) {
 	   		 	logger.info("Returning membershipDetailsDisplay");
@@ -228,7 +227,7 @@ public class MembershipController{
 	      }
 	      else
 	      {
-	        	membershipInsurance.setUpdatedBy(PrasUtil.getPricipal());
+	        	membershipInsurance.setUpdatedBy(username);
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
 	            return "membershipDetailsEditSuccess";
@@ -238,7 +237,8 @@ public class MembershipController{
 	
 	@RequestMapping(value = "/membership/{id}/details/save.do", method = RequestMethod.POST,params={"add"})
     public String newMembershipInDetailsPage(@PathVariable Integer id,
-    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
+    		Model model,BindingResult bindingResult, @ModelAttribute("username") String username) {
 		
 		 if (bindingResult.hasErrors()) {
 			 logger.info("Returning membershipDetailsDisplay");	
@@ -247,8 +247,8 @@ public class MembershipController{
 	        }
 	        else
 	        {
-	        	membershipInsurance.setCreatedBy(PrasUtil.getPricipal());
-	        	membershipInsurance.setUpdatedBy(PrasUtil.getPricipal());
+	        	membershipInsurance.setCreatedBy(username);
+	        	membershipInsurance.setUpdatedBy(username);
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.save(membershipInsurance);
 	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
 		        return "membershipDetailsEditSuccess";
@@ -258,7 +258,8 @@ public class MembershipController{
 	
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipInsDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
-    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,BindingResult bindingResult) {
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,
+    		BindingResult bindingResult, @ModelAttribute("username") String username) {
 	 	
 		 if (bindingResult.hasErrors()) {
 	       	 logger.info("Returning membershipDetailsDisplay");
@@ -268,16 +269,16 @@ public class MembershipController{
 	        else
 	        {
 	        	membershipInsurance.setActiveInd('N');
-	        	membershipInsurance.setUpdatedBy(PrasUtil.getPricipal());
+	        	membershipInsurance.setUpdatedBy(username);
 	            membershipInsuranceService.update(membershipInsurance);
 	            return "membershipEditSuccess";
 	        }    
     }
 	
 	
-	@RequestMapping(value = "/membership/details/save.do", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/membership/details/save.do", method = RequestMethod.POST)
     public String saveMembershipInsuranceAction( @Validated MembershipInsurance membershipInsurance,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning membershipDetailsEdit.jsp page");
             return "membershipDetailsEdit";
@@ -285,12 +286,14 @@ public class MembershipController{
         logger.info("Returning MembershipDetailsEditSuccess.jsp page");
         if (null != membershipInsurance.getId())
         {
+        	membershipInsurance.setCreatedBy(username);
+        	membershipInsurance.setUpdatedBy(username);
         	membershipInsurance =  membershipInsuranceService.update(membershipInsurance);
         }
         
         model.addAttribute("membershipInsurance", membershipInsurance);
         return "membershipDetailsEditSuccess";
-    }
+    }*/
 	
 	
 	
@@ -341,11 +344,7 @@ public class MembershipController{
 		
 		Membership dbMembership = membershipService.findById(id);
 		model.addAttribute("membership", dbMembership);
-		
-		//membership.getRefContacts().getR
-		
 		List<MembershipInsurance> dbMembershipInsuranceList = membershipInsuranceService.findAllByMbrId(id);
-		
 		List<MembershipProvider>  dbMembershipProviderList  = membershipProviderService.findAllByMbrId(id);
 		
 		for(MembershipProvider s:dbMembershipProviderList){  

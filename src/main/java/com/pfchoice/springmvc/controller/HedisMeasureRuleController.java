@@ -1,10 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 
-import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
@@ -41,6 +38,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
+@SessionAttributes("username")
 public class HedisMeasureRuleController{
 	
     @Autowired
@@ -105,14 +103,13 @@ public class HedisMeasureRuleController{
     public String addHedisMeasureRulePage(Model model) {
 		
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
-		hedisMeasureRule.setCreatedBy(PrasUtil.getPricipal());
-		hedisMeasureRule.setUpdatedBy(PrasUtil.getPricipal());
 		model.addAttribute("hedisMeasureRule", hedisMeasureRule);
         return "hedisMeasureRuleEdit";
     }
 	
 	@RequestMapping(value = "/hedisMeasureRule/{id}", method = RequestMethod.GET)
     public String updateHedisMeasureRulePage(@PathVariable Integer id,Model model) {
+	
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
 	    logger.info("Returning hedisMeasureRule.getId()"+dbHedisMeasureRule.getId());
 		model.addAttribute("hedisMeasureRule", dbHedisMeasureRule);
@@ -122,6 +119,7 @@ public class HedisMeasureRuleController{
 		
 	@RequestMapping(value = "/hedisMeasureRule/{id}/display", method = RequestMethod.GET)
     public String displayHedisMeasureRulePage(@PathVariable Integer id,Model model) {
+	
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
 		 logger.info("Returning hedisMeasureRule.getId()"+dbHedisMeasureRule.getId());
 	       
@@ -131,9 +129,9 @@ public class HedisMeasureRuleController{
     }
 	
 	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleList")
-	public String viewHedisMeasureRuleAction(Model model,
-			HttpServletRequest request) throws Exception{
-				logger.info("Returning view.jsp page after create");
+	public String viewHedisMeasureRuleAction(Model model) throws Exception{
+		
+		logger.info("Returning view.jsp page after create");
 				return "hedisMeasureRuleList";
 	}
 	
@@ -143,8 +141,7 @@ public class HedisMeasureRuleController{
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir,
-					HttpServletRequest request) throws Exception{
+					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort, sortdir);
 
@@ -154,15 +151,15 @@ public class HedisMeasureRuleController{
 	
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addHedisMeasureAction(@ModelAttribute("hedisMeasureRule")  @Validated HedisMeasureRule hedisMeasureRule,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning hedisMeasureRuleEdit.jsp page");
             return "hedisMeasureRuleEdit";
         }
         
 	 	model.addAttribute("hedisMeasureRule", hedisMeasureRule);
-	 	hedisMeasureRule.setCreatedBy(PrasUtil.getPricipal());
-	 	hedisMeasureRule.setUpdatedBy(PrasUtil.getPricipal());
+	 	hedisMeasureRule.setCreatedBy(username);
+	 	hedisMeasureRule.setUpdatedBy(username);
 	 	   	
     	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
       	hedisMeasureRuleService.save(hedisMeasureRule);
@@ -173,7 +170,7 @@ public class HedisMeasureRuleController{
 	
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveHedisMeasureRuleAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	hedisMeasureRule.setActiveInd('Y');
             logger.info("Returning  hedisMeasureRuleEdit.jsp page");
@@ -184,6 +181,7 @@ public class HedisMeasureRuleController{
         {
         	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
         	hedisMeasureRuleService.update(hedisMeasureRule);
+        	hedisMeasureRule.setUpdatedBy(username);
           	return "hedisMeasureRuleEditSuccess";
         }
        
@@ -193,7 +191,7 @@ public class HedisMeasureRuleController{
 
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
 			if (bindingResult.hasErrors()) {
 	        	hedisMeasureRule.setActiveInd('Y');
@@ -205,6 +203,7 @@ public class HedisMeasureRuleController{
 	        {
 	        	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
 	        	hedisMeasureRule.setActiveInd('N');
+	        	hedisMeasureRule.setUpdatedBy(username);
 	        	hedisMeasureRuleService.update(hedisMeasureRule);
 	        	return "redirect:hedisMeasureRuleList";
 	        }

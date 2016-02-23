@@ -4,9 +4,6 @@ package com.pfchoice.springmvc.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
@@ -39,6 +36,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
+@SessionAttributes("username")
 public class UserController{
 	
     @Autowired
@@ -51,7 +49,7 @@ public class UserController{
     @Qualifier("userValidator")
     private Validator validator;
     
-    @InitBinder
+    @InitBinder("user")
     private void initBinder(final WebDataBinder binder) {
         binder.setValidator(validator);
     }
@@ -76,8 +74,6 @@ public class UserController{
     public String addUserPage(final Model model) {
 		
 		User user = createUserModel();
-		user.setCreatedBy(PrasUtil.getPricipal());
-		user.setUpdatedBy(PrasUtil.getPricipal());
 		user.setActiveInd('Y');
 		model.addAttribute("user", user);
         return "userNew";
@@ -97,57 +93,54 @@ public class UserController{
 	
 	@RequestMapping(value = "/user/save.do", method = RequestMethod.POST, params ={"add"})
 	public String newUserAction( @ModelAttribute("user") @Validated User user,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning userEdit.jsp page");
             return "userNew";
         }
-        else
-        {
-	        	logger.info("Returning userSuccess.jsp page after create");
-	        	user.setCreatedBy(PrasUtil.getPricipal());
-	        	user.setUpdatedBy(PrasUtil.getPricipal());
-	        	userService.save(user);
-	 	       return "userEditSuccess";
-        }    
+        
+    	logger.info("Returning userSuccess.jsp page after create");
+    	user.setCreatedBy(username);
+    	user.setUpdatedBy(username);
+    	userService.save(user);
+       return "userEditSuccess";
     }
 	
 	@RequestMapping(value = "/user/{id}/save.do", method = RequestMethod.POST, params ={"update"})
     public String updateUserAction( @PathVariable Integer id,@Validated User user,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	user.setActiveInd('Y');
             logger.info("Returning userEdit.jsp page");
             return "userEdit";
         }
-        else
+        if (null != user.getId())
         {
-	        if (null != user.getId())
-	        {
-	        	logger.info("Returning UserSuccess.jsp page after update");
-	        	user.setUpdatedBy(PrasUtil.getPricipal());
-	        	userService.update(user);
-	        }
-	        return "userEditSuccess";
-        }    
+        	logger.info("Returning userEditSuccess.jsp page after update");
+        	user.setUpdatedBy(username);
+        	userService.update(user);
+        }
+        return "userEditSuccess";
     }
 	
 	
 	@RequestMapping(value = "/user/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated User user,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	user.setActiveInd('Y');
             logger.info("Returning userEdit.jsp page");
             return "userEdit";
         }
-        else
+        
+        if (null != user.getId())
         {
-	        	logger.info("Returning userSuccess.jsp page after update");
-	        	user.setActiveInd('N');
-	        	userService.update(user);
-	        return "userEditSuccess";
-        }    
+	    	logger.info("Returning userSuccess.jsp page after update");
+	    	user.setActiveInd('N');
+	    	user.setUpdatedBy(username);
+	    	userService.update(user);
+        }
+        return "userEditSuccess";
     }
 	
 	@RequestMapping(value = "/userList")
@@ -162,8 +155,7 @@ public class UserController{
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir,
-					HttpServletRequest request) throws Exception{
+					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		
 		Pagination pagination = userService.getPage(pageNo, pageSize);

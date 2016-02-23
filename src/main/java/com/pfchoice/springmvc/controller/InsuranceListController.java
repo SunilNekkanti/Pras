@@ -1,9 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
@@ -52,8 +48,7 @@ public class InsuranceListController
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir,
-					HttpServletRequest request) throws Exception{
+					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		
 		Pagination pagination = insuranceService.getPage(pageNo, pageSize, sSearch, sort, sortdir);

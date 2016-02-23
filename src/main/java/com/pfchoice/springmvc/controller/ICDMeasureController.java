@@ -1,8 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.ICDMeasureService;
 
@@ -31,6 +29,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
+@SessionAttributes("username")
 public class ICDMeasureController{
 	
     @Autowired
@@ -61,7 +60,6 @@ public class ICDMeasureController{
     public String addICDMeasurePage(Model model) {
 		
 		ICDMeasure icdMeasure = createICDMeasureModel();
-		icdMeasure.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("icdMeasure", icdMeasure);
         return "icdMeasureEdit";
     }
@@ -86,8 +84,7 @@ public class ICDMeasureController{
     }
 	
 	@RequestMapping(value = "/icd/icdMeasureList", method = RequestMethod.GET)
-	public String viewICDMeasureAction(Model model,
-					HttpServletRequest request) throws Exception{
+	public String viewICDMeasureAction(Model model) throws Exception{
 		logger.info("Returning view.jsp page after create");
         return "icdMeasureList";
     }
@@ -98,8 +95,7 @@ public class ICDMeasureController{
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir,
-					HttpServletRequest request) throws Exception{
+					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
 
@@ -109,15 +105,15 @@ public class ICDMeasureController{
 	
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning icdMeasureEdit.jsp page");
             return "icdMeasureEdit";
         }
         
 	 	model.addAttribute("icdMeasure", icdMeasure);
-	 	icdMeasure.setCreatedBy(PrasUtil.getPricipal());
-	 	icdMeasure.setUpdatedBy(PrasUtil.getPricipal());
+	 	icdMeasure.setCreatedBy(username);
+	 	icdMeasure.setUpdatedBy(username);
 	 	
     	logger.info("Returning icdEditSuccess.jsp page after create");
       	icdMeasureService.save(icdMeasure);
@@ -128,7 +124,7 @@ public class ICDMeasureController{
 	
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	icdMeasure.setActiveInd('Y');
         	 logger.info("Returning  icdMeasureEdit.jsp page");
@@ -138,6 +134,7 @@ public class ICDMeasureController{
         if (null != icdMeasure.getId())
         {
         	logger.info("Returning icdMeasureEditSuccess.jsp page after update");
+        	icdMeasure.setUpdatedBy(username);
         	icdMeasureService.update(icdMeasure);
         	model.addAttribute("icdMeasure", icdMeasure);
         	return "icdMeasureEditSuccess";
@@ -149,7 +146,7 @@ public class ICDMeasureController{
 
 	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        
 			if (bindingResult.hasErrors()) {
 	        	icdMeasure.setActiveInd('Y');
@@ -160,6 +157,7 @@ public class ICDMeasureController{
 	        {
 	        	logger.info("Returning icdMeasureEditSuccess.jsp page after update");
 	        	icdMeasure.setActiveInd('N');
+	        	icdMeasure.setUpdatedBy(username);
 	        	icdMeasureService.update(icdMeasure);
 	        	return "redirect:icdMeasureList";
 	        }

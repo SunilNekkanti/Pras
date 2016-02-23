@@ -55,7 +55,7 @@
         	}
         	
         	$('#userTable').dataTable({
-        	     "sAjaxSource" : '/Pras/user/list',
+        	     "sAjaxSource" : getContextPath()+'/user/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
@@ -65,7 +65,7 @@
                            		    { "sName": "id", "aTargets": [ 0 ] },
                            		    { "sName": "username", "aTargets": [ 1 ],
                              		   "render": function ( data, type, full, meta ) {
-                                              return '<a href="/Pras/user/'+full.id+'">'+data+'</a>';
+                                              return '<a href="user/'+full.id+'">'+data+'</a>';
                                     }}
                   ],          
         	     "bLengthChange": false,

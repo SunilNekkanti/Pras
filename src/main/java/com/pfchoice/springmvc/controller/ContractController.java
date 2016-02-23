@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Contract;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Provider;
@@ -34,6 +33,7 @@ import com.pfchoice.core.service.ProviderService;
 
 
 @Controller
+@SessionAttributes("username")
 public class ContractController{
 	
     @Autowired
@@ -81,7 +81,6 @@ public class ContractController{
     public String addContractPage(@PathVariable Integer id,Model model) {
 		
 		Contract contract = createContractModel();
-		contract.setCreatedBy(PrasUtil.getPricipal());
 	
 		model.addAttribute("contract", contract);
         return "providerContractEdit";
@@ -120,7 +119,7 @@ public class ContractController{
 	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 	public String newproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	
             logger.info("Returning contractEdit.jsp page");
@@ -131,9 +130,11 @@ public class ContractController{
 	        	Provider dbProvider = providerService.findById(id);
 	   		 	logger.info("Returning provider.getId()"+dbProvider.getId());
 	   		 	model.addAttribute("contract", contract);
-	   		   	contract.setCreatedBy(PrasUtil.getPricipal());
+	   		   	contract.setCreatedBy(username);
+	   		   	contract.setUpdatedBy(username);
 	        	ReferenceContract refContract = createRefContractModel();
-	        	refContract.setCreatedBy(PrasUtil.getPricipal());
+	        	refContract.setCreatedBy(username);
+	        	refContract.setUpdatedBy(username);
 	        	refContract.setPrvdr(dbProvider);
 	        	contract.setReferenceContract(refContract);
 	        	
@@ -147,7 +148,7 @@ public class ContractController{
 	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST,params ={"update"})
 	public String saveproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contractEdit.jsp page");
             contract.setActiveInd('Y');
@@ -158,7 +159,8 @@ public class ContractController{
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy(PrasUtil.getPricipal());
+	        	contract.setUpdatedBy(username);
+	        	contract.getReferenceContract().setUpdatedBy(username);
 	        	contractService.update(contract);
 	        }
 	       
@@ -181,7 +183,7 @@ public class ContractController{
 	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        
 			if (bindingResult.hasErrors()) {
 				contract.setActiveInd('Y');
@@ -191,7 +193,8 @@ public class ContractController{
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy(PrasUtil.getPricipal());
+	        	contract.setUpdatedBy(username);
+	        	contract.getReferenceContract().setUpdatedBy(username);
 	        	contract.setActiveInd('N');
 	        	contractService.update(contract);
 	        }
@@ -226,14 +229,13 @@ public class ContractController{
 		@RequestMapping(value = "/insurance/{id}/contract/new")
 	    public String addProviderContractPage(Model model) {
 			Contract contract = createContractModel();
-			contract.setCreatedBy(PrasUtil.getPricipal());
 			model.addAttribute("contract", contract);
 	        return "insuranceContractEdit";
 	    }
 		
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 		public String addMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
-	            BindingResult bindingResult, Model model) {
+	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 				
 	        if (bindingResult.hasErrors()) {
 	            logger.info("Returning insuranceContractEdit.jsp page");
@@ -242,9 +244,11 @@ public class ContractController{
 	        Insurance dbInsurance = insuranceService.findById(id);
    		 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
 	        model.addAttribute("contract", contract);
-	    	contract.setCreatedBy(PrasUtil.getPricipal());
+	    	contract.setCreatedBy(username);
+	    	contract.setUpdatedBy(username);
 	    	ReferenceContract refCnt = createRefContractModel();
-	    	refCnt.setCreatedBy(PrasUtil.getPricipal());
+	    	refCnt.setCreatedBy(username);
+	    	refCnt.setUpdatedBy(username);
 	    	refCnt.setIns(dbInsurance);
 	    	contract.setReferenceContract(refCnt);
 	    	
@@ -256,7 +260,7 @@ public class ContractController{
 		
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"update"})
 		public String saveMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
-	            BindingResult bindingResult, Model model) {
+	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
 	        if (bindingResult.hasErrors()) {
 	            logger.info("Returning insuranceContractEdit.jsp page");
@@ -267,7 +271,8 @@ public class ContractController{
 	        if (null != contract.getId())
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy(PrasUtil.getPricipal());
+	        	contract.setUpdatedBy(username);
+	        	contract.getReferenceContract().setUpdatedBy(username);
 	        	contractService.update(contract);
 	        	return "insuranceContractEditSuccess";
 	        }
@@ -277,7 +282,7 @@ public class ContractController{
 		
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"delete"})
 		public String deleteInsuranceContractAction(@PathVariable Integer id, @Validated Contract contract,
-	            BindingResult bindingResult, Model model) {
+	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 	
 			if (bindingResult.hasErrors())
 			{
@@ -289,7 +294,8 @@ public class ContractController{
 		        if (null != contract.getId())
 		        {
 		        	logger.info("Returning ContractEditSuccess.jsp page after update");
-		        	contract.setUpdatedBy(PrasUtil.getPricipal());
+		        	contract.setUpdatedBy(username);
+		        	contract.getReferenceContract().setUpdatedBy(username);
 		        	contractService.update(contract);
 		        	return "insuranceContractEditSuccess";
 		        }

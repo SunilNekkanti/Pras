@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.ProviderService;
 
 @Controller
+@SessionAttributes("username")
 public class ProviderController{
 	
     @Autowired
@@ -59,7 +61,6 @@ public class ProviderController{
     public String addProviderPage(final Model model) {
 		
 		Provider provider = createProviderModel();
-		provider.setCreatedBy(PrasUtil.getPricipal());
 		model.addAttribute("provider", provider);
         return "providerNew";
     }
@@ -79,57 +80,56 @@ public class ProviderController{
 	
 	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST, params ={"add"})
     public String newProviderAction( @Validated Provider provider,
-            BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+       
+		if (bindingResult.hasErrors()) {
             logger.info("Returning providerEdit.jsp page");
             return "providerNew";
         }
-        else
-        {
-	        	logger.info("Returning ProviderSuccess.jsp page after create");
-	        	model.addAttribute("provider", provider);
-	        	provider.setCreatedBy(PrasUtil.getPricipal());
-	 	      	providerService.save(provider);
-	 	       return "providerNewSuccess";
-        }    
+		
+    	logger.info("Returning ProviderSuccess.jsp page after create");
+    	model.addAttribute("provider", provider);
+    	provider.setCreatedBy(username);
+    	provider.setUpdatedBy(username);
+      	providerService.save(provider);
+       return "providerNewSuccess";
     }
 	
 	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"update"})
     public String updateProviderAction( @PathVariable Integer id,@Validated Provider provider,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	provider.setActiveInd('Y');
             logger.info("Returning providerEdit.jsp page");
             return "providerEdit";
         }
-        else
+        
+        if (null != provider.getId())
         {
-	        if (null != provider.getId())
-	        {
-	        	logger.info("Returning ProviderSuccess.jsp page after update");
-	        	provider.setUpdatedBy(PrasUtil.getPricipal());
-	        	providerService.update(provider);
-	        }
-	        return "providerEditSuccess";
-        }    
+        	logger.info("Returning ProviderEditSuccess.jsp page after update");
+        	provider.setUpdatedBy(username);
+        	providerService.update(provider);
+        }
+        return "providerEditSuccess";
     }
 	
 	
 	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated Provider provider,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	provider.setActiveInd('Y');
             logger.info("Returning insuranceEdit.jsp page");
-            return "insuranceEdit";
+            return "providerEdit";
         }
-        else
+        if (null != provider.getId())
         {
-	        	logger.info("Returning InsuranceSuccess.jsp page after update");
-	        	provider.setActiveInd('N');
-	        	providerService.update(provider);
-	        return "providerEditSuccess";
-        }    
+        	logger.info("Returning InsuranceSuccess.jsp page after update");
+        	provider.setActiveInd('N');
+        	providerService.update(provider);
+        	provider.setUpdatedBy(username);
+        }   
+        return "providerEditSuccess";
     }
 	
 }
