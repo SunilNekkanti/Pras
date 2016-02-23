@@ -1,40 +1,24 @@
 package com.pfchoice.springmvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionAttributeStore;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 
 import com.pfchoice.common.SystemDefaultProperties;
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
-import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.Provider;
-import com.pfchoice.core.entity.User;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.ProviderService;
@@ -43,6 +27,7 @@ import com.pfchoice.form.LoginForm;
 
 @Controller
 @RequestMapping(value = "*")
+@SessionAttributes("username")
 public class LoginController {
 	
 	@Autowired
@@ -56,8 +41,6 @@ public class LoginController {
 	
 	@Autowired
 	private UserService userService;
-	
-	
 	
 	@RequestMapping(value = { "/",  "/index"}, method = RequestMethod.GET)
 	public String login(@RequestParam(value = "error", required = false) String error,
@@ -80,10 +63,11 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homePage(HttpServletRequest request, Map<String,Object> model) {
-		
-		request.getSession().setAttribute(SystemDefaultProperties.ID, PrasUtil.getPricipal());
-		
+	public String homePage(HttpSession session, Model model) {
+		final String username = (String) session.getAttribute(SystemDefaultProperties.ID);
+		if(!model.containsAttribute("username")) {
+		      model.addAttribute("username", username);
+		    }
 		return "home";
 	}
 	
@@ -125,10 +109,7 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accesssDenied(Model model) {
 
-		model.addAttribute("username", PrasUtil.getPricipal());
-		
 	  return "ad403";
-
 	}
 	
 	

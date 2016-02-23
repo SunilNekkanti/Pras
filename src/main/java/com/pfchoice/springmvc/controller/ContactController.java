@@ -3,6 +3,9 @@ package com.pfchoice.springmvc.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Contact;
 import com.pfchoice.core.entity.Insurance;
@@ -37,6 +41,7 @@ import com.pfchoice.core.service.StateService;
 import com.pfchoice.core.service.ZipCodeService;
 
 @Controller
+@SessionAttributes("username")
 public class ContactController{
 	
     @Autowired
@@ -103,11 +108,9 @@ public class ContactController{
 	}
 	
 	@RequestMapping(value = "/membership/{id}/contact/new")
-    public String addContactPage(Model model) {
+    public String addContactPage(@ModelAttribute("username") String username, Model model) {
 		
 		Contact contact = createContactModel();
-		contact.setCreatedBy(PrasUtil.getPricipal());
-		contact.setFileId(3);
 		model.addAttribute("contact", contact);
         return "membershipContactEdit";
     }
@@ -145,7 +148,8 @@ public class ContactController{
 	
 	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
             return "membershipContactEdit";
@@ -155,10 +159,12 @@ public class ContactController{
 	 	logger.info("Returning membership.getId()"+dbMembership.getId());
 
 	 	model.addAttribute("contact", contact);
-    	contact.setCreatedBy(PrasUtil.getPricipal());
+    	contact.setCreatedBy(username);
+    	contact.setUpdatedBy(username);
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
-    	refCnt.setCreatedBy(PrasUtil.getPricipal());
+    	refCnt.setCreatedBy(username);
+    	refCnt.setUpdatedBy(username);
     	refCnt.setMbr(dbMembership);
     	contact.setRefContact(refCnt);
     	
@@ -171,7 +177,8 @@ public class ContactController{
 	
 	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
@@ -181,7 +188,9 @@ public class ContactController{
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contact.setUpdatedBy(username);
         	contactService.update(contact);
+        	contact.getRefContact().setUpdatedBy(username);
         	return "membershipContactEditSuccess";
         }
        
@@ -191,12 +200,15 @@ public class ContactController{
 
 	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
             
 	        if (null != contact.getId())
 	        {
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	contact.setActiveInd('N');
+	        	contact.setUpdatedBy(username);
+	        	contact.getRefContact().setUpdatedBy(username);
 	        	contactService.update(contact);
 	        }
 	        return "contactList";
@@ -208,8 +220,6 @@ public class ContactController{
     public String addProviderContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
-		contact.setCreatedBy(PrasUtil.getPricipal());
-		contact.setFileId(3);
 		model.addAttribute("contact", contact);
         return "providerContactEdit";
     }
@@ -249,7 +259,8 @@ public class ContactController{
 	
 	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"add"})
 	public String addProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	
             logger.info("Returning contactEdit.jsp page");
@@ -260,10 +271,12 @@ public class ContactController{
 	 	logger.info("Returning provider.getId()"+dbProvider.getId());
 
 	 	model.addAttribute("contact", contact);
-    	contact.setCreatedBy(PrasUtil.getPricipal());
+    	contact.setCreatedBy(username);
+    	contact.setUpdatedBy(username);
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
-    	refCnt.setCreatedBy(PrasUtil.getPricipal());
+    	refCnt.setCreatedBy(username);
+    	refCnt.setUpdatedBy(username);
     	refCnt.setPrvdr(dbProvider);
     	contact.setRefContact(refCnt);
     	
@@ -275,7 +288,8 @@ public class ContactController{
 
 	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"update"})
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
@@ -285,6 +299,9 @@ public class ContactController{
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contact.setUpdatedBy(username);
+        	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setUpdatedBy(username);
         	contactService.update(contact);
         	return "providerContactEditSuccess";
         }
@@ -294,7 +311,8 @@ public class ContactController{
 	
 	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"delete"})
 	public String saveProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
             contact.setActiveInd('Y');
@@ -305,6 +323,8 @@ public class ContactController{
 	        {
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	contact.setActiveInd('N');
+	        	contact.setUpdatedBy(username);
+	        	contact.getRefContact().setUpdatedBy(username);
 	        	contactService.update(contact);
 	        	return "providerContactEditSuccess";
 	        }
@@ -316,8 +336,6 @@ public class ContactController{
     public String addInsuranceContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
-		contact.setCreatedBy(PrasUtil.getPricipal());
-		contact.setFileId(3);
 		model.addAttribute("contact", contact);
         return "insuranceContactEdit";
     }
@@ -356,7 +374,8 @@ public class ContactController{
 	
 	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"add"})
 	public String addInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
             return "insuranceContactEdit";
@@ -366,10 +385,12 @@ public class ContactController{
 	 	logger.info("Returning insurance.getId()"+dbInsurance.getId());
 
 	 	model.addAttribute("contact", contact);
-    	contact.setCreatedBy(PrasUtil.getPricipal());
+    	contact.setCreatedBy(username);
+    	contact.setUpdatedBy(username);
     	contact.setFileId(3);
     	ReferenceContact refCnt = createRefContactModel();
-    	refCnt.setCreatedBy(PrasUtil.getPricipal());
+    	refCnt.setCreatedBy(username);
+    	refCnt.setUpdatedBy(username);
     	refCnt.setIns(dbInsurance);
     	contact.setRefContact(refCnt);
      	logger.info("Returning contactEditSuccess.jsp page after create");
@@ -379,7 +400,8 @@ public class ContactController{
 
 	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"update"})
 	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
             contact.setActiveInd('Y');
@@ -389,6 +411,8 @@ public class ContactController{
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contact.setUpdatedBy(username);
+        	contact.getRefContact().setUpdatedBy(username);
         	contactService.update(contact);
         	return "insuranceContactEditSuccess";
         }
@@ -398,7 +422,8 @@ public class ContactController{
 
 	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"delete"})
 	public String saveInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
             contact.setActiveInd('Y');
@@ -409,6 +434,8 @@ public class ContactController{
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setActiveInd('N');
+        	contact.setUpdatedBy(username);
+        	contact.getRefContact().setUpdatedBy(username);
         	contactService.update(contact);
         	return "insuranceContactEditSuccess";
         }

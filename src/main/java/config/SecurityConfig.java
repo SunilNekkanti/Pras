@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.pfchoice.springmvc.session.CustomAuthenticationSuccessHandler;
+
  
 @Configuration
 @EnableWebSecurity
@@ -32,24 +34,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 				 	"/provider**","/provider/**", "/home").hasAnyAuthority("ROLE_USER" ,"ROLE_ADMIN")
 		 .antMatchers("/**").hasAuthority("ROLE_ADMIN")
 		 .anyRequest().authenticated()
-		 
 		 .and()
+		 
 		 .formLogin().loginPage("/index")
 		 .usernameParameter("username").passwordParameter("password")
 		 .loginProcessingUrl("/loginform.do")
-		 .defaultSuccessUrl("/home")
+		 .successHandler(new CustomAuthenticationSuccessHandler())
 		 .failureUrl("/index?error")
-		 
 		 .and()
+		 
 		  .logout().logoutUrl("/logout").logoutSuccessUrl("/index?logout")
           .invalidateHttpSession(true)
           .deleteCookies("JSESSIONID")
           .permitAll()
-		 
           .and()
+          
 		  .exceptionHandling().accessDeniedPage("/403")
-		  
 		  .and()
+		  
 		  .csrf().disable()
 		  
 		  .sessionManagement().maximumSessions(1);
