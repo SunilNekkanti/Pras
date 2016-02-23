@@ -2,7 +2,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"    prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="/Pras/resources/js/validation.js"></script>
+
+<c:set var="context" value="${pageContext.request.contextPath}" />
+<script src="${context}/resources/js/validation.js"></script>
  <c:choose>
  	<c:when test="${insurance.id != null}"> 
 	<script>
@@ -20,7 +22,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Profile</div>
 		<div class="panel-body">
-			<springForm:form method="POST" commandName="insurance" action="/Pras/insurance/${id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="insurance" action="${context}/insurance/${id}/save.do" class="form-horizontal" role="form">
 			     <div class="form-group required">
 				 	<label class="control-label col-sm-2" for="name">Name</label>
 					<div class="col-sm-6">
@@ -46,7 +48,7 @@
 			</springForm:form>
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="/Pras/insuranceList">Click Here</a> to see Insurance List
+					<a href="${context}/insuranceList">Click Here</a> to see Insurance List
 				</div>	
 			</div>
 		</div>
