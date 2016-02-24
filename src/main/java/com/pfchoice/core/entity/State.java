@@ -65,7 +65,7 @@ public class State implements Serializable
     @Column(name="active_ind",insertable=false)
     private char activeInd;
     
-    @OneToMany(mappedBy="stateCode",  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="stateCode",  fetch = FetchType.LAZY)
     private Set<ZipCode> zipCodes;
     
     public State()

@@ -58,7 +58,7 @@ public class ZipCode implements Serializable
     private char activeInd;
     
     @Expose
-    @OneToOne(  fetch = FetchType.EAGER)
+    @OneToOne(  fetch =FetchType.LAZY)
     @JoinColumn(name="statecode", referencedColumnName="code")
     private State stateCode;
     
