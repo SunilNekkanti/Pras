@@ -3,6 +3,7 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,7 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
     public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

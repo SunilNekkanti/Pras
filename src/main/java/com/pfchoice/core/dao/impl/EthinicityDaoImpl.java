@@ -6,6 +6,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,7 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
     public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -67,6 +69,7 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 	public List<Ethinicity> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	List<Ethinicity> list = cr.list();
     	return list;
     }

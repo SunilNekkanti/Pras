@@ -6,6 +6,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import com.pfchoice.core.dao.MembershipStatusDao;
@@ -26,6 +27,7 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
     public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -66,6 +68,7 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
 	public List<MembershipStatus> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	List<MembershipStatus>  list = cr.list();
     	return list;
     }

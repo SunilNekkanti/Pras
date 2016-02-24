@@ -57,7 +57,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		  .add(Restrictions.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     	}
          crit.add(or);
-        
+         crit.add(Restrictions.eq("activeInd", 'Y'));
         if(sort != null && !"".equals(sort)) 
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
@@ -110,6 +110,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	public List<Membership> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	List<Membership> list = cr.list();
     	return list;
     }

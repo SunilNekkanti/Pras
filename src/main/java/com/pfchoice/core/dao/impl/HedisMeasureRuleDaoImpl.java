@@ -47,7 +47,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     		
     		crit.add(or);
     	}
-        
+    	crit.add(Restrictions.eq("activeInd", 'Y'));
+    	
     	if(sort != null && !"".equals(sort)) 
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
@@ -100,7 +101,10 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 	public List<HedisMeasureRule> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("code"));
+    	cr.addOrder(Order.asc("hedisMeasure.code"))
+    	.addOrder(Order.asc("cptMeasure.code"))
+    	.addOrder(Order.asc("icdMeasure.code"))
+    	.add(Restrictions.eq("activeInd", 'Y'));
     	List<HedisMeasureRule> list = cr.list();
     	return list;
     }

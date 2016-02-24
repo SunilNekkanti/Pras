@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -68,7 +69,8 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
 	public List<ZipCode> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("code"));
+    	cr.addOrder(Order.asc("code"))
+    	.add(Restrictions.eq("activeInd", 'Y'));
     	List<ZipCode> list = cr.list();
     	return list;
     }

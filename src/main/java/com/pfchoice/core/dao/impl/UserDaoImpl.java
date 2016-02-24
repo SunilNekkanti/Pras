@@ -3,8 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
@@ -28,6 +26,7 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
     public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -69,7 +68,7 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
     {
     	 Criteria crit = createCriteria();
     	 crit.add(Restrictions.eq("username", login));
-    	 
+    	 crit.add(Restrictions.eq("activeInd", 'Y'));
     	User entity = (User) crit.uniqueResult();
 
         return entity;
@@ -82,6 +81,7 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
     	Criteria crit = createCriteria();
     	crit.add(Restrictions.eq("username", login));
     	crit.add(Restrictions.eq("password", password));
+    	crit.add(Restrictions.eq("activeInd", 'Y'));
     	
     	User entity = (User) crit.uniqueResult();
     	

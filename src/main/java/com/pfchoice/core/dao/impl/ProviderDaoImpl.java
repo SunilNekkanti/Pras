@@ -44,6 +44,7 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     	}
         Criteria crit = createCriteria();
         crit.add(or);
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         
         if(sort != null && !"".equals(sort)) 
 		{
@@ -98,6 +99,7 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     {
     	
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	cr.setFetchMode("ProviderContract", FetchMode.JOIN);
     	List<Provider> list = cr.list();
     

@@ -6,7 +6,6 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -29,6 +28,7 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
     public Pagination getPage(final int pageNo,final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -69,6 +69,7 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 	public List<MembershipProvider> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	List<MembershipProvider> list = cr.list();
     	return list;
     }
@@ -78,9 +79,11 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
     {
     	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr")
     			.createAlias("mbrPrvdr.mbr","mbr")
-    			.add(Restrictions.eq("mbr.id", id));
+    			.add(Restrictions.eq("mbr.id", id))
+    			.add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
+    			.add(Restrictions.eq("mbr.activeInd", 'Y'));
+    	
     	List<MembershipProvider> list = cr.list();
-
     	final String msg = "findAllByMbrId list size is %d";
     	final String fmt = String.format(msg, list.size());
     	LOG.info(fmt);

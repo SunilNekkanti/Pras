@@ -6,12 +6,9 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
-import org.hibernate.type.StringType;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -44,7 +41,8 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
     		  .add(Restrictions.ilike("shortDescription","%"+sSearch+"%"))
     		  .add(Restrictions.ilike("description","%"+sSearch+"%"));
     	}
-         crit.add(or);
+         crit.add(or)
+         	 .add(Restrictions.eq("activeInd", 'Y'));
         
         if(sort != null && !"".equals(sort)) 
 		{
@@ -106,7 +104,8 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 	public List<CPTMeasure> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("code"));
+    	cr.addOrder(Order.asc("code"))
+    	.add(Restrictions.eq("activeInd", 'Y'));
     	List<CPTMeasure> list = cr.list();
     	return list;
     }

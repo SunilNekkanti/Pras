@@ -8,7 +8,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
@@ -32,23 +31,19 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     public Pagination getPage(final int pageNo,final  int pageSize, 
     					final String sSearch, final String sort, final String sortdir)
     {
-    	Disjunction or = Restrictions.disjunction();
+    	Criteria crit = createCriteria();
     	
     	if(sSearch != null && !"".equals(sSearch))
     	{
-    		Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
-    		Criterion description   = Restrictions.ilike("description","%"+sSearch+"%");
-    		Criterion hcc   = Restrictions.ilike("hcc","%"+sSearch+"%");
-    		Criterion rxhcc   = Restrictions.ilike("rxhcc","%"+sSearch+"%");
-    		or.add(code);
-    		or.add(description);
-    		or.add(hcc);
-    		or.add(rxhcc);
+    		Disjunction or = Restrictions.disjunction();
+        	
+    		or.add(Restrictions.ilike("code","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("description","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("hcc","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("rxhcc","%"+sSearch+"%"));
+    		crit.add(or);
     	}
 
-		Criteria crit = createCriteria();
-		crit.add(or);
-	
 		if(sort != null && !"".equals(sort)) 
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
@@ -61,6 +56,7 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 			}
 		}
 
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -101,7 +97,8 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 	public List<ICDMeasure> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("code"));
+    	cr.add(Restrictions.eq("activeInd", 'Y'))
+    	.addOrder(Order.asc("code"));
     	List<ICDMeasure> list = cr.list();
     	return list;
     }

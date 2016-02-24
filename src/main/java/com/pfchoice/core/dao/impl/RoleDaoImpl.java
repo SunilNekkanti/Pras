@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,7 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
     public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -70,6 +72,7 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
     {
     	
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	cr.setProjection(
     		    Projections.distinct(Projections.projectionList()
     		    	    .add(Projections.property("role"), "role")

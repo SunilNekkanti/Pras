@@ -29,6 +29,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     public Pagination getPage(final int pageNo, final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -69,6 +70,7 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 	public List<MembershipInsurance> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	List<MembershipInsurance> list = cr.list();
     	return list;
     }
@@ -78,7 +80,9 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
     {
     	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrIns")
     			.createAlias("mbrIns.mbr","mbr")
-    			.add(Restrictions.eq("mbr.id", id));
+    			.add(Restrictions.eq("mbr.id", id))
+    			.add(Restrictions.eq("mbrIns.activeInd", 'Y'))
+      			.add(Restrictions.eq("mbr.activeInd", 'Y'));
     	List<MembershipInsurance> list = cr.list();
     	return list;
     }

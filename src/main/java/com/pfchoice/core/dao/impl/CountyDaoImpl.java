@@ -29,6 +29,7 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
     public Pagination getPage(final int pageNo,final int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -69,7 +70,7 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
 	public List<County> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.add(Restrictions.eqOrIsNull("activeInd", "Y"));
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	cr.addOrder(Order.asc("description"));
     	List<County> list = cr.list();
     	return list;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
     public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -68,7 +70,8 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 	public List<Gender> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("description"));
+    	cr.addOrder(Order.asc("description"))
+    	.add(Restrictions.eq("activeInd", 'Y'));
     	List<Gender> list = cr.list();
     	return list;
     }

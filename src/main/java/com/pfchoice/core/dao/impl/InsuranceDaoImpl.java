@@ -40,6 +40,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
     	}
         Criteria crit = createCriteria();
         crit.add(or);
+        crit.add(Restrictions.eq("activeInd", 'Y'));
         
         if(sort != null && !"".equals(sort)) 
 		{
@@ -94,6 +95,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 	public List<Insurance> findAll()
     {
     	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
     	List<Insurance> list = cr.list();
     	return list;
     }

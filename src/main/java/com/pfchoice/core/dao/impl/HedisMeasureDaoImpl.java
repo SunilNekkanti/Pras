@@ -44,19 +44,21 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 		}
 		
 		 Criteria crit = createCriteria()
-	        		.createAlias("hedisMsrGrp", "hedisMsrGrp");
-		crit.add(or);
+	        		.createAlias("hedisMsrGrp", "hedisMsrGrp")
+	        		.add(or)
+	        		.add(Restrictions.eq("activeInd", 'Y'))
+		 			.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
 		
 		if(sort != null && !"".equals(sort)) 
 		{
-		if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
-		{
-			crit.addOrder(Order.desc(sort));
-		}
-		else 
-		{
-			crit.addOrder(Order.asc(sort));
-		}
+			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
+			{
+				crit.addOrder(Order.desc(sort));
+			}
+			else 
+			{
+				crit.addOrder(Order.asc(sort));
+			}
 		}
 		
 		Pagination page = findByCriteria(crit, pageNo, pageSize);
@@ -99,7 +101,10 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 	public List<HedisMeasure> findAll()
     {
     	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("id"));
+    	cr.createAlias("hedisMsrGrp", "hedisMsrGrp");
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
+    	cr.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
+    	cr.addOrder(Order.asc("code"));
     	List<HedisMeasure> list = cr.list();
     	return list;
     }
