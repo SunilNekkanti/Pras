@@ -67,7 +67,7 @@ $.ajax( {
                      		    { "sName": "id", "aTargets": [ 0 ] },
                      		    { "sName": "hedisMeasure.code", "aTargets": [ 1 ],
                      		      "render": function ( data, type, full, meta ) {
-                                      return '<a href="hedisMeasureRule/'+full.id+'">'+data+'</a>';
+                                      return '<a href="'+full.id+'">'+data+'</a>';
                      		      }},
                      		    { "sName": "cptMeasure.code", "aTargets": [ 2 ] },
                      			{ "sName": "icdMeasure.code", "aTargets": [ 3] },
