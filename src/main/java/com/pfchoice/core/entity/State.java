@@ -2,6 +2,7 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -63,8 +65,8 @@ public class State implements Serializable
     @Column(name="active_ind",insertable=false)
     private char activeInd;
     
-    @OneToOne(mappedBy="stateCode",  fetch = FetchType.EAGER)
-    private ZipCode zipCode;
+    @OneToMany(mappedBy="stateCode",  fetch = FetchType.EAGER)
+    private Set<ZipCode> zipCodes;
     
     public State()
     {
@@ -117,15 +119,15 @@ public class State implements Serializable
 	/**
 	 * @return the zipCode
 	 */
-	public ZipCode getZipCode() {
-		return zipCode;
+	public Set<ZipCode> getZipCodes() {
+		return zipCodes;
 	}
 
 	/**
 	 * @param zipCode the zipCode to set
 	 */
-	public void setZipCode(final ZipCode zipCode) {
-		this.zipCode = zipCode;
+	public void setZipCodes(final Set<ZipCode> zipCodes) {
+		this.zipCodes = zipCodes;
 	}
 
 	/**
