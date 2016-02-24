@@ -47,7 +47,7 @@ public class UserDaoImplTest extends JUnitSpringTestBase
         User result = userDao.findById(id);
     }
 
-   @Test
+//   @Test
     public void testSave()
     {
         System.out.println("testSave start");
