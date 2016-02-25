@@ -106,12 +106,4 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
         return Membership.class;
     }
 
-    @SuppressWarnings("unchecked")
-	public List<Membership> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.add(Restrictions.eq("activeInd", 'Y'));
-    	List<Membership> list = cr.list();
-    	return list;
-    }
 }

@@ -65,9 +65,4 @@ public class InsuranceServiceImpl implements InsuranceService
         return insuranceDao.updateByUpdater(updater);
     }
 
-    @Override
-    public List<Insurance> findAll()
-    {
-    	return insuranceDao.findAll();
-    }
 }

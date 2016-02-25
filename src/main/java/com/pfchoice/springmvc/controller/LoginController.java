@@ -71,30 +71,6 @@ public class LoginController {
 		return "home";
 	}
 	
-	@ModelAttribute("membershipList")
-	public List<Membership> populateMembershipList() {
-		
-		//Data referencing for Membership Status list box
-		List<Membership> mbrList = membershipService.findAll();
-		return mbrList;
-	}
-	
-	@ModelAttribute("providerList")
-	public List<Provider> populateProviderList() {
-		
-		//Data referencing for Membership Status list box
-		List<Provider> prvdrList = providerService.findAll();
-		return prvdrList;
-	}
-	
-	@ModelAttribute("insuranceList")
-	public List<Insurance> populateInsuranceList() {
-		
-		//Data referencing for Insurance  list box
-		List<Insurance> insList = insuranceService.findAll();
-		return insList;
-	}
-	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String page( WebRequest request,  SessionStatus status) {
 		

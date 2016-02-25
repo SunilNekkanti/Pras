@@ -23,6 +23,4 @@ public interface InsuranceService
 
     Insurance update(Insurance bean);
     
-    List<Insurance> findAll();
-
 }

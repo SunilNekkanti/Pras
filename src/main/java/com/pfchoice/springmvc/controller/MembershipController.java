@@ -397,15 +397,6 @@ public class MembershipController{
 	}
 	
 	
-	@ModelAttribute("insList")
-	public List<Insurance> populateInsuranceList() {
-		
-		//Data referencing for Insurance list box
-		List<Insurance> insList = insuranceService.findAll();
-		return insList;
-	}
-	
-	
 	@ModelAttribute("statusList")
 	public List<MembershipStatus> populateStatusList1() {
 		

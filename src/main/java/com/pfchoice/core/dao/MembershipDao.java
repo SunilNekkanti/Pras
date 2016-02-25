@@ -24,6 +24,4 @@ public interface MembershipDao
 
     Membership updateByUpdater(Updater<Membership> updater);
     
-    List<Membership> findAll();
-
 }

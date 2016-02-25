@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pfchoice.ControllerServerSideTestBase;
 import com.pfchoice.core.entity.Membership;
-import com.pfchoice.springmvc.controller.MembershipAction;
 
 /**
  *
@@ -20,7 +19,7 @@ import com.pfchoice.springmvc.controller.MembershipAction;
 public class MembershipActionServerSideTest extends ControllerServerSideTestBase
 {
 
-    @Autowired
+/*    @Autowired
     private MembershipAction membershipAction;
 
     @Test
@@ -75,5 +74,5 @@ public class MembershipActionServerSideTest extends ControllerServerSideTestBase
             ex.printStackTrace();
         }
     }
-
+*/
 }

@@ -103,7 +103,7 @@ public class ContactController{
 	}
 	
 	@RequestMapping(value = "/membership/{id}/contact/new")
-    public String addContactPage(@ModelAttribute("username") String username, Model model) {
+    public String addContactPage(@PathVariable Integer id,@ModelAttribute("username") String username, Model model) {
 		
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);

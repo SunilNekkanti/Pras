@@ -64,10 +64,4 @@ public class ProviderServiceImpl implements ProviderService
         return providerDao.updateByUpdater(updater);
     }
     
-    @Override
-    public List<Provider> findAll()
-    {
-    	return providerDao.findAll();
-    }
-
 }

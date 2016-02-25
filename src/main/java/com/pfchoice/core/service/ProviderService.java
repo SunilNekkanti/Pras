@@ -23,6 +23,4 @@ public interface ProviderService
 
     Provider update(Provider bean);
     
-    List<Provider> findAll();
-
 }

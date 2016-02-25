@@ -24,5 +24,4 @@ public interface ProviderDao
 
     Provider updateByUpdater(Updater<Provider> updater);
 
-    List<Provider> findAll();
 }

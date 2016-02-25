@@ -64,9 +64,4 @@ public class MembershipServiceImpl implements MembershipService
         return membershipDao.updateByUpdater(updater);
     }
 
-    @Override
-    public List<Membership> findAll()
-    {
-    	return membershipDao.findAll();
-    }
 }

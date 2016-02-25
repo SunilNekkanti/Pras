@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 
 import com.pfchoice.ControllerClientSideTestBase;
 import com.pfchoice.core.entity.Membership;
-import com.pfchoice.springmvc.controller.MembershipAction;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class MembershipActionTest extends ControllerClientSideTestBase
 {
-
+/*
     @Autowired
     private MembershipAction membershipAction;
 
@@ -73,6 +72,6 @@ public class MembershipActionTest extends ControllerClientSideTestBase
     //    MembershipAction instance = new MembershipAction();
         Message expResult = null;
       //  Message result = membershipAction.retrieve(id);
-    }
+    }*/
 
 }

@@ -23,6 +23,4 @@ public interface MembershipService
 
     Membership update(Membership bean);
     
-    List<Membership> findAll();
-
 }

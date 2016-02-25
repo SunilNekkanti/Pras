@@ -24,6 +24,4 @@ public interface InsuranceDao
 
     Insurance updateByUpdater(Updater<Insurance> updater);
     
-    List<Insurance> findAll();
-
 }

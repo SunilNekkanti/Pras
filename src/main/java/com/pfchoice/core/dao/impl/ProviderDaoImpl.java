@@ -94,16 +94,4 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
         return Provider.class;
     }
     
-    @SuppressWarnings("unchecked")
-	public List<Provider> findAll()
-    {
-    	
-    	Criteria cr = createCriteria();
-    	cr.add(Restrictions.eq("activeInd", 'Y'));
-    	cr.setFetchMode("ProviderContract", FetchMode.JOIN);
-    	List<Provider> list = cr.list();
-    
-    	return list;
-    }
-
 }
