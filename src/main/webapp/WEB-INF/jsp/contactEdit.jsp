@@ -135,7 +135,6 @@
 	 
      var stateId = $( "#state" ).val();
      var $select = $('#zip');
-     alert( "stateId"+stateId );
    //request the JSON data and parse into the select element
 	   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
 	    
