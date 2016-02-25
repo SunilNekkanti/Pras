@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.Contact;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
@@ -34,6 +37,8 @@ import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.ProviderService;
 import com.pfchoice.core.service.StateService;
 import com.pfchoice.core.service.ZipCodeService;
+
+import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
 @SessionAttributes("username")
@@ -98,7 +103,7 @@ public class ContactController{
 	public List<ZipCode> populateZipCodeList() {
 		
 		//Data referencing for gender list box
-		List<ZipCode> zipCodeList = zipCodeService.findAll();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(1);
 		return zipCodeList;
 	}
 	
@@ -110,12 +115,16 @@ public class ContactController{
         return "membershipContactEdit";
     }
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/membership/{id}/contact/{cntId}", method = RequestMethod.GET)
     public String updateMembershipContact1Page(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		if(dbContact == null){
 	    	   dbContact = createContactModel();
 	       }
+		final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList",zipCodeList);
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactEdit.jsp page");
         return "membershipContactEdit";
@@ -125,7 +134,10 @@ public class ContactController{
     public String displayMembershipContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
-	       
+	    
+		final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList",zipCodeList); 
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactDisplay.jsp page");
         return "membershipContactDisplay";
@@ -224,9 +236,12 @@ public class ContactController{
     public String updateProviderContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		// logger.info("Returning contact.getId()"+dbContact.getId());
-	       if(dbContact == null){
-	    	   dbContact = createContactModel();
-	       }
+        if(dbContact == null){
+    	   dbContact = createContactModel();
+        }
+        final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList",zipCodeList);   
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactEdit.jsp page");
         return "providerContactEdit";
@@ -236,7 +251,10 @@ public class ContactController{
     public String displayProviderContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
-	       
+		
+		final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList",zipCodeList);   
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactDisplay.jsp page");
         return "providerContactDisplay";
@@ -339,9 +357,12 @@ public class ContactController{
     public String updateInsuranceContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		// logger.info("Returning contact.getId()"+dbContact.getId());
-	       if(dbContact == null){
-	    	   dbContact = createContactModel();
-	       }
+        if(dbContact == null){
+    	   dbContact = createContactModel();
+        }
+        final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList",zipCodeList);
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactEdit.jsp page");
         return "insuranceContactEdit";
@@ -351,7 +372,9 @@ public class ContactController{
     public String displayInsuranceContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
-	       
+		final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList",zipCodeList);     
 		model.addAttribute("contact", dbContact);
         logger.info("Returning contactDisplay.jsp page");
         return "insuranceContactDisplay";
@@ -438,4 +461,12 @@ public class ContactController{
         return "insuranceContactEdit";
     }
 
+	@ResponseBody
+	@RequestMapping(value = "/contact/state/{stateCode}")
+	 public Message  getStateZip(@PathVariable Integer stateCode,@ModelAttribute("username") String username, Model model) 
+	{
+		  List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateCode);
+		  return  Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(zipCodeList));
+	        
+	 }
 }

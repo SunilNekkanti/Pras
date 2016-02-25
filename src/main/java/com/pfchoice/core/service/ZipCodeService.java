@@ -25,4 +25,5 @@ public interface ZipCodeService
     
     List<ZipCode> findAll();
 
+    List<ZipCode> findByStateCode(Integer stateCode);
 }

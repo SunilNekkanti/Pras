@@ -74,5 +74,17 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
     	List<ZipCode> list = cr.list();
     	return list;
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<ZipCode> findByStateCode(Integer stateCode)
+    {
+	    Criteria cr = createCriteria();
+	    cr.createAlias("stateCode", "stateCode");
+	    cr.add(Restrictions.eq("activeInd", 'Y'));
+	    cr.add(Restrictions.eq("stateCode.code", stateCode));
+	    
+		List<ZipCode> list = cr.list();
+	    return list;
+   }
 
 }

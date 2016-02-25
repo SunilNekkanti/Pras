@@ -68,4 +68,10 @@ public class ZipCodeServiceImpl implements ZipCodeService
     {
     	return zipCodeDao.findAll();
     }
+    
+    @Override
+    public List<ZipCode> findByStateCode(Integer stateCode)
+    {
+     return zipCodeDao.findByStateCode(stateCode);
+    }
 }

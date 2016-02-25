@@ -25,5 +25,6 @@ public interface ZipCodeDao
     ZipCode updateByUpdater(Updater<ZipCode> updater);
     
     List<ZipCode> findAll();
-    
+  
+    List<ZipCode> findByStateCode(Integer stateCode);
 }
