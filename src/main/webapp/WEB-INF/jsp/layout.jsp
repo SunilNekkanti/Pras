@@ -38,7 +38,7 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 95%}
+    .row.content {height: 800px;}
     
     /* Set gray background color and 100% height */
     .sidenav {
