@@ -138,7 +138,6 @@
    //request the JSON data and parse into the select element
 	   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
 	    
-		   alert( data.data);
 	     //clear the current content of the select
 	     $select.html('');
 	    
