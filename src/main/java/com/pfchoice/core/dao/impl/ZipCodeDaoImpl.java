@@ -3,11 +3,16 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.StringType;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +34,7 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
     public Pagination getPage(final int pageNo,final  int pageSize)
     {
         Criteria crit = createCriteria();
+
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
