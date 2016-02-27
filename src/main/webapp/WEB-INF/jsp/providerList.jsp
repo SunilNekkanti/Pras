@@ -92,7 +92,7 @@
 					<tr>
 							<th scope="col">Action</th>
 							<th scope="col">Name</th>
-							<th scope="col">Code</th>
+							<th scope="col">NPI</th>
 					</tr>
 				</thead>
 

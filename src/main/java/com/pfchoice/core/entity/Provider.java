@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
@@ -65,8 +63,8 @@ public class Provider implements Serializable
     private String updatedBy;
     
     @Expose
-    @Column(name="active_ind",insertable=false)
-    private char activeInd;
+    @Column(name="active_ind", insertable = false)
+    private Character activeInd;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
@@ -74,6 +72,7 @@ public class Provider implements Serializable
      
     public Provider()
     {
+    	
     }
 
     public Provider(final Integer id)
@@ -178,14 +177,14 @@ public class Provider implements Serializable
 	/**
 	 * @return the activeInd
 	 */
-	public char getActiveInd() {
+	public Character getActiveInd() {
 		return activeInd;
 	}
 
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(final char activeInd) {
+	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 	

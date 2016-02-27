@@ -61,7 +61,7 @@ public class HedisMeasureGroup implements Serializable
     
     @Expose
     @Column(name="active_ind",insertable=false)
-    private char activeInd;
+    private Character activeInd;
     
    
     
@@ -173,14 +173,14 @@ public class HedisMeasureGroup implements Serializable
 	/**
 	 * @return the activeInd
 	 */
-	public char getActiveInd() {
+	public Character getActiveInd() {
 		return activeInd;
 	}
 
 	/**
 	 * @param activeInd the activeInd to set
 	 */
-	public void setActiveInd(final char activeInd) {
+	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
