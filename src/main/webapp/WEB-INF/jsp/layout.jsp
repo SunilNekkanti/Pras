@@ -75,6 +75,34 @@ $(document).ready(function() {
 	});
 </script>
 <body>  
+<script>
+
+$(document).ready(function(){	
+	
+
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        localStorage.setItem('lastTab', $(this).attr('href'));
+    });
+
+    var lastTab = localStorage.getItem('lastTab');
+    if (lastTab) {
+        $('[href="' + lastTab + '"]').tab('show');
+    }
+
+
+$('[data-toggle="tab"]').click(function(e) {
+    e.preventDefault();
+    var loadurl = $(this).attr('href');
+    var targ = $(this).attr('data-target');
+    $.get(loadurl, function(data) {
+        $(targ).html(data);
+
+    });
+    $(this).tab('show')
+});
+
+});
+</script>
 <c:set var="context" value="${pageContext.request.contextPath}" />
        <div> <tiles:insertAttribute name="header" /> </div>  
        <div class="container-fluid text-center">    

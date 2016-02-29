@@ -6,72 +6,106 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
-<script src="${context}/resources/js/prasweb.js"></script>
-
-<script>
-
-$(document).ready(function(){	
-	
-prasPagination('provider');
-
-});
-</script>
-<div class="panel-group">
-	<div class="panel panel-primary">
-		<div class="panel-heading">Membership Hedis Measure</span></div>
-		<div class="panel-body" id="tablediv">
-			<div class="col-sm-12 fdl">
-				<table id="tab" class="table table-striped table-hover">
-					<thead>
-						<tr>
-								<th scope="col">Hedis Measure Code</th>
-								<th scope="col">Description</th>
-								<th scope="col">Due Date</th>
-								<th scope="col">Date of Service</th>
-								<th scope="col">Status</th>
-						</tr>
-					</thead>
-	
-					<tbody id="contentprovider">
-						
-						<c:forEach items="${mbrHedisMeasureList}" var="mbrHedisMeasure">
-							<tr>
-							    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
-							    		 	
-										<c:choose>
-									 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
-									 		<td>${hedisMeasure.code}</td>
-									 		<td>${hedisMeasure.description}</td>
-											<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
-									 		<td>${mbrHedisMeasure.dos}</td>
-									 		
-									 		 <c:choose>
-										    	<c:when test="${not empty mbrHedisMeasure.dos}">
-												 		<td>Completed</td>
-												</c:when>
-												<c:otherwise>
-														<td>Pending</td>
-												</c:otherwise>
-											</c:choose>
-									
-									 		</c:when>
-										</c:choose>
-									</c:forEach>
-							    
-							 </tr>     
-						</c:forEach>
-					</tbody>
-				</table>
-				<div class="col-md-12 text-center" id="page_navigationprovider"></div>
-				<div id="show_per_pageprovider"></div>
-				<div id="current_pageprovider"></div>
-			</div>	
-		</div>
+<div id="content">
+    <ul id="tabs" class="nav nav-pills" data-tabs="tabs">
+        <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
+        <li><a href="#completed" data-toggle="tab">Completed</a></li>
+    </ul>
+    <div class="row" style="height: 750px;overflow-y: scroll;">
+	    <div class="col-sm-12" >
+		    <div id="my-tab-content fade active in" class="tab-content">
+		        <div class="tab-pane active" id="pending">
+		          	<div class="panel-group">
+							<div class="panel panel-primary">
+								<div class="panel-heading">Membership Hedis Measure</span></div>
+								<div class="panel-body" id="tablediv">
+									<div class="col-sm-12 fdl">
+										<table id="tab" class="table table-striped table-hover">
+											<thead>
+												<tr>
+														<th scope="col">Hedis Measure Code</th>
+														<th scope="col">Description</th>
+														<th scope="col">Due Date</th>
+												</tr>
+											</thead>
+							
+											<tbody id="contentprovider">
+												
+												<c:forEach items="${mbrHedisMeasureList}" var="mbrHedisMeasure">
+													<tr>
+													    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
+													    		 	
+																<c:choose>
+															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
+															 		<td>${hedisMeasure.code}</td>
+															 		<td>${hedisMeasure.description}</td>
+																	<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
+															 		
+															 		</c:when>
+																</c:choose>
+															</c:forEach>
+													    
+													 </tr>     
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>	
+								   </div>
+							   </div>
+						</div>
+		          
+		        </div>
+		        <div class="tab-pane" id="completed">
+		          <div class="panel-group">
+							<div class="panel panel-primary">
+								<div class="panel-heading">Membership Hedis Measure</span></div>
+								<div class="panel-body" id="tablediv">
+									<div class="col-sm-12 fdl">
+										<table id="tab" class="table table-striped table-hover">
+											<thead>
+												<tr>
+														<th scope="col">Hedis Measure Code</th>
+														<th scope="col">Description</th>
+														<th scope="col">Date of Service</th>
+												</tr>
+											</thead>
+							
+											<tbody id="contentprovider">
+												
+												<c:forEach items="${mbrHedisMeasureList}" var="mbrHedisMeasure">
+													<tr>
+													    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
+													    		 	
+																<c:choose>
+															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
+															 		<td>${hedisMeasure.code}</td>
+															 		<td>${hedisMeasure.description}</td>
+																	<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dos} </a> 	 </td> 
+															 		
+															 		</c:when>
+																</c:choose>
+															</c:forEach>
+													    
+													 </tr>     
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>	
+								   </div>
+							   </div>
+						</div>
+		        </div>
+		    </div>
+	    </div>
 	</div>
 </div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+      //  prasPagination('provider');
+    });
+</script>  
+
+
