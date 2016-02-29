@@ -108,7 +108,7 @@
 					<label class="control-label  col-sm-2" for="zip">Zip</label>
 					<div class="col-sm-6" id="tmpZip">
 						<springForm:select path="zipCode" class="form-control" id="zip">
-				    		<springForm:options items="${zipCodeList}" itemValue="code"  itemLabel="code" />
+				    		
 						</springForm:select>
 						<springForm:errors path="zipCode.code" cssClass="error text-danger" />
 					  </div>
@@ -130,25 +130,61 @@
 	</div>
 </div>
 
-<script>
-  $( "#state" ).change(function() {
-	 
-     var stateId = $( "#state" ).val();
-     var $select = $('#zip');
-   //request the JSON data and parse into the select element
-	   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
-	    
-	     //clear the current content of the select
-	     $select.html('');
-	    
-	     //iterate over the data and append a select option
-	     $.each(data.data, function(key, val){
-	       $select.append('<option id="' + val.code + '">' + val.code +'</option>');
-	     })
-	   });
-    
-   });
-  
-</script>
+<c:choose>
+	<c:when test="${contact.stateCode != null || request.getParameter('stateCode')}"> 
+		<script>
+				 var zCode;
+				 var stateId = $( "#state" ).val();
+			     var $select = $('#zip');
+			   
+			   //request the JSON data and parse into the select element
+				   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
+				    
+				     //clear the current content of the select
+				     $select.html('');
+				     $select.append('<option value="">Select Zip Code</option>');
+				     var zipRequest = "<%= request.getParameter("zipCode") %>";
+				     var zipCode = "${contact.zipCode.code}";
+				     if(zipCode != null)
+				    	 zCode = zipCode; 
+				     else if(zipRequest != null)		 
+				          zCode = zipRequest;
+				     
+				     //iterate over the data and append a select option
+				     $.each(data.data, function(key, val){
+				    	
+				      if(val.code == zCode)
+				    	  $select.append('<option value="'+val.code+'" selected>' + val.code +'</option>');
+				      else
+				    	  $select.append('<option value="' + val.code + '">' + val.code +'</option>');
+					  
+				     })
+				   });
+			
+			   $( "#state" ).change(function() {
+				 
+			     var stateId = $( "#state" ).val();
+			     var $select = $('#zip');
+			   //request the JSON data and parse into the select element
+				   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
+				    
+				     //clear the current content of the select
+				     $select.html('');
+				     $select.append('<option value="">Select Zip Code</option>');
+				     //iterate over the data and append a select option
+				     $.each(data.data, function(key, val){
+				      
+				       $select.append('<option value="' + val.code + '">' + val.code +'</option>');
+				     })
+				   });
+			    
+			   });
+	  	</script>
+	</c:when>
+	<c:otherwise>
+		
+	</c:otherwise>
+</c:choose>
+
 
 
