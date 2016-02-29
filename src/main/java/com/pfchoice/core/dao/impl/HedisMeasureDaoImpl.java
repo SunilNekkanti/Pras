@@ -10,6 +10,8 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
+import org.hibernate.type.StringType;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -31,25 +33,29 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
     public Pagination getPage(final int pageNo,final  int pageSize, 
 			final String sSearch, final String sort, final String sortdir)
 	{
-		Disjunction or = Restrictions.disjunction();
-		
-		if(sSearch != null && !"".equals(sSearch))
-		{
-			Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
-			Criterion description   = Restrictions.ilike("description","%"+sSearch+"%");
-			Criterion hedisMsrGrp	= Restrictions.ilike("hedisMsrGrp.code","%"+sSearch+"%");
-			or.add(code);
-			or.add(description);
-			or.add(hedisMsrGrp);
-		}
-		
-		 Criteria crit = createCriteria()
-	        		.createAlias("hedisMsrGrp", "hedisMsrGrp")
-	        		.add(or)
-	        		.add(Restrictions.eq("activeInd", 'Y'))
-		 			.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
-		
-		if(sort != null && !"".equals(sort)) 
+    	
+    	Criteria crit = createCriteria()
+         		.createAlias("genderId", "genderId", JoinType.LEFT_OUTER_JOIN)
+         		.createAlias("hedisMsrGrp", "hedisMsrGrp");
+       
+    	Disjunction or = Restrictions.disjunction();
+
+    	if( sSearch != null && !"".equals(sSearch))
+    	{
+    		or.add(Restrictions.ilike("code","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("description","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("genderId.description","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("hedisMsrGrp.code","%"+sSearch+"%"))
+    		  .add(Restrictions.sqlRestriction("CAST(lower_age_limit AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.sqlRestriction("CAST(upper_age_limit AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.sqlRestriction("CAST(age_effective_from AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.sqlRestriction("CAST(age_effective_to AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
+    	}
+         crit.add(or);
+         crit.add(Restrictions.eq("activeInd", 'Y'));
+         crit.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
+         
+        if(sort != null && !"".equals(sort)) 
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
 			{
@@ -60,9 +66,10 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 				crit.addOrder(Order.asc(sort));
 			}
 		}
-		
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+        
+        Pagination page = findByCriteria(crit, pageNo, pageSize);
+        return page;
+        
 	}
 
     @Override

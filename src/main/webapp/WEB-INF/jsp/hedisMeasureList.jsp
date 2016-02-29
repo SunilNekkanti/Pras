@@ -52,14 +52,19 @@
 	            } );
         	}
         	
-        	$('#myTable').dataTable({
+        	$('#hedisMeasureTable').dataTable({
         	     "sAjaxSource" : getContextPath()+'/hedis/hedisMeasureLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%",  },
-                               { "mDataProp": "hedisMsrGrp.code","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
+                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "30%"  },
+                               { "mDataProp": "hedisMsrGrp.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
+                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
+                               { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
+                               { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
+                               { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
+                               { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
                                
                            ],
                   "aoColumnDefs": [ 
@@ -68,9 +73,28 @@
                            		      "render": function ( data, type, full, meta ) {
                                             return '<a href="'+full.id+'">'+data+'</a>';
                            		      }},
-                           		    { "sName": "description", "aTargets": [ 2 ] }
+                           		    { "sName": "description", "aTargets": [ 2 ] },
+                           		    { "sName": "hedisMsrGrp.description", "aTargets": [ 3 ] },
+                           		    { "sName": "genderId.description", "aTargets": [ 4 ] },
+                           		    { "sName": "lowerAgeLimit", "aTargets": [ 5 ] },
+                           		    { "sName": "upperAgeLimit", "aTargets": [ 6 ] },
+                           		    { "sName": "ageEffectiveFrom", "aTargets": [ 7 ],
+                    		   		   	   "render": function (data) {
+                    		   		   		    if(data == null) return null;
+                  		   		        		var date = new Date(data);
+                  		   	        			var month = date.getMonth() + 1;
+                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+                  		   		   	 } },
+                           		    { "sName": "ageEffectiveTo", "aTargets": [ 8 ] ,
+                     		   		   	   "render": function (data) {
+                     		   		   			if(data == null) return null;
+                  		   		        		var date = new Date(data);
+                  		   	        			var month = date.getMonth() + 1;
+                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+                  		   		   	 }}
                   ],          
         	     "bLengthChange": false,
+        	     "iDisplayLength": 15,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
@@ -80,24 +104,23 @@
         	
    } );
 </script>
-<script>
-	$(document).ready(function(){	
-		
-	prasPagination();
-	
-	});
-</script>
+
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Hedis Measure List</div>
 		<div class="panel-body" id="tablediv">
-			<table id="myTable" class="display table-responsive  table table-striped table-hover"> 
+			<table id="hedisMeasureTable" class="display table-responsive  table table-striped table-hover"> 
 				<thead>
 					<tr>
 						<th  scope="col">Action</th> 
 						<th  scope="col">Hedis Code</th> 
 						<th  scope="col">Description</th>  
 				        <th  scope="col">Hedis Group</th> 
+				        <th  scope="col">Gender</th> 
+				        <th  scope="col">Lower Age Limit</th> 
+				        <th  scope="col">Upper Age Limit</th> 
+				        <th  scope="col">Effective Date From</th> 
+				        <th  scope="col">Effective Date To</th> 
 					</tr>
 				</thead>
 				<tbody></tbody>
