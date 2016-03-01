@@ -207,16 +207,6 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
      return tilesViewResolver;
     }
 
-
-    @Bean(name="conversionService") 
-    public ConversionService getConversionService() {
-        ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
-        bean.afterPropertiesSet();
-        ConversionService object = bean.getObject();
-        return object;
-    }
-
-    
     @Override
     public void addFormatters(FormatterRegistry formatterRegistry)
     {

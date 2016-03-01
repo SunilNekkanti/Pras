@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -70,6 +74,13 @@ public class ICDMeasure implements Serializable
     @Expose
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
+    
+    
+    @OneToOne(cascade=CascadeType.ALL)  
+    @JoinTable(name="hedis_icd_measure",  
+    joinColumns={@JoinColumn(name="icd_id", referencedColumnName="icd_id")},  
+    inverseJoinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")})  
+    private HedisMeasureRule hedisMeasureRule;
     
     
     public ICDMeasure()
@@ -145,6 +156,20 @@ public class ICDMeasure implements Serializable
 	 */
 	public void setRxhcc(String rxhcc) {
 		this.rxhcc = rxhcc;
+	}
+	
+	/**
+	 * @return the hedisMeasureRule
+	 */
+	public HedisMeasureRule getHedisMeasureRule() {
+		return hedisMeasureRule;
+	}
+
+	/**
+	 * @param hedisMeasureRule the hedisMeasureRule to set
+	 */
+	public void setHedisMeasureRule(HedisMeasureRule hedisMeasureRule) {
+		this.hedisMeasureRule = hedisMeasureRule;
 	}
 
 	/**

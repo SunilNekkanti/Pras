@@ -58,8 +58,8 @@ $.ajax( {
   	     "aoColumns": [
                          { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                          { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                         { "mDataProp": "cptMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                         { "mDataProp": "icdMeasure.code","bSearchable" : true, "bSortable": true,"sWidth" : "20%",  },
+                         { "mDataProp": "cptCodes","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                         { "mDataProp": "icdCodes","bSearchable" : true, "bSortable": true,"sWidth" : "20%",  },
                          { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "20%",  }
                         
                      ],
@@ -69,8 +69,24 @@ $.ajax( {
                      		      "render": function ( data, type, full, meta ) {
                                       return '<a href="'+full.id+'">'+data+'</a>';
                      		      }},
-                     		    { "sName": "cptMeasure.code", "aTargets": [ 2 ] },
-                     			{ "sName": "icdMeasure.code", "aTargets": [ 3] },
+                     		    { "sName": "cptCodes", "aTargets": [ 2 ] ,
+                     		      "render": function ( data, type, full, meta ) {
+                     		    	  var cptcodes="";
+                     		    	 $.each(data, function(index, itemData) {
+                     		    		cptcodes =  cptcodes + itemData.code +', ';
+                     		    		});
+                     		    	 
+                                    return cptcodes;
+                   		      }},
+                     			{ "sName": "icdCodes", "aTargets": [ 3] ,
+                     		      "render": function ( data, type, full, meta ) {
+                     		    	  var icdcodes="";
+                     		    	 $.each(data, function(index, itemData) {
+                     		    		icdcodes =  icdcodes + itemData.code +', ';
+                     		    		});
+                     		    	 
+                                    return icdcodes;
+                   		      }},
                      			{ "sName": "effectiveYear", "aTargets": [ 4] }
             ],          
   	     "bLengthChange": false,
@@ -95,8 +111,8 @@ $.ajax( {
 						<tr>
 							<th  scope="col">Action</th> 
 							<th  scope="col">Hedis Code</th> 
-							<th  scope="col">CPT Code</th>  
-					        <th  scope="col">ICD Code</th> 
+							<th  scope="col">CPT Codes</th>  
+					        <th  scope="col">ICD Codes</th> 
 					        <th  scope="col">Effective Year</th> 
 						</tr>
 					</thead>

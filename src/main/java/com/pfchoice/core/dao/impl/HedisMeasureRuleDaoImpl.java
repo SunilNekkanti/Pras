@@ -32,17 +32,17 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 			final String sSearch, final String sort, final String sortdir)
     {
     	Criteria crit = createCriteria()
-         		.createAlias("hedisMeasure", "hedisMeasure")
-         		.createAlias("cptMeasure", "cptMeasure")
-         		.createAlias("icdMeasure", "icdMeasure");
+         		.createAlias("hedisMeasure", "hedisMeasure");
+         	//	.createAlias("cptCodes", "cptMeasure")
+         	//	.createAlias("icdCodes", "icdMeasure");
        
     	if( sSearch != null && !"".equals(sSearch))
     	{
     		Disjunction or = Restrictions.disjunction();
     		
     		or.add(Restrictions.ilike("hedisMeasure.code","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("cptMeasure.code","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("icdMeasure.code","%"+sSearch+"%"))
+    		  //.add(Restrictions.ilike("cptMeasure.code","%"+sSearch+"%"))
+    		//  .add(Restrictions.ilike("icdMeasure.code","%"+sSearch+"%"))
     		  .add(Restrictions.sqlRestriction("CAST(effective_Year AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     		
     		crit.add(or);
@@ -102,8 +102,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     {
     	Criteria cr = createCriteria();
     	cr.addOrder(Order.asc("hedisMeasure.code"))
-    	.addOrder(Order.asc("cptMeasure.code"))
-    	.addOrder(Order.asc("icdMeasure.code"))
+    	//.addOrder(Order.asc("cptMeasure.code"))
+    	//.addOrder(Order.asc("icdMeasure.code"))
     	.add(Restrictions.eq("activeInd", 'Y'));
     	List<HedisMeasureRule> list = cr.list();
     	return list;

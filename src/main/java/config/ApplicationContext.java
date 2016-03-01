@@ -44,11 +44,20 @@ public class ApplicationContext
     public static final String hibernate_dialect = "hibernate.dialect";
 
     public static final String package_to_scan = "com.pfchoice.core.entity";
+    
+    public static final String maximumPoolSize = "hibernate.hikari.maximumPoolSize";
+    
+    public static final String idleTimeout = "hibernate.hikari.idleTimeout";
+    
+    public static final String maxLifeTime = "hibernate.hikari.maxLifeTime";
+    
 
     @Autowired
     private Environment env;
 
 //<editor-fold defaultstate="collapsed" desc="HikariCP Datasoure Configuration" >
+    
+    @SuppressWarnings("unchecked")
     @Bean(destroyMethod = "close")
     @Autowired
     public DataSource dataSource()
@@ -60,8 +69,6 @@ public class ApplicationContext
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
         dataSource.setConnectionTestQuery("SELECT 1;");
         dataSource.setMaximumPoolSize(15);
-        dataSource.setMaxLifetime(120000);
-        dataSource.setIdleTimeout(120000);
         dataSource.setAutoCommit(false);
         //------------------------------
         return dataSource;
@@ -90,6 +97,10 @@ public class ApplicationContext
         hibernateProperties.put(hibernate_format_sql, env.getProperty(hibernate_format_sql));
         hibernateProperties.put(hibernate_hbm2ddl_auto, env.getProperty(hibernate_hbm2ddl_auto));
         hibernateProperties.put(hibernate_show_sql, env.getProperty(hibernate_show_sql));
+        hibernateProperties.put(maximumPoolSize, env.getProperty(maximumPoolSize));
+        hibernateProperties.put(idleTimeout, env.getProperty(idleTimeout));
+        hibernateProperties.put(maxLifeTime, env.getProperty(maxLifeTime));
+         
 //        hibernateProperties.put(hibernate_connection_provider_class, env.getProperty(hibernate_connection_provider_class));
         return hibernateProperties;
 

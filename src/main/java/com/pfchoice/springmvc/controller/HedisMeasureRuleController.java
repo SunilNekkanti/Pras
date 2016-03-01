@@ -160,7 +160,7 @@ public class HedisMeasureRuleController{
 	 	model.addAttribute("hedisMeasureRule", hedisMeasureRule);
 	 	hedisMeasureRule.setCreatedBy(username);
 	 	hedisMeasureRule.setUpdatedBy(username);
-	 	   	
+	 	
     	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
       	hedisMeasureRuleService.save(hedisMeasureRule);
    

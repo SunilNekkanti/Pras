@@ -27,20 +27,16 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="cpt">CPT Code</label>
 					<div class="col-sm-6">
-						<springForm:select path="cptMeasure" class="form-control" id="cptCode" >
-				    		<springForm:options items="${cptMeasureList}"  itemValue="id" itemLabel="code"  />
-						</springForm:select>
-						<springForm:errors path="cptMeasure.code" cssClass="error text-danger" />
+						<springForm:select multiple="true" path="cptCodes" class="form-control"  items="${cptMeasureList}" itemLabel="code" itemValue="id" />
+						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="cpt">ICD Code</label>
 					<div class="col-sm-6">
-						<springForm:select path="icdMeasure" class="form-control" id="icdCode" >
-				    		<springForm:options items="${icdMeasureList}"  itemValue="id" itemLabel="code"  />
-						</springForm:select>
-						<springForm:errors path="icdMeasure.code" cssClass="error text-danger" />
+						<springForm:select multiple="true" path="icdCodes" class="form-control"  items="${icdMeasureList}" itemLabel="code" itemValue="id" />
+						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 				</div>
 				
@@ -52,6 +48,47 @@
 					</div>
 				</div>
 				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="gender">Gender</label>
+					<div class="col-sm-6">
+						<springForm:select path="genderId"  class="form-control" id="gender">
+					   		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
+						</springForm:select>
+						<springForm:errors path="genderId" cssClass="error text-danger" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label   col-sm-2" for="lowerAgeLimit">Lower Age Limit</label>
+					<div class="col-sm-6">
+						<springForm:input path="lowerAgeLimit" class="form-control" id="lowerAgeLimit" placeholder="lowerAgeLimit" />
+						<springForm:errors path="lowerAgeLimit" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label  col-sm-2" for="upperAgeLimit">Upper Age Limit</label>
+					<div class="col-sm-6">
+						<springForm:input path="upperAgeLimit" class="form-control" id="upperAgeLimit" placeholder="upperAgeLimit" />
+						<springForm:errors path="upperAgeLimit" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label  col-sm-2" for="ageEffectiveFrom" >Age Effective From</label>
+					<div class="col-sm-6">
+						<fmt:formatDate value="${hedisMeasure.ageEffectiveFrom}" var="dateString" pattern="MM/dd/yyyy" />
+						<springForm:input path="ageEffectiveFrom" value="${dateString}" class="form-control datepicker"  id="ageEffectiveFrom" placeholder="ageEffectiveFrom" />
+						<springForm:errors path="ageEffectiveFrom" cssClass="error text-danger" />
+					  </div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="ageEffectiveTo ">Age Effective To</label>
+					<div class="col-sm-6">
+						<fmt:formatDate value="${hedisMeasure.ageEffectiveTo}" var="dateString" pattern="MM/dd/yyyy" />
+						<springForm:input path="ageEffectiveTo" value="${dateString}" class="form-control datepicker" id="ageEffectiveTo" placeholder="ageEffectiveTo" />
+						<springForm:errors path="ageEffectiveTo" cssClass="error text-danger" />
+					  </div>
+				</div>
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>
 						 <c:when test="${hedisMeasureRule.id != null}"> 

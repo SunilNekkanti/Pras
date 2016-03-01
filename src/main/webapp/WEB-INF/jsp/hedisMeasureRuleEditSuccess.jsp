@@ -11,8 +11,14 @@
 				<div class="well well-sm">
 				
 					<p> <strong>Hedis Code:${hedisMeasureRule.hedisMeasure.id}</strong> </p>
-					<p><strong>CPT Code:${hedisMeasureRule.cptMeasure.id}</strong>  </p>
-  					<p><strong>ICD Code:${hedisMeasureRule.icdMeasure.id}</strong>  </p>
+					<p><strong>CPT Codes: </strong>  </p>
+					<c:forEach items="${hedisMeasureRule.cptCodes}" var="cptCodes">
+					<p><strong> ${cptCodes.code}</strong>  </p>
+					</c:forEach>
+  					<p><strong>ICD Code:</strong>  </p>
+  					<c:forEach items="${hedisMeasureRule.icdCodes}" var="icdCodes">
+					<p><strong> ${icdCodes.code}</strong>  </p>
+					</c:forEach>
   					<p><strong>Effective Year:${hedisMeasureRule.effectiveYear}</strong>  </p>
   					<p> Updated Successfully  </p>
   					
