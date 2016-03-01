@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <c:set var="context" value="${pageContext.request.contextPath}" />
 <c:choose>
  	<c:when test="${cptMeasure.id != null && cptMeasure.activeInd != 89}">
 	<script>
@@ -27,7 +28,7 @@
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="cptMeasure" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="cptMeasure" action="${context}/cpt/${id}/save.do" class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="code">Code</label>
 					<div class="col-sm-6">

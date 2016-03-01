@@ -48,7 +48,6 @@ public class HedisMeasureValidator implements Validator {
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code",  "error.code",  "Code Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description",  "error.description",  "Description Required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "genderId",  "error.genderId",  "Gender Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "hedisMsrGrp",  "error.hedisMsrGrp",  "Hedis Measure Group Required");
         
     }

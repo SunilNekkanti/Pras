@@ -9,7 +9,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="well well-sm">
-  					<p> <strong>Login:${user.login}</strong>  </p>
+  					<p> <strong>Login:${user.username}</strong>  </p>
   					<p> Updated Successfully  </p>
 					<a href="${context}/userList">Click Here</a> Move to User list
 				</div>	

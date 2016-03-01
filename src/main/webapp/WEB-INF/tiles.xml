@@ -303,6 +303,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureList.jsp" />  
     </definition>  
     
+    <definition name="hedisMeasureNew" extends="base1.definition">  
+        <put-attribute name="title" value="Hedis Measure" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureNew.jsp" />  
+    </definition>     
     
     <definition name="hedisMeasureEdit" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure" /> 
@@ -334,6 +338,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureEdit.jsp" />  
     </definition>  
     
+    <definition name="cptMeasureNew" extends="base1.definition">  
+        <put-attribute name="title" value="CPT Measure" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureNew.jsp" />  
+    </definition> 
+    
     <definition name="cptMeasureEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="CPT Measure Edit Success" />  
         <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
@@ -350,6 +359,11 @@
      	<put-attribute name="title" value="ICD Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureList.jsp" />  
     </definition>  
+    
+     <definition name="icdMeasureNew" extends="base1.definition">  
+        <put-attribute name="title" value="ICD Measure" /> 
+        <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureNew.jsp" />  
+    </definition> 
     
     <definition name="icdMeasureEdit" extends="base.definition">  
         <put-attribute name="title" value="ICD Measure" /> 
@@ -372,6 +386,11 @@
     <definition name="hedisMeasureRuleList" extends="base1.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleList.jsp" />  
     </definition>  
+    
+    <definition name="hedisMeasureRuleNew" extends="base1.definition">  
+        <put-attribute name="title" value="Hedis Measure Rule" /> 
+      <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleNew.jsp" />  
+    </definition> 
     
     <definition name="hedisMeasureRuleEdit" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule" /> 
@@ -485,9 +504,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/userEditSuccess.jsp" />  
     </definition>  
     
-    <definition name="userNew" extends="base.definition">  
+    <definition name="userNew" extends="base1.definition">  
         <put-attribute name="title" value="New User Profile" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/userNew.jsp" />  
     </definition> 
     

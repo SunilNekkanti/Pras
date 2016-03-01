@@ -4,7 +4,6 @@
     prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
@@ -12,7 +11,7 @@
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/${id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="hedisMeasureRule" action="save.do" class="form-horizontal" role="form">
 				<springForm:hidden path="id" />
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="hedis">Hedis Code</label>

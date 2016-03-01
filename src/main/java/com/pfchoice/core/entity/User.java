@@ -93,14 +93,14 @@ public class User implements Serializable
     }
 
 	/**
-	 * @return the login
+	 * @return the username
 	 */
 	public String getUsername() {
 		return username;
 	}
 
 	/**
-	 * @param login the login to set
+	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;

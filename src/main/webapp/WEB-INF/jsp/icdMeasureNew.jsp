@@ -3,7 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 						<ul class="nav nav-tabs">
@@ -11,7 +10,7 @@
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="icdMeasure" action="${context}/icd/${id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="icdMeasure" action="save.do" class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="code">Code</label>
 					<div class="col-sm-6">

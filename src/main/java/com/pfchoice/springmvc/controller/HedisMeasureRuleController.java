@@ -104,7 +104,7 @@ public class HedisMeasureRuleController{
 		
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
 		model.addAttribute("hedisMeasureRule", hedisMeasureRule);
-        return "hedisMeasureRuleEdit";
+        return "hedisMeasureRuleNew";
     }
 	
 	@RequestMapping(value = "/hedisMeasureRule/{id}", method = RequestMethod.GET)
@@ -154,7 +154,7 @@ public class HedisMeasureRuleController{
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning hedisMeasureRuleEdit.jsp page");
-            return "hedisMeasureRuleEdit";
+            return "hedisMeasureRuleNew";
         }
         
 	 	model.addAttribute("hedisMeasureRule", hedisMeasureRule);
@@ -168,7 +168,7 @@ public class HedisMeasureRuleController{
     }
 	
 	
-	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveHedisMeasureRuleAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -189,7 +189,7 @@ public class HedisMeasureRuleController{
     }
 	
 
-	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			

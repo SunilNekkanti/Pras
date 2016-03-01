@@ -61,7 +61,7 @@ public class ICDMeasureController{
 		
 		ICDMeasure icdMeasure = createICDMeasureModel();
 		model.addAttribute("icdMeasure", icdMeasure);
-        return "icdMeasureEdit";
+        return "icdMeasureNew";
     }
 	
 	@RequestMapping(value = "/icd/{id}", method = RequestMethod.GET)
@@ -108,7 +108,7 @@ public class ICDMeasureController{
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning icdMeasureEdit.jsp page");
-            return "icdMeasureEdit";
+            return "icdMeasureNew";
         }
         
 	 	model.addAttribute("icdMeasure", icdMeasure);
@@ -122,7 +122,7 @@ public class ICDMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/icd/$id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -144,7 +144,7 @@ public class ICDMeasureController{
     }
 	
 
-	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/icd/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        

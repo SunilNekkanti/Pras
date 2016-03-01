@@ -62,9 +62,9 @@ public class MembershipActionTest extends ControllerClientSideTestBase
         Message expResult = null;
         Message result = membershipAction.deregister(id);
     }
-
+*/
     @Test
-    @Ignore
+  //  @Ignore
     public void testRetrieve()
     {
         System.out.println("retrieve");
@@ -72,6 +72,6 @@ public class MembershipActionTest extends ControllerClientSideTestBase
     //    MembershipAction instance = new MembershipAction();
         Message expResult = null;
       //  Message result = membershipAction.retrieve(id);
-    }*/
+    }
 
 }

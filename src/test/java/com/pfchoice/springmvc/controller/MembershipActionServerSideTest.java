@@ -16,10 +16,11 @@ import com.pfchoice.core.entity.Membership;
  *
  * @author Sarath
  */
+/* 
 public class MembershipActionServerSideTest extends ControllerServerSideTestBase
 {
 
-/*    @Autowired
+   @Autowired
     private MembershipAction membershipAction;
 
     @Test
@@ -74,5 +75,6 @@ public class MembershipActionServerSideTest extends ControllerServerSideTestBase
             ex.printStackTrace();
         }
     }
-*/
+
 }
+*/

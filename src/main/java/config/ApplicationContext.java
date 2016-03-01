@@ -59,7 +59,9 @@ public class ApplicationContext
         dataSource.setJdbcUrl(env.getProperty("jdbc.url"));
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
         dataSource.setConnectionTestQuery("SELECT 1;");
-        dataSource.setMaximumPoolSize(3);
+        dataSource.setMaximumPoolSize(15);
+        dataSource.setMaxLifetime(120000);
+        dataSource.setIdleTimeout(120000);
         dataSource.setAutoCommit(false);
         //------------------------------
         return dataSource;

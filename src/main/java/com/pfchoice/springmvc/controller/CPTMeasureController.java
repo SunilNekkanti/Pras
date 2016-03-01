@@ -61,7 +61,7 @@ public class CPTMeasureController{
 		
 		CPTMeasure cptMeasure = createCPTMeasureModel();
 		model.addAttribute("cptMeasure", cptMeasure);
-        return "cptMeasureEdit";
+		return "cptMeasureNew";
     }
 	
 	@RequestMapping(value = "/cpt/{id}", method = RequestMethod.GET)
@@ -111,7 +111,7 @@ public class CPTMeasureController{
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning cptMeasureEdit.jsp page");
-            return "cptMeasureEdit";
+            return "cptMeasureNew";
         }
         
 	 	model.addAttribute("cptMeasure", cptMeasure);
@@ -124,7 +124,7 @@ public class CPTMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/cpt/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         
@@ -147,7 +147,7 @@ public class CPTMeasureController{
     }
 	
 
-	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/cpt/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        

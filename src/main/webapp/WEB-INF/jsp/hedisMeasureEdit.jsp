@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				
-				<div class="form-group required">
+				<div class="form-group">
 					<label class="control-label col-sm-3" for="gender">Gender</label>
 					<div class="col-sm-8">
 						<springForm:select path="genderId"  class="form-control" id="gender">
@@ -56,7 +56,7 @@
 					  </div>
 				</div>
 				
-				<div class="form-group required">
+				<div class="form-group">
 					<label class="control-label   col-sm-3" for="lowerAgeLimit">Lower Age Limit</label>
 					<div class="col-sm-8">
 						<springForm:input path="lowerAgeLimit" class="form-control" id="lowerAgeLimit" placeholder="lowerAgeLimit" />
@@ -64,7 +64,7 @@
 					  </div>
 				</div>
 				
-				<div class="form-group required">
+				<div class="form-group">
 					<label class="control-label  col-sm-3" for="upperAgeLimit">Upper Age Limit</label>
 					<div class="col-sm-8">
 						<springForm:input path="upperAgeLimit" class="form-control" id="upperAgeLimit" placeholder="upperAgeLimit" />
