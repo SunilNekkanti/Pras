@@ -58,10 +58,10 @@ $.ajax( {
   	     "aoColumns": [
                          { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                          { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" },
-                         { "mDataProp": "cptCodes","bSearchable" : true, "bSortable" : true,"sWidth" : "20%" },
-                         { "mDataProp": "icdCodes","bSearchable" : true, "bSortable": true,"sWidth" : "20%" },
-                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "5%" },
-                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
+                         { "mDataProp": "cptCodes","bSearchable" : true, "bSortable" : false,"sWidth" : "20%" },
+                         { "mDataProp": "icdCodes","bSearchable" : true, "bSortable": false,"sWidth" : "20%" },
+                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
                          { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
                          { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
                          { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
@@ -144,12 +144,12 @@ $.ajax( {
 							<th  scope="col">Hedis Code</th> 
 							<th  scope="col">CPT Codes</th>  
 					        <th  scope="col">ICD Codes</th> 
-					        <th  scope="col">Effective Year</th> 
+					        <th  scope="col">Eff. Year</th> 
 					        <th  scope="col">Gender</th> 
 					        <th  scope="col">Lower Age Limit</th> 
 					        <th  scope="col">Upper Age Limit</th> 
-					        <th  scope="col">Effective Date From</th> 
-					        <th  scope="col">Effective Date To</th> 
+					        <th  scope="col">Eff. Date From</th> 
+					        <th  scope="col">Eff. Date To</th> 
 						</tr>
 					</thead>
 

@@ -35,23 +35,18 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 	{
     	
     	Criteria crit = createCriteria()
-         		.createAlias("genderId", "genderId", JoinType.LEFT_OUTER_JOIN)
          		.createAlias("hedisMsrGrp", "hedisMsrGrp");
-       
-    	Disjunction or = Restrictions.disjunction();
-
+    	
     	if( sSearch != null && !"".equals(sSearch))
     	{
+    		Disjunction or = Restrictions.disjunction();
+
     		or.add(Restrictions.ilike("code","%"+sSearch+"%"))
     		  .add(Restrictions.ilike("description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("genderId.description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("hedisMsrGrp.code","%"+sSearch+"%"))
-    		  .add(Restrictions.sqlRestriction("CAST(lower_age_limit AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
-    		  .add(Restrictions.sqlRestriction("CAST(upper_age_limit AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
-    		  .add(Restrictions.sqlRestriction("CAST(age_effective_from AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
-    		  .add(Restrictions.sqlRestriction("CAST(age_effective_to AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
+    		  .add(Restrictions.ilike("hedisMsrGrp.code","%"+sSearch+"%"));
+    		crit.add(or);
     	}
-         crit.add(or);
+         
          crit.add(Restrictions.eq("activeInd", 'Y'));
          crit.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
          

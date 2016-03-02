@@ -57,26 +57,6 @@ public class HedisMeasure implements Serializable
     private HedisMeasureGroup hedisMsrGrp;
     
     @Expose
-    @Column(name="lower_age_limit")
-    private Integer lowerAgeLimit;
-    
-    @Expose
-    @Column(name="upper_age_limit")
-    private Integer upperAgeLimit;
-    
-    @Expose
-    @Temporal(TemporalType.DATE)
-    @Column(name="age_effective_from")
-    private Date ageEffectiveFrom;
-    
-    @Temporal(TemporalType.DATE)
-    @Column(name="age_effective_to")
-    private Date ageEffectiveTo;
-    
-   // @Column(name="goal")
-    //private Double goal;
-    
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
@@ -173,76 +153,6 @@ public class HedisMeasure implements Serializable
 	public void setGenderId(final Gender genderId) {
 		this.genderId = genderId;
 	}
-
-	/**
-	 * @return the lowerAgeLimit
-	 */
-	public Integer getLowerAgeLimit() {
-		return lowerAgeLimit;
-	}
-
-	/**
-	 * @param lowerAgeLimit the lowerAgeLimit to set
-	 */
-	public void setLowerAgeLimit(final Integer lowerAgeLimit) {
-		this.lowerAgeLimit = lowerAgeLimit;
-	}
-
-	/**
-	 * @return the upperAgeLimit
-	 */
-	public Integer getUpperAgeLimit() {
-		return upperAgeLimit;
-	}
-
-	/**
-	 * @param upperAgeLimit the upperAgeLimit to set
-	 */
-	public void setUpperAgeLimit(final Integer upperAgeLimit) {
-		this.upperAgeLimit = upperAgeLimit;
-	}
-
-	/**
-	 * @return the ageEffectiveFrom
-	 */
-	public Date getAgeEffectiveFrom() {
-		return ageEffectiveFrom;
-	}
-
-	/**
-	 * @param ageEffectiveFrom the ageEffectiveFrom to set
-	 */
-	public void setAgeEffectiveFrom(final Date ageEffectiveFrom) {
-		this.ageEffectiveFrom = ageEffectiveFrom;
-	}
-
-	/**
-	 * @return the ageEffectiveTo
-	 */
-	public Date getAgeEffectiveTo() {
-		return ageEffectiveTo;
-	}
-
-	/**
-	 * @param ageEffectiveTo the ageEffectiveTo to set
-	 */
-	public void setAgeEffectiveTo(final Date ageEffectiveTo) {
-		this.ageEffectiveTo = ageEffectiveTo;
-	}
-
-	/**
-	 * @return the goal
-	 */
-	/*public Double getGoal() {
-		return goal;
-	}
-*/
-	/**
-	 * @param goal the goal to set
-	 */
-	/*public void setGoal(Double goal) {
-		this.goal = goal;
-	}*/
 
 	/**
 	 * @return the createdDate
