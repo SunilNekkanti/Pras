@@ -70,7 +70,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 			}
 		}
         
-    	crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+    //	crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

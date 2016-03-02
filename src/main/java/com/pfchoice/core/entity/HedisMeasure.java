@@ -47,11 +47,6 @@ public class HedisMeasure implements Serializable
     private String description;
 
     @Expose
-    @OneToOne(fetch=FetchType.EAGER )
-    @JoinColumn(name="gender_id", referencedColumnName="gender_id")
-    private Gender genderId;
-    
-    @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="qlty_msr_group_id", nullable = false, referencedColumnName="qlty_msr_group_id")
     private HedisMeasureGroup hedisMsrGrp;
@@ -138,20 +133,6 @@ public class HedisMeasure implements Serializable
 	 */
 	public void setHedisMsrGrp(final HedisMeasureGroup hedisMsrGrp) {
 		this.hedisMsrGrp = hedisMsrGrp;
-	}
-
-	/**
-	 * @return the genderId
-	 */
-	public Gender getGenderId() {
-		return genderId;
-	}
-
-	/**
-	 * @param genderId the genderId to set
-	 */
-	public void setGenderId(final Gender genderId) {
-		this.genderId = genderId;
 	}
 
 	/**
