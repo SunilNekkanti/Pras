@@ -71,7 +71,7 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
     {
     	Criteria cr = createCriteria();
     	cr.add(Restrictions.eq("activeInd", 'Y'))
-    	.addOrder(Order.asc("id"));
+    	  .addOrder(Order.asc("code"));
     	List<HedisMeasureGroup> list = cr.list();
     	return list;
     }

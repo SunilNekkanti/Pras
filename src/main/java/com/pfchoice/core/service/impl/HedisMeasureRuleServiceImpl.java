@@ -64,9 +64,4 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
         return hedisMeasureMeasureDao.updateByUpdater(updater);
     }
 
-    @Override
-    public List<HedisMeasureRule> findAll()
-    {
-    	return hedisMeasureMeasureDao.findAll();
-    }
 }

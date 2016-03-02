@@ -23,6 +23,4 @@ public interface HedisMeasureRuleService
 
     HedisMeasureRule update(HedisMeasureRule bean);
     
-    List<HedisMeasureRule> findAll();
-
 }

@@ -105,7 +105,7 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
     {
     	Criteria cr = createCriteria();
     	cr.addOrder(Order.asc("code"))
-    	.add(Restrictions.eq("activeInd", 'Y'));
+    	  .add(Restrictions.eq("activeInd", 'Y'));
     	List<CPTMeasure> list = cr.list();
     	return list;
     }
