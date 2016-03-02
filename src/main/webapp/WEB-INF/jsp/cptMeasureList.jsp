@@ -59,7 +59,7 @@
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
                                { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%",  }
+                               { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%"  }
                              
                            ],
                   "aoColumnDefs": [ 

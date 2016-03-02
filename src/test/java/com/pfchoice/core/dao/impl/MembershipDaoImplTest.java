@@ -78,7 +78,7 @@ public class MembershipDaoImplTest extends JUnitSpringTestBase
     public void testDeleteById()
     {
         System.out.println("deleteById");
-        Integer id = 1;
+        Integer id = 19999999;
         Membership result = membershipDao.deleteById(id);
     }
 

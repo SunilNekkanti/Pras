@@ -58,7 +58,7 @@ $.ajax( {
   	     "aoColumns": [
                          { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                          { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                         { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%",  },
+                         { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "60%"  },
                          { "mDataProp": "hcc","bSearchable" : true, "bSortable": true,"sWidth" : "15%" ,"sDefaultContent": "" },
                          { "mDataProp": "rxhcc","bSearchable" : true, "bSortable": true,"sWidth" : "15%","sDefaultContent": ""  }
                      ],

@@ -68,7 +68,7 @@ public class UserDaoImplTest extends JUnitSpringTestBase
     public void testDeleteById()
     {
         System.out.println("deleteById");
-        Integer id = 1;
+        Integer id = 199999;
         User result = userDao.deleteById(id);
     }
 

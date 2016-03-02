@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.service.CPTMeasureService;
 
@@ -102,7 +103,7 @@ public class CPTMeasureController{
 		
 		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
 
-        return Message.successMessage(CommonMessageContent.CPT_LIST, pagination);
+        return Message.successMessage(CommonMessageContent.CPT_LIST, JsonConverter.getJsonObject(pagination));
     }
 	
 	
