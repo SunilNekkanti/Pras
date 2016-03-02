@@ -82,6 +82,7 @@ public class HedisMeasureRule implements Serializable
     @Column(name="age_effective_from")
     private Date ageEffectiveFrom;
     
+    @Expose
     @Temporal(TemporalType.DATE)
     @Column(name="age_effective_to")
     private Date ageEffectiveTo;

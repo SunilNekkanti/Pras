@@ -59,13 +59,7 @@
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
                                { "mDataProp": "description","bSearchable" : true, "bSortable": true,"sWidth" : "30%"  },
-                               { "mDataProp": "hedisMsrGrp.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
-                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
-                               { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
-                               { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
-                               { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
-                               { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
-                               
+                               { "mDataProp": "hedisMsrGrp.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
                            ],
                   "aoColumnDefs": [ 
                            		    { "sName": "id", "aTargets": [ 0 ] },
@@ -74,24 +68,7 @@
                                             return '<a href="'+full.id+'">'+data+'</a>';
                            		      }},
                            		    { "sName": "description", "aTargets": [ 2 ] },
-                           		    { "sName": "hedisMsrGrp.description", "aTargets": [ 3 ] },
-                           		    { "sName": "genderId.description", "aTargets": [ 4 ] },
-                           		    { "sName": "lowerAgeLimit", "aTargets": [ 5 ] },
-                           		    { "sName": "upperAgeLimit", "aTargets": [ 6 ] },
-                           		    { "sName": "ageEffectiveFrom", "aTargets": [ 7 ],
-                    		   		   	   "render": function (data) {
-                    		   		   		    if(data == null) return null;
-                  		   		        		var date = new Date(data);
-                  		   	        			var month = date.getMonth() + 1;
-                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-                  		   		   	 } },
-                           		    { "sName": "ageEffectiveTo", "aTargets": [ 8 ] ,
-                     		   		   	   "render": function (data) {
-                     		   		   			if(data == null) return null;
-                  		   		        		var date = new Date(data);
-                  		   	        			var month = date.getMonth() + 1;
-                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-                  		   		   	 }}
+                           		    { "sName": "hedisMsrGrp.description", "aTargets": [ 3 ] }
                   ],          
         	     "bLengthChange": false,
         	     "iDisplayLength": 15,
@@ -116,11 +93,6 @@
 						<th  scope="col">Hedis Code</th> 
 						<th  scope="col">Description</th>  
 				        <th  scope="col">Hedis Group</th> 
-				        <th  scope="col">Gender</th> 
-				        <th  scope="col">Lower Age Limit</th> 
-				        <th  scope="col">Upper Age Limit</th> 
-				        <th  scope="col">Effective Date From</th> 
-				        <th  scope="col">Effective Date To</th> 
 					</tr>
 				</thead>
 				<tbody></tbody>
