@@ -56,55 +56,30 @@ $.ajax( {
   	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
   	     "sAjaxDataProp" : 'data.list',
   	     "aoColumns": [
-                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" },
-                         { "mDataProp": "cptCodes","bSearchable" : true, "bSortable" : false,"sWidth" : "20%" },
-                         { "mDataProp": "icdCodes","bSearchable" : true, "bSortable": false,"sWidth" : "20%" },
-                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
-                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
-                         { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
-                         { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
-                         { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
+                         { "mDataProp": "this.id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ]},
+                         { "mDataProp": "cptMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%", "asSorting" : [ "asc" ] },
+                         { "mDataProp": "icdMeasure.code","bSearchable" : true, "bSortable": true,"sWidth" : "20%" , "asSorting" : [ "asc" ]},
+                         { "mDataProp": "this.effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+                         { "mDataProp": "this.genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
+                         { "mDataProp": "this.lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
+                         { "mDataProp": "this.upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
+                         { "mDataProp": "this.ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
+                         { "mDataProp": "this.ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
                      ],
             "aoColumnDefs": [ 
-                     		    { "sName": "id", "aTargets": [ 0 ] },
+                     		    { "sName": "this.id", "aTargets": [ 0 ] },
                      		    { "sName": "hedisMeasure.code", "aTargets": [ 1 ],
                      		      "render": function ( data, type, full, meta ) {
                                       return '<a href="'+full.id+'">'+data+'</a>';
                      		      }},
-                     		    { "sName": "cptCodes", "aTargets": [ 2 ] ,
-                     		      "render": function ( data, type, full, meta ) {
-                     		    	  var cptcodes="";
-                     		    	 $.each(data, function(index, itemData) {
-                     		    		 if (cptcodes == ""){
-                     		    			cptcodes =  cptcodes + itemData.code;
-                      		    		 }else{
-                      		    			cptcodes =  cptcodes+' , ' + itemData.code ;
-                      		    		 }
-                     		    		});
-                     		    	 
-                                    return cptcodes;
-                   		      }},
-                     			{ "sName": "icdCodes", "aTargets": [ 3] ,
-                     		      "render": function ( data, type, full, meta ) {
-                     		    	  var icdcodes="";
-                     		    	 $.each(data, function(index, itemData) {
-                     		    		 if (icdcodes == ""){
-                     		    			icdcodes =  icdcodes + itemData.code;
-                     		    		 }else{
-                     		    			icdcodes =  icdcodes+' , ' + itemData.code ;
-                     		    		 }
-                     		    		
-                     		    		});
-                     		    	 
-                                    return icdcodes;
-                   		      }},
-                     			{ "sName": "effectiveYear", "aTargets": [ 4] },
-                       		    { "sName": "genderId.description", "aTargets": [ 5 ] },
-                       		    { "sName": "lowerAgeLimit", "aTargets": [ 6 ] },
-                       		    { "sName": "upperAgeLimit", "aTargets": [ 7 ] },
-                       		    { "sName": "ageEffectiveFrom", "aTargets": [ 8 ],
+                     		    { "sName": "cptMeasure.code", "aTargets": [ 2 ] },
+                     			{ "sName": "icdMeasure.code", "aTargets": [ 3] },
+                     			{ "sName": "this.effectiveYear", "aTargets": [ 4] },
+                       		    { "sName": "this.genderId.description", "aTargets": [ 5 ] },
+                       		    { "sName": "this.lowerAgeLimit", "aTargets": [ 6 ] },
+                       		    { "sName": "this.upperAgeLimit", "aTargets": [ 7 ] },
+                       		    { "sName": "this.ageEffectiveFrom", "aTargets": [ 8 ],
                 		   		   	   "render": function (data) {
                 		   		   		    if(data == null) return null;
               		   		        		var date = new Date(data);

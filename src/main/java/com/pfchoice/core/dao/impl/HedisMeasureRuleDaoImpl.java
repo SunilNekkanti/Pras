@@ -6,7 +6,6 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -69,8 +68,11 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 				crit.addOrder(Order.asc(sort));
 			}
 		}
-        
-    //	crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			crit.addOrder(Order.asc("hedisMeasure.code"));
+			crit.addOrder(Order.asc("cptMeasure.code"));
+			crit.addOrder(Order.asc("icdMeasure.code"));
+    	
+    	crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
@@ -66,6 +66,14 @@ public class HedisMeasureRule implements Serializable
     @OneToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="gender_id", referencedColumnName="gender_id")
     private Gender genderId;
+    
+    @Expose
+    @Transient
+    private  CPTMeasure cptMeasure;
+    
+    @Expose
+    @Transient
+    private  ICDMeasure icdMeasure;
     
     @Expose
     @Column(name="lower_age_limit")
@@ -318,6 +326,35 @@ public class HedisMeasureRule implements Serializable
 	 */
 	public Character getActiveInd() {
 		return activeInd;
+	}
+
+	
+	/**
+	 * @return the cptMeasure
+	 */
+	public CPTMeasure getCptMeasure() {
+		return cptMeasure;
+	}
+
+	/**
+	 * @param cptMeasure the cptMeasure to set
+	 */
+	public void setCptMeasure(CPTMeasure cptMeasure) {
+		this.cptMeasure = cptMeasure;
+	}
+
+	/**
+	 * @return the icdMeasure
+	 */
+	public ICDMeasure getIcdMeasure() {
+		return icdMeasure;
+	}
+
+	/**
+	 * @param icdMeasure the icdMeasure to set
+	 */
+	public void setIcdMeasure(ICDMeasure icdMeasure) {
+		this.icdMeasure = icdMeasure;
 	}
 
 	/**
