@@ -3,15 +3,12 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pfchoice.core.dao.InsuranceDao;
 import com.pfchoice.core.entity.Insurance;
-import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.service.InsuranceService;
 
 /**

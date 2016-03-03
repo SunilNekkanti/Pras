@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pfchoice.core.dao.ContactDao;
 import com.pfchoice.core.entity.Contact;
-import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.service.ContactService;
 
 /**

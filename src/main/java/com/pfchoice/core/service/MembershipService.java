@@ -1,7 +1,5 @@
 package com.pfchoice.core.service;
 
-import java.util.List;
-
 import com.pfchoice.core.entity.Membership;
 
 import ml.rugal.sshcommon.page.Pagination;

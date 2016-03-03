@@ -1,7 +1,5 @@
 package com.pfchoice.core.dao;
 
-import java.util.List;
-
 import com.pfchoice.core.entity.Insurance;
 
 import ml.rugal.sshcommon.hibernate.Updater;

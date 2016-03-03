@@ -3,8 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
@@ -55,6 +53,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     		
     		crit.add(or);
     	}
+    	
     	crit.add(Restrictions.eq("activeInd", 'Y'));
     	
     	if(sort != null && !"".equals(sort)) 
@@ -71,8 +70,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 			crit.addOrder(Order.asc("hedisMeasure.code"));
 			crit.addOrder(Order.asc("cptMeasure.code"));
 			crit.addOrder(Order.asc("icdMeasure.code"));
-    	
-    	crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+    	    crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+		//	crit.setResultTransformer(Criteria.PROJECTION);   
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
@@ -109,16 +108,4 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
         return HedisMeasureRule.class;
     }
     
-    @SuppressWarnings("unchecked")
-	public List<HedisMeasureRule> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("hedisMeasure.code"))
-    	//.addOrder(Order.asc("cptMeasure.code"))
-    	//.addOrder(Order.asc("icdMeasure.code"))
-    	.add(Restrictions.eq("activeInd", 'Y'));
-    	List<HedisMeasureRule> list = cr.list();
-    	return list;
-    }
-
 }
