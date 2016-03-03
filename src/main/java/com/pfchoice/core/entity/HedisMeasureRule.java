@@ -47,7 +47,6 @@ public class HedisMeasureRule implements Serializable
     @JoinColumn(name="hedis_id", referencedColumnName="qlty_msr_id")
     private HedisMeasure hedisMeasure;
     
-    
     @Expose
     @OneToMany(cascade=CascadeType.ALL)  
     @JoinTable(name="hedis_cpt_measure",  
@@ -66,14 +65,6 @@ public class HedisMeasureRule implements Serializable
     @OneToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="gender_id", referencedColumnName="gender_id")
     private Gender genderId;
-    
-    @Expose
-    @Transient
-    private  CPTMeasure cptMeasure;
-    
-    @Expose
-    @Transient
-    private  ICDMeasure icdMeasure;
     
     @Expose
     @Column(name="lower_age_limit")
@@ -118,6 +109,22 @@ public class HedisMeasureRule implements Serializable
     @Expose
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
+    
+    @Expose
+    @Transient
+    private String hedisMeasureCode;
+    
+    @Expose
+    @Transient
+    private String cptMeasureCode;
+    
+    @Expose
+    @Transient
+    private String icdMeasureCode;
+    
+    @Expose
+    @Transient
+    private String genderDescription;
     
     public HedisMeasureRule()
     {
@@ -328,33 +335,60 @@ public class HedisMeasureRule implements Serializable
 		return activeInd;
 	}
 
-	
 	/**
-	 * @return the cptMeasure
+	 * @return the hedisMeasureCode
 	 */
-	public CPTMeasure getCptMeasure() {
-		return cptMeasure;
+	public String getHedisMeasureCode() {
+		return hedisMeasureCode;
 	}
 
 	/**
-	 * @param cptMeasure the cptMeasure to set
+	 * @param hedisMeasureCode the hedisMeasureCode to set
 	 */
-	public void setCptMeasure(CPTMeasure cptMeasure) {
-		this.cptMeasure = cptMeasure;
+	public void setHedisMeasureCode(String hedisMeasureCode) {
+		this.hedisMeasureCode = hedisMeasureCode;
 	}
 
 	/**
-	 * @return the icdMeasure
+	 * @return the cptMeasureCode
 	 */
-	public ICDMeasure getIcdMeasure() {
-		return icdMeasure;
+	public String getCptMeasureCode() {
+		return cptMeasureCode;
 	}
 
 	/**
-	 * @param icdMeasure the icdMeasure to set
+	 * @param cptMeasureCode the cptMeasureCode to set
 	 */
-	public void setIcdMeasure(ICDMeasure icdMeasure) {
-		this.icdMeasure = icdMeasure;
+	public void setCptMeasureCode(String cptMeasureCode) {
+		this.cptMeasureCode = cptMeasureCode;
+	}
+
+	/**
+	 * @return the icdMeasureCode
+	 */
+	public String getIcdMeasureCode() {
+		return icdMeasureCode;
+	}
+
+	/**
+	 * @param icdMeasureCode the icdMeasureCode to set
+	 */
+	public void setIcdMeasureCode(String icdMeasureCode) {
+		this.icdMeasureCode = icdMeasureCode;
+	}
+
+	/**
+	 * @return the genderDescription
+	 */
+	public String getGenderDescription() {
+		return genderDescription;
+	}
+
+	/**
+	 * @param genderDescription the genderDescription to set
+	 */
+	public void setGenderDescription(String genderDescription) {
+		this.genderDescription = genderDescription;
 	}
 
 	/**

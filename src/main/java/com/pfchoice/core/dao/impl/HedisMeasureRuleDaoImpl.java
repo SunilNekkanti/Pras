@@ -4,11 +4,15 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.StringType;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -53,8 +57,19 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     		
     		crit.add(or);
     	}
-    	
     	crit.add(Restrictions.eq("activeInd", 'Y'));
+    	ProjectionList projList = Projections.projectionList();
+    	projList.add(Projections.property("id"),"id");
+    	projList.add(Projections.property("lowerAgeLimit"),"lowerAgeLimit");
+    	projList.add(Projections.property("upperAgeLimit"),"upperAgeLimit");
+    	projList.add(Projections.property("ageEffectiveFrom"),"ageEffectiveFrom");
+    	projList.add(Projections.property("ageEffectiveTo"),"ageEffectiveTo");
+    	projList.add(Projections.property("effectiveYear"),"effectiveYear");
+    	projList.add(Projections.property("hedisMeasure.code"),"hedisMeasureCode");
+    	projList.add(Projections.property("cptMeasure.code"),"cptMeasureCode");
+    	projList.add(Projections.property("icdMeasure.code"),"icdMeasureCode");
+    	projList.add(Projections.property("genderId.description"),"genderDescription");
+    	crit.setProjection(projList);
     	
     	if(sort != null && !"".equals(sort)) 
 		{
@@ -70,8 +85,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 			crit.addOrder(Order.asc("hedisMeasure.code"));
 			crit.addOrder(Order.asc("cptMeasure.code"));
 			crit.addOrder(Order.asc("icdMeasure.code"));
-    	    crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		//	crit.setResultTransformer(Criteria.PROJECTION);   
+    	//    crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+			crit.setResultTransformer(Transformers.aliasToBean(getEntityClass()));   
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

@@ -56,30 +56,30 @@ $.ajax( {
   	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
   	     "sAjaxDataProp" : 'data.list',
   	     "aoColumns": [
-                         { "mDataProp": "this.id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ]},
-                         { "mDataProp": "cptMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "20%", "asSorting" : [ "asc" ] },
-                         { "mDataProp": "icdMeasure.code","bSearchable" : true, "bSortable": true,"sWidth" : "20%" , "asSorting" : [ "asc" ]},
-                         { "mDataProp": "this.effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
-                         { "mDataProp": "this.genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-                         { "mDataProp": "this.lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
-                         { "mDataProp": "this.upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
-                         { "mDataProp": "this.ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
-                         { "mDataProp": "this.ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
+                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+                         { "mDataProp": "hedisMeasureCode","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ]},
+                         { "mDataProp": "cptMeasureCode","bSearchable" : true, "bSortable" : true,"sWidth" : "20%", "asSorting" : [ "asc" ] },
+                         { "mDataProp": "icdMeasureCode","bSearchable" : true, "bSortable": true,"sWidth" : "20%" , "asSorting" : [ "asc" ]},
+                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+                         { "mDataProp": "genderDescription","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
+                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
+                         { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
+                         { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
+                         { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
                      ],
             "aoColumnDefs": [ 
-                     		    { "sName": "this.id", "aTargets": [ 0 ] },
-                     		    { "sName": "hedisMeasure.code", "aTargets": [ 1 ],
+                     		    { "sName": "id", "aTargets": [ 0 ] },
+                     		    { "sName": "hedisMeasureCode", "aTargets": [ 1 ],
                      		      "render": function ( data, type, full, meta ) {
-                                      return '<a href="'+full.this.id+'">'+data+'</a>';
+                                      return '<a href="'+full.id+'">'+data+'</a>';
                      		      }},
-                     		    { "sName": "cptMeasure.code", "aTargets": [ 2 ] },
-                     			{ "sName": "icdMeasure.code", "aTargets": [ 3] },
-                     			{ "sName": "this.effectiveYear", "aTargets": [ 4] },
-                       		    { "sName": "this.genderId.description", "aTargets": [ 5 ] },
-                       		    { "sName": "this.lowerAgeLimit", "aTargets": [ 6 ] },
-                       		    { "sName": "this.upperAgeLimit", "aTargets": [ 7 ] },
-                       		    { "sName": "this.ageEffectiveFrom", "aTargets": [ 8 ],
+                     		    { "sName": "cptMeasureCode", "aTargets": [ 2 ] },
+                     			{ "sName": "icdMeasureCode", "aTargets": [ 3] },
+                     			{ "sName": "effectiveYear", "aTargets": [ 4] },
+                       		    { "sName": "genderDescription", "aTargets": [ 5 ] },
+                       		    { "sName": "lowerAgeLimit", "aTargets": [ 6 ] },
+                       		    { "sName": "upperAgeLimit", "aTargets": [ 7 ] },
+                       		    { "sName": "ageEffectiveFrom", "aTargets": [ 8 ],
                 		   		   	   "render": function (data) {
                 		   		   		    if(data == null) return null;
               		   		        		var date = new Date(data);
