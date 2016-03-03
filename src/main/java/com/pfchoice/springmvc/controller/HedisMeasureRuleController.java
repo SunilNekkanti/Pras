@@ -29,10 +29,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.CPTMeasure;
+import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.CPTMeasureService;
+import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.ICDMeasureService;
@@ -44,6 +46,9 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 @SessionAttributes("username")
 public class HedisMeasureRuleController{
 	
+	private static final Logger logger = LoggerFactory
+            .getLogger(HedisMeasureRuleController.class);
+ 
     @Autowired
     private HedisMeasureService hedisMeasureService;
     
@@ -55,6 +60,9 @@ public class HedisMeasureRuleController{
     
     @Autowired
     private ICDMeasureService icdMeasureService;
+   
+    @Autowired
+    private GenderService genderService;
     
     @Autowired
     @Qualifier("hedisMeasureRuleValidator")
@@ -68,9 +76,6 @@ public class HedisMeasureRuleController{
         binder.setValidator(validator);
     }
     
-    private static final Logger logger = LoggerFactory
-            .getLogger(HedisMeasureRuleController.class);
- 
 	public HedisMeasureRuleController() {
     }
 	
@@ -95,6 +100,14 @@ public class HedisMeasureRuleController{
 		//Data referencing for CPT Measure list box
 		List<CPTMeasure> cptMeasureList = cptMeasureService.findAll();
 		return cptMeasureList;
+	}
+	
+	@ModelAttribute("genderList")
+	public List<Gender> populateGenderList() {
+		
+		//Data referencing for gender list box
+		List<Gender> genderList = genderService.findAll();
+		return genderList;
 	}
 
 	@ModelAttribute("icdMeasureList")

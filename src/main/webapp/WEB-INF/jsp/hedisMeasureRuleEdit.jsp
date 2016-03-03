@@ -18,6 +18,7 @@
 					<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
 					<div class="col-sm-6">
 						<springForm:select path="hedisMeasure" class="form-control" id="hedisCode" >
+							<springForm:option  value="${null}" label="Select One" />
 				    		<springForm:options items="${hedisMeasureList}" itemValue="id" itemLabel="code"   />
 						</springForm:select>
 						<springForm:errors path="hedisMeasure.code" cssClass="error text-danger" />

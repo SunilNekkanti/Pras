@@ -68,6 +68,7 @@
 					<label class="control-label col-sm-2" for="gender">Gender</label>
 					<div class="col-sm-6">
 						<springForm:select path="genderId"  class="form-control" id="gender">
+							<springForm:option  value="${null}" label="Select One" />
 					   		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
 						</springForm:select>
 						<springForm:errors path="genderId" cssClass="error text-danger" />
