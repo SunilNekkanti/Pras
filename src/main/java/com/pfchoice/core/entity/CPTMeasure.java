@@ -35,7 +35,7 @@ public class CPTMeasure implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name="cpt_id", nullable = false)
+    @Column(name="cpt_id", nullable = false,unique = true)
     private Integer id;
     
     @Expose
@@ -72,12 +72,6 @@ public class CPTMeasure implements Serializable
     @Expose
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
-    
-    @OneToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="hedis_cpt_measure",  
-    joinColumns={@JoinColumn(name="cpt_id", referencedColumnName="cpt_id")},  
-    inverseJoinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")})  
-    private HedisMeasureRule hedisMeasureRule;
     
     public CPTMeasure()
     {
@@ -139,20 +133,6 @@ public class CPTMeasure implements Serializable
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
-	}
-
-	/**
-	 * @return the hedisMeasureRule
-	 */
-	public HedisMeasureRule getHedisMeasureRule() {
-		return hedisMeasureRule;
-	}
-
-	/**
-	 * @param hedisMeasureRule the hedisMeasureRule to set
-	 */
-	public void setHedisMeasureRule(HedisMeasureRule hedisMeasureRule) {
-		this.hedisMeasureRule = hedisMeasureRule;
 	}
 
 	/**

@@ -76,14 +76,6 @@ public class ICDMeasure implements Serializable
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
     
-    
-    @OneToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="hedis_icd_measure",  
-    joinColumns={@JoinColumn(name="icd_id", referencedColumnName="icd_id")},  
-    inverseJoinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")})  
-    private HedisMeasureRule hedisMeasureRule;
-    
-    
     public ICDMeasure()
     {
     }
@@ -159,20 +151,6 @@ public class ICDMeasure implements Serializable
 		this.rxhcc = rxhcc;
 	}
 	
-	/**
-	 * @return the hedisMeasureRule
-	 */
-	public HedisMeasureRule getHedisMeasureRule() {
-		return hedisMeasureRule;
-	}
-
-	/**
-	 * @param hedisMeasureRule the hedisMeasureRule to set
-	 */
-	public void setHedisMeasureRule(HedisMeasureRule hedisMeasureRule) {
-		this.hedisMeasureRule = hedisMeasureRule;
-	}
-
 	/**
 	 * @return the createdDate
 	 */
