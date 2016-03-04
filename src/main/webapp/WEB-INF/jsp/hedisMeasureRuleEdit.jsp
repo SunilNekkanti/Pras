@@ -18,7 +18,6 @@
 					<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
 					<div class="col-sm-6">
 						<springForm:select path="hedisMeasure" class="form-control" id="hedisCode" >
-							<springForm:option  value="${null}" label="Select One" />
 				    		<springForm:options items="${hedisMeasureList}" itemValue="id" itemLabel="code"   />
 						</springForm:select>
 						<springForm:errors path="hedisMeasure.code" cssClass="error text-danger" />
@@ -28,7 +27,7 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="cpt">CPT Code</label>
 					<div class="col-sm-6">
-						<springForm:select multiple="true" path="cptCodes" class="form-control"  items="${cptMeasureList}" itemLabel="code" itemValue="id" />
+						<springForm:select multiple="true" path="cptCodes" class="form-control"  size="9" items="${cptMeasureList}" itemLabel="code" itemValue="id" />
 						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -36,7 +35,7 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="cpt">ICD Code</label>
 					<div class="col-sm-6">
-						<springForm:select multiple="true" path="icdCodes" class="form-control"  items="${icdMeasureList}" itemLabel="code" itemValue="id" />
+						<springForm:select multiple="true" path="icdCodes" class="form-control"  size="9" items="${icdMeasureList}" itemLabel="code" itemValue="id" />
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -53,6 +52,7 @@
 					<label class="control-label col-sm-2" for="gender">Gender</label>
 					<div class="col-sm-6">
 						<springForm:select path="genderId"  class="form-control" id="gender">
+							<springForm:option  value="${null}" label="Select One" />
 					   		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
 						</springForm:select>
 						<springForm:errors path="genderId" cssClass="error text-danger" />
@@ -77,7 +77,7 @@
 				<div class="form-group">
 					<label class="control-label  col-sm-2" for="ageEffectiveFrom" >Age Effective From</label>
 					<div class="col-sm-6">
-						<fmt:formatDate value="${hedisMeasure.ageEffectiveFrom}" var="dateString" pattern="MM/dd/yyyy" />
+						<fmt:formatDate value="${hedisMeasureRule.ageEffectiveFrom}" var="dateString" pattern="MM/dd/yyyy" />
 						<springForm:input path="ageEffectiveFrom" value="${dateString}" class="form-control datepicker"  id="ageEffectiveFrom" placeholder="ageEffectiveFrom" />
 						<springForm:errors path="ageEffectiveFrom" cssClass="error text-danger" />
 					  </div>
@@ -85,7 +85,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="ageEffectiveTo ">Age Effective To</label>
 					<div class="col-sm-6">
-						<fmt:formatDate value="${hedisMeasure.ageEffectiveTo}" var="dateString" pattern="MM/dd/yyyy" />
+						<fmt:formatDate value="${hedisMeasureRule.ageEffectiveTo}" var="dateString" pattern="MM/dd/yyyy" />
 						<springForm:input path="ageEffectiveTo" value="${dateString}" class="form-control datepicker" id="ageEffectiveTo" placeholder="ageEffectiveTo" />
 						<springForm:errors path="ageEffectiveTo" cssClass="error text-danger" />
 					  </div>

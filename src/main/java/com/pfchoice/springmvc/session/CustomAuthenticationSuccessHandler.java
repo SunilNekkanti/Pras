@@ -29,7 +29,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         session.setAttribute(SystemDefaultProperties.ID, authUser.getUsername());  
         session.setAttribute("authorities", authentication.getAuthorities());  
   
-        session.setMaxInactiveInterval(15*60);
+        session.setMaxInactiveInterval(60*60);
         //set our response to OK status  
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);  
   

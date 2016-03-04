@@ -48,14 +48,14 @@ public class HedisMeasureRule implements Serializable
     private HedisMeasure hedisMeasure;
     
     @Expose
-    @OneToMany(cascade=CascadeType.ALL)  
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)  
     @JoinTable(name="hedis_cpt_measure",  
     joinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")},  
     inverseJoinColumns={@JoinColumn(name="cpt_id", referencedColumnName="cpt_id")}) 
     private Set<CPTMeasure> cptCodes;
     
     @Expose
-    @OneToMany(cascade=CascadeType.ALL)  
+    @OneToMany(fetch=FetchType.LAZY,  cascade=CascadeType.ALL)  
     @JoinTable(name="hedis_icd_measure",  
     joinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")},  
     inverseJoinColumns={@JoinColumn(name="icd_id", referencedColumnName="icd_id")}) 

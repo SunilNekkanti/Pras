@@ -188,7 +188,8 @@ public class HedisMeasureRuleController{
 	
 	
 	@RequestMapping(value = "/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveHedisMeasureRuleAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
+	public String saveHedisMeasureRuleAction(@PathVariable Integer id,
+			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
         	hedisMeasureRule.setActiveInd('Y');
@@ -209,7 +210,8 @@ public class HedisMeasureRuleController{
 	
 
 	@RequestMapping(value = "/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteHedisMeasureAction(@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
+	public String deleteHedisMeasureAction(@PathVariable Integer id, 
+			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
 			if (bindingResult.hasErrors()) {
