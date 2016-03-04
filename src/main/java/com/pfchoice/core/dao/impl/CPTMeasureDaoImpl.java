@@ -8,7 +8,9 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -106,6 +108,11 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
     	Criteria cr = createCriteria();
     	cr.addOrder(Order.asc("code"))
     	  .add(Restrictions.eq("activeInd", 'Y'));
+    	cr.setProjection(
+    		    Projections.distinct(Projections.projectionList()
+    		    	    .add(Projections.property("code"), "code")
+    		    	    .add(Projections.property("id"), "id")))
+    	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
     	List<CPTMeasure> list = cr.list();
     	return list;
     }

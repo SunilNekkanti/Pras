@@ -38,8 +38,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     	Criteria crit = createCriteria()
          		.createAlias("hedisMeasure", "hedisMeasure")
          		.createAlias("genderId", "genderId", JoinType.LEFT_OUTER_JOIN)
-         		.createAlias("cptCodes", "cptMeasure")
-         		.createAlias("icdCodes", "icdMeasure");
+         		.createAlias("cptCodes", "cptMeasure", JoinType.INNER_JOIN)
+         		.createAlias("icdCodes", "icdMeasure", JoinType.INNER_JOIN);
        
     	if( sSearch != null && !"".equals(sSearch))
     	{
@@ -69,7 +69,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     	projList.add(Projections.property("cptMeasure.code"),"cptMeasureCode");
     	projList.add(Projections.property("icdMeasure.code"),"icdMeasureCode");
     	projList.add(Projections.property("genderId.description"),"genderDescription");
-    	crit.setProjection(projList);
+    	
+    	crit.setProjection(Projections.distinct(projList));
     	
     	if(sort != null && !"".equals(sort)) 
 		{

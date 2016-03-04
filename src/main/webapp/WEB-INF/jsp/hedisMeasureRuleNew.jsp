@@ -74,6 +74,14 @@
 				</div>
 				
 				<div class="form-group">
+					<label class="control-label  col-sm-2" for="doseCount">Dose Count</label>
+					<div class="col-sm-4">
+						<springForm:input path="doseCount" class="form-control" id="doseCount" placeholder="doseCount" />
+						<springForm:errors path="doseCount" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
+				<div class="form-group">
 					<label class="control-label  col-sm-2" for="ageEffectiveFrom" >Age Effective From</label>
 					<div class="col-sm-4">
 						<fmt:formatDate value="${hedisMeasureRule.ageEffectiveFrom}" var="dateString" pattern="MM/dd/yyyy" />

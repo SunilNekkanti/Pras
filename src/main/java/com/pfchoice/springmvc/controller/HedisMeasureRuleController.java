@@ -147,27 +147,6 @@ public class HedisMeasureRuleController{
         return "hedisMeasureRuleDisplay";
     }
 	
-	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleList")
-	public String viewHedisMeasureRuleAction(Model model) throws Exception{
-		
-		logger.info("Returning view.jsp page after create");
-				return "hedisMeasureRuleList";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleLists", method = RequestMethod.GET)
-	public Message viewHedisMeasureRuleActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
-					@RequestParam(required = false) String sSearch,
-					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
-		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort, sortdir);
-
-        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(pagination));
-    }
-	
-	
 	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addHedisMeasureAction(@ModelAttribute("hedisMeasureRule")  @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {

@@ -8,7 +8,9 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
@@ -98,7 +100,13 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
     	Criteria cr = createCriteria();
     	cr.add(Restrictions.eq("activeInd", 'Y'))
     	  .addOrder(Order.asc("code"));
+    	cr.setProjection(
+    		    Projections.distinct(Projections.projectionList()
+    		    	    .add(Projections.property("code"), "code")
+    		    	    .add(Projections.property("id"), "id")))
+    	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
     	List<ICDMeasure> list = cr.list();
+    	
     	return list;
     }
 

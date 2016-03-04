@@ -62,7 +62,7 @@ public class HedisMeasureRule implements Serializable
     private Set<ICDMeasure> icdCodes ;
     
     @Expose
-    @OneToOne(fetch=FetchType.EAGER )
+    @OneToOne(fetch=FetchType.LAZY )
     @JoinColumn(name="gender_id", referencedColumnName="gender_id")
     private Gender genderId;
     
@@ -73,6 +73,10 @@ public class HedisMeasureRule implements Serializable
     @Expose
     @Column(name="upper_age_limit")
     private BigDecimal upperAgeLimit;
+    
+    @Expose
+    @Column(name="dose_count")
+    private Integer doseCount;
     
     @Expose
     @Temporal(TemporalType.DATE)
@@ -242,6 +246,20 @@ public class HedisMeasureRule implements Serializable
 	 */
 	public void setUpperAgeLimit(BigDecimal  upperAgeLimit) {
 		this.upperAgeLimit = upperAgeLimit;
+	}
+
+	/**
+	 * @return the doseCount
+	 */
+	public Integer getDoseCount() {
+		return doseCount;
+	}
+
+	/**
+	 * @param doseCount the doseCount to set
+	 */
+	public void setDoseCount(Integer doseCount) {
+		this.doseCount = doseCount;
 	}
 
 	/**
