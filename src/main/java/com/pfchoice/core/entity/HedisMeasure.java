@@ -12,11 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 
 import com.google.gson.annotations.Expose;
 
@@ -46,6 +47,10 @@ public class HedisMeasure implements Serializable
     @Column(name="description")
     private String description;
 
+    @Expose
+    @Transient
+    private String codeAndDescription;
+    
     @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="qlty_msr_group_id", nullable = false, referencedColumnName="qlty_msr_group_id")
@@ -119,6 +124,21 @@ public class HedisMeasure implements Serializable
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the codeAndDescription
+	 */
+	public String getCodeAndDescription() {
+		String codedescription = this.code+" ("+this.description +")";
+		return codedescription;
+	}
+
+	/**
+	 * @param codeAndDescription the codeAndDescription to set
+	 */
+	public void setCodeAndDescription(String codeAndDescription) {
+		this.codeAndDescription = codeAndDescription;
 	}
 
 	/**

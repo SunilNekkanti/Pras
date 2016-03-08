@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import com.google.gson.annotations.Expose;
 
 /**
@@ -45,6 +47,10 @@ public class ICDMeasure implements Serializable
     @Expose
     @Column(name="description")
     private String description;
+    
+    @Expose
+    @Transient
+    private String codeAndDescription;
     
     @Expose
     @Column(name="hcc")
@@ -121,6 +127,21 @@ public class ICDMeasure implements Serializable
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the codeAndDescription
+	 */
+	public String getCodeAndDescription() {
+		String codedescription = this.code+" ("+this.description +")";
+		return codedescription;
+	}
+
+	/**
+	 * @param codeAndDescription the codeAndDescription to set
+	 */
+	public void setCodeAndDescription(String codeAndDescription) {
+		this.codeAndDescription = codeAndDescription;
 	}
 
 	/**

@@ -2,8 +2,10 @@ package com.pfchoice.springmvc.controller;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +24,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.pfchoice.common.CommonMessageContent;
-import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
@@ -39,8 +37,6 @@ import com.pfchoice.core.service.HedisMeasureRuleService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.ICDMeasureService;
 
-import ml.rugal.sshcommon.page.Pagination;
-import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
 @SessionAttributes("username")
@@ -102,6 +98,14 @@ public class HedisMeasureRuleController{
 		return cptMeasureList;
 	}
 	
+	@ModelAttribute("cptMeasureListAjax")
+	public List<CPTMeasure> populateCPTMeasureListAjax() {
+		
+		//Data referencing for CPT Measure list box
+		List<CPTMeasure> cptMeasureList = new ArrayList<CPTMeasure>();
+		return cptMeasureList;
+	}
+	
 	@ModelAttribute("genderList")
 	public List<Gender> populateGenderList() {
 		
@@ -110,6 +114,14 @@ public class HedisMeasureRuleController{
 		return genderList;
 	}
 
+	@ModelAttribute("icdMeasureListAjax")
+	public List<ICDMeasure> populateICDMeasureListAjax() {
+		
+		//Data referencing for ICD Measure list box
+		List<ICDMeasure> icdMeasureList = new ArrayList<ICDMeasure>();
+		return icdMeasureList;
+	}
+	
 	@ModelAttribute("icdMeasureList")
 	public List<ICDMeasure> populateICDMeasureList() {
 		
@@ -135,6 +147,23 @@ public class HedisMeasureRuleController{
         logger.info("Returning hedisMeasureRuleEdit.jsp page");
         return "hedisMeasureRuleEdit";
     }
+	
+	@RequestMapping(value = "/hedisMeasureRuleAjax/{id}", method = RequestMethod.GET)
+    public String updateHedisMeasureRuleAjaxPage(@PathVariable Integer id,Model model) {
+	
+		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
+	    logger.info("Returning hedisMeasureRule.getId()"+dbHedisMeasureRule.getId());
+	    
+	    Set<CPTMeasure> cptMeasureList = dbHedisMeasureRule.getCptCodes();
+	    Set<ICDMeasure> icdMeasureList = dbHedisMeasureRule.getIcdCodes();
+	    
+		model.addAttribute("hedisMeasureRule", dbHedisMeasureRule);
+		model.addAttribute("cptMeasureListAjax", cptMeasureList);
+		model.addAttribute("icdMeasureListAjax", icdMeasureList);
+        logger.info("Returning hedisMeasureRuleEditAjax.jsp page");
+        return "hedisMeasureRuleEditAjax";
+    }
+	
 		
 	@RequestMapping(value = "/hedisMeasureRule/{id}/display", method = RequestMethod.GET)
     public String displayHedisMeasureRulePage(@PathVariable Integer id,Model model) {

@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
@@ -51,6 +52,10 @@ public class CPTMeasure implements Serializable
     @Column(name="description")
     private String description;
 
+    @Expose
+    @Transient
+    private String codeAndDescription;
+    
     @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -133,6 +138,21 @@ public class CPTMeasure implements Serializable
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the codeAndDescription
+	 */
+	public String getCodeAndDescription() {
+		String codedescription = this.code+" ("+this.shortDescription +")";
+		return codedescription;
+	}
+
+	/**
+	 * @param codeAndDescription the codeAndDescription to set
+	 */
+	public void setCodeAndDescription(String codeAndDescription) {
+		this.codeAndDescription = codeAndDescription;
 	}
 
 	/**

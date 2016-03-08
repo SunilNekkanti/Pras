@@ -398,6 +398,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEdit.jsp" />  
     </definition>  
     
+     <definition name="hedisMeasureRuleEditAjax" extends="base.definition">  
+        <put-attribute name="title" value="Hedis Measure Rule" /> 
+        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEditAjax.jsp" />  
+    </definition>  
+    
     <definition name="hedisMeasureRuleEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule Edit Success" />  
         <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
