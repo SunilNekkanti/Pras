@@ -150,6 +150,12 @@ public class HedisMeasureRuleController{
 	
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
 	    logger.info("Returning hedisMeasureRule.getId()"+dbHedisMeasureRule.getId());
+	    
+	    Set<CPTMeasure> cptMeasureList = dbHedisMeasureRule.getCptCodes();
+	    Set<ICDMeasure> icdMeasureList = dbHedisMeasureRule.getIcdCodes();
+	    
+		model.addAttribute("cptMeasureListAjax", cptMeasureList);
+		model.addAttribute("icdMeasureListAjax", icdMeasureList);
 		model.addAttribute("hedisMeasureRule", dbHedisMeasureRule);
         logger.info("Returning hedisMeasureRuleEdit.jsp page");
         return "hedisMeasureRuleEdit";
@@ -275,19 +281,19 @@ public class HedisMeasureRuleController{
 					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
-		Set<CPTMeasure> cptMeasureList1 = dbHedisMeasureRule.getCptCodes();
+		Set<CPTMeasure> hedisRuleCPTMeasureList = dbHedisMeasureRule.getCptCodes();
 		
 		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
 		List<CPTMeasure> cptMeasureList = (List<CPTMeasure>) pagination.getList();
 		
-		List<CPTMeasure> retainCPTList = new ArrayList<CPTMeasure>(cptMeasureList1);
+		List<CPTMeasure> retainCPTList = new ArrayList<CPTMeasure>(hedisRuleCPTMeasureList);
 		retainCPTList.retainAll(cptMeasureList);
 		
-		cptMeasureList.removeAll(cptMeasureList1);
+		cptMeasureList.removeAll(hedisRuleCPTMeasureList);
 		
 		if(sSearch!= null && "".equals(sSearch))
 		{
-			final int count = pagination.getTotalCount() - cptMeasureList1.size();
+			final int count = pagination.getTotalCount() - hedisRuleCPTMeasureList.size();
 			pagination.setTotalCount(count);    
 		}
 		else 
@@ -311,19 +317,19 @@ public class HedisMeasureRuleController{
 					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
-		Set<ICDMeasure> icdMeasureList1 = dbHedisMeasureRule.getIcdCodes();
+		Set<ICDMeasure> hedisRuleICDMeasureList = dbHedisMeasureRule.getIcdCodes();
 		
 		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
 		List<ICDMeasure> icdMeasureList = (List<ICDMeasure>) pagination.getList();
 		
-		List<ICDMeasure> retainICDList = new ArrayList<ICDMeasure>(icdMeasureList1);
+		List<ICDMeasure> retainICDList = new ArrayList<ICDMeasure>(hedisRuleICDMeasureList);
 		retainICDList.retainAll(icdMeasureList);
 		
-		icdMeasureList.removeAll(icdMeasureList1);
+		icdMeasureList.removeAll(hedisRuleICDMeasureList);
 		
 		if(sSearch!= null && "".equals(sSearch))
 		{
-			final int count = pagination.getTotalCount() - icdMeasureList1.size();
+			final int count = pagination.getTotalCount() - hedisRuleICDMeasureList.size();
 			pagination.setTotalCount(count);    
 		}
 		else 
@@ -334,7 +340,7 @@ public class HedisMeasureRuleController{
 		
 		pagination.setList(icdMeasureList);
 		
-        return Message.successMessage(CommonMessageContent.CPT_LIST, JsonConverter.getJsonObject(pagination));
+        return Message.successMessage(CommonMessageContent.ICD_LIST, JsonConverter.getJsonObject(pagination));
     }
 	
 }

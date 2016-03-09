@@ -28,9 +28,9 @@
 .popup-inner {
     max-width:700px;
     width:90%;
-    padding:40px;
+    padding:20px;
     position:absolute;
-    top:60%;
+    top:50%;
     left:60%;
     opacity: "1";
     -webkit-transform:translate(-50%, -50%);
@@ -71,12 +71,6 @@
 </style>
 <script type="text/javascript">
     
-     
-
-
-
-
-   
 $(function() {
     //----- OPEN
     $('[data-popup-open]').on('click', function(e)  {
@@ -98,88 +92,71 @@ $(function() {
 
 $(document).ready(function() {
 	
-	var checkedItems = new Array();
-	// this is needed as we might uncheck items that are checked to begin with
-	$('input[type="checkbox"][name="cptchkbox"]', ".datatable").each(function() {
-		alert('input[type="checkbox"][name="cptchkbox"]');
-	        if ($(this).is(':checked'))
-	        {
-	            checkedItems.push($(this).attr('id'));
-	            alert('test1');
-	        }
-	    });
-	// function that can remove items from the array
-	checkedItemsRemove = function(item) {
-	    var i = 0;
-	    while (i < checkedItems.length) {
-	        if (checkedItems[i] == item) {
-	            checkedItems.splice(i, 1);
-	            alert('test2');
-	        } else {
-	            i++;
-	            alert('test3');
-	        }
-	        }
-	    }
-	// function to check if an item is in the array
-	checkedItemsContains = function(item) {
-	    for (var i = 0; i < checkedItems.length; i++) {
-	   	 alert('test4');
-	        if (checkedItems[i] == item)
-	            return true;
-	    }
-	    return false;
-	}
-	// function to set the checked attribute of those which should be on the current table display
-	persistChecked = function()
-	{
-		 alert('test5');
-	       $('input[type="checkbox"][name="cptchkbox"]', '.datatable').each(function() {
-	        if (checkedItemsContains($(this).attr('id'))) {
-	            $(this).attr('checked', 'checked');
-	        } else {
-	            //$(this).removeAttr('checked');
-	        }
-	    });
-	}
-	   $('#cptListTable').on('click', '.cptchkbox', function (e)
-	   {     alert('testing');
-	       if ($(this).is(':checked')) {
-	              checkedItems.push($(this).attr('id'));
-	       } else {
-	           checkedItemsRemove($(this).attr('id'));
-	       }
-	       return true;       
-	   });  
-	   
-	   $('#cptListTable tbody').on('click', '.cptchkbox', function () {
-		   	
-		   alert(' $(this).is(:checked)'+$(this).is(':checked'));
-		   alert(' $(this).attr(id)'+$(this).attr('id'));
-		   	if ($(this).is(':checked')) {
-		   		
-		   		checkedItemsRemove($(this).attr('id'));
-	        	alert('remove checked item'+$(this).attr('id'));
-		         
-		    	} else {
-		    		  checkedItems.push($(this).attr('id'));
-			           alert('push chk item'+$(this).attr('id'));
-		    	}
-		       var id = this.id;
-		       
-		       var index = $.inArray(id, selected);
+	var checkedCPTItemsMap = {};
+	var checkedICDItemsMap = {};
+	
+	$("#addCPT").click(function (e)    {
+       	var cptCodes = $("#cptCodes"); 
+       	
+       	for (var e in checkedCPTItemsMap){
+       		var value = checkedCPTItemsMap[e];
+       		var optionExists = ($('#cptCodes option[value=' + e + ']').length > 0);
+               if(!optionExists)
+               {
+            	   cptCodes.append('<option value ="'+e+'" selected ="selected">'+value+'</option>');
+               }
+       	} 
+	});
 
-		       if ( index === -1 ) {
-		           selected.push( id );
-		       } else {
-		           selected.splice( index, 1 );
-		       }
+	$("#removeCPT").click(function (e) {
+         	$('#cptCodes option:selected').each(function () {
+         			$(this).remove();                       
+          });
+             e.preventDefault();
+    });
 
-		       $(this).toggleClass('selected');
-		   } );
+
+   $('#cptListTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+
+	  	 if ($(this).is(':checked')) {
+	  		checkedCPTItemsMap[$(this).attr('id')] = $(this).attr('value');		   		   
+	        	
+	    	} else {
+	    		delete checkedCPTItemsMap[$(this).attr('id')];
+	    	}
+	   } );
 	   
-  	 var selected = [];
-  	var datatable2Rest = function(sSource, aoData, fnCallback) {
+	$("#addICD").click(function (e)    {
+       	var cptCodes = $("#icdCodes"); 
+       	
+       	for (var e in checkedICDItemsMap){
+       		var value = checkedICDItemsMap[e];
+       		var optionExists = ($('#icdCodes option[value=' + e + ']').length > 0);
+               if(!optionExists)
+               {
+            	   cptCodes.append('<option value ="'+e+'" selected ="selected">'+value+'</option>');
+               }
+       	} 
+	});
+
+	$("#removeICD").click(function (e) {
+         	$('#icdCodes option:selected').each(function () {
+         			$(this).remove();                       
+          });
+             e.preventDefault();
+    });
+
+
+   $('#icdListTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+
+	  	 if ($(this).is(':checked')) {
+	  		checkedICDItemsMap[$(this).attr('id')] = $(this).attr('value');		   		   
+	        	
+	    } else {
+	    		delete checkedICDItemsMap[$(this).attr('id')];
+	    }
+	} ); 
+ var datatable2Rest = function(sSource, aoData, fnCallback) {
   		//extract name/value pairs into a simpler map for use later
  var paramMap = {};
  for ( var i = 0; i < aoData.length; i++) {
@@ -221,30 +198,29 @@ $.ajax( {
   	}
   	
   	var hedisRuleId =  $('#id').val();
+  	
+  	 // CPT POPUP  
+  	 
   	$('#cptListTable').dataTable({
   	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/'+hedisRuleId+'/cpt/cptMeasureLists',
   	     "sAjaxDataProp" : 'data.list',
   	     "aoColumns": [
 						 { "mData" : "id",  
-		  				  "render" : function(obj) {
-										return '<input type="checkbox" name="cptchkbox"   value="'+obj+'"/>';
+		  				  "render" : function(data, type, full, meta) {
+										return '<input type="checkbox" name="cptchkbox"   id="'+data+'" value="'+full.code+' ('+full.shortDescription+')"/>';
 									 }, 
 					  		"sWidth" : "10%", "bSearchable" : false,  "asSorting" : [ "asc" ]
 						 },
-                         { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                         { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
-                       
+                         { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"}, 
+                         { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "80%"}
                      ],
   	     "bLengthChange": false,
   	     "sPaginationType": "full_numbers",
   	     "bProcessing": true,
   	     "bServerSide" : true,
   	     "fnRowCallback": function(row, data, dataIndex){
-  	         // Get row ID
-  	         var rowId = data.id;
   	         // If row ID is in the list of selected row IDs
-               if ( $.inArray(rowId, checkedItems) !== -1 ) {
-            	  alert('checked rowid'+rowId);
+               if ( (data.id in checkedCPTItemsMap) ) {
               	 $(row).find('input[type="checkbox"]').prop('checked', true);
                }
   	      },
@@ -252,39 +228,33 @@ $.ajax( {
   	});
   	
       
-
-           
-              
-             
-          	
-          	$('#icdListTable').dataTable({
-          	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/'+hedisRuleId+'/icd/icdMeasureLists',
-          	     "sAjaxDataProp" : 'data.list',
-          	     "aoColumns": [
-  								 { "mData" : "id",  
-  								  "render" : function(obj) {
-       											return '<input type="checkbox" name="chkbox"  class="dt_checked" value="'+obj+'"/>';
-      										}, 
-      							  "sWidth" : "10%", "bSearchable" : false,  "asSorting" : [ "asc" ]
-     							 },
-                                 { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                                 { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
-                               
-                             ],
-          	     "bLengthChange": false,
-          	     "sPaginationType": "full_numbers",
-          	     "bProcessing": true,
-          	     "bServerSide" : true,
-          	     "fnRowCallback": function(row, data, dataIndex){
-          	         // Get row ID
-          	         var rowId = data.id;
-          	         // If row ID is in the list of selected row IDs
-                       if ( $.inArray(rowId, selected) !== -1 ) {
-                      	 $(row).find('input[type="checkbox"]').prop('checked', true);
-                       }
-          	      },
-          	      "fnServerData" : datatable2Rest
-          	});
+        // ICD POPUP   	
+   	$('#icdListTable').dataTable({
+   	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/'+hedisRuleId+'/icd/icdMeasureLists',
+   	     "sAjaxDataProp" : 'data.list',
+   	     "aoColumns": [
+			 { "mData" : "id",  
+			  "render" : function(data, type, full, meta) {
+											return '<input type="checkbox" name="chkbox"  id="'+data+'" value="'+full.code+' ('+full.description+')"/>';
+									}, 
+						  "sWidth" : "5%", "bSearchable" : false,  "asSorting" : [ "asc" ]
+					 },
+                          { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                          { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "85%"}
+                        
+                      ],
+   	     "bLengthChange": false,
+   	     "sPaginationType": "full_numbers",
+   	     "bProcessing": true,
+   	     "bServerSide" : true,
+   	     "fnRowCallback": function(row, data, dataIndex){
+   	         // If row ID is in the list of selected row IDs
+                if ( (data.id in checkedICDItemsMap) ) {
+               	 $(row).find('input[type="checkbox"]').prop('checked', true);
+                }
+   	      },
+   	      "fnServerData" : datatable2Rest
+   	});
           	
 } );
         
@@ -318,9 +288,9 @@ $.ajax( {
 						<springForm:select multiple="true" path="cptCodes" class="form-control"  size="9" items="${cptMeasureListAjax}" itemLabel="codeAndDescription" itemValue="id" />
 						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
-					<div class="col-sm-2">
-					    <a class="btn" data-popup-open="popup-1" href="#"> <span class="glyphicon glyphicon-plus"></span>  </a>
-						<a > <span class="glyphicon glyphicon-minus"></span> </a>
+					<div class="col-sm-1">
+					    <a class="btn" data-popup-open="popup-1" href="#"> <span class="glyphicon glyphicon-plus"></span> ADD </a>
+						<a id='removeCPT'> <span class="glyphicon glyphicon-minus"></span> Remove</a>
 					 </div>	
 				</div>
 				 		 
@@ -330,9 +300,9 @@ $.ajax( {
 						<springForm:select multiple="true" path="icdCodes" class="form-control"  size="9" items="${icdMeasureListAjax}" itemLabel="codeAndDescription" itemValue="id" />
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
-					<div class="col-sm-2">
-						<a class="btn" data-popup-open="popup-2" href="#">  <span class="glyphicon glyphicon-plus"></span>  </a>
-						<a> <span class="glyphicon glyphicon-minus"></span> </a>
+					<div class="col-sm-1">
+						<a class="btn" data-popup-open="popup-2" href="#">  <span class="glyphicon glyphicon-plus"></span>ADD </a>
+						<a id="removeICD"> <span class="glyphicon glyphicon-minus"></span> Remove</a>
 					 </div>	
 				</div>
 				
@@ -419,7 +389,7 @@ $.ajax( {
 		<div class="panel panel-primary">
 		<div class="panel-heading">CPT Measure List  </div>
 		<div class="panel-body" id="tablediv">
-		<div class="table-responsive">
+				<div class="table-responsive">
 		
 				<table id="cptListTable" class="display table-responsive  table table-striped table-hover"> 
 					<thead>
@@ -439,7 +409,7 @@ $.ajax( {
 		
 	</div>
 </div>
-        <p><a data-popup-close="popup-1" href="#">Add</a></p>
+        <p><a data-popup-close="popup-1" href="#" id="addCPT">Add</a></p>
         <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
     </div>
 </div>
@@ -451,7 +421,6 @@ $.ajax( {
 		<div class="panel panel-primary">
 		<div class="panel-heading">ICD Measure List  </div>
 		<div class="panel-body" id="tablediv">
-		<div class="table-responsive">
 		
 				<table id="icdListTable" class="display table-responsive  table table-striped table-hover"> 
 					<thead>
@@ -466,12 +435,11 @@ $.ajax( {
 						
 					</tbody>
 				</table>
-				</div>
 		</div>
 		
 	</div>
 </div>
-        <p><a data-popup-close="popup-2" href="#">Add</a></p>
+        <p><a data-popup-close="popup-2" href="#" id="addICD">Add</a></p>
         <a class="popup-close" data-popup-close="popup-2" href="#">x</a>
     </div>
 </div>
