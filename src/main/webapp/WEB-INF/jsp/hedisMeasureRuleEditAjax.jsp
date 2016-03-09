@@ -71,13 +71,18 @@
 </style>
 <script type="text/javascript">
     
+     
+
+
+
+
+   
 $(function() {
     //----- OPEN
     $('[data-popup-open]').on('click', function(e)  {
         var targeted_popup_class = jQuery(this).attr('data-popup-open');
         $('[data-popup="' + targeted_popup_class + '"]').fadeIn(650);
         
- 
         e.preventDefault();
     });
  
@@ -91,161 +96,197 @@ $(function() {
 });
 
 
-        $(document).ready(function() {
-        	 var selected = [];
-        	var datatable2Rest = function(sSource, aoData, fnCallback) {
-        		//extract name/value pairs into a simpler map for use later
-  			  var paramMap = {};
-  			  for ( var i = 0; i < aoData.length; i++) {
-  			      paramMap[aoData[i].name] = aoData[i].value;
-  			  }
-  			 
-  			   //page calculations
-  			   var pageSize = paramMap.iDisplayLength;
-  			   var start = paramMap.iDisplayStart;
-  			   var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
-  			 
-  			   // extract sort information
-  			   var sortCol = paramMap.iSortCol_0;
-  			   var sortDir = paramMap.sSortDir_0;
-  			   var sortName = paramMap['mDataProp_' + sortCol];
-  			 
-  			   //create new json structure for parameters for REST request
-  			   var restParams = new Array();
-  			   restParams.push({"name" : "pageSize", "value" : pageSize});
-  			   restParams.push({"name" : "pageNo", "value" : pageNum });
-  			   restParams.push({"name" : "sort", "value" : sortName });
-  			   restParams.push({"name" : "sortdir", "value" : sortDir });
-  			   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
+$(document).ready(function() {
+	
+	var checkedItems = new Array();
+	// this is needed as we might uncheck items that are checked to begin with
+	$('input[type="checkbox"][name="cptchkbox"]', ".datatable").each(function() {
+		alert('input[type="checkbox"][name="cptchkbox"]');
+	        if ($(this).is(':checked'))
+	        {
+	            checkedItems.push($(this).attr('id'));
+	            alert('test1');
+	        }
+	    });
+	// function that can remove items from the array
+	checkedItemsRemove = function(item) {
+	    var i = 0;
+	    while (i < checkedItems.length) {
+	        if (checkedItems[i] == item) {
+	            checkedItems.splice(i, 1);
+	            alert('test2');
+	        } else {
+	            i++;
+	            alert('test3');
+	        }
+	        }
+	    }
+	// function to check if an item is in the array
+	checkedItemsContains = function(item) {
+	    for (var i = 0; i < checkedItems.length; i++) {
+	   	 alert('test4');
+	        if (checkedItems[i] == item)
+	            return true;
+	    }
+	    return false;
+	}
+	// function to set the checked attribute of those which should be on the current table display
+	persistChecked = function()
+	{
+		 alert('test5');
+	       $('input[type="checkbox"][name="cptchkbox"]', '.datatable').each(function() {
+	        if (checkedItemsContains($(this).attr('id'))) {
+	            $(this).attr('checked', 'checked');
+	        } else {
+	            //$(this).removeAttr('checked');
+	        }
+	    });
+	}
+	   $('#cptListTable').on('click', '.cptchkbox', function (e)
+	   {     alert('testing');
+	       if ($(this).is(':checked')) {
+	              checkedItems.push($(this).attr('id'));
+	       } else {
+	           checkedItemsRemove($(this).attr('id'));
+	       }
+	       return true;       
+	   });  
+	   
+	   $('#cptListTable tbody').on('click', '.cptchkbox', function () {
+		   	
+		   alert(' $(this).is(:checked)'+$(this).is(':checked'));
+		   alert(' $(this).attr(id)'+$(this).attr('id'));
+		   	if ($(this).is(':checked')) {
+		   		
+		   		checkedItemsRemove($(this).attr('id'));
+	        	alert('remove checked item'+$(this).attr('id'));
+		         
+		    	} else {
+		    		  checkedItems.push($(this).attr('id'));
+			           alert('push chk item'+$(this).attr('id'));
+		    	}
+		       var id = this.id;
+		       
+		       var index = $.inArray(id, selected);
 
-  			   
-  			 $.ajax( {
-	                dataType: 'json',
-	                contentType: "application/json;charset=UTF-8",
-	                type: 'GET',
-	                url: sSource,
-	                data: restParams,
-	                success: function(res) {
-	                    res.iTotalRecords = res.data.totalCount;
-	                    res.iTotalDisplayRecords = res.data.totalCount;
-	               		fnCallback(res);
-	                },
-	                error : function (e) {
-	                }
-	            } );
-        	}
-        	
-        	$('#myTable').dataTable({
-        	     "sAjaxSource" : getContextPath()+'/cpt/cptMeasureLists',
-        	     "select": true,
-        	     "sAjaxDataProp" : 'data.list',
-        	     "aoColumns": [
-                               { "mDataProp": "id", "bSearchable" : false,  "asSorting" : [ "asc" ],"sWidth" : "10%"},
-                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                               { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
-                             
-                           ],
-                 "aoColumnDefs": [{
-                               'aTargets': 0,
-                               'className': 'dt-body-center',
-                               'render': function (data, type, full, meta){
-                                   return '<input type="checkbox" >';
-                               }
-                            }],
-        	     "bLengthChange": false,
-        	     "sPaginationType": "full_numbers",
-        	     "bProcessing": true,
-        	     "bServerSide" : true,
-        	     
-        	     "fnRowCallback": function(row, data, dataIndex){
-        	         // Get row ID
-        	         var rowId = data.id;
-        	         // If row ID is in the list of selected row IDs
-                     if ( $.inArray(rowId, selected) !== -1 ) {
-                    	 $(row).find('input[type="checkbox"]').prop('checked', true);
-                     }
-        	      },
-        	      "fnServerData" : datatable2Rest
-        	});
-        	
-            
+		       if ( index === -1 ) {
+		           selected.push( id );
+		       } else {
+		           selected.splice( index, 1 );
+		       }
 
-                 var checkedItems = new Array();
-                 // this is needed as we might uncheck items that are checked to begin with
-                 $('input[type="checkbox"][name="id[]"]', ".datatable").each(function() {
-                         if ($(this).is(':checked'))
-                         {
-                             checkedItems.push($(this).attr('id'));
-                             alert('test1');
-                         }
-                     });
-                // function that can remove items from the array
-                 checkedItemsRemove = function(item) {
-                     var i = 0;
-                     while (i < checkedItems.length) {
-                         if (checkedItems[i] == item) {
-                             checkedItems.splice(i, 1);
-                             alert('test2');
-                         } else {
-                             i++;
-                             alert('test3');
-                         }
-                         }
-                     }
-                 // function to check if an item is in the array
-                 checkedItemsContains = function(item) {
-                     for (var i = 0; i < checkedItems.length; i++) {
-                    	 alert('test4');
-                         if (checkedItems[i] == item)
-                             return true;
-                     }
-                     return false;
-                 }
-                 // function to set the checked attribute of those which should be on the current table display
-                 persistChecked = function()
-                 {
-                	 alert('test5');
-                        $('input[type="checkbox"][name="id[]"]', '.datatable').each(function() {
-                         if (checkedItemsContains($(this).attr('id'))) {
-                             $(this).attr('checked', 'checked');
-                         } else {
-                             //$(this).removeAttr('checked');
-                         }
-                     });
-                 }
-                    $('.datatable').on('click', '.id[]', function (e)
-                    {
-                        if ($(this).is(':checked')) {
-                               checkedItems.push($(this).attr('id'));
-                        } else {
-                            checkedItemsRemove($(this).attr('id'));
-                        }
-                        return true;       
-                    });       
-        	
+		       $(this).toggleClass('selected');
+		   } );
+	   
+  	 var selected = [];
+  	var datatable2Rest = function(sSource, aoData, fnCallback) {
+  		//extract name/value pairs into a simpler map for use later
+ var paramMap = {};
+ for ( var i = 0; i < aoData.length; i++) {
+     paramMap[aoData[i].name] = aoData[i].value;
+ }
 
-                    $('#myTable tbody').on('click', 'tr', function () {
-                    	
-                    	if ($(this).is(':checked')) {
-                            checkedItems.push($(this).attr('id'));
-                            alert($(this).attr('id'));
-                     	} else {
-                         	checkedItemsRemove($(this).attr('id'));
-                     	}
-                        var id = this.id;
-                        
-                        var index = $.inArray(id, selected);
-                 
-                        if ( index === -1 ) {
-                            selected.push( id );
-                        } else {
-                            selected.splice( index, 1 );
-                        }
-                 
-                        $(this).toggleClass('selected');
-                    } );
+  //page calculations
+  var pageSize = paramMap.iDisplayLength;
+  var start = paramMap.iDisplayStart;
+  var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
 
-      } );
+  // extract sort information
+  var sortCol = paramMap.iSortCol_0;
+  var sortDir = paramMap.sSortDir_0;
+  var sortName = paramMap['mDataProp_' + sortCol];
+
+  //create new json structure for parameters for REST request
+  var restParams = new Array();
+  restParams.push({"name" : "pageSize", "value" : pageSize});
+  restParams.push({"name" : "pageNo", "value" : pageNum });
+  restParams.push({"name" : "sort", "value" : sortName });
+  restParams.push({"name" : "sortdir", "value" : sortDir });
+  restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
+
+$.ajax( {
+           dataType: 'json',
+           contentType: "application/json;charset=UTF-8",
+           type: 'GET',
+           url: sSource,
+           data: restParams,
+           success: function(res) {
+               res.iTotalRecords = res.data.totalCount;
+               res.iTotalDisplayRecords = res.data.totalCount;
+          		fnCallback(res);
+           },
+           error : function (e) {
+           }
+       } );
+  	}
+  	
+  	var hedisRuleId =  $('#id').val();
+  	$('#cptListTable').dataTable({
+  	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/'+hedisRuleId+'/cpt/cptMeasureLists',
+  	     "sAjaxDataProp" : 'data.list',
+  	     "aoColumns": [
+						 { "mData" : "id",  
+		  				  "render" : function(obj) {
+										return '<input type="checkbox" name="cptchkbox"   value="'+obj+'"/>';
+									 }, 
+					  		"sWidth" : "10%", "bSearchable" : false,  "asSorting" : [ "asc" ]
+						 },
+                         { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                         { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
+                       
+                     ],
+  	     "bLengthChange": false,
+  	     "sPaginationType": "full_numbers",
+  	     "bProcessing": true,
+  	     "bServerSide" : true,
+  	     "fnRowCallback": function(row, data, dataIndex){
+  	         // Get row ID
+  	         var rowId = data.id;
+  	         // If row ID is in the list of selected row IDs
+               if ( $.inArray(rowId, checkedItems) !== -1 ) {
+            	  alert('checked rowid'+rowId);
+              	 $(row).find('input[type="checkbox"]').prop('checked', true);
+               }
+  	      },
+  	      "fnServerData" : datatable2Rest
+  	});
+  	
+      
+
+           
+              
+             
+          	
+          	$('#icdListTable').dataTable({
+          	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/'+hedisRuleId+'/icd/icdMeasureLists',
+          	     "sAjaxDataProp" : 'data.list',
+          	     "aoColumns": [
+  								 { "mData" : "id",  
+  								  "render" : function(obj) {
+       											return '<input type="checkbox" name="chkbox"  class="dt_checked" value="'+obj+'"/>';
+      										}, 
+      							  "sWidth" : "10%", "bSearchable" : false,  "asSorting" : [ "asc" ]
+     							 },
+                                 { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                                 { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
+                               
+                             ],
+          	     "bLengthChange": false,
+          	     "sPaginationType": "full_numbers",
+          	     "bProcessing": true,
+          	     "bServerSide" : true,
+          	     "fnRowCallback": function(row, data, dataIndex){
+          	         // Get row ID
+          	         var rowId = data.id;
+          	         // If row ID is in the list of selected row IDs
+                       if ( $.inArray(rowId, selected) !== -1 ) {
+                      	 $(row).find('input[type="checkbox"]').prop('checked', true);
+                       }
+          	      },
+          	      "fnServerData" : datatable2Rest
+          	});
+          	
+} );
         
 </script>   
 </head>
@@ -290,7 +331,7 @@ $(function() {
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a> <span class="glyphicon glyphicon-plus"></span>  </a>
+						<a class="btn" data-popup-open="popup-2" href="#">  <span class="glyphicon glyphicon-plus"></span>  </a>
 						<a> <span class="glyphicon glyphicon-minus"></span> </a>
 					 </div>	
 				</div>
@@ -380,7 +421,7 @@ $(function() {
 		<div class="panel-body" id="tablediv">
 		<div class="table-responsive">
 		
-				<table id="myTable" class="display table-responsive  table table-striped table-hover"> 
+				<table id="cptListTable" class="display table-responsive  table table-striped table-hover"> 
 					<thead>
 						<tr>
 							<th  scope="col">Select</th> 
@@ -391,6 +432,37 @@ $(function() {
 
 					<tbody >
 						
+					</tbody>
+				</table>
+				</div>
+		</div>
+		
+	</div>
+</div>
+        <p><a data-popup-close="popup-1" href="#">Add</a></p>
+        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+    </div>
+</div>
+
+
+<div class="popup" data-popup="popup-2">
+    <div class="popup-inner">
+        <div class="panel-group">
+		<div class="panel panel-primary">
+		<div class="panel-heading">ICD Measure List  </div>
+		<div class="panel-body" id="tablediv">
+		<div class="table-responsive">
+		
+				<table id="icdListTable" class="display table-responsive  table table-striped table-hover"> 
+					<thead>
+						<tr>
+							<th  scope="col">Select</th> 
+							<th  scope="col">ICD Code</th> 
+							<th  scope="col">Description</th> 
+						</tr>
+					</thead>
+
+					<tbody >
 						
 					</tbody>
 				</table>
@@ -399,8 +471,8 @@ $(function() {
 		
 	</div>
 </div>
-        <p><a data-popup-close="popup-1" href="#">Close</a></p>
-        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+        <p><a data-popup-close="popup-2" href="#">Add</a></p>
+        <a class="popup-close" data-popup-close="popup-2" href="#">x</a>
     </div>
 </div>
 </body>

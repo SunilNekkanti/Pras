@@ -24,8 +24,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
@@ -36,6 +40,9 @@ import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.ICDMeasureService;
+
+import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
 
 
 @Controller
@@ -238,4 +245,96 @@ public class HedisMeasureRuleController{
 	        }
 	        return "hedisMeasureRuleEdit";
     }
+	
+	@ResponseBody
+	@RequestMapping(value = "/hedisMeasureRule/cpt")
+	 public Message  getICDMeasure(@ModelAttribute("username") String username, Model model) 
+	{
+		List<CPTMeasure> cptMeasureList = cptMeasureService.findAll();
+		  return  Message.successMessage(CommonMessageContent.CPT_LIST, cptMeasureList);
+	        
+	 }
+	
+	@ResponseBody
+	@RequestMapping(value = "/hedisMeasureRule/icd")
+	 public Message  getCPTMeasure(@ModelAttribute("username") String username, Model model) 
+	{
+		List<ICDMeasure> icdMeasureList = icdMeasureService.findAll();
+		  return  Message.successMessage(CommonMessageContent.ICD_LIST, JsonConverter.getJsonObject(icdMeasureList));
+	        
+	 }
+	
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(value = "/hedisMeasureRule/{id}/cpt/cptMeasureLists", method = RequestMethod.GET)
+	public Message viewCPTMeasureList(@PathVariable Integer id,Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir) throws Exception{
+		
+		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
+		Set<CPTMeasure> cptMeasureList1 = dbHedisMeasureRule.getCptCodes();
+		
+		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+		List<CPTMeasure> cptMeasureList = (List<CPTMeasure>) pagination.getList();
+		
+		List<CPTMeasure> retainCPTList = new ArrayList<CPTMeasure>(cptMeasureList1);
+		retainCPTList.retainAll(cptMeasureList);
+		
+		cptMeasureList.removeAll(cptMeasureList1);
+		
+		if(sSearch!= null && "".equals(sSearch))
+		{
+			final int count = pagination.getTotalCount() - cptMeasureList1.size();
+			pagination.setTotalCount(count);    
+		}
+		else 
+		{
+			final int count = pagination.getTotalCount() - retainCPTList.size();
+			pagination.setTotalCount(count); 
+		}
+		
+		pagination.setList(cptMeasureList);
+		
+        return Message.successMessage(CommonMessageContent.CPT_LIST, JsonConverter.getJsonObject(pagination));
+    }
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(value = "/hedisMeasureRule/{id}/icd/icdMeasureLists", method = RequestMethod.GET)
+	public Message viewICDMeasureList(@PathVariable Integer id,Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir) throws Exception{
+		
+		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
+		Set<ICDMeasure> icdMeasureList1 = dbHedisMeasureRule.getIcdCodes();
+		
+		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+		List<ICDMeasure> icdMeasureList = (List<ICDMeasure>) pagination.getList();
+		
+		List<ICDMeasure> retainICDList = new ArrayList<ICDMeasure>(icdMeasureList1);
+		retainICDList.retainAll(icdMeasureList);
+		
+		icdMeasureList.removeAll(icdMeasureList1);
+		
+		if(sSearch!= null && "".equals(sSearch))
+		{
+			final int count = pagination.getTotalCount() - icdMeasureList1.size();
+			pagination.setTotalCount(count);    
+		}
+		else 
+		{
+			final int count = pagination.getTotalCount() - retainICDList.size();
+			pagination.setTotalCount(count); 
+		}
+		
+		pagination.setList(icdMeasureList);
+		
+        return Message.successMessage(CommonMessageContent.CPT_LIST, JsonConverter.getJsonObject(pagination));
+    }
+	
 }
