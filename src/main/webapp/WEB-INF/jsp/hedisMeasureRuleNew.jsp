@@ -197,6 +197,14 @@ $.ajax( {
 					</div>
 				</div>
 				
+				<div class="form-group">
+					<label class="control-label   col-sm-2" for="description">Description</label>
+					<div class="col-sm-6">
+						<springForm:input path="description" class="form-control" id="description" placeholder="description" />
+						<springForm:errors path="description" cssClass="error text-danger" />
+					  </div>
+				</div>
+				
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="cpt">CPT Code</label>
 					<div class="col-sm-6">
@@ -204,8 +212,8 @@ $.ajax( {
 						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
-					    <a href="#" id='removeCPT' class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
+						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
+					    <a href="#" id='removeCPT' class="btn btn-primary"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
 					 </div>	
 				</div>
 				 		 
@@ -216,8 +224,8 @@ $.ajax( {
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
-						<a href="#" id="removeICD" class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
+						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
+						<a href="#" id="removeICD" class="btn btn-primary"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
 					 </div>	
 				</div>
 				

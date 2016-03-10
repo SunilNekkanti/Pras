@@ -43,6 +43,10 @@ public class HedisMeasureRule implements Serializable
     private Integer id;
 
     @Expose
+    @Column(name="description")
+    private String description;
+    
+    @Expose
     @OneToOne
     @JoinColumn(name="hedis_id", referencedColumnName="qlty_msr_id")
     private HedisMeasure hedisMeasure;
@@ -149,7 +153,20 @@ public class HedisMeasureRule implements Serializable
         this.id = id;
     }
     
-    
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	/**
 	 * @return the hedisMeasure
 	 */
