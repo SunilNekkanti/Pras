@@ -5,91 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <c:set var="context" value="${pageContext.request.contextPath}" />
- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>PF Choice head page</title>
-<style type="text/css">
-
- /* Outer */
-.popup {
-    width:100%;
-    height:100%;
-    display:none;
-    position:fixed;
-    top:0px;
-    left:0px;
-    opacity: "0.1";
-    background:rgba(0,0,0,0.75);
-}
- 
-/* Inner */
-.popup-inner {
-    max-width:700px;
-    width:90%;
-    padding:20px;
-    position:absolute;
-    top:50%;
-    left:60%;
-    opacity: "1";
-    -webkit-transform:translate(-50%, -50%);
-    transform:translate(-50%, -50%);
-    box-shadow:0px 2px 6px rgba(0,0,0,1);
-    border-radius:3px;
-    background:#fff;
-}
- 
-/* Close Button */
-.popup-close {
-    width:30px;
-    height:30px;
-    padding-top:4px;
-    display:inline-block;
-    position:absolute;
-    top:0px;
-    right:0px;
-    transition:ease 0.25s all;
-    -webkit-transform:translate(50%, -50%);
-    transform:translate(50%, -50%);
-    border-radius:1000px;
-    background:rgba(0,0,0,0.8);
-    font-family:Arial, Sans-Serif;
-    font-size:20px;
-    text-align:center;
-    line-height:100%;
-    opacity: "0"  ;
-    color:#fff;
-}
- 
-.popup-close:hover {
-    -webkit-transform:translate(50%, -50%) rotate(180deg);
-    transform:translate(50%, -50%) rotate(180deg);
-    background:rgba(0,0,0,1);
-    text-decoration:none;
-}
-</style>
 <script type="text/javascript">
     
-$(function() {
-    //----- OPEN
-    $('[data-popup-open]').on('click', function(e)  {
-        var targeted_popup_class = jQuery(this).attr('data-popup-open');
-        $('[data-popup="' + targeted_popup_class + '"]').fadeIn(650);
-        
-        e.preventDefault();
-    });
- 
-    //----- CLOSE
-    $('[data-popup-close]').on('click', function(e)  {
-        var targeted_popup_class = jQuery(this).attr('data-popup-close');
-        $('[data-popup="' + targeted_popup_class + '"]').fadeOut(650);
- 
-        e.preventDefault();
-    });
-});
-
-
 $(document).ready(function() {
 	
 	var checkedCPTItemsMap = {};
@@ -156,6 +73,7 @@ $(document).ready(function() {
 	    		delete checkedICDItemsMap[$(this).attr('id')];
 	    }
 	} ); 
+   
  var datatable2Rest = function(sSource, aoData, fnCallback) {
   		//extract name/value pairs into a simpler map for use later
  var paramMap = {};
@@ -259,9 +177,6 @@ $.ajax( {
 } );
         
 </script>   
-</head>
-<body>
-
 
 <div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
@@ -270,7 +185,7 @@ $.ajax( {
                         </ul>
           </div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/save.do" class="form-horizontal" role="form">
+			<springForm:form id="hedisMeasureRule" method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/save.do" class="form-horizontal" role="form">
 				<springForm:hidden path="id" />
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
@@ -289,8 +204,8 @@ $.ajax( {
 						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-					    <a class="btn" data-popup-open="popup-1" href="#"> <span class="glyphicon glyphicon-plus"></span> ADD </a>
-						<a id='removeCPT'> <span class="glyphicon glyphicon-minus"></span> Remove</a>
+						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
+					    <a href="#" id='removeCPT' class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
 					 </div>	
 				</div>
 				 		 
@@ -301,15 +216,15 @@ $.ajax( {
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a class="btn" data-popup-open="popup-2" href="#">  <span class="glyphicon glyphicon-plus"></span>ADD </a>
-						<a id="removeICD"> <span class="glyphicon glyphicon-minus"></span> Remove</a>
+						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
+						<a href="#" id="removeICD" class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
 					 </div>	
 				</div>
 				
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="year">Effective Year (YYYY)</label>
 					<div class="col-sm-6">
-						<springForm:input path="effectiveYear" class="form-control" id="effectiveYear" placeholder="Effective Year" />
+						<springForm:input path="effectiveYear" class="form-control" maxlength="4" id="effectiveYear" placeholder="Effective Year" />
 						<springForm:errors path="effectiveYear" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -352,7 +267,7 @@ $.ajax( {
 					<label class="control-label  col-sm-2" for="ageEffectiveFrom" >Age Effective From</label>
 					<div class="col-sm-6">
 						<fmt:formatDate value="${hedisMeasureRule.ageEffectiveFrom}" var="dateString" pattern="MM/dd/yyyy" />
-						<springForm:input path="ageEffectiveFrom" value="${dateString}" class="form-control datepicker"  id="ageEffectiveFrom" placeholder="ageEffectiveFrom" />
+						<springForm:input path="ageEffectiveFrom" value="${dateString}"  class="form-control datepicker"  id="ageEffectiveFrom" placeholder="ageEffectiveFrom" />
 						<springForm:errors path="ageEffectiveFrom" cssClass="error text-danger" />
 					  </div>
 				</div>
@@ -381,69 +296,144 @@ $.ajax( {
 </div>
 </div>
 
+<div id="cptModal" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
 
- 
-<div class="popup" data-popup="popup-1">
-    <div class="popup-inner">
-        <div class="panel-group">
-		<div class="panel panel-primary">
-		<div class="panel-heading">CPT Measure List  </div>
-		<div class="panel-body" id="tablediv">
-				<div class="table-responsive">
-		
-				<table id="cptListTable" class="display table-responsive  table table-striped table-hover"> 
-					<thead>
-						<tr>
-							<th  scope="col">Select</th> 
-							<th  scope="col">CPT Code</th> 
-							<th  scope="col">Short Description</th> 
-						</tr>
-					</thead>
-
-					<tbody >
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">CPT Measure List</h4>
+	      	</div>
+	      	<div class="modal-body">
+		    	<div class="panel-group">
+					<div class="panel panel-primary">
 						
-					</tbody>
-				</table>
-				</div>
-		</div>
-		
+						<div class="panel-body">
+							<div class="table-responsive">
+					      		<table id="cptListTable" class="display table-responsive  table table-striped table-hover"> 
+									<thead>
+										<tr>
+											<th  scope="col">Select</th> 
+											<th  scope="col">CPT Code</th> 
+											<th  scope="col">Short Description</th> 
+										</tr>
+									</thead>
+									<tbody >
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>				
+	      		</div>
+	      </div>		
+	      <div class="modal-footer" style="text-align:left;">
+	        <button type="button" id="addCPT" class="btn btn-primary" data-dismiss="modal">ADD</button>
+	      </div>
+	    </div>
 	</div>
 </div>
-        <p><a data-popup-close="popup-1" href="#" id="addCPT">Add</a></p>
-        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-    </div>
-</div>
 
-
-<div class="popup" data-popup="popup-2">
-    <div class="popup-inner">
-        <div class="panel-group">
-		<div class="panel panel-primary">
-		<div class="panel-heading">ICD Measure List  </div>
-		<div class="panel-body" id="tablediv">
-		
-				<table id="icdListTable" class="display table-responsive  table table-striped table-hover"> 
-					<thead>
-						<tr>
-							<th  scope="col">Select</th> 
-							<th  scope="col">ICD Code</th> 
-							<th  scope="col">Description</th> 
-						</tr>
-					</thead>
-
-					<tbody >
+<div id="icdModal" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">ICD Measure List</h4>
+	      	</div>
+	      	<div class="modal-body">
+		    	<div class="panel-group">
+					<div class="panel panel-primary">
 						
-					</tbody>
-				</table>
-		</div>
-		
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table id="icdListTable" class="display table-responsive  table table-striped table-hover"> 
+									<thead>
+										<tr>
+											<th  scope="col">Select</th> 
+											<th  scope="col">ICD Code</th> 
+											<th  scope="col">Description</th> 
+										</tr>
+									</thead>
+									<tbody >
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>				
+	      		</div>
+	      	</div>		
+	      	<div class="modal-footer" style="text-align:left;">
+	        	<button type="button" id="addICD" class="btn btn-primary" data-dismiss="modal">ADD</button>
+	      	</div>
+	    </div>
 	</div>
 </div>
-        <p><a data-popup-close="popup-2" href="#" id="addICD">Add</a></p>
-        <a class="popup-close" data-popup-close="popup-2" href="#">x</a>
-    </div>
-</div>
-</body>
-</html>
+<script>
+$(document).ready(function() {
+    $("#effectiveYear").keydown(function(event) {
+    	 if( !(event.keyCode == 8                                // backspace
+    		        || event.keyCode == 46                              // delete
+    		        || (event.keyCode >= 35 && event.keyCode <= 40)     // arrow keys/home/end
+    		        || (event.keyCode >= 48 && event.keyCode <= 57)     // numbers on keyboard
+    		        || (event.keyCode >= 96 && event.keyCode <= 105))   // number on keypad
+    		        ) {
+    		            event.preventDefault();     // Prevent character input
+    		    }
+    });
+});
+$( "#hedisMeasureRule" ).submit(function( event ) {
+	
+	$('#cptCodes option').prop('selected', true);
+	$('#icdCodes option').prop('selected', true);
+	
+	var error_count=0;
+	var effectiveYear = $("input#effectiveYear").val().length;
+		if (effectiveYear < 3 || effectiveYear > 20) {
+			$("#effectiveYear").closest( "div" ).addClass( "has-error" );
+			$('#effectiveYear').closest( "div" ).find('span').remove();
+			$( "#effectiveYear" ).after("<span  class='text-danger'>Effective Year Must be equal to four digits.</span>" );
+			error_count++;
+		}
+		else
+		{
+			$('#effectiveYear').closest( "div" ).find('span').remove();
+			$("#effectiveYear").closest( "div" ).removeClass( "has-error" );
+		}	
+	    var icdCodes = $("#icdCodes").val();
+	  	
+		if (!icdCodes) {
+			$("#icdCodes").closest( "div" ).addClass( "has-error" );
+			$('#icdCodes').closest( ".text-danger" ).find('span').remove();
+			$("#icdCodes" ).after("<span  class='text-danger'>Select ICD Codes.</span>" );
+			error_count++;
+		}
+		else
+		{
+			$('#icdCodes').closest( "div" ).find('icdCodes').remove();
+			$("#icdCodes").closest( "div" ).removeClass( "has-error" );
+		}
+		
+		var cptCodes = $("#cptCodes").val();
+	  	
+		if (!cptCodes) {
+			$("#cptCodes").closest( "div" ).addClass( "has-error" );
+			$('#cptCodes').closest( ".text-danger" ).find('span').remove();
+			$("#cptCodes" ).after("<span  class='text-danger'>Select CPT Codes.</span>" );
+			error_count++;
+		}
+		else
+		{
+			$('#cptCodes').closest( "div" ).find('icdCodes').remove();
+			$("#cptCodes").closest( "dov" ).removeClass( "has-error" );
+		}
+		
+		
+		
+		
+	    if(error_count >0){ event.preventDefault();}
+	});
 
+</script>
 
