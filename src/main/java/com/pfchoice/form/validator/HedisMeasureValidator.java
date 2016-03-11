@@ -33,15 +33,15 @@ public class HedisMeasureValidator implements Validator {
         if (hedisMeasure.getCode().length() < 2 && hedisMeasure.getCode().length() >= 1) {
             errors.rejectValue("code", "code.tooshort", "Code must be at least 1 character.");
         }
-        else if (hedisMeasure.getCode().length() > 3 ) {
-            errors.rejectValue("code", "code.toolong", "Code must be at less than 4 characters.");
+        else if (hedisMeasure.getCode().length() > 5 ) {
+            errors.rejectValue("code", "code.toolong", "Code must be at less than 6 characters.");
         }
         
-        if (hedisMeasure.getDescription().length() < 5 && hedisMeasure.getDescription().length()>= 1) {
+        if (hedisMeasure.getDescription().length() < 2 && hedisMeasure.getDescription().length()>= 1) {
             errors.rejectValue("description", "description.tooshort", "Description must be at least 5 characters.");
         }
         
-        if (hedisMeasure.getDescription().length() > 50) {
+        if (hedisMeasure.getDescription().length() > 200) {
             errors.rejectValue("description", "description.tooshort", "Description must be  less than 50 characters.");
         }
        
