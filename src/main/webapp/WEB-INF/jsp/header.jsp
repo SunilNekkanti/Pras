@@ -423,7 +423,7 @@ $(document).ready(function () {
             <li><a href="${context}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
          </ul>
         </li> 
-        <li><a href="${context}/reports">Reports</a></li>
+        <li><a href="${context}/reports/hedis">Reports</a></li>
          <li><a href="${context}/userList">User</a></li>
         <li><a href="#">Help</a></li>
         <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
