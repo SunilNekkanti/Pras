@@ -68,9 +68,14 @@ public class Membership implements Serializable
     private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
     
      
-    @OneToOne( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private MembershipProvider mbrProvider;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy= "mbr")
+    private List<MembershipProvider> mbrProviderList;
 
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
+    private List<MembershipInsurance> mbrInsuranceList;
+    
+    
     @Expose
     @Column(name="mbr_dob")
     @Temporal(TemporalType.DATE)
@@ -195,17 +200,31 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @return the mbrProvider
+	 * @return the mbrProviderList
 	 */
-	public MembershipProvider getMbrProvider() {
-		return mbrProvider;
+	public List<MembershipProvider> getMbrProviderList() {
+		return mbrProviderList;
 	}
 
 	/**
-	 * @param mbrProvider the mbrProvider to set
+	 * @param mbrProviderList the mbrProviderList to set
 	 */
-	public void setMbrProvider(final MembershipProvider mbrProvider) {
-		this.mbrProvider = mbrProvider;
+	public void setMbrProviderList(List<MembershipProvider> mbrProviderList) {
+		this.mbrProviderList = mbrProviderList;
+	}
+
+	/**
+	 * @return the mbrInsuranceList
+	 */
+	public List<MembershipInsurance> getMbrInsuranceList() {
+		return mbrInsuranceList;
+	}
+
+	/**
+	 * @param mbrInsuranceList the mbrInsuranceList to set
+	 */
+	public void setMbrInsuranceList(List<MembershipInsurance> mbrInsuranceList) {
+		this.mbrInsuranceList = mbrInsuranceList;
 	}
 
 	/**

@@ -1,6 +1,8 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -50,6 +53,15 @@ public class HedisMeasureRuleListController{
 		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort, sortdir);
 
         return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(pagination));
+    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/hedisMeasureRule/list", method = RequestMethod.GET)
+	public Message viewHedisMeasureRuleList(Model model) throws Exception{
+		
+		List<HedisMeasureRule> hedisMeasureRuleList = hedisMeasureRuleService.findAll();
+
+        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(hedisMeasureRuleList));
     }
 	
 }

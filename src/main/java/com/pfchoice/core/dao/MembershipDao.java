@@ -18,6 +18,9 @@ public interface MembershipDao
 
     Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
+    Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, 
+    		Integer sSearchPrvdr, Integer sSearchHedisCode, String sort, String sortdir);
+    
     Membership save(Membership bean);
 
     Membership updateByUpdater(Updater<Membership> updater);

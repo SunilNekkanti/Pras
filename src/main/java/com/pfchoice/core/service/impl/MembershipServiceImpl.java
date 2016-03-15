@@ -45,6 +45,18 @@ public class MembershipServiceImpl implements MembershipService
     {
         return membershipDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Pagination getPage(final int pageNo,final int pageSize, final String sSearch, 
+    		final int sSearchIns,   final int sSearchPrvdr, final int sSearchHedisCode, 
+    		final String sort, final String sortdir)
+    {
+        return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns,
+        		sSearchPrvdr, sSearchHedisCode,  sort, sortdir);
+    }
+    
+    
 
     @Override
     public Membership save(final Membership bean)

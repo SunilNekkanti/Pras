@@ -18,7 +18,66 @@
 
 
      $(document).ready(function() {
-     	
+    	
+    	 var $selectIns = $('#extFilterIns');
+    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+			    
+			     //clear the current content of the select
+			     var s = $('<select id=\"insu\">');
+			     //iterate over the data and append a select option
+			     $.each(data.data.list, function(key, val){
+			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+			     });
+			     s.append('</select>');
+			     $selectIns.html(s);
+		 });
+    	  
+    	 var $selectPrvdr = $('#extFilterPrvdr');
+    	  $.getJSON(getContextPath()+'/provider/list?pageNo=0&pageSize=200', function(data){
+			    
+			     //clear the current content of the select
+			     var s = $('<select id=\"prvdr\">');
+			     //iterate over the data and append a select option
+			     $.each(data.data.list, function(key, val){
+			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+			     });
+			     s.append('</select>');
+			     $selectPrvdr.html(s);
+		 });
+    	  
+    	 var $selectHedisCode = $('#extFilterHedisCode');
+    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list', function(data){
+			    
+			     //clear the current content of the select
+			     var s = $('<select id=\"hedisRule\" >');
+			     //iterate over the data and append a select option
+			     $.each(data.data, function(key, val){
+			    	 s.append('<option value="'+val.id+'" >' + val.hedisMeasureCode + '('+val.description +')</option>');
+			     });
+			     s.append('</select>');
+			     $selectHedisCode.html(s);
+		 });
+    	  
+    	  $(document.body).on('change',"#insu",function (e) {
+    		  callDatableWithChangedDropDown();
+    		});
+    	
+    	  $(document.body).on('change',"#prvdr",function (e) {
+    		  callDatableWithChangedDropDown();
+    		});
+    	
+    	  $(document.body).on('change',"#hedisRule",function (e) {
+    		  callDatableWithChangedDropDown();
+      		});
+       	
+    	var callDatableWithChangedDropDown = function(){
+    		   var insSelectValue= $("#insu option:selected").val();
+    		   var prvdrSelectValue= $("#prvdr option:selected").val();
+    		   var hedisRuleSelectValue= $("#hedisRule option:selected").val();
+    		  $('#membershipTable').dataTable().fnDestroy();
+    		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue);
+    	}  
+    	            
      	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
      		//extract name/value pairs into a simpler map for use later
 		  var paramMap = {};
@@ -36,6 +95,10 @@
 		   var sortDir = paramMap.sSortDir_0;
 		   var sortName = paramMap['mDataProp_' + sortCol];
 		 
+		   var sSearchIns = paramMap.sSearchIns;
+		   var sSearchPrvdr = paramMap.sSearchPrvdr;
+		   var sSearchHedisCode = paramMap.sSearchHedisCode;
+		   
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
 		   restParams.push({"name" : "pageSize", "value" : pageSize});
@@ -43,7 +106,9 @@
 		   restParams.push({"name" : "sort", "value" : sortName });
 		   restParams.push({"name" : "sortdir", "value" : sortDir });
 		   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
-
+		   restParams.push({"name" : "sSearchIns" , "value" : sSearchIns  });
+		   restParams.push({"name" : "sSearchPrvdr" , "value" : sSearchPrvdr  });
+		   restParams.push({"name" : "sSearchHedisCode" , "value" : sSearchHedisCode  });
 		   
 		 $.ajax( {
               dataType: 'json',
@@ -61,7 +126,9 @@
           } );
      	}
      	
-     	$('#membershipTable').dataTable({
+     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId) {
+  	        var oTable = $('#membershipTable').dataTable({
+  	         
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns": [
@@ -95,8 +162,16 @@
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
+     	     "fnServerParams": function ( aoData ) {
+                aoData.push(
+                    {"name": "sSearchIns", "value": insId},
+                    {"name": "sSearchPrvdr", "value": prvdrId },
+                    {"name": "sSearchHedisCode", "value": hedisRuleId }
+                );
+             },        
      	     "fnServerData" : datatable2RestMembership
      	});
+     }
 
      	
  } );
@@ -109,7 +184,13 @@
 	<div class="panel-group">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Hedis Report </div>
+			<div class="col-sm-12" style="padding:5px 5px 0 5px;">
+			 <div class=" col-sm-2" id="extFilterIns"> </div>
+			 <div class="col-sm-2"  id="extFilterPrvdr"> </div>
+			 <div class=" col-sm-2" id="extFilterHedisCode"> </div>
+			 </div>
 			<div class="panel-body" >
+			
 				<div class="table-responsive">
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">
 					

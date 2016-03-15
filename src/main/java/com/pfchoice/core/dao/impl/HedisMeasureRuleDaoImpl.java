@@ -3,6 +3,8 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.HedisMeasureRuleDao;
 import com.pfchoice.core.entity.HedisMeasureRule;
+import com.pfchoice.core.entity.Role;
 
 /**
  *
@@ -60,6 +63,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     	crit.add(Restrictions.eq("activeInd", 'Y'));
     	ProjectionList projList = Projections.projectionList();
     	projList.add(Projections.property("id"),"id");
+    	projList.add(Projections.property("description"),"description");
     	projList.add(Projections.property("lowerAgeLimit"),"lowerAgeLimit");
     	projList.add(Projections.property("upperAgeLimit"),"upperAgeLimit");
     	projList.add(Projections.property("ageEffectiveFrom"),"ageEffectiveFrom");
@@ -124,4 +128,21 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
         return HedisMeasureRule.class;
     }
     
+    @SuppressWarnings("unchecked")
+	public List<HedisMeasureRule> findAll()
+    {
+    	
+    	Criteria cr = createCriteria();
+    	cr.createAlias("hedisMeasure", "hedisMeasure");
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
+    	cr.setProjection(
+    		    Projections.distinct(Projections.projectionList()
+    		    	    .add(Projections.property("hedisMeasure.code"), "hedisMeasureCode")
+    		    	    .add(Projections.property("description"), "description")
+    		    	    .add(Projections.property("id"), "id")))
+    	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
+
+    	List<HedisMeasureRule> list =  cr.list();
+    	return list;
+    }
 }
