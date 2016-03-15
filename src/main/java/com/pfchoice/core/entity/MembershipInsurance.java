@@ -44,7 +44,7 @@ public class MembershipInsurance implements Serializable
     @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
     private Insurance insId;
     
-    @Expose
+  //  @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;

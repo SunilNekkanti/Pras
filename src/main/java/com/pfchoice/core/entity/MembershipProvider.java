@@ -41,7 +41,7 @@ public class MembershipProvider implements Serializable
     @JoinColumn(name="prvdr_id", nullable = false, referencedColumnName="prvdr_id")
     private Provider prvdr;
     
-    @Expose
+  //  @Expose
     @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;

@@ -64,6 +64,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     	ProjectionList projList = Projections.projectionList();
     	projList.add(Projections.property("id"),"id");
     	projList.add(Projections.property("description"),"description");
+    	projList.add(Projections.property("doseCount"),"doseCount");
     	projList.add(Projections.property("lowerAgeLimit"),"lowerAgeLimit");
     	projList.add(Projections.property("upperAgeLimit"),"upperAgeLimit");
     	projList.add(Projections.property("ageEffectiveFrom"),"ageEffectiveFrom");

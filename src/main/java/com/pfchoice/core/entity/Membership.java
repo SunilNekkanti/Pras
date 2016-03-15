@@ -67,11 +67,11 @@ public class Membership implements Serializable
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
     private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
     
-     
+    @Expose 
     @OneToMany(fetch = FetchType.LAZY, mappedBy= "mbr")
     private List<MembershipProvider> mbrProviderList;
 
-
+    @Expose
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
     private List<MembershipInsurance> mbrInsuranceList;
     
@@ -120,6 +120,7 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
+    @Expose
     @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembershipHedisMeasure> mbrHedisMeasureList;
   

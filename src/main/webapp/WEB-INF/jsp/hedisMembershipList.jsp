@@ -41,6 +41,7 @@
 			     $.each(data.data.list, function(key, val){
 			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
 			     });
+			     s.append('<option value="9999">All</option>');
 			     s.append('</select>');
 			     $selectPrvdr.html(s);
 		 });
@@ -54,6 +55,7 @@
 			     $.each(data.data, function(key, val){
 			    	 s.append('<option value="'+val.id+'" >' + val.hedisMeasureCode + '('+val.description +')</option>');
 			     });
+			     s.append('<option value="9999">All</option>');
 			     s.append('</select>');
 			     $selectHedisCode.html(s);
 		 });
@@ -133,29 +135,24 @@
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns": [
                             { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                            { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                            { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
-                            { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
-                            { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
-                            { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
-                            { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
+                            { "mDataProp": "mbrInsuranceList[0].insId.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrProviderList[0].prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrHedisMeasureList.hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrHedisMeasureList.hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
+                            { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
+                            { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
+                            { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+                            { "mDataProp": "mbrHedisMeasureList[0].dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  }
                           ],
                "aoColumnDefs": [ 
-               		   		    { "sName": "id", "aTargets": [ 0 ] },
-               		   		    { "sName": "firstName", "aTargets": [ 1 ],
-               		               "render": function ( data, type, full, meta ) {
-            		                   return '<a href="membership/'+full.id+'">'+data+'</a>';
-          		                 }},
-               		   		    { "sName": "lastName", "aTargets": [ 2 ] },
-               		   		    { "sName": "dob", "aTargets": [ 3 ] ,
+               		   		    
+               		   		    { "sName": "dob", "aTargets": [ 7 ] ,
                		   		   	   "render": function (data) {
                		   		        		var date = new Date(data);
                		   	        			var month = date.getMonth() + 1;
                		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-               		   		   	 }},
-               		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
-               		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
-               		   		    { "sName": "status.id", "aTargets": [ 6 ] }
+               		   		   	 }}
                ],          
      	     "bLengthChange": false,
      	     "iDisplayLength": 15,
@@ -197,12 +194,15 @@
 						<thead>
 							<tr>
 								<th scope="col">Action</th>
+								<th scope="col">Insurance</th>
+								<th scope="col">Provider</th>
+								<th scope="col">Hedis Code</th>
+								<th scope="col">Rule Description</th>
 								<th scope="col">First Name</th>
 								<th scope="col">Last Name</th>
 								<th scope="col">Date Of Birth</th>
 								<th scope="col">Gender</th>
-								<th scope="col">County</th>
-								<th scope="col">Status</th>
+								<th scope="col">Due Date</th>
 							</tr>
 						</thead>
 	

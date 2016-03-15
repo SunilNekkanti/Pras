@@ -94,16 +94,16 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
     	}
     	
-    	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && !sSearchPrvdr.equals("All"))
+    	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999)
     	{
     		crit.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN);
     		and.add(Restrictions.eq("mbrProvider.prvdr.id", sSearchPrvdr));
     	}
     	
-    	if( sSearchHedisCode != null && !"".equals(sSearchHedisCode))
+    	if( sSearchHedisCode != null && !"".equals(sSearchHedisCode) && sSearchHedisCode != 9999)
     	{
-    	//	crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
-		//	or.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisCode));
+    		crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
+			or.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisCode));
     	}
     	
          crit.add(or);
