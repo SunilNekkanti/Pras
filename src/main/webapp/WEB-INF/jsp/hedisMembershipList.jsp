@@ -135,24 +135,56 @@
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns": [
                             { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                            { "mDataProp": "mbrInsuranceList[0].insId.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                            { "mDataProp": "mbrProviderList[0].prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                            { "mDataProp": "mbrHedisMeasureList.hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                            { "mDataProp": "mbrHedisMeasureList.hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrInsuranceList.0.insId.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                            { "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%","sDefaultContent": ""},
                             { "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
                             { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
                             { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
                             { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
-                            { "mDataProp": "mbrHedisMeasureList[0].dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  }
+                            { "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  }
                           ],
                "aoColumnDefs": [ 
-               		   		    
+
+								{ "sName": "mbrHedisMeasureList.0.hedisMeasureRule.hedisMeasure.code", "aTargets": [3 ] ,
+								  "render": function ( data, type, full, meta ) {
+								    	full.mbrHedisMeasureList.forEach(function (entry) {
+								   			if(entry.hedisMeasureRule.id == hedisRuleId) {
+								   				data = entry.hedisMeasureRule.hedisMeasure.code;
+								   			}
+								    	});
+								    return data;
+								   }
+								},	
+								{ "sName": "mbrHedisMeasureList.0.hedisMeasureRule.description", "aTargets": [4 ] ,
+								   "render": function ( data, type, full, meta ) {
+									    	full.mbrHedisMeasureList.forEach(function (entry) {
+									   			if(entry.hedisMeasureRule.id == hedisRuleId) {
+									   				data = entry.hedisMeasureRule.description;
+									   			}
+									    	});
+									    return data;
+									}
+								},	
                		   		    { "sName": "dob", "aTargets": [ 7 ] ,
                		   		   	   "render": function (data) {
                		   		        		var date = new Date(data);
                		   	        			var month = date.getMonth() + 1;
                		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-               		   		   	 }}
+               		   		   	 }},
+               		   			{ "sName": "mbrHedisMeasureList.0.dueDate", "aTargets": [ 9 ] ,
+                 		   		   "render": function (data, type, full, meta) {
+                 		   		   		full.mbrHedisMeasureList.forEach(function (entry){
+							   				if(entry.hedisMeasureRule.id == hedisRuleId){
+							   					var date = new Date(entry.dueDate);
+	 		   	        						var month = date.getMonth() + 1;
+	 		   	       				 			data = (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+							   				}	
+                 		   		   		});
+                 		   		 return data;  	
+                 		           }
+               		   		   	 }
                ],          
      	     "bLengthChange": false,
      	     "iDisplayLength": 15,
@@ -181,14 +213,13 @@
 	<div class="panel-group">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Hedis Report </div>
-			<div class="col-sm-12" style="padding:5px 5px 0 5px;">
-			 <div class=" col-sm-2" id="extFilterIns"> </div>
-			 <div class="col-sm-2"  id="extFilterPrvdr"> </div>
-			 <div class=" col-sm-2" id="extFilterHedisCode"> </div>
-			 </div>
 			<div class="panel-body" >
-			
 				<div class="table-responsive">
+				<div class="col-sm-12" style="padding:5px 5px 0 5px;">
+				 <div class=" col-sm-2" id="extFilterIns"> </div>
+				 <div class="col-sm-2"  id="extFilterPrvdr"> </div>
+				 <div class=" col-sm-2" id="extFilterHedisCode"> </div>
+				 </div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">
 					
 						<thead>

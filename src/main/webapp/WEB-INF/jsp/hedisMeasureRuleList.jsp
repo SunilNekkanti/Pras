@@ -65,7 +65,8 @@ $.ajax( {
                          { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
                          { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
                          { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "" },
-                         { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""}
+                         { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": ""},
+                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "10%" , "sDefaultContent": ""  }
                      ],
             "aoColumnDefs": [ 
                      		    { "sName": "id", "aTargets": [ 0 ] },
@@ -92,7 +93,8 @@ $.ajax( {
               		   		        		var date = new Date(data);
               		   	        			var month = date.getMonth() + 1;
               		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-              		   		   	 }}
+              		   		   	 }},
+              		   		{ "sName": "description", "aTargets": [ 10] }
             ],          
   	     "bLengthChange": false,
   	     "iDisplayLength": 15,
@@ -125,6 +127,7 @@ $.ajax( {
 					        <th  scope="col">Upper Age Limit</th> 
 					        <th  scope="col">Eff. Date From</th> 
 					        <th  scope="col">Eff. Date To</th> 
+					        <th  scope="col">Description</th> 
 						</tr>
 					</thead>
 
