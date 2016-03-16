@@ -4,15 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 
-<html>
-
-<head>
-
-<title>Membership List</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script>
 
@@ -46,7 +38,7 @@
 			     $selectPrvdr.html(s);
 		 });
     	  
-    	 var $selectHedisCode = $('#extFilterHedisCode');
+    	 var $selectHedisRule = $('#extFilterHedisRule');
     	  $.getJSON(getContextPath()+'/hedisMeasureRule/list', function(data){
 			    
 			     //clear the current content of the select
@@ -57,7 +49,7 @@
 			     });
 			     s.append('<option value="9999">All</option>');
 			     s.append('</select>');
-			     $selectHedisCode.html(s);
+			     $selectHedisRule.html(s);
 		 });
     	  
     	  $(document.body).on('change',"#insu",function (e) {
@@ -99,7 +91,7 @@
 		 
 		   var sSearchIns = paramMap.sSearchIns;
 		   var sSearchPrvdr = paramMap.sSearchPrvdr;
-		   var sSearchHedisCode = paramMap.sSearchHedisCode;
+		   var sSearchHedisRule = paramMap.sSearchHedisRule;
 		   
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
@@ -110,7 +102,7 @@
 		   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
 		   restParams.push({"name" : "sSearchIns" , "value" : sSearchIns  });
 		   restParams.push({"name" : "sSearchPrvdr" , "value" : sSearchPrvdr  });
-		   restParams.push({"name" : "sSearchHedisCode" , "value" : sSearchHedisCode  });
+		   restParams.push({"name" : "sSearchHedisRule" , "value" : sSearchHedisRule  });
 		   
 		 $.ajax( {
               dataType: 'json',
@@ -135,15 +127,16 @@
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns": [
                             { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                            { "mDataProp": "mbrInsuranceList.0.insId.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                            { "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                            { "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                            { "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%","sDefaultContent": ""},
-                            { "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
-                            { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
-                            { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
-                            { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
-                            { "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  }
+							{ "mDataProp": "mbrInsuranceList.0.insId.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+							{ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+							{ "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+							{ "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%","sDefaultContent": ""},
+							{ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  },
+							{ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  },
+							{ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
+							{ "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+							{ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
+							{ "mDataProp": "mbrHedisMeasureList.0.id","bSearchable" : true, "bSortable": true,"sWidth" : "4%", }
                           ],
                "aoColumnDefs": [ 
 
@@ -184,7 +177,18 @@
                  		   		   		});
                  		   		 return data;  	
                  		           }
-               		   		   	 }
+               		   		   	 },
+	               		   		{ "sName": "mbrHedisMeasureList.0.id", "aTargets": [ 10 ] ,
+	               		   		   "render": function (data, type, full, meta) {
+	               		   		   		full.mbrHedisMeasureList.forEach(function (entry){
+	               		      				if(entry.hedisMeasureRule.id == hedisRuleId){
+	               		      					data = entry.id;
+	               		   						
+	               		      				}	
+	               		   		   		});
+	               		   		   	return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
+	               		        	}
+               		     	 	}
                ],          
      	     "bLengthChange": false,
      	     "iDisplayLength": 15,
@@ -195,7 +199,7 @@
                 aoData.push(
                     {"name": "sSearchIns", "value": insId},
                     {"name": "sSearchPrvdr", "value": prvdrId },
-                    {"name": "sSearchHedisCode", "value": hedisRuleId }
+                    {"name": "sSearchHedisRule", "value": hedisRuleId }
                 );
              },        
      	     "fnServerData" : datatable2RestMembership
@@ -206,20 +210,26 @@
  } );
     </script>
 
-</head>
-
-<body>
 
 	<div class="panel-group">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Hedis Report </div>
 			<div class="panel-body" >
 				<div class="table-responsive">
-				<div class="col-sm-12" style="padding:5px 5px 0 5px;">
-				 <div class=" col-sm-2" id="extFilterIns"> </div>
-				 <div class="col-sm-2"  id="extFilterPrvdr"> </div>
-				 <div class=" col-sm-2" id="extFilterHedisCode"> </div>
-				 </div>
+					<div class="col-sm-12">
+							<div class="col-sm-3">
+								<label class="control-label col-sm-4">Insurance</label>
+								 <div class=" col-sm-6" id="extFilterIns">  </div>
+							</div>	 
+							<div class="col-sm-4">	 
+								<label class="control-label col-sm-3">Provider</label>
+								 <div class="col-sm-6"  id="extFilterPrvdr"> </div>
+							</div>	 
+							<div class="col-sm-4">	 
+								 <label class="control-label col-sm-3">Hedis</label>
+								 <div class="col-sm-6" id="extFilterHedisRule"></div>
+							</div>	 
+					 	</div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">
 					
 						<thead>
@@ -234,6 +244,7 @@
 								<th scope="col">Date Of Birth</th>
 								<th scope="col">Gender</th>
 								<th scope="col">Due Date</th>
+								<th scope="col">Notes</th>
 							</tr>
 						</thead>
 	
@@ -249,6 +260,63 @@
 		</div>
 	</div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Membership Hedis Followup</h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="followupSubmit" class="btn btn-default" >Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
 
-</body>
-</html>
+
+<script>
+	function myFunction(id) 
+	{
+			$( "#modal-body" ).html('');
+   			$( "#modal-body" ).append('<textarea  id="followup_details"  class="form-control" rows="5" ></textarea>');
+   			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_hedis_msr_id"  class="form-control" />');
+   			$('#myModal').modal('show');
+   			return false;
+	}
+	$( "#followupSubmit" ).click(function(event) {
+		  
+		  var followup_details  = $("#followup_details").val();
+		  var  mbr_hedis_msr_id = $("#mbr_hedis_msr_id").val();
+		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbrHedisMsrId\": "+mbr_hedis_msr_id+"}";
+		   
+		  var source = getContextPath()+'/reports/membershipHedis/followup';
+		  
+		  $.ajax({
+			  dataType: 'json',
+              contentType: "application/json;charset=UTF-8",
+		      url : source,
+		      type: 'POST',
+		      data : restParams1,
+		      success: function(data, textStatus, jqXHR)
+		      {
+		          alert("Success");
+		      },
+		      error: function (jqXHR, textStatus, errorThrown)
+		      {
+		    	  alert("Error");
+		      }
+		  });
+		  event.preventDefault();
+		});
+</script>
+

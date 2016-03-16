@@ -28,7 +28,6 @@ import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
-import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
@@ -41,6 +40,7 @@ import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.InsuranceService;
+import com.pfchoice.core.service.MembershipHedisFollowupService;
 import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
@@ -87,7 +87,8 @@ public class MembershipController{
     
     @Autowired
     private HedisMeasureService hedisMeasureService;
-  
+    
+   
     @Autowired
     @Qualifier("membershipValidator")
     private Validator validator;
@@ -377,7 +378,6 @@ public class MembershipController{
         logger.info("Returning membershipHedisMeasure.jsp page");
         return "membershipHedisMeasure";
     }
-	
 	
 	@ModelAttribute("countyList")
 	public List<County> populateCountyList() {
