@@ -46,19 +46,15 @@ public class Provider implements Serializable
     @Column(name="name")
     private String name;
       
-    @Expose
     @Column(name="created_date")
     private Timestamp createdDate;
     
-    @Expose
     @Column(name="updated_date")
     private Timestamp updatedDate;
     
-    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     

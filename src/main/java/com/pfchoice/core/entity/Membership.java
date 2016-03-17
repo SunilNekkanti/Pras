@@ -93,21 +93,17 @@ public class Membership implements Serializable
     @Column(name="file_id")
     private Integer fileId;
     
-    @Expose
     @Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     
-    @Expose
     @Column(name="updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     
-    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
@@ -120,7 +116,7 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
-    @Expose
+  //  @Expose
     @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembershipHedisMeasure> mbrHedisMeasureList;
   

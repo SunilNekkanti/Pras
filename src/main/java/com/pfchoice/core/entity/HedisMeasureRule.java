@@ -96,21 +96,17 @@ public class HedisMeasureRule implements Serializable
     @Column(name="effective_year")
     private Integer	effectiveYear;
     
-    @Expose
     @Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     
-    @Expose
     @Column(name="updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     
-    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     

@@ -50,21 +50,17 @@ public class User implements Serializable
     inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}) 
     public Set<Role> roles;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
-    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     

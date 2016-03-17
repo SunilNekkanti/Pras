@@ -44,12 +44,10 @@ public class State implements Serializable
     @Column(name="shot_name")
     private String shortName;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
@@ -57,7 +55,6 @@ public class State implements Serializable
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     

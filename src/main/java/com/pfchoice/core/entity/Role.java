@@ -47,21 +47,17 @@ public class Role implements Serializable
     private User user;
     
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
-    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     

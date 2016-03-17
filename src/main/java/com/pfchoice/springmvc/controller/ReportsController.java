@@ -20,6 +20,7 @@ import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.MembershipHedisFollowup;
 import com.pfchoice.core.service.MembershipHedisFollowupService;
+import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -45,7 +46,9 @@ public class ReportsController
     @Autowired
     private MembershipHedisFollowupService mbrHedisFollowupService;
   
-
+    @Autowired
+    private MembershipHedisMeasureService mbrHedisMeasureService;
+  
    @RequestMapping(value = "/reports/hedis")
     public String handleRequest() throws Exception {
  
@@ -68,6 +71,29 @@ public class ReportsController
 		
        return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
    }
+   
+   @RequestMapping(value = "/reports/hedis2")
+   public String handleRequest2() throws Exception {
+
+		return "hedisMembershipList2";
+	}
+   
+   @ResponseBody
+	@RequestMapping(value = "/reports/hedisMembership/list2", method = RequestMethod.GET)
+	public Message viewMembershipListJsonTest2(Model model,@RequestParam(required = false) Integer pageNo,
+					@RequestParam(required = false) Integer pageSize,
+					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = true) Integer sSearchIns,
+					@RequestParam(required = true) Integer sSearchPrvdr,
+					@RequestParam(required = true) Integer sSearchHedisRule,
+					@RequestParam(required = false) String sort,
+					@RequestParam(required = false) String sortdir) throws Exception{
+		
+		Pagination pagination = mbrHedisMeasureService.getPage(pageNo, pageSize, sSearch, sSearchIns, 
+				sSearchPrvdr, sSearchHedisRule, sort, sortdir);
+		
+      return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+  }
    
    @ResponseBody
 	@RequestMapping(value = "/reports/membershipHedis/followup", method = RequestMethod.POST)

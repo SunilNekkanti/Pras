@@ -36,7 +36,7 @@ public class MembershipHedisMeasure implements Serializable
     @Column(name="mbr_hedis_msr_Id", nullable = false)
     private Integer id;
 
-    //@Expose
+    @Expose
     @OneToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
@@ -60,21 +60,17 @@ public class MembershipHedisMeasure implements Serializable
     @Column(name="follow_up_ind")
     private Character followUpInd;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
     
-    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
     private Date updatedDate;
     
-    @Expose
     @Column(name="created_by")
     private String createdBy;
     
-    @Expose
     @Column(name="updated_by")
     private String updatedBy;
     
