@@ -40,7 +40,7 @@ public class MembershipHedisMeasure implements Serializable
     private Membership mbr;
     
     @Expose
-    @OneToOne( fetch = FetchType.LAZY)
+    @OneToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="hedis_msr_rule_id", nullable = false, referencedColumnName="hedis_msr_rule_id")
     private HedisMeasureRule hedisMeasureRule;
     
