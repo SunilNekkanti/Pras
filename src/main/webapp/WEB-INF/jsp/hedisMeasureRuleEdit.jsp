@@ -184,7 +184,10 @@ $.ajax( {
                             <li class="active"><a href="#" data-toggle="tab">Hedis Measure Rule</a></li>
                         </ul>
           </div>
-		<div class="panel-body" id="tablediv">
+          <div class="col-sm-12">
+          	<div class="col-sm-10 copyRule"><a href="#" id="copyRule" class="btn btn-primary pull-right"> <span class="glyphicon glyphicon-plus-sign"></span>Copy</a></div>	
+          </div>
+		  <div class="panel-body" id="tablediv">
 			<springForm:form id="hedisMeasureRule" method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/${id}/save.do" class="form-horizontal" role="form">
 				<springForm:hidden path="id" />
 				<div class="form-group required">
@@ -205,10 +208,10 @@ $.ajax( {
 					  </div>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group required">
 					<label class="control-label col-sm-2" for="insurance">Insurance</label>
 					<div class="col-sm-6">
-						<springForm:select path="insId"  class="form-control" id="insurance">
+						<springForm:select path="insId"  class="form-control" id="insId">
 							<springForm:option  value="${null}" label="Select One" />
 					   		<springForm:options items="${insuranceList}"  itemValue="id" itemLabel="name"    />
 						</springForm:select>
@@ -391,6 +394,21 @@ $.ajax( {
 </div>
 <script>
 $(document).ready(function() {
+	
+	$("#copyRule").click(function(event) {
+   		  event.preventDefault();     // Prevent character input
+   		  $(".copyRule").html("");
+   		  var action = "${context}/hedisMeasureRule/save.do";
+   		  $("#hedisMeasureRule").attr("action", action);
+   		  $("#id").attr("value", "");
+   		  $("#updateButton").attr("name", "add");
+   		  $("#updateButton").html("Add");
+   		  $("#deleteButton").attr("name", "reset");
+   		  $("#deleteButton").html("Reset");
+   		  $('#insId option:selected').remove();      
+   		 
+   });
+	
     $("#effectiveYear").keydown(function(event) {
     	 if( !(event.keyCode == 8                                // backspace
     		        || event.keyCode == 46                              // delete
@@ -448,8 +466,19 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 			$("#cptCodes").closest( "dov" ).removeClass( "has-error" );
 		}
 		
-		
-		
+		var insId = $("#insId").val();
+	  	
+		if (!insId) {
+			$("#insId").closest( "div" ).addClass( "has-error" );
+			$('#insId').closest( ".text-danger" ).find('span').remove();
+			$("#insId" ).after("<span  class='text-danger'>Select Insurance.</span>" );
+			error_count++;
+		}
+		else
+		{
+			$('#insId').closest( "div" ).find('icdCodes').remove();
+			$("#insId").closest( "dov" ).removeClass( "has-error" );
+		}
 		
 	    if(error_count >0){ event.preventDefault();}
 	});
