@@ -3,6 +3,8 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
@@ -81,6 +83,15 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
             getSession().delete(entity);
         }
         return entity;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<Insurance> findAll()
+    {
+    	Criteria cr = createCriteria();
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
+    	List<Insurance> list = cr.list();
+    	return list;
     }
 
     @Override

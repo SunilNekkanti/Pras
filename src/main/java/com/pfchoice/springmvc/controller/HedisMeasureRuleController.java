@@ -35,11 +35,13 @@ import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.entity.ICDMeasure;
+import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.service.CPTMeasureService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.ICDMeasureService;
+import com.pfchoice.core.service.InsuranceService;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
@@ -66,6 +68,9 @@ public class HedisMeasureRuleController{
    
     @Autowired
     private GenderService genderService;
+    
+    @Autowired
+    private InsuranceService insuranceService;
     
     @Autowired
     @Qualifier("hedisMeasureRuleValidator")
@@ -135,6 +140,14 @@ public class HedisMeasureRuleController{
 		//Data referencing for ICD Measure list box
 		List<ICDMeasure> icdMeasureList = icdMeasureService.findAll();
 		return icdMeasureList;
+	}
+	
+	@ModelAttribute("insuranceList")
+	public List<Insurance> populateInsuranceList() {
+		
+		//Data referencing for Insurance Measure list box
+		List<Insurance> insuranceList = insuranceService.findAll();
+		return insuranceList;
 	}
 	
 	@RequestMapping(value = "/hedisMeasureRule/new")

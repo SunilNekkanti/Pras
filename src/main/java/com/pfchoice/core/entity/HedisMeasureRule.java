@@ -47,6 +47,11 @@ public class HedisMeasureRule implements Serializable
     private String description;
     
     @Expose
+    @OneToOne(fetch=FetchType.LAZY )
+    @JoinColumn(name="ins_id", referencedColumnName="Insurance_Id")
+    private Insurance insId;
+    
+    @Expose
     @OneToOne
     @JoinColumn(name="hedis_id", referencedColumnName="qlty_msr_id")
     private HedisMeasure hedisMeasure;
@@ -161,6 +166,20 @@ public class HedisMeasureRule implements Serializable
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	/**
+	 * @return the insId
+	 */
+	public Insurance getInsId() {
+		return insId;
+	}
+
+	/**
+	 * @param insId the insId to set
+	 */
+	public void setInsId(Insurance insId) {
+		this.insId = insId;
 	}
 
 	/**

@@ -116,7 +116,7 @@ public class Membership implements Serializable
     @JoinColumn(name="mbr_status", referencedColumnName="code")
     private MembershipStatus status;
 
-  //  @Expose
+    @Expose
     @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MembershipHedisMeasure> mbrHedisMeasureList;
   

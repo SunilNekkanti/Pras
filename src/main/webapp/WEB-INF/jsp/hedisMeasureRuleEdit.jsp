@@ -205,6 +205,17 @@ $.ajax( {
 					  </div>
 				</div>
 				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="insurance">Insurance</label>
+					<div class="col-sm-6">
+						<springForm:select path="insId"  class="form-control" id="insurance">
+							<springForm:option  value="${null}" label="Select One" />
+					   		<springForm:options items="${insuranceList}"  itemValue="id" itemLabel="name"    />
+						</springForm:select>
+						<springForm:errors path="insId" cssClass="error text-danger" />
+					</div>
+				</div>
+				
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="cpt">CPT Code</label>
 					<div class="col-sm-6">

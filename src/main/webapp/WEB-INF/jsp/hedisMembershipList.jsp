@@ -4,12 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
-
 <script>
 
-
-     $(document).ready(function() {
+$(document).ready(function() {
     	
     	 var $selectIns = $('#extFilterIns');
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
@@ -45,12 +42,14 @@
 			     var s = $('<select id=\"hedisRule\" >');
 			     //iterate over the data and append a select option
 			     $.each(data.data, function(key, val){
-			    	 s.append('<option value="'+val.id+'" >' + val.hedisMeasureCode + '('+val.description +')</option>');
+			    	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
 			     });
 			     s.append('<option value="9999">All</option>');
 			     s.append('</select>');
 			     $selectHedisRule.html(s);
 		 });
+    	  
+    	  
     	  
     	  $(document.body).on('change',"#insu",function (e) {
     		  callDatableWithChangedDropDown();
@@ -62,6 +61,7 @@
     	
     	  $(document.body).on('change',"#hedisRule",function (e) {
     		  callDatableWithChangedDropDown();
+    		  
       		});
        	
     	var callDatableWithChangedDropDown = function(){
@@ -120,78 +120,53 @@
           } );
      	}
      	
+     	
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId) {
+     		
+     		 var hedisRuleList = document.getElementById('hedisRule').options;
+     		 var columns = new Array();
+     		 
+     		columns.push({ "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  });
+     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "15%"});
+     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sWidth" : "5%" });
+     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  });
+     		
+     		var myTable = $("#membershipTable");
+         	var thead = myTable.find("thead");
+         	 
+     		$.each( hedisRuleList, function( i, value ){
+     			if(i < hedisRuleList.length-1){
+      			columns.push({ "mDataProp": "mbrHedisMeasureList."+i+".hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%", "sDefaultContent": "",
+      							"render": function (data, type, full, meta) {
+      											$.each( hedisRuleList, function( index, value1 ){
+			      									if(data == value1.text)
+			      										data= 'X';
+			      								});
+      								 		if(data == 'X')
+      								 			return data;
+      								 		else
+      								 			return '';
+		        				          }
+      						});
+      			
+      				$('table').find('tr').each(function(){
+             			$(this).find('th').eq(-1).after('<th>'+value.text+'</th>');
+             		});
+      			}
+      			
+      		});
+      		 
+         	
   	        var oTable = $('#membershipTable').dataTable({
   	         
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.list',
-              "aoColumns": [
-                            { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-							{ "mDataProp": "mbrInsuranceList.0.insId.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-							{ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-							{ "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-							{ "mDataProp": "mbrHedisMeasureList.0.hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%","sDefaultContent": ""},
-							{ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  },
-							{ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  },
-							{ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
-							{ "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
-							{ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-							{ "mDataProp": "mbrHedisMeasureList.0.id","bSearchable" : true, "bSortable": true,"sWidth" : "4%", }
-                          ],
-               "aoColumnDefs": [ 
-
-								{ "sName": "mbrHedisMeasureList.0.hedisMeasureRule.hedisMeasure.code", "aTargets": [3 ] ,
-								  "render": function ( data, type, full, meta ) {
-								    	full.mbrHedisMeasureList.forEach(function (entry) {
-								   			if(entry.hedisMeasureRule.id == hedisRuleId) {
-								   				data = entry.hedisMeasureRule.hedisMeasure.code;
-								   			}
-								    	});
-								    return data;
-								   }
-								},	
-								{ "sName": "mbrHedisMeasureList.0.hedisMeasureRule.description", "aTargets": [4 ] ,
-								   "render": function ( data, type, full, meta ) {
-									    	full.mbrHedisMeasureList.forEach(function (entry) {
-									   			if(entry.hedisMeasureRule.id == hedisRuleId) {
-									   				data = entry.hedisMeasureRule.description;
-									   			}
-									    	});
-									    return data;
-									}
-								},	
-               		   		    { "sName": "dob", "aTargets": [ 7 ] ,
-               		   		   	   "render": function (data) {
-               		   		        		var date = new Date(data);
-               		   	        			var month = date.getMonth() + 1;
-               		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-               		   		   	 }},
-               		   			{ "sName": "mbrHedisMeasureList.0.dueDate", "aTargets": [ 9 ] ,
-                 		   		   "render": function (data, type, full, meta) {
-                 		   		   		full.mbrHedisMeasureList.forEach(function (entry){
-							   				if(entry.hedisMeasureRule.id == hedisRuleId){
-							   					var date = new Date(entry.dueDate);
-	 		   	        						var month = date.getMonth() + 1;
-	 		   	       				 			data = (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-							   				}	
-                 		   		   		});
-                 		   		 return data;  	
-                 		           }
-               		   		   	 },
-	               		   		{ "sName": "mbrHedisMeasureList.0.id", "aTargets": [ 10 ] ,
-	               		   		   "render": function (data, type, full, meta) {
-	               		   		   		full.mbrHedisMeasureList.forEach(function (entry){
-	               		      				if(entry.hedisMeasureRule.id == hedisRuleId){
-	               		      					data = entry.id;
-	               		   						
-	               		      				}	
-	               		   		   		});
-	               		   		   	return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
-	               		        	}
-               		     	 	}
-               ],          
+              "aoColumns":  columns,      
      	     "bLengthChange": false,
-     	     "iDisplayLength": 15,
+     	     "iDisplayLength": 10,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
@@ -234,17 +209,14 @@
 					
 						<thead>
 							<tr>
-								<th scope="col">Action</th>
-								<th scope="col">Insurance</th>
+								<th scope="col">Notes</th>
 								<th scope="col">Provider</th>
-								<th scope="col">Hedis Code</th>
-								<th scope="col">Rule Description</th>
 								<th scope="col">First Name</th>
 								<th scope="col">Last Name</th>
-								<th scope="col">Date Of Birth</th>
-								<th scope="col">Gender</th>
+								<th scope="col">Birthday</th>
+								<th scope="col">Sex</th>
 								<th scope="col">Due Date</th>
-								<th scope="col">Notes</th>
+								
 							</tr>
 						</thead>
 	

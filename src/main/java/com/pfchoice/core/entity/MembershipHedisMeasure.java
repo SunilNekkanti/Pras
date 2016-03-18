@@ -36,7 +36,7 @@ public class MembershipHedisMeasure implements Serializable
     @Column(name="mbr_hedis_msr_Id", nullable = false)
     private Integer id;
 
-    @Expose
+  //  @Expose
     @OneToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
