@@ -37,7 +37,7 @@ public class MembershipProvider implements Serializable
     private Integer id;
 
     @Expose
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="prvdr_id", nullable = false, referencedColumnName="prvdr_id")
     private Provider prvdr;
     

@@ -122,11 +122,14 @@ $(document).ready(function() {
      	
      	
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId) {
-     		
      		 var hedisRuleList = document.getElementById('hedisRule').options;
      		 var columns = new Array();
      		 
-     		columns.push({ "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  });
+     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,
+     						"render": function (data, type, full, meta) {
+	      								return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
+	        						  }
+     					});
      		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "15%"});
      		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
      		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
@@ -159,7 +162,6 @@ $(document).ready(function() {
       			
       		});
       		 
-         	
   	        var oTable = $('#membershipTable').dataTable({
   	         
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
@@ -261,15 +263,16 @@ $(document).ready(function() {
 	{
 			$( "#modal-body" ).html('');
    			$( "#modal-body" ).append('<textarea  id="followup_details"  class="form-control" rows="5" ></textarea>');
-   			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_hedis_msr_id"  class="form-control" />');
+   			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_id"  class="form-control" />');
    			$('#myModal').modal('show');
    			return false;
 	}
 	$( "#followupSubmit" ).click(function(event) {
 		  
 		  var followup_details  = $("#followup_details").val();
-		  var  mbr_hedis_msr_id = $("#mbr_hedis_msr_id").val();
-		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbrHedisMsrId\": "+mbr_hedis_msr_id+"}";
+		  var  mbr_id = $("#mbr_id").val();
+		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"}}";
+		  alert(restParams1);
 		   
 		  var source = getContextPath()+'/reports/membershipHedis/followup';
 		  

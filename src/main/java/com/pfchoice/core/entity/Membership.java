@@ -50,17 +50,17 @@ public class Membership implements Serializable
     private String lastName;
 
     @Expose
-    @ManyToOne(fetch=FetchType.EAGER )
+    @ManyToOne(fetch=FetchType.LAZY )
     @JoinColumn(name="mbr_genderid", referencedColumnName="gender_id")
     private Gender genderId;
     
     @Expose
-    @ManyToOne(fetch=FetchType.EAGER )
+    @ManyToOne(fetch=FetchType.LAZY )
     @JoinColumn(name="mbr_countycode", referencedColumnName="code")
     private County countyCode;
     
     @Expose
-    @ManyToOne(fetch=FetchType.EAGER )
+    @ManyToOne(fetch=FetchType.LAZY )
     @JoinColumn(name="mbr_ethinic_code", referencedColumnName="code")
     private Ethinicity ethinicCode;
     

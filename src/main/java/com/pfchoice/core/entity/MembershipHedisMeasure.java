@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,12 +35,12 @@ public class MembershipHedisMeasure implements Serializable
     private Integer id;
 
   //  @Expose
-    @OneToOne( fetch = FetchType.EAGER)
+    @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
     private Membership mbr;
     
     @Expose
-    @OneToOne( fetch = FetchType.EAGER)
+    @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="hedis_msr_rule_id", nullable = false, referencedColumnName="hedis_msr_rule_id")
     private HedisMeasureRule hedisMeasureRule;
     

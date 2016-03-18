@@ -120,23 +120,27 @@
           } );
      	}
      	
+     	
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId) {
+     		 var columns = new Array();
+     		 
+     		columns.push({ "mDataProp": "mbr.id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  });
+     		columns.push({ "mDataProp": "mbr..mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"});
+     		columns.push({ "mDataProp": "hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"});
+     		columns.push({ "mDataProp": "hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%","sDefaultContent": ""});
+     		columns.push({ "mDataProp": "mbr.firstName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  });
+     		columns.push({ "mDataProp": "mbr.lastName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  });
+     		columns.push({ "mDataProp": "mbr.dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+     		columns.push({ "mDataProp": "mbr.genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" });
+     		columns.push({ "mDataProp": "dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  });
+     		columns.push({ "mDataProp": "id","bSearchable" : true, "bSortable": true,"sWidth" : "4%" });
+           
+     		 
   	        var oTable = $('#membershipTable').dataTable({
   	         
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list2',
      	     "sAjaxDataProp" : 'data.list',
-              "aoColumns": [
-                            { "mDataProp": "mbr.id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-							{ "mDataProp": "mbr..mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-							{ "mDataProp": "hedisMeasureRule.hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-							{ "mDataProp": "hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%","sDefaultContent": ""},
-							{ "mDataProp": "mbr.firstName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  },
-							{ "mDataProp": "mbr.lastName","bSearchable" : true, "bSortable": true,"sWidth" : "13%"  },
-							{ "mDataProp": "mbr.dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
-							{ "mDataProp": "mbr.genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
-							{ "mDataProp": "dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
-							{ "mDataProp": "id","bSearchable" : true, "bSortable": true,"sWidth" : "4%", }
-                          ],
+              "aoColumns": columns,
                "aoColumnDefs": [ 
                		   		    { "sName": "mbr.dob", "aTargets": [ 6 ] ,
                		   		   	   "render": function (data) {

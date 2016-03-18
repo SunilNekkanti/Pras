@@ -4,9 +4,12 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,9 +32,10 @@ public class MembershipHedisFollowup implements Serializable
     @Column(name="mbr_hedis_followup_id", nullable = false)
     private Integer id;
 
-    @Expose
-    @Column(name="mbr_hedis_msr_Id")
-    private Integer mbrHedisMsrId;
+//  @Expose
+    @OneToOne( fetch=FetchType.LAZY )
+    @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
+    private Membership mbr;
     
     @Expose
     @Column(name="followup_details")
@@ -81,17 +85,17 @@ public class MembershipHedisFollowup implements Serializable
     }
 
 	/**
-	 * @return the mbrHedisMsrId
+	 * @return the mbr
 	 */
-	public Integer getMbrHedisMsrId() {
-		return mbrHedisMsrId;
+	public Membership getMbr() {
+		return mbr;
 	}
 
 	/**
-	 * @param mbrHedisMsrId the mbrHedisMsrId to set
+	 * @param mbr the mbr to set
 	 */
-	public void setMbrHedisMsrId(Integer mbrHedisMsrId) {
-		this.mbrHedisMsrId = mbrHedisMsrId;
+	public void setMbr(Membership mbr) {
+		this.mbr = mbr;
 	}
 
 	/**

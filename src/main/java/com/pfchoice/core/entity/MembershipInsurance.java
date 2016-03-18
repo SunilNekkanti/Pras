@@ -40,7 +40,7 @@ public class MembershipInsurance implements Serializable
     private Integer id;
 
     @Expose
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
     private Insurance insId;
     

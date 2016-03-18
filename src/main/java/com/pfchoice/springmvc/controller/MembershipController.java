@@ -40,7 +40,6 @@ import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.InsuranceService;
-import com.pfchoice.core.service.MembershipHedisFollowupService;
 import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
