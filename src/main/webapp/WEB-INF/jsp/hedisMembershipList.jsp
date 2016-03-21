@@ -38,7 +38,7 @@ $(document).ready(function() {
 	    	 });
     					 
 		 });
-    	  
+    	  var columns ;
     	  var hedisRuleDropdown = function(){
     			var prvdrSelectValue= $("#prvdr option:selected").val();
 				var $selectHedisRule = $('#extFilterHedisRule');
@@ -47,7 +47,6 @@ $(document).ready(function() {
 		     		 insSelectValue1 = 1;
 		     	 }
 		    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list?insId='+insSelectValue1, function(data){
-					    
 					     //clear the current content of the select
 					     var s = $('<select id=\"hedisRule\" style=\"width:150px;\">');
 					     //iterate over the data and append a select option
@@ -68,11 +67,51 @@ $(document).ready(function() {
 					 var insSelectValue= $("#insu option:selected").val();
 		    		 var prvdrSelectValue= $("#prvdr option:selected").val();
 		    		 var hedisRuleSelectValue= $("#hedisRule option:selected").val();
-		    		 
-		    		 $('#membershipTable').dataTable().fnDestroy();
-		    		 GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue);
-					 
-					 
+		    		
+		    		 var hedisRuleList = document.getElementById('hedisRule').options;
+		    		columns = new Array();
+		     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,
+		     						"render": function (data, type, full, meta) {
+			      								return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
+			        						  }
+		     					});
+		     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "15%"});
+		     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sWidth" : "5%" });
+		     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  });
+		     		
+		     		var myTable = $("#membershipTable");
+		     		var thead = myTable.find("thead");  
+		     		$("#membershipTable th").each(function() {
+						if($(this).attr("role") == "row"){
+						}else{
+							$(this).remove();
+						}
+								
+             		}); 
+		     		
+		     		$.each( hedisRuleList, function( i, value ){
+		     			if(i < hedisRuleList.length-1){
+		      			columns.push({ "mDataProp": "mbrHedisMeasureList."+i+".hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%", "sDefaultContent": "",
+		      							"render": function (data, type, full, meta) {
+		      											$.each( hedisRuleList, function( index, value1 ){
+					      									if(data == value1.text)
+					      										data= 'X';
+					      								});
+		      								 		if(data == 'X')
+		      								 			return data;
+		      								 		else
+		      								 			return '';
+				        				          }
+		      						});
+		      			
+		      			myTable.find('tr').each(function(){
+		             			$(this).find('th').eq(-1).after('<th>'+value.text+'</th>');
+		             		});
+		      			}
+		      		});
 				 });
     	  }
     	  
@@ -95,8 +134,11 @@ $(document).ready(function() {
     		   var insSelectValue= $("#insu option:selected").val();
     		   var prvdrSelectValue= $("#prvdr option:selected").val();
     		   var hedisRuleSelectValue= $("#hedisRule option:selected").val();
-    		  $('#membershipTable').dataTable().fnDestroy();
-    		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue);
+    		   var myTable = $('#membershipTable');
+    		   if(myTable != null){
+			     		myTable.dataTable().fnDestroy();
+	     		}
+    		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue,columns);
     	}  
     	            
      	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
@@ -141,59 +183,18 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
-             		$("#membershipTable th").each(function() {
-             		    var id = $(this).attr("aria-controls");
-						if(id != "membershipTable")
-								$(this).remove();
-             		});               		
              		$("#membershipTable").css({'width': 4150});             		                   
-              },
+            },
               error : function (e) {
               }
           } );
      	}
      	
      	
-     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId) {
+     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,columns) {
+     		  
      		 $('select').css({'width': 150});
-     		 var hedisRuleList = document.getElementById('hedisRule').options;
-     		 var columns = new Array();
      		 
-     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,
-     						"render": function (data, type, full, meta) {
-	      								return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
-	        						  }
-     					});
-     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "15%"});
-     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
-     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
-     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
-     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sWidth" : "5%" });
-     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  });
-     		
-     		var myTable = $("#membershipTable");
-         	var thead = myTable.find("thead");         	 
-     		$.each( hedisRuleList, function( i, value ){
-     			if(i < hedisRuleList.length-1){
-      			columns.push({ "mDataProp": "mbrHedisMeasureList."+i+".hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%", "sDefaultContent": "",
-      							"render": function (data, type, full, meta) {
-      											$.each( hedisRuleList, function( index, value1 ){
-			      									if(data == value1.text)
-			      										data= 'X';
-			      								});
-      								 		if(data == 'X')
-      								 			return data;
-      								 		else
-      								 			return '';
-		        				          }
-      						});
-      			
-      				$('table').find('tr').each(function(){
-             			$(this).find('th').eq(-1).after('<th>'+value.text+'</th>');
-             		});
-      			}
-      			
-      		});
       		 
   	        var oTable = $('#membershipTable').dataTable({  	         
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
