@@ -23,13 +23,13 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
 {
 
     @Autowired
-    private HedisMeasureRuleDao hedisMeasureMeasureDao;
+    private HedisMeasureRuleDao hedisMeasureRuleDao;
 
     @Override
     public HedisMeasureRule deleteById(final Integer id)
     {
         //Used for transaction test
-        return hedisMeasureMeasureDao.deleteById(id);
+        return hedisMeasureRuleDao.deleteById(id);
 //        throw new UnsupportedOperationException();
     }
 
@@ -37,7 +37,7 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
     @Transactional(readOnly = true)
     public HedisMeasureRule findById(final Integer id)
     {
-        return hedisMeasureMeasureDao.findById(id);
+        return hedisMeasureRuleDao.findById(id);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
     public Pagination getPage(final int pageNo,final  int pageSize,
     		final String sSearch, final String sort, final String sortdir)
     {
-        return hedisMeasureMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+        return hedisMeasureRuleDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
     }
 
     @Override
     public HedisMeasureRule save(final HedisMeasureRule bean)
     {
         //Used for transaction test
-        return hedisMeasureMeasureDao.save(bean);
+        return hedisMeasureRuleDao.save(bean);
 //        this.deleteById(1);
 //        return null;
     }
@@ -61,13 +61,19 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
     public HedisMeasureRule update(final HedisMeasureRule bean)
     {
         Updater<HedisMeasureRule> updater = new Updater<>(bean);
-        return hedisMeasureMeasureDao.updateByUpdater(updater);
+        return hedisMeasureRuleDao.updateByUpdater(updater);
     }
     
     @Override
     public List<HedisMeasureRule> findAll()
     {
-    	return hedisMeasureMeasureDao.findAll();
+    	return hedisMeasureRuleDao.findAll();
+    }
+
+    @Override
+    public List<HedisMeasureRule> findAllByInsId(final Integer insId)
+    {
+    	return hedisMeasureRuleDao.findAllByInsId(insId);
     }
 
 }

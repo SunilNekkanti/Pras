@@ -5,53 +5,80 @@
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <script>
-
 $(document).ready(function() {
-    	
+	 		
     	 var $selectIns = $('#extFilterIns');
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
-			     var s = $('<select id=\"insu\">');
+			     var s = $('<select id=\"insu\" style=\"width:150px;\">');
 			     //iterate over the data and append a select option
 			     $.each(data.data.list, function(key, val){
 			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
 			     });
 			     s.append('</select>');
 			     $selectIns.html(s);
-		 });
-    	  
-    	 var $selectPrvdr = $('#extFilterPrvdr');
-    	  $.getJSON(getContextPath()+'/provider/list?pageNo=0&pageSize=200', function(data){
 			    
-			     //clear the current content of the select
-			     var s = $('<select id=\"prvdr\">');
-			     //iterate over the data and append a select option
-			     $.each(data.data.list, function(key, val){
-			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
-			     });
-			     s.append('<option value="9999">All</option>');
-			     s.append('</select>');
-			     $selectPrvdr.html(s);
+		 }).success(function() { 
+			 var insSelectValue= $("#insu option:selected").val();
+			 var $selectPrvdr = $('#extFilterPrvdr');
+	    	  $.getJSON(getContextPath()+'/provider/list?pageNo=0&pageSize=200', function(data){
+				    
+				     //clear the current content of the select
+				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+				     //iterate over the data and append a select option
+				     $.each(data.data.list, function(key, val){
+				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+				     });
+				     s.append('<option value="9999">All</option>');
+				     s.append('</select>');
+				     $selectPrvdr.html(s);
+			 }).success(function() { 
+				 hedisRuleDropdown();
+	    	 });
+    					 
 		 });
     	  
-    	 var $selectHedisRule = $('#extFilterHedisRule');
-    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list', function(data){
-			    
-			     //clear the current content of the select
-			     var s = $('<select id=\"hedisRule\" >');
-			     //iterate over the data and append a select option
-			     $.each(data.data, function(key, val){
-			    	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
-			     });
-			     s.append('<option value="9999">All</option>');
-			     s.append('</select>');
-			     $selectHedisRule.html(s);
-		 });
-    	  
+    	  var hedisRuleDropdown = function(){
+    			var prvdrSelectValue= $("#prvdr option:selected").val();
+				var $selectHedisRule = $('#extFilterHedisRule');
+				 var insSelectValue1 = $("#insu option:selected").val();
+		 		 if( $("#insu option:selected").val() == null){
+		     		 insSelectValue1 = 1;
+		     	 }
+		    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list?insId='+insSelectValue1, function(data){
+					    
+					     //clear the current content of the select
+					     var s = $('<select id=\"hedisRule\" style=\"width:150px;\">');
+					     //iterate over the data and append a select option
+					     $.each(data.data, function(key, val){
+					    	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
+					     });
+					     s.append('<option value="9999">All</option>');
+					     s.append('</select>');
+					     $selectHedisRule.html(s);
+					     $( document ).ajaxComplete(function( event, xhr, settings ) {
+					    	
+					    	    $( ".log" ).text( "Triggered ajaxComplete handler. The result is " +
+					    	      xhr.responseText );
+					    	 
+					    	});
+					     
+				 }).success(function() { 
+					 var insSelectValue= $("#insu option:selected").val();
+		    		 var prvdrSelectValue= $("#prvdr option:selected").val();
+		    		 var hedisRuleSelectValue= $("#hedisRule option:selected").val();
+		    		 
+		    		 $('#membershipTable').dataTable().fnDestroy();
+		    		 GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue);
+					 
+					 
+				 });
+    	  }
     	  
     	  
     	  $(document.body).on('change',"#insu",function (e) {
+    		  hedisRuleDropdown();
     		  callDatableWithChangedDropDown();
     		});
     	
@@ -114,6 +141,12 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
+             		$("#membershipTable th").each(function() {
+             		    var id = $(this).attr("aria-controls");
+						if(id != "membershipTable")
+								$(this).remove();
+             		});               		
+             		$("#membershipTable").css({'width': 4150});             		                   
               },
               error : function (e) {
               }
@@ -122,6 +155,7 @@ $(document).ready(function() {
      	
      	
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId) {
+     		 $('select').css({'width': 150});
      		 var hedisRuleList = document.getElementById('hedisRule').options;
      		 var columns = new Array();
      		 
@@ -138,8 +172,7 @@ $(document).ready(function() {
      		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  });
      		
      		var myTable = $("#membershipTable");
-         	var thead = myTable.find("thead");
-         	 
+         	var thead = myTable.find("thead");         	 
      		$.each( hedisRuleList, function( i, value ){
      			if(i < hedisRuleList.length-1){
       			columns.push({ "mDataProp": "mbrHedisMeasureList."+i+".hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%", "sDefaultContent": "",
@@ -162,8 +195,7 @@ $(document).ready(function() {
       			
       		});
       		 
-  	        var oTable = $('#membershipTable').dataTable({
-  	         
+  	        var oTable = $('#membershipTable').dataTable({  	         
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns":  columns,      
@@ -187,7 +219,6 @@ $(document).ready(function() {
  } );
     </script>
 
-
 	<div class="panel-group">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Hedis Report </div>
@@ -198,11 +229,11 @@ $(document).ready(function() {
 								<label class="control-label col-sm-4">Insurance</label>
 								 <div class=" col-sm-6" id="extFilterIns">  </div>
 							</div>	 
-							<div class="col-sm-4">	 
+							<div class="col-sm-3">	 
 								<label class="control-label col-sm-3">Provider</label>
 								 <div class="col-sm-6"  id="extFilterPrvdr"> </div>
 							</div>	 
-							<div class="col-sm-4">	 
+							<div class="col-sm-3">	 
 								 <label class="control-label col-sm-3">Hedis</label>
 								 <div class="col-sm-6" id="extFilterHedisRule"></div>
 							</div>	 
@@ -211,13 +242,13 @@ $(document).ready(function() {
 					
 						<thead>
 							<tr>
-								<th scope="col">Notes</th>
-								<th scope="col">Provider</th>
-								<th scope="col">First Name</th>
-								<th scope="col">Last Name</th>
-								<th scope="col">Birthday</th>
-								<th scope="col">Sex</th>
-								<th scope="col">Due Date</th>
+								<th scope="col" role="row">Notes</th>
+								<th scope="col" role="row">Provider</th>
+								<th scope="col" role="row">First Name</th>
+								<th scope="col" role="row">Last Name</th>
+								<th scope="col" role="row">Birthday</th>
+								<th scope="col" role="row">Sex</th>
+								<th scope="col" role="row">Due Date</th>
 								
 							</tr>
 						</thead>
@@ -255,9 +286,7 @@ $(document).ready(function() {
       
     </div>
   </div>
-  
-
-
+ 
 <script>
 	function myFunction(id) 
 	{
@@ -267,12 +296,18 @@ $(document).ready(function() {
    			$('#myModal').modal('show');
    			return false;
 	}
+	$('select').css({'width': 150});
 	$( "#followupSubmit" ).click(function(event) {
+		
+		  if($("#followup_details").val().length <= 5)
+		  {
+		   		alert(" Followup Details must be minimum 5 charactes");
+		   		return false;
+		 }
 		  
 		  var followup_details  = $("#followup_details").val();
 		  var  mbr_id = $("#mbr_id").val();
 		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"}}";
-		  alert(restParams1);
 		   
 		  var source = getContextPath()+'/reports/membershipHedis/followup';
 		  
@@ -284,7 +319,8 @@ $(document).ready(function() {
 		      data : restParams1,
 		      success: function(data, textStatus, jqXHR)
 		      {
-		          alert("Success");
+		          alert("Followup Success Done");
+		          $('#myModal').modal('hide');
 		      },
 		      error: function (jqXHR, textStatus, errorThrown)
 		      {

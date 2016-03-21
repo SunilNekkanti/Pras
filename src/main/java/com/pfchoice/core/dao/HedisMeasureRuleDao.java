@@ -25,4 +25,7 @@ public interface HedisMeasureRuleDao
     HedisMeasureRule updateByUpdater(Updater<HedisMeasureRule> updater);
     
     List<HedisMeasureRule> findAll();
+    
+    List<HedisMeasureRule> findAllByInsId(Integer insId);
+    
 }

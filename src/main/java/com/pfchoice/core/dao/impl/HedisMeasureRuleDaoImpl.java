@@ -146,4 +146,24 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     	List<HedisMeasureRule> list =  cr.list();
     	return list;
     }
+    
+    @SuppressWarnings("unchecked")
+	public List<HedisMeasureRule> findAllByInsId(final Integer insId)
+    {
+    	
+    	Criteria cr = createCriteria();
+    	cr.createAlias("insId", "ins");
+    	cr.add(Restrictions.eq("activeInd", 'Y'));
+    	cr.add(Restrictions.eq("ins.activeInd", 'Y'));
+    	cr.add(Restrictions.eq("ins.id", insId));
+    	
+    	cr.setProjection(
+    		    Projections.distinct(Projections.projectionList()
+    		    	    .add(Projections.property("description"), "description")
+    		    	    .add(Projections.property("id"), "id")))
+    	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
+
+    	List<HedisMeasureRule> list =  cr.list();
+    	return list;
+    }
 }

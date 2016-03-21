@@ -138,7 +138,7 @@
 			     var $select = $('#zip');
 			   
 			   //request the JSON data and parse into the select element
-				   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
+				   $.getJSON(getContextPath()+'/contact/state/'+stateId, function(data){
 				    
 				     //clear the current content of the select
 				     $select.html('');
@@ -166,7 +166,7 @@
 			     var stateId = $( "#state" ).val();
 			     var $select = $('#zip');
 			   //request the JSON data and parse into the select element
-				   $.getJSON('http://localhost:8080/Pras/contact/state/'+stateId, function(data){
+				   $.getJSON(getContextPath()+'/contact/state/'+stateId, function(data){
 				    
 				     //clear the current content of the select
 				     $select.html('');

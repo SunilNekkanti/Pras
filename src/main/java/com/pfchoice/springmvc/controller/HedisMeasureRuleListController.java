@@ -57,9 +57,9 @@ public class HedisMeasureRuleListController{
 	
 	@ResponseBody
 	@RequestMapping(value = "/hedisMeasureRule/list", method = RequestMethod.GET)
-	public Message viewHedisMeasureRuleList(Model model) throws Exception{
+	public Message viewHedisMeasureRuleList(Model model,@RequestParam(required = false) Integer insId) throws Exception{
 		
-		List<HedisMeasureRule> hedisMeasureRuleList = hedisMeasureRuleService.findAll();
+		List<HedisMeasureRule> hedisMeasureRuleList = hedisMeasureRuleService.findAllByInsId(insId);
 
         return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(hedisMeasureRuleList));
     }
