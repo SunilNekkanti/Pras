@@ -47,7 +47,7 @@ public class HedisMeasureRule implements Serializable
     private String description;
     
     @Expose
-    @OneToOne(fetch=FetchType.LAZY )
+    @OneToOne(fetch=FetchType.EAGER )
     @JoinColumn(name="ins_id", referencedColumnName="Insurance_Id")
     private Insurance insId;
     

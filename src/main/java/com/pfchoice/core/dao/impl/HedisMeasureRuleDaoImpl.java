@@ -34,7 +34,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(HedisMeasureRuleDaoImpl.class
         .getName());
 
-    @Override
+    /*@Override
     public Pagination getPage(final int pageNo,final  int pageSize, 
 			final String sSearch, final String sort, final String sortdir)
     {
@@ -93,6 +93,72 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 			crit.addOrder(Order.asc("icdMeasure.code"));
     	//    crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 			crit.setResultTransformer(Transformers.aliasToBean(getEntityClass()));   
+        Pagination page = findByCriteria(crit, pageNo, pageSize);
+        return page;
+    }
+*/
+    
+    @Override
+    public Pagination getPage(final int pageNo,final  int pageSize, 
+			final String sSearch, final String sort, final String sortdir)
+    {
+    	Criteria crit = createCriteria()
+         		.createAlias("hedisMeasure", "hedisMeasure")
+         		.createAlias("insId", "insId")
+         		.createAlias("genderId", "genderId", JoinType.LEFT_OUTER_JOIN);
+         		//.createAlias("cptCodes", "cptMeasure", JoinType.INNER_JOIN)
+         		//.createAlias("icdCodes", "icdMeasure", JoinType.INNER_JOIN);
+       
+    	if( sSearch != null && !"".equals(sSearch))
+    	{
+    		Disjunction or = Restrictions.disjunction();
+    		
+    		or.add(Restrictions.ilike("hedisMeasure.code",sSearch, MatchMode.ANYWHERE))
+    		 // .add(Restrictions.ilike("cptMeasure.code",sSearch, MatchMode.ANYWHERE))
+    		 // .add(Restrictions.ilike("icdMeasure.code",sSearch, MatchMode.ANYWHERE))
+    		  .add(Restrictions.sqlRestriction("CAST({alias}.effective_Year AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.ilike("genderId.description",sSearch, MatchMode.ANYWHERE))
+    		  .add(Restrictions.sqlRestriction("CAST({alias}.lower_age_limit AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.sqlRestriction("CAST({alias}.upper_age_limit AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.sqlRestriction("CAST({alias}.age_effective_from AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE))
+    		  .add(Restrictions.sqlRestriction("CAST({alias}.age_effective_to AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
+    		
+    		crit.add(or);
+    	}
+    	crit.add(Restrictions.eq("activeInd", 'Y'));
+    	/*ProjectionList projList = Projections.projectionList();
+    	projList.add(Projections.property("id"),"id");
+    	projList.add(Projections.property("description"),"description");
+    	projList.add(Projections.property("doseCount"),"doseCount");
+    	projList.add(Projections.property("lowerAgeLimit"),"lowerAgeLimit");
+    	projList.add(Projections.property("upperAgeLimit"),"upperAgeLimit");
+    	projList.add(Projections.property("ageEffectiveFrom"),"ageEffectiveFrom");
+    	projList.add(Projections.property("ageEffectiveTo"),"ageEffectiveTo");
+    	projList.add(Projections.property("effectiveYear"),"effectiveYear");
+    	projList.add(Projections.property("hedisMeasure.code"),"hedisMeasureCode");
+    //	projList.add(Projections. property("cptMeasure.code"),"cptMeasureCode");
+    //	projList.add(Projections.property("icdMeasure.code"),"icdMeasureCode");
+    	projList.add(Projections.property("genderId.description"),"genderDescription");
+    	projList.add(Projections.groupProperty("id")) ;
+    	
+    	crit.setProjection(Projections.distinct(projList));*/
+    	
+    	if(sort != null && !"".equals(sort)) 
+		{
+			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
+			{
+				crit.addOrder(Order.desc(sort));
+			}
+			else 
+			{
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+		//	crit.addOrder(Order.asc("hedisMeasure.code"));
+		//	crit.addOrder(Order.asc("cptMeasure.code"));
+		//	crit.addOrder(Order.asc("icdMeasure.code"));
+    	//    crit.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+		//	crit.setResultTransformer(Transformers.aliasToBean(getEntityClass()));   
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

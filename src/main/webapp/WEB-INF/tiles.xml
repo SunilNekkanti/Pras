@@ -384,7 +384,7 @@
     </definition> 
     
     <definition name="hedisMeasureRuleList" extends="base1.definition">  
-        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleList.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleListGroupByRule.jsp" />  
     </definition>  
     
     <definition name="hedisMeasureRuleNew" extends="base1.definition">  
