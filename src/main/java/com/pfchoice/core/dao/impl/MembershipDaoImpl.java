@@ -69,8 +69,13 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     @Override
     public Pagination getPage(final int pageNo, final int pageSize, 
     		final String sSearch,final Integer sSearchIns,   final Integer sSearchPrvdr,
-    		final Integer sSearchHedisCode,	 final String sort, final String sortdir)
+    		final Integer sSearchHedisRule,	 final String sort, final String sortdir)
     {
+    	
+    	   System.out.println("sSearchIns is"+sSearchIns );
+   		System.out.println("sSearchPrvdr is"+sSearchPrvdr );
+   		System.out.println("sSearchHedisRule is"+sSearchHedisRule );
+   		
     	Criteria crit = createCriteria()
          		.createAlias("genderId", "genderId")
          		.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
@@ -100,10 +105,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		and.add(Restrictions.eq("mbrProvider.prvdr.id", sSearchPrvdr));
     	}
     	
-    	if( sSearchHedisCode != null && !"".equals(sSearchHedisCode) && sSearchHedisCode != 9999)
+    	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999)
     	{
+    		System.out.println("sSearchHedisRule in if"+sSearchHedisRule);
     		crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
-			or.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisCode));
+			or.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
     	}
     	
          crit.add(or);

@@ -30,6 +30,10 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
   <link rel="stylesheet" href="${context}/resources/css/common.css">
   
   <style>
+  	.center{
+  	 text-align: center;
+	}
+
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;

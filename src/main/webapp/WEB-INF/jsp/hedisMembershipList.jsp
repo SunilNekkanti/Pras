@@ -40,12 +40,16 @@ $(document).ready(function() {
 		 });
     	  var columns ;
     	  var hedisRuleDropdown = function(){
-    			var prvdrSelectValue= $("#prvdr option:selected").val();
+    		  $('#hedisRule').find('option').remove();
+				 
+				
 				var $selectHedisRule = $('#extFilterHedisRule');
-				 var insSelectValue1 = $("#insu option:selected").val();
+				var insSelectValue1 = $("#insu option:selected").val();
+				var hedisSelectValue1 = $("#").val();
 		 		 if( $("#insu option:selected").val() == null){
 		     		 insSelectValue1 = 1;
 		     	 }
+		 		
 		    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list?insId='+insSelectValue1, function(data){
 					     //clear the current content of the select
 					     var s = $('<select id=\"hedisRule\" style=\"width:150px;\">');
@@ -56,31 +60,20 @@ $(document).ready(function() {
 					     s.append('<option value="9999">All</option>');
 					     s.append('</select>');
 					     $selectHedisRule.html(s);
-					     $( document ).ajaxComplete(function( event, xhr, settings ) {
-					    	
-					    	    $( ".log" ).text( "Triggered ajaxComplete handler. The result is " +
-					    	      xhr.responseText );
-					    	 
-					    	});
 					     
 				 }).success(function() { 
-					 var insSelectValue= $("#insu option:selected").val();
-		    		 var prvdrSelectValue= $("#prvdr option:selected").val();
-		    		 var hedisRuleSelectValue= $("#hedisRule option:selected").val();
-		    		
-		    		 var hedisRuleList = document.getElementById('hedisRule').options;
-		    		columns = new Array();
-		     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,
+					columns = new Array();
+		     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center",
 		     						"render": function (data, type, full, meta) {
 			      								return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
 			        						  }
 		     					});
-		     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sWidth" : "15%"});
-		     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
-		     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
-		     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  });
-		     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sWidth" : "5%" });
-		     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  });
+		     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
+		     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
+		     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": ""  });
 		     		
 		     		var myTable = $("#membershipTable");
 		     		var thead = myTable.find("thead");  
@@ -92,56 +85,66 @@ $(document).ready(function() {
 								
              		}); 
 		     		
+		     		var hedisRuleList = document.getElementById('hedisRule').options;
+		     		var hedisRuleListinner = document.getElementById('hedisRule').options;
+		     		
+		     		$.each( hedisRuleList, function(m, value ){
+		     			if(m < hedisRuleList.length-1){
+		     				$('table').find('tr').each(function(){
+		             			$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>');
+		     				});
+		     			}
+		     		});
+						
+						
 		     		$.each( hedisRuleList, function( i, value ){
 		     			if(i < hedisRuleList.length-1){
-		      			columns.push({ "mDataProp": "mbrHedisMeasureList."+i+".hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%", "sDefaultContent": "",
-		      							"render": function (data, type, full, meta) {
-		      											$.each( hedisRuleList, function( index, value1 ){
-					      									if(data == value1.text)
-					      										data= 'X';
-					      								});
-		      								 		if(data == 'X')
-		      								 			return data;
-		      								 		else
-		      								 			return '';
-				        				          }
-		      						});
-		      			
-		      			myTable.find('tr').each(function(){
-		             			$(this).find('th').eq(-1).after('<th>'+value.text+'</th>');
-		             		});
+		     				
+		     				columns.push({ "mDataProp": "mbrHedisMeasureList["+i+"].hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+		      							    "render": function (data, type, full, meta) {
+				      									   var returnType ='';
+				      										if(data.indexOf(value.text) >= 0)
+				      											return 'X';
+				      										else
+			      											return '';
+				      								  
+		      								}
+		      						  });		
 		      			}
 		      		});
+		     		callDatableWithChangedDropDown();
 				 });
     	  }
     	  
-    	  
-    	  $(document.body).on('change',"#insu",function (e) {
-    		  hedisRuleDropdown();
-    		  callDatableWithChangedDropDown();
-    		});
-    	
-    	  $(document.body).on('change',"#prvdr",function (e) {
-    		  callDatableWithChangedDropDown();
-    		});
-    	
-    	  $(document.body).on('change',"#hedisRule",function (e) {
-    		  callDatableWithChangedDropDown();
-    		  
-      		});
-       	
     	var callDatableWithChangedDropDown = function(){
     		   var insSelectValue= $("#insu option:selected").val();
     		   var prvdrSelectValue= $("#prvdr option:selected").val();
     		   var hedisRuleSelectValue= $("#hedisRule option:selected").val();
-    		   var myTable = $('#membershipTable');
-    		   if(myTable != null){
-			     		myTable.dataTable().fnDestroy();
-	     		}
+    		   
+    		   if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+  						$('#membershipTable').DataTable().destroy();
+			   }
+
+				$('#membershipTable tbody').empty();
+    		   
     		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue,columns);
     	}  
-    	            
+    	     
+    	$(document.body).on('change',"#insu",function (e) {
+  		  hedisRuleDropdown();
+  		});
+  	
+  	  $(document.body).on('change',"#prvdr",function (e) {
+  		  callDatableWithChangedDropDown();
+  		});
+  	
+  	  $(document.body).on('change',"#hedisRule",function (e) {
+  		  callDatableWithChangedDropDown();
+  		  
+    		});
      	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
+     		
+     		
      		//extract name/value pairs into a simpler map for use later
 		  var paramMap = {};
 		  for ( var i = 0; i < aoData.length; i++) {
@@ -183,7 +186,8 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
-             		$("#membershipTable").css({'width': 4150});             		                   
+             		$("#membershipTable").css({'width': 4150});   
+             		$('select').css({'width': 150});
             },
               error : function (e) {
               }
@@ -191,17 +195,15 @@ $(document).ready(function() {
      	}
      	
      	
-     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,columns) {
-     		  
-     		 $('select').css({'width': 150});
-     		 
-      		 
-  	        var oTable = $('#membershipTable').dataTable({  	         
+     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,aoColumns) {
+      		
+  	        var oTable = $('#membershipTable').dataTable({  
+  	         "bDestroy" : true,	
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.list',
-              "aoColumns":  columns,      
+              "aoColumns":  aoColumns,      
      	     "bLengthChange": false,
-     	     "iDisplayLength": 10,
+     	     "iDisplayLength": 12,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
@@ -214,6 +216,7 @@ $(document).ready(function() {
              },        
      	     "fnServerData" : datatable2RestMembership
      	});
+  	        
      }
 
      	
@@ -225,31 +228,31 @@ $(document).ready(function() {
 			<div class="panel-heading">Hedis Report </div>
 			<div class="panel-body" >
 				<div class="table-responsive">
-					<div class="col-sm-12">
+					<div class="col-sm-10">
 							<div class="col-sm-3">
-								<label class="control-label col-sm-4">Insurance</label>
-								 <div class=" col-sm-6" id="extFilterIns">  </div>
+								<label class="control-label col-sm-3">Insurance</label>
+								 <div class=" col-sm-9" id="extFilterIns">  </div>
 							</div>	 
 							<div class="col-sm-3">	 
 								<label class="control-label col-sm-3">Provider</label>
-								 <div class="col-sm-6"  id="extFilterPrvdr"> </div>
+								 <div class="col-sm-9"  id="extFilterPrvdr"> </div>
 							</div>	 
-							<div class="col-sm-3">	 
-								 <label class="control-label col-sm-3">Hedis</label>
-								 <div class="col-sm-6" id="extFilterHedisRule"></div>
+							<div class="col-sm-4">	 
+								 <label class="control-label col-sm-4">Hedis Measures</label>
+								 <div class="col-sm-8" id="extFilterHedisRule"></div>
 							</div>	 
 					 	</div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">
 					
 						<thead>
 							<tr>
-								<th scope="col" role="row">Notes</th>
-								<th scope="col" role="row">Provider</th>
-								<th scope="col" role="row">First Name</th>
-								<th scope="col" role="row">Last Name</th>
-								<th scope="col" role="row">Birthday</th>
-								<th scope="col" role="row">Sex</th>
-								<th scope="col" role="row">Due Date</th>
+								<th scope="col" role="row"><center> Notes</center></th>
+								<th scope="col" role="row"><center>Provider</center></th>
+								<th scope="col" role="row"><center>First Name</center></th>
+								<th scope="col" role="row"><center>Last Name</center></th>
+								<th scope="col" role="row"><center>Birthday</center></th>
+								<th scope="col" role="row"><center>Sex</center></th>
+								<th scope="col" role="row"><center>Due Date</center></th>
 								
 							</tr>
 						</thead>
