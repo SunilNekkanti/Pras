@@ -100,7 +100,7 @@ $(document).ready(function() {
 		     		$.each( hedisRuleList, function( i, value ){
 		     			if(i < hedisRuleList.length-1){
 		     				
-		     				columns.push({ "mDataProp": "mbrHedisMeasureList["+i+"].hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+		     				columns.push({ "mDataProp": "mbrHedisMeasureList["+i+"].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
 				      									   var returnType ='';
 				      										if(data.indexOf(value.text) >= 0)

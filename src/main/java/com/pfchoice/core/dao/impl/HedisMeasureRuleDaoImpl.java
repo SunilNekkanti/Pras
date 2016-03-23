@@ -152,7 +152,6 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 			}
 		}
         Pagination page = findByCriteria(crit, pageNo, pageSize);
-    	System.out.println("page list size is "+page.getList().size());
         return page;
     }
 

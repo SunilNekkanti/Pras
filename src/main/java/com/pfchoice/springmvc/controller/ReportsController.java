@@ -66,9 +66,6 @@ public class ReportsController
 					@RequestParam(required = false) String sort,
 					@RequestParam(required = false) String sortdir) throws Exception{
 		
-	   System.out.println("sSearchIns is"+sSearchIns );
-		System.out.println("sSearchPrvdr is"+sSearchPrvdr );
-		System.out.println("sSearchHedisRule is"+sSearchHedisRule );
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, 
 				sSearchPrvdr, sSearchHedisRule, sort, sortdir);
 		

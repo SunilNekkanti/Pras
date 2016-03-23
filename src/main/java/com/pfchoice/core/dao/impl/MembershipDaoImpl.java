@@ -72,13 +72,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		final Integer sSearchHedisRule,	 final String sort, final String sortdir)
     {
     	
-    	   System.out.println("sSearchIns is"+sSearchIns );
-   		System.out.println("sSearchPrvdr is"+sSearchPrvdr );
-   		System.out.println("sSearchHedisRule is"+sSearchHedisRule );
-   		
     	Criteria crit = createCriteria()
          		.createAlias("genderId", "genderId")
          		.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
+         		.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
          		.createAlias("status", "status");
     	        
     	Disjunction or = Restrictions.disjunction();
@@ -101,13 +98,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	
     	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999)
     	{
-    		crit.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN);
+    		
     		and.add(Restrictions.eq("mbrProvider.prvdr.id", sSearchPrvdr));
     	}
     	
     	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999)
     	{
-    		System.out.println("sSearchHedisRule in if"+sSearchHedisRule);
     		crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
 			or.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
     	}
@@ -119,11 +115,21 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
 			{
-				crit.addOrder(Order.desc(sort));
+				if( "mbrProviderList.0.prvdr.name".equals(sort)){
+					crit.createAlias("mbrProvider.prvdr", "prvdr", JoinType.INNER_JOIN);
+					crit.addOrder(Order.desc("prvdr.name"));
+	        	}else{
+	        		crit.addOrder(Order.desc(sort));
+	        	}
 			}
 			else 
 			{
-				crit.addOrder(Order.asc(sort));
+				if( "mbrProviderList.0.prvdr.name".equals(sort)){
+					crit.createAlias("mbrProvider.prvdr", "prvdr", JoinType.INNER_JOIN);
+					crit.addOrder(Order.asc("prvdr.name"));
+	        	}else{
+	        		crit.addOrder(Order.asc(sort));
+	        	}
 			}
 		}
         
