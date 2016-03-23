@@ -49,6 +49,15 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Pagination getPage(final int pageNo,final  int pageSize,
+    		final String sSearch, final String sort, final String sortdir,
+    		final int insId, final int effYear)
+    {
+        return hedisMeasureRuleDao.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId, effYear );
+    }
+    
+    @Override
     public HedisMeasureRule save(final HedisMeasureRule bean)
     {
         //Used for transaction test

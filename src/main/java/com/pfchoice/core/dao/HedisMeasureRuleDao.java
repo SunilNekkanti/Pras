@@ -18,7 +18,9 @@ public interface HedisMeasureRuleDao
 
 	HedisMeasureRule findById(Integer id);
 
-	 Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir, Integer insId, Integer effYear);
 
     HedisMeasureRule save(HedisMeasureRule bean);
 

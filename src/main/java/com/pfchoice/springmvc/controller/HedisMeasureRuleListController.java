@@ -48,9 +48,11 @@ public class HedisMeasureRuleListController{
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
+					@RequestParam(required = false) String sortdir,
+					@RequestParam(required = false) Integer insId,
+					@RequestParam(required = false) Integer effYear ) throws Exception{
 		
-		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort, sortdir);
+		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize,	sSearch, sort, sortdir, insId, effYear);
 
         return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(pagination));
     }

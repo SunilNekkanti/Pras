@@ -18,6 +18,8 @@ public interface HedisMeasureRuleService
 	HedisMeasureRule findById(Integer id);
 
 	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir, int insId, int effYear);
 
     HedisMeasureRule save(HedisMeasureRule bean);
 

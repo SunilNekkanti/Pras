@@ -20,7 +20,7 @@
 	  var s = $('<select id=\"ey\" style=\"width:150px;\">');
 		     //iterate over the data and append a select option
 	   s.append('<option value="'+prevYear+'">' + prevYear +'</option>');
-	   s.append('<option value="'+currentYear+'">' + currentYear +'</option>');
+	   s.append('<option value="'+currentYear+'" selected=\"selected\">' + currentYear +'</option>');
 	   s.append('<option value="'+nextYear+'">' + nextYear +'</option>');
 	   s.append('</select>');
 	    $selectEY.html(s);
@@ -38,9 +38,28 @@
 	     s.append('</select>');
 	     $selectIns.html(s);
 	    
-	 }).success(function() {  GetHedisMeasureRulesByInsAndEffYear (2016,1); 	 });
+	 }).success(function() {  callDatableWithChangedDropDown();	 });
 					 
-	  
+	 $(document.body).on('change',"#insu",function (e) {
+		 callDatableWithChangedDropDown();
+ 		});
+ 	
+ 	  $(document.body).on('change',"#ey",function (e) {
+ 		 callDatableWithChangedDropDown();
+ 		});
+ 	  
+ 	 var callDatableWithChangedDropDown = function(){
+		   var insSelectValue= $("#insu option:selected").val();
+		   var eySelectValue= $("#ey option:selected").val();
+		   if ( $.fn.DataTable.isDataTable('#hedisMeasureRuleTable') ) {
+					$('#hedisMeasureRuleTable').DataTable().destroy();
+		   }
+
+			$('#hedisMeasureRuleTable tbody').empty();
+		   
+			GetHedisMeasureRulesByInsAndEffYear (eySelectValue,insSelectValue);
+	}  
+ 	 
   	var datatable2Rest = function(sSource, aoData, fnCallback) {
   		//extract name/value pairs into a simpler map for use later
  var paramMap = {};
@@ -65,7 +84,8 @@
   restParams.push({"name" : "sort", "value" : sortName });
   restParams.push({"name" : "sortdir", "value" : sortDir });
   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
-
+  restParams.push({"name" : "insId" , "value" : paramMap.insId  });
+  restParams.push({"name" : "effYear" , "value" : paramMap.ey  });
   
 $.ajax( {
            dataType: 'json',
@@ -95,7 +115,6 @@ $.ajax( {
 														                                 return '<a href="'+full.id+'">'+data+'</a>';
 														                		      }
 														                         },
-														                         { "mDataProp": "insId.name", "bSearchable" : true, "sWidth" : "10%" , "sDefaultContent": "" ,"sClass":"center"  },
 														                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center"},
 														                         { "mDataProp": "cptCodes[,].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ]  },
 														                         { "mDataProp": "icdCodes[,].code","bSearchable" : true, "bSortable": true,"sWidth" : "15%" , "asSorting" : [ "asc" ] },
@@ -133,6 +152,12 @@ $.ajax( {
 														  	     "bProcessing": true,
 														  	     "bServerSide" : true,
 														  	     "bAutoWidth": false,
+														  	     "fnServerParams": function ( aoData ) {
+													                aoData.push(
+													                    {"name": "insId", "value": insId},
+													                    {"name": "ey", "value": ey }
+													                );
+													             }, 
 														  	     "fnServerData" : datatable2Rest
 														  	});
     }
@@ -162,7 +187,6 @@ $.ajax( {
 						<tr>
 							<th  scope="col">Action</th> 
 							<th  scope="col">Description</th> 
-							<th  scope="col">Insurance</th>
 							<th  scope="col">Hedis Code</th> 
 							<th  scope="col">CPT Codes</th>  
 					        <th  scope="col">ICD Codes</th> 
