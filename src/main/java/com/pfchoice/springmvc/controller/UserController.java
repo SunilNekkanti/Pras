@@ -3,6 +3,7 @@ package com.pfchoice.springmvc.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,14 @@ public class UserController{
 		//Data referencing for ActiveMap box
 		return PrasUtil.getActiveIndMap();
 	}
+	
+	@ModelAttribute("effYearList")
+	public SortedSet<Integer> populateEffectiveYearList() {
+		//Data referencing for ActiveMap box
+		return PrasUtil.getEffectiveYearList();
+	}
+	
+	
 	
 	@RequestMapping(value = "/user/new")
     public String addUserPage(final Model model) {

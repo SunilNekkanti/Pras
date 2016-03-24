@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
@@ -148,6 +150,12 @@ public class HedisMeasureRuleController{
 		//Data referencing for Insurance Measure list box
 		List<Insurance> insuranceList = insuranceService.findAll();
 		return insuranceList;
+	}
+	
+	@ModelAttribute("effYearList")
+	public SortedSet<Integer> populateEffectiveYearList() {
+		//Data referencing for ActiveMap box
+		return PrasUtil.getHedisEffectiveYearList();
 	}
 	
 	@RequestMapping(value = "/hedisMeasureRule/new")

@@ -35,6 +35,16 @@
 								<springForm:errors path="roles" cssClass="error text-danger" />
 							</div>
 				</div>
+				
+				<div class="form-group required">
+					<label class="control-label col-sm-2" for="effYear">Eff. Year</label>
+					<div class="col-sm-6">
+						<springForm:select path="effectiveYear" class="form-control" id="effectiveYear">
+				    		<springForm:options items="${effYearList}" />
+						</springForm:select>
+						<springForm:errors path="effectiveYear" cssClass="error text-danger" />
+					  </div>
+				</div>
 							
 				<div class="col-sm-offset-2 col-sm-6">
 					<c:choose>

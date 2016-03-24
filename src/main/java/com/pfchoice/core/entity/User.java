@@ -50,6 +50,10 @@ public class User implements Serializable
     inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}) 
     public Set<Role> roles;
     
+    @Expose
+    @Column(name="effective_year")
+    private Integer	effectiveYear;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
@@ -128,6 +132,20 @@ public class User implements Serializable
 	 */
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	/**
+	 * @return the effectiveYear
+	 */
+	public Integer getEffectiveYear() {
+		return effectiveYear;
+	}
+
+	/**
+	 * @param effectiveYear the effectiveYear to set
+	 */
+	public void setEffectiveYear(Integer effectiveYear) {
+		this.effectiveYear = effectiveYear;
 	}
 
 	/**

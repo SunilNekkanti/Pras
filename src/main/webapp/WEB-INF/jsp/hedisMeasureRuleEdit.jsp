@@ -244,11 +244,13 @@ $.ajax( {
 				</div>
 				
 				<div class="form-group required">
-					<label class="control-label col-sm-2" for="year">Effective Year (YYYY)</label>
+					<label class="control-label col-sm-2" for="effYear">Effective Year (YYYY)</label>
 					<div class="col-sm-6">
-						<springForm:input path="effectiveYear" class="form-control" maxlength="4" id="effectiveYear" placeholder="Effective Year" />
+						<springForm:select path="effectiveYear" class="form-control" id="effectiveYear">
+				    		<springForm:options items="${effYearList}"   />
+						</springForm:select>
 						<springForm:errors path="effectiveYear" cssClass="error text-danger" />
-					</div>
+					  </div>
 				</div>
 				
 				<div class="form-group">
