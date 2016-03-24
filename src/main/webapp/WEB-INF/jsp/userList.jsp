@@ -59,14 +59,16 @@
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "username","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
+                               { "mDataProp": "username","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"},
+                               { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
                            ],
                   "aoColumnDefs": [ 
                            		    { "sName": "id", "aTargets": [ 0 ] },
                            		    { "sName": "username", "aTargets": [ 1 ],
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="user/'+full.id+'">'+data+'</a>';
-                                    }}
+                                    }},
+                                    { "sName": "effectiveYear", "aTargets": [ 2 ] }
                   ],          
         	     "bLengthChange": false,
         	     "sPaginationType": "full_numbers",
@@ -88,6 +90,7 @@
 					<tr>
 							<th scope="col">Action</th>
 							<th scope="col">Login</th>
+							<th scope="col">My Current Eff. Year</th>
 							
 					</tr>
 				</thead>
