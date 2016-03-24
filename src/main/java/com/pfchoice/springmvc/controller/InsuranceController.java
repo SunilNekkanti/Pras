@@ -1,6 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.PlanType;
 import com.pfchoice.core.service.InsuranceService;
+import com.pfchoice.core.service.PlanTypeService;
 
 @Controller
 @SessionAttributes("username")
@@ -35,6 +38,9 @@ public class InsuranceController{
     @Autowired
     private InsuranceService insuranceService;
     
+    @Autowired
+    private PlanTypeService planTypeService;
+   
     @Autowired
     @Qualifier("insuranceValidator")
     private Validator validator;
@@ -49,6 +55,14 @@ public class InsuranceController{
         // ModelAttribute value should be same as used in the empSave.jsp
         return new Insurance();
     }
+	
+	@ModelAttribute("planTypeList")
+	public List<PlanType> populatePlanTypeList() {
+		
+		//Data referencing for county list box
+		List<PlanType> planTypeList = planTypeService.findAll();
+		return planTypeList;
+	}
 	
 	@RequestMapping(value = "/insurance/new")
     public String addInsurancePage(Model model) {

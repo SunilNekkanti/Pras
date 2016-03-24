@@ -91,6 +91,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	private ICDMeasureFormatter icdFormatter;
 	
 	@Autowired
+	private PlanTypeFormatter planTypeFormatter;
+	
+	@Autowired
 	private ProviderFormatter providerFormatter;
 	
 	@Autowired
@@ -220,6 +223,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     	formatterRegistry.addFormatter(insuranceFormatter);
     	formatterRegistry.addFormatter(membershipFormatter);
     	formatterRegistry.addFormatter(membershipStatusFormatter);
+    	formatterRegistry.addFormatter(planTypeFormatter);
     	formatterRegistry.addFormatter(providerFormatter);
     	formatterRegistry.addFormatter(roleFormatter);
     	formatterRegistry.addFormatter(stateFormatter);

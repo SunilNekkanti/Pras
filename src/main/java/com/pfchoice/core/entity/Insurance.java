@@ -12,7 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,7 +43,12 @@ public class Insurance implements Serializable
     @Expose
     @Column(name="name")
     private String name;
-      
+    
+    @Expose
+    @OneToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name="plan_type_id", referencedColumnName="plan_type_id")
+    private PlanType planTypeId;
+    
     @Column(name="created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -95,6 +102,20 @@ public class Insurance implements Serializable
 	 */
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the planTypeId
+	 */
+	public PlanType getPlanTypeId() {
+		return planTypeId;
+	}
+
+	/**
+	 * @param planTypeId the planTypeId to set
+	 */
+	public void setPlanTypeId(PlanType planTypeId) {
+		this.planTypeId = planTypeId;
 	}
 
 	/**

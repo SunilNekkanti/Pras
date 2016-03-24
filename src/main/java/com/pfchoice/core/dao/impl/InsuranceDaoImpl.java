@@ -39,6 +39,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
     		or.add(name);
     	}
         Criteria crit = createCriteria();
+        crit.createAlias("planTypeId","planTypeId");
         crit.add(or);
         crit.add(Restrictions.eq("activeInd", 'Y'));
         
