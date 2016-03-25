@@ -97,6 +97,7 @@ $.ajax( {
                res.iTotalRecords = res.data.totalCount;
                res.iTotalDisplayRecords = res.data.totalCount;
           		fnCallback(res);
+          		$('[data-toggle="tooltip"]').tooltip();
            },
            error : function (e) {
            }
@@ -117,7 +118,7 @@ $.ajax( {
 														                         },
 														                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center",
 														                        	 "render": function  ( data, type, full, meta )  {
-												                                          			return '<span title="'+full.hedisMeasure.description+'">'+data+'</span>';  
+												                                          			return '<span data-toggle="tooltip" title="'+full.hedisMeasure.description+'">'+data+'</span>';  
 								                                 								}
 														                         },
 														                         { "mDataProp": "cptCodes[ ].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ],"sClass":"cptCodes",
@@ -125,7 +126,7 @@ $.ajax( {
 																                                         var cptcodeList=[];
 																                                         for(var i = 0; i<full.cptCodes.length; i++)
 																                                         {
-																                                          cptcodeList[i] = '<span title="'+full.cptCodes[i].shortDescription+'">'+full.cptCodes[i].code+'</span>';  
+																                                          cptcodeList[i] = '<span data-toggle="tooltip" title="'+full.cptCodes[i].shortDescription+'">'+full.cptCodes[i].code+'</span>';  
 																                                         }
 												                                   						return cptcodeList.join(', ');
 												                                 					}
@@ -135,7 +136,7 @@ $.ajax( {
 																                                         var icdCodeList=[];
 																                                         for(var i = 0; i<full.icdCodes.length; i++)
 																                                         {
-																                                          icdCodeList[i] = '<span title="'+full.icdCodes[i].description+'">'+full.icdCodes[i].code+'</span>';  
+																                                          icdCodeList[i] = '<span data-toggle="tooltip" title="'+full.icdCodes[i].description+'">'+full.icdCodes[i].code+'</span>';  
 																                                         }
 																	                                   return icdCodeList.join(', ');
 																	                               }  
