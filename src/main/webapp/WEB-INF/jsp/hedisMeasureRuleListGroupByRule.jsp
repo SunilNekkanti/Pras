@@ -116,8 +116,8 @@ $.ajax( {
 														                		      }
 														                         },
 														                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center"},
-														                         { "mDataProp": "cptCodes[,].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ],"sClass":"cptCodes" },
-														                         { "mDataProp": "icdCodes[,].code","bSearchable" : true, "bSortable": true,"sWidth" : "15%" , "asSorting" : [ "asc" ],"sClass":"icdCodes"  },
+														                         { "mDataProp": "cptCodes[, ].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ],"sClass":"cptCodes" },
+														                         { "mDataProp": "icdCodes[, ].code","bSearchable" : true, "bSortable": true,"sWidth" : "15%" , "asSorting" : [ "asc" ],"sClass":"icdCodes"  },
 														                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sClass":"center"},
 														                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": "","sClass":"center"   },
 														                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "" ,"sClass":"center"  },
