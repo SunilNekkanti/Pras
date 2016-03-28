@@ -98,8 +98,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	
     	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999)
     	{
-    		
-    		and.add(Restrictions.eq("mbrProvider.prvdr.id", sSearchPrvdr));
+    		crit.createAlias("mbrProvider.prvdr", "prvdr");
+    		crit.createAlias("prvdr.ins", "ins");
+    		and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
+    		and.add(Restrictions.eq("ins.id", sSearchIns));
     	}
     	
     	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999)
@@ -132,7 +134,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	        	}
 			}
 		}
-        
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }
