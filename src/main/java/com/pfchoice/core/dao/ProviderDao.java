@@ -22,4 +22,5 @@ public interface ProviderDao
 
     Provider updateByUpdater(Updater<Provider> updater);
 
+    Pagination findByInsId(Integer id);
 }

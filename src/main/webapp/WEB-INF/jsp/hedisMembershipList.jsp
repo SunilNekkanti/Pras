@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+
 <script>
 $(document).ready(function() {
 	 		
@@ -20,24 +21,29 @@ $(document).ready(function() {
 			     $selectIns.html(s);
 			    
 		 }).success(function() { 
-			 var insSelectValue= $("#insu option:selected").val();
-			 var $selectPrvdr = $('#extFilterPrvdr');
-	    	  $.getJSON(getContextPath()+'/provider/list?pageNo=0&pageSize=200', function(data){
-				    
-				     //clear the current content of the select
-				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
-				     //iterate over the data and append a select option
-				     $.each(data.data.list, function(key, val){
-				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
-				     });
-				     s.append('<option value="9999">All</option>');
-				     s.append('</select>');
-				     $selectPrvdr.html(s);
-			 }).success(function() { 
-				 hedisRuleDropdown(true);
-	    	 });
+			 providerDropdown();
     					 
 		 });
+    	  
+    	  var providerDropdown = function(){
+    		  var insSelectValue= $("#insu option:selected").val();
+ 			 var $selectPrvdr = $('#extFilterPrvdr');
+ 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+ 				    
+ 				     //clear the current content of the select
+ 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+ 				     //iterate over the data and append a select option
+ 				     $.each(data.data.list, function(key, val){
+ 				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+ 				     });
+ 				     s.append('<option value="9999">All</option>');
+ 				     s.append('</select>');
+ 				     $selectPrvdr.html(s);
+ 			 }).success(function() { 
+ 				 hedisRuleDropdown(true);
+ 	    	 });
+    	  }
+    	  
     	  var columns ;
     	  var hedisRuleDropdown = function(hedisDropDownSet){
     		  if(hedisDropDownSet)
@@ -138,7 +144,7 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
-  		  hedisRuleDropdown(true);
+    		providerDropdown();
   		});
   	
   	  $(document.body).on('change',"#prvdr",function (e) {
@@ -206,6 +212,14 @@ $(document).ready(function() {
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,aoColumns) {
       		
   	        var oTable = $('#membershipTable').dataTable({  
+  	        	"sDom": 'Bfrtip',
+	        	 "buttons": [
+	        	             {
+	        	                 extend: 'excelHtml5',
+	        	                 title: 'Hedis Measure RuleTable Export'
+	        	             }
+	        	             
+		                   ],
   	         "bDestroy" : true,	
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.list',
@@ -254,13 +268,13 @@ $(document).ready(function() {
 					
 						<thead>
 							<tr>
-								<th scope="col" role="row"><center> Notes</center></th>
-								<th scope="col" role="row"><center>Provider</center></th>
-								<th scope="col" role="row"><center>First Name</center></th>
-								<th scope="col" role="row"><center>Last Name</center></th>
-								<th scope="col" role="row"><center>Birthday</center></th>
-								<th scope="col" role="row"><center>Sex</center></th>
-								<th scope="col" role="row"><center>Due Date</center></th>
+								<th scope="col" role="row"> Notes</th>
+								<th scope="col" role="row">Provider</th>
+								<th scope="col" role="row">First Name</th>
+								<th scope="col" role="row">Last Name</th>
+								<th scope="col" role="row">Birthday</th>
+								<th scope="col" role="row">Sex</th>
+								<th scope="col" role="row">Due Date</th>
 								
 							</tr>
 						</thead>
@@ -305,6 +319,7 @@ $(document).ready(function() {
 			$( "#modal-body" ).html('');
    			$( "#modal-body" ).append('<textarea  id="followup_details"  class="form-control" rows="5" ></textarea>');
    			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_id"  class="form-control" />');
+   			$("#followup_details").html("Adfsdfsdfsdfds");
    			$('#myModal').modal('show');
    			return false;
 	}

@@ -62,4 +62,11 @@ public class ProviderServiceImpl implements ProviderService
         return providerDao.updateByUpdater(updater);
     }
     
+    @Override
+    @Transactional(readOnly = true)
+    public Pagination findByInsId(final Integer id)
+    {
+        return providerDao.findByInsId(id);
+    }
+    
 }

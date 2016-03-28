@@ -21,4 +21,6 @@ public interface ProviderService
 
     Provider update(Provider bean);
     
+    Pagination findByInsId(Integer id);
+    
 }

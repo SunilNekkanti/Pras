@@ -92,4 +92,16 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
         return Provider.class;
     }
     
+    @Override
+    public Pagination findByInsId(final Integer id)
+    {
+    	
+    	 Criteria crit = createCriteria();
+    	 crit.createAlias("ins", "ins");
+         crit.add(Restrictions.eq("activeInd", 'Y'));
+         crit.add(Restrictions.eq("ins.id", id));
+         
+         Pagination page = findByCriteria(crit, 0, 200);
+         return page;
+    }
 }

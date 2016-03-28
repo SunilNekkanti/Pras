@@ -6,12 +6,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -65,7 +69,12 @@ public class Provider implements Serializable
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
-     
+    @ManyToOne(fetch=FetchType.LAZY,  cascade=CascadeType.ALL)  
+    @JoinTable(name="insurance_provider",  
+    joinColumns={@JoinColumn(name="prvdr_id", referencedColumnName="prvdr_id")},  
+    inverseJoinColumns={@JoinColumn(name="ins_id", referencedColumnName="insurance_id")}) 
+    private Insurance ins ;
+    
     public Provider()
     {
     	
@@ -112,6 +121,20 @@ public class Provider implements Serializable
 	 */
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the ins
+	 */
+	public Insurance getIns() {
+		return ins;
+	}
+
+	/**
+	 * @param ins the ins to set
+	 */
+	public void setIns(Insurance ins) {
+		this.ins = ins;
 	}
 
 	/**

@@ -48,10 +48,20 @@ public class ProviderListController
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
+					@RequestParam(required = false) String sortdir,
+					@RequestParam(required = false) String insId) throws Exception{
 		
 		Pagination pagination = providerService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+		
+      return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
+  }
+  
+    
+    @ResponseBody
+    @RequestMapping(value = "insurance/providerlist", method = RequestMethod.GET)
+	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer insId) throws Exception{
+		
+		Pagination pagination = providerService.findByInsId(insId);
 		
       return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
   }
