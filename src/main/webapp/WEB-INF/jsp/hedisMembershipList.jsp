@@ -200,8 +200,6 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
-             		  
-             		$('select').css({'width': 250});
             },
               error : function (e) {
               }
@@ -334,7 +332,7 @@ $(document).ready(function() {
 		      {
 		          $.each(data.data, function(key, val)
 		          {
-				      followup_text.append(" >>>> "+val.dateOfContact+ " >>>>  " +val.createdBy+ " >>>> ");			      
+				      followup_text.append(" >>>> "+val.createdDate+ " >>>>  " +val.createdBy+ " >>>> ");			      
 				      followup_text.append(" \n");				      
 				      followup_text.append(val.followupDetails);
 				      followup_text.append("  \n");
