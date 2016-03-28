@@ -55,6 +55,7 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 				crit.addOrder(Order.asc(sort));
 			}
 		}
+        crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
         

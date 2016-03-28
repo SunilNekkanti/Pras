@@ -81,9 +81,9 @@ $(document).ready(function() {
 		     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
 		     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 		     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-		     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+		     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%"  });
 		     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
-		     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": ""  });
+		     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": ""  });
 		     		
 		     		var myTable = $("#membershipTable");
 		     		var thead = myTable.find("thead");  
@@ -201,7 +201,7 @@ $(document).ready(function() {
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
              		  
-             		$('select').css({'width': 150});
+             		$('select').css({'width': 250});
             },
               error : function (e) {
               }

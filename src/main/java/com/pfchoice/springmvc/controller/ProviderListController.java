@@ -58,7 +58,7 @@ public class ProviderListController
   
     
     @ResponseBody
-    @RequestMapping(value = "insurance/providerlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/insurance/providerlist", method = RequestMethod.GET)
 	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer insId) throws Exception{
 		
 		Pagination pagination = providerService.findByInsId(insId);
