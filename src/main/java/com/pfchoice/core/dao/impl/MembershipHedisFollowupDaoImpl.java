@@ -75,5 +75,17 @@ public class MembershipHedisFollowupDaoImpl extends HibernateBaseDao<MembershipH
     	List<MembershipHedisFollowup> list = cr.list();
     	return list;
     }
+    
+    @SuppressWarnings("unchecked")
+   	public List<MembershipHedisFollowup> findAllByMbrId(final Integer id)
+       {
+       	Criteria cr = createCriteria();
+       	cr.add(Restrictions.eq("mbr.id", id));
+       	cr.add(Restrictions.eq("activeInd", 'Y'));
+       	cr.addOrder(Order.desc("id"));
+    	
+       	List<MembershipHedisFollowup> list = cr.list();
+       	return list;
+       }
 
 }

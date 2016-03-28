@@ -25,5 +25,7 @@ public interface MembershipHedisFollowupDao
     MembershipHedisFollowup updateByUpdater(Updater<MembershipHedisFollowup> updater);
     
     List<MembershipHedisFollowup> findAll();
+    
+    List<MembershipHedisFollowup> findAllByMbrId(Integer mbrId);
 
 }

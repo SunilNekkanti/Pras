@@ -24,8 +24,8 @@ $(document).ready(function() {
 			 providerDropdown();
     					 
 		 });
-    	  
-    	  var providerDropdown = function(){
+		 
+		 var providerDropdown = function(){
     		  var insSelectValue= $("#insu option:selected").val();
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
@@ -318,9 +318,37 @@ $(document).ready(function() {
 	{
 			$( "#modal-body" ).html('');
    			$( "#modal-body" ).append('<textarea  id="followup_details"  class="form-control" rows="5" ></textarea>');
+   			$( "#modal-body" ).append('<br /><br /><textarea  id="followup_history" readonly class="form-control" rows="5" ></textarea>');
    			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_id"  class="form-control" />');
-   			$("#followup_details").html("Adfsdfsdfsdfds");
-   			$('#myModal').modal('show');
+   			
+		  var  mbr_id =id;
+		  var followup_text = $("#followup_history");
+		  
+		  var source = getContextPath()+'reports/membershipHedis/'+id+'/followupDetails';
+		  
+		  $.ajax({
+			  dataType: 'json',
+             contentType: "application/json;charset=UTF-8",
+		      url : source,
+		       success: function(data, textStatus, jqXHR)
+		      {
+		          $.each(data.data, function(key, val)
+		          {
+				      followup_text.append(" >>>> "+val.dateOfContact+ " >>>>  " +val.createdBy+ " >>>> ");			      
+				      followup_text.append(" \n");				      
+				      followup_text.append(val.followupDetails);
+				      followup_text.append("  \n");
+				      followup_text.append(" \n");
+		         })
+				     
+		          $('#myModal').modal('show');
+		      },
+		      error: function (jqXHR, textStatus, errorThrown)
+		      {
+		    	  alert("Error");
+		      }
+		  });
+   			
    			return false;
 	}
 	$('select').css({'width': 150});

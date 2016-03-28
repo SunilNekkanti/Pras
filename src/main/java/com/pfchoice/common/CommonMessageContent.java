@@ -58,5 +58,7 @@ public interface CommonMessageContent
     String  HEDIS_LIST = "Hedis List";
     
     String HEDIS_RULE_LIST = "Hedis Rule List";
+    
+    String HEDIS_FOLLOWUP_LIST = "Membership's Hedis Followup List";
 
 }

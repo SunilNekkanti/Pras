@@ -68,4 +68,10 @@ public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollow
     {
     	return mbrHedisFollowupDao.findAll();
     }
+    
+    @Override
+    public List<MembershipHedisFollowup> findAllByMbrId(final Integer id)
+    {
+    	return mbrHedisFollowupDao.findAllByMbrId(id);
+    }
 }

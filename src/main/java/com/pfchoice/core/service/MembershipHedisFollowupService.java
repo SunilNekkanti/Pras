@@ -24,5 +24,7 @@ public interface MembershipHedisFollowupService
     MembershipHedisFollowup update(MembershipHedisFollowup bean);
     
     List<MembershipHedisFollowup> findAll();
+    
+    List<MembershipHedisFollowup> findAllByMbrId(Integer id);
 
 }

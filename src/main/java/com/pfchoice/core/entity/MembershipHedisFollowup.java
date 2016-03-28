@@ -46,6 +46,7 @@ public class MembershipHedisFollowup implements Serializable
     @Temporal(TemporalType.DATE)
     private Date dateOfContact;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
@@ -54,6 +55,7 @@ public class MembershipHedisFollowup implements Serializable
     @Column(name="updated_date")
     private Date updatedDate;
     
+    @Expose
     @Column(name="created_by")
     private String createdBy;
     

@@ -2,6 +2,7 @@ package com.pfchoice.springmvc.controller;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipHedisFollowup;
+import com.pfchoice.core.entity.MembershipInsurance;
+import com.pfchoice.core.entity.MembershipProvider;
+import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.MembershipHedisFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipService;
@@ -79,8 +85,8 @@ public class ReportsController
 	}
    
    @ResponseBody
-	@RequestMapping(value = "/reports/hedisMembership/list2", method = RequestMethod.GET)
-	public Message viewMembershipListJsonTest2(Model model,@RequestParam(required = false) Integer pageNo,
+   @RequestMapping(value = "/reports/hedisMembership/list2", method = RequestMethod.GET)
+   public Message viewMembershipListJsonTest2(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = true) Integer sSearchIns,
@@ -93,11 +99,11 @@ public class ReportsController
 				sSearchPrvdr, sSearchHedisRule, sort, sortdir);
 		
       return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
-  }
+   }
    
    @ResponseBody
-	@RequestMapping(value = "/reports/membershipHedis/followup", method = RequestMethod.POST)
-	public String addMembershipContactAction(Model model, 
+   @RequestMapping(value = "/reports/membershipHedis/followup", method = RequestMethod.POST)
+   public String addMembershipHedisFollowup(Model model, 
 			@RequestBody final MembershipHedisFollowup mbrHedisFollowup, 
           @ModelAttribute("username") String username ) {
 		
@@ -106,7 +112,15 @@ public class ReportsController
       mbrHedisFollowup.setUpdatedBy(username);
       mbrHedisFollowupService.save(mbrHedisFollowup);
  
-  return "membershipContactEditSuccess";
-  }
+      return "membershipContactEditSuccess";
+   }
+   
+   @ResponseBody
+   @RequestMapping(value = "/reports/membershipHedis/{mbrId}/followupDetails")
+   public Message membershipFollowupDetails(@PathVariable Integer mbrId,
+		   			@ModelAttribute("username") String username, Model model) {	
+	   List<MembershipHedisFollowup> dbMbrHedisFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId);
+		return  Message.successMessage(CommonMessageContent.HEDIS_FOLLOWUP_LIST, JsonConverter.getJsonObject(dbMbrHedisFollowup));
+   }
    
 }
