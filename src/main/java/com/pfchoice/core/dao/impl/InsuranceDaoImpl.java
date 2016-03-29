@@ -91,6 +91,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
     {
     	Criteria cr = createCriteria();
     	cr.add(Restrictions.eq("activeInd", 'Y'));
+    	cr.addOrder(Order.asc("name"));
     	List<Insurance> list = cr.list();
     	return list;
     }

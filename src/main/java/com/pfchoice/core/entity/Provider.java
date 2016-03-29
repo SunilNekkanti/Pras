@@ -3,6 +3,7 @@ package com.pfchoice.core.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -69,11 +70,12 @@ public class Provider implements Serializable
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
-    @ManyToOne(fetch=FetchType.LAZY,  cascade=CascadeType.ALL)  
+    @Expose
+    @OneToMany(fetch=FetchType.LAZY,  cascade=CascadeType.ALL)  
     @JoinTable(name="insurance_provider",  
     joinColumns={@JoinColumn(name="prvdr_id", referencedColumnName="prvdr_id")},  
     inverseJoinColumns={@JoinColumn(name="ins_id", referencedColumnName="insurance_id")}) 
-    private Insurance ins ;
+    private List<Insurance> insurances ;
     
     public Provider()
     {
@@ -124,17 +126,17 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @return the ins
+	 * @return the insurances
 	 */
-	public Insurance getIns() {
-		return ins;
+	public List<Insurance> getInsurances() {
+		return insurances;
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param insurances the insurances to set
 	 */
-	public void setIns(Insurance ins) {
-		this.ins = ins;
+	public void setInsurances(List<Insurance> insurances) {
+		this.insurances = insurances;
 	}
 
 	/**

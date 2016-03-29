@@ -1,6 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -22,13 +23,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.util.PrasUtil;
+import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Provider;
+import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.ProviderService;
 
 @Controller
 @SessionAttributes("username")
 public class ProviderController{
 	
+	@Autowired
+	private InsuranceService insuranceService;
+	   
+	 
     @Autowired
     private ProviderService providerService;
     
@@ -56,6 +63,15 @@ public class ProviderController{
 		//Data referencing for ActiveMap box
 		return PrasUtil.getActiveIndMap();
 	}
+	
+	@ModelAttribute("insuranceList")
+	public List<Insurance> populateInsuranceList() {
+		
+		//Data referencing for Insurance Measure list box
+		List<Insurance> insuranceList = insuranceService.findAll();
+		return insuranceList;
+	}
+	
 	
 	@RequestMapping(value = "/provider/new")
     public String addProviderPage(final Model model) {

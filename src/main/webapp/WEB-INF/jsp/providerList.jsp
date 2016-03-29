@@ -60,8 +60,9 @@
     	     "sAjaxDataProp" : 'data.list',
     	     "aoColumns": [
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                           { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"},
-                           { "mDataProp": "code","bSearchable" : true, "bSortable": true,"sWidth" : "50%"  }
+                           { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "33%"},
+                           { "mDataProp": "code","bSearchable" : true, "bSortable": true,"sWidth" : "33%"  },
+                           { "mDataProp": "insurances[, ].name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
                        ],
               "aoColumnDefs": [ 
                        		    { "sName": "id", "aTargets": [ 0 ] },
@@ -69,7 +70,8 @@
                          		   "render": function ( data, type, full, meta ) {
                                           return '<a href="provider/'+full.id+'">'+data+'</a>';
                                 }},
-                       		    { "sName": "code", "aTargets": [ 2 ] }
+                       		    { "sName": "code", "aTargets": [ 2 ] },
+                       		    { "sName": "insurances[, ].name", "aTargets": [ 3 ]}
               ],          
     	     "bLengthChange": false,
     	     "iDisplayLength": 15,
@@ -93,6 +95,7 @@
 							<th scope="col">Action</th>
 							<th scope="col">Name</th>
 							<th scope="col">NPI</th>
+							<th scope="col">Insurances</th>
 					</tr>
 				</thead>
 

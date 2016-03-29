@@ -48,8 +48,7 @@ public class ProviderListController
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
 					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir,
-					@RequestParam(required = false) String insId) throws Exception{
+					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		Pagination pagination = providerService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		
