@@ -4,9 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
 <script>
 $(document).ready(function() {
+	
+		$("#hedisGenerate").click(function(event)
+		{
+			callHedisGenerate();
+		});
 	 		
     	 var $selectIns = $('#extFilterIns');
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
@@ -22,7 +26,6 @@ $(document).ready(function() {
 			    
 		 }).success(function() { 
 			 providerDropdown();
-    					 
 		 });
 		 
 		 var providerDropdown = function(){
@@ -46,9 +49,9 @@ $(document).ready(function() {
     	  
     	  var columns ;
     	  var hedisRuleDropdown = function(hedisDropDownSet){
+    		 
     		  if(hedisDropDownSet)
     		  	$('#hedisRule').find('option').remove();
-				 
 				
 				var $selectHedisRule = $('#extFilterHedisRule');
 				var insSelectValue1 = $("#insu option:selected").val();
@@ -70,63 +73,66 @@ $(document).ready(function() {
 						     s.append('</select>');
 						     $selectHedisRule.html(s);
 		    		  }
-					     
-				 }).success(function() { 
-					columns = new Array();
-		     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center","sWidth" : "3%",
-		     						"render": function (data, type, full, meta) {
-			      								return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
-			        						  }
-		     					});
-		     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
-		     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-		     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-		     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%"  });
-		     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
-		     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": ""  });
-		     		
-		     		var myTable = $("#membershipTable");
-		     		var thead = myTable.find("thead");  
-		     		$("#membershipTable th").each(function() {
-						if($(this).attr("role") == "row"){
-						}else{
-							$(this).remove();
-						}
-								
-             		}); 
-		     		
-		     		var hedisRuleList = document.getElementById('hedisRule').options;
-		     		var hedisRuleListinner = document.getElementById('hedisRule').options;
-		     		
-		     		$.each( hedisRuleList, function(m, value ){
-		     			if(m < hedisRuleList.length-1){
-		     				$('table').find('tr').each(function(){
-		     					if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
-		             				$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>');
-		     				});
-		     			}
-		     		});
-						
-						
-		     		$.each( hedisRuleList, function( i, value ){
-		     			if(i < hedisRuleList.length-1){
-		     				if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
-		     				{
-			     				columns.push({ "mDataProp": "mbrHedisMeasureList["+i+"].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
-			      							    "render": function (data, type, full, meta) {
-					      									   var returnType ='';
-					      										if(data.indexOf(value.text) >= 0)
-					      											return 'X';
-					      										else
-				      											return '';
-					      								  
-			      								}
-			      						  });	
-		     				}	
-		      			}
-		      		});
-		     		callDatableWithChangedDropDown();
 				 });
+    	  }
+    	  
+    	  var callHedisGenerate = function(){
+
+				columns = new Array();
+	     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center","sWidth" : "3%",
+	     						"render": function (data, type, full, meta) {
+		      								return '<a href="#" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
+		        						  }
+	     					});
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%"  });
+	     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
+	     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": ""  });
+	     		
+	     		var myTable = $("#membershipTable");
+	     		var thead = myTable.find("thead");  
+	     		$("#membershipTable th").each(function() {
+					if($(this).attr("role") == "row"){
+					}else{
+						$(this).remove();
+					}
+							
+       			}); 
+	     		
+	     		var hedisRuleList = document.getElementById('hedisRule').options;
+	     		var hedisRuleListinner = document.getElementById('hedisRule').options;
+	     		
+	     		$.each( hedisRuleList, function(m, value ){
+	     			if(m < hedisRuleList.length-1){
+	     				$('table').find('tr').each(function(){
+	     					if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
+	             				$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>');
+	     				});
+	     			}
+	     		});
+					
+				
+	     		$.each( hedisRuleList, function( i, value ){
+	     			if(i < hedisRuleList.length-1){
+	     				if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
+	     				{
+		     				columns.push({ "mDataProp": "mbrHedisMeasureList["+i+"].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+		      							    "render": function (data, type, full, meta) {
+				      									   var returnType ='';
+				      										if(data.indexOf(value.text) >= 0)
+				      											return 'X';
+				      										else
+			      											return '';
+				      								  
+		      								}
+		      						  });	
+	     				}	
+	      			}
+	      		});
+	     		callDatableWithChangedDropDown();
+    		  
     	  }
     	  
     	var callDatableWithChangedDropDown = function(){
@@ -137,27 +143,34 @@ $(document).ready(function() {
     		   if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
   						$('#membershipTable').DataTable().destroy();
 			   }
-
 				$('#membershipTable tbody').empty();
-    		   
     		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue,columns);
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
+    		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+					$('#membershipTable').DataTable().destroy();
+	   		}
+    		$('#membershipTable tbody').empty();
     		providerDropdown();
   		});
-  	
-  	  $(document.body).on('change',"#prvdr",function (e) {
-  		  callDatableWithChangedDropDown();
+    	
+    	$(document.body).on('change',"#prvdr",function (e) {
+    		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+					$('#membershipTable').DataTable().destroy();
+	   		}
+    		$('#membershipTable tbody').empty();
   		});
   	
   	  $(document.body).on('change',"#hedisRule",function (e) {
-  		  
+  		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+			$('#membershipTable').DataTable().destroy();
+			}
+  			$('#membershipTable tbody').empty();
   			hedisRuleDropdown(false);
-  		  
-    		});
-     	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
-     		
+   		});
+     	
+  	  var datatable2RestMembership = function(sSource, aoData, fnCallback) {
      		
      		//extract name/value pairs into a simpler map for use later
 		  var paramMap = {};
@@ -200,6 +213,8 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
+             		if($('#hedisRule').val() == 9999)
+             		$('#membershipTable').width(3000);
             },
               error : function (e) {
               }
@@ -209,7 +224,7 @@ $(document).ready(function() {
      	
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,aoColumns) {
       		
-  	        var oTable = $('#membershipTable').dataTable({  
+  	        var oTable = $('#membershipTable').removeAttr( "width" ).dataTable({  
   	        	"sDom": 'Bfrtip',
 	        	 "buttons": [
 	        	             {
@@ -248,18 +263,21 @@ $(document).ready(function() {
 			<div class="panel-heading">Hedis Report </div>
 			<div class="panel-body" >
 				<div class="table-responsive">
-					<div class="col-sm-10">
+					<div class="col-sm-12">
 							<div class="col-sm-3">
-								<label class="control-label col-sm-3">Insurance</label>
-								 <div class=" col-sm-9" id="extFilterIns">  </div>
+								<label class="control-label col-sm-4">Insurance</label>
+								 <div class=" col-sm-8" id="extFilterIns">  </div>
 							</div>	 
 							<div class="col-sm-3">	 
 								<label class="control-label col-sm-3">Provider</label>
 								 <div class="col-sm-9"  id="extFilterPrvdr"> </div>
 							</div>	 
-							<div class="col-sm-4">	 
-								 <label class="control-label col-sm-4">Hedis Measures</label>
-								 <div class="col-sm-8" id="extFilterHedisRule"></div>
+							<div class="col-sm-3">	 
+								 <label class="control-label col-sm-5">Hedis Measures</label>
+								 <div class="col-sm-7" id="extFilterHedisRule"></div>
+							</div>	
+							<div class="col-sm-3">	 
+								 <button type="button" id="hedisGenerate" class="btn btn-success btn-xs">Generate</button>
 							</div>	 
 					 	</div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">
@@ -304,7 +322,7 @@ $(document).ready(function() {
         </div>
         <div class="modal-footer">
           <button type="button" id="followupSubmit" class="btn btn-default" >Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" id="hedisGenerate"  class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
       
