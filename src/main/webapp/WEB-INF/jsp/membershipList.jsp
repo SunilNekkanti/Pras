@@ -18,7 +18,61 @@
 
 
      $(document).ready(function() {
+    	 
+    	 $("#mbrGenerate").click(function(event){
+    		 var insSelectValue= $("#insu option:selected").val();
+  		     var prvdrSelectValue= $("#prvdr option:selected").val();
+    		 callMembershipDataTable(insSelectValue, prvdrSelectValue);
+    	 });
+    	 
+    	 $(document.body).on('change',"#insu",function (e) {
+     		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+ 					$('#membershipTable').DataTable().destroy();
+ 	   		}
+     		$('#membershipTable tbody').empty();
+     		providerDropdown();
+   		});
      	
+     	$(document.body).on('change',"#prvdr",function (e) {
+     		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+ 					$('#membershipTable').DataTable().destroy();
+ 	   		}
+     		$('#membershipTable tbody').empty();
+   		});
+     	
+    	  var $selectIns = $('#extFilterIns');
+	   	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+				    
+				     //clear the current content of the select
+				     var s = $('<select id=\"insu\" style=\"width:150px;\">');
+				     //iterate over the data and append a select option
+				     $.each(data.data.list, function(key, val){
+				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+				     });
+				     s.append('</select>');
+				     $selectIns.html(s);
+				    
+			 }).success(function() { 
+				 providerDropdown();
+			 });
+		 
+		     var providerDropdown = function(){
+   		     var insSelectValue= $("#insu option:selected").val();
+			 var $selectPrvdr = $('#extFilterPrvdr');
+	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+				    
+				     //clear the current content of the select
+				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+				     //iterate over the data and append a select option
+				     $.each(data.data.list, function(key, val){
+				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+				     });
+				     s.append('<option value="9999">All</option>');
+				     s.append('</select>');
+				     $selectPrvdr.html(s);
+			 });
+   	  }
+		 
      	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
      		//extract name/value pairs into a simpler map for use later
 		  var paramMap = {};
@@ -43,8 +97,9 @@
 		   restParams.push({"name" : "sort", "value" : sortName });
 		   restParams.push({"name" : "sortdir", "value" : sortDir });
 		   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
+		   restParams.push({"name" : "sSearchIns" , "value" : paramMap.sSearchIns  });
+		   restParams.push({"name" : "sSearchPrvdr" , "value" : paramMap.sSearchPrvdr  });
 
-		   
 		 $.ajax( {
               dataType: 'json',
               contentType: "application/json;charset=UTF-8",
@@ -61,43 +116,51 @@
           } );
      	}
      	
-     	$('#membershipTable').dataTable({
-     	     "sAjaxSource" : getContextPath()+'/membership/list',
-     	     "sAjaxDataProp" : 'data.list',
-              "aoColumns": [
-                            { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                            { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                            { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
-                            { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
-                            { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
-                            { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
-                            { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
-                          ],
-               "aoColumnDefs": [ 
-               		   		    { "sName": "id", "aTargets": [ 0 ] },
-               		   		    { "sName": "firstName", "aTargets": [ 1 ],
-               		               "render": function ( data, type, full, meta ) {
-            		                   return '<a href="membership/'+full.id+'">'+data+'</a>';
-          		                 }},
-               		   		    { "sName": "lastName", "aTargets": [ 2 ] },
-               		   		    { "sName": "dob", "aTargets": [ 3 ] ,
-               		   		   	   "render": function (data) {
-               		   		        		var date = new Date(data);
-               		   	        			var month = date.getMonth() + 1;
-               		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-               		   		   	 }},
-               		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
-               		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
-               		   		    { "sName": "status.id", "aTargets": [ 6 ] }
-               ],          
-     	     "bLengthChange": false,
-     	     "iDisplayLength": 15,
-     	     "sPaginationType": "full_numbers",
-     	     "bProcessing": true,
-     	     "bServerSide" : true,
-     	     "fnServerData" : datatable2RestMembership
-     	});
-
+     	var callMembershipDataTable  = function (insId,prvdrId) {
+     		$('#membershipTable').dataTable({
+        	     "sAjaxSource" : getContextPath()+'/membership/list',
+        	     "sAjaxDataProp" : 'data.list',
+                 "aoColumns": [
+                               { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
+                               { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
+                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
+                               { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
+                               { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
+                             ],
+                  "aoColumnDefs": [ 
+                  		   		    { "sName": "id", "aTargets": [ 0 ] },
+                  		   		    { "sName": "firstName", "aTargets": [ 1 ],
+                  		               "render": function ( data, type, full, meta ) {
+               		                   return '<a href="membership/'+full.id+'">'+data+'</a>';
+             		                 }},
+                  		   		    { "sName": "lastName", "aTargets": [ 2 ] },
+                  		   		    { "sName": "dob", "aTargets": [ 3 ] ,
+                  		   		   	   "render": function (data) {
+                  		   		        		var date = new Date(data);
+                  		   	        			var month = date.getMonth() + 1;
+                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+                  		   		   	 }},
+                  		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
+                  		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
+                  		   		    { "sName": "status.id", "aTargets": [ 6 ] }
+                  ],          
+        	     "bLengthChange": false,
+        	     "iDisplayLength": 15,
+        	     "sPaginationType": "full_numbers",
+        	     "bProcessing": true,
+        	     "bServerSide" : true,
+        	     "fnServerParams": function ( aoData ) {
+                     aoData.push(
+                         {"name": "sSearchIns", "value": insId},
+                         {"name": "sSearchPrvdr", "value": prvdrId }
+                     );
+                  },    
+        	     "fnServerData" : datatable2RestMembership
+        	});
+     	}
+     	
      	
  } );
     </script>
@@ -111,6 +174,19 @@
 			<div class="panel-heading">Membership List  </div>
 			<div class="panel-body" >
 				<div class="table-responsive">
+					<div class="col-sm-12">
+							<div class="col-sm-3">
+								<label class="control-label col-sm-4">Insurance</label>
+								 <div class=" col-sm-8" id="extFilterIns">  </div>
+							</div>	 
+							<div class="col-sm-3">	 
+								<label class="control-label col-sm-3">Provider</label>
+								 <div class="col-sm-9"  id="extFilterPrvdr"> </div>
+							</div>	 
+							<div class="col-sm-3">	 
+								 <button type="button" id="mbrGenerate" class="btn btn-primary btn-xs">Generate</button>
+							</div>	 
+					</div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">
 					
 						<thead>

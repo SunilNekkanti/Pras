@@ -46,11 +46,13 @@ public class MembershipListController
 	public Message viewMembershipListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
+					@RequestParam(required = false) Integer sSearchIns,
+					@RequestParam(required = false) Integer sSearchPrvdr,
 					@RequestParam(required = false) String sort,
 					@RequestParam(required = false) String sortdir) throws Exception{
 		
-		
-		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	   //provided 9999 to ignore hedisMeasureRule join   
+		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, 9999, sort, sortdir);
 		
        return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
    }
