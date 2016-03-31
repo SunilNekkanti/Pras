@@ -60,26 +60,19 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     @Autowired
     private AuthenticationInterceptor authenticationInterceptor;
 	
-	@Autowired
-	private MembershipStatusFormatter membershipStatusFormatter;
-
-	@Autowired
-	private GenderFormatter genderFormatter;
+	
 	
 	@Autowired
 	private CountyFormatter countyFormatter;
-	
-	@Autowired
-	private InsuranceFormatter insuranceFormatter;
-	
-	@Autowired
-	private MembershipFormatter membershipFormatter;
 	
 	@Autowired
 	private CPTMeasureFormatter cptMeasureFormatter;
 	
 	@Autowired
 	private FileTypeFormatter fileTypeFormatter;
+	
+	@Autowired
+	private GenderFormatter genderFormatter;
 	
 	@Autowired
 	private HedisMeasureFormatter hedisMeasureFormatter;
@@ -89,6 +82,18 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	
 	@Autowired
 	private ICDMeasureFormatter icdFormatter;
+	
+	@Autowired
+	private InsuranceFormatter insuranceFormatter;
+
+	@Autowired
+	private InsuranceProviderFormatter insuranceProviderFormatter;
+
+	@Autowired
+	private MembershipFormatter membershipFormatter;
+	
+	@Autowired
+	private MembershipStatusFormatter membershipStatusFormatter;
 	
 	@Autowired
 	private PlanTypeFormatter planTypeFormatter;
@@ -221,6 +226,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     	formatterRegistry.addFormatter(hedisMeasureGroupFormatter);
     	formatterRegistry.addFormatter(icdFormatter);
     	formatterRegistry.addFormatter(insuranceFormatter);
+    	formatterRegistry.addFormatter(insuranceProviderFormatter);
     	formatterRegistry.addFormatter(membershipFormatter);
     	formatterRegistry.addFormatter(membershipStatusFormatter);
     	formatterRegistry.addFormatter(planTypeFormatter);

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,9 +43,9 @@ public class ReferenceContract implements Serializable
     private Insurance ins;
     
     @Expose
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="prvdr_id", referencedColumnName="prvdr_id")
-    private Provider prvdr;
+    @OneToOne(  fetch = FetchType.EAGER)
+    @JoinColumn(name="ins_prvdr_id", referencedColumnName="ins_prvdr_id")
+    private InsuranceProvider insPrvdr;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -100,17 +101,17 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @return the prvdr
+	 * @return the insPrvdr
 	 */
-	public Provider getPrvdr() {
-		return prvdr;
+	public InsuranceProvider getInsPrvdr() {
+		return insPrvdr;
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param insPrvdr the insPrvdr to set
 	 */
-	public void setPrvdr(final Provider prvdr) {
-		this.prvdr = prvdr;
+	public void setInsPrvdr(InsuranceProvider insPrvdr) {
+		this.insPrvdr = insPrvdr;
 	}
 
 	/**

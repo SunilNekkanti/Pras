@@ -20,7 +20,12 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Contact List <span class="badge">${contactList.size()}</span> </div>
+		<div class="panel-heading">
+			Contact List <span class="badge">${contactList.size()}</span>
+			<button class="btn btn-danger pull-right btn-xs" onclick= "return newContact();">
+	        	<span class="glyphicon glyphicon-plus-sign "></span> New Contact
+	        </button>
+	    </div>	 
 		<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover table-responsive">
 					<thead>
@@ -52,7 +57,7 @@
 											<a href="${context}/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.refContact.ins != null}">
-											<a href="${context}/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
+											<a onclick ="return contact(${cntct.refContact.ins.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue

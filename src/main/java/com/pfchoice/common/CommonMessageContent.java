@@ -60,5 +60,7 @@ public interface CommonMessageContent
     String HEDIS_RULE_LIST = "Hedis Rule List";
     
     String HEDIS_FOLLOWUP_LIST = "Membership's Hedis Followup List";
-
+    
+    String PROVIDER_INSURANCES_LIST = "Provider's Insurance List";
+    
 }

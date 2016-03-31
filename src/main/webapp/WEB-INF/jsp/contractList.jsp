@@ -1,26 +1,17 @@
-<%@  page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="UTF-8"%>
-		
+<%@  page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="UTF-8"%>		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-<script src="resources/js/prasweb.js"></script>
-<script>
-	$(document).ready(function(){	
-		
-	prasPagination();
-	
-	});
-</script>
+
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Contact List<span class="badge">${contractList.size()}</span></div>
+		<div class="panel-heading">
+			Contract List<span class="badge">${contractList.size()}</span>
+				<button class="btn btn-danger pull-right btn-xs" onclick= "return newContract();">
+          			<span class="glyphicon glyphicon-plus-sign "></span> New Contract
+          		</button>
+        </div>
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
 				<table id="tab" class="table table-striped table-hover table-responsive">
@@ -43,11 +34,11 @@
 							    <c:when test="${cntct.activeInd == 89}">
 							    	<c:choose>
 									 	
-										 <c:when test="${cntct.referenceContract.prvdr != null}">
-											<a href="${context}/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
+										 <c:when test="${cntct.referenceContract.insPrvdr.prvdr != null}">
+											<a href="${context}/provider/${cntct.referenceContract.insPrvdr.prvdr.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.referenceContract.ins != null}">
-											<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
+											<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue
@@ -57,11 +48,11 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									
-									 <c:when test="${cntct.referenceContract.prvdr != null}">
-										<a href="${context}/provider/${cntct.referenceContract.prvdr.id}/contract/${cntct.id}"   rel='tab' >View</a>
+									 <c:when test="${cntct.referenceContractinsPrvdr.prvdr != null}">
+										<a href="${context}/provider/${cntct.referenceContractinsPrvdr.prvdr.id}/contract/${cntct.id}"  href="#" rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.referenceContract.ins != null}">
-										<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"   rel='tab' >View</a>
+										<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"  href="#"  rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue

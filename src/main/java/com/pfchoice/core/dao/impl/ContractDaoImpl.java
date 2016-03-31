@@ -69,7 +69,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      {
     	String refRestrictionString = null;
     	 if("provider".equals(refString)){
-				refRestrictionString = "refContract.prvdr.id";
+				refRestrictionString = "insPrvdr.prvdr.id";
 			}else if("insurance".equals(refString)) {
 				refRestrictionString = "refContract.ins.id";
 			}
@@ -81,6 +81,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      	if(refRestrictionString != null)
      	{
      		cr.createAlias("contract.referenceContract","refContract");
+     		cr.createAlias("refContract.insPrvdr","insPrvdr");
      		cr.add(Restrictions.eq(refRestrictionString, id));
      	}		
      	List<Contract> list = cr.list();
@@ -93,7 +94,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
     	Contract contract  = null;
     	String refRestrictionString = null;
     	if("provider".equals(refString)){
-				refRestrictionString = "refContract.prvdr.id";
+				refRestrictionString = "insPrvdr.prvdr.id";
 		}else if("insurance".equals(refString)) {
 				refRestrictionString = "refContract.ins.id";
 		}
@@ -102,6 +103,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      	if(refRestrictionString != null)
      	{
      			cr.createAlias("contract.referenceContract","refContract");
+     			cr.createAlias("refContract.insPrvdr","insPrvdr");
      			cr.add(Restrictions.eq(refRestrictionString, id));
      	}		
    				

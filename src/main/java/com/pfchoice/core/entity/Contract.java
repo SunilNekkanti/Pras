@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -44,11 +45,9 @@ public class Contract implements Serializable
     @Column(name="end_date")
     private Date endDate;
     
-    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(  fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="ref_contract_id", referencedColumnName="ref_contract_id")
     private ReferenceContract referenceContract;
-    
-    
       
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -66,6 +65,9 @@ public class Contract implements Serializable
     
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
+    
+    @Transient
+    private Integer insPrvdrId;
     
       
     public Contract()
@@ -155,6 +157,20 @@ public class Contract implements Serializable
 	 */
 	public void setReferenceContract(final ReferenceContract referenceContract) {
 		this.referenceContract = referenceContract;
+	}
+
+	/**
+	 * @return the insPrvdrId
+	 */
+	public Integer getInsPrvdrId() {
+		return insPrvdrId;
+	}
+
+	/**
+	 * @param insPrvdrId the insPrvdrId to set
+	 */
+	public void setInsPrvdrId(Integer insPrvdrId) {
+		this.insPrvdrId = insPrvdrId;
 	}
 
 	/**

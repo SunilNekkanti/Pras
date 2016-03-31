@@ -21,15 +21,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.Contract;
 import com.pfchoice.core.entity.Insurance;
-import com.pfchoice.core.entity.Provider;
+import com.pfchoice.core.entity.InsuranceProvider;
 import com.pfchoice.core.entity.ReferenceContract;
 import com.pfchoice.core.service.ContractService;
+import com.pfchoice.core.service.InsuranceProviderService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.ProviderService;
+
+import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
 
 
 @Controller
@@ -40,10 +47,11 @@ public class ContractController{
     private ContractService contractService;
     
     @Autowired
-    private ProviderService providerService;
+    private InsuranceProviderService insuranceProviderService;
     
     @Autowired
     private InsuranceService insuranceService;
+    
     
     @Autowired
     @Qualifier("contractValidator")
@@ -77,12 +85,17 @@ public class ContractController{
     }
 	
  
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/provider/{id}/contract/new")
     public String addContractPage(@PathVariable Integer id,Model model) {
 		
 		Contract contract = createContractModel();
-	
 		model.addAttribute("contract", contract);
+		
+		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+		model.addAttribute("insPrvdrList", insPrvdrList);
+		model.addAttribute("insuranceRequired", true);
+		
         return "providerContractEdit";
     }
 	
@@ -93,7 +106,11 @@ public class ContractController{
 	       if(dbContract == null){
 	    	   dbContract = createContractModel();
 	       }
+	       List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+			model.addAttribute("insPrvdrList", insPrvdrList);
+			model.addAttribute("insuranceRequired", true);
 		model.addAttribute("contract", dbContract);
+		
         logger.info("Returning contractEdit.jsp page");
         return "providerContractEdit";
     }
@@ -103,7 +120,8 @@ public class ContractController{
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
 		model.addAttribute("contractList", listBean);
- 
+		model.addAttribute("prvdrId", id);
+		model.addAttribute("popup", true);
 		return "providerContractList";
 	}
 	
@@ -113,6 +131,7 @@ public class ContractController{
 		 logger.info("Returning contract.getId()"+dbContract.getId());
 	       
 		model.addAttribute("contract", dbContract);
+		
         logger.info("Returning contractDisplay.jsp page");
         return "contractDisplay";
     }
@@ -127,22 +146,22 @@ public class ContractController{
         }
         else
         {
-	        	Provider dbProvider = providerService.findById(id);
-	   		 	logger.info("Returning provider.getId()"+dbProvider.getId());
-	   		 	model.addAttribute("contract", contract);
-	   		   	contract.setCreatedBy(username);
-	   		   	contract.setUpdatedBy(username);
-	        	ReferenceContract refContract = createRefContractModel();
-	        	refContract.setCreatedBy(username);
-	        	refContract.setUpdatedBy(username);
-	        	refContract.setPrvdr(dbProvider);
-	        	contract.setReferenceContract(refContract);
-	        	
-	        	logger.info("Returning contractEditSuccess.jsp page after create");
-	 	      	contractService.save(contract);
-	       
-	       
-	        return "providerContractEditSuccess";
+    	    final int insPrvdrId = contract.getInsPrvdrId();
+        	InsuranceProvider dbInsuranceProvider = insuranceProviderService.findById(insPrvdrId);
+   		 	logger.info("Returning InsuranceProvider.getId()"+dbInsuranceProvider.getId());
+   		 	model.addAttribute("contract", contract);
+   		   	contract.setCreatedBy(username);
+   		   	contract.setUpdatedBy(username);
+        	ReferenceContract refContract = createRefContractModel();
+        	refContract.setCreatedBy(username);
+        	refContract.setUpdatedBy(username);
+        	refContract.setInsPrvdr(dbInsuranceProvider);
+        	contract.setReferenceContract(refContract);
+        	
+        	logger.info("Returning contractEditSuccess.jsp page after create");
+ 	      	contractService.save(contract);
+       
+        return "providerContractEditSuccess";
         }    
     }
 	
@@ -171,11 +190,16 @@ public class ContractController{
 	@RequestMapping(value = "/provider/{id}/contract/{cntId}", method = RequestMethod.GET)
     public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contract dbContract = contractService.findById(cntId);
-		// logger.info("Returning contract.getId()"+dbContract.getId());
-	       if(dbContract == null){
-	    	   dbContract = createContractModel();
-	       }
+        if(dbContract == null){
+    	   dbContract = createContractModel();
+        }
+        dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
 		model.addAttribute("contract", dbContract);
+		
+		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+		model.addAttribute("insPrvdrList", insPrvdrList);
+		model.addAttribute("insuranceRequired", true);
+		
         logger.info("Returning contractEdit.jsp page");
         return "providerContractEdit";
     }
@@ -207,6 +231,8 @@ public class ContractController{
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
 		model.addAttribute("contractList", listBean);
+		model.addAttribute("prvdrId", id);
+		model.addAttribute("popup", false);
  
 		return "insuranceContractList";
 	}
@@ -326,5 +352,14 @@ public class ContractController{
 	    }
 	
 	/* -- End of Insurance Contract   */
-
+		
+		@ResponseBody
+		@RequestMapping(value = "/provider/{id}/insuranceProvidersList", method = RequestMethod.GET)
+	    public Message getInsuraceProviderList(@PathVariable Integer id, Model model) {
+			List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+			model.addAttribute("insPrvdrList", insPrvdrList);
+			
+	        logger.info("Returning insPrvdrList dropdown");
+	        return Message.successMessage(CommonMessageContent.PROVIDER_INSURANCES_LIST, JsonConverter.getJsonObject(insPrvdrList));
+	    }
 }

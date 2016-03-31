@@ -6,5 +6,7 @@
 
 <jsp:include page="/WEB-INF/jsp/contactList.jsp">
  <jsp:param name="contactList" value="${contactList}"/>
+ <jsp:param name="prvdrId" value="${prvdrId}"/>
+ <jsp:param name="popup" value="${true}"/>
 </jsp:include>
 
