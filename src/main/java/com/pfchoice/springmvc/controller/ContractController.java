@@ -1,8 +1,12 @@
 package com.pfchoice.springmvc.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,21 +25,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.Contract;
+import com.pfchoice.core.entity.FilesUpload;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.InsuranceProvider;
 import com.pfchoice.core.entity.ReferenceContract;
 import com.pfchoice.core.service.ContractService;
 import com.pfchoice.core.service.InsuranceProviderService;
 import com.pfchoice.core.service.InsuranceService;
-import com.pfchoice.core.service.ProviderService;
 
-import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 
@@ -63,6 +69,7 @@ public class ContractController{
     	dateFormat.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         binder.setValidator(validator);
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
     }
     
     private static final Logger logger = LoggerFactory
@@ -85,7 +92,6 @@ public class ContractController{
     }
 	
  
-	@SuppressWarnings("unused")
 	@RequestMapping(value = "/provider/{id}/contract/new")
     public String addContractPage(@PathVariable Integer id,Model model) {
 		
@@ -120,8 +126,6 @@ public class ContractController{
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
 		model.addAttribute("contractList", listBean);
-		model.addAttribute("prvdrId", id);
-		model.addAttribute("popup", true);
 		return "providerContractList";
 	}
 	
@@ -138,9 +142,9 @@ public class ContractController{
 	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 	public String newproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
+            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
         if (bindingResult.hasErrors()) {
-        	
             logger.info("Returning contractEdit.jsp page");
             return "providerContractEdit";
         }
@@ -157,6 +161,15 @@ public class ContractController{
         	refContract.setUpdatedBy(username);
         	refContract.setInsPrvdr(dbInsuranceProvider);
         	contract.setReferenceContract(refContract);
+        	
+        	if (fileUpload != null ) {
+                FilesUpload uploadFile = new FilesUpload();
+                uploadFile.setFileName(fileUpload.getOriginalFilename());
+                uploadFile.setData(fileUpload.getBytes());
+                uploadFile.setCreatedBy(username);
+                uploadFile.setUpdatedBy(username);
+                contract.setFilesUpload(uploadFile);
+           }
         	
         	logger.info("Returning contractEditSuccess.jsp page after create");
  	      	contractService.save(contract);
@@ -188,7 +201,7 @@ public class ContractController{
     }
 	
 	@RequestMapping(value = "/provider/{id}/contract/{cntId}", method = RequestMethod.GET)
-    public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
+    public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) throws IOException {
 		Contract dbContract = contractService.findById(cntId);
         if(dbContract == null){
     	   dbContract = createContractModel();
@@ -196,9 +209,10 @@ public class ContractController{
         dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
 		model.addAttribute("contract", dbContract);
 		
-		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
-		model.addAttribute("insPrvdrList", insPrvdrList);
+	    byte[] bytes = dbContract.getFilesUpload().getData();
+	    String fileContent = new String(bytes);
 		model.addAttribute("insuranceRequired", true);
+		model.addAttribute("fileContent", fileContent);
 		
         logger.info("Returning contractEdit.jsp page");
         return "providerContractEdit";
@@ -231,9 +245,7 @@ public class ContractController{
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
 		model.addAttribute("contractList", listBean);
-		model.addAttribute("prvdrId", id);
-		model.addAttribute("popup", false);
- 
+		  logger.info("Returning insuranceContractList.jsp page");
 		return "insuranceContractList";
 	}
 	
@@ -253,7 +265,7 @@ public class ContractController{
 	/* -- Insurance Contract   */
 	
 		@RequestMapping(value = "/insurance/{id}/contract/new")
-	    public String addProviderContractPage(Model model) {
+	    public String addProviderContractPage(@PathVariable Integer id, Model model) {
 			Contract contract = createContractModel();
 			model.addAttribute("contract", contract);
 	        return "insuranceContractEdit";
@@ -261,7 +273,8 @@ public class ContractController{
 		
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 		public String addMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
-	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
+	            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 				
 	        if (bindingResult.hasErrors()) {
 	            logger.info("Returning insuranceContractEdit.jsp page");
@@ -278,9 +291,17 @@ public class ContractController{
 	    	refCnt.setIns(dbInsurance);
 	    	contract.setReferenceContract(refCnt);
 	    	
-	    	logger.info("Returning insuranceContractEditSuccess.jsp page after create");
+        	if (fileUpload != null ) {
+                FilesUpload uploadFile = new FilesUpload();
+                uploadFile.setFileName(fileUpload.getOriginalFilename());
+                uploadFile.setData(fileUpload.getBytes());
+                uploadFile.setCreatedBy(username);
+                uploadFile.setUpdatedBy(username);
+                contract.setFilesUpload(uploadFile);
+           }
+        	
 	      	contractService.save(contract);
-	   
+	     	logger.info("Returning insuranceContractEditSuccess.jsp page after create");
 	      	return "insuranceContractEditSuccess";
 	    }
 		
@@ -336,6 +357,9 @@ public class ContractController{
 		       if(dbContract == null){
 		    	   dbContract = createContractModel();
 		       }
+		       byte[] bytes = dbContract.getFilesUpload().getData();
+			    String fileContent = new String(bytes);
+			    model.addAttribute("fileContent", fileContent);
 			model.addAttribute("contract", dbContract);
 	        logger.info("Returning insuranceContractEdit.jsp page");
 	        return "insuranceContractEdit";
@@ -362,4 +386,31 @@ public class ContractController{
 	        logger.info("Returning insPrvdrList dropdown");
 	        return Message.successMessage(CommonMessageContent.PROVIDER_INSURANCES_LIST, JsonConverter.getJsonObject(insPrvdrList));
 	    }
+		
+		
+		@RequestMapping( method = RequestMethod.POST, 
+			    value = "/provider/{id}/contract/{cntId}/file", 
+			    headers = "content-type=application/json" )
+			public void export( @PathVariable Integer id,@PathVariable Integer cntId,Model model, HttpServletResponse response ) 
+			    throws IOException {
+				Contract dbContract = contractService.findById(cntId);
+		        if(dbContract == null){
+		    	   dbContract = createContractModel();
+		        }
+		        dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
+				model.addAttribute("contract", dbContract);
+				
+				byte[] bytes = dbContract.getFilesUpload().getData();
+		  	
+			    String myString = new String(bytes);
+			    String filename = dbContract.getFilesUpload().getFileName();
+			    response.setContentType("text/plain");
+			    response.setHeader("Content-Disposition","attachment;filename="+filename);
+			    ServletOutputStream out = response.getOutputStream();
+			    out.println(myString);
+			    out.flush();
+			    out.close();
+			    
+			}
+		
 }

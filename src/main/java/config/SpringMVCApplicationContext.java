@@ -7,21 +7,18 @@ import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentRes
 
 import com.pfchoice.core.entity.formatter.*;
 
-import com.pfchoice.springmvc.interceptor.AuthenticationInterceptor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.support.ConversionServiceFactoryBean;
-import org.springframework.core.convert.ConversionService;
 
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -57,10 +54,8 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 {
 	
-    @Autowired
-    private AuthenticationInterceptor authenticationInterceptor;
-	
-	
+    //@Autowired
+    //private AuthenticationInterceptor authenticationInterceptor;
 	
 	@Autowired
 	private CountyFormatter countyFormatter;
@@ -236,5 +231,13 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     	formatterRegistry.addFormatter(zipCodeFormatter);
     }
 
-  
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1048576);   // 1MB
+        multipartResolver.setMaxInMemorySize(1048576);  // 1MB
+        multipartResolver.setDefaultEncoding("utf-8");
+        return multipartResolver;
+    }
+    
 }

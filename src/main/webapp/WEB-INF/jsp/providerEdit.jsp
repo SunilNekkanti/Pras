@@ -230,7 +230,6 @@
 	{
 		var url = getContextPath()+'provider/${id}/contract/save.do?update'; 
 		var dataList = 	$("#contract").serializeArray();
-		var dataList = 	$("#contract").serializeArray();
 		dataList.push({})
 		$.ajax({
 	           type: "POST",
@@ -242,7 +241,7 @@
 	           },
 	    		error:function(data)
 	    		{
-	    			 alert(data); 
+	    			 alert('modify error '+data); 
 	    		}
 	     });
 	}
@@ -261,7 +260,7 @@
 	           },
 	    		error:function(data)
 	    		{
-	    			 alert(data); 
+	    			 alert('add error '+ data); 
 	    		}
 	         });
 	}

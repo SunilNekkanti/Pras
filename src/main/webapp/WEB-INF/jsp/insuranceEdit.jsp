@@ -161,6 +161,7 @@
 	function newContract()
 	{
 		var source = getContextPath()+'insurance/${id}/contract/new';
+		alert('source '+source);
 		$.ajax({
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
@@ -213,17 +214,18 @@
 		
 	}
 	
+	
 	function addContract()
 	{
 		var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
 		var dataList = 	$("#contract").serializeArray();
+		dataList.push({})
 		$.ajax({
 	           type: "POST",
 	           url: url,
 	           data: dataList, 
 	           success: function(data)
 	           {
-	              
 	               $('#insuranceContractNew').html(data);
 	           },
 	    		error:function(data)
@@ -232,6 +234,7 @@
 	    		}
 	         });
 	}
+	
 	function modifyContract()
 	{
 		var url = getContextPath()+'insurance/${id}/contract/save.do?update'; 
@@ -256,6 +259,7 @@
 	{
 		var url = getContextPath()+'insurance/${id}/contact/save.do?add'; 
 		var dataList = 	$("#contact").serializeArray();
+		dataList.push({})
 		$.ajax({
 	           type: "POST",
 	           url: url,

@@ -6,7 +6,6 @@
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
-
 <script src="${context}/resources/js/validation.js"></script>	
 <c:choose>
  	<c:when test="${contract.id != null && contract.activeInd != 89}">
@@ -28,7 +27,7 @@
            </button>
     	</div>
 		<div class="panel-body">
-			<springForm:form method="POST" id="contract" commandName="contract" action="save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" id="contract" commandName="contract" action="${id}/contract/save.do" class="form-horizontal" role="form" enctype="multipart/form-data">
 				<div class="col-sm-12">
 					<div class="col-sm-2">
 						<div class="form-group required">
@@ -98,8 +97,17 @@
 							</div>
 						</div>
 					</div>	
+					<div class="col-sm-2">	
+						<div class="form-group required">
+						 	<label class="control-label col-sm-5" for="filesUpload">Contract file</label>
+							<div class="col-sm-7">
+	                  				  <input type="file" name="fileUpload" size="50" />
+	                  				  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Contract File</button>
+							</div>
+						</div>
+					</div>	
 				</div>
-				
+				<div id="filecontent"> </div>
 				<div class="col-sm-offset-10 col-sm-2">
 					<c:choose>
 						<c:when test="${id != null && contract.activeInd == 89}"> 
@@ -107,7 +115,7 @@
 						 	<button type="button" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
 						</c:when>
 						<c:when test="${contract.id == null}">
-							<button type="button" class="btn btn-primary" id="updateButton" onclick="return addContract();" name="add" >Add</button>
+							<button type="submit" class="btn btn-primary" id="updateButton" onclick="return addContract();" name="add" >Add</button>
 							<button type="button" class="btn btn-primary" id="resetButton" >Reset</button>
 						</c:when>
 					</c:choose>
@@ -115,4 +123,27 @@
 			</springForm:form>
 	 	</div>
 	 </div>	
+</div>
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Contract File Content</h4>
+      </div>
+      <div class="modal-body">
+       ${fileContent}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
