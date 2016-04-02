@@ -275,4 +275,51 @@
 	    		}
 	         });
 	}
+	
+	
+	function addContact()
+	{
+		var url = getContextPath()+'insurance/${id}/contact/save.do?add'; 
+		var dataList = 	$("#contact").serializeArray();
+		
+		  
+		$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: dataList, 
+	           success: function(data)
+	           {
+	            	$('#providerContactNew').html(data);
+	           },
+	    		error:function(data)
+	    		{
+	    			 alert('add error '+ data); 
+	    		}
+	         });
+	}
+	
+	function addContract()
+	{
+		var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
+		if(window.FormData !== undefined)  // for HTML5 browsers
+	    {
+		var formData = new FormData($('#contract')[0]);
+        formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+	    $.ajax({
+	        url: url,
+	        type: 'POST',
+	        mimeType:"multipart/form-data",
+	        data: formData,
+	        async: false,
+	        success: function (data) {
+	        	$('#insuranceContractNew').html(data);
+	        },
+	        cache: false,
+	        contentType: false,
+	        processData: false
+	    });
+	    }
+	    return false;
+	}
+	$(document).on("click", "#addButton",   function() { addContract(); } );
 </script>

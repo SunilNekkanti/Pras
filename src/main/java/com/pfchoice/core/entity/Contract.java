@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author Mohanasundharam
@@ -27,28 +29,35 @@ public class Contract implements Serializable
 	
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="contract_Id", nullable = false)
     private Integer id;
 
+    @Expose
     @Column(name="contract_NBR")
     private String contractNBR;
     
+    @Expose
     @Column(name="PMPM")
     private Double PMPM;
 
+    @Expose
     @Column(name="start_date")
     private Date startDate;
     
+    @Expose
     @Column(name="end_date")
     private Date endDate;
     
-    @OneToOne(  fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Expose
+    @OneToOne(  fetch = FetchType.EAGER)
     @JoinColumn(name="ref_contract_id", referencedColumnName="ref_contract_id")
     private ReferenceContract referenceContract;
     
+    @Expose
     @OneToOne(  fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="file_upload_id", referencedColumnName="file_upload_id")
     private FilesUpload filesUpload;
@@ -67,6 +76,7 @@ public class Contract implements Serializable
     @Column(name="updated_by")
     private String updatedBy;
     
+    @Expose
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
     

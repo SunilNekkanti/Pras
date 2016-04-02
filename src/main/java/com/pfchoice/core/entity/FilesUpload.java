@@ -31,6 +31,9 @@ public class FilesUpload implements Serializable
     @Column(name="file_name")
     private String fileName;
     
+    @Column(name="content_type")
+    private String contentType;
+    
     @Column(name = "file_data", nullable=false, columnDefinition="mediumblob")
     private byte[] data;
     
@@ -76,6 +79,20 @@ public class FilesUpload implements Serializable
 	 */
 	public String getFileName() {
 		return fileName;
+	}
+
+	/**
+	 * @return the contentType
+	 */
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType the contentType to set
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	/**
@@ -199,7 +216,7 @@ public class FilesUpload implements Serializable
     @Override
     public String toString()
     {
-        return "com.pfchoice.core.entity.Contact[ id=" + id + " ]";
+        return "com.pfchoice.core.entity.FilesUpload[ id=" + id + " ]";
     }
 
 }

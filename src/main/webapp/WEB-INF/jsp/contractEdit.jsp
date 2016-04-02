@@ -101,7 +101,7 @@
 						<div class="form-group required">
 						 	<label class="control-label col-sm-5" for="filesUpload">Contract file</label>
 							<div class="col-sm-7">
-	                  				  <input type="file" name="fileUpload" size="50" />
+	                  				  <input type="file" name="fileUpload" id="fileUpload"  size="50" />
 	                  				  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Contract File</button>
 							</div>
 						</div>
@@ -115,7 +115,7 @@
 						 	<button type="button" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
 						</c:when>
 						<c:when test="${contract.id == null}">
-							<button type="submit" class="btn btn-primary" id="updateButton" onclick="return addContract();" name="add" >Add</button>
+							<button type="button" class="btn btn-primary" id="addButton"   name="add" >Add</button>
 							<button type="button" class="btn btn-primary" id="resetButton" >Reset</button>
 						</c:when>
 					</c:choose>
@@ -137,7 +137,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Contract File Content</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"  id="modal-body">
        ${fileContent}
       </div>
       <div class="modal-footer">

@@ -1,6 +1,9 @@
 package com.pfchoice.springmvc.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -165,6 +169,7 @@ public class ContractController{
         	if (fileUpload != null ) {
                 FilesUpload uploadFile = new FilesUpload();
                 uploadFile.setFileName(fileUpload.getOriginalFilename());
+                uploadFile.setContentType(fileUpload.getContentType());
                 uploadFile.setData(fileUpload.getBytes());
                 uploadFile.setCreatedBy(username);
                 uploadFile.setUpdatedBy(username);
@@ -188,7 +193,7 @@ public class ContractController{
         }
         else
         {
-	        if (null != contract.getId())
+	        if (contract.getId() != null)
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
 	        	contract.setUpdatedBy(username);
@@ -201,18 +206,13 @@ public class ContractController{
     }
 	
 	@RequestMapping(value = "/provider/{id}/contract/{cntId}", method = RequestMethod.GET)
-    public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) throws IOException {
+    public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model, HttpServletResponse response) throws IOException {
 		Contract dbContract = contractService.findById(cntId);
         if(dbContract == null){
     	   dbContract = createContractModel();
         }
         dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
 		model.addAttribute("contract", dbContract);
-		
-	    byte[] bytes = dbContract.getFilesUpload().getData();
-	    String fileContent = new String(bytes);
-		model.addAttribute("insuranceRequired", true);
-		model.addAttribute("fileContent", fileContent);
 		
         logger.info("Returning contractEdit.jsp page");
         return "providerContractEdit";
@@ -294,6 +294,7 @@ public class ContractController{
         	if (fileUpload != null ) {
                 FilesUpload uploadFile = new FilesUpload();
                 uploadFile.setFileName(fileUpload.getOriginalFilename());
+                uploadFile.setContentType(fileUpload.getContentType());
                 uploadFile.setData(fileUpload.getBytes());
                 uploadFile.setCreatedBy(username);
                 uploadFile.setUpdatedBy(username);
@@ -357,9 +358,6 @@ public class ContractController{
 		       if(dbContract == null){
 		    	   dbContract = createContractModel();
 		       }
-		       byte[] bytes = dbContract.getFilesUpload().getData();
-			    String fileContent = new String(bytes);
-			    model.addAttribute("fileContent", fileContent);
 			model.addAttribute("contract", dbContract);
 	        logger.info("Returning insuranceContractEdit.jsp page");
 	        return "insuranceContractEdit";
@@ -388,29 +386,24 @@ public class ContractController{
 	    }
 		
 		
-		@RequestMapping( method = RequestMethod.POST, 
-			    value = "/provider/{id}/contract/{cntId}/file", 
-			    headers = "content-type=application/json" )
-			public void export( @PathVariable Integer id,@PathVariable Integer cntId,Model model, HttpServletResponse response ) 
-			    throws IOException {
-				Contract dbContract = contractService.findById(cntId);
-		        if(dbContract == null){
-		    	   dbContract = createContractModel();
-		        }
-		        dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
-				model.addAttribute("contract", dbContract);
-				
-				byte[] bytes = dbContract.getFilesUpload().getData();
-		  	
-			    String myString = new String(bytes);
-			    String filename = dbContract.getFilesUpload().getFileName();
-			    response.setContentType("text/plain");
-			    response.setHeader("Content-Disposition","attachment;filename="+filename);
-			    ServletOutputStream out = response.getOutputStream();
-			    out.println(myString);
-			    out.flush();
-			    out.close();
-			    
-			}
+		@ResponseBody
+		@RequestMapping(value = "/contract/{cntId}/file", method = RequestMethod.GET, produces =  {MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_OCTET_STREAM_VALUE })
+	    public String downloadContractFile(@PathVariable Integer cntId,Model model, HttpServletResponse response) throws IOException {
+			Contract dbContract = contractService.findById(cntId);
+	        	logger.info("fetching contractFile for contract id"+cntId);
+	        	 byte[] bytes = dbContract.getFilesUpload().getData();
+	 			response.setContentType(dbContract.getFilesUpload().getContentType());
+	 			response.setHeader("Content-Disposition","attachment;filename="+dbContract.getFilesUpload().getFileName());
+	 			OutputStream os = response.getOutputStream();
+	 			os.write(bytes); // newHtml is a String.
+	 			os.flush();
+	 			//response.getOutputStream().write(bytes);
+	 			//response.getWriter().write(fileContent);
+	 			
+			
+	        logger.info("Returning contractFile page");
+	        return "providerContractEdit";
+	    }
+		
 		
 }

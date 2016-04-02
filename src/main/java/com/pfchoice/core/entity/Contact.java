@@ -64,7 +64,7 @@ public class Contact implements Serializable
     private String city;
 
     @Expose
-    @OneToOne(  fetch = FetchType.LAZY, cascade =CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(  fetch = FetchType.EAGER)
     @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
     private ReferenceContact refContact;
     

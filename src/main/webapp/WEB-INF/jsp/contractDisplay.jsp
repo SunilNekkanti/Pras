@@ -25,7 +25,6 @@
 <script
 	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
-<script src="${context}/resources/js/prasweb.js"></script>
 
 
 

@@ -286,7 +286,7 @@ public class ContactController{
 	 	model.addAttribute("contact", contact);
     	contact.setCreatedBy(username);
     	contact.setUpdatedBy(username);
-    	contact.setFileId(3);
+    	contact.setFileId(1);
     	ReferenceContact refCnt = createRefContactModel();
     	refCnt.setCreatedBy(username);
     	refCnt.setUpdatedBy(username);

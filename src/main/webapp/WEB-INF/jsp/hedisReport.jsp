@@ -31,10 +31,6 @@
  <script src="../js/grid.locale-en.js" type="text/javascript"></script>
  <script src="../js/jquery.jqGrid.min.js" type="text/javascript"></script>
 
- 
- 
-<script src="${context}/resources/js/prasweb.js"></script>
-
 </head>
 
 <body>

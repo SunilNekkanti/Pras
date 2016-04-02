@@ -196,7 +196,22 @@
 		$('#providerContractNew').css("display","none");
  		$('#providerContractEdit').css("display","none");
  		$('#providerContractList').show();
-		
+ 		$('#providerContactNew').css("display","none");
+ 	   $('#providerContactEdit').css("display","none");
+ 	   $('#cntSuccess').css("display","none");
+ 	   var source = getContextPath()+'provider/${id}/contactList';
+ 	   $.ajax({
+ 	    url : source,
+ 	       success: function(data, textStatus, jqXHR)
+ 	       {
+ 	          $('#providerContactList').html(data);
+ 	       },
+ 	       error: function (jqXHR, textStatus, errorThrown)
+ 	       {
+ 	        alert("Error");
+ 	       }
+ 	   });
+ 	   $('#providerContactList').show();
 	}
 	
 	function contactList()
@@ -210,22 +225,27 @@
 	function addContract()
 	{
 		var url = getContextPath()+'provider/${id}/contract/save.do?add'; 
-		var dataList = 	$("#contract").serializeArray();
-		dataList.push({})
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	               $('#providerContractNew').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert(data); 
-	    		}
-	         });
+		if(window.FormData !== undefined)  // for HTML5 browsers
+	    {
+		var formData = new FormData($('#contract')[0]);
+        formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+	    $.ajax({
+	        url: url,
+	        type: 'POST',
+	        mimeType:"multipart/form-data",
+	        data: formData,
+	        async: false,
+	        success: function (data) {
+	        	$('#providerContractNew').html(data);
+	        },
+	        cache: false,
+	        contentType: false,
+	        processData: false
+	    });
+	    }
+	    return false;
 	}
+	
 	function modifyContract()
 	{
 		var url = getContextPath()+'provider/${id}/contract/save.do?update'; 
@@ -237,7 +257,7 @@
 	           data: dataList, 
 	           success: function(data)
 	           {
-	    			$('#providerContractNew').html(data);
+	    			$('#providerContractEdit').html(data);
 	           },
 	    		error:function(data)
 	    		{
@@ -250,6 +270,8 @@
 	{
 		var url = getContextPath()+'provider/${id}/contact/save.do?add'; 
 		var dataList = 	$("#contact").serializeArray();
+		
+		  
 		$.ajax({
 	           type: "POST",
 	           url: url,
@@ -264,6 +286,30 @@
 	    		}
 	         });
 	}
+	
+	function modifyContact()
+	{
+		var url = getContextPath()+'provider/${id}/contact/save.do?update'; 
+		var dataList = 	$("#contact").serializeArray();
+		
+		  
+		$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: dataList, 
+	           success: function(data)
+	           {
+	            	$('#providerContactEdit').html(data);
+	           },
+	    		error:function(data)
+	    		{
+	    			 alert('add error '+ data); 
+	    		}
+	         });
+	}
+	
+	$(document).on("click", "#addButton",   function() { addContract(); } );
+
 </script>
 
 

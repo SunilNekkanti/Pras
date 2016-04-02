@@ -125,6 +125,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     	configurer.favorPathExtension(false).favorParameter(false).ignoreAcceptHeader(true);
     	configurer.defaultContentType( MediaType.APPLICATION_JSON);
         configurer.mediaType("json", MediaType.APPLICATION_JSON);
+        configurer.mediaType("json", MediaType.APPLICATION_OCTET_STREAM);
     }
 
     @Override
@@ -234,8 +235,8 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(1048576);   // 1MB
-        multipartResolver.setMaxInMemorySize(1048576);  // 1MB
+        multipartResolver.setMaxUploadSize(10485760);   // 1MB
+        multipartResolver.setMaxInMemorySize(10485760);  // 1MB
         multipartResolver.setDefaultEncoding("utf-8");
         return multipartResolver;
     }

@@ -21,7 +21,7 @@
 							<th  scope="col">Contract NBR</th>  
 					        <th  scope="col">Start Date</th> 
 					        <th  scope="col">End Date</th> 
-					         
+					        <th  scope="col">Contract File</th>
 						</tr>
 					</thead>
 
@@ -35,7 +35,7 @@
 							    	<c:choose>
 									 	
 										 <c:when test="${cntct.referenceContract.insPrvdr.prvdr != null}">
-											<a href="${context}/provider/${cntct.referenceContract.insPrvdr.prvdr.id}/contract/${cntct.id}"   rel='tab' >Edit</a> 
+											<a onclick ="return contract(${cntct.referenceContract.insPrvdr.prvdr.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.referenceContract.ins != null}">
 											<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
@@ -64,6 +64,7 @@
 								   	<td> ${cntct.contractNBR}</td> 
 						        	<td> ${cntct.startDate}</td>
 						        	<td> ${cntct.endDate}</td>
+						        	<td> <a href="#" onclick="myFunction(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td>
 						        	
 						       </tr>     
 						        
@@ -77,3 +78,46 @@
 		</div>
 	</div>
 </div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Contract File Content</h4>
+      </div>
+      <div class="modal-body"  id="modal-body">
+       ${fileContent}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+	function myFunction(id) 
+	{
+		
+		var w = 500;
+	    var h = 500;
+	    var left = (screen.width/2)-(w/2);
+	    var top = (screen.height/2)-(h/2);
+	    
+
+	window.open (getContextPath()+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	    alert(window.parent.location);
+	    
+	    
+		 
+	}
+	
+	
+</script>
+	

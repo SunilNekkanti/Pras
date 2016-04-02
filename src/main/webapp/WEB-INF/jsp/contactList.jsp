@@ -10,14 +10,6 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-<script src="${context}/resources/js/prasweb.js"></script>
-<script>
-	$(document).ready(function(){	
-		
-	prasPagination();
-	
-	});
-</script>
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -54,7 +46,7 @@
 									 		<a href="${context}/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
 										 </c:when>
 										 <c:when test="${cntct.refContact.prvdr != null}">
-											<a href="${context}/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
+											<a  onclick ="return contact(${cntct.refContact.prvdr.id},${cntct.id})"  href="#"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.refContact.ins != null}">
 											<a onclick ="return contact(${cntct.refContact.ins.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
