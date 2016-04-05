@@ -124,6 +124,7 @@ public class ProviderController{
 	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"update"})
     public String updateProviderAction( @PathVariable Integer id,@Validated Provider provider,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("Returning providerSuccess.jsp page before delete");
         if (bindingResult.hasErrors()) {
         	provider.setActiveInd('Y');
             logger.info("Returning providerEdit.jsp page");
@@ -136,8 +137,6 @@ public class ProviderController{
         	Provider dbProvider = providerService.findById(id);
         	dbProvider.getInsPrvdrs().forEach(existinginsPrvdr ->  {
         		if( !provider.getInsPrvdrs().contains(existinginsPrvdr)){
-        			System.out.println("removed insPrvdr id"+existinginsPrvdr.getId());
-        			existinginsPrvdr.setActiveInd('Y');
         			existinginsPrvdr.getRefContracts().forEach(refContract -> {
         				refContract.setActiveInd('N');
         				refContract.getContract().setActiveInd('N');
@@ -154,20 +153,13 @@ public class ProviderController{
 	
 	
 	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction(@PathVariable Integer id, @Validated Provider provider,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-        if (bindingResult.hasErrors()) {
-        	provider.setActiveInd('Y');
-            logger.info("Returning insuranceEdit.jsp page");
-            return "providerEdit";
-        }
-        if (null != provider.getId())
-        {
-        	logger.info("Returning InsuranceSuccess.jsp page after update");
-        	provider.setActiveInd('N');
-        	providerService.update(provider);
-        	provider.setUpdatedBy(username);
-        }   
+    public String deleteInsuranceAction(@PathVariable Integer id,  @ModelAttribute("username") String username) {
+           
+		Provider dbProvider = providerService.findById(id);
+        dbProvider.setActiveInd(new Character('N'));
+        dbProvider.setUpdatedBy(username);
+        providerService.update(dbProvider);
+        logger.info("Returning providerSuccess.jsp page after delete");
         return "providerEditSuccess";
     }
 	

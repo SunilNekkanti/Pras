@@ -8,7 +8,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Profile</div>
 		<div class="panel-body">
-			<springForm:form method="POST" commandName="insurance" action="${context}/insurance/${id}/save.do" class="form-inline" role="form">
+			<springForm:form method="POST" commandName="insurance" action="${context}/insurance/${id}/save.do">
 			     <div class="form-group required col-sm-3">
 				 	<div class="col-sm-4"><label for="name">Name</label></div>
 					<div class="col-sm-8">

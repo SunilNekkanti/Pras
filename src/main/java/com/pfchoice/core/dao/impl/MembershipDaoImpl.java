@@ -49,7 +49,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		  .add(Restrictions.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     	}
          crit.add(or);
-         crit.add(Restrictions.eq("activeInd", 'Y'));
+         crit.add(Restrictions.eq("activeInd", new Character('Y')));
         if(sort != null && !"".equals(sort)) 
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
@@ -99,7 +99,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999)
     	{
     		crit.createAlias("mbrProvider.prvdr", "prvdr");
-    		crit.createAlias("insPrvdrs", "insPrvdr");
+    		crit.createAlias("prvdr.insPrvdrs", "insPrvdr");
         	crit.createAlias("insPrvdr.ins", "ins");
     		and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
     		and.add(Restrictions.eq("ins.id", sSearchIns));

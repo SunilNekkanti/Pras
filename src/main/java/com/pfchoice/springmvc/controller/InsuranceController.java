@@ -123,21 +123,13 @@ public class InsuranceController{
         return "insuranceEditSuccess";
     }
 	
-	@RequestMapping(value = "/insurance/${id}/save.do", method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction(@PathVariable Integer id, @Validated Insurance insurance,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-        if (bindingResult.hasErrors()) {
-        	insurance.setActiveInd('Y');
-            logger.info("Returning insuranceEdit.jsp page");
-            return "insuranceEdit";
-        }
+	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+    public String deleteInsuranceAction(@PathVariable Integer id, @ModelAttribute("username") String username) {
         
-        if (null != insurance.getId())
-        {
-	        	insurance.setActiveInd('N');
-	        	insurance.setUpdatedBy(username);
-	        	insuranceService.update(insurance);
-        }    
+		Insurance dbInsurance = insuranceService.findById(id);
+		dbInsurance.setActiveInd(new Character('N'));
+		dbInsurance.setUpdatedBy(username);
+	    insuranceService.update(dbInsurance);
         logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
         return "insuranceDeleteSuccess";
     }

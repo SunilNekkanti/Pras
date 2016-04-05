@@ -67,14 +67,14 @@ public class Provider implements Serializable
     private String updatedBy;
     
     @Expose
-    @Column(name="active_ind", insertable = false)
+    @Column(name="active_ind",insertable=false)
     private Character activeInd;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
     @Expose
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL ,  mappedBy = "prvdr",orphanRemoval=true)
+    @OneToMany(fetch = FetchType.LAZY,   mappedBy = "prvdr",orphanRemoval=true)
     private List<InsuranceProvider> insPrvdrs  = new ArrayList<InsuranceProvider>();
     
     public Provider()

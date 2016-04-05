@@ -30,8 +30,13 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     public Pagination getPage(final int pageNo, final int pageSize, 
     		final String sSearch, final String sort, final String sortdir)
     {
-    	Disjunction or = Restrictions.disjunction();
-
+    	Criteria crit = createCriteria();
+        crit.createAlias("insPrvdrs","insPrvdr");
+        crit.add(Restrictions.eq("activeInd", new Character('Y')));
+        crit.add(Restrictions.eq("insPrvdr.activeInd", new Character('Y')));
+        
+        Disjunction or = Restrictions.disjunction();
+    	
     	if( sSearch != null && !"".equals(sSearch))
     	{
     		Criterion name   = Restrictions.ilike("name","%"+sSearch+"%");
@@ -39,10 +44,8 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     		
     		or.add(name);
     		or.add(code);
+    		crit.add(or);
     	}
-        Criteria crit = createCriteria();
-        crit.add(or);
-        crit.add(Restrictions.eq("activeInd", 'Y'));
         
         if(sort != null && !"".equals(sort)) 
 		{
@@ -100,7 +103,8 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     	 Criteria crit = createCriteria();
     	 crit.createAlias("insPrvdrs", "insPrvdr");
     	 crit.createAlias("insPrvdr.ins", "ins");
-         crit.add(Restrictions.eq("activeInd", 'Y'));
+         crit.add(Restrictions.eq("activeInd", new Character('Y')));
+         crit.add(Restrictions.eq("insPrvdr.activeInd", new Character('Y')));
          crit.add(Restrictions.eq("ins.id", id));
          
          Pagination page = findByCriteria(crit, 0, 200);

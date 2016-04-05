@@ -71,7 +71,20 @@
                                           return '<a href="provider/'+full.id+'">'+data+'</a>';
                                 }},
                        		    { "sName": "code", "aTargets": [ 2 ] },
-                       		    { "sName": "insPrvdrs[, ].ins.name", "aTargets": [ 3 ]}
+                       		    { "sName": "insPrvdrs[, ].ins.name", "aTargets": [ 3 ],
+                       		    	"render": function  ( data, type, full, meta )  {
+                                        var insNames=[];
+                                        for(var i = 0; i<full.insPrvdrs.length; i++)
+                                        {
+                                        	if(full.insPrvdrs[i].activeInd == 'Y')
+                                        		{
+                                        			insNames[i] = full.insPrvdrs[i].ins.name;  
+                                        		}
+                                         
+                                        }
+                  						return insNames.join(', ');
+                					}
+                       		    }
               ],          
     	     "bLengthChange": false,
     	     "iDisplayLength": 15,

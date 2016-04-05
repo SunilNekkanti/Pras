@@ -42,7 +42,6 @@ public class InsuranceProvider implements Serializable
     @Column(name="ins_prvdr_id", nullable = false)
     private Integer id;
 
-   // @Expose
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="prvdr_id", nullable = false, referencedColumnName="prvdr_id")
     private Provider prvdr;
