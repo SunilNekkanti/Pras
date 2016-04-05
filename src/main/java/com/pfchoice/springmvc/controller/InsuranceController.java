@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.InsuranceProvider;
 import com.pfchoice.core.entity.PlanType;
+import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.PlanTypeService;
 
@@ -77,11 +79,10 @@ public class InsuranceController{
 		
 		Insurance dbInsurance = insuranceService.findById(id);
 		 logger.info("Returning insurance.getId()"+dbInsurance.getId());
-		 
 			       
 		model.addAttribute("insurance", dbInsurance);
 		 logger.info("Returning insuranceSave.jsp page");
-        return "insuranceEdit";
+        return "insuranceDetails";
     }
 	
 	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"add"})
@@ -101,10 +102,19 @@ public class InsuranceController{
        return "insuranceNewSuccess";
     }
 	
-	
+	@RequestMapping(value = "/insurance/{id}/details", method = RequestMethod.GET)
+    public String viewProviderPage(@PathVariable Integer id,Model model) {
+		
+		Insurance dbInsurance = insuranceService.findById(id);
+		 logger.info("Returning insurance.getId()"+dbInsurance.getId());
+			       
+		model.addAttribute("insurance", dbInsurance);
+		 logger.info("Returning insuranceSave.jsp page");
+       return "insuranceEdit";
+    }
 	
 	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"update"})
-    public String updateInsuranceAction( @PathVariable Integer id,@Validated Insurance insurance,
+    public String updateInsuranceAction( @PathVariable Integer id,@ModelAttribute @Validated Insurance insurance,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		
         if (bindingResult.hasErrors()) {

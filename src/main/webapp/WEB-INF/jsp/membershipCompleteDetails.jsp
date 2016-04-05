@@ -52,7 +52,6 @@
 		
 		var url = getContextPath()+'membership/${id}/save?update';
 		var dataList = 	$("#membership").serialize();
-		alert(dataList);
 		$.ajax({
 	           type: "POST",
 	           url: url,
@@ -60,7 +59,6 @@
 	           success: function(data)
 	           {
 	               $('#mbrDetails').html(data);
-	               alert(data);
 	           },
 	    		error:function(data)
 	    		{
@@ -70,7 +68,6 @@
 	}
 	function deletembrDetails()
 	{
-		alert("deleteMbrDetails");
 		var source = getContextPath()+'membership/${id}/contactList';
 	}
 	var source = getContextPath()+'membership/${id}/contactList';
@@ -228,7 +225,6 @@
 	function mbrNewIns()
 	{
 		var source = getContextPath()+'membership/${id}/details/new';
-		alert(source);
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -244,10 +240,7 @@
 	
 	function mbrDetails(mbrId,mbrDetailsId)
 	{
-		alert(mbrId+"/details/"+mbrDetailsId+"/display");
-		
 		var source = getContextPath()+'membership/${id}/details/'+mbrDetailsId+'/display';
-		alert(source);
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -265,13 +258,11 @@
 	{
 		
 		var source = getContextPath()+'membership/${id}/detailsList';
-		alert(source);
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
 		    {
 		       $('#mbrInsList').html(data);
-		       alert(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
@@ -284,14 +275,12 @@
 	{
 		var url = getContextPath()+'membership/${id}/details/save.do?add'; 
 		var dataList = 	$("#membershipInsurance").serialize();
-		alert(url);
 		$.ajax({
 	           type: "POST",
 	           url: url,
 	           data: dataList, 
 	           success: function(data)
 	           {
-	        	   alert(data);
 	            	$('#mbrInsList').html(data);
 	           },
 	    		error:function(data)
@@ -305,7 +294,6 @@
 	{
 		var url = getContextPath()+'membership/${id}/details/'+mbrInsId+'/save.do?update'; 
 		var dataList = 	$("#membershipInsurance").serialize();
-		alert(url);
 		$.ajax({
 	           type: "POST",
 	           url: url,
@@ -324,7 +312,6 @@
 	{
 		var url = getContextPath()+'membership/${id}/details/'+mbrInsId+'/save.do?delete'; 
 		var dataList = 	$("#membershipInsurance").serialize();
-		alert(url);
 		$.ajax({
 	           type: "POST",
 	           url: url,

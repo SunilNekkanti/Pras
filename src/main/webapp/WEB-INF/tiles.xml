@@ -197,13 +197,17 @@
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceAddSuccess.jsp" />  
     </definition> 
     
-    <definition name="insuranceEdit" extends="base1.definition">  
+    <definition name="insuranceEdit" extends="baseNoHeader.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
-        
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEdit.jsp" />  
     </definition>  
     
-    <definition name="insuranceEditSuccess" extends="base1.definition">  
+    <definition name="insuranceDetails" extends="base1.definition">  
+     <put-attribute name="title" value="Insurance Profile" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/insuranceDetails.jsp" />  
+    </definition>
+    
+    <definition name="insuranceEditSuccess" extends="baseNoHeader.definition">  
        <put-attribute name="body" value="/WEB-INF/jsp/insuranceEditSuccess.jsp" />  
     </definition>  
     

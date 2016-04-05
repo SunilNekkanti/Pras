@@ -232,7 +232,6 @@
 	{
 		
 		   var source = getContextPath()+'provider/${id}/contactList';
-		   alert(source);
 			$.ajax({
 				url : source,
 			    success: function(data, textStatus, jqXHR)
