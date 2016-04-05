@@ -60,7 +60,7 @@ $.ajax( {
                          { "mDataProp": "hedisMeasureCode","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ]},
                          { "mDataProp": "cptMeasureCode","bSearchable" : true, "bSortable" : true,"sWidth" : "20%", "asSorting" : [ "asc" ] },
                          { "mDataProp": "icdMeasureCode","bSearchable" : true, "bSortable": true,"sWidth" : "20%" , "asSorting" : [ "asc" ]},
-                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
                          { "mDataProp": "genderDescription","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": ""  },
                          { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": ""  },
                          { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" },
@@ -76,7 +76,7 @@ $.ajax( {
                      		      }},
                      		    { "sName": "cptMeasureCode", "aTargets": [ 2 ] },
                      			{ "sName": "icdMeasureCode", "aTargets": [ 3] },
-                     			{ "sName": "effectiveYear", "aTargets": [ 4] },
+                     			{ "sName": "doseCount", "aTargets": [ 4] },
                        		    { "sName": "genderDescription", "aTargets": [ 5 ] },
                        		    { "sName": "lowerAgeLimit", "aTargets": [ 6 ] },
                        		    { "sName": "upperAgeLimit", "aTargets": [ 7 ] },
@@ -121,7 +121,7 @@ $.ajax( {
 							<th  scope="col">Hedis Code</th> 
 							<th  scope="col">CPT Codes</th>  
 					        <th  scope="col">ICD Codes</th> 
-					        <th  scope="col">Eff. Year</th> 
+					        <th  scope="col">Dose Count</th> 
 					        <th  scope="col">Gender</th> 
 					        <th  scope="col">Lower Age Limit</th> 
 					        <th  scope="col">Upper Age Limit</th> 

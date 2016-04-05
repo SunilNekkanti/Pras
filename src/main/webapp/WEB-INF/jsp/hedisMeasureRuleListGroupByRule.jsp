@@ -141,7 +141,7 @@ $.ajax( {
 																	                                   return icdCodeList.join(', ');
 																	                               }  
 												                                 },
-														                         { "mDataProp": "effectiveYear","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sClass":"center"},
+														                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sClass":"center", "sDefaultContent": ""},
 														                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": "","sClass":"center"   },
 														                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "" ,"sClass":"center"  },
 														                         { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" ,"sClass":"center" },
@@ -206,7 +206,7 @@ $.ajax( {
 							<th  scope="col">Hedis Code</th> 
 							<th  scope="col">CPT Codes</th>  
 					        <th  scope="col">ICD Codes</th> 
-					        <th  scope="col">Eff. Year</th> 
+					        <th  scope="col">Dose Count</th> 
 					        <th  scope="col">Gender</th> 
 					        <th  scope="col">Lower Age Limit</th> 
 					        <th  scope="col">Upper Age Limit</th> 
