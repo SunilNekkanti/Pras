@@ -1,7 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.InsuranceProvider;
-import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.InsuranceProviderService;
 import com.pfchoice.core.service.InsuranceService;
@@ -98,9 +96,20 @@ public class ProviderController{
 		model.addAttribute("provider", dbProvider);
 		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
 		model.addAttribute("insPrvdrList", insPrvdrList);
+		logger.info("Returning providerView.jsp page");
+        return "providerDetails";
+    }
+	
+	@RequestMapping(value = "/provider/{id}/details", method = RequestMethod.GET)
+    public String viewProviderPage(@PathVariable Integer id,Model model) {
 		
-			
-        logger.info("Returning providerSave.jsp page");
+		Provider dbProvider = providerService.findById(id);
+		logger.info("Returning provider.getId()"+dbProvider.getId());
+			       
+		model.addAttribute("provider", dbProvider);
+		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+		model.addAttribute("insPrvdrList", insPrvdrList);
+		logger.info("Returning providerView.jsp page");
         return "providerEdit";
     }
 	
@@ -124,14 +133,13 @@ public class ProviderController{
 	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"update"})
     public String updateProviderAction( @PathVariable Integer id,@Validated Provider provider,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("Returning providerSuccess.jsp page before delete");
         if (bindingResult.hasErrors()) {
         	provider.setActiveInd('Y');
             logger.info("Returning providerEdit.jsp page");
             return "providerEdit";
         }
         
-        if (null != provider.getId())
+        if ( provider.getId() != null)
         {
         	logger.info("Returning ProviderEditSuccess.jsp page after update");
         	Provider dbProvider = providerService.findById(id);
@@ -147,6 +155,8 @@ public class ProviderController{
         	
         	provider.setUpdatedBy(username);
         	providerService.update(provider);
+        	model.addAttribute("Message", "Provider Details Updated Successfully");
+    		
         }
         return "providerEditSuccess";
     }

@@ -1,7 +1,5 @@
 package com.pfchoice.form.validator;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -21,9 +19,6 @@ public class MembershipInsuranceValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
        
-         
-        MembershipInsurance mbrIns = (MembershipInsurance) obj;
-        
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "insId", 	"error.insId",	"Insurance Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activityDate", 	"error.activityDate",	"Activity date Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "activityMonth", 	"error.activityMonth",	"Activity Month Required");

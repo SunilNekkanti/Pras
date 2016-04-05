@@ -57,7 +57,6 @@ public class ApplicationContext
 
 //<editor-fold defaultstate="collapsed" desc="HikariCP Datasoure Configuration" >
     
-    @SuppressWarnings("unchecked")
     @Bean(destroyMethod = "close")
     @Autowired
     public DataSource dataSource()
@@ -73,9 +72,7 @@ public class ApplicationContext
         //------------------------------
         return dataSource;
     }
-//</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Hibernate Session factory configuration">
     @Bean
     @Autowired
     public LocalSessionFactoryBean sessionFactory(DataSource datasouce)
@@ -101,12 +98,10 @@ public class ApplicationContext
         hibernateProperties.put(idleTimeout, env.getProperty(idleTimeout));
         hibernateProperties.put(maxLifeTime, env.getProperty(maxLifeTime));
          
-//        hibernateProperties.put(hibernate_connection_provider_class, env.getProperty(hibernate_connection_provider_class));
         return hibernateProperties;
 
     }
 
-//<editor-fold defaultstate="collapsed" desc="Hibernate transaction manager">
     @Bean
     @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory sessionFactory)

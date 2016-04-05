@@ -2,17 +2,22 @@
 <%@ page session="false" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
- <h2> Provider Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Provider Update</div>
+		<div class="panel-heading">
+			Info
+				<button class="btn btn-danger pull-right btn-xs" onclick= "return providerDetails();">
+          		<span class="glyphicon glyphicon-plus-sign "></span> Provider Details
+          	</button>
+		
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="well well-sm">
+					<p>${Message}</p>
   					<p> <strong>Name:${provider.name}</strong>  </p>
   					<p><strong>Code:${provider.code}</strong>  </p>
   					<p> Updated Successfully  </p>
-					<a href="${context}/providerList">Click Here</a> Move to Provider list
 				</div>	
 			</div>
 		</div>

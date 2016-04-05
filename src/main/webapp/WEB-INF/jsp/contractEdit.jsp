@@ -94,6 +94,7 @@
 							<div class="col-sm-7">
 	                  			<c:choose>
 									<c:when test="${id != null && contract.activeInd == 89}"> 
+										<a href="#" onclick="myFunction(${contract.id})"><span class="glyphicon glyphicon-open-file"></span></a>
 										<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-file"></span> File </button>
 									</c:when>
 									<c:when test="${contract.id == null}"> 
@@ -123,24 +124,13 @@
 </div>
 
 
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Contract File Content</h4>
-      </div>
-      <div class="modal-body"  id="modal-body">
-       ${fileContent}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<script>
+function myFunction(id) 
+{
+	var w = 500;
+	var h = 500;
+	var left = (screen.width/2)-(w/2);
+	var top = (screen.height/2)-(h/2);
+	window.open (getContextPath()+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+</script>

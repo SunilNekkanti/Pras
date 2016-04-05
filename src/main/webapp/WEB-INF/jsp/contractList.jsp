@@ -50,10 +50,10 @@
 							    	<c:choose>
 									
 									 <c:when test="${cntct.referenceContract.insPrvdr.prvdr != null}">
-										<a href="${context}/provider/${cntct.referenceContract.insPrvdr.prvdr.id}/contract/${cntct.id}"  href="#" rel='tab' >View</a>
+										<a onclick ="return contract(${cntct.referenceContract.insPrvdr.prvdr.id},${cntct.id})" href="#" rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.referenceContract.ins != null}">
-										<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"  href="#"  rel='tab' >View</a>
+										<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id})" href="#"  rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue
@@ -104,22 +104,14 @@
 </div>
 
 <script>
-	function myFunction(id) 
-	{
-		
-		var w = 500;
-	    var h = 500;
-	    var left = (screen.width/2)-(w/2);
-	    var top = (screen.height/2)-(h/2);
-	    
-
+function myFunction(id) 
+{
+	var w = 500;
+    var h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
 	window.open (getContextPath()+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-	    alert(window.parent.location);
-	    
-	    
-		 
-	}
-	
-	
+	alert(window.parent.location);
+}
 </script>
 	

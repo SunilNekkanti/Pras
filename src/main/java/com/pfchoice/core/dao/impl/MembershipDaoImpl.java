@@ -61,7 +61,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 				crit.addOrder(Order.asc(sort));
 			}
 		}
-        
+        crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         Pagination page = findByCriteria(crit, pageNo, pageSize);
         return page;
     }

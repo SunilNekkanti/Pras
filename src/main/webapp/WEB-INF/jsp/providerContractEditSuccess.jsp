@@ -1,20 +1,10 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@  page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="UTF-8"%>
+		
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
- <h2> Contract Updated Successfully.</h2>
-<div class="panel-group">
-	<div class="panel panel-primary">
-		<div class="panel-heading">Contract Update</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="well well-sm">
-  				
-  					<p><strong>PMPM:${contract.pmpm}</strong>  </p>
-  					<p><strong>Contract NBR:${contract.contractNBR}</strong>  </p>
-  					<p> Updated Successfully  </p>
-					
-				</div>	
-			</div>
-		</div>
-	</div>
-</div>	
+<jsp:include page="/WEB-INF/jsp/contractEditSuccess.jsp">
+ <jsp:param name="contract" value="${contract}"/>
+</jsp:include>
+

@@ -20,11 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
-import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipHedisFollowup;
-import com.pfchoice.core.entity.MembershipInsurance;
-import com.pfchoice.core.entity.MembershipProvider;
-import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.MembershipHedisFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipService;

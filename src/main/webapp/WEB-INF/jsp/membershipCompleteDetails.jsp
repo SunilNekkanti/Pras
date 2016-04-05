@@ -4,7 +4,7 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-sm-12" id="mbrDetails">
 		<jsp:include page="/WEB-INF/jsp/membershipEdit.jsp">
  			<jsp:param name="membershipEdit" value="${membershipEdit}"/>
 		</jsp:include>
@@ -21,7 +21,9 @@
 	</div>
 </div>
 
-<div class="row" id="mbrInsList"></div>
+<div class="row">
+	<div class="col-sm-12" id="mbrInsList"></div>
+</div>
 
 <div class="row">
 	<div class="col-sm-12">
@@ -44,6 +46,33 @@
 </div>	
 
 <script>		
+
+	function modifyMbrDetails()
+	{
+		
+		var url = getContextPath()+'membership/${id}/save?update';
+		var dataList = 	$("#membership").serialize();
+		alert(dataList);
+		$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: dataList, 
+	           success: function(data)
+	           {
+	               $('#mbrDetails').html(data);
+	               alert(data);
+	           },
+	    		error:function(data)
+	    		{
+	    			 alert("Membership Details Modify Error");
+	    		}
+	         });
+	}
+	function deletembrDetails()
+	{
+		alert("deleteMbrDetails");
+		var source = getContextPath()+'membership/${id}/contactList';
+	}
 	var source = getContextPath()+'membership/${id}/contactList';
 	$.ajax({
 		url : source,

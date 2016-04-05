@@ -80,6 +80,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEditSuccess.jsp" />  
     </definition>  
     
+     <definition name="membershipDetails" extends="base1.definition">  
+        <put-attribute name="title" value="Membership Profile" />  
+        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/membershipDetails.jsp" />  
+    </definition>  
+    
     <definition name="membershipDisplay" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" /> 
         <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
@@ -119,17 +125,20 @@
         <put-attribute name="body" value="/WEB-INF/jsp/providerNew.jsp" />  
     </definition> 
     
+     <definition name="providerEdit" extends="baseNoHeader.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/providerEdit.jsp" />  
+    </definition> 
+    
      <definition name="providerNewSuccess" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/providerEditSuccess.jsp" />  
     </definition> 
     
-    <definition name="providerEdit" extends="base1.definition">  
-        <put-attribute name="body" value="/WEB-INF/jsp/providerEdit.jsp" />  
+     <definition name="providerDetails" extends="base1.definition">  
+     <put-attribute name="title" value="Provider Profile" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/providerDetails.jsp" />  
     </definition>  
    
-    <definition name="providerEditSuccess" extends="base1.definition">  
-        <put-attribute name="title" value="Provider Profile" />  
-        <put-attribute name="menu" value="" />
+    <definition name="providerEditSuccess" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/providerEditSuccess.jsp" />  
     </definition>
       

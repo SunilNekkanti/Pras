@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.HedisMeasureRuleDao;
 import com.pfchoice.core.entity.HedisMeasureRule;
-import com.pfchoice.core.entity.Role;
 
 /**
  *
