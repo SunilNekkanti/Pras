@@ -24,7 +24,7 @@
 			<springForm:form method="POST" id="membership" data-toggle="validator" commandName="membership" action="${context}/membership/${membership.id}/save.do" class="form-horizontal" role="form">
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="col-sm-6">
+						<div class="col-sm-3">
 							<div class="form-group required">
 								<label class="control-label col-sm-4" for="firstName">First Name</label>
 								<div class="col-sm-8">
@@ -33,7 +33,8 @@
 									<springForm:errors path="firstName" cssClass="error text-danger" />
 								</div>
 							</div>
-							 
+						</div>
+						<div class="col-sm-3">	 
 							<div class="form-group required">
 								<label class="control-label col-sm-4" for="lastName">Last Name</label>
 								<div class="col-sm-8">
@@ -41,6 +42,8 @@
 									<springForm:errors path="lastName" cssClass="error text-danger" />
 								</div>
 							</div>
+						</div>
+						<div class="col-sm-3">	
 							<div class="form-group required">
 								<label class="control-label col-sm-4" for="gender">Gender</label>
 								<div class="col-sm-8">
@@ -51,6 +54,9 @@
 									<springForm:errors path="genderId" cssClass="error text-danger" />
 								</div>
 							</div>
+						</div>
+						
+						<div class="col-sm-3">	
 							<div class="form-group required">
 							 	<label class="control-label col-sm-4" for="dob">DOB</label>
 								<div class="col-sm-8">
@@ -59,8 +65,9 @@
 									<springForm:errors path="dob" cssClass="error text-danger" />
 								</div>
 							</div>
-							
-							<div class="form-group">
+						</div>
+						
+							<!-- <div class="form-group">
 								<label class="control-label col-sm-4" for="ethinicCode">Ethinicity</label>
 								<div class="col-sm-8">
 									<springForm:select path="ethinicCode" class="form-control" id="ethinicCode" >
@@ -68,9 +75,10 @@
 									</springForm:select>
 									<springForm:errors path="ethinicCode" cssClass="error text-danger" />
 								</div>
-							</div>
+							</div> -->
 						</div>
-						<div class="col-sm-6">
+						<div class="col-sm-12">
+						<div class="col-sm-3">
 							<div class="form-group required">
 								<label class="control-label col-sm-4" for="status">Status</label>
 								<div class="col-sm-8">
@@ -81,7 +89,8 @@
 									<springForm:errors path="status" cssClass="error text-danger" />
 								  </div>
 							</div>
-								
+							</div>
+							<div class="col-sm-3">	
 							<div class="form-group required">
 								<label class="control-label col-sm-4" for="county">County</label>
 								<div class="col-sm-8">
@@ -92,6 +101,8 @@
 									<springForm:errors path="countyCode" cssClass="error text-danger" />
 								</div>
 							</div>
+							</div>
+							<div class="col-sm-3">
 							<div class="form-group drequired">
 								<label class="control-label  drequired col-sm-4" for="medicaidNo">Medicaid No</label>
 								<div class="col-sm-8">
@@ -99,6 +110,8 @@
 									<springForm:errors path="medicaidNo" cssClass="error text-danger" />
 								</div>
 							</div>
+						  </div>
+						  <div class="col-sm-3">	
 							<div class="form-group drequired">
 								<label class="control-label col-sm-4" for="medicareNo">Medicare No</label>
 								<div class="col-sm-8">
@@ -106,11 +119,11 @@
 									<springForm:errors path="medicareNo" cssClass="error text-danger" />
 								</div>
 							</div>
-						</div>
+							</div>	
 					</div>
 				</div>
 				<div class="col-sm-12">	 
-					<div class="col-sm-offset-6 col-sm-4">
+					<div class="col-sm-offset-10 col-sm-2">
 						<c:choose>
 							 <c:when test="${membership.id != null && membership.activeInd == 89}"> 
 								<button type="submit" class="btn btn-primary" name = "update" id="updateButton">Update</button>

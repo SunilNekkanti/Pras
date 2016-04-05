@@ -12,7 +12,7 @@
         <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
         <li><a href="#completed" data-toggle="tab">Completed</a></li>
     </ul>
-    <div class="row" style="height: 250px;overflow-y: scroll;">
+    <div class="row" >
 	    <div class="col-sm-12" >
 		    <div id="my-tab-content fade active in" class="tab-content">
 		        <div class="tab-pane active" id="pending">
