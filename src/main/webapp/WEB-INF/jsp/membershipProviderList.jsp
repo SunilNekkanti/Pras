@@ -27,9 +27,9 @@ prasPagination('provider');
 			<table id="tab" class="table table-striped table-hover">
 				<thead>
 					<tr>
-							<th scope="col">Action</th> 
 							<th scope="col">Name</th>
-							<th scope="col">Code</th>
+							<th scope="col">NPI</th>
+							<th scope="col">Insurances</th>
 					</tr>
 				</thead>
 
@@ -37,18 +37,17 @@ prasPagination('provider');
 					
 					<c:forEach items="${membershipProviderList}" var="mbrProvider">
 						<tr>
-							<td> 
-							    <c:choose>
-							    <c:when test="${fn:contains(mbrProvider.activeInd, 'Y')}">
-									 	<a href="${context}/membership/${mbrProvider.mbr.id}/memberProvider/${mbrProvider.id}"   rel='tab' >Edit</a> 
-							    </c:when>
-							    <c:otherwise> 
-										<a href="${context}/membership/${mbrProvider.mbr.id}/memberProvider/${mbrProvider.id}/display"   rel='tab' >View</a>
-							    </c:otherwise>
-							    </c:choose>
-							    </td>
 							<td> <a href="${context}/provider/${mbrProvider.id}"   rel='tab' > ${mbrProvider.prvdr.name}</a></td> 
 						    <td> ${mbrProvider.prvdr.code}  </td> 
+						    <%String insPrvdrNames ="";  %>
+						    <c:forEach items="${mbrProvider.prvdr.insPrvdrs}" var="insPrvdr">
+						    	<c:choose>
+									 <c:when test="${insPrvdr.id != null && insPrvdr.activeInd == 89}"> 
+									 <c:set var="insPrvdrNames" value=" ${insPrvdr.ins.name},${insPrvdrNames}" /> 
+					                 </c:when>
+					            </c:choose>
+						    </c:forEach>
+						    <td> ${insPrvdrNames}  </td>
 						 </tr>     
 					</c:forEach>
 				</tbody>

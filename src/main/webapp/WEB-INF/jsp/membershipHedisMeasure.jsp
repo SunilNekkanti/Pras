@@ -12,7 +12,7 @@
         <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
         <li><a href="#completed" data-toggle="tab">Completed</a></li>
     </ul>
-    <div class="row" style="height: 750px;overflow-y: scroll;">
+    <div class="row" style="height: 250px;overflow-y: scroll;">
 	    <div class="col-sm-12" >
 		    <div id="my-tab-content fade active in" class="tab-content">
 		        <div class="tab-pane active" id="pending">
@@ -20,7 +20,7 @@
 							<div class="panel panel-primary">
 								<div class="panel-heading">Membership Hedis Measure</span></div>
 								<div class="panel-body" id="tablediv">
-									<div class="col-sm-12 fdl">
+									<div class="col-sm-12">
 										<table id="tab" class="table table-striped table-hover">
 											<thead>
 												<tr>
@@ -61,7 +61,7 @@
 							<div class="panel panel-primary">
 								<div class="panel-heading">Membership Hedis Measure</span></div>
 								<div class="panel-body" id="tablediv">
-									<div class="col-sm-12 fdl">
+									<div class="col-sm-12 ">
 										<table id="tab" class="table table-striped table-hover">
 											<thead>
 												<tr>
