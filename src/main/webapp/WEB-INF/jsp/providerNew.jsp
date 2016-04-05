@@ -13,7 +13,11 @@
 </script>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Provider Profile</div>
+		<div class="panel-heading">Provider Profile
+			<a class="btn btn-danger pull-right btn-xs"href="${context}/providerList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Provider List
+          	</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" id="provider" commandName="provider" action="save.do">
 				<div class="form-group required col-sm-12">
@@ -54,15 +58,7 @@
 				</div>
 				 
 			</springForm:form>
-			
-			
-			<div class="row col-sm-12">
-				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="${context}/providerList">Click Here</a> to see Provider List
-				</div>	
-			</div>
-			
- 		</div>
+		</div>
 	</div>
 </div>	
 

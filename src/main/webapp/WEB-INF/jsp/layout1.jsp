@@ -73,21 +73,19 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
   </style>
 
 </head> 
-<script>
-$(document).ready(function() {
-	   $(function() {
-	      $(".datepicker").datepicker({
-	         dateFormat: 'mm/dd/yy'
-	      });
-	   });
-	});
-</script> 
+
 <body>  
 <script>
 
 $(document).ready(function(){	
-	
+	 $(".datepicker").datepicker({
+         dateFormat: 'mm/dd/yy'
+      });
 
+	  $('body').on('focus',".datepicker", function(){
+		    $(this).datepicker();
+		   });
+	  
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('lastTab', $(this).attr('href'));
     });

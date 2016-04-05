@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+
 import com.google.gson.annotations.Expose;
 
 /**
@@ -42,7 +44,7 @@ public class Contract implements Serializable
     
     @Expose
     @Column(name="PMPM")
-    private Double PMPM;
+    private Double pmpm;
 
     @Expose
     @Column(name="start_date")
@@ -53,12 +55,12 @@ public class Contract implements Serializable
     private Date endDate;
     
     @Expose
-    @OneToOne(  fetch = FetchType.EAGER)
+    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name="ref_contract_id", referencedColumnName="ref_contract_id")
     private ReferenceContract referenceContract;
     
     @Expose
-    @OneToOne(  fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="file_upload_id", referencedColumnName="file_upload_id")
     private FilesUpload filesUpload;
     
@@ -80,6 +82,7 @@ public class Contract implements Serializable
     @Column(name="active_ind",insertable=false)
     private Character activeInd;
     
+    @Expose
     @Transient
     private Integer insPrvdrId;
     
@@ -118,17 +121,17 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @return the pMPM
+	 * @return the pmpm
 	 */
-	public Double getPMPM() {
-		return PMPM;
+	public Double getPmpm() {
+		return pmpm;
 	}
 
 	/**
-	 * @param pMPM the pMPM to set
+	 * @param pmpm the pmpm to set
 	 */
-	public void setPMPM(final Double pMPM) {
-		PMPM = pMPM;
+	public void setPmpm(Double pmpm) {
+		this.pmpm = pmpm;
 	}
 
 	/**

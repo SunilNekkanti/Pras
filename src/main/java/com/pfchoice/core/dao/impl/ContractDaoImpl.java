@@ -82,7 +82,8 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      	if(refRestrictionString != null)
      	{
      		cr.add(Restrictions.eq(refRestrictionString, id));
-     	}		
+     	}	
+     	cr.add(Restrictions.eq("contract.activeInd", 'Y'));
      	List<Contract> list = cr.list();
      	return list;
      }
@@ -106,7 +107,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
      			cr.add(Restrictions.eq(refRestrictionString, id));
      	}		
    				
-       			cr.add(Restrictions.eq("contract.activeInd", 'Y'));
+       	cr.add(Restrictions.eq("contract.activeInd", 'Y'));
      	List<Contract> list = cr.list();
      	if(list.size()>0)
      		contract =list.get(0);

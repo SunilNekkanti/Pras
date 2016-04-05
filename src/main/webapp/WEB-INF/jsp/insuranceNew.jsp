@@ -12,7 +12,11 @@
 
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Insurance Profile</div>
+		<div class="panel-heading">Insurance Profile
+			<a class="btn btn-danger pull-right btn-xs"href="${context}/insuranceList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Insurance List
+          	</a>
+		</div>
 		<div class="panel-body">
 			<springForm:form method="POST" commandName="insurance" id="insurance" action="save.do" class="form-horizontal" role="form">
 			     <div class="form-group required">
@@ -49,11 +53,6 @@
 				</div>
 				
 			</springForm:form>
-			<div class="row col-sm-12">
-				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="${context}/insuranceList">Click Here</a> to see Insurance List
-				</div>	
-			</div>
 		</div>
 	</div>	
 </div>	

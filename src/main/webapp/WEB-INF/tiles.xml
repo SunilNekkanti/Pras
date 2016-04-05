@@ -86,22 +86,15 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDisplay.jsp" />  
     </definition>  
     
-    <definition name="membershipDetailsList" extends="base.definition">  
-        <put-attribute name="title" value="MembershipDetails List" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
-        <put-attribute name="menubar" value="" /> 
+    <definition name="membershipDetailsList" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsList.jsp" />  
     </definition>  
     
-    <definition name="membershipDetailsDisplay" extends="base1.definition">  
-        <put-attribute name="title" value="Membership Details" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsDisplay.jsp" />  
+    <definition name="membershipDetailsDisplay" extends="baseNoHeader.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsDisplay.jsp" />  
     </definition> 
     
-     <definition name="membershipDetailsEditSuccess" extends="base1.definition">  
-        <put-attribute name="title" value="Membership Profile" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+     <definition name="membershipDetailsEditSuccess" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsEditSuccess.jsp" />  
     </definition>  
     
@@ -201,15 +194,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEdit.jsp" />  
     </definition>  
     
-    <definition name="insuranceEditSuccess" extends="base.definition">  
-        <put-attribute name="title" value="Insurance Profile" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
-        <put-attribute name="body" value="/WEB-INF/jsp/insuranceEditSuccess.jsp" />  
+    <definition name="insuranceEditSuccess" extends="base1.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/insuranceEditSuccess.jsp" />  
     </definition>  
     
-    <definition name="insuranceDeleteSuccess" extends="base1.definition">  
-        <put-attribute name="title" value="Insurance Delete" />  
-               <put-attribute name="body" value="/WEB-INF/jsp/insuranceDeleteSuccess.jsp" />  
+    <definition name="insuranceDeleteSuccess" extends="baseNoHeader.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/insuranceDeleteSuccess.jsp" />  
     </definition>  
     
     <definition name="insuranceContractList" extends="baseNoHeader.definition">  
@@ -221,10 +211,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceContractEdit.jsp"/>
     </definition>  
     
-    <definition name="insuranceContractEditSuccess" extends="base.definition">  
-        <put-attribute name="title" value="Insurance Contract Details" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/insuranceContractEditSuccess.jsp" /> 
+    <definition name="insuranceContractEditSuccess" extends="baseNoHeader.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/insuranceContractEditSuccess.jsp" /> 
     </definition>  
     
     <definition name="insuranceContractDisplay" extends="base.definition">  
@@ -242,9 +230,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipTabMenu.jsp" />  
     </definition> 
     
-    <definition name="membershipContactList" extends="base.definition">  
-        <put-attribute name="title" value="Membership Contact List" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+    <definition name="membershipContactList" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipContactList.jsp" />  
     </definition>  
     
@@ -267,10 +253,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/contactEdit.jsp" />  
     </definition>  
     
-    <definition name="contactEditSuccess" extends="base1.definition">  
-        <put-attribute name="title" value="Membership Contact Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
-        <put-attribute name="body" value="/WEB-INF/jsp/contactEditSuccess.jsp" />  
+    <definition name="contactEditSuccess" extends="baseNoHeader.definition">  
+         <put-attribute name="body" value="/WEB-INF/jsp/contactEditSuccess.jsp" />  
     </definition>   
     
         <definition name="contactDisplay" extends="base1.definition">  
@@ -409,15 +393,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceContactEdit.jsp" />  
     </definition>  
     
-    <definition name="insuranceContactEditSuccess" extends="base.definition">  
-        <put-attribute name="title" value="Insurance Contact Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
-        <put-attribute name="body" value="/WEB-INF/jsp/insuranceContactEditSuccess.jsp" />  
+    <definition name="insuranceContactEditSuccess" extends="baseNoHeader.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/insuranceContactEditSuccess.jsp" />  
     </definition>   
     
-        <definition name="insuranceContactDisplay" extends="base.definition">  
-        <put-attribute name="title" value="Insurance Contact Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
+     <definition name="insuranceContactDisplay" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceContactDisplay.jsp" />  
     </definition> 
     
@@ -429,47 +409,33 @@
         <put-attribute name="body" value="/WEB-INF/jsp/providerContactEditSuccess.jsp" />  
     </definition>   
     
-        <definition name="providerContactDisplay" extends="base.definition">  
-        <put-attribute name="title" value="Provider Contact Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />
+     <definition name="providerContactDisplay" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/providerContactDisplay.jsp" />  
     </definition> 
     
     
-    <definition name="membershipContactEdit" extends="base.definition">  
-        <put-attribute name="title" value="Membership Contact" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+    <definition name="membershipContactEdit" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipContactEdit.jsp" />  
     </definition>  
     
-    <definition name="membershipContactEditSuccess" extends="base.definition">  
-        <put-attribute name="title" value="Membership Contact Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+    <definition name="membershipContactEditSuccess" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipContactEditSuccess.jsp" />  
     </definition>   
     
-        <definition name="membershipContactDisplay" extends="base.definition">  
-        <put-attribute name="title" value="Membership Contact Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
+     <definition name="membershipContactDisplay" extends="base.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipContactDisplay.jsp" />  
     </definition>
     
-    <definition name="membershipProviderEdit" extends="base.definition">  
-        <put-attribute name="title" value="Membership Provider Details" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/membershipProviderEdit.jsp" />  
+    <definition name="membershipProviderEdit" extends="baseNoHeader.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/membershipProviderEdit.jsp" />  
     </definition>  
     
-    <definition name="membershipProviderList" extends="base.definition">  
-        <put-attribute name="title" value="Membership Provider List" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
+    <definition name="membershipProviderList" extends="baseNoHeader.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipProviderList.jsp" />  
     </definition>  
     
-    <definition name="membershipHedisMeasure" extends="base.definition">  
-        <put-attribute name="title" value="Membership Hedis Measure" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/membershipHedisMeasure.jsp" />  
+    <definition name="membershipHedisMeasure" extends="baseNoHeader.definition">  
+       <put-attribute name="body" value="/WEB-INF/jsp/membershipHedisMeasure.jsp" />  
     </definition>  
     
      <definition name="membershipCompleteDetails" extends="base1.definition">  

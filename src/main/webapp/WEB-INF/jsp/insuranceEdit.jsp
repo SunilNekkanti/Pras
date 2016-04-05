@@ -4,20 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<script src="${context}/resources/js/validation.js"></script>
- <c:choose>
- 	<c:when test="${insurance.id != null}"> 
-	<script>
-		$(document).ready(function(){	 
-		
-	
-		});
-	</script>
-	</c:when>	
-	<c:otherwise>
-		<script>$(document).ready(function(){});</script>
-	</c:otherwise>
-</c:choose>
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Insurance Profile</div>
@@ -74,11 +60,8 @@
 	</div>	
 </div>	
 <div id="insuranceContractList"></div>
-<div id="insuranceContractEdit"></div>
-<div id="insuranceContractNew"></div>
 <div id="insuranceContactList"></div>
-<div id="insuranceContactEdit"></div>
-<div id="insuranceContactNew"></div>
+
 
 <script>
 	var source = getContextPath()+'insurance/${id}/contractList';
@@ -90,7 +73,7 @@
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
-	  	  alert("Error Insurance");
+	  	  alert("insurance Contract List Error");
 	    }
 	});
 	
@@ -103,7 +86,7 @@
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
-	  	  alert("Error");
+	  	  alert("insurance Contact List Error");
 	    }
 	});
 		
@@ -114,13 +97,11 @@
 			url : source,
 		     success: function(data, textStatus, jqXHR)
 		    {
-		    	$('#insuranceContractList').css("display","none");
-		    	$('#insuranceContractNew').show();
-		        $('#insuranceContractEdit').html(data);
+		    	$('#insuranceContractList').html(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("insurance Contract Error");
 		    }
 		});
 		return false;	
@@ -133,49 +114,33 @@
 			url : source,
 		     success: function(data, textStatus, jqXHR)
 		    {
-		    	$('#insuranceContactList').css("display","none");
-		    	$('#insuranceContactNew').show();
-		        $('#insuranceContactEdit').html(data);
+		    	 $('#insuranceContactList').html(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("insurance Contact Error");
 		    }
 		});
 		return false;	
 	}
 	
-	var source = getContextPath()+'insurance/${id}/contractList';
-	$.ajax({
-		url : source,
-	    success: function(data, textStatus, jqXHR)
-	    {
-	       $('#insuranceContractList').html(data);
-	    },
-	    error: function (jqXHR, textStatus, errorThrown)
-	    {
-	  	  alert("Error");
-	    }
-	});
+	
 
 	function newContract()
 	{
 		var source = getContextPath()+'insurance/${id}/contract/new';
-		alert('source '+source);
 		$.ajax({
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
 		    {
-		 		$('#insuranceContractList').css("display","none");
-		 		$('#insuranceContractNew').show();
-		        $('#insuranceContractNew').html(data);
+		 		$('#insuranceContractList').html(data);
 		        $('#contract').on('submit', function (event) {
 		        	
 		        });
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("insurance New Contract Error");
 		    }
 		});
 	}
@@ -187,116 +152,50 @@
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
 		    {
-		 		$('#insuranceContactList').css("display","none");
-		 		$('#insuranceContactNew').show();
-		        $('#insuranceContactNew').html(data);
+		 		$('#insuranceContactList').html(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("insurance New Contact Error");
 		    }
 		});
 	}
 	
 	function contractList()
 	{
-		$('#insuranceContractNew').css("display","none");
- 		$('#insuranceContractEdit').css("display","none");
- 		$('#insuranceContractList').show();
-		
+	  var source = getContextPath()+'insurance/${id}/contractList';
+ 	   $.ajax({
+ 	    url : source,
+ 	       success: function(data, textStatus, jqXHR)
+ 	       {
+ 	          $('#insuranceContractList').html(data);
+ 	       },
+ 	       error: function (jqXHR, textStatus, errorThrown)
+ 	       {
+ 	        alert("Providr Contract List Error");
+ 	       }
+ 	   });
+ 	   $('#insuranceContactList').show();
 	}
 	
 	function contactList()
 	{
-		$('#insuranceContactNew').css("display","none");
- 		$('#insuranceContactEdit').css("display","none");
- 		$('#insuranceContactList').show();
 		
+		   var source = getContextPath()+'insurance/${id}/contactList';
+		   alert(source);
+			$.ajax({
+				url : source,
+			    success: function(data, textStatus, jqXHR)
+			    {
+			       $('#insuranceContactList').html(data);
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			  	  alert("insurance Contact List Error");
+			    }
+			});
 	}
-	
-	
-	function addContract()
-	{
-		var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
-		var dataList = 	$("#contract").serializeArray();
-		dataList.push({})
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	               $('#insuranceContractNew').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert(data); 
-	    		}
-	         });
-	}
-	
-	function modifyContract()
-	{
-		var url = getContextPath()+'insurance/${id}/contract/save.do?update'; 
-		var dataList = 	$("#contract").serializeArray();
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	              
-	               $('#insuranceContractNew').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert(data); 
-	    		}
-	     });
-	}
-	
-	function addContact()
-	{
-		var url = getContextPath()+'insurance/${id}/contact/save.do?add'; 
-		var dataList = 	$("#contact").serializeArray();
-		dataList.push({})
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	              
-	               $('#insuranceContactNew').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert(data); 
-	    		}
-	         });
-	}
-	
-	
-	function addContact()
-	{
-		var url = getContextPath()+'insurance/${id}/contact/save.do?add'; 
-		var dataList = 	$("#contact").serializeArray();
-		
-		  
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	            	$('#providerContactNew').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert('add error '+ data); 
-	    		}
-	         });
-	}
+
 	
 	function addContract()
 	{
@@ -312,7 +211,7 @@
 	        data: formData,
 	        async: false,
 	        success: function (data) {
-	        	$('#insuranceContractNew').html(data);
+	        	$('#insuranceContractList').html(data);
 	        },
 	        cache: false,
 	        contentType: false,
@@ -321,5 +220,108 @@
 	    }
 	    return false;
 	}
+	
+	function modifyContract()
+	{
+		
+		var url = getContextPath()+'insurance/${id}/contract/save.do?update'; 
+		var dataList = 	$("#contract").serialize();
+		$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: dataList, 
+	           success: function(data)
+	           {
+	    			$('#insuranceContractList').html(data);
+	           },
+	    		error:function(data)
+	    		{
+	    			 alert('insurance Modify Error '+data); 
+	    		}
+	     });
+	}
+	
+	function deleteContract()
+	{
+		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		{
+			var url = getContextPath()+'provider/${id}/contract/save.do?delete'; 
+			var dataList = 	$("#contract").serialize();
+			$.ajax({
+		           type: "POST",
+		           url: url,
+		           data: dataList, 
+		           success: function(data)
+		           {
+		            	$('#insuranceContractList').html(data);
+		           },
+		    		error:function(data)
+		    		{
+		    			 alert('Insurance Delete Contact Error '+ data); 
+		    		}
+		         });
+		}	
+	}
+	
+	function addContact()
+	{
+		var url = getContextPath()+'insurance/${id}/contact/save.do?add'; 
+		var dataList = 	$("#contact").serialize();
+		$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: dataList, 
+	           success: function(data)
+	           {
+	            	$('#insuranceContactList').html(data);
+	           },
+	    		error:function(data)
+	    		{
+	    			 alert('insurance Add Contact Error '+ data); 
+	    		}
+	         });
+	}
+	
+	function modifyContact()
+	{
+		var url = getContextPath()+'insurance/${id}/contact/save.do?update'; 
+		var dataList = 	$("#contact").serialize();
+		$.ajax({
+	           type: "POST",
+	           url: url,
+	           data: dataList, 
+	           success: function(data)
+	           {
+	            	$('#insuranceContactList').html(data);
+	           },
+	    		error:function(data)
+	    		{
+	    			 alert('insurance Modify Contact Error '+ data); 
+	    		}
+	         });
+	}
+	function deleteContact()
+	{
+		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		{
+			var url = getContextPath()+'insurance/${id}/contact/save.do?delete'; 
+			var dataList = 	$("#contact").serialize();
+			$.ajax({
+		           type: "POST",
+		           url: url,
+		           data: dataList, 
+		           success: function(data)
+		           {
+		            	$('#insuranceContactList').html(data);
+		           },
+		    		error:function(data)
+		    		{
+		    			 alert('Insurance Delete Contact Error '+ data); 
+		    		}
+		         });
+		}	
+	}
+	
 	$(document).on("click", "#addButton",   function() { addContract(); } );
+
 </script>

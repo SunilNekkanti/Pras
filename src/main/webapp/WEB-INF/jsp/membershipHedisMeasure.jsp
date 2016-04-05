@@ -78,7 +78,7 @@
 													    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
 													    		 	
 																<c:choose>
-															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
+															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id && mbrHedisMeasure.dos != null}"> 
 															 		<td>${hedisMeasure.code}</td>
 															 		<td>${hedisMeasure.description}</td>
 																	<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dos} </a> 	 </td> 

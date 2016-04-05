@@ -2,6 +2,7 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.google.gson.annotations.Expose;
 
@@ -71,11 +74,8 @@ public class Provider implements Serializable
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
     @Expose
-    @OneToMany(fetch=FetchType.LAZY,  cascade=CascadeType.ALL)  
-    @JoinTable(name="insurance_provider",  
-    joinColumns={@JoinColumn(name="prvdr_id", referencedColumnName="prvdr_id")},  
-    inverseJoinColumns={@JoinColumn(name="ins_id", referencedColumnName="insurance_id")}) 
-    private List<Insurance> insurances ;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL ,  mappedBy = "prvdr",orphanRemoval=true)
+    private List<InsuranceProvider> insPrvdrs  = new ArrayList<InsuranceProvider>();
     
     public Provider()
     {
@@ -126,17 +126,17 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @return the insurances
+	 * @return the insPrvdrs
 	 */
-	public List<Insurance> getInsurances() {
-		return insurances;
+	public List<InsuranceProvider> getInsPrvdrs() {
+		return insPrvdrs;
 	}
 
 	/**
-	 * @param insurances the insurances to set
+	 * @param insPrvdrs the insPrvdrs to set
 	 */
-	public void setInsurances(List<Insurance> insurances) {
-		this.insurances = insurances;
+	public void setInsPrvdrs(List<InsuranceProvider> insPrvdrs) {
+		this.insPrvdrs = insPrvdrs;
 	}
 
 	/**

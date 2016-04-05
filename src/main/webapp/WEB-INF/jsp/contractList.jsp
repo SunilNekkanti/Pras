@@ -19,6 +19,7 @@
 						<tr>
 							<th  scope="col">Action</th> 
 							<th  scope="col">Contract NBR</th>  
+							<th  scope="col">PMPM</th>  
 					        <th  scope="col">Start Date</th> 
 					        <th  scope="col">End Date</th> 
 					        <th  scope="col">Contract File</th>
@@ -48,8 +49,8 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									
-									 <c:when test="${cntct.referenceContractinsPrvdr.prvdr != null}">
-										<a href="${context}/provider/${cntct.referenceContractinsPrvdr.prvdr.id}/contract/${cntct.id}"  href="#" rel='tab' >View</a>
+									 <c:when test="${cntct.referenceContract.insPrvdr.prvdr != null}">
+										<a href="${context}/provider/${cntct.referenceContract.insPrvdr.prvdr.id}/contract/${cntct.id}"  href="#" rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.referenceContract.ins != null}">
 										<a href="${context}/insurance/${cntct.referenceContract.ins.id}/contract/${cntct.id}"  href="#"  rel='tab' >View</a>
@@ -62,6 +63,7 @@
 							    </c:choose>
 							    </td>
 								   	<td> ${cntct.contractNBR}</td> 
+								   	<td> ${cntct.pmpm}</td> 
 						        	<td> ${cntct.startDate}</td>
 						        	<td> ${cntct.endDate}</td>
 						        	<td> <a href="#" onclick="myFunction(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td>

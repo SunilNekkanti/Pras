@@ -1,14 +1,11 @@
 package com.pfchoice.springmvc.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -178,7 +175,7 @@ public class ContractController{
         	
         	logger.info("Returning contractEditSuccess.jsp page after create");
  	      	contractService.save(contract);
-       
+ 	       model.addAttribute("Message", "Provider Contract Added Successfully");
         return "providerContractEditSuccess";
         }    
     }
@@ -195,12 +192,20 @@ public class ContractController{
         {
 	        if (contract.getId() != null)
 	        {
-	        	logger.info("Returning ContractEditSuccess.jsp page after update");
+	        	Contract dbContract = contractService.findById(id);
+	        	InsuranceProvider dbInsuranceProvider = dbContract.getReferenceContract().getInsPrvdr();
+	        	
 	        	contract.setUpdatedBy(username);
+	        	contract.setCreatedBy(username);
+	        	contract.setActiveInd('Y');
+	        	contract.getReferenceContract().setInsPrvdr(dbInsuranceProvider);
 	        	contract.getReferenceContract().setUpdatedBy(username);
+	        	contract.getReferenceContract().setCreatedBy(username);
+	        	contract.getReferenceContract().setActiveInd('Y');
+	        	logger.info("Returning ContractEditSuccess.jsp page after update");
 	        	contractService.update(contract);
 	        }
-	       
+	        model.addAttribute("Message", "Provider Contract Updated Successfully");
 	        return "providerContractEditSuccess";
         }    
     }
@@ -213,6 +218,11 @@ public class ContractController{
         }
         dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
 		model.addAttribute("contract", dbContract);
+		
+		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+		model.addAttribute("insPrvdrList", insPrvdrList);
+		
+		model.addAttribute("insuranceRequired", true);
 		
         logger.info("Returning contractEdit.jsp page");
         return "providerContractEdit";
@@ -236,6 +246,7 @@ public class ContractController{
 	        	contract.setActiveInd('N');
 	        	contractService.update(contract);
 	        }
+	        model.addAttribute("Message", "Provider Contract Deleted Successfully");
 	        return "providerContractEditSuccess";
     }
 	
@@ -303,6 +314,7 @@ public class ContractController{
         	
 	      	contractService.save(contract);
 	     	logger.info("Returning insuranceContractEditSuccess.jsp page after create");
+	     	model.addAttribute("Message", "Insurance Contract Added Successfully");
 	      	return "insuranceContractEditSuccess";
 	    }
 		
@@ -320,11 +332,15 @@ public class ContractController{
 	        {
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
 	        	contract.setUpdatedBy(username);
+	        	contract.setCreatedBy(username);
 	        	contract.getReferenceContract().setUpdatedBy(username);
+	        	contract.getReferenceContract().setCreatedBy(username);
+	        	contract.getReferenceContract().setActiveInd('Y');
+	        	contract.setActiveInd('Y');
 	        	contractService.update(contract);
+	        	 model.addAttribute("Message", "Insurance Contract Updated Successfully");
 	        	return "insuranceContractEditSuccess";
 	        }
-	       
 	        return "insuranceContractEdit";
 	    }
 		
@@ -345,6 +361,7 @@ public class ContractController{
 		        	contract.setUpdatedBy(username);
 		        	contract.getReferenceContract().setUpdatedBy(username);
 		        	contractService.update(contract);
+		        	  model.addAttribute("Message", "Insurance Contact Deleted Successfully");
 		        	return "insuranceContractEditSuccess";
 		        }
 		        return "insuranceContractEdit";

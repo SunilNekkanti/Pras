@@ -1,6 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,17 +25,23 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.InsuranceProvider;
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;
+import com.pfchoice.core.service.InsuranceProviderService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.ProviderService;
+
 
 @Controller
 @SessionAttributes("username")
 public class ProviderController{
 	
 	@Autowired
+	private InsuranceProviderService insuranceProviderService;
+	 
+	@Autowired
 	private InsuranceService insuranceService;
-	   
 	 
     @Autowired
     private ProviderService providerService;
@@ -89,6 +96,9 @@ public class ProviderController{
 		logger.info("Returning provider.getId()"+dbProvider.getId());
 			       
 		model.addAttribute("provider", dbProvider);
+		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+		model.addAttribute("insPrvdrList", insPrvdrList);
+		
 			
         logger.info("Returning providerSave.jsp page");
         return "providerEdit";
@@ -123,6 +133,19 @@ public class ProviderController{
         if (null != provider.getId())
         {
         	logger.info("Returning ProviderEditSuccess.jsp page after update");
+        	Provider dbProvider = providerService.findById(id);
+        	dbProvider.getInsPrvdrs().forEach(existinginsPrvdr ->  {
+        		if( !provider.getInsPrvdrs().contains(existinginsPrvdr)){
+        			System.out.println("removed insPrvdr id"+existinginsPrvdr.getId());
+        			existinginsPrvdr.setActiveInd('Y');
+        			existinginsPrvdr.getRefContracts().forEach(refContract -> {
+        				refContract.setActiveInd('N');
+        				refContract.getContract().setActiveInd('N');
+        			}  );
+        			existinginsPrvdr.setActiveInd('N');
+            	}
+        	});
+        	
         	provider.setUpdatedBy(username);
         	providerService.update(provider);
         }

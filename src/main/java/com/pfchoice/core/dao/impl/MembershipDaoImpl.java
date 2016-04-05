@@ -99,7 +99,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999)
     	{
     		crit.createAlias("mbrProvider.prvdr", "prvdr");
-    		crit.createAlias("prvdr.insurances", "ins");
+    		crit.createAlias("insPrvdrs", "insPrvdr");
+        	crit.createAlias("insPrvdr.ins", "ins");
     		and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
     		and.add(Restrictions.eq("ins.id", sSearchIns));
     	}

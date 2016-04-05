@@ -62,7 +62,7 @@
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                            { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "33%"},
                            { "mDataProp": "code","bSearchable" : true, "bSortable": true,"sWidth" : "33%"  },
-                           { "mDataProp": "insurances[, ].name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
+                           { "mDataProp": "insPrvdrs[, ].ins.name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
                        ],
               "aoColumnDefs": [ 
                        		    { "sName": "id", "aTargets": [ 0 ] },
@@ -71,7 +71,7 @@
                                           return '<a href="provider/'+full.id+'">'+data+'</a>';
                                 }},
                        		    { "sName": "code", "aTargets": [ 2 ] },
-                       		    { "sName": "insurances[, ].name", "aTargets": [ 3 ]}
+                       		    { "sName": "insPrvdrs[, ].ins.name", "aTargets": [ 3 ]}
               ],          
     	     "bLengthChange": false,
     	     "iDisplayLength": 15,
@@ -84,10 +84,14 @@
     	
 } );
     </script>
-
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading"> Provider List</div>
+		<div class="panel-heading"> Provider List
+			<a class="btn btn-danger pull-right btn-xs"href="${context}/provider/new">
+          		<span class="glyphicon glyphicon-plus-sign "></span> New Provider
+          	</a>
+		</div>
 		<div class="panel-body" >
 			<table id="providerTable" class="table table-striped table-hover table-responsive">
 				<thead>

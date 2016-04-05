@@ -2,19 +2,26 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 import com.google.gson.annotations.Expose;
 /**
@@ -26,26 +33,29 @@ import com.google.gson.annotations.Expose;
 public class InsuranceProvider implements Serializable
 {
 
-
     private static final long serialVersionUID = 1L;
 
     @Expose
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name="ins_prvdr_id", nullable = false)
     private Integer id;
 
-    @Expose
-    @ManyToOne(fetch = FetchType.EAGER)
+   // @Expose
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="prvdr_id", nullable = false, referencedColumnName="prvdr_id")
     private Provider prvdr;
     
-  //  @Expose
-    @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
+    @Expose
+    @OneToOne( fetch=FetchType.EAGER )
     @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
     private Insurance ins;
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "insPrvdr")
+    private Set<ReferenceContract> refContracts;
+    
+   
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
     private Date createdDate;
@@ -113,6 +123,19 @@ public class InsuranceProvider implements Serializable
 		this.prvdr = prvdr;
 	}
 
+	/**
+	 * @return the refContracts
+	 */
+	public Set<ReferenceContract> getRefContracts() {
+		return refContracts;
+	}
+
+	/**
+	 * @param refContracts the refContracts to set
+	 */
+	public void setRefContracts(Set<ReferenceContract> refContracts) {
+		this.refContracts = refContracts;
+	}
 
 	/**
 	 * @return the createdDate

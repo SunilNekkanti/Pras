@@ -80,9 +80,14 @@
 
 } );
     </script>
+    <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Insurance List </div>
+		<div class="panel-heading">Insurance List 
+			<a class="btn btn-danger pull-right btn-xs"href="${context}/insurance/new">
+          		<span class="glyphicon glyphicon-plus-sign "></span>New Insurance
+          	</a>
+		</div>
 		<div class="panel-body" >
 				<table id="insuranceTable" class="table table-striped table-hover table-responsive">
 					<thead>

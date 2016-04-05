@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,9 +44,12 @@ public class ReferenceContract implements Serializable
     private Insurance ins;
     
     @Expose
-    @OneToOne(  fetch = FetchType.EAGER)
+    @OneToOne(  fetch = FetchType.LAZY)
     @JoinColumn(name="ins_prvdr_id", referencedColumnName="ins_prvdr_id")
     private InsuranceProvider insPrvdr;
+    
+    @OneToOne(  fetch = FetchType.LAZY, mappedBy="referenceContract")
+    private Contract contract;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -112,6 +116,20 @@ public class ReferenceContract implements Serializable
 	 */
 	public void setInsPrvdr(InsuranceProvider insPrvdr) {
 		this.insPrvdr = insPrvdr;
+	}
+
+	/**
+	 * @return the contract
+	 */
+	public Contract getContract() {
+		return contract;
+	}
+
+	/**
+	 * @param contract the contract to set
+	 */
+	public void setContract(Contract contract) {
+		this.contract = contract;
 	}
 
 	/**

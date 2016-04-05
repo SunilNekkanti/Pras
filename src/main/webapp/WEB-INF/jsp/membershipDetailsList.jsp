@@ -33,7 +33,11 @@
 <body>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Insurance Details</div>
+		<div class="panel-heading">Insurance Details
+			<button class="btn btn-success pull-right btn-xs" onclick= "return mbrNewIns();">
+          		<span class="glyphicon glyphicon-plus-sign "></span> Member New Insurance
+          	</button>
+		</div>
 			<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover table-responsive">
 					<thead>
@@ -57,7 +61,7 @@
 						
 						<c:forEach items="${membershipDetailsList}" var="mbrDetails">
 							    <tr>
-								   <td> <a href="${context}/membership/${id}/details/${mbrDetails.id}/display"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
+								   <td> <a onclick="mbrDetails(${id},${mbrDetails.id}); return false;" href="javascript:void(0)"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
 						        <td> ${mbrDetails.newBenifits} </td> 
 						        <td> ${mbrDetails.activityDate}  </td> 
 						        <td> ${mbrDetails.activityMonth}</td>

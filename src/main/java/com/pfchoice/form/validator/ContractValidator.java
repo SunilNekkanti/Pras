@@ -35,7 +35,7 @@ public class ContractValidator implements Validator {
             errors.rejectValue("contractNBR", "contractNBR.tooshort",     "Contract NBR must be at least 5 characters and less than 20 characters.");
         }
                  
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "PMPM", 		"error.PMPM", 		"PMPM Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pmpm", 		"error.PMPM", 		"PMPM Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate",  "error.startDate",  "Start Date Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", 	"error.endDate",    "End Date Required");
         

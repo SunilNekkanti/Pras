@@ -98,7 +98,8 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     {
     	
     	 Criteria crit = createCriteria();
-    	 crit.createAlias("insurances", "ins");
+    	 crit.createAlias("insPrvdrs", "insPrvdr");
+    	 crit.createAlias("insPrvdr.ins", "ins");
          crit.add(Restrictions.eq("activeInd", 'Y'));
          crit.add(Restrictions.eq("ins.id", id));
          

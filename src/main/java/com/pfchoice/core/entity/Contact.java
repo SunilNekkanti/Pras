@@ -34,6 +34,10 @@ public class Contact implements Serializable
     @Basic(optional = false)
     @Column(name="cnt_Id", nullable = false)
     private Integer id;
+    
+    @Expose
+    @Column(name="contact_person")
+    private String contactPerson;
 
     @Expose
     @Column(name="home_phone")
@@ -64,7 +68,7 @@ public class Contact implements Serializable
     private String city;
 
     @Expose
-    @OneToOne(  fetch = FetchType.EAGER)
+    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
     private ReferenceContact refContact;
     
@@ -120,7 +124,20 @@ public class Contact implements Serializable
         this.id = id;
     }
 
-    
+    /**
+	 * @return the contactPerson
+	 */
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	/**
+	 * @param contactPerson the contactPerson to set
+	 */
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
 	/**
 	 * @return the homePhone
 	 */

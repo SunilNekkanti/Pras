@@ -6,20 +6,6 @@
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<script src="${context}/resources/js/validation.js"></script>
-<c:choose>
- 	<c:when test="${contact.id != null}"> 	
-	<script>
-		$(document).ready(function(){				
-			removePlaceHolder();contactValidation();
-		});
-	</script>
-	</c:when>
-	<c:otherwise>
-		<script>$(document).ready(function(){contactValidation();});</script>
-	</c:otherwise>
-</c:choose>
-
 <div class="panel-group">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -32,7 +18,15 @@
 			<springForm:form method="POST" id="contact" commandName="contact" action="save.do" class="form-horizontal" role="form">
 				<div class ="col-sm-5">	
 					<div class="form-group">
-						<label class="control-label col-sm-4" for="homePhone">Home Phone</label>
+						<label class="control-label col-sm-4" for="contactPerson">Contact Person:</label>
+						<div class="col-sm-8">
+							<springForm:input path="contactPerson" class="form-control" id="contactPerson" placeholder="contact Person" />
+							<springForm:errors path="contactPerson" cssClass="error text-danger" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="homePhone">Land Phone</label>
 						<div class="col-sm-8">
 							<springForm:hidden path="id" />
 							<springForm:hidden path="refContact.id" />
@@ -53,7 +47,8 @@
 							<springForm:errors path="homePhone" cssClass="error text-danger" />
 						</div>
 					</div>
-				 		 
+				 	
+					 
 					<div class="form-group">
 						<label class="control-label col-sm-4" for="mobilePhone">Mobile Phone</label>
 						<div class="col-sm-8">
@@ -120,16 +115,16 @@
 							<springForm:errors path="zipCode.code" cssClass="error text-danger" />
 						  </div>
 					</div>
-					<div class="col-sm-offset-6 col-sm-4">
+					<div class="col-sm-offset-6 col-sm-6">
 						<c:choose>
-							 <c:when test="${contact.id != null}"> 
+							 <c:when test="${id != null && contact.activeInd == 89}">  
 							 	<button type="button" class="btn btn-primary" id="updateButton" onclick="return modifyContact();"  name="update" >Update</button>
-							 	<button type="button" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
+							 	<button type="button" class="btn btn-primary" id="deleteButton" name="delete" onclick="return deleteContact();" >Delete</button>
 							 </c:when>
-							 <c:otherwise>
-								<button type="button" class="btn btn-primary" id="updateButton" onclick="return addContact();"  name="add" >Add</button>
+							 <c:when test="${contact.id == null}">
+								<button type="button" class="btn btn-primary" id="addButton" onclick="return addContact();"  name="add" >Add</button>
 								<button type="button" class="btn btn-primary" id="resetButton" >Reset</button>
-							</c:otherwise>
+							</c:when>
 							</c:choose>
 					</div>
 				</div>	
@@ -147,27 +142,28 @@
 			   
 			   //request the JSON data and parse into the select element
 				   $.getJSON(getContextPath()+'contact/state/'+stateId, function(data){
-				    
-				     //clear the current content of the select
-				     $select.html('');
-				     $select.append('<option value="">Select Zip Code</option>');
-				     var zipRequest = "<%= request.getParameter("zipCode") %>";
-				     var zipCode = "${contact.zipCode.code}";
-				     if(zipCode != null)
-				    	 zCode = zipCode; 
-				     else if(zipRequest != null)		 
-				          zCode = zipRequest;
-				     
-				     //iterate over the data and append a select option
-				     $.each(data.data, function(key, val){
-				    	
-				      if(val.code == zCode)
-				    	  $select.append('<option value="'+val.code+'" selected>' + val.code +'</option>');
-				      else
-				    	  $select.append('<option value="' + val.code + '">' + val.code +'</option>');
-					  
-				     })
-				   });
+				   }).success(function(data) 
+				   {  
+					    //clear the current content of the select
+					     $select.html('');
+					     $select.append('<option value="">Select Zip Code</option>');
+					     var zipRequest = "<%= request.getParameter("zipCode") %>";
+					     var zipCode = "${contact.zipCode.code}";
+					     if(zipCode != null)
+					    	 zCode = zipCode; 
+					     else if(zipRequest != null)		 
+					          zCode = zipRequest;
+					     
+					     //iterate over the data and append a select option
+					     $.each(data.data, function(key, val){
+					    	
+					      if(val.code == zCode)
+					    	  $select.append('<option value="'+val.code+'" selected>' + val.code +'</option>');
+					      else
+					    	  $select.append('<option value="' + val.code + '">' + val.code +'</option>');
+						   
+					     });	   
+					});
 			
 			   $( "#state" ).change(function() {
 				 

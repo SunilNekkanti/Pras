@@ -45,8 +45,8 @@
 					<div class="form-group required col-sm-4">
 						<label class="control-label col-sm-3" for="insurance">Insurance</label>
 						<div class="col-sm-9">
-							<springForm:select multiple="true" path="insurances" class="form-control"  items="${insuranceList}" itemLabel="name" itemValue="id" />
-							<springForm:errors path="insurances" cssClass="error text-danger" />
+							<springForm:select multiple="true" path="insPrvdrs" class="form-control"  items="${insPrvdrList}" itemLabel="ins.name" itemValue="id" />
+							<springForm:errors path="insPrvdrs" cssClass="error text-danger" />
 						</div>
 					</div>
 				</div>
@@ -68,11 +68,8 @@
 	</div>
 </div>	
 <div id="providerContractList"></div>
-<div id="providerContractEdit"></div>
-<div id="providerContractNew"></div>
 <div id="providerContactList"></div>
-<div id="providerContactEdit"></div>
-<div id="providerContactNew"></div>
+
 
 <script>
 	var source = getContextPath()+'provider/${id}/contractList';
@@ -84,7 +81,7 @@
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
-	  	  alert("Error provider");
+	  	  alert("Provider Contract List Error");
 	    }
 	});
 	
@@ -97,7 +94,7 @@
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
-	  	  alert("Error");
+	  	  alert("Provider Contact List Error");
 	    }
 	});
 		
@@ -108,13 +105,11 @@
 			url : source,
 		     success: function(data, textStatus, jqXHR)
 		    {
-		    	$('#providerContractList').css("display","none");
-		    	$('#providerContractNew').show();
-		        $('#providerContractEdit').html(data);
+		    	$('#providerContractList').html(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("Provider Contract Error");
 		    }
 		});
 		return false;	
@@ -127,30 +122,17 @@
 			url : source,
 		     success: function(data, textStatus, jqXHR)
 		    {
-		    	$('#providerContactList').css("display","none");
-		    	$('#providerContactNew').show();
-		        $('#providerContactEdit').html(data);
+		    	 $('#providerContactList').html(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("Provider Contact Error");
 		    }
 		});
 		return false;	
 	}
 	
-	var source = getContextPath()+'provider/${id}/contractList';
-	$.ajax({
-		url : source,
-	    success: function(data, textStatus, jqXHR)
-	    {
-	       $('#providerContractList').html(data);
-	    },
-	    error: function (jqXHR, textStatus, errorThrown)
-	    {
-	  	  alert("Error");
-	    }
-	});
+	
 
 	function newContract()
 	{
@@ -159,16 +141,14 @@
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
 		    {
-		 		$('#providerContractList').css("display","none");
-		 		$('#providerContractNew').show();
-		        $('#providerContractNew').html(data);
+		 		$('#providerContractList').html(data);
 		        $('#contract').on('submit', function (event) {
 		        	
 		        });
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("Provider New Contract Error");
 		    }
 		});
 	}
@@ -180,35 +160,27 @@
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
 		    {
-		 		$('#providerContactList').css("display","none");
-		 		$('#providerContactNew').show();
-		        $('#providerContactNew').html(data);
+		 		$('#providerContactList').html(data);
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		  	  alert("Error");
+		  	  alert("Provider New Contact Error");
 		    }
 		});
 	}
 	
 	function contractList()
 	{
-		$('#providerContractNew').css("display","none");
- 		$('#providerContractEdit').css("display","none");
- 		$('#providerContractList').show();
- 		$('#providerContactNew').css("display","none");
- 	   $('#providerContactEdit').css("display","none");
- 	   $('#cntSuccess').css("display","none");
- 	   var source = getContextPath()+'provider/${id}/contactList';
+	  var source = getContextPath()+'provider/${id}/contractList';
  	   $.ajax({
  	    url : source,
  	       success: function(data, textStatus, jqXHR)
  	       {
- 	          $('#providerContactList').html(data);
+ 	          $('#providerContractList').html(data);
  	       },
  	       error: function (jqXHR, textStatus, errorThrown)
  	       {
- 	        alert("Error");
+ 	        alert("Providr Contract List Error");
  	       }
  	   });
  	   $('#providerContactList').show();
@@ -216,11 +188,22 @@
 	
 	function contactList()
 	{
-		$('#providerContactNew').css("display","none");
- 		$('#providerContactEdit').css("display","none");
- 		$('#providerContactList').show();
 		
+		   var source = getContextPath()+'provider/${id}/contactList';
+		   alert(source);
+			$.ajax({
+				url : source,
+			    success: function(data, textStatus, jqXHR)
+			    {
+			       $('#providerContactList').html(data);
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			  	  alert("Provider Contact List Error");
+			    }
+			});
 	}
+
 	
 	function addContract()
 	{
@@ -236,7 +219,7 @@
 	        data: formData,
 	        async: false,
 	        success: function (data) {
-	        	$('#providerContractNew').html(data);
+	        	$('#providerContractList').html(data);
 	        },
 	        cache: false,
 	        contentType: false,
@@ -249,40 +232,58 @@
 	function modifyContract()
 	{
 		var url = getContextPath()+'provider/${id}/contract/save.do?update'; 
-		var dataList = 	$("#contract").serializeArray();
-		dataList.push({})
+		var dataList = 	$("#contract").serialize();
 		$.ajax({
 	           type: "POST",
 	           url: url,
 	           data: dataList, 
 	           success: function(data)
 	           {
-	    			$('#providerContractEdit').html(data);
+	    			$('#providerContractList').html(data);
 	           },
 	    		error:function(data)
 	    		{
-	    			 alert('modify error '+data); 
+	    			 alert('Provider Modify Error '+data); 
 	    		}
 	     });
+	}
+	function deleteContract()
+	{
+		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		{
+			var url = getContextPath()+'provider/${id}/contract/save.do?delte'; 
+			var dataList = 	$("#contract").serialize();
+			$.ajax({
+		           type: "POST",
+		           url: url,
+		           data: dataList, 
+		           success: function(data)
+		           {
+		            	$('#providerContractList').html(data);
+		           },
+		    		error:function(data)
+		    		{
+		    			 alert('Provider Delete Contract Error '+ data); 
+		    		}
+		         });
+		}	
 	}
 	
 	function addContact()
 	{
 		var url = getContextPath()+'provider/${id}/contact/save.do?add'; 
-		var dataList = 	$("#contact").serializeArray();
-		
-		  
+		var dataList = 	$("#contact").serialize();
 		$.ajax({
 	           type: "POST",
 	           url: url,
 	           data: dataList, 
 	           success: function(data)
 	           {
-	            	$('#providerContactNew').html(data);
+	            	$('#providerContactList').html(data);
 	           },
 	    		error:function(data)
 	    		{
-	    			 alert('add error '+ data); 
+	    			 alert('Provider Add Contact Error '+ data); 
 	    		}
 	         });
 	}
@@ -290,23 +291,42 @@
 	function modifyContact()
 	{
 		var url = getContextPath()+'provider/${id}/contact/save.do?update'; 
-		var dataList = 	$("#contact").serializeArray();
-		
-		  
+		var dataList = 	$("#contact").serialize();
 		$.ajax({
 	           type: "POST",
 	           url: url,
 	           data: dataList, 
 	           success: function(data)
 	           {
-	            	$('#providerContactEdit').html(data);
+	            	$('#providerContactList').html(data);
 	           },
 	    		error:function(data)
 	    		{
-	    			 alert('add error '+ data); 
+	    			 alert('Provider Modify Contact Error '+ data); 
 	    		}
 	         });
 	}
+	function deleteContact()
+	{
+		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		{
+			var url = getContextPath()+'provider/${id}/contact/save.do?delete'; 
+			var dataList = 	$("#contact").serialize();
+			$.ajax({
+		           type: "POST",
+		           url: url,
+		           data: dataList, 
+		           success: function(data)
+		           {
+		            	$('#providerContactList').html(data);
+		           },
+		    		error:function(data)
+		    		{
+		    			 alert('Provider Delete Contact Error '+ data); 
+		    		}
+		         });
+		}
+	}	
 	
 	$(document).on("click", "#addButton",   function() { addContract(); } );
 

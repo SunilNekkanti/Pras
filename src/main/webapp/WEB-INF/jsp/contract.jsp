@@ -53,8 +53,8 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="PMPM">PMPM:</label>
 					<div class="col-sm-6">
-						<springForm:input path="PMPM" class="form-control" id="mobilePhone" placeholder="PMPM" />
-						<springForm:errors path="PMPM" cssClass="error text-danger" />
+						<springForm:input path="pmpm" class="form-control" id="mobilePhone" placeholder="PMPM" />
+						<springForm:errors path="pmpm" cssClass="error text-danger" />
 					</div>
 				</div>
 				<div class="form-group">

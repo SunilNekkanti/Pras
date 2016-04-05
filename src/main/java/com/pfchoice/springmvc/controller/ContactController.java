@@ -168,7 +168,7 @@ public class ContactController{
 	 	model.addAttribute("contact", contact);
     	contact.setCreatedBy(username);
     	contact.setUpdatedBy(username);
-    	contact.setFileId(3);
+    	contact.setFileId(1);
     	ReferenceContact refCnt = createRefContactModel();
     	refCnt.setCreatedBy(username);
     	refCnt.setUpdatedBy(username);
@@ -177,6 +177,7 @@ public class ContactController{
     	
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
+      	model.addAttribute("Message", "Member Contact Added Successfully");
    
     return "membershipContactEditSuccess";
     }
@@ -196,8 +197,11 @@ public class ContactController{
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setUpdatedBy(username);
-        	contactService.update(contact);
         	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setActiveInd('Y');
+        	contact.setActiveInd('Y');
+        	contactService.update(contact);
+        	 model.addAttribute("Message", "Member Contact Updated Successfully");
         	return "membershipContactEditSuccess";
         }
        
@@ -216,9 +220,11 @@ public class ContactController{
 	        	contact.setActiveInd('N');
 	        	contact.setUpdatedBy(username);
 	        	contact.getRefContact().setUpdatedBy(username);
+	        	contact.getRefContact().setActiveInd('N');
 	        	contactService.update(contact);
 	        }
-	        return "contactList";
+	        model.addAttribute("Message", "Member Contact Deleted Successfully");
+	        return "membershipContactEditSuccess";
     }
 	
        
@@ -295,8 +301,8 @@ public class ContactController{
     	
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
-	       
-	        return "providerContactEditSuccess";
+      	 model.addAttribute("Message", "Provider Contact Added Successfully");
+	      return "providerContactEditSuccess";
     }
 
 	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"update"})
@@ -312,10 +318,14 @@ public class ContactController{
         if (null != contact.getId())
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
+        	contact.setCreatedBy(username);
         	contact.setUpdatedBy(username);
         	contact.getRefContact().setUpdatedBy(username);
-        	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setCreatedBy(username);
+        	contact.getRefContact().setActiveInd('Y');
+        	contact.setActiveInd('Y');
         	contactService.update(contact);
+        	 model.addAttribute("Message", "Provider Contact Updated Successfully");
         	return "providerContactEditSuccess";
         }
        
@@ -339,9 +349,10 @@ public class ContactController{
 	        	contact.setUpdatedBy(username);
 	        	contact.getRefContact().setUpdatedBy(username);
 	        	contactService.update(contact);
+	        	  model.addAttribute("Message", "Provider Contact Deleted Successfully");
 	        	return "providerContactEditSuccess";
 	        }
-	       
+	      
 	        return "providerContactEdit";
     }
 	
@@ -405,7 +416,7 @@ public class ContactController{
 	 	model.addAttribute("contact", contact);
     	contact.setCreatedBy(username);
     	contact.setUpdatedBy(username);
-    	contact.setFileId(3);
+    	contact.setFileId(1);
     	ReferenceContact refCnt = createRefContactModel();
     	refCnt.setCreatedBy(username);
     	refCnt.setUpdatedBy(username);
@@ -413,6 +424,7 @@ public class ContactController{
     	contact.setRefContact(refCnt);
      	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
+      	 model.addAttribute("Message", "Insurance Contact Added Successfully");
        	return "insuranceContactEditSuccess";
     }
 
@@ -431,7 +443,10 @@ public class ContactController{
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setUpdatedBy(username);
         	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setActiveInd('Y');
+        	contact.setActiveInd('Y');
         	contactService.update(contact);
+        	 model.addAttribute("Message", "Insurance Contact Updated Successfully");
         	return "insuranceContactEditSuccess";
         }
        
@@ -455,6 +470,7 @@ public class ContactController{
         	contact.setUpdatedBy(username);
         	contact.getRefContact().setUpdatedBy(username);
         	contactService.update(contact);
+        	 model.addAttribute("Message", "Insurance Contact Deleted Successfully");
         	return "insuranceContactEditSuccess";
         }
        

@@ -2,18 +2,22 @@
 <%@ page session="false" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
- <h2> Contract Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Contract Update</div>
+		<div class="panel-heading">Info
+			<button class="btn btn-success pull-right btn-xs" onclick= "return contractList();">
+	          	<span class="glyphicon glyphicon-plus-sign "></span> contact List
+	         </button>
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="well well-sm">
-  				
-  					<p><strong>PMPM:${contract.PMPM}</strong>  </p>
+					<p>${Message}</p>
+  				 
+  					<p><strong>PMPM:${contract.pmpm}</strong>  </p>
   					<p><strong>Contract NBR:${contract.contractNBR}</strong>  </p>
   					<p> Updated Successfully  </p>
-					<a href="${context}/provider/${id}/contractList">Click Here</a> Move to contract list
+					
 				</div>	
 			</div>
 		</div>

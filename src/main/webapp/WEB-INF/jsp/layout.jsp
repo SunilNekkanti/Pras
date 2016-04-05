@@ -110,6 +110,13 @@ $('[data-toggle="tab"]').click(function(e) {
     $(this).tab('show')
 });
 
+
+
+   $('body').on('focus',".datepicker", function(){
+    $(this).datepicker();
+   });
+
+
 });
 </script>
 <c:set var="context" value="${pageContext.request.contextPath}" />

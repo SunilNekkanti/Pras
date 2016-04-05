@@ -23,10 +23,13 @@
 					<thead>
 						<tr>
 							<th  scope="col">Action</th> 
-							<th  scope="col">Home Phone</th>  
+							<th  scope="col">Contact Person</th>
+							<th  scope="col">Land Phone</th>  
 					        <th  scope="col">Mobile Phone</th> 
-					        <th  scope="col">Fax Number</th> 
+					        <th  scope="col">Fax Number</th>
+					        <th  scope="col">Email</th> 
 					        <th  scope="col">Address 1</th> 
+					        <th  scope="col">Address 2</th> 
 					        <th  scope="col">City</th> 
 					        <th  scope="col">State</th> 
 					        <th  scope="col">Zip Code</th> 
@@ -43,7 +46,7 @@
 							    <c:when test="${cntct.activeInd == 89}">
 							    	<c:choose>
 									 	<c:when test="${cntct.refContact.mbr != null}"> 
-									 		<a href="${context}/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}"   rel='tab' >Edit</a> 
+									 		<a onclick ="return contact(${cntct.refContact.mbr.id},${cntct.id})" href="#"  rel='tab' >Edit</a> 
 										 </c:when>
 										 <c:when test="${cntct.refContact.prvdr != null}">
 											<a  onclick ="return contact(${cntct.refContact.prvdr.id},${cntct.id})"  href="#"   rel='tab' >Edit</a> 
@@ -59,7 +62,7 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									 <c:when test="${cntct.refContact.mbr != null}"> 
-										<a href="${context}/membership/${cntct.refContact.mbr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
+										<a onclick ="return contact(${cntct.refContact.mbr.id},${cntct.id})" href="#"  rel='tab' >View</a> 
 									 </c:when>
 									 <c:when test="${cntct.refContact.prvdr != null}">
 										<a href="${context}/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
@@ -74,10 +77,13 @@
 							    </c:otherwise>
 							    </c:choose>
 							    </td>
-								   	<td>  ${cntct.homePhone}</td> 
+							    	<td> ${cntct.contactPerson}</td>
+								   	<td> ${cntct.homePhone}</td> 
 						        	<td> ${cntct.mobilePhone}</td>
 						        	<td> ${cntct.faxNumber}</td>
+						        	<td> ${cntct.email}</td>
 						        	<td> ${cntct.address1}</td>
+						        	<td> ${cntct.address2}</td>
 						        	<td> ${cntct.city}</td>
 						        	<td> ${cntct.stateCode.shortName}</td>
 						        	<td> ${cntct.zipCode.code}</td>

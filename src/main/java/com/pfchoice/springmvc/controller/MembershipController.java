@@ -28,6 +28,7 @@ import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
+import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
@@ -151,7 +152,7 @@ public class MembershipController{
     public String saveMembershipAction(@PathVariable Integer id, @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
-        if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
         	membership.setActiveInd('Y');
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
@@ -230,6 +231,7 @@ public class MembershipController{
 	        	membershipInsurance.setUpdatedBy(username);
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
+	            model.addAttribute("Message", "Membership Insurance Updated Successfully");
 	            return "membershipDetailsEditSuccess";
 	       }    
     }
@@ -238,7 +240,7 @@ public class MembershipController{
 	@RequestMapping(value = "/membership/{id}/details/save.do", method = RequestMethod.POST,params={"add"})
     public String newMembershipInDetailsPage(@PathVariable Integer id,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
-    		Model model,BindingResult bindingResult, @ModelAttribute("username") String username) {
+    		BindingResult bindingResult,Model model, @ModelAttribute("username") String username) {
 		
 		 if (bindingResult.hasErrors()) {
 			 logger.info("Returning membershipDetailsDisplay");	
@@ -247,10 +249,13 @@ public class MembershipController{
 	        }
 	        else
 	        {
+	        	Membership dbMembership = membershipService.findById(id);
+	        	membershipInsurance.setMbr(dbMembership);
 	        	membershipInsurance.setCreatedBy(username);
 	        	membershipInsurance.setUpdatedBy(username);
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.save(membershipInsurance);
 	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
+	            model.addAttribute("Message", "Membership Insurance Added Successfully");
 		        return "membershipDetailsEditSuccess";
 	        }    
     }
@@ -258,8 +263,8 @@ public class MembershipController{
 	
 	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipInsDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
-    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,Model model,
-    		BindingResult bindingResult, @ModelAttribute("username") String username) {
+    		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
+    		BindingResult bindingResult,Model model, @ModelAttribute("username") String username) {
 	 	
 		 if (bindingResult.hasErrors()) {
 	       	 logger.info("Returning membershipDetailsDisplay");
@@ -270,34 +275,15 @@ public class MembershipController{
 	        {
 	        	membershipInsurance.setActiveInd('N');
 	        	membershipInsurance.setUpdatedBy(username);
-	            membershipInsuranceService.update(membershipInsurance);
-	            return "membershipEditSuccess";
+	            MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
+	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
+	            model.addAttribute("Message", "Membership Insurance Deleted Successfully");
+	            return "membershipDetailsEditSuccess";
 	        }    
     }
 	
 	
-	/*@RequestMapping(value = "/membership/details/save.do", method = RequestMethod.POST)
-    public String saveMembershipInsuranceAction( @Validated MembershipInsurance membershipInsurance,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-        if (bindingResult.hasErrors()) {
-            logger.info("Returning membershipDetailsEdit.jsp page");
-            return "membershipDetailsEdit";
-        }
-        logger.info("Returning MembershipDetailsEditSuccess.jsp page");
-        if (null != membershipInsurance.getId())
-        {
-        	membershipInsurance.setCreatedBy(username);
-        	membershipInsurance.setUpdatedBy(username);
-        	membershipInsurance =  membershipInsuranceService.update(membershipInsurance);
-        }
-        
-        model.addAttribute("membershipInsurance", membershipInsurance);
-        return "membershipDetailsEditSuccess";
-    }*/
-	
-	
-	
-	@RequestMapping(value = "/membership/{id}/detailsList")
+   @RequestMapping(value = "/membership/{id}/detailsList")
     public String handleRequest(@PathVariable Integer id,Model model) throws Exception {
  
     	List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
@@ -341,7 +327,6 @@ public class MembershipController{
 	
 	@RequestMapping(value = "/membership/{id}/complete", method = RequestMethod.GET)
     public String completeMembershipProviderDetailsPage(@PathVariable Integer id,Model model)throws Exception {
-		
 		Membership dbMembership = membershipService.findById(id);
 		model.addAttribute("membership", dbMembership);
 		List<MembershipInsurance> dbMembershipInsuranceList = membershipInsuranceService.findAllByMbrId(id);
@@ -364,6 +349,16 @@ public class MembershipController{
 		
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
+		
+		List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
+    	model.addAttribute("membershipDetailsList", listBean);
+    	logger.info("Returning membershipDetailsList.jsp page");
+    	
+    	List<MembershipProvider> mbrPrvdrList = membershipProviderService.findAllByMbrId(id);
+		model.addAttribute("membershipProviderList", mbrPrvdrList);
+        logger.info("Returning membershipProviderList.jsp page");
+    	
+    	
 		return "membershipCompleteDetails";
            
     }
@@ -433,6 +428,14 @@ public class MembershipController{
 		//Data referencing for Hedis Measure Codes list box
 		List<HedisMeasure> hedisMeasureList = hedisMeasureService.findAll();
 		return hedisMeasureList;
+	}
+	
+	@ModelAttribute("insList")
+	public List<Insurance> populateInsuranceList() {
+		
+		//Data referencing for Insurance list box
+		List<Insurance> insuranceList = insuranceService.findAll();
+		return insuranceList;
 	}
 		
 }
