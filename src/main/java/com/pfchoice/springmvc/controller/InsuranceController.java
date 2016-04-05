@@ -128,20 +128,23 @@ public class InsuranceController{
         	logger.info("Returning InsuranceSuccess.jsp page after update");
         	insurance.setUpdatedBy(username);
         	insuranceService.update(insurance);
+        	model.addAttribute("Message", "Insurance Details Updated Successfully");
         }
            
         return "insuranceEditSuccess";
     }
 	
 	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction(@PathVariable Integer id, @ModelAttribute("username") String username) {
+    public String deleteInsuranceAction(@PathVariable Integer id, Model model, @ModelAttribute("username") String username) {
         
 		Insurance dbInsurance = insuranceService.findById(id);
 		dbInsurance.setActiveInd(new Character('N'));
 		dbInsurance.setUpdatedBy(username);
 	    insuranceService.update(dbInsurance);
+	    model.addAttribute("insurance", dbInsurance);
+	    model.addAttribute("Message", "Insurance details deleted successfully");
         logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
-        return "insuranceDeleteSuccess";
+        return "insuranceEditSuccess";
     }
 	
 	@ModelAttribute("activeIndMap")

@@ -186,7 +186,7 @@
 	}
 	function deleteContact()
 	{
-		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
 			var url = getContextPath()+'membership/${id}/contact/save.do?delete'; 
 			var dataList = 	$("#contact").serializeArray();

@@ -102,7 +102,7 @@ function modifyInsuranceDetails()
 }
 function deleteInsuranceDetails()
 {
-	if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+	if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 	{
 		var url = getContextPath()+'insurance/${id}/save.do?delete'; 
 		var dataList = 	$("#insurance").serialize();
@@ -300,7 +300,7 @@ function deleteInsuranceDetails()
 	
 	function deleteContract()
 	{
-		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
 			var url = getContextPath()+'provider/${id}/contract/save.do?delete'; 
 			var dataList = 	$("#contract").serialize();
@@ -359,7 +359,7 @@ function deleteInsuranceDetails()
 	}
 	function deleteContact()
 	{
-		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
 			var url = getContextPath()+'insurance/${id}/contact/save.do?delete'; 
 			var dataList = 	$("#contact").serialize();

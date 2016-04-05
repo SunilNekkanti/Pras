@@ -15,7 +15,7 @@
 								<p><strong>Gender:${membership.genderId.description}</strong></p>
 								<p><strong>county:${membership.countyCode.description}</strong></p>
 								 <p>Updated Successfully </p>
-								<a href="${context}/membershipTmpList">Click Here</a> Move to membership list
+								<a href="${context}/membershipList">Click Here</a> Move to membership list
 	 					</div>	
 					</div>
 				</div>

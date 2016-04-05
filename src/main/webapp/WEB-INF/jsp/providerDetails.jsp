@@ -11,7 +11,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Provider Profile</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" id="provider" commandName="provider" action="${context}/provider/${id}/save.do">
+			<springForm:form method="POST"  commandName="provider" action="${context}/provider/${id}/save.do">
 				<div class="col-sm-12">
 					<div class="form-group required col-sm-4">
 						<label class="control-label  col-sm-5" for="name">Name</label>
@@ -121,7 +121,7 @@
 	}
 	function deleteProviderDetails()
 	{
-		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
 			var url = getContextPath()+'provider/${id}/save.do?delete'; 
 			var dataList = 	$("#provider").serialize();
@@ -290,9 +290,9 @@
 	}
 	function deleteContract()
 	{
-		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'provider/${id}/contract/save.do?delte'; 
+			var url = getContextPath()+'provider/${id}/contract/save.do?delete'; 
 			var dataList = 	$("#contract").serialize();
 			$.ajax({
 		           type: "POST",
@@ -349,7 +349,7 @@
 	}
 	function deleteContact()
 	{
-		if (confirm("Action cannot be undone.Are you want to delete it?!") == true) 
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
 			var url = getContextPath()+'provider/${id}/contact/save.do?delete'; 
 			var dataList = 	$("#contact").serialize();

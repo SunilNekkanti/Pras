@@ -141,6 +141,24 @@ public class ContractController{
         return "contractDisplay";
     }
 	
+	@RequestMapping(value = "/provider/{id}/contract/{cntId}", method = RequestMethod.GET)
+    public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model, HttpServletResponse response) throws IOException {
+		Contract dbContract = contractService.findById(cntId);
+        if(dbContract == null){
+    	   dbContract = createContractModel();
+        }
+        dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
+		model.addAttribute("contract", dbContract);
+		
+		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
+		model.addAttribute("insPrvdrList", insPrvdrList);
+		
+		model.addAttribute("insuranceRequired", true);
+		
+        logger.info("Returning contractEdit.jsp page");
+        return "providerContractEdit";
+    }
+	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST, params ={"add"})
 	public String newproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
@@ -190,64 +208,50 @@ public class ContractController{
         }
         else
         {
-	        if (contract.getId() != null)
+        	final Integer cntId = contract.getId();
+	        if ( cntId != null)
 	        {
-	        	Contract dbContract = contractService.findById(id);
-	        	InsuranceProvider dbInsuranceProvider = dbContract.getReferenceContract().getInsPrvdr();
-	        	
-	        	contract.setUpdatedBy(username);
-	        	contract.setCreatedBy(username);
-	        	contract.setActiveInd('Y');
-	        	contract.getReferenceContract().setInsPrvdr(dbInsuranceProvider);
-	        	contract.getReferenceContract().setUpdatedBy(username);
-	        	contract.getReferenceContract().setCreatedBy(username);
-	        	contract.getReferenceContract().setActiveInd('Y');
+	        	Contract dbContract = contractService.findById(cntId); 
+	        	dbContract.setUpdatedBy(username);
+	        	dbContract.setContractNBR(contract.getContractNBR());
+	        	dbContract.setPmpm(contract.getPmpm());
+	        	dbContract.setStartDate(contract.getStartDate());
+	        	dbContract.setEndDate(contract.getEndDate());
+	        	dbContract.setFilesUpload(contract.getFilesUpload());
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contractService.update(contract);
+	        	contractService.update(dbContract);
 	        }
 	        model.addAttribute("Message", "Provider Contract Updated Successfully");
 	        return "providerContractEditSuccess";
         }    
     }
 	
-	@RequestMapping(value = "/provider/{id}/contract/{cntId}", method = RequestMethod.GET)
-    public String updateProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model, HttpServletResponse response) throws IOException {
-		Contract dbContract = contractService.findById(cntId);
-        if(dbContract == null){
-    	   dbContract = createContractModel();
-        }
-        dbContract.setInsPrvdrId(dbContract.getReferenceContract().getInsPrvdr().getId());
-		model.addAttribute("contract", dbContract);
-		
-		List<InsuranceProvider> insPrvdrList =  insuranceProviderService.findAllByPrvdrId(id);
-		model.addAttribute("insPrvdrList", insPrvdrList);
-		
-		model.addAttribute("insuranceRequired", true);
-		
-        logger.info("Returning contractEdit.jsp page");
-        return "providerContractEdit";
-    }
-	
-	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
+	public String deleteProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-       
-			if (bindingResult.hasErrors()) {
-				contract.setActiveInd('Y');
-	            logger.info("Returning insuranceContractEdit.jsp page");
-	             return "providerContractEdit";
-	        }
-	        if (null != contract.getId())
+
+		if (bindingResult.hasErrors())
+		{
+            logger.info("Returning providerContractEdit.jsp page");
+            contract.setActiveInd('Y');
+            return "providerContractEdit";
+        }
+		final Integer cntId = contract.getId();
+	        if (cntId != null)
 	        {
-	        	logger.info("Returning ContractEditSuccess.jsp page after update");
-	        	contract.setUpdatedBy(username);
-	        	contract.getReferenceContract().setUpdatedBy(username);
-	        	contract.setActiveInd('N');
-	        	contractService.update(contract);
+	        	logger.info("Returning ContractEditSuccess.jsp page before delete");
+	        	Contract dbContract = contractService.findById(cntId);
+	        	
+	        	dbContract.setUpdatedBy(username);
+	        	dbContract.setActiveInd('N');
+	        	dbContract.getReferenceContract().setUpdatedBy(username);
+	        	dbContract.getReferenceContract().setActiveInd('N');
+	        	contractService.update(dbContract);
+	        	  model.addAttribute("Message", "Provider contract deleted successfully");
+	        	return "providerContractEditSuccess";
 	        }
-	        model.addAttribute("Message", "Provider Contract Deleted Successfully");
-	        return "providerContractEditSuccess";
+	        return "providerContractEdit";
+	        
     }
 	
 	
@@ -357,11 +361,16 @@ public class ContractController{
 	            
 		        if (null != contract.getId())
 		        {
-		        	logger.info("Returning ContractEditSuccess.jsp page after update");
+		        	logger.info("Returning ContractEditSuccess.jsp page before delete");
 		        	contract.setUpdatedBy(username);
+		        	contract.setCreatedBy(username);
+		        	contract.setActiveInd('N');
 		        	contract.getReferenceContract().setUpdatedBy(username);
+		        	contract.getReferenceContract().setCreatedBy(username);
+		        	contract.getReferenceContract().setActiveInd('N');
+		        	
 		        	contractService.update(contract);
-		        	  model.addAttribute("Message", "Insurance Contact Deleted Successfully");
+		        	  model.addAttribute("Message", "Insurance contract deleted successfully");
 		        	return "insuranceContractEditSuccess";
 		        }
 		        return "insuranceContractEdit";

@@ -16,7 +16,6 @@
 				<div class="well well-sm">
 					<p>${Message}</p>
   					<p> <strong>Name:${insurance.name}</strong>  </p>
-  					<p> Updated Successfully  </p>
 				</div>	
 			</div>
 		</div>

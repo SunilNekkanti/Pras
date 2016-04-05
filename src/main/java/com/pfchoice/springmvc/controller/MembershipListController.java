@@ -35,7 +35,7 @@ public class MembershipListController
     @Autowired
     private MembershipService membershipService;
 
-   @RequestMapping(value = "/membershipTmpList")
+   @RequestMapping(value = "/membershipList")
     public String handleRequest() throws Exception {
  
 		return "membershipList";

@@ -412,7 +412,7 @@ $(document).ready(function () {
         <li><a href="about.html">About</a></li>
         <li><a href="${context}/insuranceList">Insurance</a></li>
         <li><a href="${context}/providerList">Provider</a></li>
-        <li><a href="${context}/membershipTmpList">Membership</a></li>
+        <li><a href="${context}/membershipList">Membership</a></li>
         
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quality Measures <span class="caret"></span></a>

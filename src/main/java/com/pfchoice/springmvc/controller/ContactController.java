@@ -348,6 +348,7 @@ public class ContactController{
 	        	contact.setActiveInd('N');
 	        	contact.setUpdatedBy(username);
 	        	contact.getRefContact().setUpdatedBy(username);
+	        	contact.getRefContact().setActiveInd('N');
 	        	contactService.update(contact);
 	        	  model.addAttribute("Message", "Provider Contact Deleted Successfully");
 	        	return "providerContactEditSuccess";
@@ -469,6 +470,7 @@ public class ContactController{
         	contact.setActiveInd('N');
         	contact.setUpdatedBy(username);
         	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setActiveInd('N');
         	contactService.update(contact);
         	 model.addAttribute("Message", "Insurance Contact Deleted Successfully");
         	return "insuranceContactEditSuccess";
