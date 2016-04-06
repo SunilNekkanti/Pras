@@ -10,7 +10,7 @@
         <li><a href="#provider" data-toggle="tab">Provider</a></li>
         <li><a href="#insurance" data-toggle="tab">Insurance</a></li>
     </ul>
-    <div class="row" style="height: 750px;overflow-y: scroll;">
+    <div class="row">
 	    <div class="col-sm-12" >
 		    <div id="my-tab-content fade active in" class="tab-content">
 		        <div class="tab-pane active" id="membership">

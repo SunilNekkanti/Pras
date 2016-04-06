@@ -147,7 +147,7 @@
                   		   		    { "sName": "status.id", "aTargets": [ 6 ] }
                   ],          
         	     "bLengthChange": false,
-        	     "iDisplayLength": 15,
+        	     "iDisplayLength": 13,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
@@ -160,6 +160,7 @@
         	     "fnServerData" : datatable2RestMembership
         	});
      	}
+     	
      	
      	
  } );
@@ -184,7 +185,7 @@
 								 <div class="col-sm-9"  id="extFilterPrvdr"> </div>
 							</div>	 
 							<div class="col-sm-3">	 
-								 <button type="button" id="mbrGenerate" class="btn btn-primary btn-xs">Generate</button>
+								 <button type="button" id="mbrGenerate" class="btn btn-success btn-xs">Generate</button>
 							</div>	 
 					</div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">

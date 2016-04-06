@@ -46,7 +46,7 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 800px;}
+    .row.content {height: 775px;}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -59,7 +59,7 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
     footer {
       background-color: #555;
       color: white;
-      padding: 15px;
+      padding: 5px;
     }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
@@ -117,7 +117,7 @@ $('[data-toggle="tab"]').click(function(e) {
     			<div class="col-sm-12 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>
       </div>
-      <div class="footer navbar-fixed-bottom"><tiles:insertAttribute name="footer" /></div>  
+      <div class="footer"><tiles:insertAttribute name="footer" /></div>  
   
 </body>  
 </html>

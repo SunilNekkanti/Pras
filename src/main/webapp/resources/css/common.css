@@ -3,3 +3,63 @@
 .fdl {height: 300px;overflow-y: scroll;}
 .icdCodes, .cptCodes{max-width:300px; word-wrap:break-word;}
 table.dataTable{width:100%;}
+.navbar {background: #556B2F !important;}
+.navbar-inverse .navbar-nav>li>a {color: #FFF !important; }
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {color: #9d9d9d !important; }
+footer, .footer .container-fluid{background: #556B2F !important; height:30px;}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {background-color:#dff0d8 !important;}
+a {color: #3c763d;text-decoration: none;}
+table.dataTable > tbody tr.odd td {  background: #fafcF9 !important;}
+
+div.dataTables_info {
+    color: #3c763d;
+}
+ table.pretty {
+    clear: both;
+}
+ 
+ table.pretty tfoot th {
+    background: #b0cc7f;
+    text-align: left;
+}
+ 
+table.pretty tfoot td {
+    background: #d7e1c5;
+    text-align: center;
+    font-weight: bold;
+}
+
+ div.dataTables_wrapper {
+    background-color: #FFFFFF;
+}
+
+ div.dataTables_length,
+div.dataTables_filter,
+div.dataTables_paginate,
+div.dataTables_info {
+    padding: 6px;
+}
+
+/* Self clearing - */
+div.dataTables_wrapper:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+html[xmlns] .dataTables_wrapper { display: block; }
+* html .dataTables_wrapper { height: 1%; }
+ 
+@font-face {
+    font-family: GOTHAM;
+    src: url(GOTHAM-MEDIUM.TTF);
+}
+#myNavbar {font-family: GOTHAM;font-weight: 300;
+    font-style: normal;
+    font-size: 13px;
+    text-transform: uppercase;
+    line-height: 21px;
+    color: #777;
+}

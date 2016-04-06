@@ -399,14 +399,14 @@ $(document).ready(function () {
 	      //  e.preventDefault();
 	    });
 	    
-	   $('.navbar').css('background','#4c7c4c')
+	   $('.navbar').css('background','#556B2F')
 	   
 });
 </script>
 </head>
 <body>
 
-<nav class="navbar  navbar-inverse">
+<nav class="navbar navigation  navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
