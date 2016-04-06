@@ -7,12 +7,12 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Membership Provider Details</div>
 		<div class="panel-body" id="tablediv">
 			<div class="col-sm-12 fdl">
 				<springForm:form  commandName="membershipProvider" action="save.do">
-					<div class="panel panel-primary">
+					<div class="panel panel-success">
 						<div class="panel-body" id="tablediv">
 							<springForm:hidden path="id" />
 							<div class="form-group col-sm-12">

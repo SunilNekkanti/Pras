@@ -4,7 +4,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
  <h2> ICD Measure Updated Successfully.</h2>
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">ICD Measure Update</div>
 		<div class="row">
 			<div class="col-sm-12">

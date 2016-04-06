@@ -7,7 +7,7 @@
  
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">
 			Contact Details
 			<button class="btn btn-danger pull-right btn-xs" onclick= "return contactList();">

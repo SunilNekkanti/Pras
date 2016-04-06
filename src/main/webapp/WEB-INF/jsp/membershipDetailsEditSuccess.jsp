@@ -3,7 +3,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <%@ page session="false" %>
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Info
 			<button class="btn btn-success pull-right btn-xs" onclick= "return mbrInsList();">
           		<span class="glyphicon glyphicon-plus-sign "></span> Member Insurance List

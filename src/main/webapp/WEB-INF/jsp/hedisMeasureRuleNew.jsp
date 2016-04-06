@@ -329,7 +329,7 @@ $.ajax( {
 	      	</div>
 	      	<div class="modal-body">
 		    	<div class="panel-group">
-					<div class="panel panel-primary">
+					<div class="panel panel-success">
 						
 						<div class="panel-body">
 							<div class="table-responsive">
@@ -366,7 +366,7 @@ $.ajax( {
 	      	</div>
 	      	<div class="modal-body">
 		    	<div class="panel-group">
-					<div class="panel panel-primary">
+					<div class="panel panel-success">
 						
 						<div class="panel-body">
 							<div class="table-responsive">

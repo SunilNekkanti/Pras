@@ -24,7 +24,7 @@
 </c:choose>
 
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Contact</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="contact" action="save.do" class="form-horizontal" role="form">

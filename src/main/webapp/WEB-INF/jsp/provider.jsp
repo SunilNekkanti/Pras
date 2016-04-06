@@ -49,7 +49,7 @@ $(document).ready(function(){
 <form:form action="provider.html" commandName="provider">
 	<h2>Provider List</h2>
   	<div class="panel-group">
-  		<div class="panel panel-primary">
+  		<div class="panel panel-success">
 	      	<div class="panel-heading">Provider Details</div>
 	      	<div class="panel-body" id="tablediv">
 	         

@@ -9,6 +9,14 @@
 <title>PF Choice head page</title>
 <style type="text/css">
 
+.navigation { 
+    font-family: 'Gotham SSm',sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 21px;
+    color: #777;
+  }
 .panel.with-nav-tabs .panel-heading{
     padding: 5px 5px 0 5px;
 }
@@ -390,12 +398,15 @@ $(document).ready(function () {
 	        }
 	      //  e.preventDefault();
 	    });
+	    
+	   $('.navbar').css('background','#4c7c4c')
+	   
 });
 </script>
 </head>
 <body>
 
-<nav class="navbar navbar-inverse ">
+<nav class="navbar  navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">

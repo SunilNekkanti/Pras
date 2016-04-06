@@ -40,7 +40,7 @@ $(document).ready(function(){
 <form:form action="insurance.html" commandName="insurance" >
 	<h2>Insurance List</h2>
   	<div class="panel-group">
-  		<div class="panel panel-primary">
+  		<div class="panel panel-success">
 	      	<div class="panel-heading">Insurance Details</div>
 	      	<div class="panel-body" id="tablediv">
 	         

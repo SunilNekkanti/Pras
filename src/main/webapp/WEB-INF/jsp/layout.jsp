@@ -127,7 +127,7 @@ $('[data-toggle="tab"]').click(function(e) {
     			<div class="col-sm-9 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>
       </div>
-      <div ><tiles:insertAttribute name="footer" /></div>  
+      <div class="footer navbar-fixed-bottom"><tiles:insertAttribute name="footer" /></div>  
   
 </body>  
 </html>

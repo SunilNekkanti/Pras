@@ -5,7 +5,7 @@
 <title>Provider Deleted Successfully</title>
 
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Provider Deleted Successfully</div>
 		<div class="row">
 			<div class="col-sm-12">

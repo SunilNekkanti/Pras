@@ -16,7 +16,7 @@
 	</c:when>
 </c:choose>	
 <div class="panel-group" style="padding-left:0px;">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Membership Profile</div>
 		<div class="panel-body" id="tablediv">
 			<div class="col-sm-12" style="min-height:300px;">

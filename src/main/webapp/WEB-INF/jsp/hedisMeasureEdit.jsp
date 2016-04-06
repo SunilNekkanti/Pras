@@ -15,7 +15,7 @@
 	</c:when>
 </c:choose>
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Hedis Measure</div>
         <div class="panel-body">
 			<springForm:form method="POST" commandName="hedisMeasure" action="${context}/hedis/${id}/save.do" class="form-horizontal" role="form">

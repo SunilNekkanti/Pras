@@ -3,7 +3,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <%@ page session="false" %>
 <div class="panel-group">
-		<div class="panel panel-primary">
+		<div class="panel panel-success">
 			<div class="panel-heading">Membership Updated Successfully</div>
 				<div class="row">
 					<div class="col-sm-12">

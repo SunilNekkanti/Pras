@@ -11,7 +11,7 @@
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">
 			Contact List <span class="badge">${contactList.size()}</span>
 			<button class="btn btn-danger pull-right btn-xs" onclick= "return newContact();">

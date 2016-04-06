@@ -14,7 +14,7 @@
 	</c:when>
 </c:choose>	   
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Membership Insurance
 			<button class="btn btn-success pull-right btn-xs" onclick= "return mbrInsList();">
           		<span class="glyphicon glyphicon-plus-sign "></span> Membership Insurance List

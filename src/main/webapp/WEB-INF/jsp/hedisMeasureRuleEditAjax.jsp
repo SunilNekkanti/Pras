@@ -386,7 +386,7 @@ $.ajax( {
 <div class="popup" data-popup="popup-1">
     <div class="popup-inner">
         <div class="panel-group">
-		<div class="panel panel-primary">
+		<div class="panel panel-success">
 		<div class="panel-heading">CPT Measure List  </div>
 		<div class="panel-body" id="tablediv">
 				<div class="table-responsive">
@@ -418,7 +418,7 @@ $.ajax( {
 <div class="popup" data-popup="popup-2">
     <div class="popup-inner">
         <div class="panel-group">
-		<div class="panel panel-primary">
+		<div class="panel panel-success">
 		<div class="panel-heading">ICD Measure List  </div>
 		<div class="panel-body" id="tablediv">
 		

@@ -32,7 +32,7 @@
 
 <body>
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Insurance Details
 			<button class="btn btn-success pull-right btn-xs" onclick= "return mbrNewIns();">
           		<span class="glyphicon glyphicon-plus-sign "></span> Member New Insurance

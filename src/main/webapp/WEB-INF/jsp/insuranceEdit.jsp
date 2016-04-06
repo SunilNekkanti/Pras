@@ -5,7 +5,7 @@
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Insurance Profile</div>
 		<div class="panel-body">
 			<springForm:form method="POST" commandName="insurance" action="${context}/insurance/${id}/save.do">

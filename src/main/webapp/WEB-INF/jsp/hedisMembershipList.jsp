@@ -259,7 +259,7 @@ $(document).ready(function() {
     </script>
 
 	<div class="panel-group">
-		<div class="panel panel-primary">
+		<div class="panel panel-success">
 			<div class="panel-heading">Hedis Report </div>
 			<div class="panel-body" >
 				<div class="table-responsive">

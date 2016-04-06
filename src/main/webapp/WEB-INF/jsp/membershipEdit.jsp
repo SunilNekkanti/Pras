@@ -18,7 +18,7 @@
 	</c:when>	 
 </c:choose>
  <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Membership Profile</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" id="membership" data-toggle="validator" commandName="membership" action="${context}/membership/${membership.id}/save.do" class="form-horizontal" role="form">

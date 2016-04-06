@@ -99,7 +99,7 @@
     </script>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading"> Provider List
 			<a class="btn btn-danger pull-right btn-xs"href="${context}/provider/new">
           		<span class="glyphicon glyphicon-plus-sign "></span> New Provider

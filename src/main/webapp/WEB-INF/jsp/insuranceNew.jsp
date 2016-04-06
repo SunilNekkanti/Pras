@@ -11,7 +11,7 @@
 
 
 <div class="panel-group">
-	<div class="panel panel-primary">
+	<div class="panel panel-success">
 		<div class="panel-heading">Insurance Profile
 			<a class="btn btn-danger pull-right btn-xs"href="${context}/insuranceList">
           		<span class="glyphicon glyphicon-plus-sign "></span>Insurance List
