@@ -39,18 +39,18 @@
 					<c:choose>
 						 <c:when test="${insurance.id != null && insurance.activeInd == 89}"> 
 						 	<div class="col-sm-3">
-						 		<button type="button" class="btn btn-primary" id="updateButton" name="update" onclick="return modifyInsuranceDetails();" >Update</button>
+						 		<button type="button" class="btn btn-success btn-sm" id="updateButton" name="update" onclick="return modifyInsuranceDetails();" >Update</button>
 						 	</div>
 						 	<div class="col-sm-3">	
-						 		<button type="button" class="btn btn-primary" id="deleteButton" name="delete" onclick="return deleteInsuranceDetails();" >Delete</button>
+						 		<button type="button" class="btn btn-success btn-sm" id="deleteButton" name="delete" onclick="return deleteInsuranceDetails();" >Delete</button>
 						 </div>	
 						 </c:when>
 						 <c:when test="${insurance.id == null}"> 
 						 	<div class="col-sm-3">
-								<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
+								<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="add" >Add</button>
 							</div>
 							<div class="col-sm-3">
-								<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+								<button type="submit" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 							</div>	
 						</c:when>
 					</c:choose>					

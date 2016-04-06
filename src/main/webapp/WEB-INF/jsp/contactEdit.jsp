@@ -118,12 +118,12 @@
 					<div class="col-sm-offset-6 col-sm-6">
 						<c:choose>
 							 <c:when test="${id != null && contact.activeInd == 89}">  
-							 	<button type="button" class="btn btn-primary" id="updateButton" onclick="return modifyContact();"  name="update" >Update</button>
-							 	<button type="button" class="btn btn-primary" id="deleteButton" name="delete" onclick="return deleteContact();" >Delete</button>
+							 	<button type="button" class="btn btn-success btn-sm" id="updateButton" onclick="return modifyContact();"  name="update" >Update</button>
+							 	<button type="button" class="btn btn-success btn-sm" id="deleteButton" name="delete" onclick="return deleteContact();" >Delete</button>
 							 </c:when>
 							 <c:when test="${contact.id == null}">
-								<button type="button" class="btn btn-primary" id="addButton" onclick="return addContact();"  name="add" >Add</button>
-								<button type="button" class="btn btn-primary" id="resetButton" >Reset</button>
+								<button type="button" class="btn btn-success btn-sm" id="addButton" onclick="return addContact();"  name="add" >Add</button>
+								<button type="button" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 							</c:when>
 							</c:choose>
 					</div>

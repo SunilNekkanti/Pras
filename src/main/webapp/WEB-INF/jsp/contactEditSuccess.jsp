@@ -5,7 +5,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Info
-			<button class="btn btn-success pull-right btn-xs" onclick= "return contactList();">
+			<button class="btn btn-danger pull-right btn-xs" onclick= "return contactList();">
 	          	<span class="glyphicon glyphicon-plus-sign "></span> contact List
 	         </button>
 		</div>

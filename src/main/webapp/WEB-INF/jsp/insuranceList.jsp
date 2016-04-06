@@ -84,7 +84,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Insurance List 
-			<a class="btn btn-danger pull-right btn-xs"href="${context}/insurance/new">
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/insurance/new">
           		<span class="glyphicon glyphicon-plus-sign "></span>New Insurance
           	</a>
 		</div>

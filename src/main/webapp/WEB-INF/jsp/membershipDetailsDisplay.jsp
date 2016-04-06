@@ -16,7 +16,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Membership Insurance
-			<button class="btn btn-success pull-right btn-xs" onclick= "return mbrInsList();">
+			<button class="btn btn-danger pull-right btn-xs" onclick= "return mbrInsList();">
           		<span class="glyphicon glyphicon-plus-sign "></span> Membership Insurance List
           	</button>
 		
@@ -148,12 +148,12 @@
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>
 						 <c:when test="${membershipInsurance.id != null && membershipInsurance.activeInd == 89}"> 
-								<button type="button" class="btn btn-primary" id="updateButton" name="update"  onclick="return modifyMbrInsDetails(${membershipInsurance.id})">Update</button>
-								<button type="button" class="btn btn-primary" id="deleteButton" class="delete" onclick ="return deleteMbrInsDetails(${membershipInsurance.id})" name="delete" >Delete</button>
+								<button type="button" class="btn btn-success btn-sm" id="updateButton" name="update"  onclick="return modifyMbrInsDetails(${membershipInsurance.id})">Update</button>
+								<button type="button" class="btn btn-success btn-sm" id="deleteButton" class="delete" onclick ="return deleteMbrInsDetails(${membershipInsurance.id})" name="delete" >Delete</button>
 						</c:when>
 						 <c:when test="${membershipInsurance.id == null}"> 
-							<button type="button" class="btn btn-primary" id="updateButton" name="add" onclick="return addMbrInsDetails()">Add</button>
-							<button type="button" class="btn btn-primary" id="resetButton" >Reset</button>
+							<button type="button" class="btn btn-success btn-sm" id="updateButton" name="add" onclick="return addMbrInsDetails()">Add</button>
+							<button type="button" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 						</c:when>
 					</c:choose>			
 				</div>	

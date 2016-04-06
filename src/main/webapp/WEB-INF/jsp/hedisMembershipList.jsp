@@ -277,7 +277,7 @@ $(document).ready(function() {
 								 <div class="col-sm-7" id="extFilterHedisRule"></div>
 							</div>	
 							<div class="col-sm-3">	 
-								 <button type="button" id="hedisGenerate" class="btn btn-primary btn-xs">Generate</button>
+								 <button type="button" id="hedisGenerate" class="btn btn-success btn-sm btn-xs">Generate</button>
 							</div>	 
 					 	</div>
 					<table id="membershipTable" class="table table-striped table-hover table-responsive">

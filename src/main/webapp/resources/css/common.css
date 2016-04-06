@@ -8,15 +8,12 @@ table.dataTable{width:100%;}
 .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {color: #9d9d9d !important; }
 footer, .footer .container-fluid{background: #556B2F !important; height:30px;}
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {background-color:#dff0d8 !important;}
-a {color: #3c763d;text-decoration: none;}
+a {color: #3c763d !important;text-decoration: none;}
+.white-text{color: #FFFFFF !important;text-decoration: none;}
 table.dataTable > tbody tr.odd td {  background: #fafcF9 !important;}
-
-div.dataTables_info {
-    color: #3c763d;
-}
- table.pretty {
-    clear: both;
-}
+table tbody tr.odd td {  background: #fafcF9 !important;}
+div.dataTables_info { color: #3c763d;}
+ table.pretty { clear: both;}
  
  table.pretty tfoot th {
     background: #b0cc7f;
@@ -53,13 +50,31 @@ html[xmlns] .dataTables_wrapper { display: block; }
 * html .dataTables_wrapper { height: 1%; }
  
 @font-face {
-    font-family: GOTHAM;
+    font-family: Gothams;
     src: url(GOTHAM-MEDIUM.TTF);
 }
-#myNavbar {font-family: GOTHAM;font-weight: 300;
-    font-style: normal;
-    font-size: 13px;
+
+#myNavbar {
+font-family: Gothams;
     text-transform: uppercase;
-    line-height: 21px;
-    color: #777;
+    font-size: 9px !important;
+    font-weight: 100;
+    opacity: 0.9;
+    letter-spacing: 1px;}
+    
+.panel-heading, 
+#tabs a,
+table.dataTable tr th  
+{font-family: Gothams;}    
+    
+@font-face {
+    font-family: GothamsBody;
+    src: url(GOTHAM-LIGHT.TTF);
+}    
+body{font-family: GothamsBody;}
+
+/*  Menu onclick color change */
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #fff;
+    background-color: rgb(85, 107, 47);
 }

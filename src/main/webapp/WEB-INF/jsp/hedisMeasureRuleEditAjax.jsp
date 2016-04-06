@@ -367,12 +367,12 @@ $.ajax( {
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>
 						 <c:when test="${hedisMeasureRule.id != null}"> 
-						 	<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
-						 	<button type="submit" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
+						 	<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="update" >Update</button>
+						 	<button type="submit" class="btn btn-success btn-sm" id="deleteButton" name="delete" >Delete</button>
 						 </c:when>
 						 <c:otherwise>
-							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
-							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+							<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="add" >Add</button>
+							<button type="submit" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 						</c:otherwise>
 						</c:choose>
 				</div>

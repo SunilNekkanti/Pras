@@ -109,12 +109,12 @@
 				<div class="col-sm-offset-7 col-sm-5">
 					<c:choose>
 						<c:when test="${id != null && contract.activeInd == 89}"> 
-						 	<button type="button" class="btn btn-primary" id="updateButton" name="update" onclick="return modifyContract();" >Update</button>
-						 	<button type="button" class="btn btn-primary" id="deleteButton" name="delete" onclick="return deleteContract();">Delete</button>
+						 	<button type="button" class="btn btn-success btn-sm" id="updateButton" name="update" onclick="return modifyContract();" >Update</button>
+						 	<button type="button" class="btn btn-success btn-sm" id="deleteButton" name="delete" onclick="return deleteContract();">Delete</button>
 						</c:when>
 						<c:when test="${contract.id == null}">
-							<button type="button" class="btn btn-primary" id="addButton"   name="add" onclick="return addContract();" >Add</button>
-							<button type="button" class="btn btn-primary" id="resetButton" >Reset</button>
+							<button type="button" class="btn btn-success btn-sm" id="addButton"   name="add" onclick="return addContract();" >Add</button>
+							<button type="button" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 						</c:when>
 					</c:choose>
 				</div>

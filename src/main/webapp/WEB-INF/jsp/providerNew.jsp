@@ -47,12 +47,12 @@
 				<div class="col-sm-offset-2 col-sm-6">
 					<c:choose>
 						 <c:when test="${provider.id != null && provider.activeInd == 89}"> 
-							<button type="submit" class="btn btn-primary" name="update" id="updateButton">Update</button>
-							<button type="submit" class="btn btn-primary" name="delete" id="deleteButton">Delete</button>
+							<button type="submit" class="btn btn-success btn-sm" name="update" id="updateButton">Update</button>
+							<button type="submit" class="btn btn-success btn-sm" name="delete" id="deleteButton">Delete</button>
 						 </c:when>
 						 <c:when test="${provider.id == null}"> 
-							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
-							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+							<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="add" >Add</button>
+							<button type="submit" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 						</c:when>
 					</c:choose>	
 				</div>

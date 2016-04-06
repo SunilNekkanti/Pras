@@ -185,7 +185,7 @@ $.ajax( {
                         </ul>
           </div>
           <div class="col-sm-12">
-          	<div class="col-sm-10 copyRule"><a href="#" id="copyRule" class="btn btn-primary pull-right"> <span class="glyphicon glyphicon-plus-sign"></span>Copy</a></div>	
+          	<div class="col-sm-10 copyRule"><a href="#" id="copyRule" class="btn btn-success btn-sm pull-right"> <span class="glyphicon glyphicon-plus-sign"></span>Copy</a></div>	
           </div>
 		  <div class="panel-body" id="tablediv">
 			<springForm:form id="hedisMeasureRule" method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/${id}/save.do" class="form-horizontal" role="form">
@@ -226,8 +226,8 @@ $.ajax( {
 						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
-					    <a href="#" id='removeCPT' class="btn btn-primary"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
+						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
+					    <a href="#" id='removeCPT' class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
 					 </div>	
 				</div>
 				 		 
@@ -238,8 +238,8 @@ $.ajax( {
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-primary"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
-						<a href="#" id="removeICD" class="btn btn-primary"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
+						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
+						<a href="#" id="removeICD" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
 					 </div>	
 				</div>
 				
@@ -306,12 +306,12 @@ $.ajax( {
 				<div class="col-sm-offset-6 col-sm-4">
 					<c:choose>
 						 <c:when test="${hedisMeasureRule.id != null}"> 
-						 	<button type="submit" class="btn btn-primary" id="updateButton" name="update" >Update</button>
-						 	<button type="submit" class="btn btn-primary" id="deleteButton" name="delete" >Delete</button>
+						 	<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="update" >Update</button>
+						 	<button type="submit" class="btn btn-success btn-sm" id="deleteButton" name="delete" >Delete</button>
 						 </c:when>
 						 <c:otherwise>
-							<button type="submit" class="btn btn-primary" id="updateButton" name="add" >Add</button>
-							<button type="submit" class="btn btn-primary" id="resetButton" >Reset</button>
+							<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="add" >Add</button>
+							<button type="submit" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 						</c:otherwise>
 						</c:choose>
 				</div>
@@ -352,7 +352,7 @@ $.ajax( {
 	      		</div>
 	      </div>		
 	      <div class="modal-footer" style="text-align:left;">
-	        <button type="button" id="addCPT" class="btn btn-primary" data-dismiss="modal">ADD</button>
+	        <button type="button" id="addCPT" class="btn btn-success btn-sm" data-dismiss="modal">ADD</button>
 	      </div>
 	    </div>
 	</div>
@@ -389,7 +389,7 @@ $.ajax( {
 	      		</div>
 	      	</div>		
 	      	<div class="modal-footer" style="text-align:left;">
-	        	<button type="button" id="addICD" class="btn btn-primary" data-dismiss="modal">ADD</button>
+	        	<button type="button" id="addICD" class="btn btn-success btn-sm" data-dismiss="modal">ADD</button>
 	      	</div>
 	    </div>
 	</div>

@@ -101,7 +101,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading"> Provider List
-			<a class="btn btn-danger pull-right btn-xs"href="${context}/provider/new">
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/provider/new">
           		<span class="glyphicon glyphicon-plus-sign "></span> New Provider
           	</a>
 		</div>

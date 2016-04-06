@@ -71,8 +71,8 @@
 				</div>
 				 		 
 				<div class="col-sm-offset-6 col-sm-4">
-					<button type="submit" class="btn btn-primary" id="updateButton">Update</button>
-					<button type="submit" class="btn btn-primary" id="deleteButton">Delete</button>
+					<button type="submit" class="btn btn-success btn-sm" id="updateButton">Update</button>
+					<button type="submit" class="btn btn-success btn-sm" id="deleteButton">Delete</button>
 				</div>
 			</springForm:form>
 		</div>
