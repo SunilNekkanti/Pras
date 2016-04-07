@@ -40,10 +40,10 @@ public class ReferenceContract implements Serializable
     @JoinColumn(name="insurance_id", referencedColumnName="insurance_id")
     private Insurance ins;
     
-    @Expose
+   // @Expose
     @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="ins_prvdr_id", referencedColumnName="ins_prvdr_id")
-    private InsuranceProvider insPrvdr;
+    @JoinColumn(name="prvdr_id",  referencedColumnName="prvdr_id")
+    private Provider prvdr;
     
     @OneToOne(  fetch = FetchType.LAZY, mappedBy="referenceContract")
     private Contract contract;
@@ -102,17 +102,17 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @return the insPrvdr
+	 * @return the prvdr
 	 */
-	public InsuranceProvider getInsPrvdr() {
-		return insPrvdr;
+	public Provider getPrvdr() {
+		return prvdr;
 	}
 
 	/**
-	 * @param insPrvdr the insPrvdr to set
+	 * @param prvdr the prvdr to set
 	 */
-	public void setInsPrvdr(InsuranceProvider insPrvdr) {
-		this.insPrvdr = insPrvdr;
+	public void setPrvdr(Provider prvdr) {
+		this.prvdr = prvdr;
 	}
 
 	/**

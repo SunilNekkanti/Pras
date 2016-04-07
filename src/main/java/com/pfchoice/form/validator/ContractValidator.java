@@ -31,11 +31,13 @@ public class ContractValidator implements Validator {
 	        }
         }    
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contractNBR", 		"error.contractNBR", 		"Contract NBR Required");
+       
        if (contract.getContractNBR().length() < 5 && contract.getContractNBR().length() >=1) {
             errors.rejectValue("contractNBR", "contractNBR.tooshort",     "Contract NBR must be at least 5 characters and less than 20 characters.");
         }
-                 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pmpm", 		"error.PMPM", 		"PMPM Required");
+       if(contract.getReferenceContract() != null && contract.getReferenceContract().getIns() != null){
+    	   ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pmpm", 		"error.PMPM", 		"PMPM Required");
+       }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate",  "error.startDate",  "Start Date Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", 	"error.endDate",    "End Date Required");
         

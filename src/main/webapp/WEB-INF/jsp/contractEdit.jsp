@@ -11,12 +11,12 @@
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Contract Details
-			<button class="btn btn-danger pull-right btn-xs" onclick= "return contractList();">
+			<button class="btn btn-danger pull-right btn-xs" onclick= "return contractList(${pmpmRequired});">
           		<span class="glyphicon glyphicon-plus-sign "></span> contract List
            </button>
     	</div>
 		<div class="panel-body">
-			<springForm:form method="POST" id="contract" commandName="contract" action="${id}/contract/save.do" class="form-horizontal" role="form" enctype="multipart/form-data">
+			<springForm:form method="POST" id="contract${pmpmRequired}" commandName="contract" action="${id}/contract/save.do" class="form-horizontal" role="form" enctype="multipart/form-data">
 				<div class="col-sm-12">
 					<div class="col-sm-3">
 						<div class="form-group required">
@@ -26,8 +26,8 @@
 								<springForm:hidden path="referenceContract.id" />
 								
 								 <c:choose>
-								 	 <c:when test="${contract.referenceContract.insPrvdr.prvdr != null}">
-										<springForm:hidden path="referenceContract.insPrvdr.prvdr.id" />
+								 	 <c:when test="${contract.referenceContract.prvdr != null}">
+										<springForm:hidden path="referenceContract.prvdr.id" />
 									</c:when>
 									<c:when test="${contract.referenceContract.ins != null}">
 										<springForm:hidden path="referenceContract.ins.id" />
@@ -39,33 +39,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-3">	
-						<div class="form-group required">
-							<label class="control-label required col-sm-5" for="PMPM">PMPM</label>
-							<div class="col-sm-7">
-								<springForm:input path="pmpm" class="form-control" id="PMPM" placeholder="PMPM" />
-								<springForm:errors path="pmpm" cssClass="error text-danger" />
-							</div>
-						</div>
-					</div>	
-					
-					<c:choose>
-					<c:when test="${insuranceRequired}">
-						<div class="col-sm-3">
-									<div class="form-group required">
-									<label class="control-label col-sm-5" for="status">Insurance</label>
-									<div class="col-sm-7">
-										<springForm:select path="insPrvdrId" class="form-control" id="status">
-											<springForm:option  value="${null}" label="Select One"/>
-								    		<springForm:options items="${insPrvdrList}" itemValue="id" itemLabel="ins.name"   />
-										</springForm:select>
-										<springForm:errors path="insPrvdrId" cssClass="error text-danger" />
-									  </div>
-								</div>
-						</div>		
-					</c:when>
-					</c:choose>
-					
 					<div class="col-sm-3">
 						<div class="form-group required">
 						 	<label class="control-label col-sm-5" for="startDate">Start Date</label>
@@ -76,8 +49,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-12">	
 					<div class="col-sm-3">	
 						<div class="form-group required">
 						 	<label class="control-label col-sm-5" for="endDate">End Date</label>
@@ -103,17 +74,50 @@
 								</c:choose>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="col-sm-12">	
+						
+				<c:choose>
+					<c:when test="${pmpmRequired}">
+					<div class="col-sm-3">	
+						<div class="form-group required">
+							<label class="control-label required col-sm-5" for="PMPM">PMPM</label>
+							<div class="col-sm-7">
+								<springForm:input path="pmpm" class="form-control" id="PMPM" placeholder="PMPM" />
+								<springForm:errors path="pmpm" cssClass="error text-danger" />
+							</div>
+						</div>
 					</div>	
+					</c:when>
+					</c:choose>
+
+					<c:choose>
+					<c:when test="${insuranceRequired}">
+						<div class="col-sm-3">
+									<div class="form-group required">
+									<label class="control-label col-sm-5" for="status">Insurance</label>
+									<div class="col-sm-7">
+										<springForm:select path="insId" class="form-control" id="status">
+											<springForm:option  value="${null}" label="Select One"/>
+								    		<springForm:options items="${insuranceList}" itemValue="id" itemLabel="name"   />
+										</springForm:select>
+										<springForm:errors path="insId" cssClass="error text-danger" />
+									  </div>
+								</div>
+						</div>		
+					</c:when>
+					</c:choose>	
 				</div>
 				<div id="filecontent"> </div>
 				<div class="col-sm-offset-7 col-sm-5">
 					<c:choose>
 						<c:when test="${id != null && contract.activeInd == 89}"> 
-						 	<button type="button" class="btn btn-success btn-sm" id="updateButton" name="update" onclick="return modifyContract();" >Update</button>
-						 	<button type="button" class="btn btn-success btn-sm" id="deleteButton" name="delete" onclick="return deleteContract();">Delete</button>
+						 	<button type="button" class="btn btn-success btn-sm" id="updateButton" name="update" onclick="return modifyContract(${pmpmRequired});" >Update</button>
+						 	<button type="button" class="btn btn-success btn-sm" id="deleteButton" name="delete" onclick="return deleteContract(${pmpmRequired});">Delete</button>
 						</c:when>
 						<c:when test="${contract.id == null}">
-							<button type="button" class="btn btn-success btn-sm" id="addButton"   name="add" onclick="return addContract();" >Add</button>
+							<button type="button" class="btn btn-success btn-sm" id="addButton"   name="add" onclick="return addContract(${pmpmRequired});" >Add</button>
 							<button type="button" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
 						</c:when>
 					</c:choose>

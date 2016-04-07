@@ -82,9 +82,6 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
 	private InsuranceFormatter insuranceFormatter;
 
 	@Autowired
-	private InsuranceProviderFormatter insuranceProviderFormatter;
-
-	@Autowired
 	private MembershipFormatter membershipFormatter;
 	
 	@Autowired
@@ -222,7 +219,6 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
     	formatterRegistry.addFormatter(hedisMeasureGroupFormatter);
     	formatterRegistry.addFormatter(icdFormatter);
     	formatterRegistry.addFormatter(insuranceFormatter);
-    	formatterRegistry.addFormatter(insuranceProviderFormatter);
     	formatterRegistry.addFormatter(membershipFormatter);
     	formatterRegistry.addFormatter(membershipStatusFormatter);
     	formatterRegistry.addFormatter(planTypeFormatter);

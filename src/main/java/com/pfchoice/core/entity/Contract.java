@@ -82,7 +82,7 @@ public class Contract implements Serializable
     
     @Expose
     @Transient
-    private Integer insPrvdrId;
+    private Integer insId;
     
       
     public Contract()
@@ -189,17 +189,17 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @return the insPrvdrId
+	 * @return the insId
 	 */
-	public Integer getInsPrvdrId() {
-		return insPrvdrId;
+	public Integer getInsId() {
+		return insId;
 	}
 
 	/**
-	 * @param insPrvdrId the insPrvdrId to set
+	 * @param insId the insId to set
 	 */
-	public void setInsPrvdrId(Integer insPrvdrId) {
-		this.insPrvdrId = insPrvdrId;
+	public void setInsId(Integer insId) {
+		this.insId = insId;
 	}
 
 	/**

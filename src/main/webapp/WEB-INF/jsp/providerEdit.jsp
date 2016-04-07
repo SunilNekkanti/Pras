@@ -26,14 +26,6 @@
 						   	<springForm:errors path="code" cssClass="error text-danger" />
 						 </div>
 					</div>
-					
-					<div class="form-group required col-sm-4">
-						<label class="control-label col-sm-3" for="insurance">Insurance</label>
-						<div class="col-sm-9">
-							<springForm:select multiple="true" path="insPrvdrs" class="form-control"  items="${insPrvdrList}" itemLabel="ins.name" itemValue="id" />
-							<springForm:errors path="insPrvdrs" cssClass="error text-danger" />
-						</div>
-					</div>
 				</div>
 				<div class="col-sm-offset-9 col-sm-3">
 					<c:choose>

@@ -14,7 +14,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Provider Profile
-			<a class="btn btn-danger pull-right btn-xs"href="${context}/providerList">
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/providerList">
           		<span class="glyphicon glyphicon-plus-sign "></span>Provider List
           	</a>
 		</div>
@@ -37,13 +37,6 @@
 						    </div>
 				</div>
 				
-				<div class="form-group required col-sm-12">
-							<label class="control-label col-sm-2" for="insurance">Insurance</label>
-							<div class="col-sm-6">
-								<springForm:select multiple="true" path="insurances" class="form-control"  items="${insuranceList}" itemLabel="name" itemValue="id" />
-								<springForm:errors path="insurances" cssClass="error text-danger" />
-							</div>
-				</div>
 				<div class="col-sm-offset-2 col-sm-6">
 					<c:choose>
 						 <c:when test="${provider.id != null && provider.activeInd == 89}"> 

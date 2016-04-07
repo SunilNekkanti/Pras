@@ -8,7 +8,7 @@
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Contract List<span class="badge">${contractList.size()}</span>
-				<button class="btn btn-danger pull-right btn-xs" onclick= "return newContract();">
+				<button class="btn btn-danger pull-right btn-xs" onclick= "return newContract(${pmpmRequired});">
           			<span class="glyphicon glyphicon-plus-sign "></span> New Contract
           		</button>
         </div>
@@ -35,11 +35,11 @@
 							    <c:when test="${cntct.activeInd == 89}">
 							    	<c:choose>
 									 	
-										 <c:when test="${cntct.referenceContract.insPrvdr.prvdr != null}">
-											<a onclick ="return contract(${cntct.referenceContract.insPrvdr.prvdr.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
+										 <c:when test="${cntct.referenceContract.prvdr != null}">
+											<a onclick ="return contract(${cntct.referenceContract.prvdr.id},${cntct.id},${pmpmRequired})" href="#"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.referenceContract.ins != null}">
-											<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
+											<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id},${pmpmRequired})" href="#"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue
@@ -49,11 +49,11 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									
-									 <c:when test="${cntct.referenceContract.insPrvdr.prvdr != null}">
-										<a onclick ="return contract(${cntct.referenceContract.insPrvdr.prvdr.id},${cntct.id})" href="#" rel='tab' >View</a>
+									 <c:when test="${cntct.referenceContract.prvdr != null}">
+										<a onclick ="return contract(${cntct.referenceContract.prvdr.id},${cntct.id},${pmpmRequired})" href="#" rel='tab' >View</a>
 									</c:when>
 									 <c:when test="${cntct.referenceContract.ins != null}">
-										<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id})" href="#"  rel='tab' >View</a>
+										<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id},${pmpmRequired})" href="#"  rel='tab' >View</a>
 									</c:when>
 									<c:otherwise>
 										issue
@@ -105,12 +105,13 @@
 
 <script>
 function myFunction(id) 
-{
+ {
 	var w = 500;
     var h = 500;
     var left = (screen.width/2)-(w/2);
     var top = (screen.height/2)-(h/2);
 	window.open (getContextPath()+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 }
+
 </script>
 	

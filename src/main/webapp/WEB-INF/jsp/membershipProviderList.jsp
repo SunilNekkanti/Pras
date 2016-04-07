@@ -29,7 +29,6 @@ prasPagination('provider');
 					<tr>
 							<th scope="col">Name</th>
 							<th scope="col">NPI</th>
-							<th scope="col">Insurances</th>
 					</tr>
 				</thead>
 
@@ -39,15 +38,6 @@ prasPagination('provider');
 						<tr>
 							<td> <a href="${context}/provider/${mbrProvider.id}"   rel='tab' > ${mbrProvider.prvdr.name}</a></td> 
 						    <td> ${mbrProvider.prvdr.code}  </td> 
-						    <%String insPrvdrNames ="";  %>
-						    <c:forEach items="${mbrProvider.prvdr.insPrvdrs}" var="insPrvdr">
-						    	<c:choose>
-									 <c:when test="${insPrvdr.id != null && insPrvdr.activeInd == 89}"> 
-									 <c:set var="insPrvdrNames" value=" ${insPrvdr.ins.name},${insPrvdrNames}" /> 
-					                 </c:when>
-					            </c:choose>
-						    </c:forEach>
-						    <td> ${insPrvdrNames}  </td>
 						 </tr>     
 					</c:forEach>
 				</tbody>

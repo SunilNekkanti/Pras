@@ -46,9 +46,9 @@ public class InsuranceProvider implements Serializable
     @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
     private Insurance ins;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "insPrvdr")
+   /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "insPrvdr")
     private Set<ReferenceContract> refContracts;
-    
+   */ 
    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -120,16 +120,16 @@ public class InsuranceProvider implements Serializable
 	/**
 	 * @return the refContracts
 	 */
-	public Set<ReferenceContract> getRefContracts() {
+	/*public Set<ReferenceContract> getRefContracts() {
 		return refContracts;
-	}
+	}*/
 
 	/**
 	 * @param refContracts the refContracts to set
 	 */
-	public void setRefContracts(Set<ReferenceContract> refContracts) {
+	/*public void setRefContracts(Set<ReferenceContract> refContracts) {
 		this.refContracts = refContracts;
-	}
+	}*/
 
 	/**
 	 * @return the createdDate

@@ -148,7 +148,7 @@ function deleteInsuranceDetails()
 	    }
 	});
 		
-	function contract(insuranceId,contractId)
+	function contract(insuranceId,contractId,pmpmRequired)
 	{
 		var source = getContextPath()+'insurance/'+insuranceId+'/contract/'+contractId;
 		$.ajax({
@@ -184,7 +184,7 @@ function deleteInsuranceDetails()
 	
 	
 
-	function newContract()
+	function newContract(pmpmRequired)
 	{
 		var source = getContextPath()+'insurance/${id}/contract/new';
 		$.ajax({
@@ -219,7 +219,7 @@ function deleteInsuranceDetails()
 		});
 	}
 	
-	function contractList()
+	function contractList(pmpmRequired)
 	{
 	  var source = getContextPath()+'insurance/${id}/contractList';
  	   $.ajax({
@@ -254,7 +254,7 @@ function deleteInsuranceDetails()
 	}
 
 	
-	function addContract()
+	function addContract(pmpmRequired)
 	{
 		var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
 		if(window.FormData !== undefined)  // for HTML5 browsers
@@ -278,11 +278,11 @@ function deleteInsuranceDetails()
 	    return false;
 	}
 	
-	function modifyContract()
+	function modifyContract(pmpmRequired)
 	{
 		
 		var url = getContextPath()+'insurance/${id}/contract/save.do?update'; 
-		var dataList = 	$("#contract").serialize();
+		var dataList = 	$("#contract"+pmpmRequired).serialize();
 		$.ajax({
 	           type: "POST",
 	           url: url,
@@ -298,12 +298,12 @@ function deleteInsuranceDetails()
 	     });
 	}
 	
-	function deleteContract()
+	function deleteContract(pmpmRequired)
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
 			var url = getContextPath()+'provider/${id}/contract/save.do?delete'; 
-			var dataList = 	$("#contract").serialize();
+			var dataList = 	$("#contract"+pmpmRequired).serialize();
 			$.ajax({
 		           type: "POST",
 		           url: url,
@@ -342,7 +342,7 @@ function deleteInsuranceDetails()
 	function modifyContact()
 	{
 		var url = getContextPath()+'insurance/${id}/contact/save.do?update'; 
-		var dataList = 	$("#contact").serialize();
+		var dataList = 	$("#contact"+pmpmRequired).serialize();
 		$.ajax({
 	           type: "POST",
 	           url: url,

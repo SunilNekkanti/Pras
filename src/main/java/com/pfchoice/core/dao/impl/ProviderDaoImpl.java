@@ -31,9 +31,9 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     		final String sSearch, final String sort, final String sortdir)
     {
     	Criteria crit = createCriteria();
-        crit.createAlias("insPrvdrs","insPrvdr");
+     //   crit.createAlias("refContracts","refContract");
         crit.add(Restrictions.eq("activeInd", new Character('Y')));
-        crit.add(Restrictions.eq("insPrvdr.activeInd", new Character('Y')));
+      //  crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
         
         Disjunction or = Restrictions.disjunction();
     	
@@ -60,6 +60,11 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		}
         crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         Pagination page = findByCriteria(crit, pageNo, pageSize);
+        
+        final String msg = "providerDaoImpl->getpage list size is %d";
+    	final String fmt = String.format(msg, page.getList().size());
+    	LOG.info(fmt);
+    	
         return page;
         
     }
@@ -101,10 +106,10 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
     {
     	
     	 Criteria crit = createCriteria();
-    	 crit.createAlias("insPrvdrs", "insPrvdr");
-    	 crit.createAlias("insPrvdr.ins", "ins");
+    	 crit.createAlias("refContracts", "refContract");
+    	 crit.createAlias("refContract.ins", "ins");
          crit.add(Restrictions.eq("activeInd", new Character('Y')));
-         crit.add(Restrictions.eq("insPrvdr.activeInd", new Character('Y')));
+         crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
          crit.add(Restrictions.eq("ins.id", id));
          
          Pagination page = findByCriteria(crit, 0, 200);

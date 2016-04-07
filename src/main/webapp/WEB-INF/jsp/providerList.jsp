@@ -62,7 +62,7 @@
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                            { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "33%"},
                            { "mDataProp": "code","bSearchable" : true, "bSortable": true,"sWidth" : "33%"  },
-                           { "mDataProp": "insPrvdrs[, ].ins.name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
+                           { "mDataProp": "refContracts[, ].ins.name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
                        ],
               "aoColumnDefs": [ 
                        		    { "sName": "id", "aTargets": [ 0 ] },
@@ -71,14 +71,14 @@
                                           return '<a href="provider/'+full.id+'">'+data+'</a>';
                                 }},
                        		    { "sName": "code", "aTargets": [ 2 ] },
-                       		    { "sName": "insPrvdrs[, ].ins.name", "aTargets": [ 3 ],
+                       		    { "sName": "refContracts[, ].ins.name", "aTargets": [ 3 ],
                        		    	"render": function  ( data, type, full, meta )  {
                                         var insNames=[];
-                                        for(var i = 0; i<full.insPrvdrs.length; i++)
+                                        for(var i = 0; i<full.refContracts.length; i++)
                                         {
-                                        	if(full.insPrvdrs[i].activeInd == 'Y')
+                                        	if(full.refContracts[i].activeInd == 'Y')
                                         		{
-                                        			insNames[i] = full.insPrvdrs[i].ins.name;  
+                                        			insNames[i] = full.refContracts[i].ins.name;  
                                         		}
                                          
                                         }

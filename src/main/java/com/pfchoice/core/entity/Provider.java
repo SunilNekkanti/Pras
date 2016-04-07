@@ -68,8 +68,8 @@ public class Provider implements Serializable
     private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
     
     @Expose
-    @OneToMany(fetch = FetchType.LAZY,   mappedBy = "prvdr",orphanRemoval=true)
-    private List<InsuranceProvider> insPrvdrs  = new ArrayList<InsuranceProvider>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
+    private Set<ReferenceContract> refContracts = new HashSet<ReferenceContract>();
     
     public Provider()
     {
@@ -117,20 +117,6 @@ public class Provider implements Serializable
 	 */
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the insPrvdrs
-	 */
-	public List<InsuranceProvider> getInsPrvdrs() {
-		return insPrvdrs;
-	}
-
-	/**
-	 * @param insPrvdrs the insPrvdrs to set
-	 */
-	public void setInsPrvdrs(List<InsuranceProvider> insPrvdrs) {
-		this.insPrvdrs = insPrvdrs;
 	}
 
 	/**
@@ -216,6 +202,20 @@ public class Provider implements Serializable
 	 */
 	public void setRefContacts(Set<ReferenceContact> refContacts) {
 		this.refContacts = refContacts;
+	}
+	
+	/**
+	 * @return the refContracts
+	 */
+	public Set<ReferenceContract> getRefContracts() {
+		return refContracts;
+	}
+
+	/**
+	 * @param refContracts the refContracts to set
+	 */
+	public void setRefContracts(Set<ReferenceContract> refContracts) {
+		this.refContracts = refContracts;
 	}
 
 	@Override
