@@ -36,7 +36,7 @@ public class ReferenceContract implements Serializable
     private Integer id;
 
     @Expose
-    @OneToOne( fetch = FetchType.LAZY)
+    @OneToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="insurance_id", referencedColumnName="insurance_id")
     private Insurance ins;
     

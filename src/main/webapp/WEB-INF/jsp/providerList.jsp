@@ -71,17 +71,18 @@
                                           return '<a href="provider/'+full.id+'">'+data+'</a>';
                                 }},
                        		    { "sName": "code", "aTargets": [ 2 ] },
-                       		    { "sName": "refContracts[ ].ins.name", "aTargets": [ 3 ],
+                       		    { "sName": "refContracts[].ins.name", "aTargets": [ 3 ],
                        		    	"render": function  ( data, type, full, meta )  {
                                         var insNames=[];
-                                        for(var i = 0; i<full.refContracts.length; i++)
-                                        {
-                                        	if(full.refContracts[i].activeInd == 'Y' && full.refContracts[i].ins != null)
-                                        		{
-                                        			insNames[i] = full.refContracts[i].ins.name;  
-                                        		}
-                                         
-                                        }
+                                        var index =0;
+                                        var refContracts = full.refContracts;
+                                        refContracts.forEach(function( item ) {
+                                        	if(item.activeInd == 'Y' && item.ins != null)
+                                    		{
+                                        		insNames[index] = item.ins.name;  
+                                        		++index;
+                                        	}
+                                        });
                   						return insNames.join(', ');
                 					}
                        		    }
