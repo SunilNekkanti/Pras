@@ -74,18 +74,17 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
   </style>
 
 </head>  
-<script>
-$(document).ready(function() {
-	   $(function() {
-	      $(".datepicker").datepicker({
-	         dateFormat: 'mm/dd/yy'
-	      });
-	   });
-	});
-</script>
 <body>  
 <script>
+jQuery( document ).ready(function( $ ) {
+	$(".datepicker").datepicker({
+        dateFormat: 'mm/dd/yy'
+    });
 
+	  $('body').on('focus',".datepicker", function(){
+		    $(this).datepicker();
+		   });
+});
 $(document).ready(function(){	
 	
 

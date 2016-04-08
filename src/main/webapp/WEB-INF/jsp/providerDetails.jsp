@@ -53,6 +53,7 @@
 
 
 <script>
+
 	var source = getContextPath()+'provider/${id}/contractList';
 	$.ajax({
 		url : source,
@@ -208,9 +209,6 @@
 			 	success: function(data, textStatus, jqXHR)
 			    {
 			 		$('#providerContractList').html(data);
-			        $('#contract').on('submit', function (event) {
-			        	
-			        });
 			    },
 			    error: function (jqXHR, textStatus, errorThrown)
 			    {
@@ -229,9 +227,6 @@
 		 	success: function(data, textStatus, jqXHR)
 		    {
 		 		$('#providerInsuranceContractList').html(data);
-		        $('#contract'+pmpmRequired).on('submit', function (event) {
-		        	
-		        });
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
@@ -455,6 +450,7 @@
 		           success: function(data)
 		           {
 		            	$('#providerInsuranceContractList').html(data);
+		            	
 		           },
 		    		error:function(data)
 		    		{
@@ -524,7 +520,6 @@
 		}
 	}	
 	
-	//$(document).on("click", "#addButton",   function() { addContract("${pmpmRequired}"); } );
 
 </script>
 

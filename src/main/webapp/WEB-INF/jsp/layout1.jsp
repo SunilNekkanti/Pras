@@ -76,16 +76,17 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 
 <body>  
 <script>
-
-$(document).ready(function(){	
-	 $(".datepicker").datepicker({
-         dateFormat: 'mm/dd/yy'
-      });
+jQuery( document ).ready(function( $ ) {
+	$(".datepicker").datepicker({
+        dateFormat: 'mm/dd/yy'
+    });
 
 	  $('body').on('focus',".datepicker", function(){
 		    $(this).datepicker();
 		   });
-	  
+});
+$(document).ready(function(){	
+
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('lastTab', $(this).attr('href'));
     });
