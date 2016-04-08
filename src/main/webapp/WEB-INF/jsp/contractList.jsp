@@ -1,7 +1,7 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="UTF-8"%>		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 
 <div class="panel-group">
@@ -82,8 +82,8 @@
 								   		<td> ${cntct.referenceContract.ins.name}</td> 
 								   	</c:when>
 								</c:choose>			
-						        	<td> ${cntct.startDate}</td>
-						        	<td> ${cntct.endDate}</td>
+						        	<td> <fmt:formatDate value="${cntct.startDate}"  pattern="MM-dd-yyyy" /> </td>
+						        	<td> <fmt:formatDate value="${cntct.endDate}"  pattern="MM-dd-yyyy" /> </td>
 						        	<td> <a href="#" onclick="fileDownload(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td>
 						        	
 						       </tr>     
