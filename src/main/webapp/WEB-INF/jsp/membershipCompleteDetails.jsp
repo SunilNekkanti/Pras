@@ -50,7 +50,7 @@
 	function modifyMbrDetails()
 	{
 		
-		var url = getContextPath()+'membership/${id}/save?update';
+		var url = getContextPath()+'membership/${id}/save.do?update';
 		var dataList = 	$("#membership").serialize();
 		$.ajax({
 	           type: "POST",
@@ -240,7 +240,9 @@
 	
 	function mbrDetails(mbrId,mbrDetailsId)
 	{
+		
 		var source = getContextPath()+'membership/${id}/details/'+mbrDetailsId+'/display';
+		alert('url'+url);
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -326,6 +328,8 @@
 	    		}
 	         });
 	}
+	
+	
 	
 </script>
 

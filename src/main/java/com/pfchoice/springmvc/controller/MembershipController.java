@@ -148,7 +148,7 @@ public class MembershipController{
 	
 	
 	
-	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST, params={"update"})
     public String saveMembershipAction(@PathVariable Integer id, @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
@@ -157,7 +157,6 @@ public class MembershipController{
             logger.info("Returning membershipEdit.jsp page");
             return "membershipEdit";
         }
-        
         logger.info("Returning MembershipSuccess.jsp page");
         if (null != membership.getId())
         {
@@ -166,7 +165,6 @@ public class MembershipController{
         }
         Membership dbMembership  = membershipService.findById(membership.getId()); 
         model.addAttribute("membership", dbMembership);
-
         return "membershipEditSuccess";
     }
 	

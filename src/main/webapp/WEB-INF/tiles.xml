@@ -126,11 +126,13 @@
     </definition> 
     
      <definition name="providerEdit" extends="baseNoHeader.definition">  
+     	<put-attribute name="title" value="Modify Provider Details" />
         <put-attribute name="body" value="/WEB-INF/jsp/providerEdit.jsp" />  
     </definition> 
     
-     <definition name="providerNewSuccess" extends="baseNoHeader.definition">  
-        <put-attribute name="body" value="/WEB-INF/jsp/providerEditSuccess.jsp" />  
+     <definition name="providerNewSuccess" extends="base1.definition"> 
+     	<put-attribute name="title" value="New Provider Added" />   
+        <put-attribute name="body" value="/WEB-INF/jsp/providerAddSuccess.jsp" />  
     </definition> 
     
      <definition name="providerDetails" extends="base1.definition">  

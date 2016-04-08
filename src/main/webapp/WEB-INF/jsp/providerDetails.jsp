@@ -59,6 +59,11 @@
 	    success: function(data, textStatus, jqXHR)
 	    {
 	       $('#providerContractList').html(data);
+	       var rowCount = $('#providerContractList tr').length;
+	       if(rowCount > 1)
+	       {
+	    	   prvdrInscontractList();  
+	       }
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
@@ -66,18 +71,7 @@
 	    }
 	});
 	
-	var source = getContextPath()+'provider/${id}/prvdrInsContractList';
-	$.ajax({
-		url : source,
-	    success: function(data, textStatus, jqXHR)
-	    {
-	       $('#providerInsuranceContractList').html(data);
-	    },
-	    error: function (jqXHR, textStatus, errorThrown)
-	    {
-	  	  alert("Provider Insurance Contract List Error");
-	    }
-	});
+	
 	
 	var source = getContextPath()+'provider/${id}/contactList';
 	$.ajax({
@@ -272,7 +266,12 @@
 		 	    url : source,
 		 	       success: function(data, textStatus, jqXHR)
 		 	       {
-		 	          $('#providerContractList').html(data);
+		 	    	  $('#providerContractList').html(data); 
+		 	    	  var rowCount = $('#providerContractList tr').length;
+		 		      if(rowCount > 1)
+		 		      { 
+		 		    	 prvdrInscontractList();
+		 		      }
 		 	       },
 		 	       error: function (jqXHR, textStatus, errorThrown)
 		 	       {
@@ -328,8 +327,7 @@
 			if(window.FormData !== undefined)  // for HTML5 browsers
 		    {
 			var formData = new FormData($('#contract'+pmpmRequired)[0]);
-			alert(formData);
-	        formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+			formData.append('fileUpload', $('input[type=file]')[0].files[0]);
 		    $.ajax({
 		        url: url,
 		        type: 'POST',
@@ -432,6 +430,7 @@
 			           success: function(data)
 			           {
 			            	$('#providerContractList').html(data);
+			            	$('#providerInsuranceContractList').html('');
 			           },
 			    		error:function(data)
 			    		{

@@ -62,7 +62,7 @@
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                            { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "33%"},
                            { "mDataProp": "code","bSearchable" : true, "bSortable": true,"sWidth" : "33%"  },
-                           { "mDataProp": "refContracts[, ].ins.name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
+                           { "mDataProp": "refContracts[].ins.name","bSearchable" : true, "bSortable": true,"sWidth" : "33%","asSorting" : [ 3,"asc" ]  }
                        ],
               "aoColumnDefs": [ 
                        		    { "sName": "id", "aTargets": [ 0 ] },
@@ -71,12 +71,12 @@
                                           return '<a href="provider/'+full.id+'">'+data+'</a>';
                                 }},
                        		    { "sName": "code", "aTargets": [ 2 ] },
-                       		    { "sName": "refContracts[, ].ins.name", "aTargets": [ 3 ],
+                       		    { "sName": "refContracts[ ].ins.name", "aTargets": [ 3 ],
                        		    	"render": function  ( data, type, full, meta )  {
                                         var insNames=[];
                                         for(var i = 0; i<full.refContracts.length; i++)
                                         {
-                                        	if(full.refContracts[i].activeInd == 'Y')
+                                        	if(full.refContracts[i].activeInd == 'Y' && full.refContracts[i].ins != null)
                                         		{
                                         			insNames[i] = full.refContracts[i].ins.name;  
                                         		}

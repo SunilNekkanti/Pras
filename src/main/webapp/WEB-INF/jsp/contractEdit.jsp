@@ -34,7 +34,7 @@
 									</c:when>
 								</c:choose>
 								
-								<springForm:input path="contractNBR" class="form-control" id="contractNBR" placeholder="Contract NBR" />
+								<springForm:input path="contractNBR" class="form-control" id="contractNBR" maxlength="20" placeholder="Contract NBR" />
 								<springForm:errors path="contractNBR" cssClass="error text-danger" />
 							</div>
 						</div>
@@ -65,8 +65,7 @@
 							<div class="col-sm-7">
 	                  			<c:choose>
 									<c:when test="${id != null && contract.activeInd == 89}"> 
-										<a href="#" onclick="myFunction(${contract.id})"><span class="glyphicon glyphicon-open-file"></span></a>
-										<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-file"></span> File </button>
+										<a href="#" onclick="fileDownload(${contract.id})"><span class="glyphicon glyphicon-open-file"></span></a>
 									</c:when>
 									<c:when test="${contract.id == null}"> 
 										<input type="file" name="fileUpload" size="50" />
@@ -129,7 +128,7 @@
 
 
 <script>
-function myFunction(id) 
+function fileDownload(id) 
 {
 	var w = 500;
 	var h = 500;

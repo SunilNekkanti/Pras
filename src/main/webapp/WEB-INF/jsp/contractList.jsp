@@ -7,7 +7,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			Contract List<span class="badge">${contractList.size()}</span>
+		${contractType}	Contract List<span class="badge">${contractList.size()}</span>
 				<button class="btn btn-danger pull-right btn-xs" onclick= "return newContract(${pmpmRequired});">
           			<span class="glyphicon glyphicon-plus-sign "></span> New Contract
           		</button>
@@ -19,7 +19,16 @@
 						<tr>
 							<th  scope="col">Action</th> 
 							<th  scope="col">Contract NBR</th>  
-							<th  scope="col">PMPM</th>  
+							<c:choose>
+								<c:when test="${pmpmRequired}">
+									<th  scope="col">PMPM</th> 
+								</c:when>
+							</c:choose>	
+							<c:choose>
+								<c:when test="${insuranceRequired}">
+									<th  scope="col">Insurance</th> 
+								</c:when>
+							</c:choose>		 
 					        <th  scope="col">Start Date</th> 
 					        <th  scope="col">End Date</th> 
 					        <th  scope="col">Contract File</th>
@@ -63,10 +72,19 @@
 							    </c:choose>
 							    </td>
 								   	<td> ${cntct.contractNBR}</td> 
-								   	<td> ${cntct.pmpm}</td> 
+								 <c:choose>
+									<c:when test="${pmpmRequired}">
+										<td> ${cntct.pmpm}</td> 
+									</c:when>
+								</c:choose>	
+								<c:choose>
+									<c:when test="${insuranceRequired}">
+								   		<td> ${cntct.referenceContract.ins.name}</td> 
+								   	</c:when>
+								</c:choose>			
 						        	<td> ${cntct.startDate}</td>
 						        	<td> ${cntct.endDate}</td>
-						        	<td> <a href="#" onclick="myFunction(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td>
+						        	<td> <a href="#" onclick="fileDownload(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td>
 						        	
 						       </tr>     
 						        
@@ -104,7 +122,7 @@
 </div>
 
 <script>
-function myFunction(id) 
+function fileDownload(id) 
  {
 	var w = 500;
     var h = 500;

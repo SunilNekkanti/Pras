@@ -128,6 +128,7 @@ public class ContractController{
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
 		model.addAttribute("contractList", listBean);
+		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", false);
 		return "providerContractList";
 	}
@@ -227,30 +228,17 @@ public class ContractController{
 	public String deleteProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 
-		if (bindingResult.hasErrors())
-		{
-            logger.info("Returning providerContractEdit.jsp page");
-            contract.setActiveInd('Y');
-            return "providerContractEdit";
-        }
-		final Integer cntId = contract.getId();
-	        if (cntId != null)
-	        {
-	        	logger.info("Returning ContractEditSuccess.jsp page before delete");
-	        	Contract dbContract = contractService.findById(cntId);
-	        	
-	        	dbContract.setUpdatedBy(username);
-	        	dbContract.setActiveInd('N');
-	        	dbContract.getReferenceContract().setUpdatedBy(username);
-	        	dbContract.getReferenceContract().setActiveInd('N');
-	        	
-	        	contractService.update(dbContract);
-	        	model.addAttribute("pmpmRequired", false);
-	        	model.addAttribute("Message", "Provider contract deleted successfully");
-	        	return "providerContractEditSuccess";
-	        }
-	        return "providerContractEdit";
-	        
+		Provider dbProvider = providerService.findById(id);
+		dbProvider.getRefContracts().forEach(refContract -> { 
+			refContract.getContract().setActiveInd('N');
+			refContract.getContract().setUpdatedBy(username);
+			refContract.setActiveInd('N');
+			refContract.setUpdatedBy(username);
+        });
+		providerService.update(dbProvider);
+	    model.addAttribute("pmpmRequired", false);
+	    model.addAttribute("Message", "Provider contract deleted successfully");
+	    return "providerContractEditSuccess";
     }
 	
 	
@@ -259,6 +247,7 @@ public class ContractController{
  
     	List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
 		model.addAttribute("contractList", listBean);
+		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", true);
 		  logger.info("Returning insuranceContractList.jsp page");
 		return "insuranceContractList";
@@ -444,6 +433,8 @@ public class ContractController{
 	 
 	    	List<Contract> listBean = contractService.findAllContractsByRefId("providerInsurance",id);
 			model.addAttribute("contractList", listBean);
+			model.addAttribute("insuranceRequired", true);
+			model.addAttribute("contractType", "TPA");
 			model.addAttribute("pmpmRequired", true);
 			return "providerContractList";
 		}
@@ -517,6 +508,9 @@ public class ContractController{
 	        	final Integer cntId = contract.getId();
 		        if ( cntId != null)
 		        {
+		        	final Integer insId = contract.getInsId();
+		        	Insurance dbInsurance = insuranceService.findById(insId);
+		        	contract.getReferenceContract().setIns(dbInsurance);
 		        	contract.setUpdatedBy(username);
 		        	contract.setCreatedBy(username);
 		        	contract.getReferenceContract().setUpdatedBy(username);
