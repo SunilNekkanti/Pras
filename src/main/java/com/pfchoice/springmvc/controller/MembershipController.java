@@ -34,8 +34,6 @@ import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
-import com.pfchoice.core.entity.State;
-import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.GenderService;
@@ -45,8 +43,6 @@ import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
-import com.pfchoice.core.service.StateService;
-import com.pfchoice.core.service.ZipCodeService;
 
 @Controller
 @SessionAttributes("username")
@@ -60,12 +56,6 @@ public class MembershipController{
     
     @Autowired
     private GenderService  genderService;
-    
-    @Autowired
-    private StateService stateService;
-    
-    @Autowired
-    private ZipCodeService zipCodeService;
     
     @Autowired
     private MembershipStatusService  membershipStatusService;
@@ -405,21 +395,6 @@ public class MembershipController{
 		return mbrethinicityList;
 	}
 	
-	@ModelAttribute("stateList")
-	public List<State> populateStateList() {
-	  //Data referencing for county list box
-		List<State> stateList = stateService.findAll();
-		return stateList;
-	}
-
-	@ModelAttribute("zipCodeList")
-	public List<ZipCode> populateZipCodeList() {
-		//Data referencing for gender list box
-		List<ZipCode> zipCodeList = zipCodeService.findAll();
-		return zipCodeList;
-	}
- 
-
 	@ModelAttribute("hedisMeasureList")
 	public List<HedisMeasure> populateHedisMeasureList() {
 		
