@@ -256,53 +256,27 @@ function deleteInsuranceDetails()
 	
 	function addContract(pmpmRequired)
 	{
-		var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
-		if(window.FormData !== undefined)  // for HTML5 browsers
-	    {
-		var formData = new FormData($('#contract')[0]);
-        formData.append('fileUpload', $('input[type=file]')[0].files[0]);
-	    $.ajax({
-	        url: url,
-	        type: 'POST',
-	        mimeType:"multipart/form-data",
-	        data: formData,
-	        async: false,
-	        success: function (data) {
-	        	$('#insuranceContractList').html(data);
-	        },
-	        cache: false,
-	        contentType: false,
-	        processData: false
-	    });
-	    }
-	    return false;
+		if(pmpmRequired){
+			var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
+			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' )
+		}
+		return false;
 	}
 	
 	function modifyContract(pmpmRequired)
 	{
-		
-		var url = getContextPath()+'insurance/${id}/contract/save.do?update'; 
-		var dataList = 	$("#contract"+pmpmRequired).serialize();
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	    			$('#insuranceContractList').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert('insurance Modify Error '+data); 
-	    		}
-	     });
+		if(pmpmRequired){
+			var url = getContextPath()+'insurance/${id}/contract/save.do?update';  
+			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' )
+		}
+		return false;
 	}
 	
 	function deleteContract(pmpmRequired)
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'provider/${id}/contract/save.do?delete'; 
+			var url = getContextPath()+'insurance/${id}/contract/save.do?delete'; 
 			var dataList = 	$("#contract"+pmpmRequired).serialize();
 			$.ajax({
 		           type: "POST",
@@ -379,6 +353,27 @@ function deleteInsuranceDetails()
 		}	
 	}
 	
-	$(document).on("click", "#addButton",   function() { addContract(); } );
+	function  ajaxCallWithFileUpload(url, pmpmRequired,selector) {
+		if(window.FormData !== undefined)  // for HTML5 browsers
+	    {
+			var formData = new FormData($('#contract'+pmpmRequired)[0]);
+			formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+		    $.ajax({
+		        url: url,
+		        type: 'POST',
+		        mimeType:"multipart/form-data",
+		        data: formData,
+		        async: false,
+		        success: function (data) {
+		        	$('#'+selector).html(data);
+		        },
+		        cache: false,
+		        contentType: false,
+		        processData: false
+		    });
+	    }else{
+	    	alert('fileupload error');
+	    }
+	}
 
 </script>

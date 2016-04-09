@@ -316,99 +316,30 @@
 	function addContract(pmpmRequired)
 	{
 		if(pmpmRequired){
-			addprvdrInsContract(pmpmRequired);
+			var url = getContextPath()+'provider/${id}/prvdrInsContract/save.do?add'; 
+			ajaxCallWithFileUpload( url, pmpmRequired, 'providerInsuranceContractList' )
 		}else{
 			var url = getContextPath()+'provider/${id}/contract/save.do?add'; 
-			if(window.FormData !== undefined)  // for HTML5 browsers
-		    {
-			var formData = new FormData($('#contract'+pmpmRequired)[0]);
-			formData.append('fileUpload', $('input[type=file]')[0].files[0]);
-		    $.ajax({
-		        url: url,
-		        type: 'POST',
-		        mimeType:"multipart/form-data",
-		        data: formData,
-		        async: false,
-		        success: function (data) {
-		        	$('#providerContractList').html(data);
-		        },
-		        cache: false,
-		        contentType: false,
-		        processData: false
-		    });
-		    }
+			ajaxCallWithFileUpload( url, pmpmRequired, 'providerContractList' )
 		}
 		
 	    return false;
 	}
 	
-	function addprvdrInsContract(pmpmRequired)
-	{
-		var url = getContextPath()+'provider/${id}/prvdrInsContract/save.do?add'; 
-		if(window.FormData !== undefined)  // for HTML5 browsers
-	    {
-		var formData = new FormData($('#contract'+pmpmRequired)[0]);
-        formData.append('fileUpload', $('input[type=file]')[0].files[0]);
-	    $.ajax({
-	        url: url,
-	        type: 'POST',
-	        mimeType:"multipart/form-data",
-	        data: formData,
-	        async: false,
-	        success: function (data) {
-	        	$('#providerInsuranceContractList').html(data);
-	        },
-	        cache: false,
-	        contentType: false,
-	        processData: false
-	    });
-	    }
-	    return false;
-	}
 	
 	function modifyContract(pmpmRequired)
 	{
 		if(pmpmRequired){
-			modifyPrvdrInsContract(pmpmRequired);
+			var url = getContextPath()+'provider/${id}/prvdrInsContract/save.do?update'; 
+			ajaxCallWithFileUpload( url, pmpmRequired, 'providerInsuranceContractList' )
 		}else{
 			var url = getContextPath()+'provider/${id}/contract/save.do?update'; 
-			var dataList = 	$("#contract"+pmpmRequired).serialize();
-			$.ajax({
-		           type: "POST",
-		           url: url,
-		           data: dataList, 
-		           success: function(data)
-		           {
-		    			$('#providerContractList').html(data);
-		           },
-		    		error:function(data)
-		    		{
-		    			 alert('Provider Modify Error '+data); 
-		    		}
-		     });	
+			ajaxCallWithFileUpload( url, pmpmRequired, 'providerContractList' )
 		}
 		return false;
 	}
 	
-	function modifyPrvdrInsContract(pmpmRequired)
-	{
-		var url = getContextPath()+'provider/${id}/prvdrInsContract/save.do?update'; 
-		var dataList = 	$("#contract"+pmpmRequired).serialize();
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	    			$('#providerInsuranceContractList').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert('Provider Insurance Modify Error '+data); 
-	    		}
-	     });
-	}
-	
+		
 	function deleteContract(pmpmRequired)
 	{
 		if(pmpmRequired){
@@ -521,6 +452,29 @@
 	}	
 	
 
+	function  ajaxCallWithFileUpload(url, pmpmRequired,selector) {
+		if(window.FormData !== undefined)  // for HTML5 browsers
+	    {
+			var formData = new FormData($('#contract'+pmpmRequired)[0]);
+			formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+		    $.ajax({
+		        url: url,
+		        type: 'POST',
+		        mimeType:"multipart/form-data",
+		        data: formData,
+		        async: false,
+		        success: function (data) {
+		        	$('#'+selector).html(data);
+		        },
+		        cache: false,
+		        contentType: false,
+		        processData: false
+		    });
+	    }else{
+	    	alert('fileupload error');
+	    }
+	}
+	
 </script>
 
 

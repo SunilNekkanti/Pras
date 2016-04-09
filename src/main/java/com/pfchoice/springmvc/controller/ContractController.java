@@ -202,7 +202,8 @@ public class ContractController{
 	
 	@RequestMapping(value = "/provider/{id}/contract/save.do", method = RequestMethod.POST,params ={"update"})
 	public String saveproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
+            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning contractEdit.jsp page");
             contract.setActiveInd('Y');
@@ -219,6 +220,15 @@ public class ContractController{
 	        	contract.getReferenceContract().setCreatedBy(username);
 	        	contract.getReferenceContract().setActiveInd('Y');
 	        	contract.setActiveInd('Y');
+	        	if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
+	                FilesUpload uploadFile = new FilesUpload();
+	                uploadFile.setFileName(fileUpload.getOriginalFilename());
+	                uploadFile.setContentType(fileUpload.getContentType());
+	                uploadFile.setData(fileUpload.getBytes());
+	                uploadFile.setCreatedBy(username);
+	                uploadFile.setUpdatedBy(username);
+	                contract.setFilesUpload(uploadFile);
+	           }
 	        	logger.info("Returning ContractEditSuccess.jsp page after update");
 	        	contractService.update(contract);
 	        }
@@ -287,6 +297,7 @@ public class ContractController{
 	            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 				
 	        if (bindingResult.hasErrors()) {
+	        	model.addAttribute("pmpmRequired", true);
 	            logger.info("Returning insuranceContractEdit.jsp page");
 	             return "insuranceContractEdit";
 	        }
@@ -301,7 +312,7 @@ public class ContractController{
 	    	refCnt.setIns(dbInsurance);
 	    	contract.setReferenceContract(refCnt);
 	    	
-        	if (fileUpload != null ) {
+        	if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
                 FilesUpload uploadFile = new FilesUpload();
                 uploadFile.setFileName(fileUpload.getOriginalFilename());
                 uploadFile.setContentType(fileUpload.getContentType());
@@ -320,10 +331,12 @@ public class ContractController{
 		
 		@RequestMapping(value = "/insurance/{id}/contract/save.do", method = RequestMethod.POST, params ={"update"})
 		public String saveMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
-	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
+	            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 			
 	        if (bindingResult.hasErrors()) {
 	            logger.info("Returning insuranceContractEdit.jsp page");
+	            model.addAttribute("pmpmRequired", true);
 	            contract.setActiveInd('Y');
 	            return "insuranceContractEdit";
 	        }
@@ -337,6 +350,15 @@ public class ContractController{
 	        	contract.getReferenceContract().setCreatedBy(username);
 	        	contract.getReferenceContract().setActiveInd('Y');
 	        	contract.setActiveInd('Y');
+	        	if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
+	                FilesUpload uploadFile = new FilesUpload();
+	                uploadFile.setFileName(fileUpload.getOriginalFilename());
+	                uploadFile.setContentType(fileUpload.getContentType());
+	                uploadFile.setData(fileUpload.getBytes());
+	                uploadFile.setCreatedBy(username);
+	                uploadFile.setUpdatedBy(username);
+	                contract.setFilesUpload(uploadFile);
+	           }
 	        	contractService.update(contract);
 	        	model.addAttribute("pmpmRequired", true);
 	        	model.addAttribute("Message", "Insurance Contract Updated Successfully");
@@ -351,6 +373,7 @@ public class ContractController{
 	
 			if (bindingResult.hasErrors())
 			{
+				model.addAttribute("pmpmRequired", true);
 	            logger.info("Returning insuranceContractEdit.jsp page");
 	            contract.setActiveInd('Y');
 	            return "insuranceContractEdit";
@@ -463,6 +486,8 @@ public class ContractController{
 	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 	            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 	        if (bindingResult.hasErrors()) {
+	        	 model.addAttribute("pmpmRequired", true);
+		 	     model.addAttribute("insuranceequired", true);
 	            logger.info("Returning contractEdit.jsp page");
 	            return "providerContractEdit";
 	        }
@@ -481,7 +506,7 @@ public class ContractController{
 	        	refContract.setUpdatedBy(username);
 	        	contract.setReferenceContract(refContract);
 	        	
-	        	if (fileUpload != null ) {
+	        	if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 	                FilesUpload uploadFile = new FilesUpload();
 	                uploadFile.setFileName(fileUpload.getOriginalFilename());
 	                uploadFile.setContentType(fileUpload.getContentType());
@@ -494,6 +519,7 @@ public class ContractController{
 	        	logger.info("Returning contractEditSuccess.jsp page after create");
 	 	      	contractService.save(contract);
 	 	       model.addAttribute("pmpmRequired", true);
+	 	       model.addAttribute("insuranceequired", true);
 	 	       model.addAttribute("Message", "Provider Contract Added Successfully");
 	        return "providerContractEditSuccess";
 	        }    
@@ -501,8 +527,11 @@ public class ContractController{
 		
 		@RequestMapping(value = "/provider/{id}/prvdrInsContract/save.do", method = RequestMethod.POST,params ={"update"})
 		public String saveInsuranceProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
-	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+	            BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
+	            @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 	        if (bindingResult.hasErrors()) {
+	        	model.addAttribute("pmpmRequired", true);
+		 	    model.addAttribute("insuranceequired", true);
 	            logger.info("Returning contractEdit.jsp page");
 	            contract.setActiveInd('Y');
 	            return "providerContractEdit";
@@ -521,11 +550,21 @@ public class ContractController{
 		        	contract.getReferenceContract().setCreatedBy(username);
 		        	contract.getReferenceContract().setActiveInd('Y');
 		        	contract.setActiveInd('Y');
+		        	if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
+		                FilesUpload uploadFile = new FilesUpload();
+		                uploadFile.setFileName(fileUpload.getOriginalFilename());
+		                uploadFile.setContentType(fileUpload.getContentType());
+		                uploadFile.setData(fileUpload.getBytes());
+		                uploadFile.setCreatedBy(username);
+		                uploadFile.setUpdatedBy(username);
+		                contract.setFilesUpload(uploadFile);
+		           }
 		        	logger.info("Returning ContractEditSuccess.jsp page after update");
 		        	contractService.update(contract);
 		        }
 		        model.addAttribute("Message", "Insurance Provider Contract Updated Successfully");
 		        model.addAttribute("pmpmRequired", true);
+		 	    model.addAttribute("insuranceequired", true);
 		        return "providerContractEditSuccess";
 	        }    
 	    }
@@ -536,6 +575,8 @@ public class ContractController{
 
 			if (bindingResult.hasErrors())
 			{
+				model.addAttribute("pmpmRequired", true);
+		 	    model.addAttribute("insuranceequired", true);
 	            logger.info("Returning providerContractEdit.jsp page");
 	            contract.setActiveInd('Y');
 	            return "providerContractEdit";
@@ -553,6 +594,7 @@ public class ContractController{
 		        	contractService.update(dbContract);
 		        	model.addAttribute("Message", "Provider contract deleted successfully");
 		            model.addAttribute("pmpmRequired", true);
+			 	    model.addAttribute("insuranceequired", true);
 		        	return "providerContractEditSuccess";
 		        }
 		        return "providerContractEdit";

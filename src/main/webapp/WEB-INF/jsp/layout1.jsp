@@ -77,42 +77,79 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 <body>  
 <script>
 jQuery( document ).ready(function( $ ) {
-	 
-	   $('body').on('focus',".datepicker", function(){
-	        $(this).datepicker({
-	            dateFormat: 'mm/dd/yy'
-	        });
-	     });
-	   
-	  $('body').on('focus',".datepicker1", function(){
-	      
-	     var date1 = new Date($('.startDateText').text());
-	     var date2 = new Date($('.endDateText').text());
-	    $(this).datepicker( "destroy" );
-	    $(this).datepicker({
-	            dateFormat: 'mm/dd/yy',
-	            minDate: date1,
-	            maxDate:date2,
-	            onClose: function( selectedDate ) {
-	                $( ".datepicker3" ).datepicker( "option", "minDate", selectedDate );
-	              }
-	        });
-	     
-	     
-	     });
-	   
-	   $('body').on('focus',".datepicker3", function(){
-	    var date1 = new Date($('#startDate').val());
-	    var date2 = new Date($('.endDateText').text());
-	    $(this).datepicker( "destroy" );
-	       $(this).datepicker({
-	           dateFormat: 'mm/dd/yy',
-	           minDate: date1,
-	           maxDate:date2,
-	       });
-	    });
-	   
+	$(".datepicker").datepicker({
+        dateFormat: 'mm/dd/yy'
+    });
+
+	  $('body').on('focus',".datepicker", function(){
+		    $(this).datepicker();
+		   });
+});
+
+jQuery( document ).ready(function( $ ) {
+	$(".datepickerfrom").datepicker({
+        dateFormat: 'mm/dd/yy'
+    });
+	
+	 $('body').on('keydown',".datepickerfrom, .datepickerto, .datepicker, .datepicker1, .datepicker3", function(event){
+		 event.preventDefault();
+    });
+
+		
+
+	  $('body').on('focus',".datepickerfrom", function(){
+		 	 $(this).datepicker( "destroy" );
+			 	$(this).datepicker({
+			          dateFormat: 'mm/dd/yy',
+			          onClose: function( selectedDate ) {
+			              $( ".datepickerto" ).datepicker( "option", "minDate", selectedDate );
+			            }
+			      });
+			   });
+
+	 $('body').on('focus',".datepickerto", function(){
+  		 var date1 = new Date($('.datepickerfrom').val());
+		  $(this).datepicker( "destroy" );
+	      $(this).datepicker({
+	          dateFormat: 'mm/dd/yy',
+	          minDate: date1
+	         
+	      });
+
 	});
+	 
+	 $('body').on('focus',".datepicker1", function(){
+	 	  
+	 	 var date1 = new Date($('.startDateText').text());
+	 	 var date2 = new Date($('.endDateText').text());
+	 	$(this).datepicker( "destroy" );
+	 	$(this).datepicker({
+	          dateFormat: 'mm/dd/yy',
+	          minDate: date1,
+	          maxDate:date2,
+	          onClose: function( selectedDate ) {
+	              $( ".datepicker3" ).datepicker( "option", "minDate", selectedDate );
+	            }
+	      });
+	 	 
+	 		
+	   });
+  
+  $('body').on('focus',".datepicker3", function(){
+	  var date1 = new Date($('.datepicker1').val());
+	  var date2 = new Date($('.endDateText').text());
+	  $(this).datepicker( "destroy" );
+      $(this).datepicker({
+          dateFormat: 'mm/dd/yy',
+          minDate: date1,
+          maxDate:date2,
+      });
+   });
+  
+  
+});
+
+
 $(document).ready(function(){	
 
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
