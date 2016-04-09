@@ -63,4 +63,6 @@ public interface CommonMessageContent
     
     String PROVIDER_INSURANCES_LIST = "Provider's Insurance List";
     
+    String CONTRACT_LIST = "Contract List";
+    
 }

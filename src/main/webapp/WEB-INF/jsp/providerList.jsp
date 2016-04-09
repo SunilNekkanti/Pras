@@ -75,8 +75,7 @@
                        		    	"render": function  ( data, type, full, meta )  {
                                         var insNames=[];
                                         var index =0;
-                                        var refContracts = full.refContracts;
-                                        refContracts.forEach(function( item ) {
+                                        full.refContracts.forEach(function( item ) {
                                         	if(item.activeInd == 'Y' && item.ins != null)
                                     		{
                                         		insNames[index] = item.ins.name;  

@@ -32,6 +32,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.Message;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.Contract;
 import com.pfchoice.core.entity.FilesUpload;
 import com.pfchoice.core.entity.Insurance;
@@ -40,6 +43,7 @@ import com.pfchoice.core.entity.ReferenceContract;
 import com.pfchoice.core.service.ContractService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.ProviderService;
+
 
 
 @Controller
@@ -178,7 +182,7 @@ public class ContractController{
         	refContract.setUpdatedBy(username);
         	contract.setReferenceContract(refContract);
         	
-        	if (fileUpload != null ) {
+        	if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
                 FilesUpload uploadFile = new FilesUpload();
                 uploadFile.setFileName(fileUpload.getOriginalFilename());
                 uploadFile.setContentType(fileUpload.getContentType());
@@ -555,4 +559,10 @@ public class ContractController{
 		        
 	    }
 
+		@ResponseBody
+		 @RequestMapping(value = "/insurance/{id}/contractJsonList", method = RequestMethod.GET)
+		 public Message viewInsuranceContract(@PathVariable Integer id,Model model) throws Exception{
+		  List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
+		       return Message.successMessage(CommonMessageContent.CONTRACT_LIST, JsonConverter.getJsonObject(listBean));
+		   }
 }

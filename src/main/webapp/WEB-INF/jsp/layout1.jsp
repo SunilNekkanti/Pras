@@ -77,14 +77,42 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 <body>  
 <script>
 jQuery( document ).ready(function( $ ) {
-	$(".datepicker").datepicker({
-        dateFormat: 'mm/dd/yy'
-    });
-
-	  $('body').on('focus',".datepicker", function(){
-		    $(this).datepicker();
-		   });
-});
+	 
+	   $('body').on('focus',".datepicker", function(){
+	        $(this).datepicker({
+	            dateFormat: 'mm/dd/yy'
+	        });
+	     });
+	   
+	  $('body').on('focus',".datepicker1", function(){
+	      
+	     var date1 = new Date($('.startDateText').text());
+	     var date2 = new Date($('.endDateText').text());
+	    $(this).datepicker( "destroy" );
+	    $(this).datepicker({
+	            dateFormat: 'mm/dd/yy',
+	            minDate: date1,
+	            maxDate:date2,
+	            onClose: function( selectedDate ) {
+	                $( ".datepicker3" ).datepicker( "option", "minDate", selectedDate );
+	              }
+	        });
+	     
+	     
+	     });
+	   
+	   $('body').on('focus',".datepicker3", function(){
+	    var date1 = new Date($('#startDate').val());
+	    var date2 = new Date($('.endDateText').text());
+	    $(this).datepicker( "destroy" );
+	       $(this).datepicker({
+	           dateFormat: 'mm/dd/yy',
+	           minDate: date1,
+	           maxDate:date2,
+	       });
+	    });
+	   
+	});
 $(document).ready(function(){	
 
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {

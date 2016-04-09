@@ -242,7 +242,6 @@
 	{
 		
 		var source = getContextPath()+'membership/${id}/details/'+mbrDetailsId+'/display';
-		alert('url'+url);
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)

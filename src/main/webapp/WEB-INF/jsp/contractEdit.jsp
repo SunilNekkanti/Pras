@@ -42,25 +42,47 @@
 					<div class="col-sm-3">
 						<div class="form-group required">
 						 	<label class="control-label col-sm-5" for="startDate">Start Date</label>
-							<div class="col-sm-7">
-								<fmt:formatDate value="${contract.startDate}" var="dateString" pattern="MM/dd/yyyy" />
-								<springForm:input  value="${dateString}" var="startDate" path="startDate"  class="form-control datepicker"  id="startDate" placeholder="Start Date" />
-								<springForm:errors path="startDate" cssClass="error text-danger" />
-							</div>
+						 	<c:choose>
+									<c:when test="${pmpmRequired}"> 
+										<div class="col-sm-7">
+											<fmt:formatDate value="${contract.startDate}" var="dateString" pattern="MM/dd/yyyy" />
+											<springForm:input  value="${dateString}" var="startDate" path="startDate"  class="form-control datepicker1"  id="startDate" placeholder="Start Date" />
+											<springForm:errors path="startDate" cssClass="error text-danger" />
+										</div>
+									</c:when>
+									<c:otherwise> 
+										<div class="col-sm-7">
+											<fmt:formatDate value="${contract.startDate}" var="dateString" pattern="MM/dd/yyyy" />
+											<springForm:input  value="${dateString}" var="startDate" path="startDate"  class="form-control datepicker"  id="startDate" placeholder="Start Date" />
+											<springForm:errors path="startDate" cssClass="error text-danger" />
+										</div>
+				                  	</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 					<div class="col-sm-3">	
 						<div class="form-group required">
 						 	<label class="control-label col-sm-5" for="endDate">End Date</label>
-							<div class="col-sm-7">
-								<fmt:formatDate value="${contract.endDate}" var="dateString" pattern="MM/dd/yyyy" />
-								<springForm:input value="${dateString}"  path="endDate" class="form-control datepicker" id="endDate" placeholder="End Date" />
-								<springForm:errors path="endDate" cssClass="error text-danger" />
-							</div>
+						 	<c:choose>
+									<c:when test="${pmpmRequired}"> 
+										<div class="col-sm-7">
+											<fmt:formatDate value="${contract.endDate}" var="dateString" pattern="MM/dd/yyyy" />
+											<springForm:input value="${dateString}"  path="endDate" class="form-control datepicker3" id="endDate" placeholder="End Date" />
+											<springForm:errors path="endDate" cssClass="error text-danger" />
+										</div>
+									</c:when>
+									<c:otherwise> 
+										<div class="col-sm-7">
+											<fmt:formatDate value="${contract.endDate}" var="dateString" pattern="MM/dd/yyyy" />
+											<springForm:input value="${dateString}"  path="endDate" class="form-control datepicker" id="endDate" placeholder="End Date" />
+											<springForm:errors path="endDate" cssClass="error text-danger" />
+										</div>
+									</c:otherwise>	
+							</c:choose>				
 						</div>
 					</div>	
 					<div class="col-sm-3">	
-						<div class="form-group required">
+						<div class="form-group">
 						 	<label class="control-label col-sm-5" for="filesUpload">Contract file</label>
 							<div class="col-sm-7">
 	                  			<c:choose>
@@ -76,37 +98,46 @@
 					</div>
 				</div>
 				<div class="col-sm-12">	
-						
-				<c:choose>
-					<c:when test="${pmpmRequired}">
-					<div class="col-sm-3">	
-						<div class="form-group required">
-							<label class="control-label required col-sm-5" for="PMPM">PMPM</label>
-							<div class="col-sm-7">
-								<springForm:input path="pmpm" class="form-control" id="PMPM" placeholder="PMPM" />
-								<springForm:errors path="pmpm" cssClass="error text-danger" />
-							</div>
-						</div>
-					</div>	
-					</c:when>
-					</c:choose>
-
 					<c:choose>
-					<c:when test="${insuranceRequired}">
-						<div class="col-sm-3">
-									<div class="form-group required">
-									<label class="control-label col-sm-5" for="status">Insurance</label>
-									<div class="col-sm-7">
-										<springForm:select path="insId" class="form-control" id="status">
-											<springForm:option  value="${null}" label="Select One"/>
-								    		<springForm:options items="${insuranceList}" itemValue="id" itemLabel="name"   />
-										</springForm:select>
-										<springForm:errors path="insId" cssClass="error text-danger" />
-									  </div>
-								</div>
-						</div>		
-					</c:when>
+						<c:when test="${insuranceRequired}">
+							<div class="col-sm-3">
+										<div class="form-group required">
+										<label class="control-label col-sm-5" for="status">Insurance</label>
+										<div class="col-sm-7">
+											<springForm:select path="insId" class="form-control" id="status" onchange="return insPmpm(this.value)">
+									    		<springForm:options items="${insuranceList}" itemValue="id" itemLabel="name"   />
+											</springForm:select>
+											<springForm:errors path="insId" cssClass="error text-danger" />
+										  </div>
+									</div>
+							</div>		
+						</c:when>
 					</c:choose>	
+					<c:choose>
+						<c:when test="${pmpmRequired}">
+						<div class="col-sm-3">	
+							<div class="form-group required">
+								<label class="control-label required col-sm-5" for="PMPM">PMPM</label>
+								<div class="col-sm-7">
+									<springForm:input path="pmpm" class="form-control" id="PMPM" placeholder="PMPM" />
+									<springForm:errors path="pmpm" cssClass="error text-danger" />
+								</div>
+							</div>
+						</div>	
+						<div class="col-sm-5 insPmpm">	
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="PMPM">PMPM:</label>
+								<label class="control-label col-sm-2 pmpmText" ></label>
+							
+								<label class="control-label col-sm-2" for="PMPM">From:</label>
+								<label class="control-label col-sm-2 startDateText"></label>
+							
+								<label class="control-label col-sm-2" for="PMPM">To:</label>
+								<label class="control-label col-sm-2 endDateText" ></label>
+							</div>
+						</div>	
+						</c:when>
+					</c:choose>
 				</div>
 				<div id="filecontent"> </div>
 				<div class="col-sm-offset-7 col-sm-5">
@@ -125,9 +156,40 @@
 	 	</div>
 	 </div>	
 </div>
+<div id="tmpInsContractList"></div>
 
 
 <script>
+$(document).ready(function(){
+	$(".insPmpm").hide();
+});
+
+function insPmpm(id)
+{
+	var source = getContextPath()+'insurance/'+id+'/contractJsonList';
+	$.ajax({
+		url : source,
+	    success: function(data, textStatus, jqXHR)
+	    {
+	    	$('.pmpmText').html(data.data[0].pmpm);
+	    	
+	    	var startDate = new Date(data.data[0].startDate);
+       		var month = startDate.getMonth() + 1;
+      		$('.startDateText').html((month > 9 ? month : "0" + month) + "/" + startDate.getDate() + "/" + startDate.getFullYear());
+      		
+      		var endDate = new Date(data.data[0].endDate);
+       		var month = endDate.getMonth() + 1;
+      		$('.endDateText').html((month > 9 ? month : "0" + month) + "/" + endDate.getDate() + "/" + endDate.getFullYear());
+      		
+      		$(".insPmpm").show();
+		    
+	    },
+	    error: function (jqXHR, textStatus, errorThrown)
+	    {
+	  	  alert("Error");
+	    }
+	});	
+}
 function fileDownload(id) 
 {
 	var w = 500;
@@ -136,4 +198,13 @@ function fileDownload(id)
 	var top = (screen.height/2)-(h/2);
 	window.open (getContextPath()+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 }
+
+jQuery( document ).ready(function( $ ) {
+	
+	  $('body').on('focus',".datepicker", function(){
+		      $(this).datepicker({
+		          dateFormat: 'mm/dd/yy'
+		      });
+		   });
+});
 </script>
