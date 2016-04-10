@@ -74,20 +74,18 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	
     	Criteria crit = createCriteria()
          		.createAlias("genderId", "genderId")
-         		.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
          		.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-         		.createAlias("status", "status");
-    	        
+    	        .createAlias("mbrProvider.prvdr", "prvdr");
     	Disjunction or = Restrictions.disjunction();
     	Conjunction and = Restrictions.conjunction();
 
     	if( sSearch != null && !"".equals(sSearch))
     	{
-    		or.add(Restrictions.ilike("firstName","%"+sSearch+"%"))
+    		or.add(Restrictions.ilike("prvdr.name","%"+sSearch+"%"))
+    		  .add(Restrictions.ilike("firstName","%"+sSearch+"%"))
     		  .add(Restrictions.ilike("lastName","%"+sSearch+"%"))
     		  .add(Restrictions.ilike("genderId.description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("countyCode.description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("status.description","%"+sSearch+"%"))
+    		  .add(Restrictions.like("genderId.code",new Character(sSearch.toCharArray()[0])))
     		  .add(Restrictions.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     	}
     	if( sSearchIns != null && !"".equals(sSearchIns))
@@ -98,7 +96,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	
     	if( sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999)
     	{
-    		crit.createAlias("mbrProvider.prvdr", "prvdr");
     		crit.createAlias("prvdr.refContracts", "refContract");
         	crit.createAlias("refContract.ins", "ins");
     		and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
@@ -108,7 +105,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999)
     	{
     		crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
-			or.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
+			and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
+			or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     	}
     	
          crit.add(or);
@@ -119,7 +117,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
 			{
 				if( "mbrProviderList.0.prvdr.name".equals(sort)){
-					crit.createAlias("mbrProvider.prvdr", "prvdr", JoinType.INNER_JOIN);
 					crit.addOrder(Order.desc("prvdr.name"));
 	        	}else{
 	        		crit.addOrder(Order.desc(sort));
@@ -128,7 +125,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			else 
 			{
 				if( "mbrProviderList.0.prvdr.name".equals(sort)){
-					crit.createAlias("mbrProvider.prvdr", "prvdr", JoinType.INNER_JOIN);
 					crit.addOrder(Order.asc("prvdr.name"));
 	        	}else{
 	        		crit.addOrder(Order.asc(sort));
