@@ -3,21 +3,25 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <%@ page session="false" %>
 <div class="panel-group">
-		<div class="panel panel-success">
-			<div class="panel-heading">Membership Updated Successfully</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="well well-sm">
-								<p><strong>First Name:${membership.firstName}</strong></p>
-								<p><strong>Last Name:${membership.lastName}</strong></p>
-								<p><strong>Date of Birth:${membership.dob}</strong></p>
-								<p><strong>Membership Status:${membership.status.description}</strong></p>
-								<p><strong>Gender:${membership.genderId.description}</strong></p>
-								<p><strong>county:${membership.countyCode.description}</strong></p>
-								 <p>Updated Successfully </p>
-								<a href="${context}/membershipList">Click Here</a> Move to membership list
-	 					</div>	
-					</div>
-				</div>
+	<div class="panel panel-success">
+		<div class="panel-heading">Info
+			<button class="btn btn-danger pull-right btn-xs" onclick= "return membershipDetails();">
+          		<span class="glyphicon glyphicon-plus-sign "></span> Membership Details
+        	</button>
 		</div>
-	</div>	
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="well well-sm">
+					<p><strong>${Message}</strong></p>
+					<p><strong>First Name:${membership.firstName}</strong></p>
+					<p><strong>Last Name:${membership.lastName}</strong></p>
+					<p><strong>Date of Birth:${membership.dob}</strong></p>
+					<p><strong>Membership Status:${membership.status.description}</strong></p>
+					<p><strong>Gender:${membership.genderId.description}</strong></p>
+					<p><strong>county:${membership.countyCode.description}</strong></p>
+					
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>	

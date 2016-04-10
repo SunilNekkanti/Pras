@@ -66,9 +66,26 @@
 	    		}
 	         });
 	}
-	function deletembrDetails()
+	function deleteMbrDetails()
 	{
-		var source = getContextPath()+'membership/${id}/contactList';
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
+		{
+			var url = getContextPath()+'membership/${id}/save.do?delete';
+			var dataList = 	$("#membership").serialize();
+			$.ajax({
+		           type: "POST",
+		           url: url,
+		           data: dataList, 
+		           success: function(data)
+		           {
+		        	   $('#mbrDetails').html(data);
+		           },
+		    		error:function(data)
+		    		{
+		    			 alert("Membership Details Delete Error");
+		    		}
+		         });
+		}		
 	}
 	var source = getContextPath()+'membership/${id}/contactList';
 	$.ajax({
@@ -311,21 +328,40 @@
 	}
 	function deleteMbrInsDetails(mbrInsId)
 	{
-		var url = getContextPath()+'membership/${id}/details/'+mbrInsId+'/save.do?delete'; 
-		var dataList = 	$("#membershipInsurance").serialize();
+		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
+		{
+			var url = getContextPath()+'membership/${id}/details/'+mbrInsId+'/save.do?delete'; 
+			var dataList = 	$("#membershipInsurance").serialize();
+			$.ajax({
+		           type: "POST",
+		           url: url,
+		           data: dataList, 
+		           success: function(data)
+		           {
+		            	$('#mbrInsList').html(data);
+		           },
+		    		error:function(data)
+		    		{
+		    			 alert('Delete Member Insurance Error '+ data); 
+		    		}
+		         });
+		}	
+	}
+	function membershipDetails()
+	{
+		
+		var url = getContextPath()+'/membership/${id}'; 
 		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
+	          url: url,
+	          success: function(data, textStatus, jqXHR)
 	           {
-	            	$('#mbrInsList').html(data);
+	        	   $('#mbrDetails').html(data);
 	           },
 	    		error:function(data)
 	    		{
-	    			 alert('Delete Member Insurance Error '+ data); 
+	    			 alert(data); 
 	    		}
-	         });
+	     });
 	}
 	
 	

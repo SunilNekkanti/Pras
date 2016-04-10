@@ -88,15 +88,14 @@
 						<div class="form-group">
 						 	<label class="control-label col-sm-5" for="filesUpload">Contract file</label>
 							<div class="col-sm-7">
+							<span><input type="file" class="file" name="fileUpload"/></span>	
 	                  			<c:choose>
 									<c:when test="${not empty contract.filesUpload.id}"> 
 										<a href="#" onclick="fileDownload(${contract.id})"><span class="glyphicon glyphicon-open-file"></span></a>
 									</c:when>
 								</c:choose>	
-										<input type="file" name="fileUpload" size="50" />
-				                  	
-								
-							</div>
+									
+				            </div>
 						</div>
 					</div>
 				</div>
@@ -155,17 +154,15 @@
 
 <script>
 $(document).ready(function(){
-	$(".insPmpm").hide();
-	
-	var insId = $("#status").val();
+	d = $("#status").val();
 	if(insId)
 	{
-		
 		var source = getContextPath()+'insurance/'+insId+'/contractJsonList';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
 		    {
+		    
 		    	$('.pmpmText').html(data.data[0].pmpm);
 		    	
 		    	var startDate = new Date(data.data[0].startDate);
@@ -177,8 +174,7 @@ $(document).ready(function(){
 	      		$('.endDateText').html((month > 9 ? month : "0" + month) + "/" + endDate.getDate() + "/" + endDate.getFullYear());
 	      		
 	      		$(".insPmpm").show();
-			    
-		    },
+	      	 },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
 		  	  alert("Error");
@@ -189,11 +185,8 @@ $(document).ready(function(){
 
 function insPmpm(id)
 {
-	
-
 	if(id)
     {		
-		alert("inside Pmpm");
 		var source = getContextPath()+'insurance/'+id+'/contractJsonList';
 		$.ajax({
 			url : source,
@@ -202,7 +195,6 @@ function insPmpm(id)
 		    	if(data.data.length > 0)
 		    	{
 		    		$('.pmpmText').html(data.data[0].pmpm);
-			    	
 			    	var startDate = new Date(data.data[0].startDate);
 		       		var month = startDate.getMonth() + 1;
 		      		$('.startDateText').html((month > 9 ? month : "0" + month) + "/" + startDate.getDate() + "/" + startDate.getFullYear());
@@ -212,19 +204,18 @@ function insPmpm(id)
 		      		$('.endDateText').html((month > 9 ? month : "0" + month) + "/" + endDate.getDate() + "/" + endDate.getFullYear());
 		      		
 		      		$(".insPmpm").show();	
-		      		$("button").show();
+		      		$(".frmBtn button").show();
 		    		
 		    	}
 		    	else
 		    	{
 		    		$(".frmBtn button").hide();
-		    		$(".insText").hide();	
+		    		$('.startDateText').html('');
+		    		$('.endDateText').html('');
+		    		$('.pmpmText').html('');
 		    		alert("No insurance contract for the selected insurance.Add insurance contract");
 		    	}
-		    	
-		    	
-			    
-		    },
+		     },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
 		  	  alert("Error");
@@ -234,13 +225,8 @@ function insPmpm(id)
 	else
 	{
 		$(".frmBtn button").hide();
-		$(".insText").hide();
-		alert("undefined");
-		
 	}
-	
-	
-	$(".datepicker1, .datepicker3").val('');
+	$("#PMPM").val('');$(".datepicker3").val('');$(".datepicker1").val('');
 	
 }
 function fileDownload(id) 

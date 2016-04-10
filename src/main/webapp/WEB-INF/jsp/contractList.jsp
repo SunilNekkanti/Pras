@@ -85,7 +85,7 @@
 						        	<td> <fmt:formatDate value="${cntct.startDate}"  pattern="MM-dd-yyyy" /> </td>
 						        	<td> <fmt:formatDate value="${cntct.endDate}"  pattern="MM-dd-yyyy" /> </td>
 						        <c:choose>
-									<c:when test="${not empty cntct.filesUpload.id}">
+									<c:when test="${cntct.filesUpload.fileName}">
 										<td><a href="#" onclick="fileDownload(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td> 
 									</c:when>
 									<c:otherwise>

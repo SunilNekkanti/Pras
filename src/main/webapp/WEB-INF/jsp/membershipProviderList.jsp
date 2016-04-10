@@ -29,6 +29,8 @@ prasPagination('provider');
 					<tr>
 							<th scope="col">Name</th>
 							<th scope="col">NPI</th>
+							<th scope="col">Contact Person</th>
+							<th scope="col">Contact No</th>
 					</tr>
 				</thead>
 
@@ -36,9 +38,13 @@ prasPagination('provider');
 					
 					<c:forEach items="${membershipProviderList}" var="mbrProvider">
 						<tr>
-							<td> <a href="${context}/provider/${mbrProvider.id}"   rel='tab' > ${mbrProvider.prvdr.name}</a></td> 
-						    <td> ${mbrProvider.prvdr.code}  </td> 
-						 </tr>     
+							<td> <a href="${context}/provider/${mbrProvider.prvdr.id}"   rel='tab' > ${mbrProvider.prvdr.name}</a></td> 
+						    <td> ${mbrProvider.prvdr.code}</td> 
+						    <c:forEach items="${mbrProvider.prvdr.refContacts}" var="refContacts">
+								<td> ${refContacts.cnt.contactPerson}  </td> 
+								<td> ${refContacts.cnt.homePhone}  </td>
+							</c:forEach>
+							</tr>
 					</c:forEach>
 				</tbody>
 			</table>

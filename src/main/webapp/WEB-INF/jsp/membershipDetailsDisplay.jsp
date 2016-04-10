@@ -65,7 +65,7 @@
 					<div class="form-group required">
 					 	<label class="control-label required col-sm-5" for="activityMonth">Activity Month</label>
 						<div class="col-sm-7">
-							<springForm:input path="activityMonth" class="form-control" id="activityMonth" placeholder="activityMonth" />
+							<springForm:input path="activityMonth" class="form-control" id="activityMonth" placeholder="MMYY" />
 							<springForm:errors path="activityMonth" cssClass="error text-danger" />
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 					 	<label class="control-label col-sm-5" for="effStartDate">Effective Start Date</label>
 						<div class="col-sm-7">
 							<fmt:formatDate value="${membershipInsurance.effStartDate}" var="dateString" pattern="MM/dd/yyyy" />
-							<springForm:input path="effStartDate" value="${dateString}" class="form-control datepicker"  id="effStartDate" placeholder="effStartDate" />
+							<springForm:input path="effStartDate" value="${dateString}" class="form-control datepickerfrom"  id="effStartDate" placeholder="effStartDate" />
 							<springForm:errors path="effStartDate" cssClass="error text-danger" />
 						</div>
 					</div>
@@ -87,7 +87,7 @@
 					 	<label class="control-label col-sm-5" for="effEndDate">Effective End Date</label>
 						<div class="col-sm-7">
 							<fmt:formatDate value="${membershipInsurance.effEndDate}" var="dateString" pattern="MM/dd/yyyy" />
-							<springForm:input path="effEndDate" value="${dateString}" class="form-control datepicker"  id="effEndDate" placeholder="effEndDate" />
+							<springForm:input path="effEndDate" value="${dateString}" class="form-control datepickerto"  id="effEndDate" placeholder="effEndDate" />
 							<springForm:errors path="effEndDate" cssClass="error text-danger" />
 						</div>
 					</div>

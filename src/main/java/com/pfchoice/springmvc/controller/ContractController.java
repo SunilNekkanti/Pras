@@ -3,8 +3,11 @@ package com.pfchoice.springmvc.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +46,8 @@ import com.pfchoice.core.entity.ReferenceContract;
 import com.pfchoice.core.service.ContractService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.ProviderService;
+
+import ml.rugal.sshcommon.page.Pagination;
 
 
 
@@ -93,13 +98,13 @@ public class ContractController{
         return new ReferenceContract();
     }
 	
-	@ModelAttribute("insuranceList")
+	/*@ModelAttribute("insuranceList")
 	public List<Insurance> populateInsuranceList() {
 		
 		//Data referencing for Insurance Measure list box
 		List<Insurance> insuranceList = insuranceService.findAll();
 		return insuranceList;
-	}
+	}*/
  
 	@RequestMapping(value = "/provider/{id}/contract/new")
     public String addProviderContractPage(@PathVariable Integer id,Model model) {
@@ -444,14 +449,34 @@ public class ContractController{
 		
 		
 		
+		@SuppressWarnings("unchecked")
 		@RequestMapping(value = "/provider/{id}/prvdrInsContract/new")
 	    public String addprvdrinsContractPage(@PathVariable Integer id,Model model) {
+			
+			Pagination page = contractService.getPage(0,20000);
+			List<Contract> contracts = (List<Contract>) page.getList();
+			Set<Insurance> insList = new HashSet<Insurance>();
+			insList.clear();
+			contracts.forEach( contract1 -> {
+				if(contract1.getActiveInd() == 'Y' 	
+						&& contract1.getReferenceContract().getActiveInd() == 'Y' 	
+						&& contract1.getReferenceContract().getIns() != null) 
+				{
+					if(contract1.getReferenceContract().getPrvdr() == null)
+					{
+						insList.add(contract1.getReferenceContract().getIns());
+					}else if(contract1.getReferenceContract().getPrvdr().getId() == id)
+					{
+						insList.remove(contract1.getReferenceContract().getIns());
+					}
+				}
+			});
 			
 			Contract contract = createContractModel();
 			model.addAttribute("contract", contract);
 			model.addAttribute("insuranceRequired", true);
 			model.addAttribute("pmpmRequired", true);
-			
+			model.addAttribute("insuranceList",insList);
 	        return "providerContractEdit";
 	    }
 		
@@ -466,6 +491,7 @@ public class ContractController{
 			return "providerContractList";
 		}
 		
+		@SuppressWarnings("unchecked")
 		@RequestMapping(value = "/provider/{id}/prvdrInsContract/{cntId}", method = RequestMethod.GET)
 	    public String updateInsuranceProviderContractPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model, HttpServletResponse response) throws IOException {
 			Contract dbContract = contractService.findById(cntId);
@@ -476,6 +502,21 @@ public class ContractController{
 			dbContract.setInsId(dbContract.getReferenceContract().getIns().getId());
 			model.addAttribute("insuranceRequired", true);
 			model.addAttribute("pmpmRequired", true);
+			
+			Pagination page = contractService.getPage(0,20000);
+			List<Contract> contracts = (List<Contract>) page.getList();
+			List<Insurance> insList = new ArrayList<Insurance>();
+			insList.clear();
+			contracts.forEach( contract1 -> {
+				if(contract1.getActiveInd() == 'Y' 
+						&& contract1.getReferenceContract().getActiveInd() == 'Y' 
+						&& contract1.getReferenceContract().getIns() != null 
+						&& contract1.getReferenceContract().getPrvdr() == null) {
+					insList.add(contract1.getReferenceContract().getIns());
+				}
+			});
+			
+			model.addAttribute("insuranceList",insList);
 			
 	        logger.info("Returning contractEdit.jsp page");
 	        return "providerContractEdit";

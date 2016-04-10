@@ -154,6 +154,7 @@ public class MembershipController{
             membershipService.update(membership);
         }
         Membership dbMembership  = membershipService.findById(membership.getId()); 
+        model.addAttribute("Message", "Membership details updated successfully");
         model.addAttribute("membership", dbMembership);
         return "membershipEditSuccess";
     }
@@ -175,6 +176,7 @@ public class MembershipController{
             membershipService.update(membership);
         }
         
+        model.addAttribute("Message", "Membership details deleted successfully");
         model.addAttribute("membership", membership);
         return "membershipEditSuccess";
     }

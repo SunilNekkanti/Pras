@@ -127,7 +127,7 @@
 						<c:choose>
 							 <c:when test="${membership.id != null && membership.activeInd == 89}"> 
 								<button type="button" class="btn btn-success btn-sm" name = "update" id="updateButton" onclick="return modifyMbrDetails()">Update</button>
-								<button type="submit" class="btn btn-success btn-sm" name ="delete"id="deleteButton">Delete</button>
+								<button type="button" class="btn btn-success btn-sm" name ="delete" id="deleteButton"  onclick="return deleteMbrDetails()">Delete</button>
 							</c:when>
 						</c:choose>				
 					</div>

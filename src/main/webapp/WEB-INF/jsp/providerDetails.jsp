@@ -63,6 +63,7 @@
 	       var rowCount = $('#providerContractList tr').length;
 	       if(rowCount > 1)
 	       {
+	    	   $('#providerContractList .panel-heading button').hide();
 	    	   prvdrInscontractList();  
 	       }
 	    },
@@ -265,7 +266,8 @@
 		 	    	  var rowCount = $('#providerContractList tr').length;
 		 		      if(rowCount > 1)
 		 		      { 
-		 		    	 prvdrInscontractList();
+		 		    	 $('#providerContractList .panel-heading button').hide();
+		 	 		     prvdrInscontractList();
 		 		      }
 		 	       },
 		 	       error: function (jqXHR, textStatus, errorThrown)
