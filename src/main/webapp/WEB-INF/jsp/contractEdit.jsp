@@ -153,8 +153,28 @@
 
 
 <script>
+jQuery( document ).ready(function( $ ) {
+    $("#PMPM").blur(function (e) {
+    	if(isNaN($('#PMPM').val()))
+    	{
+    		$("#PMPM").val('');
+    		alert("PMPM should be number");
+    	}
+    	else if($(".pmpmText").html().length > 0)
+    	{
+    		var pmpmText = $(".pmpmText").html();
+    		if(pmpmText < $("#PMPM").val())
+    		{
+    			$("#PMPM").val('');
+    			alert("PMPM not greater than "+ pmpmText);
+    		}	
+    	}
+    	
+    });
+});
+
 $(document).ready(function(){
-	d = $("#status").val();
+	insId = $("#status").val();
 	if(insId)
 	{
 		var source = getContextPath()+'insurance/'+insId+'/contractJsonList';

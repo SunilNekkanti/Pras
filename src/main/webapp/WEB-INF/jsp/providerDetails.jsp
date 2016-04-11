@@ -322,10 +322,20 @@
 			ajaxCallWithFileUpload( url, pmpmRequired, 'providerInsuranceContractList' )
 		}else{
 			var url = getContextPath()+'provider/${id}/contract/save.do?add'; 
-			ajaxCallWithFileUpload( url, pmpmRequired, 'providerContractList' )
+			ajaxCallWithFileUpload( url, pmpmRequired, 'providerContractList' );
+			var source = getContextPath()+'provider/${id}/contractJsonList';
+		 	   $.ajax({
+		 	    url : source,
+		 	       success: function(data, textStatus, jqXHR)
+		 	       {
+		 	    	  if(data.data.length > 0)
+		 		      { 
+		 		    	 prvdrInscontractList();
+		 		      }
+		 	       }
+		 	   });
 		}
-		
-	    return false;
+		return false;
 	}
 	
 	

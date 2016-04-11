@@ -648,4 +648,11 @@ public class ContractController{
 		  List<Contract> listBean = contractService.findAllContractsByRefId("insurance",id);
 		       return Message.successMessage(CommonMessageContent.CONTRACT_LIST, JsonConverter.getJsonObject(listBean));
 		   }
+		
+		@ResponseBody
+		 @RequestMapping(value = "/provider/{id}/contractJsonList", method = RequestMethod.GET)
+		 public Message viewProviderContract(@PathVariable Integer id,Model model) throws Exception{
+		  List<Contract> listBean = contractService.findAllContractsByRefId("provider",id);
+		       return Message.successMessage(CommonMessageContent.CONTRACT_LIST, JsonConverter.getJsonObject(listBean));
+		   }
 }
