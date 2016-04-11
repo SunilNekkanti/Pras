@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div id="insuranceDetails">
 <div class="panel-group">
 	<div class="panel panel-success">
@@ -316,7 +316,9 @@ function deleteInsuranceDetails()
 	function modifyContact()
 	{
 		var url = getContextPath()+'insurance/${id}/contact/save.do?update'; 
-		var dataList = 	$("#contact"+pmpmRequired).serialize();
+		var dataList = 	$("#contact").serialize();
+		alert(url);
+		alert(dataList);
 		$.ajax({
 	           type: "POST",
 	           url: url,

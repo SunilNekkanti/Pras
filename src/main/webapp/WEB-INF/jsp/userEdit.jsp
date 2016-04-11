@@ -9,7 +9,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">User Profile
-			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/userList">
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/${userpath}/userList">
           		<span class="glyphicon glyphicon-plus-sign "></span>User List
           	</a>
 		</div>

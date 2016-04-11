@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="context" value="${pageContext.request.contextPath}" />
-<script src="${context}/resources/js/validation.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <script>
 	$(document).ready(function(){	insuranceValidation();	});
 </script>

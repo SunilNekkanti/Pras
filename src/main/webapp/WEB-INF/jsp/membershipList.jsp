@@ -13,7 +13,7 @@
 <title>Membership List</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <script>
 
 
@@ -133,7 +133,7 @@
                   		   		    { "sName": "id", "aTargets": [ 0 ] },
                   		   		    { "sName": "firstName", "aTargets": [ 1 ],
                   		               "render": function ( data, type, full, meta ) {
-               		                   return '<a href="membership/'+full.id+'/complete">'+data+'</a>';
+               		                   return '<a href="${context}/membership/'+full.id+'/complete">'+data+'</a>';
              		                 }},
                   		   		    { "sName": "lastName", "aTargets": [ 2 ] },
                   		   		    { "sName": "dob", "aTargets": [ 3 ] ,

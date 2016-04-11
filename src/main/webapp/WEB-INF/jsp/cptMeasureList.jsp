@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <script>
         $(document).ready(function() {
         	
@@ -82,11 +82,11 @@
         	        } );
     </script>
 
-<c:set var="context" value="${pageContext.request.contextPath}" />
+
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">CPT Measure List  
-		<c:set var="url" value="${context}/${userpath}/cpt/new"/>
+		<c:set var="url" value="${context}/cpt/new"/>
 			<a class="btn btn-danger pull-right btn-xs white-text" href="${url}">
           		<span class="glyphicon glyphicon-plus-sign "></span>New CPT Measure
           	</a>

@@ -64,7 +64,7 @@
 			
 			<div class="row col-sm-12">
 				<div class="col-sm-12" style="padding-top:2px;">
-					<a href="${context}/userList">Click Here</a> to see User List
+					<a href="${context}/${userpath}/userList">Click Here</a> to see User List
 				</div>	
 			</div>
 			

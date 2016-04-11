@@ -122,7 +122,7 @@ public class ICDMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/admin/icd/$id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {

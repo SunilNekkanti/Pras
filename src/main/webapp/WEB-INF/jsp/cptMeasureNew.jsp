@@ -20,7 +20,7 @@
 	</script>
 	</c:when>
 </c:choose>
-<c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel panel-success">
 		<div class="panel-heading">CPT Measure
          CPT Measure

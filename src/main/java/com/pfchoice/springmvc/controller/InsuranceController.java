@@ -113,7 +113,7 @@ public class InsuranceController{
        return "insuranceEdit";
     }
 	
-	@RequestMapping(value = {"/admin/insurance/{id}/save.do"}, method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = {"/admin/insurance/{id}/save.do",}, method = RequestMethod.POST, params ={"update"})
     public String updateInsuranceAction( @PathVariable Integer id,@ModelAttribute @Validated Insurance insurance,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		
