@@ -45,7 +45,7 @@ import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class MembershipController{
 	
 	private static final Logger logger = LoggerFactory
@@ -115,7 +115,7 @@ public class MembershipController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}","/user/membership/{id}"}, method = RequestMethod.GET)
     public String updateMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
@@ -126,7 +126,7 @@ public class MembershipController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/display","/user/membership/{id}/display"}, method = RequestMethod.GET)
     public String displayMembershipPage(@PathVariable Integer id,Model model) {
 		Membership dbMembership = membershipService.findById(id);
 		 logger.info("Returning membership.getId()"+dbMembership.getId());
@@ -138,7 +138,7 @@ public class MembershipController{
 	
 	
 	
-	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST, params={"update"})
+	@RequestMapping(value = {"/admin/membership/{id}/save.do","/user/membership/{id}/save.do"}, method = RequestMethod.POST, params={"update"})
     public String saveMembershipAction(@PathVariable Integer id, @ModelAttribute("membership") @Validated  Membership membership,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 			
@@ -159,7 +159,7 @@ public class MembershipController{
         return "membershipEditSuccess";
     }
 	
-	@RequestMapping(value = "/membership/{id}/save.do", method = RequestMethod.POST,params={"delete"})
+	@RequestMapping(value = {"/admin/membership/{id}/save.do","/user/membership/{id}/save.do"}, method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipAction(@PathVariable Integer id, @Validated Membership membership,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 				
@@ -182,7 +182,7 @@ public class MembershipController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/details/{mbrInsId}/display","/user/membership/{id}/details/{mbrInsId}/display"}, method = RequestMethod.GET)
     public String displayMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,Model model) {
 		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
 		 logger.info("Returning dbMembershipInsurance.getId()"+dbMembershipInsurance.getId());
@@ -193,7 +193,7 @@ public class MembershipController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}/details/new")
+	@RequestMapping(value = {"/admin/membership/{id}/details/new","/user/membership/{id}/details/new"})
     public String newMembershipInsDetailsPage(@PathVariable Integer id,Model model) {
 		
 		Membership dbMembership = membershipService.findById(id);
@@ -206,7 +206,7 @@ public class MembershipController{
         return "membershipDetailsDisplay";
     }
 	
-	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"update"})
+	@RequestMapping(value = {"/admin/membership/{id}/details/{mbrInsId}/save.do","/user/membership/{id}/details/{mbrInsId}/save.do"}, method = RequestMethod.POST,params={"update"})
     public String saveMembershipDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,BindingResult bindingResult
     		,Model model, @ModelAttribute("username") String username) {
@@ -227,7 +227,7 @@ public class MembershipController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}/details/save.do", method = RequestMethod.POST,params={"add"})
+	@RequestMapping(value = {"/admin/membership/{id}/details/save.do","/user/membership/{id}/details/save.do"}, method = RequestMethod.POST,params={"add"})
     public String newMembershipInDetailsPage(@PathVariable Integer id,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
     		BindingResult bindingResult,Model model, @ModelAttribute("username") String username) {
@@ -251,7 +251,7 @@ public class MembershipController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}/details/{mbrInsId}/save.do", method = RequestMethod.POST,params={"delete"})
+	@RequestMapping(value = {"/admin/membership/{id}/details/{mbrInsId}/save.do","/user/membership/{id}/details/{mbrInsId}/save.do"}, method = RequestMethod.POST,params={"delete"})
     public String deleteMembershipInsDetailsPage(@PathVariable Integer id,@PathVariable Integer mbrInsId,
     		@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
     		BindingResult bindingResult,Model model, @ModelAttribute("username") String username) {
@@ -273,7 +273,7 @@ public class MembershipController{
     }
 	
 	
-   @RequestMapping(value = "/membership/{id}/detailsList")
+   @RequestMapping(value = {"/admin/membership/{id}/detailsList","/user/membership/{id}/detailsList"})
     public String handleRequest(@PathVariable Integer id,Model model) throws Exception {
  
     	List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
@@ -283,7 +283,7 @@ public class MembershipController{
 	}
     
 	
-	@RequestMapping(value = "/membership/{id}/providerDetails", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/providerDetails","/user/membership/{id}/providerDetails"}, method = RequestMethod.GET)
     public String displayMembershipProviderDetailsPage(@PathVariable Integer id, 
     				Model model)throws Exception {
 		
@@ -294,7 +294,7 @@ public class MembershipController{
         return "membershipProviderEdit";
     }
 	
-	@RequestMapping(value = "/membership/{id}/memberProvider/{mbrPrvdrId}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/memberProvider/{mbrPrvdrId}","/user/membership/{id}/memberProvider/{mbrPrvdrId}"}, method = RequestMethod.GET)
     public String displayInactiveMembershipProviderDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrPrvdrId, 
     				@ModelAttribute @Validated  MembershipProvider membershipProvider,
     				BindingResult bindingResult, Model model)throws Exception {
@@ -305,7 +305,7 @@ public class MembershipController{
         return "membershipProviderEdit";
     }
 	
-	@RequestMapping(value = "/membership/{id}/providerDetailsList", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/providerDetailsList","/user/membership/{id}/providerDetailsList"}, method = RequestMethod.GET)
     public String displayMembershipProviderDetailsListPage(@PathVariable Integer id,  @Validated MembershipProvider membershipProvider,
     				BindingResult bindingResult, Model model)throws Exception {
 		
@@ -315,7 +315,7 @@ public class MembershipController{
         return "membershipProviderList";
     }
 	
-	@RequestMapping(value = "/membership/{id}/complete", method = RequestMethod.GET)
+	@RequestMapping(value ={"/admin/membership/{id}/complete","/user/membership/{id}/complete"}, method = RequestMethod.GET)
     public String completeMembershipProviderDetailsPage(@PathVariable Integer id,Model model)throws Exception {
 		Membership dbMembership = membershipService.findById(id);
 		model.addAttribute("membership", dbMembership);
@@ -353,7 +353,7 @@ public class MembershipController{
            
     }
 	
-	@RequestMapping(value = "/membership/{id}/hedisMeasure", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/hedisMeasure","/user/membership/{id}/hedisMeasure"}, method = RequestMethod.GET)
     public String displayMembershipHedisMeasurePage(@PathVariable Integer id, Model model)throws Exception {
 		
 		Membership dbMembership = membershipService.findById(id);

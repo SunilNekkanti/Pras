@@ -16,14 +16,18 @@
 </c:choose>
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure</div>
+		<div class="panel-heading">Hedis Measure Details
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedis/hedisMeasureList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure List
+          	</a>
+		</div>
         <div class="panel-body">
 			<springForm:form method="POST" commandName="hedisMeasure" action="${context}/hedis/${id}/save.do" class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-3" for="code">Code</label>
 					<div class="col-sm-8">
 						<springForm:hidden path="id" />
-						<springForm:input path="code" class="form-control " id="code" placeholder="Code" />
+						<springForm:input path="code" class="form-control" maxlength="5" id="code" placeholder="Code" />
 						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>

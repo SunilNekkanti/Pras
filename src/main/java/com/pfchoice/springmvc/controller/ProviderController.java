@@ -30,7 +30,7 @@ import com.pfchoice.core.service.ProviderService;
 
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class ProviderController{
 	
 	@Autowired
@@ -73,7 +73,7 @@ public class ProviderController{
 	}
 	
 	
-	@RequestMapping(value = "/provider/new")
+	@RequestMapping(value = {"/admin/provider/new"})
     public String addProviderPage(final Model model) {
 		
 		Provider provider = createProviderModel();
@@ -82,7 +82,7 @@ public class ProviderController{
     }
  
 	
-	@RequestMapping(value = "/provider/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/provider/{id}","/user/provider/{id}"}, method = RequestMethod.GET)
     public String updateProviderPage(@PathVariable Integer id,Model model) {
 		
 		Provider dbProvider = providerService.findById(id);
@@ -93,7 +93,7 @@ public class ProviderController{
         return "providerDetails";
     }
 	
-	@RequestMapping(value = "/provider/{id}/details", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/provider/{id}/details","/user/provider/{id}/details"}, method = RequestMethod.GET)
     public String viewProviderPage(@PathVariable Integer id,Model model) {
 		
 		Provider dbProvider = providerService.findById(id);
@@ -104,7 +104,7 @@ public class ProviderController{
         return "providerEdit";
     }
 	
-	@RequestMapping(value = "/provider/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = {"/admin/provider/save.do"}, method = RequestMethod.POST, params ={"add"})
     public String newProviderAction( @Validated Provider provider,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        
@@ -121,7 +121,7 @@ public class ProviderController{
        return "providerNewSuccess";
     }
 	
-	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = {"/admin/provider/{id}/save.do"}, method = RequestMethod.POST, params ={"update"})
     public String updateProviderAction( @PathVariable Integer id,@Validated Provider provider,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -142,7 +142,7 @@ public class ProviderController{
     }
 	
 	
-	@RequestMapping(value = "/provider/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = {"/admin/provider/{id}/save.do"}, method = RequestMethod.POST, params ={"delete"})
     public String deleteInsuranceAction(@PathVariable Integer id,  @ModelAttribute("username") String username) {
            
 		Provider dbProvider = providerService.findById(id);

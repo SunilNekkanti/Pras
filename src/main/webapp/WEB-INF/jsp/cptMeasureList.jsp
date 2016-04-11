@@ -82,11 +82,15 @@
         	        } );
     </script>
 
-
-
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">CPT Measure List  </div>
+		<div class="panel-heading">CPT Measure List  
+		<c:set var="url" value="${context}/${userpath}/cpt/new"/>
+			<a class="btn btn-danger pull-right btn-xs white-text" href="${url}">
+          		<span class="glyphicon glyphicon-plus-sign "></span>New CPT Measure
+          	</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 		<div class="table-responsive">
 		

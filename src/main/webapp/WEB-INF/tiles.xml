@@ -7,7 +7,6 @@
         template="/WEB-INF/jsp/layout.jsp">  
         <put-attribute name="title" value="" />  
         <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />  
         <put-attribute name="body" value="" />  
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
     </definition> 
@@ -20,14 +19,6 @@
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
     </definition> 
     
-    <definition name="base1.definition" template="/WEB-INF/jsp/layout1.jsp">  
-        <put-attribute name="title" value="" />  
-        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" /> 
-        <put-attribute name="menubar" value="" />   
-        <put-attribute name="body" value="" />  
-        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />  
-    </definition>  
-    
     <definition name="baseNoHeader.definition" template="/WEB-INF/jsp/layoutNoHeader.jsp">  
        <put-attribute name="body" value="" />  
     </definition> 
@@ -37,18 +28,18 @@
         <put-attribute name="body" value="/WEB-INF/jsp/contact.jsp" />  
     </definition>  
   
-    <definition name="hello" extends="base1.definition">  
+    <definition name="hello" extends="base.definition">  
         <put-attribute name="title" value="Hello Spring MVC" />  
         <put-attribute name="body" value="/WEB-INF/jsp/hello.jsp" />  
     </definition>  
     
-    <definition name="home" extends="base1.definition">  
+    <definition name="home" extends="base.definition">  
         <put-attribute name="title" value="PF Choice" />  
         <put-attribute name="body" value="/WEB-INF/jsp/home.jsp" />  
     </definition> 
     
     
-     <definition name="index" extends="base1.definition">  
+     <definition name="index" extends="base.definition">  
         <put-attribute name="title" value="Hello Spring MVC" />  
         <put-attribute name="body" value="/WEB-INF/jsp/loginForm.jsp" />  
     </definition> 
@@ -63,7 +54,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membership.jsp" />  
     </definition>  
     
-    <definition name="membershipList" extends="base1.definition">  
+    <definition name="membershipList" extends="base.definition">  
         <put-attribute name="title" value="Membership List" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipList.jsp" />  
     </definition>  
@@ -76,15 +67,13 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipEditSuccess.jsp" />  
     </definition>
     
-     <definition name="membershipDetails" extends="base1.definition">  
+     <definition name="membershipDetails" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetails.jsp" />  
     </definition>  
     
     <definition name="membershipDisplay" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDisplay.jsp" />  
     </definition>  
     
@@ -100,23 +89,22 @@
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsEditSuccess.jsp" />  
     </definition>  
     
-     <definition name="membershipDetailsEdit" extends="base1.definition">  
+     <definition name="membershipDetailsEdit" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/membershipDetailsEdit.jsp" />  
     </definition> 
     
      <!--   Provider Section  -->
-     <definition name="providerList" extends="base1.definition">  
+     <definition name="providerList" extends="base.definition">  
         <put-attribute name="title" value="Provider List" />  
         <put-attribute name="body" value="/WEB-INF/jsp/providerList.jsp" />  
     </definition>
     
-   <definition name="provider" extends="base1.definition">  
+   <definition name="provider" extends="base.definition">  
         <put-attribute name="title" value="Membership Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/provider.jsp" />  
     </definition>  
-     <definition name="providerNew" extends="base1.definition">  
+     <definition name="providerNew" extends="base.definition">  
         <put-attribute name="title" value="Provider Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/providerNew.jsp" />  
     </definition> 
@@ -126,12 +114,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/providerEdit.jsp" />  
     </definition> 
     
-     <definition name="providerNewSuccess" extends="base1.definition"> 
+     <definition name="providerNewSuccess" extends="base.definition"> 
      	<put-attribute name="title" value="New Provider Added" />   
         <put-attribute name="body" value="/WEB-INF/jsp/providerAddSuccess.jsp" />  
     </definition> 
     
-     <definition name="providerDetails" extends="base1.definition">  
+     <definition name="providerDetails" extends="base.definition">  
      <put-attribute name="title" value="Provider Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/providerDetails.jsp" />  
     </definition>  
@@ -142,7 +130,6 @@
       
      <definition name="providerAddSuccess" extends="base.definition">  
         <put-attribute name="title" value="Provider Profile" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/providerAddSuccess.jsp" />  
     </definition>
     
@@ -160,7 +147,6 @@
     
     <definition name="providerContractDisplay" extends="base.definition">  
         <put-attribute name="title" value="provider Contract Details" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/provider_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceContractEdit.jsp" /> 
     </definition>
     
@@ -175,22 +161,21 @@
      
      <!--  Insurance Section -->
     
-     <definition name="insuranceList" extends="base1.definition">  
+     <definition name="insuranceList" extends="base.definition">  
         <put-attribute name="title" value="Insurance List" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceList.jsp" />  
     </definition>
     
-       <definition name="insurance" extends="base1.definition">  
-       <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />
+       <definition name="insurance" extends="base.definition">  
         <put-attribute name="title" value="Insurnace Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insurance.jsp" />  
     </definition>  
-     <definition name="insuranceNew" extends="base1.definition">  
+     <definition name="insuranceNew" extends="base.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceNew.jsp" />  
     </definition> 
     
-     <definition name="insuranceNewSuccess" extends="base1.definition">  
+     <definition name="insuranceNewSuccess" extends="base.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceAddSuccess.jsp" />  
     </definition> 
@@ -200,7 +185,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceEdit.jsp" />  
     </definition>  
     
-    <definition name="insuranceDetails" extends="base1.definition">  
+    <definition name="insuranceDetails" extends="base.definition">  
      <put-attribute name="title" value="Insurance Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceDetails.jsp" />  
     </definition>
@@ -228,7 +213,6 @@
     
     <definition name="insuranceContractDisplay" extends="base.definition">  
         <put-attribute name="title" value="Insurance Contract Details" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/insurance_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceContractEdit.jsp" /> 
     </definition>
     
@@ -236,7 +220,7 @@
     
     <!-- End of  Insurance Section -->
     
-       <definition name="membershipTabMenu" extends="base1.definition">  
+       <definition name="membershipTabMenu" extends="base.definition">  
         <put-attribute name="title" value="Insurance Profile" />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipTabMenu.jsp" />  
     </definition> 
@@ -253,14 +237,13 @@
        <put-attribute name="body" value="/WEB-INF/jsp/insuranceContactList.jsp" />  
     </definition>  
         
-    <definition name="contactList" extends="base1.definition">  
+    <definition name="contactList" extends="base.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/contactList.jsp" />  
     </definition>  
     
     
-    <definition name="contactEdit" extends="base1.definition">  
+    <definition name="contactEdit" extends="base.definition">  
         <put-attribute name="title" value="Membership Contact" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/contactEdit.jsp" />  
     </definition>  
     
@@ -268,134 +251,119 @@
          <put-attribute name="body" value="/WEB-INF/jsp/contactEditSuccess.jsp" />  
     </definition>   
     
-        <definition name="contactDisplay" extends="base1.definition">  
+        <definition name="contactDisplay" extends="base.definition">  
         <put-attribute name="title" value="Membership Contact Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/contactDisplay.jsp" />  
     </definition> 
     
      <definition name="mbrList" extends="base.definition">  
         <put-attribute name="title" value="Membership Contact Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/membership_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/mbrList.jsp" />  
     </definition> 
     
             
-    <definition name="hedisMeasureList" extends="base1.definition">  
+    <definition name="hedisMeasureList" extends="base.definition">  
      	<put-attribute name="title" value="Hedis Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureList.jsp" />  
     </definition>  
     
-    <definition name="hedisMeasureNew" extends="base1.definition">  
+    <definition name="hedisMeasureNew" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureNew.jsp" />  
     </definition>     
     
     <definition name="hedisMeasureEdit" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureEdit.jsp" />  
     </definition>  
     
     <definition name="hedisMeasureEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Edit Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureEditSuccess.jsp" />  
     </definition>   
     
      <definition name="hedisMeasureDisplay" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureDisplay.jsp" />  
     </definition> 
 
     
-    <definition name="cptMeasureList" extends="base1.definition">  
+    <definition name="cptMeasureList" extends="base.definition">  
          <put-attribute name="title" value="CPT Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureList.jsp" />  
     </definition>  
     
     <definition name="cptMeasureEdit" extends="base.definition">  
         <put-attribute name="title" value="CPT Measure" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureEdit.jsp" />  
     </definition>  
     
-    <definition name="cptMeasureNew" extends="base1.definition">  
+    <definition name="cptMeasureNew" extends="base.definition">  
         <put-attribute name="title" value="CPT Measure" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureNew.jsp" />  
     </definition> 
     
     <definition name="cptMeasureEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="CPT Measure Edit Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureEditSuccess.jsp" />  
     </definition>   
     
      <definition name="cptMeasureDisplay" extends="base.definition">  
         <put-attribute name="title" value="CPT Measure Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/cptMeasureDisplay.jsp" />  
     </definition> 
     
-    <definition name="icdMeasureList" extends="base1.definition">  
+    <definition name="icdMeasureList" extends="base.definition">  
      	<put-attribute name="title" value="ICD Measure List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureList.jsp" />  
     </definition>  
     
-     <definition name="icdMeasureNew" extends="base1.definition">  
+     <definition name="icdMeasureNew" extends="base.definition">  
         <put-attribute name="title" value="ICD Measure" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureNew.jsp" />  
     </definition> 
     
     <definition name="icdMeasureEdit" extends="base.definition">  
         <put-attribute name="title" value="ICD Measure" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureEdit.jsp" />  
     </definition>  
     
     <definition name="icdMeasureEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="ICD Measure Edit Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureEditSuccess.jsp" />  
     </definition>   
     
      <definition name="icdMeasureDisplay" extends="base.definition">  
         <put-attribute name="title" value="ICD Measure Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/icdMeasureDisplay.jsp" />  
     </definition> 
     
-    <definition name="hedisMeasureRuleList" extends="base1.definition">  
+    <definition name="hedisMeasureRuleList" extends="base.definition">  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleListGroupByRule.jsp" />  
     </definition>  
     
-    <definition name="hedisMeasureRuleNew" extends="base1.definition">  
+    <definition name="hedisMeasureRuleNew" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule" /> 
       <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleNew.jsp" />  
     </definition> 
     
     <definition name="hedisMeasureRuleEdit" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEdit.jsp" />  
     </definition>  
     
      <definition name="hedisMeasureRuleEditAjax" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEditAjax.jsp" />  
     </definition>  
     
     <definition name="hedisMeasureRuleEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule Edit Success" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleEditSuccess.jsp" />  
     </definition>   
     
      <definition name="hedisMeasureRuleDisplay" extends="base.definition">  
         <put-attribute name="title" value="Hedis Measure Rule Info" />  
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureRuleDisplay.jsp" />  
     </definition> 
     
@@ -449,28 +417,27 @@
        <put-attribute name="body" value="/WEB-INF/jsp/membershipHedisMeasure.jsp" />  
     </definition>  
     
-     <definition name="membershipCompleteDetails" extends="base1.definition">  
+     <definition name="membershipCompleteDetails" extends="base.definition">  
         <put-attribute name="title" value="Membership " />  
         <put-attribute name="body" value="/WEB-INF/jsp/membershipCompleteDetails.jsp" />  
     </definition>  
     
-     <definition name="userList" extends="base1.definition">  
+     <definition name="userList" extends="base.definition">  
      	<put-attribute name="title" value="User List" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/userList.jsp" />  
     </definition>  
     
     <definition name="userEdit" extends="base.definition">  
         <put-attribute name="title" value="User Profile" /> 
-        <put-attribute name="menu" value="/WEB-INF/jsp/hedis_menu.jsp" />  
         <put-attribute name="body" value="/WEB-INF/jsp/userEdit.jsp" />  
     </definition> 
     
-     <definition name="userEditSuccess" extends="base1.definition">  
+     <definition name="userEditSuccess" extends="base.definition">  
         <put-attribute name="title" value="User Profile Update" />  
         <put-attribute name="body" value="/WEB-INF/jsp/userEditSuccess.jsp" />  
     </definition>  
     
-    <definition name="userNew" extends="base1.definition">  
+    <definition name="userNew" extends="base.definition">  
         <put-attribute name="title" value="New User Profile" /> 
         <put-attribute name="body" value="/WEB-INF/jsp/userNew.jsp" />  
     </definition> 
@@ -480,12 +447,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/ad403.jsp" />  
     </definition> 
     
-    <definition name="hedisMembershipList" extends="base1.definition">  
+    <definition name="hedisMembershipList" extends="base.definition">  
         <put-attribute name="title" value="Hedis Report" />  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMembershipList.jsp" />  
     </definition>
     
-     <definition name="hedisMembershipList2" extends="base1.definition">  
+     <definition name="hedisMembershipList2" extends="base.definition">  
         <put-attribute name="title" value="Hedis Report" />  
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMembershipList2.jsp" />  
     </definition>

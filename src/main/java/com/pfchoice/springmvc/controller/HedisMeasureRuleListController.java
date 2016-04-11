@@ -24,7 +24,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class HedisMeasureRuleListController{
 	
 	private static final Logger logger = LoggerFactory
@@ -35,7 +35,7 @@ public class HedisMeasureRuleListController{
     private HedisMeasureRuleService hedisMeasureRuleService;
     
 	
-	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleList")
+	@RequestMapping(value = {"/admin/hedisMeasureRule/hedisMeasureRuleList","/user/hedisMeasureRule/hedisMeasureRuleList"})
 	public String viewHedisMeasureRuleAction(Model model) throws Exception{
 		
 		logger.info("Returning view.jsp page after create");
@@ -43,7 +43,7 @@ public class HedisMeasureRuleListController{
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/hedisMeasureRuleLists", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedisMeasureRule/hedisMeasureRuleLists","/user/hedisMeasureRule/hedisMeasureRuleLists"}, method = RequestMethod.GET)
 	public Message viewHedisMeasureRuleActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
@@ -58,7 +58,7 @@ public class HedisMeasureRuleListController{
     }
 	
 	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/list", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedisMeasureRule/list","/user/hedisMeasureRule/list"}, method = RequestMethod.GET)
 	public Message viewHedisMeasureRuleList(Model model,@RequestParam(required = false) Integer insId) throws Exception{
 		
 		List<HedisMeasureRule> hedisMeasureRuleList = hedisMeasureRuleService.findAllByInsId(insId);

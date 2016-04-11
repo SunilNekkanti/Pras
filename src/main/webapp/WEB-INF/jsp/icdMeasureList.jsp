@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+ <c:set var="context" value="${pageContext.request.contextPath}" />
 <script>
   $(document).ready(function() {
   	
@@ -85,7 +85,11 @@ $.ajax( {
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">ICD Measure List  </div>
+		<div class="panel-heading">ICD Measure List
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/${userpath}/icd/new">
+          		<span class="glyphicon glyphicon-plus-sign "></span>New ICD
+          	</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 		<div class="table-responsive">
 		

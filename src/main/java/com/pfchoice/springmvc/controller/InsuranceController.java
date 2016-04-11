@@ -31,7 +31,7 @@ import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.PlanTypeService;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class InsuranceController{
 	
 	private static final Logger logger = LoggerFactory
@@ -66,7 +66,7 @@ public class InsuranceController{
 		return planTypeList;
 	}
 	
-	@RequestMapping(value = "/insurance/new")
+	@RequestMapping(value ={"/admin/insurance/new"})
     public String addInsurancePage(Model model) {
 		
 		Insurance insurance = createInsuranceModel();
@@ -74,7 +74,7 @@ public class InsuranceController{
         return "insuranceNew";
     }
 	
-	@RequestMapping(value = "/insurance/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/insurance/{id}","/user/insurance/{id}"}, method = RequestMethod.GET)
     public String updateInsurancePage(@PathVariable Integer id,Model model, @ModelAttribute("username") String username) {
 		
 		Insurance dbInsurance = insuranceService.findById(id);
@@ -85,7 +85,7 @@ public class InsuranceController{
         return "insuranceDetails";
     }
 	
-	@RequestMapping(value = "/insurance/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = {"/admin/insurance/save.do"}, method = RequestMethod.POST, params ={"add"})
     public String newInsuranceAction(@Validated Insurance insurance,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        
@@ -102,7 +102,7 @@ public class InsuranceController{
        return "insuranceNewSuccess";
     }
 	
-	@RequestMapping(value = "/insurance/{id}/details", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/insurance/{id}/details","/user/insurance/{id}/details"}, method = RequestMethod.GET)
     public String viewProviderPage(@PathVariable Integer id,Model model) {
 		
 		Insurance dbInsurance = insuranceService.findById(id);
@@ -113,7 +113,7 @@ public class InsuranceController{
        return "insuranceEdit";
     }
 	
-	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = {"/admin/insurance/{id}/save.do"}, method = RequestMethod.POST, params ={"update"})
     public String updateInsuranceAction( @PathVariable Integer id,@ModelAttribute @Validated Insurance insurance,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		
@@ -134,7 +134,7 @@ public class InsuranceController{
         return "insuranceEditSuccess";
     }
 	
-	@RequestMapping(value = "/insurance/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = {"/admin/insurance/{id}/save.do"}, method = RequestMethod.POST, params ={"delete"})
     public String deleteInsuranceAction(@PathVariable Integer id, Model model, @ModelAttribute("username") String username) {
         
 		Insurance dbInsurance = insuranceService.findById(id);

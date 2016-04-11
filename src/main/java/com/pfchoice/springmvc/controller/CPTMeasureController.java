@@ -29,7 +29,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class CPTMeasureController{
 	
     @Autowired
@@ -57,7 +57,7 @@ public class CPTMeasureController{
         return new CPTMeasure();
     }
 	
-	@RequestMapping(value = "/cpt/new")
+	@RequestMapping(value = "/admin/cpt/new")
     public String addCPTMeasurePage(Model model) {
 		
 		CPTMeasure cptMeasure = createCPTMeasureModel();
@@ -65,7 +65,7 @@ public class CPTMeasureController{
 		return "cptMeasureNew";
     }
 	
-	@RequestMapping(value = "/cpt/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/cpt/{id}","/user/cpt/{id}"}, method = RequestMethod.GET)
     public String updateCPTMeasurePage(@PathVariable Integer id,Model model) {
 		
 		CPTMeasure dbCPTMeasure = cptMeasureService.findById(id);
@@ -75,7 +75,7 @@ public class CPTMeasureController{
         return "cptMeasureEdit";
     }
 		
-	@RequestMapping(value = "/cpt/{id}/display", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/cpt/{id}/display", method = RequestMethod.GET)
     public String displayCPTMeasurePage(@PathVariable Integer id,Model model) {
 		
 		CPTMeasure dbCPTMeasure = cptMeasureService.findById(id);
@@ -86,7 +86,7 @@ public class CPTMeasureController{
         return "cptMeasureDisplay";
     }
 	
-	@RequestMapping(value = "/cpt/cptMeasureList", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/cpt/cptMeasureList","/user/cpt/cptMeasureList"}, method = RequestMethod.GET)
 	public String viewCPTMeasureAction(Model model) throws Exception{
 		
 		logger.info("Returning view.jsp page after create");
@@ -94,7 +94,7 @@ public class CPTMeasureController{
     }
 	
 	@ResponseBody
-	@RequestMapping(value = "/cpt/cptMeasureLists", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/cpt/cptMeasureLists","/user/cpt/cptMeasureLists"}, method = RequestMethod.GET)
 	public Message viewCPTMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
@@ -107,7 +107,7 @@ public class CPTMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/cpt/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = "/admin/cpt/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -125,7 +125,7 @@ public class CPTMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/cpt/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         
@@ -148,7 +148,7 @@ public class CPTMeasureController{
     }
 	
 
-	@RequestMapping(value = "/cpt/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        

@@ -80,10 +80,14 @@
         	
     } );
     </script>
-
+ <c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading"> Provider List</div>
+		<div class="panel-heading"> User List
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/user/new">
+          		<span class="glyphicon glyphicon-plus-sign "></span>New User
+          	</a>
+		</div>
 		<div class="panel-body" >
 			<table id="userTable" class="table table-striped table-hover table-responsive">
 				<thead>

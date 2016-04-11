@@ -91,7 +91,7 @@
 							</div>
 							</div>
 							<div class="col-sm-3">	
-							<div class="form-group required">
+							<div class="form-group">
 								<label class="control-label col-sm-4" for="county">County</label>
 								<div class="col-sm-8">
 									<springForm:select path="countyCode" class="form-control" id="county" >

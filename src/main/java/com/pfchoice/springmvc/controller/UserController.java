@@ -37,7 +37,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class UserController{
 	
     @Autowired
@@ -112,6 +112,7 @@ public class UserController{
     	user.setCreatedBy(username);
     	user.setUpdatedBy(username);
     	userService.save(user);
+    	model.addAttribute("Message", "New user added successfully");
        return "userEditSuccess";
     }
 	
@@ -127,6 +128,7 @@ public class UserController{
         {
         	logger.info("Returning userEditSuccess.jsp page after update");
         	user.setUpdatedBy(username);
+        	model.addAttribute("Message", "User updated successfully");
         	userService.update(user);
         }
         return "userEditSuccess";
@@ -147,12 +149,13 @@ public class UserController{
 	    	logger.info("Returning userSuccess.jsp page after update");
 	    	user.setActiveInd('N');
 	    	user.setUpdatedBy(username);
+	    	model.addAttribute("Message", "User deleted successfully");
 	    	userService.update(user);
         }
         return "userEditSuccess";
     }
 	
-	@RequestMapping(value = "/userList")
+	@RequestMapping(value = {"/admin/userList","/user/userList"})
     public String handleRequest() throws Exception {
  
 		return "userList";

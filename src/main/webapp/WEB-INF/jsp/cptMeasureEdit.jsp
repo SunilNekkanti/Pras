@@ -21,12 +21,13 @@
 	</script>
 	</c:when>
 </c:choose>
-<div class="panel with-nav-tabs panel-primary">
+<div class="panel  panel-success">
 		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">CPT Measure</a></li>
-                        </ul>
-          </div>
+			CPT Measure
+        	<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/cpt/cptMeasureList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>CPT Measure List
+          	</a>
+        </div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="cptMeasure" action="${context}/cpt/${id}/save.do" class="form-horizontal" role="form">
 				<div class="form-group required">
@@ -35,6 +36,14 @@
 						<springForm:hidden path="id" />
 						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
 						<springForm:errors path="code" cssClass="error text-danger" />
+					</div>
+				</div>
+				
+				<div class="form-group required">
+					<label class="control-label col-sm-2" for="shortDescription required">Short Description</label>
+					<div class="col-sm-6">
+						<springForm:input path="shortDescription" class="form-control" id="shortDescription" placeholder="Short Description" />
+						<springForm:errors path="shortDescription" cssClass="error text-danger" />
 					</div>
 				</div>
 				 		 

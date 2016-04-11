@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
@@ -25,7 +26,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
  * @author sarath
  */
 @Controller
-
+@SessionAttributes({"username","userpath"})
 public class ProviderListController
 {
 
@@ -34,14 +35,14 @@ public class ProviderListController
     @Autowired
     private ProviderService providerService;
 
-   @RequestMapping(value = "/providerList")
+   @RequestMapping(value = {"/admin/providerList","/user/providerList"})
     public String handleRequest() throws Exception {
  
 		return "providerList";
 	}
    
     @ResponseBody
-    @RequestMapping(value = "/provider/list", method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin/provider/list","/user/provider/list"}, method = RequestMethod.GET)
 	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
@@ -55,7 +56,7 @@ public class ProviderListController
   
     
     @ResponseBody
-    @RequestMapping(value = "/insurance/providerlist", method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin/insurance/providerlist","/user/insurance/providerlist"}, method = RequestMethod.GET)
 	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer insId) throws Exception{
 		
 		Pagination pagination = providerService.findByInsId(insId);

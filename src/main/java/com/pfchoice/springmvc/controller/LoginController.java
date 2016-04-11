@@ -16,7 +16,7 @@ import com.pfchoice.form.LoginForm;
 
 @Controller
 @RequestMapping(value = "*")
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class LoginController {
 	
 	@RequestMapping(value = { "/",  "/index"}, method = RequestMethod.GET)

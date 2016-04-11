@@ -2,16 +2,19 @@
 <%@ page session="false" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
- <h2> Login Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Login Update</div>
+		<div class="panel-heading">Info
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/userList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>User List
+          	</a>
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="well well-sm">
+					<p><strong>${Message}</strong></p>
   					<p> <strong>Login:${user.username}</strong>  </p>
-  					<p> Updated Successfully  </p>
-					<a href="${context}/userList">Click Here</a> Move to User list
+  					
 				</div>	
 			</div>
 		</div>

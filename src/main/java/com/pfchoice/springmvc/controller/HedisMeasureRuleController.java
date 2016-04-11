@@ -50,7 +50,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class HedisMeasureRuleController{
 	
 	private static final Logger logger = LoggerFactory
@@ -158,7 +158,7 @@ public class HedisMeasureRuleController{
 		return PrasUtil.getHedisEffectiveYearList();
 	}
 	
-	@RequestMapping(value = "/hedisMeasureRule/new")
+	@RequestMapping(value = "/admin/hedisMeasureRule/new")
     public String addHedisMeasureRulePage(Model model) {
 		
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
@@ -166,7 +166,7 @@ public class HedisMeasureRuleController{
         return "hedisMeasureRuleNew";
     }
 	
-	@RequestMapping(value = "/hedisMeasureRule/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedisMeasureRule/{id}","/user/hedisMeasureRule/{id}"}, method = RequestMethod.GET)
     public String updateHedisMeasureRulePage(@PathVariable Integer id,Model model) {
 	
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
@@ -182,7 +182,7 @@ public class HedisMeasureRuleController{
         return "hedisMeasureRuleEdit";
     }
 	
-	@RequestMapping(value = "/hedisMeasureRuleAjax/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/hedisMeasureRuleAjax/{id}", method = RequestMethod.GET)
     public String updateHedisMeasureRuleAjaxPage(@PathVariable Integer id,Model model) {
 	
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
@@ -199,7 +199,7 @@ public class HedisMeasureRuleController{
     }
 	
 		
-	@RequestMapping(value = "/hedisMeasureRule/{id}/display", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/hedisMeasureRule/{id}/display", method = RequestMethod.GET)
     public String displayHedisMeasureRulePage(@PathVariable Integer id,Model model) {
 	
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
@@ -210,7 +210,7 @@ public class HedisMeasureRuleController{
         return "hedisMeasureRuleDisplay";
     }
 	
-	@RequestMapping(value = "/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = "/admin/hedisMeasureRule/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addHedisMeasureAction(@ModelAttribute("hedisMeasureRule")  @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -229,7 +229,7 @@ public class HedisMeasureRuleController{
     }
 	
 	
-	@RequestMapping(value = "/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/admin/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveHedisMeasureRuleAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
@@ -251,7 +251,7 @@ public class HedisMeasureRuleController{
     }
 	
 
-	@RequestMapping(value = "/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/admin/hedisMeasureRule/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@PathVariable Integer id, 
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
@@ -274,7 +274,7 @@ public class HedisMeasureRuleController{
     }
 	
 	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/cpt")
+	@RequestMapping(value = {"/admin/hedisMeasureRule/cpt","/user/hedisMeasureRule/cpt"})
 	 public Message  getICDMeasure(@ModelAttribute("username") String username, Model model) 
 	{
 		List<CPTMeasure> cptMeasureList = cptMeasureService.findAll();
@@ -283,7 +283,7 @@ public class HedisMeasureRuleController{
 	 }
 	
 	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/icd")
+	@RequestMapping(value = {"/admin/hedisMeasureRule/icd","/user/hedisMeasureRule/icd"})
 	 public Message  getCPTMeasure(@ModelAttribute("username") String username, Model model) 
 	{
 		List<ICDMeasure> icdMeasureList = icdMeasureService.findAll();
@@ -294,7 +294,7 @@ public class HedisMeasureRuleController{
 	
 	@SuppressWarnings("unchecked")
 	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/{id}/cpt/cptMeasureLists", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedisMeasureRule/{id}/cpt/cptMeasureLists","/user/hedisMeasureRule/{id}/cpt/cptMeasureLists"}, method = RequestMethod.GET)
 	public Message viewCPTMeasureList(@PathVariable Integer id,Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
@@ -330,7 +330,7 @@ public class HedisMeasureRuleController{
 	
 	@SuppressWarnings("unchecked")
 	@ResponseBody
-	@RequestMapping(value = "/hedisMeasureRule/{id}/icd/icdMeasureLists", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedisMeasureRule/{id}/icd/icdMeasureLists","/user/hedisMeasureRule/{id}/icd/icdMeasureLists"}, method = RequestMethod.GET)
 	public Message viewICDMeasureList(@PathVariable Integer id,Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,

@@ -384,7 +384,8 @@
 function getContextPath() {
     var ctx = window.location.pathname,
         path = '/' !== ctx ? ctx.substring(0, ctx.indexOf('/', 1) + 1) : ctx;
-    return path + (/\/$/.test(path) ? '' : '/');
+    path = path + (/\/$/.test(path) ? '' : '/')+"${userpath}";
+    return path;
 }
 
 $(document).ready(function () {
@@ -421,21 +422,21 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li><a href="${context}/home">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="${context}/insuranceList">Insurance</a></li>
-        <li><a href="${context}/providerList">Provider</a></li>
-        <li><a href="${context}/membershipList">Membership</a></li>
+        <li><a href="${context}/${userpath}/insuranceList">Insurance</a></li>
+        <li><a href="${context}/${userpath}/providerList">Provider</a></li>
+        <li><a href="${context}/${userpath}/membershipList">Membership</a></li>
         
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quality Measures <span class="caret"></span></a>
           <ul class="dropdown-menu"> 
-            <li><a href="${context}/hedis/hedisMeasureList">Hedis</a></li>
-            <li><a href="${context}/cpt/cptMeasureList">CPT</a></li>
-            <li><a href="${context}/icd/icdMeasureList">ICD</a></li>
-            <li><a href="${context}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
+            <li><a href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
+            <li><a href="${context}/${userpath}/cpt/cptMeasureList">CPT</a></li>
+            <li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
+            <li><a href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
          </ul>
         </li> 
-        <li><a href="${context}/reports/hedis">Reports</a></li>
-         <li><a href="${context}/userList">User</a></li>
+        <li><a href="${context}/${userpath}/reports/hedis">Reports</a></li>
+         <li><a href="${context}/${userpath}/userList">User</a></li>
         <li><a href="#">Help</a></li>
         <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
       </ul>

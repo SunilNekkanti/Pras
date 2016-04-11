@@ -81,10 +81,14 @@
         	
    } );
 </script>
-
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure List</div>
+		<div class="panel-heading">Hedis Measure List
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/${userpath}/hedis/new">
+          		<span class="glyphicon glyphicon-plus-sign "></span>New Hedis Measure
+          	</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<table id="hedisMeasureTable" class="display table-responsive  table table-striped table-hover"> 
 				<thead>

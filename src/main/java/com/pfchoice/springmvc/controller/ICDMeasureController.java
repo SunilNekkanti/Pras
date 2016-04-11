@@ -29,7 +29,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class ICDMeasureController{
 	
     @Autowired
@@ -56,7 +56,7 @@ public class ICDMeasureController{
         return new ICDMeasure();
     }
 	
-	@RequestMapping(value = "/icd/new")
+	@RequestMapping(value = "/admin/icd/new")
     public String addICDMeasurePage(Model model) {
 		
 		ICDMeasure icdMeasure = createICDMeasureModel();
@@ -64,7 +64,7 @@ public class ICDMeasureController{
         return "icdMeasureNew";
     }
 	
-	@RequestMapping(value = "/icd/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/icd/{id}","/user/icd/{id}"}, method = RequestMethod.GET)
     public String updateICDMeasurePage(@PathVariable Integer id,Model model) {
 		ICDMeasure dbICDMeasure = icdMeasureService.findById(id);
 	    logger.info("Returning icdMeasure.getId()"+dbICDMeasure.getId());
@@ -73,7 +73,7 @@ public class ICDMeasureController{
         return "icdMeasureEdit";
     }
 		
-	@RequestMapping(value = "/icd/{id}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/icd/{id}/display"}, method = RequestMethod.GET)
     public String displayICDMeasurePage(@PathVariable Integer id,Model model) {
 		ICDMeasure dbICDMeasure = icdMeasureService.findById(id);
 		 logger.info("Returning icdMeasure.getId()"+dbICDMeasure.getId());
@@ -83,14 +83,14 @@ public class ICDMeasureController{
         return "icdMeasureDisplay";
     }
 	
-	@RequestMapping(value = "/icd/icdMeasureList", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/icd/icdMeasureList","/user/icd/icdMeasureList"}, method = RequestMethod.GET)
 	public String viewICDMeasureAction(Model model) throws Exception{
 		logger.info("Returning view.jsp page after create");
         return "icdMeasureList";
     }
 	
 	@ResponseBody
-	@RequestMapping(value = "/icd/icdMeasureLists", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/icd/icdMeasureLists","/user/icd/icdMeasureLists"}, method = RequestMethod.GET)
 	public Message viewICDMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
@@ -103,7 +103,7 @@ public class ICDMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/icd/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = "/admin/icd/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -122,7 +122,7 @@ public class ICDMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/icd/$id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/admin/icd/$id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -144,7 +144,7 @@ public class ICDMeasureController{
     }
 	
 
-	@RequestMapping(value = "/icd/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        

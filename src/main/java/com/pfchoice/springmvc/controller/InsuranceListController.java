@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
@@ -27,7 +28,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
  * @author sarath
  */
 @Controller
-
+@SessionAttributes({"username","userpath"})
 public class InsuranceListController
 {
 
@@ -36,14 +37,14 @@ public class InsuranceListController
     @Autowired
     private InsuranceService insuranceService;
 
-   @RequestMapping(value = "/insuranceList")
+   @RequestMapping(value = {"/admin/insuranceList","/user/insuranceList"})
     public String handleRequest( Model model) throws Exception {
  
 		return "insuranceList";
 	}
     
    @ResponseBody
-   @RequestMapping(value = "/insurance/list", method = RequestMethod.GET)
+   @RequestMapping(value = {"/admin/insurance/list","/user/insurance/list"}, method = RequestMethod.GET)
 	public Message viewInsuranceListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,

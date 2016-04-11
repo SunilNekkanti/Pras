@@ -4,12 +4,12 @@
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <c:set var="context" value="${pageContext.request.contextPath}" />
-<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">ICD Measure</a></li>
-                        </ul>
-          </div>
+<div class="panel panel-success">
+		<div class="panel-heading">ICD Measure
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/icd/icdMeasureList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>ICD Measure List
+          	</a>
+        </div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="icdMeasure" action="${context}/icd/${id}/save.do" class="form-horizontal" role="form">
 				<div class="form-group required">

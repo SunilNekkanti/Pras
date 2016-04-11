@@ -178,11 +178,11 @@ $.ajax( {
         
 </script>   
 
-<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">Hedis Measure Rule</a></li>
-                        </ul>
+<div class="panel  panel-success">
+		<div class="panel-heading">Hedis Measure Rule
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureRule/hedisMeasureRuleList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure Rule List
+          	</a>
           </div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form id="hedisMeasureRule" method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/save.do" class="form-horizontal" role="form">

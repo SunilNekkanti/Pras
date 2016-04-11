@@ -41,7 +41,7 @@ import com.pfchoice.core.service.ZipCodeService;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class ContactController{
 	
     @Autowired
@@ -107,7 +107,7 @@ public class ContactController{
 		return zipCodeList;
 	}
 	
-	@RequestMapping(value = "/membership/{id}/contact/new")
+	@RequestMapping(value = {"/admin/membership/{id}/contact/new","/user/membership/{id}/contact/new"})
     public String addContactPage(@PathVariable Integer id,@ModelAttribute("username") String username, Model model) {
 		
 		Contact contact = createContactModel();
@@ -115,8 +115,7 @@ public class ContactController{
         return "membershipContactEdit";
     }
 	
-	@SuppressWarnings("unused")
-	@RequestMapping(value = "/membership/{id}/contact/{cntId}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/contact/{cntId}","/user/membership/{id}/contact/{cntId}"}, method = RequestMethod.GET)
     public String updateMembershipContact1Page(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		if(dbContact == null){
@@ -130,7 +129,7 @@ public class ContactController{
         return "membershipContactEdit";
     }
 		
-	@RequestMapping(value = "/membership/{id}/contact/{cntId}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/membership/{id}/contact/{cntId}/display","/user/membership/{id}/contact/{cntId}/display"}, method = RequestMethod.GET)
     public String displayMembershipContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
@@ -143,7 +142,7 @@ public class ContactController{
         return "membershipContactDisplay";
     }
 	
-	@RequestMapping(value = "/membership/{id}/contactList")
+	@RequestMapping(value = {"/admin/membership/{id}/contactList","/user/membership/{id}/contactList"})
     public String handleRequest(@PathVariable Integer id, Model model) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
@@ -153,7 +152,7 @@ public class ContactController{
 	}
 	
 	
-	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = {"/admin/membership/{id}/contact/save.do","/user/membership/{id}/contact/save.do"}, method = RequestMethod.POST, params ={"add"})
 	public String addMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -183,7 +182,7 @@ public class ContactController{
     }
 	
 	
-	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = {"/admin/membership/{id}/contact/save.do","/user/membership/{id}/contact/save.do"}, method = RequestMethod.POST, params ={"update"})
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -209,7 +208,7 @@ public class ContactController{
     }
 	
 
-	@RequestMapping(value = "/membership/{id}/contact/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = {"/admin/membership/{id}/contact/save.do","/user/membership/{id}/contact/save.do"}, method = RequestMethod.POST, params ={"delete"})
 	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -229,7 +228,7 @@ public class ContactController{
 	
        
 	
-	@RequestMapping(value = "/provider/{id}/contact/new")
+	@RequestMapping(value = {"/admin/provider/{id}/contact/new","/user/provider/{id}/contact/new"})
     public String addProviderContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
@@ -238,7 +237,7 @@ public class ContactController{
     }
 	
 	
-	@RequestMapping(value = "/provider/{id}/contact/{cntId}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/provider/{id}/contact/{cntId}","/user/provider/{id}/contact/{cntId}"}, method = RequestMethod.GET)
     public String updateProviderContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		// logger.info("Returning contact.getId()"+dbContact.getId());
@@ -253,7 +252,7 @@ public class ContactController{
         return "providerContactEdit";
     }
 		
-	@RequestMapping(value = "/provider/{id}/contact/{cntId}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/provider/{id}/contact/{cntId}/display","/user/provider/{id}/contact/{cntId}/display"}, method = RequestMethod.GET)
     public String displayProviderContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
@@ -266,7 +265,7 @@ public class ContactController{
         return "providerContactDisplay";
     }
 	
-	@RequestMapping(value = "/provider/{id}/contactList")
+	@RequestMapping(value = {"/admin/provider/{id}/contactList","/user/provider/{id}/contactList"})
     public String providerContactList(@PathVariable Integer id, Model model) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("provider",id);
@@ -276,7 +275,7 @@ public class ContactController{
 	}
 	
 	
-	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"add"})
+	@RequestMapping(value = {"/admin/provider/{id}/contact/save.do","/user/provider/{id}/contact/save.do"}, method = RequestMethod.POST, params= {"add"})
 	public String addProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -305,7 +304,7 @@ public class ContactController{
 	      return "providerContactEditSuccess";
     }
 
-	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"update"})
+	@RequestMapping(value = {"/admin/provider/{id}/contact/save.do","/user/provider/{id}/contact/save.do"}, method = RequestMethod.POST, params= {"update"})
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -332,7 +331,7 @@ public class ContactController{
         return "providerContactEdit";
     }
 	
-	@RequestMapping(value = "/provider/{id}/contact/save.do", method = RequestMethod.POST, params= {"delete"})
+	@RequestMapping(value = {"/admin/provider/{id}/contact/save.do","/user/provider/{id}/contact/save.do"}, method = RequestMethod.POST, params= {"delete"})
 	public String saveProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -357,7 +356,7 @@ public class ContactController{
 	        return "providerContactEdit";
     }
 	
-	@RequestMapping(value = "/insurance/{id}/contact/new")
+	@RequestMapping(value = {"/admin/insurance/{id}/contact/new","/user/insurance/{id}/contact/new"})
     public String addInsuranceContactPage(@PathVariable Integer id,Model model) {
 		
 		Contact contact = createContactModel();
@@ -365,7 +364,7 @@ public class ContactController{
         return "insuranceContactEdit";
     }
 	
-	@RequestMapping(value = "/insurance/{id}/contact/{cntId}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/insurance/{id}/contact/{cntId}","/user/insurance/{id}/contact/{cntId}"}, method = RequestMethod.GET)
     public String updateInsuranceContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		// logger.info("Returning contact.getId()"+dbContact.getId());
@@ -380,7 +379,7 @@ public class ContactController{
         return "insuranceContactEdit";
     }
 		
-	@RequestMapping(value = "/insurance/{id}/contact/{cntId}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/insurance/{id}/contact/{cntId}/display","/user/insurance/{id}/contact/{cntId}/display"}, method = RequestMethod.GET)
     public String displayInsuranceContactPage(@PathVariable Integer id,@PathVariable Integer cntId,Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		 logger.info("Returning contact.getId()"+dbContact.getId());
@@ -392,7 +391,7 @@ public class ContactController{
         return "insuranceContactDisplay";
     }
 	
-	@RequestMapping(value = "/insurance/{id}/contactList")
+	@RequestMapping(value = {"/admin/insurance/{id}/contactList","/user/insurance/{id}/contactList"})
     public String insuranceContactList(@PathVariable Integer id,Model model) throws Exception {
  
     	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
@@ -402,7 +401,7 @@ public class ContactController{
 	}
 	
 	
-	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"add"})
+	@RequestMapping(value = {"/admin/insurance/{id}/contact/save.do","/user/insurance/{id}/contact/save.do"}, method = RequestMethod.POST, params={"add"})
 	public String addInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -429,7 +428,7 @@ public class ContactController{
        	return "insuranceContactEditSuccess";
     }
 
-	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"update"})
+	@RequestMapping(value = {"/admin/insurance/{id}/contact/save.do","/user/insurance/{id}/contact/save.do"}, method = RequestMethod.POST, params={"update"})
 	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -454,7 +453,7 @@ public class ContactController{
         return "insuranceContactEdit";
     }
 
-	@RequestMapping(value = "/insurance/{id}/contact/save.do", method = RequestMethod.POST, params={"delete"})
+	@RequestMapping(value = {"/admin/insurance/{id}/contact/save.do","/user/insurance/{id}/contact/save.do"}, method = RequestMethod.POST, params={"delete"})
 	public String saveInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
@@ -480,7 +479,7 @@ public class ContactController{
     }
 
 	@ResponseBody
-	@RequestMapping(value = "/contact/state/{stateCode}")
+	@RequestMapping(value = {"/admin/contact/state/{stateCode}","/user/contact/state/{stateCode}"})
 	 public Message  getStateZip(@PathVariable Integer stateCode,@ModelAttribute("username") String username, Model model) 
 	{
 		  List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateCode);

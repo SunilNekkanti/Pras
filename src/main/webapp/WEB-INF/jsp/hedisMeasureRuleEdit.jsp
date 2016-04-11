@@ -178,12 +178,12 @@ $.ajax( {
         
 </script>   
 
-<div class="panel with-nav-tabs panel-primary">
-		<div class="panel-heading">
-						<ul class="nav nav-tabs">
-                            <li class="active"><a href="#" data-toggle="tab">Hedis Measure Rule</a></li>
-                        </ul>
-          </div>
+<div class="panel panel-success">
+	<div class="panel-heading">Hedis Measure Rule
+		<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureRule/hedisMeasureRuleList">
+	    	<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure Rule List
+        </a>
+     </div>
           <div class="col-sm-12">
           	<div class="col-sm-10 copyRule"><a href="#" id="copyRule" class="btn btn-success btn-sm pull-right"> <span class="glyphicon glyphicon-plus-sign"></span>Copy</a></div>	
           </div>

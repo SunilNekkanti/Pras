@@ -7,6 +7,7 @@ import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,12 +27,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	UserDetailsService authenticationService;
 	
 	@Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+            .ignoring()
+                .antMatchers("/resources/**","/index");
+    }
+	
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	
 		http.authorizeRequests()
-		 .antMatchers("/resources/**","/index").permitAll()
-		 .antMatchers("/membership**","/membership/**",
-				 	"/provider**","/provider/**", "/home").hasAnyAuthority("ROLE_USER" ,"ROLE_ADMIN")
+		 .antMatchers("/user*/**","/home").hasAnyAuthority("ROLE_USER" ,"ROLE_ADMIN")
 		 .antMatchers("/**").hasAuthority("ROLE_ADMIN")
 		 .anyRequest().authenticated()
 		 .and()

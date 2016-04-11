@@ -45,7 +45,7 @@
 							    	<c:choose>
 									 	
 										 <c:when test="${cntct.referenceContract.prvdr != null}">
-											<a onclick ="return contract(${cntct.referenceContract.prvdr.id},${cntct.id},${pmpmRequired})" href="#"   rel='tab' >Edit</a> 
+											<a onclick ="return contract(${cntct.referenceContract.prvdr.id},${cntct.id},${pmpmRequired})" href="javascript:void(0)"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.referenceContract.ins != null}">
 											<a onclick ="return contract(${cntct.referenceContract.ins.id},${cntct.id},${pmpmRequired})" href="#"   rel='tab' >Edit</a> 

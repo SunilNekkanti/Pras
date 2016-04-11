@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 
@@ -184,7 +184,11 @@ $.ajax( {
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure Rule List  </div>
+		<div class="panel-heading">Hedis Measure Rule List  
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/${userpath}/hedisMeasureRule/new">
+          		<span class="glyphicon glyphicon-plus-sign "></span>New Hedis Rule
+          	</a>
+         </div>	
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
 					<div class="col-sm-6">

@@ -65,7 +65,7 @@
 					<div class="form-group required">
 					 	<label class="control-label required col-sm-5" for="activityMonth">Activity Month</label>
 						<div class="col-sm-7">
-							<springForm:input path="activityMonth" class="form-control" id="activityMonth" placeholder="MMYY" />
+							<springForm:input path="activityMonth" maxlength="4" class="form-control" id="activityMonth" placeholder="MMYY" />
 							<springForm:errors path="activityMonth" cssClass="error text-danger" />
 						</div>
 					</div>

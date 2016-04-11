@@ -88,7 +88,9 @@
 						<div class="form-group">
 						 	<label class="control-label col-sm-5" for="filesUpload">Contract file</label>
 							<div class="col-sm-7">
-							<span><input type="file" class="file" name="fileUpload"/></span>	
+							<span class="btn btn-danger btn-file btn-sm">
+								    Browse <input type="file" class="file" name="fileUpload">
+							</span>
 	                  			<c:choose>
 									<c:when test="${not empty contract.filesUpload.id}"> 
 										<a href="#" onclick="fileDownload(${contract.id})"><span class="glyphicon glyphicon-open-file"></span></a>
@@ -267,3 +269,25 @@ jQuery( document ).ready(function( $ ) {
 		   });
 });
 </script>
+<style>
+	.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+</style>

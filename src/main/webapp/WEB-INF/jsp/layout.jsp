@@ -1,10 +1,10 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>   
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>   
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">  
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 <title><tiles:insertAttribute name="title" ignore="true" /></title>  
@@ -32,13 +32,12 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 <script type="text/javascript" src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
 <script type="text/javascript" src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
- 
-  
-  
+
   <style>
-   .center{
-  		text-align: center;
-    }
+  	.center{
+  	 text-align: center;
+	}
+
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
@@ -58,7 +57,7 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
     
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #556B2F;
+      background-color: #555;
       color: white;
       padding: 5px;
     }
@@ -73,28 +72,85 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
     }
   </style>
 
-</head>  
+</head> 
+
 <body>  
 <script>
 jQuery( document ).ready(function( $ ) {
-	
-	$('body').on('focus',".datepicker", function(){
-	      $(this).datepicker({
-	          dateFormat: 'mm/dd/yy'
-	      });
-	   });
-	
-	  $('body').on('focus',".datepicker1", function(){
-		 
-		      $(this).datepicker({
-		          dateFormat: 'mm/dd/yy'
-		      });
-		   });
+	$(".datepicker").datepicker({
+        dateFormat: 'mm/dd/yy'
+    });
 
-	 
+	  $('body').on('focus',".datepicker", function(){
+		    $(this).datepicker();
+		   });
 });
-$(document).ready(function(){	
+
+jQuery( document ).ready(function( $ ) {
+	$(".datepickerfrom").datepicker({
+        dateFormat: 'mm/dd/yy'
+    });
 	
+	 $('body').on('keydown',".datepickerfrom, .datepickerto, .datepicker, .datepicker1, .datepicker3", function(event){
+		 event.preventDefault();
+    });
+
+		
+
+	  $('body').on('focus',".datepickerfrom", function(){
+		 	 $(this).datepicker( "destroy" );
+			 	$(this).datepicker({
+			          dateFormat: 'mm/dd/yy',
+			          onClose: function( selectedDate ) {
+			              $( ".datepickerto" ).datepicker( "option", "minDate", selectedDate );
+			            }
+			      });
+			   });
+
+	 $('body').on('focus',".datepickerto", function(){
+  		 var date1 = new Date($('.datepickerfrom').val());
+		  $(this).datepicker( "destroy" );
+	      $(this).datepicker({
+	          dateFormat: 'mm/dd/yy',
+	          minDate: date1
+	         
+	      });
+
+	});
+	 
+	 $('body').on('focus',".datepicker1", function(){
+	 	  
+	 	 var date1 = new Date($('.startDateText').text());
+	 	 var date2 = new Date($('.endDateText').text());
+	 	$(this).datepicker( "destroy" );
+	 	$(this).datepicker({
+	          dateFormat: 'mm/dd/yy',
+	          minDate: date1,
+	          maxDate:date2,
+	          onClose: function( selectedDate ) {
+	              $( ".datepicker3" ).datepicker( "option", "minDate", selectedDate );
+	            }
+	      });
+	 	 
+	 		
+	   });
+  
+  $('body').on('focus',".datepicker3", function(){
+	  var date1 = new Date($('.datepicker1').val());
+	  var date2 = new Date($('.endDateText').text());
+	  $(this).datepicker( "destroy" );
+      $(this).datepicker({
+          dateFormat: 'mm/dd/yy',
+          minDate: date1,
+          maxDate:date2,
+      });
+   });
+  
+  
+});
+
+
+$(document).ready(function(){	
 
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('lastTab', $(this).attr('href'));
@@ -117,21 +173,13 @@ $('[data-toggle="tab"]').click(function(e) {
     $(this).tab('show')
 });
 
-
-
-   $('body').on('focus',".datepicker", function(){
-    $(this).datepicker();
-   });
-
-
 });
 </script>
-<c:set var="context" value="${pageContext.request.contextPath}" />
-       <div> <tiles:insertAttribute name="header" /> </div>  
+	<c:set var="context" value="${pageContext.request.contextPath}" />
+       <div> <tiles:insertAttribute name="header" /> </div> 
        <div class="container-fluid text-center">    
-  			<div class="row content"  style="padding:25px;">
-    			<div class="col-sm-3 sidenav"> <tiles:insertAttribute name="menu" /></div> 
-    			<div class="col-sm-9 text-left"><tiles:insertAttribute name="body" /></div>  
+  			<div class="row content" style="padding:25px;">
+    			<div class="col-sm-12 text-left"><tiles:insertAttribute name="body" /></div>  
     		</div>
       </div>
       <div class="footer"><tiles:insertAttribute name="footer" /></div>  

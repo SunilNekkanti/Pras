@@ -36,7 +36,7 @@ import ml.rugal.sshcommon.springmvc.util.Message;
  * @author sarath
  */
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class ReportsController
 {
 
@@ -51,7 +51,7 @@ public class ReportsController
     @Autowired
     private MembershipHedisMeasureService mbrHedisMeasureService;
   
-   @RequestMapping(value = "/reports/hedis")
+   @RequestMapping(value ={"/admin/reports/hedis","/user/reports/hedis"})
     public String handleRequest() throws Exception {
  
 		return "hedisMembershipList";

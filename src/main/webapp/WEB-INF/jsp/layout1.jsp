@@ -177,7 +177,6 @@ $('[data-toggle="tab"]').click(function(e) {
 </script>
 	<c:set var="context" value="${pageContext.request.contextPath}" />
        <div> <tiles:insertAttribute name="header" /> </div> 
-       <div> <tiles:insertAttribute name="menubar" /> </div>  
        <div class="container-fluid text-center">    
   			<div class="row content" style="padding:25px;">
     			<div class="col-sm-12 text-left"><tiles:insertAttribute name="body" /></div>  

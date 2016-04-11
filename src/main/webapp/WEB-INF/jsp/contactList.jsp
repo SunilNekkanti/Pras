@@ -46,13 +46,13 @@
 							    <c:when test="${cntct.activeInd == 89}">
 							    	<c:choose>
 									 	<c:when test="${cntct.refContact.mbr != null}"> 
-									 		<a onclick ="return contact(${cntct.refContact.mbr.id},${cntct.id})" href="#"  rel='tab' >Edit</a> 
+									 		<a onclick ="return contact(${cntct.refContact.mbr.id},${cntct.id})" href="javascript:void(0)"  rel='tab' >Edit</a> 
 										 </c:when>
 										 <c:when test="${cntct.refContact.prvdr != null}">
-											<a  onclick ="return contact(${cntct.refContact.prvdr.id},${cntct.id})"  href="#"   rel='tab' >Edit</a> 
+											<a  onclick ="return contact(${cntct.refContact.prvdr.id},${cntct.id})"  href="javascript:void(0)"   rel='tab' >Edit</a> 
 										</c:when>
 										 <c:when test="${cntct.refContact.ins != null}">
-											<a onclick ="return contact(${cntct.refContact.ins.id},${cntct.id})" href="#"   rel='tab' >Edit</a> 
+											<a onclick ="return contact(${cntct.refContact.ins.id},${cntct.id})" href="javascript:void(0)"   rel='tab' >Edit</a> 
 										</c:when>
 										<c:otherwise>
 											issue

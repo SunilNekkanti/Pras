@@ -38,7 +38,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","userpath"})
 public class HedisMeasureController{
 	
     
@@ -94,7 +94,7 @@ public class HedisMeasureController{
 		return hedisMeasureGroupList;
 	}
 	
-	@RequestMapping(value = "/hedis/new")
+	@RequestMapping(value = {"/admin/hedis/new"})
     public String addHedisMeasurePage(Model model) {
 		
 		HedisMeasure hedisMeasure = createHedisMeasureModel();
@@ -102,7 +102,7 @@ public class HedisMeasureController{
         return "hedisMeasureNew";
     }
 	
-	@RequestMapping(value = "/hedis/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedis/{id}","/user/hedis/{id}"}, method = RequestMethod.GET)
     public String updateHedisMeasurePage(@PathVariable Integer id,Model model) {
 		
 		HedisMeasure dbHedisMeasure = hedisMeasureService.findById(id);
@@ -112,7 +112,7 @@ public class HedisMeasureController{
         return "hedisMeasureEdit";
     }
 		
-	@RequestMapping(value = "/hedis/{id}/display", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedis/{id}/display"}, method = RequestMethod.GET)
     public String displayHedisMeasurePage(@PathVariable Integer id,Model model) {
 		
 		HedisMeasure dbHedisMeasure = hedisMeasureService.findById(id);
@@ -123,7 +123,7 @@ public class HedisMeasureController{
         return "hedisMeasureDisplay";
     }
 	
-	@RequestMapping(value = "/hedis/hedisMeasureList", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedis/hedisMeasureList","/user/hedis/hedisMeasureList"}, method = RequestMethod.GET)
 	public String viewHedisMeasureAction(Model model) throws Exception{
 		
 		logger.info("Returning view.jsp page after create");
@@ -131,7 +131,7 @@ public class HedisMeasureController{
     }
 	
 	@ResponseBody
-	@RequestMapping(value = "/hedis/hedisMeasureLists", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/hedis/hedisMeasureLists","/user/hedis/hedisMeasureLists"}, method = RequestMethod.GET)
 	public Message viewHedisMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,
@@ -144,7 +144,7 @@ public class HedisMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/hedis/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = "/admin/hedis/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -163,7 +163,7 @@ public class HedisMeasureController{
     }
 	
 	
-	@RequestMapping(value = "/hedis/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        
@@ -185,7 +185,7 @@ public class HedisMeasureController{
     }
 	
 
-	@RequestMapping(value = "/hedis/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		 
