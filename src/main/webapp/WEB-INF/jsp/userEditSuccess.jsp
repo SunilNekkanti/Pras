@@ -1,11 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
-<c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Info
-			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/${userpath}/userList">
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/userList">
           		<span class="glyphicon glyphicon-plus-sign "></span>User List
           	</a>
 		</div>

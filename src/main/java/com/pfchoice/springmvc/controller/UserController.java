@@ -79,7 +79,7 @@ public class UserController{
 	
 	
 	
-	@RequestMapping(value = "/user/new")
+	@RequestMapping(value = {"/admin/user/new"})
     public String addUserPage(final Model model) {
 		
 		User user = createUserModel();
@@ -89,7 +89,7 @@ public class UserController{
     }
  
 	
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/user/{id}","/user/user/{id}"}, method = RequestMethod.GET)
     public String updateUserPage(@PathVariable Integer id,Model model) {
 		
 		User dbUser = userService.findById(id);
@@ -100,7 +100,7 @@ public class UserController{
         return "userEdit";
     }
 	
-	@RequestMapping(value = "/user/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = {"/admin/user/save.do","/user/user/save.do"}, method = RequestMethod.POST, params ={"add"})
 	public String newUserAction( @ModelAttribute("user") @Validated User user,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -116,7 +116,7 @@ public class UserController{
        return "userEditSuccess";
     }
 	
-	@RequestMapping(value = "/user/{id}/save.do", method = RequestMethod.POST, params ={"update"})
+	@RequestMapping(value = {"/admin/user/{id}/save.do","/user/user/{id}/save.do"}, method = RequestMethod.POST, params ={"update"})
     public String updateUserAction( @PathVariable Integer id,@Validated User user,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -135,7 +135,7 @@ public class UserController{
     }
 	
 	
-	@RequestMapping(value = "/user/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
+	@RequestMapping(value = {"/admin/user/{id}/save.do","/user/user/{id}/save.do"}, method = RequestMethod.POST, params ={"delete"})
     public String deleteInsuranceAction(@PathVariable Integer id, @Validated User user,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
         if (bindingResult.hasErrors()) {
@@ -162,7 +162,7 @@ public class UserController{
 	}
    
     @ResponseBody
-    @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin/user/list","/user/user/list"}, method = RequestMethod.GET)
 	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
 					@RequestParam(required = false) Integer pageSize,
 					@RequestParam(required = false) String sSearch,

@@ -80,7 +80,7 @@
         	
     } );
     </script>
- <c:set var="context" value="${pageContext.request.contextPath}" />
+ <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading"> User List
