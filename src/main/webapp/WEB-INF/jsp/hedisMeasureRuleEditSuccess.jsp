@@ -2,14 +2,18 @@
 <%@ page session="false" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
- <h2> Hedis Measure Rule Updated Successfully.</h2>
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure Rule Update</div>
+		<div class="panel-heading">Info
+			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureRule/hedisMeasureRuleList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure Rule List
+          	</a> 
+		
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="well well-sm">
-				
+					<p><strong>${Message}</strong>
 					<p> <strong>Hedis Code:${hedisMeasureRule.hedisMeasure.id}</strong> </p>
 					<c:set var="cptCodesText" value="" />
 					<c:forEach items="${hedisMeasureRule.cptCodes}" var="cptMeasure">
@@ -42,12 +46,7 @@
   					<p><strong>Upper Age Limit:${hedisMeasureRule.upperAgeLimit}</strong> </p>
   					<p><strong>Eff. Date From:${hedisMeasureRule.ageEffectiveFrom}</strong> </p>
   					<p><strong>Eff. Date To:${hedisMeasureRule.ageEffectiveTo}</strong> </p>
-  					<p> Updated Successfully  </p>
-  					
-			 		<a href="${context}/hedisMeasureRule/hedisMeasureRuleList">Click Here </a> Move to Hedis Measure Rule list
-										
-					
-				</div>	
+  				</div>	
 			</div>
 		</div>
 	</div>

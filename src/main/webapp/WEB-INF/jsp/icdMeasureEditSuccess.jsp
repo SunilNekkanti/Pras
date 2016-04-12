@@ -1,23 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
- <h2> ICD Measure Updated Successfully.</h2>
+
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">ICD Measure Update</div>
+		<div class="panel-heading">Info
+			<a class="btn btn-danger pull-right btn-xs white-text" href="${context}/icd/icdMeasureList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>ICD Measure List
+          	</a> 
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="well well-sm">
-				
-					<p> <strong>Code:${icdMeasure.code}</strong> </p>
-  					<p><strong>Description:${icdMeasure.description}</strong>  </p>
-  					<p> Updated Successfully  </p>
-  					
-			 		<a href="${context}/icd/icdMeasureList">Click Here </a> Move to ICD Measure list
-					
-				</div>	
+					<p> <strong>${Message}</strong></p>
+					<p> <strong>Code:${icdMeasure.code}</strong></p>
+  					<p><strong>Description:${icdMeasure.description}</strong></p>
+  				</div>	
 			</div>
 		</div>
 	</div>
-</div>	
+</div>

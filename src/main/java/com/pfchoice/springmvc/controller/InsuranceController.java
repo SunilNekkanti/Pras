@@ -99,6 +99,7 @@ public class InsuranceController{
     	insurance.setCreatedBy(username);
     	insurance.setUpdatedBy(username);
       	insuranceService.save(insurance);
+      	model.addAttribute("Message", "Insurance details added successfully");
        return "insuranceNewSuccess";
     }
 	

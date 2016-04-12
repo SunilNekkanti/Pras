@@ -118,6 +118,7 @@ public class ProviderController{
     	provider.setCreatedBy(username);
     	provider.setUpdatedBy(username);
       	providerService.save(provider);
+      	model.addAttribute("Message", "Provider details added Successfully");
        return "providerNewSuccess";
     }
 	
@@ -143,13 +144,14 @@ public class ProviderController{
 	
 	
 	@RequestMapping(value = {"/admin/provider/{id}/save.do"}, method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction(@PathVariable Integer id,  @ModelAttribute("username") String username) {
+    public String deleteInsuranceAction(@PathVariable Integer id, Model model,  @ModelAttribute("username") String username) {
            
 		Provider dbProvider = providerService.findById(id);
         dbProvider.setActiveInd(new Character('N'));
         dbProvider.setUpdatedBy(username);
         providerService.update(dbProvider);
         logger.info("Returning providerSuccess.jsp page after delete");
+        model.addAttribute("Message", "Provider Details Deleted Successfully");
         return "providerEditSuccess";
     }
 	

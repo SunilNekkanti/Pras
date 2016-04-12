@@ -22,7 +22,7 @@
 </c:choose>
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel panel-success">
-		<div class="panel-heading">CPT Measure
+		<div class="panel-heading">
          CPT Measure
         	<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/cpt/cptMeasureList">
           		<span class="glyphicon glyphicon-plus-sign "></span>CPT Measure List
@@ -34,7 +34,7 @@
 					<label class="control-label col-sm-2" for="code">Code</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
-						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
+						<springForm:input path="code" class="form-control" id="code" maxlength="10" placeholder="Code" />
 						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="shortDescription required">Short Description</label>
 					<div class="col-sm-6">
-						<springForm:input path="shortDescription" class="form-control" id="shortDescription" placeholder="Short Description" />
+						<springForm:input path="shortDescription" class="form-control" maxlength="255" id="shortDescription" placeholder="Short Description" />
 						<springForm:errors path="shortDescription" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="description required">Description</label>
 					<div class="col-sm-6">
-						<springForm:input path="description" class="form-control" id="description" placeholder="Description" />
+						<springForm:input path="description" class="form-control" maxlength="1000" id="description" placeholder="Description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>

@@ -29,19 +29,19 @@ public class ICDMeasureValidator implements Validator {
              
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "error.code","Code Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description","error.description", "Description Required");
-        if(icdMeasure.getCode().length() < 4 && icdMeasure.getCode().length() >= 1){
+        if(icdMeasure.getCode().length() < 2 && icdMeasure.getCode().length() >= 1){
         	
-        	  errors.rejectValue("code", "error.code","Code must be atleast 5 characters");
+        	  errors.rejectValue("code", "error.code","Code must be atleast 3 characters");
         }
-        if(icdMeasure.getCode().length() > 20 && icdMeasure.getCode().length() >= 1){
+        if(icdMeasure.getCode().length() > 10 && icdMeasure.getCode().length() >= 1){
         	
-        	  errors.rejectValue("code", "error.code","Code must be atleast 5 characters and less than 20 characters");
+        	  errors.rejectValue("code", "error.code","Code must be atleast 3 characters and less than 10 characters");
         }
         if(icdMeasure.getDescription().length() <=5 && icdMeasure.getDescription().length() >= 1){
         	  errors.rejectValue("description", "error.description", "Description must be atleast 5 characters");
         }
-        if(icdMeasure.getDescription().length() > 50 && icdMeasure.getDescription().length() >= 1){
-        	  errors.rejectValue("description", "error.description", "Description must be atleast 5 characters and less than 50 characters");
+        if(icdMeasure.getDescription().length() > 500 && icdMeasure.getDescription().length() >= 1){
+        	  errors.rejectValue("description", "error.description", "Description must be atleast 5 characters and less than 500 characters");
         }
               
     }

@@ -16,7 +16,7 @@
 					<label class="control-label col-sm-2" for="code">Code</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
-						<springForm:input path="code" class="form-control" id="code" placeholder="Code" />
+						<springForm:input path="code" class="form-control" maxlength="10" id="code" placeholder="Code" />
 						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -24,8 +24,24 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="description required">Description</label>
 					<div class="col-sm-6">
-						<springForm:input path="description" class="form-control" id="description" placeholder="Description" />
+						<springForm:input path="description" class="form-control" maxlength="500" id="description" placeholder="Description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="hcc">Hcc</label>
+					<div class="col-sm-6">
+						<springForm:input path="hcc" class="form-control" id="hcc" maxlength="10" placeholder="hcc" />
+						<springForm:errors path="hcc" cssClass="error text-danger" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="rxhcc ">RxHcc</label>
+					<div class="col-sm-6">
+						<springForm:input path="rxhcc" class="form-control" id="rxhcc" maxlenth="10" placeholder="rxhcc" />
+						<springForm:errors path="rxhcc" cssClass="error text-danger" />
 					</div>
 				</div>
 				

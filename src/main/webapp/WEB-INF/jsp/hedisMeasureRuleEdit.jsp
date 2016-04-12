@@ -203,7 +203,7 @@ $.ajax( {
 				<div class="form-group">
 					<label class="control-label   col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">
-						<springForm:input path="description" class="form-control" id="description" placeholder="description" />
+						<springForm:input path="description" class="form-control" id="description" maxlength="500" placeholder="description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
 					  </div>
 				</div>
@@ -487,3 +487,13 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 
 </script>
 
+<script>
+	$(document).ready(function(){
+		 $("#deleteButton").click(function(event){
+			 if (confirm("Action cannot be undone.Click 'Ok' to delete.") == false) 
+			{
+				 event.preventDefault();
+			} 	
+		 });		
+});
+</script>

@@ -200,7 +200,7 @@ $.ajax( {
 				<div class="form-group">
 					<label class="control-label   col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">
-						<springForm:input path="description" class="form-control" id="description" placeholder="description" />
+						<springForm:input path="description" class="form-control" maxlength="500" id="description" placeholder="description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
 					  </div>
 				</div>

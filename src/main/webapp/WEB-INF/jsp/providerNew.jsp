@@ -7,7 +7,7 @@
 
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 
-<script src="${context}/resources/js/validation.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
 <script>
 	$(document).ready(function(){	providerValidation();	});
 </script>

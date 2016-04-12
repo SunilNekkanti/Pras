@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
 <script>
 	$(document).ready(function(){	insuranceValidation();	});
 </script>
@@ -13,7 +13,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Insurance Profile
-			<a class="btn btn-danger pull-right btn-xs"href="${context}/insuranceList">
+			<a class="btn btn-danger pull-right btn-xs white-text" href="${context}/insuranceList">
           		<span class="glyphicon glyphicon-plus-sign "></span>Insurance List
           	</a>
 		</div>

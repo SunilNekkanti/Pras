@@ -19,7 +19,7 @@ public class InsuranceValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
      
-         
+         System.out.println("inside validator");
         Insurance ins = (Insurance) obj;
         if(ins.getId() != null)
         {	

@@ -117,7 +117,7 @@ public class ICDMeasureController{
 	 	
     	logger.info("Returning icdEditSuccess.jsp page after create");
       	icdMeasureService.save(icdMeasure);
-   
+      	model.addAttribute("Message", "ICD Measure added successfully");
     return "icdMeasureEditSuccess";
     }
 	
@@ -137,6 +137,7 @@ public class ICDMeasureController{
         	icdMeasure.setUpdatedBy(username);
         	icdMeasureService.update(icdMeasure);
         	model.addAttribute("icdMeasure", icdMeasure);
+        	model.addAttribute("Message", "ICD Measure updated successfully");
         	return "icdMeasureEditSuccess";
         }
        
@@ -159,6 +160,7 @@ public class ICDMeasureController{
 	        	icdMeasure.setActiveInd('N');
 	        	icdMeasure.setUpdatedBy(username);
 	        	icdMeasureService.update(icdMeasure);
+	        	model.addAttribute("Message", "ICD Measure deleted successfully");
 	        	return "redirect:icdMeasureList";
 	        }
 	        return "icdMeasureEdit";

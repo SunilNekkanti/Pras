@@ -6,14 +6,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
-<c:choose>
- 	<c:when test="${hedisMeasure.id != null && hedisMeasure.activeInd != 89}">
-	<script>$(document).ready(function(){removeRequired();	removePlaceHolder();});	</script>
-	</c:when>
-	<c:when test="${hedisMeasure.id != null}"> 	
-	<script>$(document).ready(function(){removePlaceHolder();});</script>
-	</c:when>
-</c:choose>
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Hedis Measure Details
@@ -69,4 +61,14 @@
 		</div>	
  	</div>
 </div>
+<script>
+	$(document).ready(function(){
+		 $("#deleteButton").click(function(event){
+			 if (confirm("Action cannot be undone.Click 'Ok' to delete.") == false) 
+			{
+				 event.preventDefault();
+			} 	
+		 });		
+});
+</script>
 

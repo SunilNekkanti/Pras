@@ -120,7 +120,7 @@ public class CPTMeasureController{
 	 	cptMeasure.setUpdatedBy(username);
 	 	logger.info("Returning cptEditSuccess.jsp page after create");
       	cptMeasureService.save(cptMeasure);
-   
+      	model.addAttribute("Message", "CPT Measure added successfully");
     return "cptMeasureEditSuccess";
     }
 	
@@ -141,6 +141,7 @@ public class CPTMeasureController{
         	cptMeasure.setUpdatedBy(username);
         	cptMeasureService.update(cptMeasure);
         	model.addAttribute("cptMeasure", cptMeasure);
+        	model.addAttribute("Message", "CPT Measure updated successfully");
         	return "cptMeasureEditSuccess";
         }
        
@@ -163,6 +164,7 @@ public class CPTMeasureController{
 	        	cptMeasure.setActiveInd('N');
 	        	cptMeasure.setUpdatedBy(username);
 	        	cptMeasureService.update(cptMeasure);
+	        	model.addAttribute("Message", "CPT Measure deleted successfully");
 	        	return "redirect:cptMeasureList";
 	        }
 	        return "cptMeasureEdit";
