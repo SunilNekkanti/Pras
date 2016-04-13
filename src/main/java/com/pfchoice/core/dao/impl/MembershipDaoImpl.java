@@ -75,7 +75,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	Criteria crit = createCriteria()
          		.createAlias("genderId", "genderId")
          		.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-    	        .createAlias("mbrProvider.prvdr", "prvdr");
+    	        .createAlias("mbrProvider.prvdr", "prvdr")
+    	        .createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
     	Disjunction or = Restrictions.disjunction();
     	Conjunction and = Restrictions.conjunction();
 
@@ -104,7 +105,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	
     	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999)
     	{
-    		crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
+    		
 			and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
 			or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
     	}
