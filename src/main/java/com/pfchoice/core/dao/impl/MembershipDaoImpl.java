@@ -66,7 +66,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
         return page;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Pagination getPage(final int pageNo, final int pageSize, 
     		final String sSearch,final Integer sSearchIns,   final Integer sSearchPrvdr,
     		final Integer sSearchHedisRule,	 final String sort, final String sortdir)
@@ -75,11 +76,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	Criteria crit = createCriteria()
          		.createAlias("genderId", "genderId")
          		.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-    	        .createAlias("mbrProvider.prvdr", "prvdr")
-    	        .createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule", JoinType.INNER_JOIN);
+    	        .createAlias("mbrProvider.prvdr", "prvdr");
+    	crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
     	Disjunction or = Restrictions.disjunction();
     	Conjunction and = Restrictions.conjunction();
-
+    	
     	if( sSearch != null && !"".equals(sSearch))
     	{
     		or.add(Restrictions.ilike("prvdr.name","%"+sSearch+"%"))
@@ -91,7 +92,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     	}
     	if( sSearchIns != null && !"".equals(sSearchIns))
     	{
-    		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
+    		
     		and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
     	}
     	
@@ -103,16 +104,24 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		and.add(Restrictions.eq("ins.id", sSearchIns));
     	}
     	
-    	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999)
+    	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule)  && sSearchHedisRule != 9999)
     	{
-    		
-			and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
+	        crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
+	        and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
+			and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd",new Character('Y')));
+			if( sSearch != null && !"".equals(sSearch)){
 			or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
+			}
     	}
+    	
+    	and.add(Restrictions.eq("activeInd", new Character('Y')));
+        and.add(Restrictions.eq("prvdr.activeInd",new Character('Y')));
+        and.add(Restrictions.eq("mbrInsurance.activeInd",new Character('Y')));
+       
     	
          crit.add(or);
          crit.add(and);
-         crit.add(Restrictions.eq("activeInd", 'Y'));
+         
         if(sort != null && !"".equals(sort)) 
 		{
 			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
@@ -132,7 +141,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	        	}
 			}
 		}
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
+         crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+         Pagination page = findByCriteria(crit, pageNo, pageSize);
+        
         return page;
     }
 

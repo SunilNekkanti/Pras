@@ -155,7 +155,10 @@
 
 
 <script>
-jQuery( document ).ready(function( $ ) {
+
+
+$(document).ready(function(){
+	
     $("#PMPM").blur(function (e) {
     	if(isNaN($('#PMPM').val()))
     	{
@@ -173,9 +176,7 @@ jQuery( document ).ready(function( $ ) {
     	}
     	
     });
-});
-
-$(document).ready(function(){
+    
 	insId = $("#status").val();
 	if(insId)
 	{
