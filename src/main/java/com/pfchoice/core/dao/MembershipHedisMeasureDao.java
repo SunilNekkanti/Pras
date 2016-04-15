@@ -25,4 +25,6 @@ public interface MembershipHedisMeasureDao
 
     MembershipHedisMeasure updateByUpdater(Updater<MembershipHedisMeasure> updater);
     
+    Pagination findByMbrIdAndRuleId(Integer mbrId, Integer ruleId);
+    
 }

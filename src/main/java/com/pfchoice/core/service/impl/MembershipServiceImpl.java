@@ -3,6 +3,8 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +51,11 @@ public class MembershipServiceImpl implements MembershipService
     @Override
     @Transactional(readOnly = true)
     public Pagination getPage(final int pageNo,final int pageSize, final String sSearch, 
-    		final int sSearchIns,   final int sSearchPrvdr, final int sSearchHedisCode, 
+    		final int sSearchIns,   final int sSearchPrvdr, final int sSearchHedisCode, final List<Integer> ruleIds,
     		final String sort, final String sortdir)
     {
         return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns,
-        		sSearchPrvdr, sSearchHedisCode,  sort, sortdir);
+        		sSearchPrvdr, sSearchHedisCode, ruleIds,  sort, sortdir);
     }
     
     

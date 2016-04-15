@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.MembershipHedisFollowup;
+import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.MembershipHedisFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipService;
@@ -65,22 +66,38 @@ public class ReportsController
 					@RequestParam(required = true) Integer sSearchIns,
 					@RequestParam(required = true) Integer sSearchPrvdr,
 					@RequestParam(required = true) Integer sSearchHedisRule,
+					@RequestParam(required = true) List<Integer> ruleIds,
 					@RequestParam(required = false) String sort,
 					@RequestParam(required = false) String sortdir) throws Exception{
 		
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, 
-				sSearchPrvdr, sSearchHedisRule, sort, sortdir);
+				sSearchPrvdr, sSearchHedisRule, ruleIds, sort, sortdir);
 		
        return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
    }
    
    
+   @SuppressWarnings("unchecked")
    @ResponseBody
    @RequestMapping(value = {"/admin/reports/membershipHedis/followup","/user/reports/membershipHedis/followup"}, method = RequestMethod.POST)
    public String addMembershipHedisFollowup(Model model, 
 			@RequestBody final MembershipHedisFollowup mbrHedisFollowup, 
           @ModelAttribute("username") String username ) {
-		
+	
+	  Integer mbrId =  mbrHedisFollowup.getMbr().getId();
+	  List<Integer> ruleIds = mbrHedisFollowup.getRuleIds();
+	  if(ruleIds != null ){
+		  ruleIds.forEach(ruleId -> {
+			  System.out.println("rule id is"+ruleId);
+			  Pagination  page = mbrHedisMeasureService.findByMbrIdAndRuleId(mbrId,ruleId);
+			  List<MembershipHedisMeasure> mbrHedisMeasureList = (List<MembershipHedisMeasure>) page.getList();
+			  if( mbrHedisMeasureList != null && mbrHedisMeasureList.size()>0){
+				 MembershipHedisMeasure dbMembershipHedisMeasure = mbrHedisMeasureList.get(0);
+				 dbMembershipHedisMeasure.setActiveInd(new Character('N'));
+				 mbrHedisMeasureService.update(dbMembershipHedisMeasure);
+			  }
+		  });
+	  }
       mbrHedisFollowup.setDateOfContact(new Date());
       mbrHedisFollowup.setCreatedBy(username);
       mbrHedisFollowup.setUpdatedBy(username);

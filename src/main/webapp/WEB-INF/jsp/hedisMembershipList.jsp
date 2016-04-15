@@ -102,7 +102,6 @@ $(document).ready(function() {
        			}); 
 	     		
 	     		var hedisRuleList = document.getElementById('hedisRule').options;
-	     		var hedisRuleListinner = document.getElementById('hedisRule').options;
 	     		
 	     		$.each( hedisRuleList, function(m, value ){
 	     			if(m < hedisRuleList.length-1){
@@ -118,8 +117,13 @@ $(document).ready(function() {
 	     			if(i < hedisRuleList.length-1){
 	     				if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
 	     				{
-		     				columns.push({ "mDataProp": "mbrHedisMeasureList["+i+"].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
+		      							    	full.mbrHedisMeasureList.forEach(function( item ) {
+		      							    		if(item.activeInd == 'N' ){
+		      							    			data = data.replace(item.hedisMeasureRule.description,'');
+		      							    		}
+		      							    	});
 				      									   var returnType ='';
 				      										if(data.indexOf(value.text) >= 0)
 				      											return 'X';
@@ -140,11 +144,17 @@ $(document).ready(function() {
     		   var prvdrSelectValue= $("#prvdr option:selected").val();
     		   var hedisRuleSelectValue= $("#hedisRule option:selected").val();
     		   
+    		   var ruleArray = new Array;
+    		    $("#hedisRule option").each  ( function() {
+    		    	ruleArray.push ( $(this).val() );
+    		    });
+
+    		    
     		   if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
   						$('#membershipTable').DataTable().destroy();
 			   }
 				$('#membershipTable tbody').empty();
-    		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue,columns);
+    		   GetMembershipByInsPrvdrHedisRule(insSelectValue,prvdrSelectValue,hedisRuleSelectValue, ruleArray, columns);
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
@@ -191,6 +201,7 @@ $(document).ready(function() {
 		   var sSearchIns = paramMap.sSearchIns;
 		   var sSearchPrvdr = paramMap.sSearchPrvdr;
 		   var sSearchHedisRule = paramMap.sSearchHedisRule;
+		   var ruleIds = paramMap.ruleIds;
 		   
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
@@ -202,6 +213,8 @@ $(document).ready(function() {
 		   restParams.push({"name" : "sSearchIns" , "value" : sSearchIns  });
 		   restParams.push({"name" : "sSearchPrvdr" , "value" : sSearchPrvdr  });
 		   restParams.push({"name" : "sSearchHedisRule" , "value" : sSearchHedisRule  });
+		   restParams.push({"name" : "ruleIds" , "value" : ruleIds  });
+		   
 		   
 		 $.ajax( {
               dataType: 'json',
@@ -222,7 +235,7 @@ $(document).ready(function() {
      	}
      	
      	
-     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,aoColumns) {
+     	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,ruleArray, aoColumns) {
       		
   	        var oTable = $('#membershipTable').removeAttr( "width" ).dataTable({  
   	        	"sDom": 'Bfrtip',
@@ -246,7 +259,8 @@ $(document).ready(function() {
                 aoData.push(
                     {"name": "sSearchIns", "value": insId},
                     {"name": "sSearchPrvdr", "value": prvdrId },
-                    {"name": "sSearchHedisRule", "value": hedisRuleId }
+                    {"name": "sSearchHedisRule", "value": hedisRuleId },
+                    {"name": "ruleIds", "value": ruleArray }
                 );
              },        
      	     "fnServerData" : datatable2RestMembership
@@ -332,7 +346,30 @@ $(document).ready(function() {
 <script>
 	function myFunction(id) 
 	{
+			var ruleMap = {};
+			
+			$("#hedisRule > option").each(function() {
+			    ruleMap[this.text] = this.value;
+			});
+			
 			$( "#modal-body" ).html('');
+   			
+   			$('#membershipTable tr').each(function(index) {
+   				
+   				if(id == ($('#membershipTable tr:eq('+index+') td:eq(0) a').attr('id')))
+   				{
+   					$('#membershipTable tr:eq('+index+') td').each(function(tdIndex) {
+   						if($(this).text() == 'X')
+   							{
+   								var label = $.trim($('#membershipTable tr:eq(0) th:eq('+tdIndex+')').text());
+   								var ruleId = ruleMap[label];
+   								$( "#modal-body" ).append('<input type="checkbox" name="rule_group[]"  value="'+ruleId+'"/> <label>'+label+'</label>');
+   							}
+   						
+   					});
+   				}		
+   			
+   			});
    			$( "#modal-body" ).append('<textarea  id="followup_details"  class="form-control" rows="5" ></textarea>');
    			$( "#modal-body" ).append('<br /><br /><textarea  id="followup_history" readonly class="form-control" rows="5" ></textarea>');
    			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_id"  class="form-control" />');
@@ -370,16 +407,21 @@ $(document).ready(function() {
 	$('select').css({'width': 150});
 	$( "#followupSubmit" ).click(function(event) {
 		
+		 
 		  if($("#followup_details").val().length <= 5)
 		  {
 		   		alert(" Followup Details must be minimum 5 charactes");
 		   		return false;
 		 }
-		  
 		  var followup_details  = $("#followup_details").val();
 		  var  mbr_id = $("#mbr_id").val();
-		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"}}";
-		   
+		  
+		  var ruleIds = [];
+		  $.each($("input[name='rule_group[]']:checked"), function() {
+			 ruleIds.push($(this).val());
+			});
+		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"},\"ruleIds\":"+JSON.stringify(ruleIds)+"}";
+		   alert("restParams1"+restParams1);
 		  var source = getContextPath()+'/reports/membershipHedis/followup';
 		  
 		  $.ajax({

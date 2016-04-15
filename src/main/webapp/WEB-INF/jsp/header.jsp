@@ -411,17 +411,11 @@ $(document).ready(function () {
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">
-      <img src="${context}/resources/images/mdbillinglogo.png" class="img-responsive" alt="Cinque Terre" ></img></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="${context}/home">Home</a></li>
-        <li><a href="about.html">About</a></li>
         <li><a href="${context}/${userpath}/insuranceList">Insurance</a></li>
         <li><a href="${context}/${userpath}/providerList">Provider</a></li>
         <li><a href="${context}/${userpath}/membershipList">Membership</a></li>
@@ -437,7 +431,6 @@ $(document).ready(function () {
         </li> 
         <li><a href="${context}/${userpath}/reports/hedis">Reports</a></li>
          <li><a href="${context}/${userpath}/userList">User</a></li>
-        <li><a href="#">Help</a></li>
         <li><a href="#">Alerts <span class="badge"> 0</span></a> </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

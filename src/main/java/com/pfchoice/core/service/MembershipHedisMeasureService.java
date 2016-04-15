@@ -23,4 +23,6 @@ public interface MembershipHedisMeasureService
 
     MembershipHedisMeasure update(MembershipHedisMeasure bean);
     
+    Pagination findByMbrIdAndRuleId(Integer mbrId, Integer ruleId);
+    
 }

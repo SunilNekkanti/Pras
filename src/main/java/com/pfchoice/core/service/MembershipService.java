@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.Membership;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -17,7 +19,8 @@ public interface MembershipService
 
     Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
     
-    Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchHedisCode, String sort, String sortdir);
+    Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchHedisCode, 
+    		  final List<Integer> ruleIds, String sort, String sortdir);
 
     Membership save(Membership bean);
 

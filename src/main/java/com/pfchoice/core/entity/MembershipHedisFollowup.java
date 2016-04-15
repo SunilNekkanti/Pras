@@ -1,6 +1,8 @@
 package com.pfchoice.core.entity;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
@@ -45,6 +48,9 @@ public class MembershipHedisFollowup implements Serializable
     @Column(name="date_of_contact")
     @Temporal(TemporalType.DATE)
     private Date dateOfContact;
+    
+    @Transient
+    private List<Integer> ruleIds;
     
     @Expose
     @Temporal(TemporalType.TIMESTAMP)
@@ -128,6 +134,20 @@ public class MembershipHedisFollowup implements Serializable
 		this.dateOfContact = dateOfContact;
 	}
 	
+	/**
+	 * @return the ruleIds
+	 */
+	public List<Integer> getRuleIds() {
+		return ruleIds;
+	}
+
+	/**
+	 * @param ruleIds the ruleIds to set
+	 */
+	public void setRuleIds(List<Integer> ruleIds) {
+		this.ruleIds = ruleIds;
+	}
+
 	/**
 	 * @return the createdDate
 	 */

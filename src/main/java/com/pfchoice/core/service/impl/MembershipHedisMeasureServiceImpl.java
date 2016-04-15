@@ -74,4 +74,9 @@ public class MembershipHedisMeasureServiceImpl implements MembershipHedisMeasure
         return membershipHedisMeasureDao.updateByUpdater(updater);
     }
 
+    @Override
+    public  Pagination findByMbrIdAndRuleId(final Integer mbrId,final Integer ruleId)
+    {
+    	 return membershipHedisMeasureDao.findByMbrIdAndRuleId(mbrId, ruleId);
+    }
 }

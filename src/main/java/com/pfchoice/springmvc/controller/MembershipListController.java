@@ -1,6 +1,9 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.util.Collections;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +55,10 @@ public class MembershipListController
 					@RequestParam(required = false) String sort,
 					@RequestParam(required = false) String sortdir) throws Exception{
 		
-	   //provided 9999 to ignore hedisMeasureRule join   
-		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, 9999, sort, sortdir);
+	   //provided 0 to ignore hedisMeasureRule join  
+	    Integer i = 0;
+	    List<Integer> ruleIds =  Collections.singletonList(i) ;
+		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, 0, ruleIds, sort, sortdir);
 		
        return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
    }

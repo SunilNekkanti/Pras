@@ -3,6 +3,7 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
@@ -70,7 +71,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	@Override
     public Pagination getPage(final int pageNo, final int pageSize, 
     		final String sSearch,final Integer sSearchIns,   final Integer sSearchPrvdr,
-    		final Integer sSearchHedisRule,	 final String sort, final String sortdir)
+    		final Integer sSearchHedisRule,	final List<Integer> ruleIds, final String sort, final String sortdir)
     {
     	
     	Criteria crit = createCriteria()
@@ -104,11 +105,18 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
     		and.add(Restrictions.eq("ins.id", sSearchIns));
     	}
     	
-    	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule)  && sSearchHedisRule != 9999)
+    	if( sSearchHedisRule != null && !"".equals(sSearchHedisRule)  && sSearchHedisRule != 9999 && sSearchHedisRule != 0)
     	{
 	        crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 	        and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
 			and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd",new Character('Y')));
+			if( sSearch != null && !"".equals(sSearch)){
+			or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
+			}
+    	}else if(sSearchHedisRule == 9999 ){
+    		crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
+    		and.add(Restrictions.in("mbrHedisMeasureRule.hedisMeasureRule.id", ruleIds));
+    		and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd",new Character('Y')));
 			if( sSearch != null && !"".equals(sSearch)){
 			or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%"+sSearch+"%", StringType.INSTANCE));
 			}

@@ -153,4 +153,17 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
         return MembershipHedisMeasure.class;
     }
 
+    @Override
+    public Pagination  findByMbrIdAndRuleId(final Integer mbrId, final Integer ruleId)
+    {
+    	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrHedisMeasure");
+    	cr.createAlias("mbrHedisMeasure.mbr","mbr");
+    	cr.createAlias("mbrHedisMeasure.hedisMeasureRule","hedisMeasureRule");
+    	cr.add(Restrictions.eq("mbr.id",mbrId));
+    	cr.add(Restrictions.eq("hedisMeasureRule.id",ruleId));
+    	cr.add(Restrictions.eq("activeInd",new Character('Y')));
+    	
+    	Pagination page = findByCriteria(cr, 0, 1);
+    	return page;   	    	
+    }
 }

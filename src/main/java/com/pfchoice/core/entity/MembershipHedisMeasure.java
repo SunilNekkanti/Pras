@@ -41,7 +41,7 @@ public class MembershipHedisMeasure implements Serializable
     
     @Expose
     @OneToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name="hedis_msr_rule_id", nullable = false, referencedColumnName="hedis_msr_rule_id")
+    @JoinColumn(name="hedis_msr_rule_id", nullable = false,  referencedColumnName="hedis_msr_rule_id")
     private HedisMeasureRule hedisMeasureRule;
     
     @Expose
