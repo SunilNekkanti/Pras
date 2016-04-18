@@ -177,8 +177,10 @@ public class ContactController{
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
       	model.addAttribute("Message", "Member Contact Added Successfully");
-   
-    return "membershipContactEditSuccess";
+      	List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
+		model.addAttribute("contactList", listBean);
+ 
+		return "membershipContactList";
     }
 	
 	
@@ -186,6 +188,7 @@ public class ContactController{
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
+		contact.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
         	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
@@ -200,8 +203,11 @@ public class ContactController{
         	contact.getRefContact().setActiveInd('Y');
         	contact.setActiveInd('Y');
         	contactService.update(contact);
-        	 model.addAttribute("Message", "Member Contact Updated Successfully");
-        	return "membershipContactEditSuccess";
+        	model.addAttribute("Message", "Member Contact Updated Successfully");
+        	List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
+     		model.addAttribute("contactList", listBean);
+      
+     		return "membershipContactList";
         }
        
         return "membershipContactEdit";
@@ -221,9 +227,12 @@ public class ContactController{
 	        	contact.getRefContact().setUpdatedBy(username);
 	        	contact.getRefContact().setActiveInd('N');
 	        	contactService.update(contact);
+	        	model.addAttribute("Message", "Member Contact Deleted Successfully");
+		        List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
+	     		model.addAttribute("contactList", listBean);
+	            return "membershipContactList";
 	        }
-	        model.addAttribute("Message", "Member Contact Deleted Successfully");
-	        return "membershipContactEditSuccess";
+	        return "membershipContactEdit";
     }
 	
        
@@ -301,13 +310,16 @@ public class ContactController{
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
       	 model.addAttribute("Message", "Provider Contact Added Successfully");
-	      return "providerContactEditSuccess";
+      	List<Contact> listBean = contactService.findAllContactsByRefId("provider",id);
+		model.addAttribute("contactList", listBean);
+		return "providerContactList";
     }
 
 	@RequestMapping(value = {"/admin/provider/{id}/contact/save.do","/user/provider/{id}/contact/save.do"}, method = RequestMethod.POST, params= {"update"})
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
+		contact.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
         	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
@@ -324,8 +336,10 @@ public class ContactController{
         	contact.getRefContact().setActiveInd('Y');
         	contact.setActiveInd('Y');
         	contactService.update(contact);
-        	 model.addAttribute("Message", "Provider Contact Updated Successfully");
-        	return "providerContactEditSuccess";
+        	model.addAttribute("Message", "Provider Contact Updated Successfully");
+        	List<Contact> listBean = contactService.findAllContactsByRefId("provider",id);
+     		model.addAttribute("contactList", listBean);
+     		return "providerContactList";
         }
        
         return "providerContactEdit";
@@ -349,8 +363,10 @@ public class ContactController{
 	        	contact.getRefContact().setUpdatedBy(username);
 	        	contact.getRefContact().setActiveInd('N');
 	        	contactService.update(contact);
-	        	  model.addAttribute("Message", "Provider Contact Deleted Successfully");
-	        	return "providerContactEditSuccess";
+	        	model.addAttribute("Message", "Provider Contact Deleted Successfully");
+	        	List<Contact> listBean = contactService.findAllContactsByRefId("provider",id);
+	     		model.addAttribute("contactList", listBean);
+	     		return "providerContactList";
 	        }
 	      
 	        return "providerContactEdit";
@@ -424,8 +440,12 @@ public class ContactController{
     	contact.setRefContact(refCnt);
      	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
-      	 model.addAttribute("Message", "Insurance Contact Added Successfully");
-       	return "insuranceContactEditSuccess";
+      	model.addAttribute("Message", "Insurance Contact Added Successfully");
+      	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
+		model.addAttribute("contactList", listBean);
+ 
+		return "insuranceContactList";
+      
     }
 
 	@RequestMapping(value = {"/admin/insurance/{id}/contact/save.do","/user/insurance/{id}/contact/save.do"}, method = RequestMethod.POST, params={"update"})
@@ -446,8 +466,11 @@ public class ContactController{
         	contact.getRefContact().setActiveInd('Y');
         	contact.setActiveInd('Y');
         	contactService.update(contact);
-        	 model.addAttribute("Message", "Insurance Contact Updated Successfully");
-        	return "insuranceContactEditSuccess";
+        	model.addAttribute("Message", "Insurance Contact Updated Successfully");
+        	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
+     		model.addAttribute("contactList", listBean);
+      
+     		return "insuranceContactList";
         }
        
         return "insuranceContactEdit";
@@ -471,8 +494,11 @@ public class ContactController{
         	contact.getRefContact().setUpdatedBy(username);
         	contact.getRefContact().setActiveInd('N');
         	contactService.update(contact);
-        	 model.addAttribute("Message", "Insurance Contact Deleted Successfully");
-        	return "insuranceContactEditSuccess";
+        	model.addAttribute("Message", "Insurance Contact Deleted Successfully");
+        	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
+    		model.addAttribute("contactList", listBean);
+     
+    		return "insuranceContactList";
         }
        
         return "insuranceContactEdit";
