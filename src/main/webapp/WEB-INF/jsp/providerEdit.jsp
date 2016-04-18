@@ -7,21 +7,26 @@
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Provider Profile</div>
+		<div class="panel-heading">Provider Profile
+		<span class="clrRed">${Message}</span>
+			<a class="btn btn-danger pull-right btn-xs white-text" href="${context}/providerList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Provider List
+          	</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" id="provider" commandName="provider" action="${context}/provider/${id}/save.do">
 				<div class="col-sm-12">
 					<div class="form-group required col-sm-4">
-						<label class="control-label  col-sm-2" for="name">Name</label>
-					    <div class="col-sm-10">
+						<label class="control-label  col-sm-5" for="name">Name</label>
+					    <div class="col-sm-7">
 					    	<springForm:hidden path="id" />
 					      	<springForm:input path="name" class="form-control" id="name" placeholder="Name" />
 					      	<springForm:errors path="name" cssClass="error text-danger" />
 					    </div>
 					 </div>
 					<div class="form-group required col-sm-4">
-					    <label class="control-label  col-sm-2" for="code">NPI</label>
-						<div class="col-sm-10">
+					    <label class="control-label  col-sm-5" for="code">NPI</label>
+						<div class="col-sm-7">
 						   	<springForm:input path="code" class="form-control" id="code" placeholder="code" />
 						   	<springForm:errors path="code" cssClass="error text-danger" />
 						 </div>

@@ -180,6 +180,7 @@ $.ajax( {
 
 <div class="panel panel-success">
 	<div class="panel-heading">Hedis Measure Rule
+	<span class="clrRed">${Message}</span>
 		<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureRule/hedisMeasureRuleList">
 	    	<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure Rule List
         </a>
@@ -200,7 +201,7 @@ $.ajax( {
 					</div>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group required">
 					<label class="control-label   col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">
 						<springForm:input path="description" class="form-control" id="description" maxlength="500" placeholder="description" />

@@ -78,7 +78,9 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 <script>
 jQuery( document ).ready(function( $ ) {
 	$(".datepicker").datepicker({
-        dateFormat: 'mm/dd/yy'
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
     });
 
 	  $('body').on('focus',".datepicker", function(){
@@ -87,9 +89,7 @@ jQuery( document ).ready(function( $ ) {
 });
 
 jQuery( document ).ready(function( $ ) {
-	$(".datepickerfrom").datepicker({
-        dateFormat: 'mm/dd/yy'
-    });
+	
 	
 	 $('body').on('keydown',".datepickerfrom, .datepickerto, .datepicker, .datepicker1, .datepicker3", function(event){
 		 event.preventDefault();
@@ -98,9 +98,11 @@ jQuery( document ).ready(function( $ ) {
 		
 
 	  $('body').on('focus',".datepickerfrom", function(){
-		 	 $(this).datepicker( "destroy" );
-			 	$(this).datepicker({
+		 	 $(this).datepicker({
 			          dateFormat: 'mm/dd/yy',
+			          changeMonth: true,
+			          changeYear: true,
+			          minDate:'01/01/2015',
 			          onClose: function( selectedDate ) {
 			              $( ".datepickerto" ).datepicker( "option", "minDate", selectedDate );
 			            }
@@ -109,9 +111,10 @@ jQuery( document ).ready(function( $ ) {
 
 	 $('body').on('focus',".datepickerto", function(){
   		 var date1 = new Date($('.datepickerfrom').val());
-		  $(this).datepicker( "destroy" );
-	      $(this).datepicker({
+		  $(this).datepicker({
 	          dateFormat: 'mm/dd/yy',
+	          changeMonth: true,
+	          changeYear: true,
 	          minDate: date1
 	         
 	      });
@@ -127,6 +130,8 @@ jQuery( document ).ready(function( $ ) {
 	          dateFormat: 'mm/dd/yy',
 	          minDate: date1,
 	          maxDate:date2,
+	          changeMonth: true,
+	          changeYear: true,
 	          onClose: function( selectedDate ) {
 	              $( ".datepicker3" ).datepicker( "option", "minDate", selectedDate );
 	            }
@@ -143,6 +148,8 @@ jQuery( document ).ready(function( $ ) {
           dateFormat: 'mm/dd/yy',
           minDate: date1,
           maxDate:date2,
+          changeMonth: true,
+          changeYear: true
       });
    });
   
@@ -175,6 +182,7 @@ $('[data-toggle="tab"]').click(function(e) {
 
 });
 </script>
+
 	<c:set var="context" value="${pageContext.request.contextPath}" />
        <div> <tiles:insertAttribute name="header" /> </div> 
        <div class="container-fluid text-center">    

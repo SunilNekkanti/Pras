@@ -6,20 +6,13 @@
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
-  <script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
- <c:choose>
- 	<c:when test="${membership.id != null}"> 
-	<script>
-		$(document).ready(function(){	 
-		removePlaceHolder();
-		membershipValidation();
-		});
-	</script>
-	</c:when>	 
-</c:choose>
+<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
+
  <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Membership Profile</div>
+		<div class="panel-heading">Membership Profile
+			<span class="clrRed">${Message}</span>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" id="membership" data-toggle="validator" commandName="membership" action="${context}/membership/${membership.id}/save.do" class="form-horizontal" role="form">
 				<div class="row">

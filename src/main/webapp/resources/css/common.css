@@ -77,3 +77,6 @@ body{font-family: GothamsBody;}
     color: #fff;
     background-color: rgb(85, 107, 47);
 }
+table#cptListTable {
+    width: 100% !important;
+}

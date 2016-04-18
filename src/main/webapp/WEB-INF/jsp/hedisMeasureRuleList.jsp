@@ -110,7 +110,9 @@ $.ajax( {
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure Rule List  </div>
+		<div class="panel-heading">Hedis Measure Rule List
+		<span class="clrRed">${Message}</span>
+		 </div>
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
 				<table id="hedisMeasureRuleTable" class="display table-responsive  table table-striped table-hover"> 

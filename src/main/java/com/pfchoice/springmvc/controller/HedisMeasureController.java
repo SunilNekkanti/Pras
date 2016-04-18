@@ -159,14 +159,14 @@ public class HedisMeasureController{
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	hedisMeasureService.save(hedisMeasure);
    
-    return "hedisMeasureEditSuccess";
+    return "hedisMeasureList";
     }
 	
 	
 	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-       
+		hedisMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
             logger.info("Returning  hedisMeasureEdit.jsp page");
             hedisMeasure.setActiveInd('Y');
@@ -179,7 +179,7 @@ public class HedisMeasureController{
         	logger.info("Returning hedisMeasureEditSuccess.jsp page after update");
         	hedisMeasureService.update(hedisMeasure);
         	model.addAttribute("Message", "Hedis Measure updated successfully");
-        	return "hedisMeasureEditSuccess";
+        	return "hedisMeasureEdit";
         }
        
         return "hedisMeasureEdit";
@@ -203,7 +203,7 @@ public class HedisMeasureController{
 	        	hedisMeasure.setUpdatedBy(username);
 	        	hedisMeasureService.update(hedisMeasure);
 	        	model.addAttribute("Message", "Hedis Measure deleted successfully");
-	        	return "redirect:hedisMeasureList";
+	        	return "hedisMeasureEdit";
 	        }
 	        return "hedisMeasureEdit";
     }

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 
@@ -34,9 +35,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Insurance Details
-			<button class="btn btn-danger pull-right btn-xs" onclick= "return mbrNewIns();">
-          		<span class="glyphicon glyphicon-plus-sign "></span> Member New Insurance
-          	</button>
+			<span class="clrRed">${Message}</span>
 		</div>
 			<div class="panel-body" id="tablediv">
 				<table id="tab" class="table table-striped table-hover table-responsive">
@@ -63,10 +62,10 @@
 							    <tr>
 								   <td> <a onclick="mbrDetails(${id},${mbrDetails.id}); return false;" href="javascript:void(0)"   rel='tab' > ${mbrDetails.insId.name}</a></td> 
 						        <td> ${mbrDetails.newBenifits} </td> 
-						        <td> ${mbrDetails.activityDate}  </td> 
-						        <td> ${mbrDetails.activityMonth}</td>
-						        <td> ${mbrDetails.effStartDate} </td> 
-						        <td> ${mbrDetails.effEndDate} </td> 
+						        <td> <fmt:formatDate value="${mbrDetails.activityDate}"  pattern="MM-dd-yyyy" /> </td> 
+						        <td> <fmt:formatNumber value="${mbrDetails.activityMonth}"  groupingUsed="false" minIntegerDigits="4"/> </td>
+						        <td> <fmt:formatDate value="${mbrDetails.effStartDate}"  pattern="MM-dd-yyyy" /> </td> 
+						        <td> <fmt:formatDate value="${mbrDetails.effEndDate}"  pattern="MM-dd-yyyy" />  </td> 
 						        
 						         
 						        <td> ${mbrDetails.planId} </td> 

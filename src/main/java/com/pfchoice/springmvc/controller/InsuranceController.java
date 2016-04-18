@@ -98,7 +98,7 @@ public class InsuranceController{
     	insurance.setUpdatedBy(username);
       	insuranceService.save(insurance);
       	model.addAttribute("Message", "Insurance details added successfully");
-       return "insuranceNewSuccess";
+       return "redirect:/admin/insuranceList";
     }
 	
 	@RequestMapping(value = {"/admin/insurance/{id}/details","/user/insurance/{id}/details"}, method = RequestMethod.GET)
@@ -115,7 +115,7 @@ public class InsuranceController{
 	@RequestMapping(value = {"/admin/insurance/{id}/save.do",}, method = RequestMethod.POST, params ={"update"})
     public String updateInsuranceAction( @PathVariable Integer id,@ModelAttribute @Validated Insurance insurance,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		
+		insurance.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
         	logger.info("Returning insuranceEdit.jsp page");
         	insurance.setActiveInd('Y');
@@ -130,7 +130,7 @@ public class InsuranceController{
         	model.addAttribute("Message", "Insurance Details Updated Successfully");
         }
            
-        return "insuranceEditSuccess";
+        return "insuranceEdit";
     }
 	
 	@RequestMapping(value = {"/admin/insurance/{id}/save.do"}, method = RequestMethod.POST, params ={"delete"})
@@ -143,7 +143,7 @@ public class InsuranceController{
 	    model.addAttribute("insurance", dbInsurance);
 	    model.addAttribute("Message", "Insurance details deleted successfully");
         logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
-        return "insuranceEditSuccess";
+        return "insuranceEdit";
     }
 	
 	@ModelAttribute("activeIndMap")

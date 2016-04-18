@@ -84,6 +84,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading"> User List
+		<span class="clrRed">${Message}</span>
 			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/user/new">
           		<span class="glyphicon glyphicon-plus-sign "></span>New User
           	</a>

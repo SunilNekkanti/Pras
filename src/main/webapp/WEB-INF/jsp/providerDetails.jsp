@@ -9,7 +9,12 @@
 <div id="providerDetails">
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Provider Profile</div>
+		<div class="panel-heading">Provider Profile
+		<span class="clrRed">${Message}</span>
+			<a class="btn btn-danger pull-right btn-xs white-text" href="${context}/providerList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Provider List
+          	</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST"  commandName="provider" action="${context}/provider/${id}/save.do">
 				<div class="col-sm-12">

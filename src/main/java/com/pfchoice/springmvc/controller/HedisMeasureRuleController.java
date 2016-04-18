@@ -221,11 +221,11 @@ public class HedisMeasureRuleController{
 	 	model.addAttribute("hedisMeasureRule", hedisMeasureRule);
 	 	hedisMeasureRule.setCreatedBy(username);
 	 	hedisMeasureRule.setUpdatedBy(username);
-	 	
+	 	model.addAttribute("Message", "Hedis Measure added successfully");
     	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
       	hedisMeasureRuleService.save(hedisMeasureRule);
    
-    return "hedisMeasureRuleEditSuccess";
+      	return "hedisMeasureRuleList";
     }
 	
 	
@@ -233,6 +233,7 @@ public class HedisMeasureRuleController{
 	public String saveHedisMeasureRuleAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		hedisMeasureRule.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
         	hedisMeasureRule.setActiveInd('Y');
             logger.info("Returning  hedisMeasureRuleEdit.jsp page");
@@ -244,7 +245,8 @@ public class HedisMeasureRuleController{
         	logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
         	hedisMeasureRuleService.update(hedisMeasureRule);
         	hedisMeasureRule.setUpdatedBy(username);
-          	return "hedisMeasureRuleEditSuccess";
+        	model.addAttribute("Message", "Hedis Measure update successfully");
+          	return "hedisMeasureRuleEdit";
         }
        
         return "hedisMeasureRuleEdit";
@@ -268,7 +270,8 @@ public class HedisMeasureRuleController{
 	        	hedisMeasureRule.setActiveInd('N');
 	        	hedisMeasureRule.setUpdatedBy(username);
 	        	hedisMeasureRuleService.update(hedisMeasureRule);
-	        	return "redirect:hedisMeasureRuleList";
+	        	model.addAttribute("Message", "Hedis Measure delete successfully");
+	        	return "hedisMeasureRuleEdit";
 	        }
 	        return "hedisMeasureRuleEdit";
     }

@@ -86,6 +86,7 @@ $.ajax( {
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">ICD Measure List
+			<span class="clrRed">${Message}</span>
 			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/icd/new">
           		<span class="glyphicon glyphicon-plus-sign "></span>New ICD
           	</a>

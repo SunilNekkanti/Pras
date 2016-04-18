@@ -7,7 +7,12 @@
 <div id="insuranceDetails">
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Insurance Profile</div>
+		<div class="panel-heading">Insurance Profile
+			<span class="clrRed">${Message}</span>
+			<a class="btn btn-danger pull-right btn-xs white-text" href="${context}/insuranceList">
+          		<span class="glyphicon glyphicon-plus-sign "></span>Insurance List
+          	</a>
+		</div>
 		<div class="panel-body">
 			<springForm:form method="POST" commandName="insurance" action="${context}/insurance/${id}/save.do">
 			     <div class="form-group required col-sm-3">
@@ -317,8 +322,7 @@ function deleteInsuranceDetails()
 	{
 		var url = getContextPath()+'insurance/${id}/contact/save.do?update'; 
 		var dataList = 	$("#contact").serialize();
-		alert(url);
-		alert(dataList);
+		
 		$.ajax({
 	           type: "POST",
 	           url: url,

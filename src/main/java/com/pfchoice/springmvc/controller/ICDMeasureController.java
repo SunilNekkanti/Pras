@@ -118,13 +118,14 @@ public class ICDMeasureController{
     	logger.info("Returning icdEditSuccess.jsp page after create");
       	icdMeasureService.save(icdMeasure);
       	model.addAttribute("Message", "ICD Measure added successfully");
-    return "icdMeasureEditSuccess";
+    return "icdMeasureList";
     }
 	
 	
 	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"update"})
 	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		icdMeasure.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
         	icdMeasure.setActiveInd('Y');
         	 logger.info("Returning  icdMeasureEdit.jsp page");
@@ -138,7 +139,7 @@ public class ICDMeasureController{
         	icdMeasureService.update(icdMeasure);
         	model.addAttribute("icdMeasure", icdMeasure);
         	model.addAttribute("Message", "ICD Measure updated successfully");
-        	return "icdMeasureEditSuccess";
+        	return "icdMeasureEdit";
         }
        
         return "icdMeasureEdit";
@@ -161,7 +162,7 @@ public class ICDMeasureController{
 	        	icdMeasure.setUpdatedBy(username);
 	        	icdMeasureService.update(icdMeasure);
 	        	model.addAttribute("Message", "ICD Measure deleted successfully");
-	        	return "redirect:icdMeasureList";
+	        	return "icdMeasureEdit";
 	        }
 	        return "icdMeasureEdit";
     }

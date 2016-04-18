@@ -113,7 +113,7 @@ public class UserController{
     	user.setUpdatedBy(username);
     	userService.save(user);
     	model.addAttribute("Message", "New user added successfully");
-       return "userEditSuccess";
+       return "userList";
     }
 	
 	@RequestMapping(value = {"/admin/user/{id}/save.do","/user/user/{id}/save.do"}, method = RequestMethod.POST, params ={"update"})
@@ -131,7 +131,7 @@ public class UserController{
         	model.addAttribute("Message", "User updated successfully");
         	userService.update(user);
         }
-        return "userEditSuccess";
+        return "userEdit";
     }
 	
 	
@@ -152,7 +152,7 @@ public class UserController{
 	    	model.addAttribute("Message", "User deleted successfully");
 	    	userService.update(user);
         }
-        return "userEditSuccess";
+        return "userEdit";
     }
 	
 	@RequestMapping(value = {"/admin/userList","/user/userList"})

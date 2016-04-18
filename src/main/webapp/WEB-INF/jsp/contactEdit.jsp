@@ -9,6 +9,7 @@
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Contact Details
+			<span class="clrRed">${Message}</span>
 			<button class="btn btn-danger pull-right btn-xs" onclick= "return contactList();">
           		<span class="glyphicon glyphicon-plus-sign "></span> contact List
           	</button>

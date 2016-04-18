@@ -6,6 +6,7 @@
  <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel panel-success">
 		<div class="panel-heading">ICD Measure
+			<span class="clrRed">${Message}</span>
 			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/icd/icdMeasureList">
           		<span class="glyphicon glyphicon-plus-sign "></span>ICD Measure List
           	</a>

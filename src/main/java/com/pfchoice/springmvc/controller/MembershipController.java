@@ -156,7 +156,7 @@ public class MembershipController{
         Membership dbMembership  = membershipService.findById(membership.getId()); 
         model.addAttribute("Message", "Membership details updated successfully");
         model.addAttribute("membership", dbMembership);
-        return "membershipEditSuccess";
+        return "membershipEdit";
     }
 	
 	@RequestMapping(value = {"/admin/membership/{id}/save.do","/user/membership/{id}/save.do"}, method = RequestMethod.POST,params={"delete"})
@@ -178,7 +178,7 @@ public class MembershipController{
         
         model.addAttribute("Message", "Membership details deleted successfully");
         model.addAttribute("membership", membership);
-        return "membershipEditSuccess";
+        return "membershipEdit";
     }
 	
 	
@@ -222,7 +222,9 @@ public class MembershipController{
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance", dbMembershipInsurance);
 	            model.addAttribute("Message", "Membership Insurance Updated Successfully");
-	            return "membershipDetailsEditSuccess";
+	            List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
+	        	model.addAttribute("membershipDetailsList", listBean);
+	        	return "membershipDetailsList";
 	       }    
     }
 	
@@ -246,7 +248,9 @@ public class MembershipController{
 	        	MembershipInsurance dbMembershipInsurance = membershipInsuranceService.save(membershipInsurance);
 	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
 	            model.addAttribute("Message", "Membership Insurance Added Successfully");
-		        return "membershipDetailsEditSuccess";
+	            List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
+	        	model.addAttribute("membershipDetailsList", listBean);
+	        	return "membershipDetailsList";
 	        }    
     }
 	
@@ -268,7 +272,10 @@ public class MembershipController{
 	            MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
 	            model.addAttribute("membershipInsurance",dbMembershipInsurance);
 	            model.addAttribute("Message", "Membership Insurance Deleted Successfully");
-	            return "membershipDetailsEditSuccess";
+	            List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
+	        	model.addAttribute("membershipDetailsList", listBean);
+	        	return "membershipDetailsList";
+	           
 	        }    
     }
 	

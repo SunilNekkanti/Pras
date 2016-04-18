@@ -3,10 +3,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
     prefix="springForm"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel  panel-success">
 		<div class="panel-heading">
 			CPT Measure
+			<span class="clrRed">${Message}</span>
         	<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/cpt/cptMeasureList">
           		<span class="glyphicon glyphicon-plus-sign "></span>CPT Measure List
           	</a>

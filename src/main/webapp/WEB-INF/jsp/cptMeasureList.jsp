@@ -86,6 +86,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">CPT Measure List  
+			<span class="clrRed">${Message}</span>
 		<c:set var="url" value="${context}/cpt/new"/>
 			<a class="btn btn-danger pull-right btn-xs white-text" href="${url}">
           		<span class="glyphicon glyphicon-plus-sign "></span>New CPT Measure

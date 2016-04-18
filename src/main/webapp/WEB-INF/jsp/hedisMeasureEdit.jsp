@@ -9,6 +9,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Hedis Measure Details
+		<span class="clrRed">${Message}</span>
 			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedis/hedisMeasureList">
           		<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure List
           	</a>
@@ -50,10 +51,10 @@
 						 	<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="update" >Update</button>
 						 	<button type="submit" class="btn btn-success btn-sm" id="deleteButton" name="delete" >Delete</button>
 						 </c:when>
-						 <c:otherwise>
+						 <c:when test="${hedisMeasure.id == null}">
 							<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="add" >Add</button>
 							<button type="submit" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
-						</c:otherwise>
+						</c:when>
 						</c:choose>
 			   </div>
 			  </div> 
