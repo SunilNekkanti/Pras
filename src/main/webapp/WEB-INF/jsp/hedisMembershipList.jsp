@@ -420,7 +420,6 @@ $(document).ready(function() {
 			 ruleIds.push($(this).val());
 			});
 		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"},\"ruleIds\":"+JSON.stringify(ruleIds)+"}";
-		   alert("restParams1"+restParams1);
 		  var source = getContextPath()+'/reports/membershipHedis/followup';
 		  
 		  $.ajax({

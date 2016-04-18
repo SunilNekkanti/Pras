@@ -133,6 +133,7 @@ function deleteInsuranceDetails()
 	    success: function(data, textStatus, jqXHR)
 	    {
 	       $('#insuranceContractList').html(data);
+	       removeNewcontract();
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
@@ -232,6 +233,7 @@ function deleteInsuranceDetails()
  	       success: function(data, textStatus, jqXHR)
  	       {
  	          $('#insuranceContractList').html(data);
+ 	          removeNewcontract();
  	       },
  	       error: function (jqXHR, textStatus, errorThrown)
  	       {
@@ -263,7 +265,8 @@ function deleteInsuranceDetails()
 	{
 		if(pmpmRequired){
 			var url = getContextPath()+'insurance/${id}/contract/save.do?add'; 
-			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' )
+			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' );
+			removeNewcontract();
 		}
 		return false;
 	}
@@ -272,7 +275,8 @@ function deleteInsuranceDetails()
 	{
 		if(pmpmRequired){
 			var url = getContextPath()+'insurance/${id}/contract/save.do?update';  
-			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' )
+			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' );
+			removeNewcontract();
 		}
 		return false;
 	}
@@ -290,6 +294,7 @@ function deleteInsuranceDetails()
 		           success: function(data)
 		           {
 		            	$('#insuranceContractList').html(data);
+		            	removeNewcontract();
 		           },
 		    		error:function(data)
 		    		{
@@ -380,6 +385,17 @@ function deleteInsuranceDetails()
 	    }else{
 	    	alert('fileupload error');
 	    }
+	}
+	
+	function removeNewcontract()
+	{
+		
+		 var rowCount = $('#insuranceContractList tr').length;
+	      if(rowCount > 1)
+	      { 
+	    	 $('#insuranceContractList .panel-heading button').hide();
+ 		     prvdrInscontractList();
+	      }
 	}
 
 </script>

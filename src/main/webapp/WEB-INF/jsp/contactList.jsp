@@ -14,7 +14,7 @@
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Contact List <span class="badge">${contactList.size()}</span>
-			<span class="ckrRed">${Message}</span>
+			<span class="clrRed">${Message}</span>
 			<button class="btn btn-danger pull-right btn-xs" onclick= "return newContact();">
 	        	<span class="glyphicon glyphicon-plus-sign "></span> New Contact
 	        </button>

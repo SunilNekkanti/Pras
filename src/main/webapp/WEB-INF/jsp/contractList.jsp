@@ -8,7 +8,7 @@
 	<div class="panel panel-success">
 		<div class="panel-heading">
 		${contractType}	Contract List<span class="badge">${contractList.size()}</span>
-			<span class="ckrRed">${Message}</span>
+			<span class="clrRed">${Message}</span>
 				<button class="btn btn-danger pull-right btn-xs" onclick= "return newContract(${pmpmRequired});">
           			<span class="glyphicon glyphicon-plus-sign "></span> New Contract
           		</button>

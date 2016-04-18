@@ -98,7 +98,7 @@ public class InsuranceController{
     	insurance.setUpdatedBy(username);
       	insuranceService.save(insurance);
       	model.addAttribute("Message", "Insurance details added successfully");
-       return "redirect:/admin/insuranceList";
+       return "insuranceList";
     }
 	
 	@RequestMapping(value = {"/admin/insurance/{id}/details","/user/insurance/{id}/details"}, method = RequestMethod.GET)
