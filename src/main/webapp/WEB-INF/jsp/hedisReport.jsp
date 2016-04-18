@@ -59,7 +59,6 @@
 						</c:otherwise>
 						</c:choose>
 						
-						<springForm:hidden path="refContact.createdBy" value="sarath"/>
 						<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
 						<springForm:errors path="homePhone" cssClass="error" />
 					</div>

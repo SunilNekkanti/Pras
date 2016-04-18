@@ -41,10 +41,14 @@
 								<springForm:hidden path="refContact.ins.id" />
 							</c:otherwise>
 							</c:choose>
-							
-							<springForm:hidden path="refContact.createdBy" value="sarath"/>
+							<div class="col-sm-8">
 							<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
 							<springForm:errors path="homePhone" cssClass="error text-danger" />
+							</div>
+							<div class="col-sm-4">
+							<springForm:input path="extension" class="form-control" id="extension" placeholder="Extension" />
+							<springForm:errors path="extension" cssClass="error text-danger" />
+							</div>
 						</div>
 					</div>
 				 	

@@ -63,23 +63,29 @@
 							    <c:otherwise> 
 							    	<c:choose>
 									 <c:when test="${cntct.refContact.mbr != null}"> 
-										<a onclick ="return contact(${cntct.refContact.mbr.id},${cntct.id})" href="#"  rel='tab' >View</a> 
-									 </c:when>
-									 <c:when test="${cntct.refContact.prvdr != null}">
-										<a href="${context}/provider/${cntct.refContact.prvdr.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
-									</c:when>
-									 <c:when test="${cntct.refContact.ins != null}">
-										<a href="${context}/insurance/${cntct.refContact.ins.id}/contact/${cntct.id}/display"   rel='tab' >View</a>
-									</c:when>
-									<c:otherwise>
-										issue
-									</c:otherwise>
+									 		<a onclick ="return contact(${cntct.refContact.mbr.id},${cntct.id})" href="javascript:void(0)"  rel='tab' >View</a> 
+										 </c:when>
+										 <c:when test="${cntct.refContact.prvdr != null}">
+											<a  onclick ="return contact(${cntct.refContact.prvdr.id},${cntct.id})"  href="javascript:void(0)"   rel='tab' >View</a> 
+										</c:when>
+										 <c:when test="${cntct.refContact.ins != null}">
+											<a onclick ="return contact(${cntct.refContact.ins.id},${cntct.id})" href="javascript:void(0)"   rel='tab' >View</a> 
+										</c:when>
+										<c:otherwise>
+											issue
+										</c:otherwise>
 									</c:choose>
 							    </c:otherwise>
 							    </c:choose>
 							    </td>
 							    	<td> ${cntct.contactPerson}</td>
-								   	<td> ${cntct.homePhone}</td> 
+								   	<td> ${cntct.homePhone} 
+								   	 <c:choose> 
+								   	 <c:when test="${not empty cntct.extension}">
+								   	 <strong> X </strong>${cntct.extension}
+								   	 </c:when>
+								   	 </c:choose>
+								   	 </td> 
 						        	<td> ${cntct.mobilePhone}</td>
 						        	<td> ${cntct.faxNumber}</td>
 						        	<td> ${cntct.email}</td>

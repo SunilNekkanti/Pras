@@ -189,19 +189,25 @@ public class ContactController{
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
 		contact.setActiveInd('Y');
+		System.out.println("1");
         if (bindingResult.hasErrors()) {
+        	System.out.println("1.1");
         	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
             return "membershipContactEdit";
         }
-	        
+        System.out.println("2");
         if (null != contact.getId())
         {
+        	System.out.println("2.1");
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setUpdatedBy(username);
+        	contact.setCreatedBy(username);
+        	System.out.println(contact.getCreatedBy());
         	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setCreatedBy(username);
+        	System.out.println(contact.getRefContact().getCreatedBy());
         	contact.getRefContact().setActiveInd('Y');
-        	contact.setActiveInd('Y');
         	contactService.update(contact);
         	model.addAttribute("Message", "Member Contact Updated Successfully");
         	List<Contact> listBean = contactService.findAllContactsByRefId("membership",id);
@@ -224,7 +230,9 @@ public class ContactController{
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	contact.setActiveInd('N');
 	        	contact.setUpdatedBy(username);
+	        	contact.setCreatedBy(username);
 	        	contact.getRefContact().setUpdatedBy(username);
+	        	contact.getRefContact().setCreatedBy(username);
 	        	contact.getRefContact().setActiveInd('N');
 	        	contactService.update(contact);
 	        	model.addAttribute("Message", "Member Contact Deleted Successfully");
@@ -360,7 +368,9 @@ public class ContactController{
 	        	logger.info("Returning ContactEditSuccess.jsp page after update");
 	        	contact.setActiveInd('N');
 	        	contact.setUpdatedBy(username);
+	        	contact.setCreatedBy(username);
 	        	contact.getRefContact().setUpdatedBy(username);
+	        	contact.getRefContact().setCreatedBy(username);
 	        	contact.getRefContact().setActiveInd('N');
 	        	contactService.update(contact);
 	        	model.addAttribute("Message", "Provider Contact Deleted Successfully");
@@ -452,9 +462,9 @@ public class ContactController{
 	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
+		 contact.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
             logger.info("Returning contactEdit.jsp page");
-            contact.setActiveInd('Y');
             return "insuranceContactEdit";
         }
 	        
@@ -462,9 +472,10 @@ public class ContactController{
         {
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setUpdatedBy(username);
+        	contact.setCreatedBy(username);
         	contact.getRefContact().setUpdatedBy(username);
-        	contact.getRefContact().setActiveInd('Y');
-        	contact.setActiveInd('Y');
+        	contact.getRefContact().setCreatedBy(username);
+        	contact.getRefContact().setActiveInd('Y'); ;
         	contactService.update(contact);
         	model.addAttribute("Message", "Insurance Contact Updated Successfully");
         	List<Contact> listBean = contactService.findAllContactsByRefId("insurance",id);
@@ -491,7 +502,9 @@ public class ContactController{
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setActiveInd('N');
         	contact.setUpdatedBy(username);
+        	contact.setCreatedBy(username);
         	contact.getRefContact().setUpdatedBy(username);
+        	contact.getRefContact().setCreatedBy(username);
         	contact.getRefContact().setActiveInd('N');
         	contactService.update(contact);
         	model.addAttribute("Message", "Insurance Contact Deleted Successfully");

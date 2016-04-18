@@ -44,6 +44,10 @@ public class Contact implements Serializable
     private String homePhone;
     
     @Expose
+    @Column(name="Extension")
+    private Integer extension;
+    
+    @Expose
     @Column(name="mobile_phone")
     private String mobilePhone;
 
@@ -150,6 +154,20 @@ public class Contact implements Serializable
 	 */
 	public void setHomePhone(final String homePhone) {
 		this.homePhone = homePhone;
+	}
+
+	/**
+	 * @return the extension
+	 */
+	public Integer getExtension() {
+		return extension;
+	}
+
+	/**
+	 * @param extension the extension to set
+	 */
+	public void setExtension(Integer extension) {
+		this.extension = extension;
 	}
 
 	/**
