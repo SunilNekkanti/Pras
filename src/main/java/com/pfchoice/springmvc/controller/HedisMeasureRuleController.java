@@ -246,7 +246,7 @@ public class HedisMeasureRuleController{
         	hedisMeasureRuleService.update(hedisMeasureRule);
         	hedisMeasureRule.setUpdatedBy(username);
         	model.addAttribute("Message", "Hedis Measure update successfully");
-          	return "hedisMeasureRuleEdit";
+          	return "hedisMeasureRuleList";
         }
        
         return "hedisMeasureRuleEdit";
@@ -271,7 +271,7 @@ public class HedisMeasureRuleController{
 	        	hedisMeasureRule.setUpdatedBy(username);
 	        	hedisMeasureRuleService.update(hedisMeasureRule);
 	        	model.addAttribute("Message", "Hedis Measure delete successfully");
-	        	return "hedisMeasureRuleEdit";
+	        	return "hedisMeasureRuleList";
 	        }
 	        return "hedisMeasureRuleEdit";
     }

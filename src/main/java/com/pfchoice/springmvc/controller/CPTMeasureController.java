@@ -126,11 +126,10 @@ public class CPTMeasureController{
 	
 	
 	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
+	public String saveCPTMeasureAction(@PathVariable Integer id,@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		cptMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
-			cptMeasure.setActiveInd('Y');
             logger.info("Returning  cptMeasureEdit.jsp page");
             return "cptMeasureEdit";
         }
@@ -142,7 +141,7 @@ public class CPTMeasureController{
         	cptMeasureService.update(cptMeasure);
         	model.addAttribute("cptMeasure", cptMeasure);
         	model.addAttribute("Message", "CPT Measure updated successfully");
-        	return "cptMeasureEdit";
+        	return "cptMeasureList";
         }
        
         return "cptMeasureEdit";
@@ -150,11 +149,10 @@ public class CPTMeasureController{
 	
 
 	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
+	public String deleteCPTMeasureAction(@PathVariable Integer id,@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		cptMeasure.setActiveInd('Y');
 			if (bindingResult.hasErrors()) {
-				cptMeasure.setActiveInd('Y');
 	            logger.info("Returning  cptMeasureEdit.jsp page");
 	            return "cptMeasureEdit";
 	        }
@@ -165,7 +163,7 @@ public class CPTMeasureController{
 	        	cptMeasure.setUpdatedBy(username);
 	        	cptMeasureService.update(cptMeasure);
 	        	model.addAttribute("Message", "CPT Measure deleted successfully");
-	        	return "cptMeasureEdit";
+	        	return "cptMeasureList";
 	        }
 	        return "cptMeasureEdit";
     }

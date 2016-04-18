@@ -113,7 +113,7 @@ $.ajax( {
 														                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ],"sClass":"center"  },
 														                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "10%" , "sDefaultContent": "" ,"sClass":"center" ,
 														                        	 "render": function ( data, type, full, meta ) {
-														                                 return '<a href="'+full.id+'">'+data+'</a>';
+														                                 return '<a href="${context}/hedisMeasureRule/'+full.id+'">'+data+'</a>';
 														                		      }
 														                         },
 														                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center",
@@ -194,8 +194,8 @@ $.ajax( {
 			<div class="table-responsive">
 					<div class="col-sm-6">
 							<div class="col-sm-4">
-								<label class="control-label col-sm-4">Eff. Year</label>
-								 <div class=" col-sm-8" id="extFilterEY">  </div>
+								<label class="control-label col-sm-5">Eff. Year</label>
+								 <div class=" col-sm-7" id="extFilterEY">  </div>
 							</div>	 
 							<div class="col-sm-4">	 
 								<label class="control-label col-sm-4">Insurance</label>

@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+ <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <script>
   $(document).ready(function() {
         	
@@ -65,7 +65,7 @@
                            		    { "sName": "id", "aTargets": [ 0 ] },
                            		    { "sName": "code", "aTargets": [ 1 ],
                            		      "render": function ( data, type, full, meta ) {
-                                            return '<a href="'+full.id+'">'+data+'</a>';
+                                            return '<a href="${context}/hedis/'+full.id+'">'+data+'</a>';
                            		      }},
                            		    { "sName": "description", "aTargets": [ 2 ] },
                            		    { "sName": "hedisMsrGrp.description", "aTargets": [ 3 ] }

@@ -20,6 +20,10 @@
      $(document).ready(function() {
     	 
     	 $("#mbrGenerate").click(function(event){
+    		 if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+					$('#membershipTable').DataTable().destroy();
+	   		}
+  			$('#membershipTable tbody').empty();
     		 var insSelectValue= $("#insu option:selected").val();
   		     var prvdrSelectValue= $("#prvdr option:selected").val();
     		 callMembershipDataTable(insSelectValue, prvdrSelectValue);

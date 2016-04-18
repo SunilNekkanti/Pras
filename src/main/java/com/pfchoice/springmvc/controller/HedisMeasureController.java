@@ -169,7 +169,6 @@ public class HedisMeasureController{
 		hedisMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
             logger.info("Returning  hedisMeasureEdit.jsp page");
-            hedisMeasure.setActiveInd('Y');
             hedisMeasure.setUpdatedBy(username);
             return "hedisMeasureEdit";
         }
@@ -179,7 +178,7 @@ public class HedisMeasureController{
         	logger.info("Returning hedisMeasureEditSuccess.jsp page after update");
         	hedisMeasureService.update(hedisMeasure);
         	model.addAttribute("Message", "Hedis Measure updated successfully");
-        	return "hedisMeasureEdit";
+        	return "hedisMeasureList";
         }
        
         return "hedisMeasureEdit";
@@ -189,10 +188,9 @@ public class HedisMeasureController{
 	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
 	public String deleteHedisMeasureAction(@PathVariable Integer id,@Validated HedisMeasure hedisMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		 
+		hedisMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 	            logger.info("Returning  hedisMeasureEdit.jsp page");
-	            hedisMeasure.setActiveInd('Y');
 	            return "hedisMeasureEdit";
 	        }
             
@@ -203,7 +201,7 @@ public class HedisMeasureController{
 	        	hedisMeasure.setUpdatedBy(username);
 	        	hedisMeasureService.update(hedisMeasure);
 	        	model.addAttribute("Message", "Hedis Measure deleted successfully");
-	        	return "hedisMeasureEdit";
+	        	return "hedisMeasureList";
 	        }
 	        return "hedisMeasureEdit";
     }

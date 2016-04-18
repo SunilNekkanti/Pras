@@ -27,43 +27,43 @@
 					
 					<div class="form-group">
 						<label class="control-label col-sm-4" for="homePhone">Land Phone</label>
-						<div class="col-sm-8">
-							<springForm:hidden path="id" />
-							<springForm:hidden path="refContact.id" />
-							 <c:choose>
-							 <c:when test="${contact.refContact.mbr != null}"> 
-								<springForm:hidden path="refContact.mbr.id" />
-							 </c:when>
-							 <c:when test="${contact.refContact.prvdr != null}">
-								<springForm:hidden path="refContact.prvdr.id" />
-							</c:when>
-							<c:otherwise>
-								<springForm:hidden path="refContact.ins.id" />
-							</c:otherwise>
-							</c:choose>
-							<div class="col-sm-8">
-							<springForm:input path="homePhone" class="form-control" id="homePhone" placeholder="Home Phone" />
-							<springForm:errors path="homePhone" cssClass="error text-danger" />
+						<div class="col-sm-5">
+								<springForm:hidden path="id" />
+								<springForm:hidden path="refContact.id" />
+								 <c:choose>
+								 <c:when test="${contact.refContact.mbr != null}"> 
+									<springForm:hidden path="refContact.mbr.id" />
+								 </c:when>
+								 <c:when test="${contact.refContact.prvdr != null}">
+									<springForm:hidden path="refContact.prvdr.id" />
+								</c:when>
+								<c:otherwise>
+									<springForm:hidden path="refContact.ins.id" />
+								</c:otherwise>
+								</c:choose>
+								
+								<springForm:input path="homePhone" class="form-control" id="homePhone" maxlength="14" placeholder="Land Phone" />
+								<springForm:errors path="homePhone" cssClass="error text-danger" />
 							</div>
-							<div class="col-sm-4">
-							<springForm:input path="extension" class="form-control" id="extension" placeholder="Extension" />
-							<springForm:errors path="extension" cssClass="error text-danger" />
+							<div class="col-sm-3">
+								<springForm:input path="extension" class="form-control" id="extension" maxlength="5" placeholder="Extension" />
+								<springForm:errors path="extension" cssClass="error text-danger" />
 							</div>
-						</div>
+						
 					</div>
 				 	
 					 
 					<div class="form-group">
 						<label class="control-label col-sm-4" for="mobilePhone">Mobile Phone</label>
 						<div class="col-sm-8">
-							<springForm:input path="mobilePhone" class="form-control" id="mobilePhone" placeholder="Mobile Phone" />
+							<springForm:input path="mobilePhone" class="form-control" id="mobilePhone" maxlength="14" placeholder="Mobile Phone" />
 							<springForm:errors path="mobilePhone" cssClass="error text-danger" />
 						</div>
 					</div>
 					<div class="form-group">
 					 	<label class="control-label col-sm-4" for="faxNumber">Fax Number</label>
 						<div class="col-sm-8">
-							<springForm:input path="faxNumber" class="form-control" id="fax" placeholder="Fax Number" />
+							<springForm:input path="faxNumber" class="form-control" maxlength="14"  id="fax" placeholder="Fax Number" />
 							<springForm:errors path="faxNumber" cssClass="error text-danger" />
 						</div>
 					</div>
@@ -195,4 +195,18 @@
 </c:choose>
 
 
+<script>
+$(document).ready(function() {
+ $("#extension").keydown(function(event) {
+   if( !(event.keyCode == 8                                // backspace
+           || event.keyCode == 46                              // delete
+           || (event.keyCode >= 35 && event.keyCode <= 40)     // arrow keys/home/end
+           || (event.keyCode >= 48 && event.keyCode <= 57)     // numbers on keyboard
+           || (event.keyCode >= 96 && event.keyCode <= 105))   // number on keypad
+           ) {
+               event.preventDefault();     // Prevent character input
+       }
+ });
+}); 
 
+</script>

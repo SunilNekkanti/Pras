@@ -197,7 +197,7 @@ $.ajax( {
 					</div>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group required">
 					<label class="control-label   col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">
 						<springForm:input path="description" class="form-control" maxlength="500" id="description" placeholder="description" />
@@ -205,7 +205,7 @@ $.ajax( {
 					  </div>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group required">
 					<label class="control-label col-sm-2" for="insurance">Insurance</label>
 					<div class="col-sm-6">
 						<springForm:select path="insId"  class="form-control" id="insurance">
@@ -224,8 +224,8 @@ $.ajax( {
 						<springForm:errors path="cptCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
-					    <a href="#" id='removeCPT' class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
+						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
+					    <a href="#" id='removeCPT' class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
 					 </div>	
 				</div>
 				 		 
@@ -236,8 +236,8 @@ $.ajax( {
 						<springForm:errors path="icdCodes" cssClass="error text-danger" />
 					</div>
 					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
-						<a href="#" id="removeICD" class="btn btn-success btn-sm"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
+						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
+						<a href="#" id="removeICD" class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
 					 </div>	
 				</div>
 				
@@ -406,16 +406,43 @@ $(document).ready(function() {
     });
 });
 $( "#hedisMeasureRule" ).submit(function( event ) {
-	
+	$(".text-danger").html('');
+	$( "has-error" ).remove();
 	$('#cptCodes option').prop('selected', true);
 	$('#icdCodes option').prop('selected', true);
 	
 	var error_count=0;
-	var effectiveYear = $("input#effectiveYear").val().length;
-		if (effectiveYear < 3 || effectiveYear > 20) {
+	var insurance = $("#insurance").val();
+	if (!insurance) {
+		$("#insurance").closest( "div" ).addClass( "has-error" );
+		$('#insurance').closest( "div" ).find('span').remove();
+		$( "#insurance" ).after("<span  class='text-danger'>Select Insurance.</span>" );
+		error_count++;
+	}
+	else
+	{
+		$('#insurance').closest( "div" ).find('span').remove();
+		$("#insurance").closest( "div" ).removeClass( "has-error" );
+	}	
+	
+	var description = $("#description").val().length;
+	if (description < 6) {
+		$("#description").closest( "div" ).addClass( "has-error" );
+		$('#description').closest( "div" ).find('span').remove();
+		$( "#description" ).after("<span  class='text-danger'>Description atleast 5 characters</span>" );
+		error_count++;
+	}
+	else
+	{
+		$('#description').closest( "div" ).find('span').remove();
+		$("#description").closest( "div" ).removeClass( "has-error" );
+	}	
+	
+	var effectiveYear = $("#effectiveYear").val();
+		if (!effectiveYear) {
 			$("#effectiveYear").closest( "div" ).addClass( "has-error" );
 			$('#effectiveYear').closest( "div" ).find('span').remove();
-			$( "#effectiveYear" ).after("<span  class='text-danger'>Effective Year Must be equal to four digits.</span>" );
+			$( "#effectiveYear" ).after("<span  class='text-danger'>Select Effective Year.</span>" );
 			error_count++;
 		}
 		else

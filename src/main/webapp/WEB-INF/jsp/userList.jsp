@@ -8,7 +8,7 @@
 <title>Provider List</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <script>
         $(document).ready(function() {
         	
@@ -66,7 +66,7 @@
                            		    { "sName": "id", "aTargets": [ 0 ] },
                            		    { "sName": "username", "aTargets": [ 1 ],
                              		   "render": function ( data, type, full, meta ) {
-                                              return '<a href="user/'+full.id+'">'+data+'</a>';
+                                              return '<a href="${context}/user/'+full.id+'">'+data+'</a>';
                                     }},
                                     { "sName": "effectiveYear", "aTargets": [ 2 ] }
                   ],          

@@ -66,7 +66,7 @@ $.ajax( {
                      		    { "sName": "id", "aTargets": [ 0 ] },
                      		    { "sName": "code", "aTargets": [ 1 ],
                      		      "render": function ( data, type, full, meta ) {
-                                      return '<a href="'+full.id+'">'+data+'</a>';
+                                      return '<a href="${context}/icd/'+full.id+'">'+data+'</a>';
                      		      }},
                      		    { "sName": "description", "aTargets": [ 2 ] }
             ],          

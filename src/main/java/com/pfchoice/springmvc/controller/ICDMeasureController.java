@@ -118,16 +118,15 @@ public class ICDMeasureController{
     	logger.info("Returning icdEditSuccess.jsp page after create");
       	icdMeasureService.save(icdMeasure);
       	model.addAttribute("Message", "ICD Measure added successfully");
-    return "icdMeasureList";
+      	return "icdMeasureList";
     }
 	
 	
 	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
+	public String saveICDMeasureAction(@PathVariable Integer id,@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		icdMeasure.setActiveInd('Y');
         if (bindingResult.hasErrors()) {
-        	icdMeasure.setActiveInd('Y');
         	 logger.info("Returning  icdMeasureEdit.jsp page");
             return "icdMeasureEdit";
         }
@@ -139,7 +138,7 @@ public class ICDMeasureController{
         	icdMeasureService.update(icdMeasure);
         	model.addAttribute("icdMeasure", icdMeasure);
         	model.addAttribute("Message", "ICD Measure updated successfully");
-        	return "icdMeasureEdit";
+        	return "icdMeasureList";
         }
        
         return "icdMeasureEdit";
@@ -147,7 +146,7 @@ public class ICDMeasureController{
 	
 
 	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
+	public String deleteICDMeasureAction(@PathVariable Integer id,@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
        
 			if (bindingResult.hasErrors()) {
@@ -162,7 +161,7 @@ public class ICDMeasureController{
 	        	icdMeasure.setUpdatedBy(username);
 	        	icdMeasureService.update(icdMeasure);
 	        	model.addAttribute("Message", "ICD Measure deleted successfully");
-	        	return "icdMeasureEdit";
+	        	return "icdMeasureList";
 	        }
 	        return "icdMeasureEdit";
     }

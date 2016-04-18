@@ -119,8 +119,8 @@ public class UserController{
 	@RequestMapping(value = {"/admin/user/{id}/save.do","/user/user/{id}/save.do"}, method = RequestMethod.POST, params ={"update"})
     public String updateUserAction( @PathVariable Integer id,@Validated User user,
             BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-        if (bindingResult.hasErrors()) {
-        	user.setActiveInd('Y');
+		user.setActiveInd('Y');
+		if (bindingResult.hasErrors()) {
             logger.info("Returning userEdit.jsp page");
             return "userEdit";
         }
@@ -131,7 +131,7 @@ public class UserController{
         	model.addAttribute("Message", "User updated successfully");
         	userService.update(user);
         }
-        return "userEdit";
+        return "userList";
     }
 	
 	
@@ -152,7 +152,7 @@ public class UserController{
 	    	model.addAttribute("Message", "User deleted successfully");
 	    	userService.update(user);
         }
-        return "userEdit";
+        return "userList";
     }
 	
 	@RequestMapping(value = {"/admin/userList","/user/userList"})
