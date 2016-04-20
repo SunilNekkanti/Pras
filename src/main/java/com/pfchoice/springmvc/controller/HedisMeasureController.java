@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +147,7 @@ public class HedisMeasureController{
 	
 	@RequestMapping(value = "/admin/hedis/save.do", method = RequestMethod.POST, params ={"add"})
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+            BindingResult bindingResult, Model model, @ModelAttribute("username") String username)  {
         if (bindingResult.hasErrors()) {
             logger.info("Returning hedisMeasureEdit.jsp page");
             return "hedisMeasureNew";
@@ -157,7 +158,13 @@ public class HedisMeasureController{
 	 	hedisMeasure.setUpdatedBy(username);
 	 	model.addAttribute("Message", "Hedis Measure added successfully");
     	logger.info("Returning contactEditSuccess.jsp page after create");
-      	hedisMeasureService.save(hedisMeasure);
+    	try{
+    		hedisMeasureService.save(hedisMeasure);
+    	}catch(HibernateException e){
+    		model.addAttribute("Message", e.getCause().getMessage());
+    		 return "hedisMeasureNew";
+    	}
+      	
    
     return "hedisMeasureList";
     }

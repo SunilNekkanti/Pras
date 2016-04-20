@@ -2,6 +2,7 @@ package com.pfchoice.core.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -50,7 +51,7 @@ public class MembershipHedisFollowup implements Serializable
     private Date dateOfContact;
     
     @Transient
-    private List<Integer> ruleIds;
+    private List<Map<Integer,String>> mbrHedisMeasureIds;
     
     @Expose
     @Temporal(TemporalType.TIMESTAMP)
@@ -133,19 +134,19 @@ public class MembershipHedisFollowup implements Serializable
 	public void setDateOfContact(Date dateOfContact) {
 		this.dateOfContact = dateOfContact;
 	}
-	
+
 	/**
 	 * @return the ruleIds
 	 */
-	public List<Integer> getRuleIds() {
-		return ruleIds;
+	public List<Map<Integer, String>> getMbrHedisMeasureIds() {
+		return mbrHedisMeasureIds;
 	}
 
 	/**
 	 * @param ruleIds the ruleIds to set
 	 */
-	public void setRuleIds(List<Integer> ruleIds) {
-		this.ruleIds = ruleIds;
+	public void setMbrHedisMeasureIds(List<Map<Integer, String>> mbrHedisMeasureIds) {
+		this.mbrHedisMeasureIds = mbrHedisMeasureIds;
 	}
 
 	/**

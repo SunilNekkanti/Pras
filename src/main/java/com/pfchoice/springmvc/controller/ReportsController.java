@@ -1,8 +1,10 @@
 package com.pfchoice.springmvc.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +54,7 @@ public class ReportsController
     @Autowired
     private MembershipHedisMeasureService mbrHedisMeasureService;
   
+    
    @RequestMapping(value ={"/admin/reports/hedis","/user/reports/hedis"})
     public String handleRequest() throws Exception {
  
@@ -77,24 +80,27 @@ public class ReportsController
    }
    
    
-   @SuppressWarnings("unchecked")
    @ResponseBody
    @RequestMapping(value = {"/admin/reports/membershipHedis/followup","/user/reports/membershipHedis/followup"}, method = RequestMethod.POST)
    public String addMembershipHedisFollowup(Model model, 
 			@RequestBody final MembershipHedisFollowup mbrHedisFollowup, 
           @ModelAttribute("username") String username ) {
 	
-	  Integer mbrId =  mbrHedisFollowup.getMbr().getId();
-	  List<Integer> ruleIds = mbrHedisFollowup.getRuleIds();
-	  if(ruleIds != null ){
-		  ruleIds.forEach(ruleId -> {
-			  System.out.println("rule id is"+ruleId);
-			  Pagination  page = mbrHedisMeasureService.findByMbrIdAndRuleId(mbrId,ruleId);
-			  List<MembershipHedisMeasure> mbrHedisMeasureList = (List<MembershipHedisMeasure>) page.getList();
-			  if( mbrHedisMeasureList != null && mbrHedisMeasureList.size()>0){
-				 MembershipHedisMeasure dbMembershipHedisMeasure = mbrHedisMeasureList.get(0);
-				 dbMembershipHedisMeasure.setActiveInd(new Character('N'));
-				 mbrHedisMeasureService.update(dbMembershipHedisMeasure);
+	  List<Map<Integer,String>> mbrHedisMeasureList = mbrHedisFollowup.getMbrHedisMeasureIds();
+	  if(mbrHedisMeasureList != null ){
+		  mbrHedisMeasureList.forEach(ruleMap -> {
+			  for(Map.Entry<Integer, String> entry: ruleMap.entrySet()) {
+				  System.out.println("key :"+entry.getKey()+" value:"+entry.getValue());
+				  MembershipHedisMeasure dbMembershipHedisMeasure  = mbrHedisMeasureService.findById(entry.getKey());
+				  SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				  String dateOfService = entry.getValue();
+				  try {
+						dbMembershipHedisMeasure.setDos(dateFormat.parse(dateOfService));
+						dbMembershipHedisMeasure.setActiveInd(new Character('N'));
+				  } catch (Exception e) {
+					  LOG.warn(e.getCause().getMessage());
+				  }
+				  mbrHedisMeasureService.update(dbMembershipHedisMeasure);
 			  }
 		  });
 	  }

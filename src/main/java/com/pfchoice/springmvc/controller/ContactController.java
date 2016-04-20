@@ -173,7 +173,6 @@ public class ContactController{
     	refCnt.setUpdatedBy(username);
     	refCnt.setMbr(dbMembership);
     	contact.setRefContact(refCnt);
-    	
     	logger.info("Returning contactEditSuccess.jsp page after create");
       	contactService.save(contact);
       	model.addAttribute("Message", "Member Contact Added Successfully");

@@ -8,6 +8,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">Hedis Measure Details
+		<span class="clrRed">${Message}</span>
 			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedis/hedisMeasureList">
           		<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure List
           	</a>

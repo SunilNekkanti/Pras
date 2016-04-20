@@ -4,6 +4,7 @@ package com.pfchoice.springmvc.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.Message;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
@@ -369,6 +375,23 @@ public class MembershipController{
         logger.info("Returning membershipHedisMeasure.jsp page");
         return "membershipHedisMeasure";
     }
+	
+	@ResponseBody
+	@RequestMapping(value = {"/admin/membership/{id}/hedisMeasureList","/user/membership/{id}/hedisMeasureList"}, method = RequestMethod.GET)
+	public Message displayMembershipHedisMeasureListPage(@PathVariable Integer id, Model model,
+				@RequestParam(required = false) Integer hedisRuleId)throws Exception {
+	  
+	  Membership dbMembership = membershipService.findById(id);
+	  List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
+	  if(hedisRuleId != null && !"".equals(hedisRuleId) && hedisRuleId != 9999)
+	  {
+	   mbrHedisMeasureList = mbrHedisMeasureList.stream()
+	     				  .filter(mbrHedisMeasure -> (mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
+	     				  								&& mbrHedisMeasure.getDos() == null))
+	     				  .collect(Collectors.toList());
+	  }
+	        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(mbrHedisMeasureList));
+	}
 	
 	@ModelAttribute("countyList")
 	public List<County> populateCountyList() {

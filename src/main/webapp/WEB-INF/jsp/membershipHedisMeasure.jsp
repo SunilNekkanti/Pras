@@ -37,7 +37,7 @@
 													    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
 													    		 	
 																<c:choose>
-															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id}"> 
+															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id && empty mbrHedisMeasure.dos   }"> 
 															 		<td>${hedisMeasure.code}</td>
 															 		<td>${hedisMeasure.description}</td>
 																	<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dueDate} </a> 	 </td> 
@@ -78,7 +78,7 @@
 													    	<c:forEach items="${hedisMeasureList}" var="hedisMeasure">
 													    		 	
 																<c:choose>
-															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id && mbrHedisMeasure.dos != null}"> 
+															 		<c:when test="${mbrHedisMeasure.hedisMeasureRule.hedisMeasure.id == hedisMeasure.id && not empty mbrHedisMeasure.dos }"> 
 															 		<td>${hedisMeasure.code}</td>
 															 		<td>${hedisMeasure.description}</td>
 																	<td>	<a href="${context}/membership/${mbrHedisMeasure.mbr.id}/memberHedisMeasure/${mbrHedisMeasure.id}"   rel='tab' > ${mbrHedisMeasure.dos} </a> 	 </td> 

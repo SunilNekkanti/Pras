@@ -461,8 +461,6 @@ public class ContractController{
 	    }
 		
 		
-		
-		@SuppressWarnings("unchecked")
 		@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/new")
 	    public String addprvdrinsContractPage(@PathVariable Integer id,Model model) {
  			
@@ -666,6 +664,7 @@ public class ContractController{
 		   }
 		
 		
+		@SuppressWarnings("unchecked")
 		protected Set<Insurance> getInsuranceList(Integer id){
 			Pagination page = contractService.getPage(0,20000);
 			List<Contract> contracts = (List<Contract>) page.getList();
