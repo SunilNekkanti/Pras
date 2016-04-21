@@ -386,9 +386,15 @@ public class MembershipController{
 	  if(hedisRuleId != null && !"".equals(hedisRuleId) && hedisRuleId != 9999)
 	  {
 	   mbrHedisMeasureList = mbrHedisMeasureList.stream()
-	     				  .filter(mbrHedisMeasure -> (mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
+	     				  						.filter(mbrHedisMeasure -> (mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
 	     				  								&& mbrHedisMeasure.getDos() == null))
-	     				  .collect(Collectors.toList());
+	     				  						.collect(Collectors.toList());
+	  }
+	  else
+	  {
+		  mbrHedisMeasureList = mbrHedisMeasureList.stream()
+ 				  									.filter(mbrHedisMeasure -> (mbrHedisMeasure.getDos() == null))
+ 				  									.collect(Collectors.toList());
 	  }
 	        return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(mbrHedisMeasureList));
 	}

@@ -32,7 +32,7 @@
 				 	<div class="col-sm-3"><label for="Plan" >Plan</label></div>
 				 	<div class="col-sm-8">
 						<springForm:select path="planTypeId" class="form-control" id="planTypeId" style="width:150px;">
-				    		<springForm:options items="${planTypeList}" itemValue="id" itemLabel="code"     />
+				    		<springForm:options items="${planTypeList}" itemValue="id" itemLabel="description"     />
 							</springForm:select>
 					</div>
 					<div class="col-sm-12">
@@ -162,6 +162,7 @@ function deleteInsuranceDetails()
 		     success: function(data, textStatus, jqXHR)
 		    {
 		    	$('#insuranceContractList').html(data);
+		    	
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
@@ -273,34 +274,101 @@ function deleteInsuranceDetails()
 	
 	function modifyContract(pmpmRequired)
 	{
-		if(pmpmRequired){
-			var url = getContextPath()+'insurance/${id}/contract/save.do?update';  
-			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' );
-			removeNewcontract();
-		}
-		return false;
+		var mindates=[];
+		var maxdates=[];
+		var pmpmList=[];
+		
+		$("#insuranceContractList .updateError").html('');
+		var pmpm = $("#PMPM").val();
+		var startDate = $(".datepickerfrom").val(); 
+		var endDate = $(".datepickerto").val();
+		var error = 0;
+		var source = getContextPath()+'insurance/${id}/contractJsonList';
+	 	$.ajax({
+	 		url : source,
+	 	    success: function(data, textStatus, jqXHR)
+	 	    {
+	 	    	   
+	 	    		 $.each(data.data, function(i, item) {
+	 	    			mindates.push(new Date(data.data[i].startDate));
+	 	    			maxdates.push(new Date(data.data[i].endDate));
+	 	    			pmpmList.push(data.data[i].pmpm);
+	 	    		});
+	 	    		 
+	 	    		var maxDate=new Date(Math.max.apply(null,maxdates));
+	 	   			var minDate=new Date(Math.min.apply(null,mindates));
+	 	   			var maxpmpm = Math.max.apply(null,pmpmList); 
+	 	   			
+	 	   			if(pmpm < maxpmpm)
+	 	   			{
+	 	   				error = 1;
+	 	   				$("#insuranceContractList .updateError").append("<div class='row col-sm-12'>PMPM must be greater than $"+ maxpmpm +"</div>");
+	 	   			}
+		 	   		if(Date.parse(startDate) > Date.parse(minDate))
+	 		    	{
+		 	   			error = 1;
+	 		    		var dMin = new Date(minDate);
+	 		    		dMin = (dMin.getMonth()+1)+"/"+dMin.getDate() + "/"+dMin.getFullYear();
+			 			$("#insuranceContractList .updateError").append("<div class='row col-sm-12'>Start date must be less than "+ dMin +"</div>");
+	 		    	}
+ 		    
+		 		   if(Date.parse(endDate) < Date.parse(maxDate))
+				   	{
+		 			    error = 1;
+		 			 	var dMax = new Date(maxDate);
+		 			  	dMax = (dMax.getMonth()+1)+"/"+dMax.getDate() + "/"+dMax.getFullYear();
+				      	$("#insuranceContractList .updateError").append("<div class='row col-sm-12'>End date must be greater than "+ dMax +"</div>");
+				    }
+	 	   			if(error == 1)
+	 	 	 	   	{ return false;}
+	 	 	 	    else
+	 	 	 	    {
+	 	 		   		if(pmpmRequired){
+	 	 		 			var url = getContextPath()+'insurance/${id}/contract/save.do?update';  
+	 	 		 			ajaxCallWithFileUpload( url, pmpmRequired, 'insuranceContractList' );
+	 	 		 			removeNewcontract();
+	 	 		 		}
+	 	 		 		return false;
+	 	 	 	 	}
+	 	       }
+	 	  });
 	}
 	
 	function deleteContract(pmpmRequired)
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'insurance/${id}/contract/save.do?delete'; 
-			var dataList = 	$("#contract"+pmpmRequired).serialize();
-			$.ajax({
-		           type: "POST",
-		           url: url,
-		           data: dataList, 
-		           success: function(data)
-		           {
-		            	$('#insuranceContractList').html(data);
-		            	removeNewcontract();
-		           },
-		    		error:function(data)
-		    		{
-		    			 alert('Insurance Delete Contact Error '+ data); 
-		    		}
-		         });
+			var source = getContextPath()+'insurance/${id}/contractJsonList';
+		 	   $.ajax({
+		 	    url : source,
+		 	       success: function(data, textStatus, jqXHR)
+		 	       {
+			 	    	 if(data.data.length > 0)
+			 	    	 {
+			 	    		$("#insuranceContractList .clrRed").append("Delete depending TPA");
+			 	    	 }	 
+			 	    	 else
+			 	    	 {
+			 	    		var url = getContextPath()+'insurance/${id}/contract/save.do?delete'; 
+			 				var dataList = 	$("#contract"+pmpmRequired).serialize();
+			 				$.ajax({
+			 			           type: "POST",
+			 			           url: url,
+			 			           data: dataList, 
+			 			           success: function(data)
+			 			           {
+			 			            	$('#insuranceContractList').html(data);
+			 			            	removeNewcontract();
+			 			           },
+			 			    		error:function(data)
+			 			    		{
+			 			    			 alert('Insurance Delete Contact Error '+ data); 
+			 			    		}
+			 			         });
+			 	    	 } 
+		 	       }	   
+		 	   });
+			
 		}	
 	}
 	
@@ -394,8 +462,8 @@ function deleteInsuranceDetails()
 	      if(rowCount > 1)
 	      { 
 	    	 $('#insuranceContractList .panel-heading button').hide();
- 		     prvdrInscontractList();
+ 		    
 	      }
 	}
-
+	
 </script>

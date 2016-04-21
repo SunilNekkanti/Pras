@@ -7,7 +7,7 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-		${contractType}	Contract List<span class="badge">${contractList.size()}</span>
+		${contractType}	
 			<span class="clrRed">${Message}</span>
 				<button class="btn btn-danger pull-right btn-xs" onclick= "return newContract(${pmpmRequired});">
           			<span class="glyphicon glyphicon-plus-sign "></span> New Contract
@@ -86,7 +86,7 @@
 						        	<td> <fmt:formatDate value="${cntct.startDate}"  pattern="MM-dd-yyyy" /> </td>
 						        	<td> <fmt:formatDate value="${cntct.endDate}"  pattern="MM-dd-yyyy" /> </td>
 						        <c:choose>
-									<c:when test="${cntct.filesUpload.fileName}">
+									<c:when test="${not empty cntct.filesUpload.id}">
 										<td><a href="#" onclick="fileDownload(${cntct.id})"><span class="glyphicon glyphicon-open-file"></span></a> </td> 
 									</c:when>
 									<c:otherwise>

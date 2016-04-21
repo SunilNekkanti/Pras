@@ -31,7 +31,7 @@
 				 	<div class="col-sm-3"><label for="Plan" >Plan</label></div>
 				 	<div class="col-sm-8">
 						<springForm:select path="planTypeId" class="form-control" id="planTypeId" style="width:150px;">
-				    		<springForm:options items="${planTypeList}" itemValue="id" itemLabel="code"     />
+				    		<springForm:options items="${planTypeList}" itemValue="id" itemLabel="description"     />
 							</springForm:select>
 					</div>
 					<div class="col-sm-12">

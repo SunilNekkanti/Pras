@@ -83,6 +83,11 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 			refRestrictionString = "refContract.ins.id";
 			cr.add(Restrictions.isNull("refContract.prvdr.id"));
 		}
+		else if("insuranceProvider".equals(refString)) 
+		{
+			refRestrictionString = "refContract.ins.id";
+			cr.add(Restrictions.isNotNull("refContract.prvdr.id"));
+		}
      			
      	if(refRestrictionString != null)
      	{

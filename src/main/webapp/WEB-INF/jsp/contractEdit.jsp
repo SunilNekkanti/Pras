@@ -10,12 +10,14 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			Contract Details
+			${contractType}	Details
+			<span class="clrRed">${Message}</span>
 			<button class="btn btn-danger pull-right btn-xs" onclick= "return contractList(${pmpmRequired});">
           		<span class="glyphicon glyphicon-plus-sign "></span> contract List
            </button>
     	</div>
 		<div class="panel-body">
+			<span class="updateError"></span>
 			<springForm:form method="POST" id="contract${pmpmRequired}" commandName="contract" action="${id}/contract/save.do" class="form-horizontal" role="form" enctype="multipart/form-data">
 				<div class="col-sm-12">
 					<div class="col-sm-3">

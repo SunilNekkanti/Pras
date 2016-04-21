@@ -32,7 +32,7 @@
 					<label class="control-label col-sm-2" for="Plan">Plan</label>
 					<div class="col-sm-6">
 						<springForm:select path="planTypeId" class="form-control" id="planTypeId">
-				    		<springForm:options items="${planTypeList}" itemValue="id" itemLabel="code"     />
+				    		<springForm:options items="${planTypeList}" itemValue="id" itemLabel="description"     />
 						</springForm:select>
 						<springForm:errors path="planTypeId.code" cssClass="error text-danger" />
 					  </div>

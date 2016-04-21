@@ -188,17 +188,13 @@ public class ContactController{
             BindingResult bindingResult, Model model,
             @ModelAttribute("username") String username) {
 		contact.setActiveInd('Y');
-		System.out.println("1");
         if (bindingResult.hasErrors()) {
-        	System.out.println("1.1");
         	contact.setActiveInd('Y');
             logger.info("Returning contactEdit.jsp page");
             return "membershipContactEdit";
         }
-        System.out.println("2");
         if (null != contact.getId())
         {
-        	System.out.println("2.1");
         	logger.info("Returning ContactEditSuccess.jsp page after update");
         	contact.setUpdatedBy(username);
         	contact.setCreatedBy(username);

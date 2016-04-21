@@ -536,7 +536,8 @@ $(document).ready(function() {
 	    	if($(this).is(':checked'))
 	    	{
 	    		$("."+this.id).addClass( "datepicker" );
-	    		 $(".datepicker" ).show();
+	    		$(".datepicker" ).show();
+	    		$(".datepicker").datepicker({maxDate: '0'});
 	    	}
 	    	else
 	    	{

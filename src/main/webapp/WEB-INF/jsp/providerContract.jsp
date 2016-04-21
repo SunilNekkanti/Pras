@@ -6,7 +6,7 @@
 <h2>  ${provider.name} ${provider.id} </h2>
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Provider Contract Details</div>
+		<div class="panel-heading">${contractType} Details</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="providerContract" action="save.do">
 				<div class="form-group col-sm-12">
