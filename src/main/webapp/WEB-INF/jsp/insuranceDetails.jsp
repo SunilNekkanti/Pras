@@ -345,7 +345,7 @@ function deleteInsuranceDetails()
 		 	       {
 			 	    	 if(data.data.length > 0)
 			 	    	 {
-			 	    		$("#insuranceContractList .clrRed").append("Delete depending TPA");
+			 	    		$("#insuranceContractList .clrRed").append("Cannot delete because of depending Third Party Agreements");
 			 	    	 }	 
 			 	    	 else
 			 	    	 {

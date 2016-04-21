@@ -478,7 +478,7 @@ public class ContractController{
 		@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/new")
 	    public String addprvdrinsContractPage(@PathVariable Integer id,Model model) {
  			
-			Set<Insurance> insList = getInsuranceList( id);
+			Set<Insurance> insList = getInsuranceList( id, true);
 			
 			Contract contract = createContractModel();
 			model.addAttribute("contract", contract);
@@ -538,7 +538,7 @@ public class ContractController{
 			
 			model.addAttribute("contractType", "Third Party Agreement");
 			if (bindingResult.hasErrors()) {
-	        	Set<Insurance> insList = getInsuranceList(id);
+	        	Set<Insurance> insList = getInsuranceList(id,true);
 	        	 model.addAttribute("insuranceList",insList);
 	        	 model.addAttribute("pmpmRequired", true);
 		 	     model.addAttribute("insuranceRequired", true);
@@ -590,7 +590,7 @@ public class ContractController{
 			contract.setActiveInd('Y');
 			
 			if (bindingResult.hasErrors()) {
-				Set<Insurance> insList = getInsuranceList(id);
+				Set<Insurance> insList = getInsuranceList(id, false);
 				 model.addAttribute("contract",contract);
 	        	 model.addAttribute("insuranceList",insList);
 	        	model.addAttribute("pmpmRequired", true);
@@ -642,7 +642,7 @@ public class ContractController{
 			model.addAttribute("contractType", "Third Party Agreement");
 			if (bindingResult.hasErrors())
 			{
-				Set<Insurance> insList = getInsuranceList(id);
+				Set<Insurance> insList = getInsuranceList(id, false);
 	        	 model.addAttribute("insuranceList",insList);
 				model.addAttribute("pmpmRequired", true);
 		 	    model.addAttribute("insuranceRequired", true);
@@ -689,7 +689,7 @@ public class ContractController{
 		
 		
 		@SuppressWarnings("unchecked")
-		protected Set<Insurance> getInsuranceList(Integer id){
+		protected Set<Insurance> getInsuranceList(Integer id, boolean add){
 			Pagination page = contractService.getPage(0,20000);
 			List<Contract> contracts = (List<Contract>) page.getList();
 			Set<Insurance> insList = new HashSet<Insurance>();
@@ -704,7 +704,9 @@ public class ContractController{
 						insList.add(contract1.getReferenceContract().getIns());
 					}else if(contract1.getReferenceContract().getPrvdr().getId() == id)
 					{
-						insList.remove(contract1.getReferenceContract().getIns());
+						if(add){
+							insList.remove(contract1.getReferenceContract().getIns());
+						}
 					}
 				}
 			});
