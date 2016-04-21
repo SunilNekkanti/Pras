@@ -81,7 +81,7 @@ $(document).ready(function() {
 				columns = new Array();
 	     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center","sWidth" : "3%",
 	     						"render": function (data, type, full, meta) {
-		      								return '<a href="javascript:void(0)" id="'+data+'" onclick="myFunction('+data+')"><span class="glyphicon glyphicon-pencil"></span></a>';
+		      								return '<a href="javascript:void(0)" id="'+data+'" onclick="myFunction('+data+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
 		        						  }
 	     					});
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
@@ -327,7 +327,7 @@ $(document).ready(function() {
      		});	
  } );
 
- function myFunction(id) 
+ function myFunction(id,lastName,firstName) 
 {
 	   if ( $.fn.DataTable.isDataTable('#mbrHedisMeasureTable') ) {
 				$('#mbrHedisMeasureTable').DataTable().destroy();
@@ -406,10 +406,13 @@ $(document).ready(function() {
 			
 			
 		//	$( "#modal-body" ).html('');
-			$( "#modal-body textarea" ).remove();
+			
+			$(".modal-title").html(lastName+","+firstName+" - Hedis Followup");
+			$( "#modal-body .notes" ).remove();
+			$( "#modal-body .history" ).remove();
    			$( "#modal-body #mbr_id" ).remove();
- 			$( "#modal-body" ).append('<br /><textarea  id="followup_details"  class="form-control" rows="5" ></textarea>');
- 			$( "#modal-body" ).append('<br /><textarea  id="followup_history" readonly class="form-control" rows="5" ></textarea>');
+ 			$( "#modal-body" ).append('<div class="notes"> <br /> Notes <textarea  id="followup_details"  class="form-control" rows="5" ></textarea></div>');
+ 			$( "#modal-body" ).append('<div class="history"><br /> History<textarea  id="followup_history" readonly class="form-control" rows="5" ></textarea></div>');
  			$( "#modal-body" ).append('<input type="hidden"  value="'+id+'" id="mbr_id"  class="form-control" />');
  			
 		  var  mbr_id =id;
@@ -536,8 +539,8 @@ $(document).ready(function() {
 	    	if($(this).is(':checked'))
 	    	{
 	    		$("."+this.id).addClass( "datepicker" );
+	    		$(".datepicker").datepicker({maxDate:"0"}).datepicker("setDate",new Date());
 	    		$(".datepicker" ).show();
-	    		$(".datepicker").datepicker({maxDate: '0'});
 	    	}
 	    	else
 	    	{
