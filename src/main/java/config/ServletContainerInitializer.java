@@ -15,78 +15,68 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  * 
  * @author Sarath
  */
-public class ServletContainerInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
-{
+public class ServletContainerInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException
-    {
-        servletContext.addFilter("openSessionInViewFilter", openSessionInViewFilter()).addMappingForUrlPatterns(null, false, "/*");
-        servletContext.addFilter("characterEncodingFilter", characterEncodingFilter()).addMappingForUrlPatterns(null, true, "/*");
-        servletContext.addFilter("hiddenHttpMethodFilter", hiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
-        
-        FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
-        securityFilter.addMappingForUrlPatterns(null, false, "/*");
-        super.onStartup(servletContext);
-        
-    }
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		servletContext.addFilter("openSessionInViewFilter", openSessionInViewFilter()).addMappingForUrlPatterns(null,
+				false, "/*");
+		servletContext.addFilter("characterEncodingFilter", characterEncodingFilter()).addMappingForUrlPatterns(null,
+				true, "/*");
+		servletContext.addFilter("hiddenHttpMethodFilter", hiddenHttpMethodFilter()).addMappingForUrlPatterns(null,
+				true, "/*");
 
-    /**
-     * Common configuration.
-     */
-    @Override
-    protected Class<?>[] getRootConfigClasses()
-    {
-    	return new Class[]{ApplicationContext.class, SecurityConfig.class};
-    }
+		FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain",
+				DelegatingFilterProxy.class);
+		securityFilter.addMappingForUrlPatterns(null, false, "/*");
+		super.onStartup(servletContext);
 
-    /**
-     * SpringMVC configuration.
-     */
-    @Override
-    protected Class<?>[] getServletConfigClasses()
-    {
+	}
 
-    	
-        return new Class<?>[] {SpringMVCApplicationContext.class};
-    }
+	/**
+	 * Common configuration.
+	 */
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] { ApplicationContext.class, SecurityConfig.class };
+	}
 
-    @Override
-    protected String[] getServletMappings()
-    {
-        return new String[]
-        {
-            "/"
-        };
-    }
+	/**
+	 * SpringMVC configuration.
+	 */
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
 
-    @Override
-    protected String getServletName()
-    {
-        return "pfchoice";
-    }
+		return new Class<?>[] { SpringMVCApplicationContext.class };
+	}
 
-    @Override
-    protected boolean isAsyncSupported()
-    {
-        return true;
-    }
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
+	}
 
-    private Filter openSessionInViewFilter()
-    {
-        return new OpenSessionInViewFilter();
-    }
+	@Override
+	protected String getServletName() {
+		return "pfchoice";
+	}
 
-    private Filter characterEncodingFilter()
-    {
-        CharacterEncodingFilter cef = new CharacterEncodingFilter();
-        cef.setEncoding("UTF-8");
-        return cef;
-    }
+	@Override
+	protected boolean isAsyncSupported() {
+		return true;
+	}
 
-    private Filter hiddenHttpMethodFilter()
-    {
-        return new HiddenHttpMethodFilter();
-    }
+	private Filter openSessionInViewFilter() {
+		return new OpenSessionInViewFilter();
+	}
+
+	private Filter characterEncodingFilter() {
+		CharacterEncodingFilter cef = new CharacterEncodingFilter();
+		cef.setEncoding("UTF-8");
+		return cef;
+	}
+
+	private Filter hiddenHttpMethodFilter() {
+		return new HiddenHttpMethodFilter();
+	}
 
 }

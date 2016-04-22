@@ -10,21 +10,20 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface MembershipHedisFollowupService
-{
+public interface MembershipHedisFollowupService {
 
 	MembershipHedisFollowup deleteById(Integer id);
 
 	MembershipHedisFollowup findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    MembershipHedisFollowup save(MembershipHedisFollowup bean);
+	MembershipHedisFollowup save(MembershipHedisFollowup bean);
 
-    MembershipHedisFollowup update(MembershipHedisFollowup bean);
-    
-    List<MembershipHedisFollowup> findAll();
-    
-    List<MembershipHedisFollowup> findAllByMbrId(Integer id);
+	MembershipHedisFollowup update(MembershipHedisFollowup bean);
+
+	List<MembershipHedisFollowup> findAll();
+
+	List<MembershipHedisFollowup> findAllByMbrId(Integer id);
 
 }

@@ -3,7 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
@@ -20,99 +19,86 @@ import com.pfchoice.core.entity.Provider;
  * @author Mohanasundharam
  */
 @Repository
-public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> implements ProviderDao
-{
+public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> implements ProviderDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ProviderDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ProviderDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo, final int pageSize, 
-    		final String sSearch, final String sort, final String sortdir)
-    {
-    	Criteria crit = createCriteria();
-     //   crit.createAlias("refContracts","refContract");
-        crit.add(Restrictions.eq("activeInd", new Character('Y')));
-      //  crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
-        
-        Disjunction or = Restrictions.disjunction();
-    	
-    	if( sSearch != null && !"".equals(sSearch))
-    	{
-    		Criterion name   = Restrictions.ilike("name","%"+sSearch+"%");
-    		Criterion code   = Restrictions.ilike("code","%"+sSearch+"%");
-    		
-    		or.add(name);
-    		or.add(code);
-    		crit.add(or);
-    	}
-        
-        if(sort != null && !"".equals(sort)) 
-		{
-			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
-			{
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		Criteria crit = createCriteria();
+		// crit.createAlias("refContracts","refContract");
+		crit.add(Restrictions.eq("activeInd", new Character('Y')));
+		// crit.add(Restrictions.eq("refContract.activeInd", new
+		// Character('Y')));
+
+		Disjunction or = Restrictions.disjunction();
+
+		if (sSearch != null && !"".equals(sSearch)) {
+			Criterion name = Restrictions.ilike("name", "%" + sSearch + "%");
+			Criterion code = Restrictions.ilike("code", "%" + sSearch + "%");
+
+			or.add(name);
+			or.add(code);
+			crit.add(or);
+		}
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				crit.addOrder(Order.desc(sort));
-			}
-			else 
-			{
+			} else {
 				crit.addOrder(Order.asc(sort));
 			}
 		}
-        crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        
-        final String msg = "providerDaoImpl->getpage list size is %d";
-    	final String fmt = String.format(msg, page.getList().size());
-    	LOG.info(fmt);
-    	
-        return page;
-        
-    }
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
 
-    @Override
-    public Provider findById(final Integer id)
-    {
-    	Provider entity = get(id);
-        return entity;
-    }
+		final String msg = "providerDaoImpl->getpage list size is %d";
+		final String fmt = String.format(msg, page.getList().size());
+		LOG.info(fmt);
 
-    @Override
-    public Provider save(final Provider bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+		return page;
 
-    @Override
-    public Provider deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	Provider entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	}
 
-    @Override
-    protected Class<Provider> getEntityClass()
-    {
-        return Provider.class;
-    }
-    
-    @Override
-    public Pagination findByInsId(final Integer id)
-    {
-    	
-    	 Criteria crit = createCriteria();
-    	 crit.createAlias("refContracts", "refContract");
-    	 crit.createAlias("refContract.ins", "ins");
-         crit.add(Restrictions.eq("activeInd", new Character('Y')));
-         crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
-         crit.add(Restrictions.eq("ins.id", id));
-         
-         Pagination page = findByCriteria(crit, 0, 200);
-         return page;
-    }
+	@Override
+	public Provider findById(final Integer id) {
+		Provider entity = get(id);
+		return entity;
+	}
+
+	@Override
+	public Provider save(final Provider bean) {
+		getSession().save(bean);
+		return bean;
+	}
+
+	@Override
+	public Provider deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		Provider entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
+
+	@Override
+	protected Class<Provider> getEntityClass() {
+		return Provider.class;
+	}
+
+	@Override
+	public Pagination findByInsId(final Integer id) {
+
+		Criteria crit = createCriteria();
+		crit.createAlias("refContracts", "refContract");
+		crit.createAlias("refContract.ins", "ins");
+		crit.add(Restrictions.eq("activeInd", new Character('Y')));
+		crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
+		crit.add(Restrictions.eq("ins.id", id));
+
+		Pagination page = findByCriteria(crit, 0, 200);
+		return page;
+	}
 }

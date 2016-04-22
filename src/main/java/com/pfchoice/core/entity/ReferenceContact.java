@@ -22,73 +22,67 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity(name = "reference_contact")
-public class ReferenceContact implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class ReferenceContact implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="ref_cnt_Id", nullable = false)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @OneToOne( fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_id",  referencedColumnName="mbr_id")
-    private Membership mbr;
-    
-    @Expose
-    @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name="insurance_id",  referencedColumnName="insurance_id")
-    private Insurance ins;
-    
-    @Expose
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="prvdr_id",  referencedColumnName="prvdr_id")
-    private Provider prvdr;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    @OneToOne( fetch = FetchType.LAZY,mappedBy="refContact")
-    private Contact cnt;
-    
-      
-    public ReferenceContact()
-    {
-    }
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "ref_cnt_Id", nullable = false)
+	private Integer id;
 
-    public ReferenceContact(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
+	private Membership mbr;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "insurance_id", referencedColumnName = "insurance_id")
+	private Insurance ins;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
+	private Provider prvdr;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "refContact")
+	private Contact cnt;
+
+	public ReferenceContact() {
+	}
+
+	public ReferenceContact(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the mbr
@@ -98,7 +92,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param mbr
+	 *            the mbr to set
 	 */
 	public void setMbr(final Membership mbr) {
 		this.mbr = mbr;
@@ -112,7 +107,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param ins
+	 *            the ins to set
 	 */
 	public void setIns(final Insurance ins) {
 		this.ins = ins;
@@ -126,7 +122,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param prvdr
+	 *            the prvdr to set
 	 */
 	public void setPrvdr(final Provider prvdr) {
 		this.prvdr = prvdr;
@@ -140,7 +137,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -154,7 +152,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -168,7 +167,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -182,7 +182,8 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -196,12 +197,13 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
-	
+
 	/**
 	 * @return the cnt
 	 */
@@ -210,40 +212,37 @@ public class ReferenceContact implements Serializable
 	}
 
 	/**
-	 * @param cnt the cnt to set
+	 * @param cnt
+	 *            the cnt to set
 	 */
 	public void setCnt(final Contact cnt) {
 		this.cnt = cnt;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReferenceContact))
-        {
-            return false;
-        }
-        ReferenceContact other = (ReferenceContact) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof ReferenceContact)) {
+			return false;
+		}
+		ReferenceContact other = (ReferenceContact) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Contact[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Contact[ id=" + id + " ]";
+	}
 
 }

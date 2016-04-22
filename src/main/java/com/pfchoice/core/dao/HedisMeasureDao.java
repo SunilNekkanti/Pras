@@ -11,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface HedisMeasureDao
-{
+public interface HedisMeasureDao {
 
 	HedisMeasure deleteById(Integer id);
 
 	HedisMeasure findById(Integer id);
 
-	 Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    HedisMeasure save(HedisMeasure bean);
+	HedisMeasure save(HedisMeasure bean);
 
-    HedisMeasure updateByUpdater(Updater<HedisMeasure> updater);
-    
-    List<HedisMeasure> findAll();
+	HedisMeasure updateByUpdater(Updater<HedisMeasure> updater);
+
+	List<HedisMeasure> findAll();
 
 }

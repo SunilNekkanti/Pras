@@ -9,65 +9,57 @@ import javax.persistence.Id;
 
 import com.google.gson.annotations.Expose;
 
-
 /**
  *
  * @author Mohanasundharam
  */
 @Entity(name = "lu_ethinicity")
-public class Ethinicity implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class Ethinicity implements Serializable {
 
-    @Expose
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="code", nullable = false)
-    private Byte id;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Column(name="description")
-    private String description;
-    
-    @Column(name="created_date")
-    private Timestamp createdDate;
-    
-    @Column(name="updated_date")
-    private Timestamp updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-      
-    public Ethinicity()
-    {
-    }
+	@Expose
+	@Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "code", nullable = false)
+	private Byte id;
 
-    public Ethinicity(final Byte id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "description")
+	private String description;
 
-    public Byte getId()
-    {
-        return id;
-    }
+	@Column(name = "created_date")
+	private Timestamp createdDate;
 
-    public void setId(final Byte id)
-    {
-        this.id = id;
-    }
-    
-       
+	@Column(name = "updated_date")
+	private Timestamp updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public Ethinicity() {
+	}
+
+	public Ethinicity(final Byte id) {
+		this.id = id;
+	}
+
+	public Byte getId() {
+		return id;
+	}
+
+	public void setId(final Byte id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the description
 	 */
@@ -76,7 +68,8 @@ public class Ethinicity implements Serializable
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
@@ -90,7 +83,8 @@ public class Ethinicity implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
@@ -104,7 +98,8 @@ public class Ethinicity implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
@@ -118,7 +113,8 @@ public class Ethinicity implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -132,7 +128,8 @@ public class Ethinicity implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -146,43 +143,37 @@ public class Ethinicity implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Ethinicity)) {
+			return false;
+		}
+		Ethinicity other = (Ethinicity) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ethinicity))
-        {
-            return false;
-        }
-        Ethinicity other = (Ethinicity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Ethinicity[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Ethinicity[ id=" + id + " ]";
+	}
 
 }

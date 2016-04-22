@@ -11,20 +11,19 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface ZipCodeDao
-{
+public interface ZipCodeDao {
 
 	ZipCode deleteById(Integer id);
 
 	ZipCode findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    ZipCode save(ZipCode bean);
+	ZipCode save(ZipCode bean);
 
-    ZipCode updateByUpdater(Updater<ZipCode> updater);
-    
-    List<ZipCode> findAll();
-  
-    List<ZipCode> findByStateCode(Integer stateCode);
+	ZipCode updateByUpdater(Updater<ZipCode> updater);
+
+	List<ZipCode> findAll();
+
+	List<ZipCode> findByStateCode(Integer stateCode);
 }

@@ -1,6 +1,5 @@
 package com.pfchoice.core.dao;
 
-
 import com.pfchoice.core.entity.User;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -10,20 +9,19 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface UserDao
-{
+public interface UserDao {
 
 	User deleteById(Integer id);
 
 	User findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    User save(User bean);
+	User save(User bean);
 
-    User updateByUpdater(Updater<User> updater);
-    
-    User findByLogin(String login);
+	User updateByUpdater(Updater<User> updater);
 
-    boolean isValidUser(String login, String password);
+	User findByLogin(String login);
+
+	boolean isValidUser(String login, String password);
 }

@@ -1,9 +1,9 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
@@ -103,33 +103,33 @@ $.ajax( {
   	     "bServerSide" : true,
   	     "fnServerData" : datatable2Rest
   	});
-
   	
 } );
     </script>
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure Rule List
-		<span class="clrRed">${Message}</span>
-		 </div>
+		<div class="panel-heading">
+			Hedis Measure Rule List <span class="clrRed">${Message}</span>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
-				<table id="hedisMeasureRuleTable" class="display table-responsive  table table-striped table-hover"> 
-				
+				<table id="hedisMeasureRuleTable"
+					class="display table-responsive  table table-striped table-hover">
+
 					<thead>
 						<tr>
-							<th  scope="col">Action</th> 
-							<th  scope="col">Hedis Code</th> 
-							<th  scope="col">CPT Codes</th>  
-					        <th  scope="col">ICD Codes</th> 
-					        <th  scope="col">Dose Count</th> 
-					        <th  scope="col">Gender</th> 
-					        <th  scope="col">Lower Age Limit</th> 
-					        <th  scope="col">Upper Age Limit</th> 
-					        <th  scope="col">Eff. Date From</th> 
-					        <th  scope="col">Eff. Date To</th> 
-					        <th  scope="col">Description</th> 
+							<th scope="col">Action</th>
+							<th scope="col">Hedis Code</th>
+							<th scope="col">CPT Codes</th>
+							<th scope="col">ICD Codes</th>
+							<th scope="col">Dose Count</th>
+							<th scope="col">Gender</th>
+							<th scope="col">Lower Age Limit</th>
+							<th scope="col">Upper Age Limit</th>
+							<th scope="col">Eff. Date From</th>
+							<th scope="col">Eff. Date To</th>
+							<th scope="col">Description</th>
 						</tr>
 					</thead>
 

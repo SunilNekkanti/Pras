@@ -11,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface CPTMeasureDao
-{
+public interface CPTMeasureDao {
 
 	CPTMeasure deleteById(Integer id);
 
 	CPTMeasure findById(Integer id);
 
-	 Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    CPTMeasure save(CPTMeasure bean);
+	CPTMeasure save(CPTMeasure bean);
 
-    CPTMeasure updateByUpdater(Updater<CPTMeasure> updater);
-    
-    List<CPTMeasure> findAll();
+	CPTMeasure updateByUpdater(Updater<CPTMeasure> updater);
+
+	List<CPTMeasure> findAll();
 
 }

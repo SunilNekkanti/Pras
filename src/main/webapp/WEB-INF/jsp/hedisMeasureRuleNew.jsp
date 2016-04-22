@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form"
-    prefix="springForm"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+	prefix="springForm"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <script type="text/javascript">
     
 $(document).ready(function() {
@@ -176,220 +177,274 @@ $.ajax( {
           	
 } );
         
-</script>   
+</script>
 
 <div class="panel  panel-success">
-		<div class="panel-heading">Hedis Measure Rule
-			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureRule/hedisMeasureRuleList">
-          		<span class="glyphicon glyphicon-plus-sign "></span>Hedis Measure Rule List
-          	</a>
-          </div>
-		<div class="panel-body" id="tablediv">
-			<springForm:form id="hedisMeasureRule" method="POST" commandName="hedisMeasureRule" action="${context}/hedisMeasureRule/save.do" class="form-horizontal" role="form">
-				<springForm:hidden path="id" />
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
-					<div class="col-sm-6">
-						<springForm:select path="hedisMeasure" class="form-control" id="hedisCode" >
-				    		<springForm:options items="${hedisMeasureList}" itemValue="id" itemLabel="codeAndDescription"   />
-						</springForm:select>
-						<springForm:errors path="hedisMeasure.code" cssClass="error text-danger" />
-					</div>
+	<div class="panel-heading">
+		Hedis Measure Rule <a
+			class="btn btn-danger pull-right btn-xs white-text"
+			href="${context}/hedisMeasureRule/hedisMeasureRuleList"> <span
+			class="glyphicon glyphicon-plus-sign "></span>Hedis Measure Rule List
+		</a>
+	</div>
+	<div class="panel-body" id="tablediv">
+		<springForm:form id="hedisMeasureRule" method="POST"
+			commandName="hedisMeasureRule"
+			action="${context}/hedisMeasureRule/save.do" class="form-horizontal"
+			role="form">
+			<springForm:hidden path="id" />
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
+				<div class="col-sm-6">
+					<springForm:select path="hedisMeasure" class="form-control"
+						id="hedisCode">
+						<springForm:options items="${hedisMeasureList}" itemValue="id"
+							itemLabel="codeAndDescription" />
+					</springForm:select>
+					<springForm:errors path="hedisMeasure.code"
+						cssClass="error text-danger" />
 				</div>
-				
-				<div class="form-group required">
-					<label class="control-label   col-sm-2" for="description">Description</label>
-					<div class="col-sm-6">
-						<springForm:input path="description" class="form-control" maxlength="500" id="description" placeholder="description" />
-						<springForm:errors path="description" cssClass="error text-danger" />
-					  </div>
+			</div>
+
+			<div class="form-group required">
+				<label class="control-label   col-sm-2" for="description">Description</label>
+				<div class="col-sm-6">
+					<springForm:input path="description" class="form-control"
+						maxlength="500" id="description" placeholder="description" />
+					<springForm:errors path="description" cssClass="error text-danger" />
 				</div>
-				
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="insurance">Insurance</label>
-					<div class="col-sm-6">
-						<springForm:select path="insId"  class="form-control" id="insurance">
-							<springForm:option  value="${null}" label="Select One" />
-					   		<springForm:options items="${insuranceList}"  itemValue="id" itemLabel="name"    />
-						</springForm:select>
-						<springForm:errors path="insId" cssClass="error text-danger" />
-					</div>
+			</div>
+
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="insurance">Insurance</label>
+				<div class="col-sm-6">
+					<springForm:select path="insId" class="form-control" id="insurance">
+						<springForm:option value="${null}" label="Select One" />
+						<springForm:options items="${insuranceList}" itemValue="id"
+							itemLabel="name" />
+					</springForm:select>
+					<springForm:errors path="insId" cssClass="error text-danger" />
 				</div>
-				
-				
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="cpt">CPT Code</label>
-					<div class="col-sm-6">
-						<springForm:select multiple="true" path="cptCodes" class="form-control"  size="9" items="${cptMeasureListAjax}" itemLabel="codeAndDescription" itemValue="id" />
-						<springForm:errors path="cptCodes" cssClass="error text-danger" />
-					</div>
-					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#cptModal" class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a>
-					    <a href="#" id='removeCPT' class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a>
-					 </div>	
+			</div>
+
+
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="cpt">CPT Code</label>
+				<div class="col-sm-6">
+					<springForm:select multiple="true" path="cptCodes"
+						class="form-control" size="9" items="${cptMeasureListAjax}"
+						itemLabel="codeAndDescription" itemValue="id" />
+					<springForm:errors path="cptCodes" cssClass="error text-danger" />
 				</div>
-				 		 
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="cpt">ICD Code</label>
-					<div class="col-sm-6">
-						<springForm:select multiple="true" path="icdCodes" class="form-control"  size="9" items="${icdMeasureListAjax}" itemLabel="codeAndDescription" itemValue="id" />
-						<springForm:errors path="icdCodes" cssClass="error text-danger" />
-					</div>
-					<div class="col-sm-2">
-						<a href="#" data-toggle="modal" data-target="#icdModal"class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-plus-sign"></span>ICD</a>
-						<a href="#" id="removeICD" class="btn btn-success btn-sm white-text"> <span class="glyphicon glyphicon-minus-sign"></span>ICD</a>
-					 </div>	
+				<div class="col-sm-2">
+					<a href="#" data-toggle="modal" data-target="#cptModal"
+						class="btn btn-success btn-sm white-text"> <span
+						class="glyphicon glyphicon-plus-sign"></span>CPT
+					</a> <a href="#" id='removeCPT'
+						class="btn btn-success btn-sm white-text"> <span
+						class="glyphicon glyphicon-minus-sign"></span>CPT
+					</a>
 				</div>
-				
-				<div class="form-group required">
-					<label class="control-label col-sm-2" for="effYear">Effective Year (YYYY)</label>
-					<div class="col-sm-6">
-						<springForm:select path="effectiveYear" class="form-control" id="effectiveYear">
-				    		<springForm:options items="${effYearList}"   />
-						</springForm:select>
-						<springForm:errors path="effectiveYear" cssClass="error text-danger" />
-					  </div>
+			</div>
+
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="cpt">ICD Code</label>
+				<div class="col-sm-6">
+					<springForm:select multiple="true" path="icdCodes"
+						class="form-control" size="9" items="${icdMeasureListAjax}"
+						itemLabel="codeAndDescription" itemValue="id" />
+					<springForm:errors path="icdCodes" cssClass="error text-danger" />
 				</div>
-				
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="gender">Gender</label>
-					<div class="col-sm-6">
-						<springForm:select path="genderId"  class="form-control" id="gender">
-							<springForm:option  value="${null}" label="Select One" />
-					   		<springForm:options items="${genderList}"  itemValue="id" itemLabel="description"    />
-						</springForm:select>
-						<springForm:errors path="genderId" cssClass="error text-danger" />
-					</div>
+				<div class="col-sm-2">
+					<a href="#" data-toggle="modal" data-target="#icdModal"
+						class="btn btn-success btn-sm white-text"> <span
+						class="glyphicon glyphicon-plus-sign"></span>ICD
+					</a> <a href="#" id="removeICD"
+						class="btn btn-success btn-sm white-text"> <span
+						class="glyphicon glyphicon-minus-sign"></span>ICD
+					</a>
 				</div>
-				<div class="form-group">
-					<label class="control-label   col-sm-2" for="lowerAgeLimit">Lower Age Limit</label>
-					<div class="col-sm-6">
-						<springForm:input path="lowerAgeLimit" class="form-control" id="lowerAgeLimit" placeholder="lowerAgeLimit" />
-						<springForm:errors path="lowerAgeLimit" cssClass="error text-danger" />
-					  </div>
+			</div>
+
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="effYear">Effective
+					Year (YYYY)</label>
+				<div class="col-sm-6">
+					<springForm:select path="effectiveYear" class="form-control"
+						id="effectiveYear">
+						<springForm:options items="${effYearList}" />
+					</springForm:select>
+					<springForm:errors path="effectiveYear"
+						cssClass="error text-danger" />
 				</div>
-				
-				<div class="form-group">
-					<label class="control-label  col-sm-2" for="upperAgeLimit">Upper Age Limit</label>
-					<div class="col-sm-6">
-						<springForm:input path="upperAgeLimit" class="form-control" id="upperAgeLimit" placeholder="upperAgeLimit" />
-						<springForm:errors path="upperAgeLimit" cssClass="error text-danger" />
-					  </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="gender">Gender</label>
+				<div class="col-sm-6">
+					<springForm:select path="genderId" class="form-control" id="gender">
+						<springForm:option value="${null}" label="Select One" />
+						<springForm:options items="${genderList}" itemValue="id"
+							itemLabel="description" />
+					</springForm:select>
+					<springForm:errors path="genderId" cssClass="error text-danger" />
 				</div>
-				
-				<div class="form-group">
-					<label class="control-label  col-sm-2" for="doseCount">Dose Count</label>
-					<div class="col-sm-6">
-						<springForm:input path="doseCount" class="form-control" id="doseCount" placeholder="doseCount" />
-						<springForm:errors path="doseCount" cssClass="error text-danger" />
-					  </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label   col-sm-2" for="lowerAgeLimit">Lower
+					Age Limit</label>
+				<div class="col-sm-6">
+					<springForm:input path="lowerAgeLimit" class="form-control"
+						id="lowerAgeLimit" placeholder="lowerAgeLimit" />
+					<springForm:errors path="lowerAgeLimit"
+						cssClass="error text-danger" />
 				</div>
-				
-				<div class="form-group">
-					<label class="control-label  col-sm-2" for="ageEffectiveFrom" >Age Effective From</label>
-					<div class="col-sm-6">
-						<fmt:formatDate value="${hedisMeasureRule.ageEffectiveFrom}" var="dateString" pattern="MM/dd/yyyy" />
-						<springForm:input path="ageEffectiveFrom" value="${dateString}"  class="form-control datepicker"  id="ageEffectiveFrom" placeholder="ageEffectiveFrom" />
-						<springForm:errors path="ageEffectiveFrom" cssClass="error text-danger" />
-					  </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label  col-sm-2" for="upperAgeLimit">Upper
+					Age Limit</label>
+				<div class="col-sm-6">
+					<springForm:input path="upperAgeLimit" class="form-control"
+						id="upperAgeLimit" placeholder="upperAgeLimit" />
+					<springForm:errors path="upperAgeLimit"
+						cssClass="error text-danger" />
 				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="ageEffectiveTo ">Age Effective To</label>
-					<div class="col-sm-6">
-						<fmt:formatDate value="${hedisMeasureRule.ageEffectiveTo}" var="dateString" pattern="MM/dd/yyyy" />
-						<springForm:input path="ageEffectiveTo" value="${dateString}" class="form-control datepicker" id="ageEffectiveTo" placeholder="ageEffectiveTo" />
-						<springForm:errors path="ageEffectiveTo" cssClass="error text-danger" />
-					  </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label  col-sm-2" for="doseCount">Dose
+					Count</label>
+				<div class="col-sm-6">
+					<springForm:input path="doseCount" class="form-control"
+						id="doseCount" placeholder="doseCount" />
+					<springForm:errors path="doseCount" cssClass="error text-danger" />
 				</div>
-				<div class="col-sm-offset-6 col-sm-4">
-					<c:choose>
-						 <c:when test="${hedisMeasureRule.id != null}"> 
-						 	<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="update" >Update</button>
-						 	<button type="submit" class="btn btn-success btn-sm" id="deleteButton" name="delete" >Delete</button>
-						 </c:when>
-						 <c:otherwise>
-							<button type="submit" class="btn btn-success btn-sm" id="updateButton" name="add" >Add</button>
-							<button type="submit" class="btn btn-success btn-sm" id="resetButton" >Reset</button>
-						</c:otherwise>
-						</c:choose>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label  col-sm-2" for="ageEffectiveFrom">Age
+					Effective From</label>
+				<div class="col-sm-6">
+					<fmt:formatDate value="${hedisMeasureRule.ageEffectiveFrom}"
+						var="dateString" pattern="MM/dd/yyyy" />
+					<springForm:input path="ageEffectiveFrom" value="${dateString}"
+						class="form-control datepicker" id="ageEffectiveFrom"
+						placeholder="ageEffectiveFrom" />
+					<springForm:errors path="ageEffectiveFrom"
+						cssClass="error text-danger" />
 				</div>
-			</springForm:form>
-			
-</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="ageEffectiveTo ">Age
+					Effective To</label>
+				<div class="col-sm-6">
+					<fmt:formatDate value="${hedisMeasureRule.ageEffectiveTo}"
+						var="dateString" pattern="MM/dd/yyyy" />
+					<springForm:input path="ageEffectiveTo" value="${dateString}"
+						class="form-control datepicker" id="ageEffectiveTo"
+						placeholder="ageEffectiveTo" />
+					<springForm:errors path="ageEffectiveTo"
+						cssClass="error text-danger" />
+				</div>
+			</div>
+			<div class="col-sm-offset-6 col-sm-4">
+				<c:choose>
+					<c:when test="${hedisMeasureRule.id != null}">
+						<button type="submit" class="btn btn-success btn-sm"
+							id="updateButton" name="update">Update</button>
+						<button type="submit" class="btn btn-success btn-sm"
+							id="deleteButton" name="delete">Delete</button>
+					</c:when>
+					<c:otherwise>
+						<button type="submit" class="btn btn-success btn-sm"
+							id="updateButton" name="add">Add</button>
+						<button type="submit" class="btn btn-success btn-sm"
+							id="resetButton">Reset</button>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</springForm:form>
+
+	</div>
 </div>
 
 <div id="cptModal" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
 
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	    	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">CPT Measure List</h4>
-	      	</div>
-	      	<div class="modal-body">
-		    	<div class="panel-group">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">CPT Measure List</h4>
+			</div>
+			<div class="modal-body">
+				<div class="panel-group">
 					<div class="panel panel-success">
-						
+
 						<div class="panel-body">
 							<div class="table-responsive">
-					      		<table id="cptListTable" class="display table-responsive  table table-striped table-hover"> 
+								<table id="cptListTable"
+									class="display table-responsive  table table-striped table-hover">
 									<thead>
 										<tr>
-											<th  scope="col">Select</th> 
-											<th  scope="col">CPT Code</th> 
-											<th  scope="col">Short Description</th> 
+											<th scope="col">Select</th>
+											<th scope="col">CPT Code</th>
+											<th scope="col">Short Description</th>
 										</tr>
 									</thead>
-									<tbody >
+									<tbody>
 									</tbody>
 								</table>
 							</div>
 						</div>
-					</div>				
-	      		</div>
-	      </div>		
-	      <div class="modal-footer" style="text-align:left;">
-	        <button type="button" id="addCPT" class="btn btn-success btn-sm" data-dismiss="modal">ADD</button>
-	      </div>
-	    </div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: left;">
+				<button type="button" id="addCPT" class="btn btn-success btn-sm"
+					data-dismiss="modal">ADD</button>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div id="icdModal" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	    	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">ICD Measure List</h4>
-	      	</div>
-	      	<div class="modal-body">
-		    	<div class="panel-group">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">ICD Measure List</h4>
+			</div>
+			<div class="modal-body">
+				<div class="panel-group">
 					<div class="panel panel-success">
-						
+
 						<div class="panel-body">
 							<div class="table-responsive">
-								<table id="icdListTable" class="display table-responsive  table table-striped table-hover"> 
+								<table id="icdListTable"
+									class="display table-responsive  table table-striped table-hover">
 									<thead>
 										<tr>
-											<th  scope="col">Select</th> 
-											<th  scope="col">ICD Code</th> 
-											<th  scope="col">Description</th> 
+											<th scope="col">Select</th>
+											<th scope="col">ICD Code</th>
+											<th scope="col">Description</th>
 										</tr>
 									</thead>
-									<tbody >
+									<tbody>
 									</tbody>
 								</table>
 							</div>
 						</div>
-					</div>				
-	      		</div>
-	      	</div>		
-	      	<div class="modal-footer" style="text-align:left;">
-	        	<button type="button" id="addICD" class="btn btn-success btn-sm" data-dismiss="modal">ADD</button>
-	      	</div>
-	    </div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: left;">
+				<button type="button" id="addICD" class="btn btn-success btn-sm"
+					data-dismiss="modal">ADD</button>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
@@ -477,9 +532,6 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 			$('#cptCodes').closest( "div" ).find('icdCodes').remove();
 			$("#cptCodes").closest( "dov" ).removeClass( "has-error" );
 		}
-		
-		
-		
 		
 	    if(error_count >0){ event.preventDefault();}
 	});

@@ -11,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface CountyDao
-{
+public interface CountyDao {
 
 	County deleteById(Integer id);
 
 	County findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    County save(County bean);
+	County save(County bean);
 
-    County updateByUpdater(Updater<County> updater);
-    
-    List<County> findAll();
+	County updateByUpdater(Updater<County> updater);
+
+	List<County> findAll();
 
 }

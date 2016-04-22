@@ -9,18 +9,17 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface ProviderDao
-{
+public interface ProviderDao {
 
 	Provider deleteById(Integer id);
 
 	Provider findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    Provider save(Provider bean);
+	Provider save(Provider bean);
 
-    Provider updateByUpdater(Updater<Provider> updater);
+	Provider updateByUpdater(Updater<Provider> updater);
 
-    Pagination findByInsId(Integer id);
+	Pagination findByInsId(Integer id);
 }

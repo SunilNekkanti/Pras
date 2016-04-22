@@ -19,53 +19,46 @@ import com.pfchoice.core.service.MembershipStatusService;
  */
 @Service
 @Transactional
-public class MembershipStatusServiceImpl implements MembershipStatusService
-{
+public class MembershipStatusServiceImpl implements MembershipStatusService {
 
-    @Autowired
-    private MembershipStatusDao membershipStatusDao;
+	@Autowired
+	private MembershipStatusDao membershipStatusDao;
 
-    @Override
-    public MembershipStatus deleteById(final Byte id)
-    {
-        //Used for transaction test
-        return membershipStatusDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public MembershipStatus deleteById(final Byte id) {
+		// Used for transaction test
+		return membershipStatusDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public MembershipStatus findById(final Byte id)
-    {
-        return membershipStatusDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public MembershipStatus findById(final Byte id) {
+		return membershipStatusDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        return membershipStatusDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return membershipStatusDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public MembershipStatus save(final MembershipStatus bean)
-    {
-        //Used for transaction test
-        return membershipStatusDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public MembershipStatus save(final MembershipStatus bean) {
+		// Used for transaction test
+		return membershipStatusDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public MembershipStatus update(final MembershipStatus bean)
-    {
-        Updater<MembershipStatus> updater = new Updater<>(bean);
-        return membershipStatusDao.updateByUpdater(updater);
-    }
+	@Override
+	public MembershipStatus update(final MembershipStatus bean) {
+		Updater<MembershipStatus> updater = new Updater<>(bean);
+		return membershipStatusDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<MembershipStatus> findAll()
-    {
-    	return membershipStatusDao.findAll();
-    }
+	@Override
+	public List<MembershipStatus> findAll() {
+		return membershipStatusDao.findAll();
+	}
 }

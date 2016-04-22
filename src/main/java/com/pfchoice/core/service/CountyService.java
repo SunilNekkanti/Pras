@@ -10,19 +10,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface CountyService
-{
+public interface CountyService {
 
 	County deleteById(Integer id);
 
 	County findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    County save(County bean);
+	County save(County bean);
 
-    County update(County bean);
-    
-    List<County> findAll();
+	County update(County bean);
+
+	List<County> findAll();
 
 }

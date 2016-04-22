@@ -19,53 +19,46 @@ import com.pfchoice.core.service.HedisMeasureGroupService;
  */
 @Service
 @Transactional
-public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService
-{
+public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 
-    @Autowired
-    private HedisMeasureGroupDao hedisMeasureGroupDao;
+	@Autowired
+	private HedisMeasureGroupDao hedisMeasureGroupDao;
 
-    @Override
-    public HedisMeasureGroup deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return hedisMeasureGroupDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public HedisMeasureGroup deleteById(final Integer id) {
+		// Used for transaction test
+		return hedisMeasureGroupDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public HedisMeasureGroup findById(final Integer id)
-    {
-        return hedisMeasureGroupDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public HedisMeasureGroup findById(final Integer id) {
+		return hedisMeasureGroupDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        return hedisMeasureGroupDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return hedisMeasureGroupDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public HedisMeasureGroup save(final HedisMeasureGroup bean)
-    {
-        //Used for transaction test
-        return hedisMeasureGroupDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public HedisMeasureGroup save(final HedisMeasureGroup bean) {
+		// Used for transaction test
+		return hedisMeasureGroupDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public HedisMeasureGroup update(final HedisMeasureGroup bean)
-    {
-        Updater<HedisMeasureGroup> updater = new Updater<>(bean);
-        return hedisMeasureGroupDao.updateByUpdater(updater);
-    }
+	@Override
+	public HedisMeasureGroup update(final HedisMeasureGroup bean) {
+		Updater<HedisMeasureGroup> updater = new Updater<>(bean);
+		return hedisMeasureGroupDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<HedisMeasureGroup> findAll()
-    {
-    	return hedisMeasureGroupDao.findAll();
-    }
+	@Override
+	public List<HedisMeasureGroup> findAll() {
+		return hedisMeasureGroupDao.findAll();
+	}
 }

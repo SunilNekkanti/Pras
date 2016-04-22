@@ -1,22 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form"
-    prefix="springForm"%>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	prefix="springForm"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="row">
 	<div class="col-sm-12" id="mbrDetails">
 		<jsp:include page="/WEB-INF/jsp/membershipEdit.jsp">
- 			<jsp:param name="membershipEdit" value="${membershipEdit}"/>
+			<jsp:param name="membershipEdit" value="${membershipEdit}" />
 		</jsp:include>
 	</div>
-</div>	
+</div>
 <div id="membershipContactList"></div>
 
 
 <div class="row">
 	<div class="col-sm-12" id="mbrPrdvrDetails">
 		<jsp:include page="/WEB-INF/jsp/membershipProviderList.jsp">
-			<jsp:param name="membershipProviderList" value="${membershipProviderList}"/>
+			<jsp:param name="membershipProviderList"
+				value="${membershipProviderList}" />
 		</jsp:include>
 	</div>
 </div>
@@ -27,12 +28,12 @@
 
 <div class="row">
 	<div class="col-sm-12">
-			<jsp:include page="/WEB-INF/jsp/membershipHedisMeasure.jsp">
-				<jsp:param name="mbrHedisMeasureList" value="${mbrHedisMeasureList}"/>
-			</jsp:include>
+		<jsp:include page="/WEB-INF/jsp/membershipHedisMeasure.jsp">
+			<jsp:param name="mbrHedisMeasureList" value="${mbrHedisMeasureList}" />
+		</jsp:include>
 	</div>
 </div>
-<div class="row">	
+<div class="row">
 	<div class="col-sm-12">
 		<div class="panel-group">
 			<div class="panel panel-success">
@@ -43,7 +44,7 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 
 <script>		
 

@@ -19,59 +19,51 @@ import com.pfchoice.core.service.ContractService;
  */
 @Service
 @Transactional
-public class ContractServiceImpl implements ContractService
-{
+public class ContractServiceImpl implements ContractService {
 
-    @Autowired
-    private ContractDao contractDao;
+	@Autowired
+	private ContractDao contractDao;
 
-    @Override
-    public Contract deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return contractDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public Contract deleteById(final Integer id) {
+		// Used for transaction test
+		return contractDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Contract findById(final Integer id)
-    {
-        return contractDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Contract findById(final Integer id) {
+		return contractDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        return contractDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return contractDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public Contract save(final Contract bean)
-    {
-        //Used for transaction test
-        return contractDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public Contract save(final Contract bean) {
+		// Used for transaction test
+		return contractDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public Contract update(final Contract bean)
-    {
-        Updater<Contract> updater = new Updater<>(bean);
-        return contractDao.updateByUpdater(updater);
-    }
+	@Override
+	public Contract update(final Contract bean) {
+		Updater<Contract> updater = new Updater<>(bean);
+		return contractDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<Contract> findAllContractsByRefId(final String refString, Integer id)
-    {
-    	return contractDao.findAllContractsByRefId(refString, id);
-    }
+	@Override
+	public List<Contract> findAllContractsByRefId(final String refString, Integer id) {
+		return contractDao.findAllContractsByRefId(refString, id);
+	}
 
-    @Override
-    public Contract findActiveContractByRefId(final String refString, Integer id)
-    {
-    	return contractDao.findActiveContractByRefId(refString, id);
-    }
+	@Override
+	public Contract findActiveContractByRefId(final String refString, Integer id) {
+		return contractDao.findActiveContractByRefId(refString, id);
+	}
 }

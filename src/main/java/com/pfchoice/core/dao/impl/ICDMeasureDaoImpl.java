@@ -22,92 +22,75 @@ import com.pfchoice.core.entity.ICDMeasure;
  * @author Sarath
  */
 @Repository
-public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> implements ICDMeasureDao
-{
+public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> implements ICDMeasureDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ICDMeasureDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ICDMeasureDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final  int pageSize, 
-    					final String sSearch, final String sort, final String sortdir)
-    {
-    	Criteria crit = createCriteria();
-    	
-    	if(sSearch != null && !"".equals(sSearch))
-    	{
-    		Disjunction or = Restrictions.disjunction();
-        	
-    		or.add(Restrictions.ilike("code","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("hcc","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("rxhcc","%"+sSearch+"%"));
-    		crit.add(or);
-    	}
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		Criteria crit = createCriteria();
 
-		if(sort != null && !"".equals(sort)) 
-		{
-			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
-			{
+		if (sSearch != null && !"".equals(sSearch)) {
+			Disjunction or = Restrictions.disjunction();
+
+			or.add(Restrictions.ilike("code", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("description", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("hcc", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("rxhcc", "%" + sSearch + "%"));
+			crit.add(or);
+		}
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				crit.addOrder(Order.desc(sort));
-			}
-			else 
-			{
+			} else {
 				crit.addOrder(Order.asc(sort));
 			}
 		}
 
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+		return page;
+	}
 
-    @Override
-    public ICDMeasure findById(final Integer id)
-    {
-    	ICDMeasure entity = get(id);
-        return entity;
-    }
+	@Override
+	public ICDMeasure findById(final Integer id) {
+		ICDMeasure entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public ICDMeasure save(final ICDMeasure bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public ICDMeasure save(final ICDMeasure bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public ICDMeasure deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	ICDMeasure entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public ICDMeasure deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		ICDMeasure entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<ICDMeasure> getEntityClass()
-    {
-        return ICDMeasure.class;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<ICDMeasure> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.add(Restrictions.eq("activeInd", 'Y'))
-    	  .addOrder(Order.asc("code"));
-    	cr.setProjection(
-    		    Projections.distinct(Projections.projectionList()
-    		    	    .add(Projections.property("code"), "code")
-    		    	    .add(Projections.property("id"), "id")))
-    	.setResultTransformer(Transformers.aliasToBean(getEntityClass())); 
-    	List<ICDMeasure> list = cr.list();
-    	
-    	return list;
-    }
+	@Override
+	protected Class<ICDMeasure> getEntityClass() {
+		return ICDMeasure.class;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ICDMeasure> findAll() {
+		Criteria cr = createCriteria();
+		cr.add(Restrictions.eq("activeInd", 'Y')).addOrder(Order.asc("code"));
+		cr.setProjection(Projections.distinct(Projections.projectionList().add(Projections.property("code"), "code")
+				.add(Projections.property("id"), "id")))
+				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
+		List<ICDMeasure> list = cr.list();
+
+		return list;
+	}
 
 }

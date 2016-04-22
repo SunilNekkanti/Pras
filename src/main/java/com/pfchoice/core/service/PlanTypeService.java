@@ -10,19 +10,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface PlanTypeService
-{
+public interface PlanTypeService {
 
 	PlanType deleteById(Integer id);
 
 	PlanType findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    PlanType save(PlanType bean);
+	PlanType save(PlanType bean);
 
-    PlanType update(PlanType bean);
-    
-    List<PlanType> findAll();
+	PlanType update(PlanType bean);
+
+	List<PlanType> findAll();
 
 }

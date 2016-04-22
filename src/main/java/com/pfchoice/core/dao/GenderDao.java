@@ -11,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface GenderDao
-{
+public interface GenderDao {
 
 	Gender deleteById(Byte id);
 
 	Gender findById(Byte id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    Gender save(Gender bean);
+	Gender save(Gender bean);
 
-    Gender updateByUpdater(Updater<Gender> updater);
-    
-    List<Gender> findAll();
+	Gender updateByUpdater(Updater<Gender> updater);
+
+	List<Gender> findAll();
 
 }

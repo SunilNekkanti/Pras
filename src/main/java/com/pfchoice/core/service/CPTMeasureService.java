@@ -10,8 +10,7 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface CPTMeasureService
-{
+public interface CPTMeasureService {
 
 	CPTMeasure deleteById(Integer id);
 
@@ -19,10 +18,10 @@ public interface CPTMeasureService
 
 	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    CPTMeasure save(CPTMeasure bean);
+	CPTMeasure save(CPTMeasure bean);
 
-    CPTMeasure update(CPTMeasure bean);
-    
-    List<CPTMeasure> findAll();
+	CPTMeasure update(CPTMeasure bean);
+
+	List<CPTMeasure> findAll();
 
 }

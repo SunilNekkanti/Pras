@@ -11,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface PlanTypeDao
-{
+public interface PlanTypeDao {
 
 	PlanType deleteById(Integer id);
 
 	PlanType findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    PlanType save(PlanType bean);
+	PlanType save(PlanType bean);
 
-    PlanType updateByUpdater(Updater<PlanType> updater);
-    
-    List<PlanType> findAll();
+	PlanType updateByUpdater(Updater<PlanType> updater);
+
+	List<PlanType> findAll();
 
 }

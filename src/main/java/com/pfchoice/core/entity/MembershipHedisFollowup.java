@@ -1,4 +1,5 @@
 package com.pfchoice.core.entity;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -24,74 +25,68 @@ import com.google.gson.annotations.Expose;
  * @author Mohanasundharam
  */
 @Entity(name = "membership_hedis_followup")
-public class MembershipHedisFollowup implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class MembershipHedisFollowup implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="mbr_hedis_followup_id", nullable = false)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
-//  @Expose
-    @OneToOne( fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
-    private Membership mbr;
-    
-    @Expose
-    @Column(name="followup_details")
-    private String followupDetails;
-    
-    @Expose
-    @Column(name="date_of_contact")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfContact;
-    
-    @Transient
-    private List<Map<Integer,String>> mbrHedisMeasureIds;
-    
-    @Expose
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Expose
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-      
-    public MembershipHedisFollowup()
-    {
-    }
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "mbr_hedis_followup_id", nullable = false)
+	private Integer id;
 
-    public MembershipHedisFollowup(final Integer id)
-    {
-        this.id = id;
-    }
+	// @Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mbr_id", nullable = false, referencedColumnName = "mbr_id")
+	private Membership mbr;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@Column(name = "followup_details")
+	private String followupDetails;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "date_of_contact")
+	@Temporal(TemporalType.DATE)
+	private Date dateOfContact;
+
+	@Transient
+	private List<Map<Integer, String>> mbrHedisMeasureIds;
+
+	@Expose
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Expose
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public MembershipHedisFollowup() {
+	}
+
+	public MembershipHedisFollowup(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the mbr
@@ -101,7 +96,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param mbr
+	 *            the mbr to set
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
@@ -115,7 +111,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param followupDetails the followupDetails to set
+	 * @param followupDetails
+	 *            the followupDetails to set
 	 */
 	public void setFollowupDetails(String followupDetails) {
 		this.followupDetails = followupDetails;
@@ -129,7 +126,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param dateOfContact the dateOfContact to set
+	 * @param dateOfContact
+	 *            the dateOfContact to set
 	 */
 	public void setDateOfContact(Date dateOfContact) {
 		this.dateOfContact = dateOfContact;
@@ -143,7 +141,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param ruleIds the ruleIds to set
+	 * @param ruleIds
+	 *            the ruleIds to set
 	 */
 	public void setMbrHedisMeasureIds(List<Map<Integer, String>> mbrHedisMeasureIds) {
 		this.mbrHedisMeasureIds = mbrHedisMeasureIds;
@@ -157,7 +156,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -171,7 +171,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -185,7 +186,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -199,7 +201,8 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -213,43 +216,37 @@ public class MembershipHedisFollowup implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof MembershipHedisFollowup)) {
+			return false;
+		}
+		MembershipHedisFollowup other = (MembershipHedisFollowup) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MembershipHedisFollowup))
-        {
-            return false;
-        }
-        MembershipHedisFollowup other = (MembershipHedisFollowup) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.MemberhsipHedisFollowup[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.MemberhsipHedisFollowup[ id=" + id + " ]";
+	}
 
 }

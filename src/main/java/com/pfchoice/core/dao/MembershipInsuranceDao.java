@@ -11,23 +11,22 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface MembershipInsuranceDao
-{
+public interface MembershipInsuranceDao {
 
 	MembershipInsurance deleteById(Integer id);
 
 	MembershipInsurance findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    MembershipInsurance save(MembershipInsurance bean);
+	MembershipInsurance save(MembershipInsurance bean);
 
-    MembershipInsurance updateByUpdater(Updater<MembershipInsurance> updater);
-    
-    List<MembershipInsurance> findAll();
-    
-    List<MembershipInsurance> findAllByMbrId(Integer id);
-    
-    MembershipInsurance findByMbrId(Integer id);
+	MembershipInsurance updateByUpdater(Updater<MembershipInsurance> updater);
+
+	List<MembershipInsurance> findAll();
+
+	List<MembershipInsurance> findAllByMbrId(Integer id);
+
+	MembershipInsurance findByMbrId(Integer id);
 
 }

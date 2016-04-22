@@ -19,61 +19,51 @@ import com.pfchoice.core.entity.PlanType;
  * @author Mohanasundharam
  */
 @Repository
-public class PlanTypeDaoImpl extends HibernateBaseDao<PlanType, Integer> implements PlanTypeDao
-{
+public class PlanTypeDaoImpl extends HibernateBaseDao<PlanType, Integer> implements PlanTypeDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(PlanTypeDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(PlanTypeDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public PlanType findById(final Integer id)
-    {
-    	PlanType entity = get(id);
-        return entity;
-    }
+	@Override
+	public PlanType findById(final Integer id) {
+		PlanType entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public PlanType save(final PlanType bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public PlanType save(final PlanType bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public PlanType deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	PlanType entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public PlanType deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		PlanType entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<PlanType> getEntityClass()
-    {
-        return PlanType.class;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<PlanType> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("code"))
-    	.add(Restrictions.eq("activeInd", 'Y'));
-    	List<PlanType> list = cr.list();
-    	return list;
-    }
+	@Override
+	protected Class<PlanType> getEntityClass() {
+		return PlanType.class;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PlanType> findAll() {
+		Criteria cr = createCriteria();
+		cr.addOrder(Order.asc("code")).add(Restrictions.eq("activeInd", 'Y'));
+		List<PlanType> list = cr.list();
+		return list;
+	}
 
 }

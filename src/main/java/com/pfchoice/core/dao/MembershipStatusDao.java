@@ -11,18 +11,17 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface MembershipStatusDao
-{
+public interface MembershipStatusDao {
 
 	MembershipStatus deleteById(Byte id);
 
 	MembershipStatus findById(Byte id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    MembershipStatus save(MembershipStatus bean);
+	MembershipStatus save(MembershipStatus bean);
 
-    MembershipStatus updateByUpdater(Updater<MembershipStatus> updater);
+	MembershipStatus updateByUpdater(Updater<MembershipStatus> updater);
 
 	List<MembershipStatus> findAll();
 }

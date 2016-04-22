@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.google.gson.annotations.Expose;
 
@@ -21,58 +23,55 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "hedis_measure_group")
-public class HedisMeasureGroup implements Serializable
-{
+public class HedisMeasureGroup implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="qlty_msr_group_id", nullable = false)
-    private Integer id;
-    
-    @Expose
-    @Column(name="code", nullable = false)
-    private String code;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "qlty_msr_group_id", nullable = false)
+	private Integer id;
 
-    @Expose
-    @Column(name="description")
-    private String description;
+	@Expose
+	@NotNull
+	@Size(min = 2, max = 100, message = "The code must be between {min} and {max} characters long")
+	@Column(name = "code", nullable = false)
+	private String code;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-   
-    
-   
-    
-    public HedisMeasureGroup()
-    {
-    }
+	@Expose
+	@NotNull
+	@Size(min = 5, max = 200, message = "The description must be between {min} and {max} characters long")
+	@Column(name = "description")
+	private String description;
 
-    public HedisMeasureGroup(final Integer id)
-    {
-        this.id = id;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
 
-    /**
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public HedisMeasureGroup() {
+	}
+
+	public HedisMeasureGroup(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public Integer getId() {
@@ -80,22 +79,21 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
 
-	public String getCode()
-    {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(final String code)
-    {
-        this.code = code;
-    }
-    
+	public void setCode(final String code) {
+		this.code = code;
+	}
+
 	/**
 	 * @return the description
 	 */
@@ -104,7 +102,8 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
@@ -118,7 +117,8 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -132,7 +132,8 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -146,7 +147,8 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -160,7 +162,8 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -174,40 +177,37 @@ public class HedisMeasureGroup implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the code fields are not set
-        if (!(object instanceof HedisMeasureGroup))
-        {
-            return false;
-        }
-        HedisMeasureGroup other = (HedisMeasureGroup) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the code fields
+		// are not set
+		if (!(object instanceof HedisMeasureGroup)) {
+			return false;
+		}
+		HedisMeasureGroup other = (HedisMeasureGroup) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.QualityMeasureGroup[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.QualityMeasureGroup[ id=" + id + " ]";
+	}
 
 }

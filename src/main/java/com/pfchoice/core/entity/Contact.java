@@ -23,112 +23,106 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity(name = "contact")
-public class Contact implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class Contact implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="cnt_Id", nullable = false)
-    private Integer id;
-    
-    @Expose
-    @Column(name="contact_person")
-    private String contactPerson;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Column(name="home_phone")
-    private String homePhone;
-    
-    @Expose
-    @Column(name="Extension")
-    private Integer extension;
-    
-    @Expose
-    @Column(name="mobile_phone")
-    private String mobilePhone;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "cnt_Id", nullable = false)
+	private Integer id;
 
-    @Expose
-    @Column(name="fax_number")
-    private String faxNumber;
-    
-    @Expose
-    @Column(name="email")
-    private String email;
-    
-    @Expose
-    @Column(name="address1")
-    private String address1;
-    
-    @Expose
-    @Column(name="address2")
-    private String address2;
-    
-    @Expose
-    @Column(name="city")
-    private String city;
+	@Expose
+	@Column(name = "contact_person")
+	private String contactPerson;
 
-    @Expose
-    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="ref_cnt_id", referencedColumnName="ref_cnt_id")
-    private ReferenceContact refContact;
-    
-    @Expose
-    @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name="statecode", referencedColumnName="code")
-    private State stateCode;
-    
-    @Expose
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="zipcode", referencedColumnName="zipcode")
-    private ZipCode zipCode;
-    
-    @Expose
-    @Column(name="file_id")
-    private Integer fileId;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-      
-    public Contact()
-    {
-    }
+	@Expose
+	@Column(name = "home_phone")
+	private String homePhone;
 
-    public Contact(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "Extension")
+	private Integer extension;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@Column(name = "mobile_phone")
+	private String mobilePhone;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "fax_number")
+	private String faxNumber;
 
-    /**
+	@Expose
+	@Column(name = "email")
+	private String email;
+
+	@Expose
+	@Column(name = "address1")
+	private String address1;
+
+	@Expose
+	@Column(name = "address2")
+	private String address2;
+
+	@Expose
+	@Column(name = "city")
+	private String city;
+
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "ref_cnt_id", referencedColumnName = "ref_cnt_id")
+	private ReferenceContact refContact;
+
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "statecode", referencedColumnName = "code")
+	private State stateCode;
+
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "zipcode", referencedColumnName = "zipcode")
+	private ZipCode zipCode;
+
+	@Expose
+	@Column(name = "file_id")
+	private Integer fileId;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public Contact() {
+	}
+
+	public Contact(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the contactPerson
 	 */
 	public String getContactPerson() {
@@ -136,7 +130,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param contactPerson the contactPerson to set
+	 * @param contactPerson
+	 *            the contactPerson to set
 	 */
 	public void setContactPerson(String contactPerson) {
 		this.contactPerson = contactPerson;
@@ -150,7 +145,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param homePhone the homePhone to set
+	 * @param homePhone
+	 *            the homePhone to set
 	 */
 	public void setHomePhone(final String homePhone) {
 		this.homePhone = homePhone;
@@ -164,7 +160,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param extension the extension to set
+	 * @param extension
+	 *            the extension to set
 	 */
 	public void setExtension(Integer extension) {
 		this.extension = extension;
@@ -178,7 +175,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param mobilePhone the mobilePhone to set
+	 * @param mobilePhone
+	 *            the mobilePhone to set
 	 */
 	public void setMobilePhone(final String mobilePhone) {
 		this.mobilePhone = mobilePhone;
@@ -192,7 +190,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param faxNumber the faxNumber to set
+	 * @param faxNumber
+	 *            the faxNumber to set
 	 */
 	public void setFaxNumber(final String faxNumber) {
 		this.faxNumber = faxNumber;
@@ -206,7 +205,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(final String email) {
 		this.email = email;
@@ -220,7 +220,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param address1 the address1 to set
+	 * @param address1
+	 *            the address1 to set
 	 */
 	public void setAddress1(final String address1) {
 		this.address1 = address1;
@@ -234,7 +235,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param address2 the address2 to set
+	 * @param address2
+	 *            the address2 to set
 	 */
 	public void setAddress2(final String address2) {
 		this.address2 = address2;
@@ -248,7 +250,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(final String city) {
 		this.city = city;
@@ -262,7 +265,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param zipCode the zipCode to set
+	 * @param zipCode
+	 *            the zipCode to set
 	 */
 	public void setZipCode(final ZipCode zipCode) {
 		this.zipCode = zipCode;
@@ -276,7 +280,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param stateCode the stateCode to set
+	 * @param stateCode
+	 *            the stateCode to set
 	 */
 	public void setStateCode(final State stateCode) {
 		this.stateCode = stateCode;
@@ -290,13 +295,13 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param fileId the fileId to set
+	 * @param fileId
+	 *            the fileId to set
 	 */
 	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
 	}
 
-	
 	/**
 	 * @return the refContact
 	 */
@@ -305,7 +310,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param refContact the refContact to set
+	 * @param refContact
+	 *            the refContact to set
 	 */
 	public void setRefContact(final ReferenceContact refContact) {
 		this.refContact = refContact;
@@ -319,7 +325,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -333,7 +340,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -347,7 +355,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -361,7 +370,8 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -375,43 +385,37 @@ public class Contact implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Contact)) {
+			return false;
+		}
+		Contact other = (Contact) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contact))
-        {
-            return false;
-        }
-        Contact other = (Contact) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Contact[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Contact[ id=" + id + " ]";
+	}
 
 }

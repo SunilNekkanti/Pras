@@ -1,12 +1,13 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
- <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
   $(document).ready(function() {
   	
@@ -85,33 +86,35 @@ $.ajax( {
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">ICD Measure List
-			<span class="clrRed">${Message}</span>
-			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/icd/new">
-          		<span class="glyphicon glyphicon-plus-sign "></span>New ICD
-          	</a>
+		<div class="panel-heading">
+			ICD Measure List <span class="clrRed">${Message}</span> <a
+				class="btn btn-danger pull-right btn-xs white-text"
+				href="${context}/icd/new"> <span
+				class="glyphicon glyphicon-plus-sign "></span>New ICD
+			</a>
 		</div>
 		<div class="panel-body" id="tablediv">
-		<div class="table-responsive">
-		
-				<table id="myTable" class="display table-responsive  table table-striped table-hover"> 
+			<div class="table-responsive">
+
+				<table id="myTable"
+					class="display table-responsive  table table-striped table-hover">
 					<thead>
 						<tr>
-							<th  scope="col">Action</th> 
-							<th  scope="col">ICD Code</th> 
-							<th  scope="col">Description</th>  
-							<th  scope="col">HCC</th>  
-							<th  scope="col">RxHCC</th>  
+							<th scope="col">Action</th>
+							<th scope="col">ICD Code</th>
+							<th scope="col">Description</th>
+							<th scope="col">HCC</th>
+							<th scope="col">RxHCC</th>
 						</tr>
 					</thead>
 
-					<tbody >
-						
-						
+					<tbody>
+
+
 					</tbody>
 				</table>
-				</div>
+			</div>
 		</div>
-		
+
 	</div>
 </div>

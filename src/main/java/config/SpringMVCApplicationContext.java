@@ -36,7 +36,6 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-
 /**
  * Java based Web context configuration class.
  * <p>
@@ -46,195 +45,179 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(
-    {
-        "com.pfchoice.springmvc.controller"    
-    })
-@Import({SecurityConfig.class})
-public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter
-{
-	
-    //@Autowired
-    //private AuthenticationInterceptor authenticationInterceptor;
-	
+@ComponentScan({ "com.pfchoice.springmvc.controller" })
+@Import({ SecurityConfig.class })
+public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
+
+	// @Autowired
+	// private AuthenticationInterceptor authenticationInterceptor;
+
 	@Autowired
 	private CountyFormatter countyFormatter;
-	
+
 	@Autowired
 	private CPTMeasureFormatter cptMeasureFormatter;
-	
+
 	@Autowired
 	private FileTypeFormatter fileTypeFormatter;
-	
+
 	@Autowired
 	private GenderFormatter genderFormatter;
-	
+
 	@Autowired
 	private HedisMeasureFormatter hedisMeasureFormatter;
-	
+
 	@Autowired
 	private HedisMeasureGroupFormatter hedisMeasureGroupFormatter;
-	
+
 	@Autowired
 	private ICDMeasureFormatter icdFormatter;
-	
+
 	@Autowired
 	private InsuranceFormatter insuranceFormatter;
 
 	@Autowired
 	private MembershipFormatter membershipFormatter;
-	
+
 	@Autowired
 	private MembershipStatusFormatter membershipStatusFormatter;
-	
+
 	@Autowired
 	private PlanTypeFormatter planTypeFormatter;
-	
+
 	@Autowired
 	private ProviderFormatter providerFormatter;
-	
+
 	@Autowired
 	private RoleFormatter roleFormatter;
-	
+
 	@Autowired
 	private StateFormatter stateFormatter;
-	
+
 	@Autowired
 	private ZipCodeFormatter zipCodeFormatter;
-	
-	
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
-    {
-        configurer.enable();
-    }
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers)
-    {
-        argumentResolvers.add(new FormModelMethodArgumentResolver());
-    }
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
 
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer)
-    {
-       // configurer.favorPathExtension(false).favorParameter(false).parameterName("mediaType").ignoreAcceptHeader(true);
-    	configurer.favorPathExtension(false).favorParameter(false).ignoreAcceptHeader(true);
-    	configurer.defaultContentType( MediaType.APPLICATION_JSON);
-        configurer.mediaType("json", MediaType.APPLICATION_JSON);
-        configurer.mediaType("json", MediaType.APPLICATION_OCTET_STREAM);
-    }
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(new FormModelMethodArgumentResolver());
+	}
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
-    {
-     
-        
-        GsonHttpMessageConverter messageConverter = new GsonHttpMessageConverter();
-        List<MediaType> supportedMediaTypes = new ArrayList<>();
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-        messageConverter.setSupportedMediaTypes(supportedMediaTypes);
-        converters.add(messageConverter);
-     // super.configureMessageConverters(converters);
-    }
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+		// configurer.favorPathExtension(false).favorParameter(false).parameterName("mediaType").ignoreAcceptHeader(true);
+		configurer.favorPathExtension(false).favorParameter(false).ignoreAcceptHeader(true);
+		configurer.defaultContentType(MediaType.APPLICATION_JSON);
+		configurer.mediaType("json", MediaType.APPLICATION_JSON);
+		configurer.mediaType("json", MediaType.APPLICATION_OCTET_STREAM);
+	}
 
-    public @Bean TilesViewResolver tilesViewResolver() {
-        return new TilesViewResolver();
-    }
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 
-    @Bean
-    public HandlerAdapter annotationMethodHandlerAdapter()
-    {
-        return new RequestMappingHandlerAdapter();
-    }
+		GsonHttpMessageConverter messageConverter = new GsonHttpMessageConverter();
+		List<MediaType> supportedMediaTypes = new ArrayList<>();
+		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+		messageConverter.setSupportedMediaTypes(supportedMediaTypes);
+		converters.add(messageConverter);
+		// super.configureMessageConverters(converters);
+	}
 
-    @Bean
-    public AbstractHandlerMapping defaultAnnotationHandlerMapping()
-    {
-        RequestMappingHandlerMapping mapping = new RequestMappingHandlerMapping();
-        mapping.setUseSuffixPatternMatch(false);
-        return mapping;
-    }
+	public @Bean TilesViewResolver tilesViewResolver() {
+		return new TilesViewResolver();
+	}
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry)
-    {
-        //This is a very important interceptor for authentication usage
-      // registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
-    }
-    
-      @Bean
+	@Bean
+	public HandlerAdapter annotationMethodHandlerAdapter() {
+		return new RequestMappingHandlerAdapter();
+	}
+
+	@Bean
+	public AbstractHandlerMapping defaultAnnotationHandlerMapping() {
+		RequestMappingHandlerMapping mapping = new RequestMappingHandlerMapping();
+		mapping.setUseSuffixPatternMatch(false);
+		return mapping;
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		// This is a very important interceptor for authentication usage
+		// registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
+	}
+
+	@Bean
 	public ViewResolver viewResolver() {
 		UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
 		viewResolver.setPrefix("/WEB-INF/jsp/");
 		viewResolver.setSuffix(".jsp");
 
-		//viewResolver.setViewClass(JstlView.class);
+		// viewResolver.setViewClass(JstlView.class);
 		viewResolver.setViewClass(TilesView.class);
 		return viewResolver;
 	}
-    
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	registry
-        .addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    	registry.setOrder(-1);
-    }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-    }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.setOrder(-1);
+	}
 
-    @Bean
-    public TilesConfigurer tilesConfigurer() {
-        TilesConfigurer configurer = new TilesConfigurer();
-        configurer.setDefinitions(new String[] {
-            "/WEB-INF/**/tiles.xml"        });
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("index");
+	}
 
-        configurer.setCheckRefresh(true);
+	@Bean
+	public TilesConfigurer tilesConfigurer() {
+		TilesConfigurer configurer = new TilesConfigurer();
+		configurer.setDefinitions(new String[] { "/WEB-INF/**/tiles.xml" });
 
-        return configurer;
+		configurer.setCheckRefresh(true);
 
-    }
-    
-    /**
-     * <code>Resolves views selected for rendering by @Controllers to tiles resources in the Apache TilesConfigurer bean</code>
-     */
-    @Bean
-    public TilesViewResolver getTilesViewResolver() {
-     TilesViewResolver tilesViewResolver = new TilesViewResolver();
-     tilesViewResolver.setViewClass(TilesView.class);
-     return tilesViewResolver;
-    }
+		return configurer;
 
-    @Override
-    public void addFormatters(FormatterRegistry formatterRegistry)
-    {
-    	formatterRegistry.addFormatter(countyFormatter);
-    	formatterRegistry.addFormatter(cptMeasureFormatter);
-    	formatterRegistry.addFormatter(fileTypeFormatter);
-    	formatterRegistry.addFormatter(genderFormatter);
-    	formatterRegistry.addFormatter(hedisMeasureFormatter);
-    	formatterRegistry.addFormatter(hedisMeasureGroupFormatter);
-    	formatterRegistry.addFormatter(icdFormatter);
-    	formatterRegistry.addFormatter(insuranceFormatter);
-    	formatterRegistry.addFormatter(membershipFormatter);
-    	formatterRegistry.addFormatter(membershipStatusFormatter);
-    	formatterRegistry.addFormatter(planTypeFormatter);
-    	formatterRegistry.addFormatter(providerFormatter);
-    	formatterRegistry.addFormatter(roleFormatter);
-    	formatterRegistry.addFormatter(stateFormatter);
-    	formatterRegistry.addFormatter(zipCodeFormatter);
-    }
+	}
 
-    @Bean
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(10485760);   // 1MB
-        multipartResolver.setMaxInMemorySize(10485760);  // 1MB
-        multipartResolver.setDefaultEncoding("utf-8");
-        return multipartResolver;
-    }
-    
+	/**
+	 * <code>Resolves views selected for rendering by @Controllers to tiles resources in the Apache TilesConfigurer bean</code>
+	 */
+	@Bean
+	public TilesViewResolver getTilesViewResolver() {
+		TilesViewResolver tilesViewResolver = new TilesViewResolver();
+		tilesViewResolver.setViewClass(TilesView.class);
+		return tilesViewResolver;
+	}
+
+	@Override
+	public void addFormatters(FormatterRegistry formatterRegistry) {
+		formatterRegistry.addFormatter(countyFormatter);
+		formatterRegistry.addFormatter(cptMeasureFormatter);
+		formatterRegistry.addFormatter(fileTypeFormatter);
+		formatterRegistry.addFormatter(genderFormatter);
+		formatterRegistry.addFormatter(hedisMeasureFormatter);
+		formatterRegistry.addFormatter(hedisMeasureGroupFormatter);
+		formatterRegistry.addFormatter(icdFormatter);
+		formatterRegistry.addFormatter(insuranceFormatter);
+		formatterRegistry.addFormatter(membershipFormatter);
+		formatterRegistry.addFormatter(membershipStatusFormatter);
+		formatterRegistry.addFormatter(planTypeFormatter);
+		formatterRegistry.addFormatter(providerFormatter);
+		formatterRegistry.addFormatter(roleFormatter);
+		formatterRegistry.addFormatter(stateFormatter);
+		formatterRegistry.addFormatter(zipCodeFormatter);
+	}
+
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(10485760); // 1MB
+		multipartResolver.setMaxInMemorySize(10485760); // 1MB
+		multipartResolver.setDefaultEncoding("utf-8");
+		return multipartResolver;
+	}
+
 }

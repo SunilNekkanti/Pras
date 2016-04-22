@@ -19,60 +19,50 @@ import com.pfchoice.core.entity.Gender;
  * @author Sarath
  */
 @Repository
-public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements GenderDao
-{
+public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements GenderDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(GenderDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(GenderDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public Gender findById(final Byte id)
-    {
-    	Gender entity = get(id);
-        return entity;
-    }
+	@Override
+	public Gender findById(final Byte id) {
+		Gender entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public Gender save(final Gender bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public Gender save(final Gender bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public Gender deleteById(final Byte id)
-    {
-//        throw new UnsupportedOperationException();
-    	Gender entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public Gender deleteById(final Byte id) {
+		// throw new UnsupportedOperationException();
+		Gender entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<Gender> getEntityClass()
-    {
-        return Gender.class;
-    }
+	@Override
+	protected Class<Gender> getEntityClass() {
+		return Gender.class;
+	}
 
-    @SuppressWarnings("unchecked")
-	public List<Gender> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("description"))
-    	.add(Restrictions.eq("activeInd", 'Y'));
-    	List<Gender> list = cr.list();
-    	return list;
-    }
+	@SuppressWarnings("unchecked")
+	public List<Gender> findAll() {
+		Criteria cr = createCriteria();
+		cr.addOrder(Order.asc("description")).add(Restrictions.eq("activeInd", 'Y'));
+		List<Gender> list = cr.list();
+		return list;
+	}
 }

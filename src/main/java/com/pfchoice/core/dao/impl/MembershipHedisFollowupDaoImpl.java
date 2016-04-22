@@ -19,73 +19,63 @@ import com.pfchoice.core.entity.MembershipHedisFollowup;
  * @author Mohanasundharam
  */
 @Repository
-public class MembershipHedisFollowupDaoImpl extends HibernateBaseDao<MembershipHedisFollowup, Integer> implements MembershipHedisFollowupDao
-{
+public class MembershipHedisFollowupDaoImpl extends HibernateBaseDao<MembershipHedisFollowup, Integer>
+		implements MembershipHedisFollowupDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MembershipHedisFollowupDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MembershipHedisFollowupDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public MembershipHedisFollowup findById(final Integer id)
-    {
-    	MembershipHedisFollowup entity = get(id);
-        return entity;
-    }
+	@Override
+	public MembershipHedisFollowup findById(final Integer id) {
+		MembershipHedisFollowup entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public MembershipHedisFollowup save(final MembershipHedisFollowup bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public MembershipHedisFollowup save(final MembershipHedisFollowup bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public MembershipHedisFollowup deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	MembershipHedisFollowup entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public MembershipHedisFollowup deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		MembershipHedisFollowup entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<MembershipHedisFollowup> getEntityClass()
-    {
-        return MembershipHedisFollowup.class;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<MembershipHedisFollowup> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.addOrder(Order.desc("dateOfContact"))
-    	.add(Restrictions.eq("activeInd", 'Y'));
-    	List<MembershipHedisFollowup> list = cr.list();
-    	return list;
-    }
-    
-    @SuppressWarnings("unchecked")
-   	public List<MembershipHedisFollowup> findAllByMbrId(final Integer id)
-       {
-       	Criteria cr = createCriteria();
-       	cr.add(Restrictions.eq("mbr.id", id));
-       	cr.add(Restrictions.eq("activeInd", 'Y'));
-       	cr.addOrder(Order.desc("id"));
-    	
-       	List<MembershipHedisFollowup> list = cr.list();
-       	return list;
-       }
+	@Override
+	protected Class<MembershipHedisFollowup> getEntityClass() {
+		return MembershipHedisFollowup.class;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MembershipHedisFollowup> findAll() {
+		Criteria cr = createCriteria();
+		cr.addOrder(Order.desc("dateOfContact")).add(Restrictions.eq("activeInd", 'Y'));
+		List<MembershipHedisFollowup> list = cr.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MembershipHedisFollowup> findAllByMbrId(final Integer id) {
+		Criteria cr = createCriteria();
+		cr.add(Restrictions.eq("mbr.id", id));
+		cr.add(Restrictions.eq("activeInd", 'Y'));
+		cr.addOrder(Order.desc("id"));
+
+		List<MembershipHedisFollowup> list = cr.list();
+		return list;
+	}
 
 }

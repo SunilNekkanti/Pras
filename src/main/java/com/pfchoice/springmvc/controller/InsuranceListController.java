@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import com.pfchoice.core.service.InsuranceService;
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
-
-
 /**
  *
  * A Provider controller class for GET/DELETE/POST/PUT.
@@ -28,32 +25,29 @@ import ml.rugal.sshcommon.springmvc.util.Message;
  * @author sarath
  */
 @Controller
-@SessionAttributes({"username","userpath"})
-public class InsuranceListController
-{
+@SessionAttributes({ "username", "userpath" })
+public class InsuranceListController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InsuranceListController.class.getName());
-    
-    @Autowired
-    private InsuranceService insuranceService;
+	private static final Logger LOG = LoggerFactory.getLogger(InsuranceListController.class.getName());
 
-   @RequestMapping(value = {"/admin/insuranceList","/user/insuranceList"})
-    public String handleRequest( Model model) throws Exception {
- 
+	@Autowired
+	private InsuranceService insuranceService;
+
+	@RequestMapping(value = { "/admin/insuranceList", "/user/insuranceList" })
+	public String handleRequest(Model model) throws Exception {
+
 		return "insuranceList";
 	}
-    
-   @ResponseBody
-   @RequestMapping(value = {"/admin/insurance/list","/user/insurance/list"}, method = RequestMethod.GET)
-	public Message viewInsuranceListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
-					@RequestParam(required = false) String sSearch,
-					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
-		
+
+	@ResponseBody
+	@RequestMapping(value = { "/admin/insurance/list", "/user/insurance/list" }, method = RequestMethod.GET)
+	public Message viewInsuranceListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
+					throws Exception {
+
 		Pagination pagination = insuranceService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-		
-     return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
- }
+
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
+	}
 }

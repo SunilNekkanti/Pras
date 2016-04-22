@@ -11,21 +11,20 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface ContactDao
-{
+public interface ContactDao {
 
 	Contact deleteById(Integer id);
 
 	Contact findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    Contact save(Contact bean);
+	Contact save(Contact bean);
 
-    Contact updateByUpdater(Updater<Contact> updater);
-    
-    List<Contact> findAllContactsByRefId(String refString, Integer id);
-    
-    Contact findActiveContactByRefId(String refString, Integer id);
+	Contact updateByUpdater(Updater<Contact> updater);
+
+	List<Contact> findAllContactsByRefId(String refString, Integer id);
+
+	Contact findActiveContactByRefId(String refString, Integer id);
 
 }

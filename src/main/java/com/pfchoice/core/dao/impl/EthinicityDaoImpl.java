@@ -18,59 +18,50 @@ import com.pfchoice.core.entity.Ethinicity;
  * @author Mohanasundharam
  */
 @Repository
-public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implements EthinicityDao
-{
+public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implements EthinicityDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(EthinicityDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(EthinicityDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public Ethinicity findById(final Byte id)
-    {
-    	Ethinicity entity = get(id);
-        return entity;
-    }
+	@Override
+	public Ethinicity findById(final Byte id) {
+		Ethinicity entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public Ethinicity save(final Ethinicity bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public Ethinicity save(final Ethinicity bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public Ethinicity deleteById(final Byte id)
-    {
-//        throw new UnsupportedOperationException();
-    	Ethinicity entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public Ethinicity deleteById(final Byte id) {
+		// throw new UnsupportedOperationException();
+		Ethinicity entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<Ethinicity> getEntityClass()
-    {
-        return Ethinicity.class;
-    }
+	@Override
+	protected Class<Ethinicity> getEntityClass() {
+		return Ethinicity.class;
+	}
 
-    @SuppressWarnings("unchecked")
-	public List<Ethinicity> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.add(Restrictions.eq("activeInd", 'Y'));
-    	List<Ethinicity> list = cr.list();
-    	return list;
-    }
+	@SuppressWarnings("unchecked")
+	public List<Ethinicity> findAll() {
+		Criteria cr = createCriteria();
+		cr.add(Restrictions.eq("activeInd", 'Y'));
+		List<Ethinicity> list = cr.list();
+		return list;
+	}
 }

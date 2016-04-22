@@ -17,56 +17,49 @@ import com.pfchoice.core.service.ProviderService;
  */
 @Service
 @Transactional
-public class ProviderServiceImpl implements ProviderService
-{
+public class ProviderServiceImpl implements ProviderService {
 
-    @Autowired
-    private ProviderDao providerDao;
+	@Autowired
+	private ProviderDao providerDao;
 
-    @Override
-    public Provider deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return providerDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public Provider deleteById(final Integer id) {
+		// Used for transaction test
+		return providerDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Provider findById(final Integer id)
-    {
-        return providerDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Provider findById(final Integer id) {
+		return providerDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize, final String sSearch,
-    		final String sort, final String sortdir)
-    {
-        return providerDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return providerDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
 
-    @Override
-    public Provider save(final Provider bean)
-    {
-        //Used for transaction test
-        return providerDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public Provider save(final Provider bean) {
+		// Used for transaction test
+		return providerDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public Provider update(final Provider bean)
-    {
-        Updater<Provider> updater = new Updater<>(bean);
-        return providerDao.updateByUpdater(updater);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination findByInsId(final Integer id)
-    {
-        return providerDao.findByInsId(id);
-    }
-    
+	@Override
+	public Provider update(final Provider bean) {
+		Updater<Provider> updater = new Updater<>(bean);
+		return providerDao.updateByUpdater(updater);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination findByInsId(final Integer id) {
+		return providerDao.findByInsId(id);
+	}
+
 }

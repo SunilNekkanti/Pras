@@ -1,7 +1,7 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
@@ -182,76 +182,75 @@
     </script>
 
 
-	<div class="panel-group">
-		<div class="panel panel-success">
-			<div class="panel-heading">Hedis Report </div>
-			<div class="panel-body" >
-				<div class="table-responsive">
-					<div class="col-sm-12">
-							<div class="col-sm-3">
-								<label class="control-label col-sm-4">Insurance</label>
-								 <div class=" col-sm-6" id="extFilterIns">  </div>
-							</div>	 
-							<div class="col-sm-4">	 
-								<label class="control-label col-sm-3">Provider</label>
-								 <div class="col-sm-6"  id="extFilterPrvdr"> </div>
-							</div>	 
-							<div class="col-sm-4">	 
-								 <label class="control-label col-sm-3">Hedis</label>
-								 <div class="col-sm-6" id="extFilterHedisRule"></div>
-							</div>	 
-					 	</div>
-					<table id="membershipTable" class="table table-striped table-hover table-responsive">
-					
-						<thead>
-							<tr>
-								<th scope="col">Action</th>
-								<th scope="col">Provider</th>
-								<th scope="col">Hedis Code</th>
-								<th scope="col">Rule Description</th>
-								<th scope="col">First Name</th>
-								<th scope="col">Last Name</th>
-								<th scope="col">Date Of Birth</th>
-								<th scope="col">Gender</th>
-								<th scope="col">Due Date</th>
-								<th scope="col">Notes</th>
-							</tr>
-						</thead>
-	
-						<tbody >
-							
-						</tbody>
-	
-					</table>
-				</div>	
-				
-			</div>
-			
-		</div>
-	</div>
+<div class="panel-group">
+	<div class="panel panel-success">
+		<div class="panel-heading">Hedis Report</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<div class="col-sm-12">
+					<div class="col-sm-3">
+						<label class="control-label col-sm-4">Insurance</label>
+						<div class=" col-sm-6" id="extFilterIns"></div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label col-sm-3">Provider</label>
+						<div class="col-sm-6" id="extFilterPrvdr"></div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label col-sm-3">Hedis</label>
+						<div class="col-sm-6" id="extFilterHedisRule"></div>
+					</div>
+				</div>
+				<table id="membershipTable"
+					class="table table-striped table-hover table-responsive">
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Membership Hedis Followup</h4>
-        </div>
-        <div class="modal-body" id="modal-body">
-         
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="followupSubmit" class="btn btn-default" >Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
+					<thead>
+						<tr>
+							<th scope="col">Action</th>
+							<th scope="col">Provider</th>
+							<th scope="col">Hedis Code</th>
+							<th scope="col">Rule Description</th>
+							<th scope="col">First Name</th>
+							<th scope="col">Last Name</th>
+							<th scope="col">Date Of Birth</th>
+							<th scope="col">Gender</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Notes</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+					</tbody>
+
+				</table>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Membership Hedis Followup</h4>
+			</div>
+			<div class="modal-body" id="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" id="followupSubmit" class="btn btn-default">Submit</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
 
 
 <script>

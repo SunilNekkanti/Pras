@@ -29,142 +29,136 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes({"username","userpath"})
-public class CPTMeasureController{
-	
-    @Autowired
-    private CPTMeasureService cptMeasureService;
-    
-    
-    @Autowired
-    @Qualifier("cPTMeasureValidator")
-    private Validator validator;
- 
-    @InitBinder("cptMeasure")
-    private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
-    }
-    
-    private static final Logger logger = LoggerFactory
-            .getLogger(CPTMeasureController.class);
- 
+@SessionAttributes({ "username", "userpath" })
+public class CPTMeasureController {
+
+	@Autowired
+	private CPTMeasureService cptMeasureService;
+
+	@Autowired
+	@Qualifier("cPTMeasureValidator")
+	private Validator validator;
+
+	@InitBinder("cptMeasure")
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(validator);
+	}
+
+	private static final Logger logger = LoggerFactory.getLogger(CPTMeasureController.class);
+
 	public CPTMeasureController() {
-    }
-	
+	}
+
 	@ModelAttribute("cptMeasure")
-    public CPTMeasure createCPTMeasureModel() {
-        // ModelAttribute value should be same as used in the CPTMeasureEdit.jsp
-        return new CPTMeasure();
-    }
-	
+	public CPTMeasure createCPTMeasureModel() {
+		// ModelAttribute value should be same as used in the CPTMeasureEdit.jsp
+		return new CPTMeasure();
+	}
+
 	@RequestMapping(value = "/admin/cpt/new")
-    public String addCPTMeasurePage(Model model) {
-		
+	public String addCPTMeasurePage(Model model) {
+
 		CPTMeasure cptMeasure = createCPTMeasureModel();
 		model.addAttribute("cptMeasure", cptMeasure);
 		return "cptMeasureNew";
-    }
-	
-	@RequestMapping(value = {"/admin/cpt/{id}","/user/cpt/{id}"}, method = RequestMethod.GET)
-    public String updateCPTMeasurePage(@PathVariable Integer id,Model model) {
-		
-		CPTMeasure dbCPTMeasure = cptMeasureService.findById(id);
-	    logger.info("Returning cptMeasure.getId()"+dbCPTMeasure.getId());
-		model.addAttribute("cptMeasure", dbCPTMeasure);
-        logger.info("Returning cptMeasureEdit.jsp page");
-        return "cptMeasureEdit";
-    }
-		
-	@RequestMapping(value = "/admin/cpt/{id}/display", method = RequestMethod.GET)
-    public String displayCPTMeasurePage(@PathVariable Integer id,Model model) {
-		
-		CPTMeasure dbCPTMeasure = cptMeasureService.findById(id);
-		 logger.info("Returning cptMeasure.getId()"+dbCPTMeasure.getId());
-	       
-		model.addAttribute("cptMeasure", dbCPTMeasure);
-        logger.info("Returning cptMeasureDisplay.jsp page");
-        return "cptMeasureDisplay";
-    }
-	
-	@RequestMapping(value = {"/admin/cpt/cptMeasureList","/user/cpt/cptMeasureList"}, method = RequestMethod.GET)
-	public String viewCPTMeasureAction(Model model) throws Exception{
-		
-		logger.info("Returning view.jsp page after create");
-        return "cptMeasureList";
-    }
-	
-	@ResponseBody
-	@RequestMapping(value = {"/admin/cpt/cptMeasureLists","/user/cpt/cptMeasureLists"}, method = RequestMethod.GET)
-	public Message viewCPTMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
-					@RequestParam(required = false) String sSearch,
-					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
-		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+	}
 
-        return Message.successMessage(CommonMessageContent.CPT_LIST, JsonConverter.getJsonObject(pagination));
-    }
-	
-	
-	@RequestMapping(value = "/admin/cpt/save.do", method = RequestMethod.POST, params ={"add"})
+	@RequestMapping(value = { "/admin/cpt/{id}", "/user/cpt/{id}" }, method = RequestMethod.GET)
+	public String updateCPTMeasurePage(@PathVariable Integer id, Model model) {
+
+		CPTMeasure dbCPTMeasure = cptMeasureService.findById(id);
+		logger.info("Returning cptMeasure.getId()" + dbCPTMeasure.getId());
+		model.addAttribute("cptMeasure", dbCPTMeasure);
+		logger.info("Returning cptMeasureEdit.jsp page");
+		return "cptMeasureEdit";
+	}
+
+	@RequestMapping(value = "/admin/cpt/{id}/display", method = RequestMethod.GET)
+	public String displayCPTMeasurePage(@PathVariable Integer id, Model model) {
+
+		CPTMeasure dbCPTMeasure = cptMeasureService.findById(id);
+		logger.info("Returning cptMeasure.getId()" + dbCPTMeasure.getId());
+
+		model.addAttribute("cptMeasure", dbCPTMeasure);
+		logger.info("Returning cptMeasureDisplay.jsp page");
+		return "cptMeasureDisplay";
+	}
+
+	@RequestMapping(value = { "/admin/cpt/cptMeasureList", "/user/cpt/cptMeasureList" }, method = RequestMethod.GET)
+	public String viewCPTMeasureAction(Model model) throws Exception {
+
+		logger.info("Returning view.jsp page after create");
+		return "cptMeasureList";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = { "/admin/cpt/cptMeasureLists", "/user/cpt/cptMeasureLists" }, method = RequestMethod.GET)
+	public Message viewCPTMeasureActionJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
+					throws Exception {
+
+		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.CPT_LIST, JsonConverter.getJsonObject(pagination));
+	}
+
+	@RequestMapping(value = "/admin/cpt/save.do", method = RequestMethod.POST, params = { "add" })
 	public String addCPTMeasureAction(@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-        if (bindingResult.hasErrors()) {
-            logger.info("Returning cptMeasureEdit.jsp page");
-            return "cptMeasureNew";
-        }
-        
-	 	model.addAttribute("cptMeasure", cptMeasure);
-	 	cptMeasure.setCreatedBy(username);
-	 	cptMeasure.setUpdatedBy(username);
-	 	logger.info("Returning cptEditSuccess.jsp page after create");
-      	cptMeasureService.save(cptMeasure);
-      	model.addAttribute("Message", "CPT Measure added successfully");
-    return "cptMeasureList";
-    }
-	
-	
-	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveCPTMeasureAction(@PathVariable Integer id,@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning cptMeasureEdit.jsp page");
+			return "cptMeasureNew";
+		}
+
+		model.addAttribute("cptMeasure", cptMeasure);
+		cptMeasure.setCreatedBy(username);
+		cptMeasure.setUpdatedBy(username);
+		logger.info("Returning cptEditSuccess.jsp page after create");
+		cptMeasureService.save(cptMeasure);
+		model.addAttribute("Message", "CPT Measure added successfully");
+		return "cptMeasureList";
+	}
+
+	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params = { "update" })
+	public String saveCPTMeasureAction(@PathVariable Integer id,
+			@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
 		cptMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
-            logger.info("Returning  cptMeasureEdit.jsp page");
-            return "cptMeasureEdit";
-        }
-	        
-        if (null != cptMeasure.getId())
-        {
-        	logger.info("Returning cptMeasureEditSuccess.jsp page after update");
-        	cptMeasure.setUpdatedBy(username);
-        	cptMeasureService.update(cptMeasure);
-        	model.addAttribute("cptMeasure", cptMeasure);
-        	model.addAttribute("Message", "CPT Measure updated successfully");
-        	return "cptMeasureList";
-        }
-       
-        return "cptMeasureEdit";
-    }
-	
+			logger.info("Returning  cptMeasureEdit.jsp page");
+			return "cptMeasureEdit";
+		}
 
-	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteCPTMeasureAction(@PathVariable Integer id,@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		if (null != cptMeasure.getId()) {
+			logger.info("Returning cptMeasureEditSuccess.jsp page after update");
+			cptMeasure.setUpdatedBy(username);
+			cptMeasureService.update(cptMeasure);
+			model.addAttribute("cptMeasure", cptMeasure);
+			model.addAttribute("Message", "CPT Measure updated successfully");
+			return "cptMeasureList";
+		}
+
+		return "cptMeasureEdit";
+	}
+
+	@RequestMapping(value = "/admin/cpt/{id}/save.do", method = RequestMethod.POST, params = { "delete" })
+	public String deleteCPTMeasureAction(@PathVariable Integer id,
+			@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
 		cptMeasure.setActiveInd('Y');
-			if (bindingResult.hasErrors()) {
-	            logger.info("Returning  cptMeasureEdit.jsp page");
-	            return "cptMeasureEdit";
-	        }
-	        if (null != cptMeasure.getId())
-	        {
-	        	logger.info("Returning cptMeasureEditSuccess.jsp page after update");
-	        	cptMeasure.setActiveInd('N');
-	        	cptMeasure.setUpdatedBy(username);
-	        	cptMeasureService.update(cptMeasure);
-	        	model.addAttribute("Message", "CPT Measure deleted successfully");
-	        	return "cptMeasureList";
-	        }
-	        return "cptMeasureEdit";
-    }
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning  cptMeasureEdit.jsp page");
+			return "cptMeasureEdit";
+		}
+		if (null != cptMeasure.getId()) {
+			logger.info("Returning cptMeasureEditSuccess.jsp page after update");
+			cptMeasure.setActiveInd('N');
+			cptMeasure.setUpdatedBy(username);
+			cptMeasureService.update(cptMeasure);
+			model.addAttribute("Message", "CPT Measure deleted successfully");
+			return "cptMeasureList";
+		}
+		return "cptMeasureEdit";
+	}
 }

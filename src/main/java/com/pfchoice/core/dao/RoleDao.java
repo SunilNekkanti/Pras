@@ -1,6 +1,5 @@
 package com.pfchoice.core.dao;
 
-
 import java.util.List;
 
 import com.pfchoice.core.entity.Role;
@@ -12,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface RoleDao
-{
+public interface RoleDao {
 
 	Role deleteById(Integer id);
 
 	Role findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    Role save(Role bean);
+	Role save(Role bean);
 
-    Role updateByUpdater(Updater<Role> updater);
-    
-    List<Role> findAll();
-    
+	Role updateByUpdater(Updater<Role> updater);
+
+	List<Role> findAll();
+
 }

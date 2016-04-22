@@ -22,63 +22,59 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "cpt_measure")
-public class CPTMeasure implements Serializable
-{
+public class CPTMeasure implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="cpt_id", nullable = false,unique = true)
-    private Integer id;
-    
-    @Expose
-    @Column(name="code", nullable = false)
-    private String code;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "cpt_id", nullable = false, unique = true)
+	private Integer id;
 
-    @Expose
-    @Column(name="short_description")
-    private String shortDescription;
+	@Expose
+	@Column(name = "code", nullable = false)
+	private String code;
 
-    
-    @Expose
-    @Column(name="description")
-    private String description;
+	@Expose
+	@Column(name = "short_description")
+	private String shortDescription;
 
-    @Expose
-    @Transient
-    private String codeAndDescription;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    public CPTMeasure()
-    {
-    }
+	@Expose
+	@Column(name = "description")
+	private String description;
 
-    public CPTMeasure(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Transient
+	private String codeAndDescription;
 
-    /**
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public CPTMeasure() {
+	}
+
+	public CPTMeasure(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public Integer getId() {
@@ -86,23 +82,21 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
 
-	public String getCode()
-    {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(final String code)
-    {
-        this.code = code;
-    }
-    
-    
+	public void setCode(final String code) {
+		this.code = code;
+	}
+
 	/**
 	 * @return the shortDescription
 	 */
@@ -111,7 +105,8 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param shortDescription the shortDescription to set
+	 * @param shortDescription
+	 *            the shortDescription to set
 	 */
 	public void setShortDescription(final String shortDescription) {
 		this.shortDescription = shortDescription;
@@ -125,7 +120,8 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
@@ -135,12 +131,13 @@ public class CPTMeasure implements Serializable
 	 * @return the codeAndDescription
 	 */
 	public String getCodeAndDescription() {
-		String codedescription = this.code+" ("+this.shortDescription +")";
+		String codedescription = this.code + " (" + this.shortDescription + ")";
 		return codedescription;
 	}
 
 	/**
-	 * @param codeAndDescription the codeAndDescription to set
+	 * @param codeAndDescription
+	 *            the codeAndDescription to set
 	 */
 	public void setCodeAndDescription(String codeAndDescription) {
 		this.codeAndDescription = codeAndDescription;
@@ -154,7 +151,8 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -168,7 +166,8 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -182,7 +181,8 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -196,7 +196,8 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -210,40 +211,37 @@ public class CPTMeasure implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the code fields are not set
-        if (!(object instanceof CPTMeasure))
-        {
-            return false;
-        }
-        CPTMeasure other = (CPTMeasure) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the code fields
+		// are not set
+		if (!(object instanceof CPTMeasure)) {
+			return false;
+		}
+		CPTMeasure other = (CPTMeasure) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.CPTMeasure[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.CPTMeasure[ id=" + id + " ]";
+	}
 
 }

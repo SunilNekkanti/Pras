@@ -19,61 +19,52 @@ import com.pfchoice.core.service.MembershipService;
  */
 @Service
 @Transactional
-public class MembershipServiceImpl implements MembershipService
-{
+public class MembershipServiceImpl implements MembershipService {
 
-    @Autowired
-    private MembershipDao membershipDao;
+	@Autowired
+	private MembershipDao membershipDao;
 
-    @Override
-    public Membership deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return membershipDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public Membership deleteById(final Integer id) {
+		// Used for transaction test
+		return membershipDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-  //  @Transactional(readOnly = true)
-    public Membership findById(final Integer id)
-    {
-        return membershipDao.findById(id);
-    }
+	@Override
+	// @Transactional(readOnly = true)
+	public Membership findById(final Integer id) {
+		return membershipDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final int pageSize, final String sSearch, 
-    		final String sort, final String sortdir)
-    {
-        return membershipDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final int pageSize, final String sSearch, 
-    		final int sSearchIns,   final int sSearchPrvdr, final int sSearchHedisCode, final List<Integer> ruleIds,
-    		final String sort, final String sortdir)
-    {
-        return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns,
-        		sSearchPrvdr, sSearchHedisCode, ruleIds,  sort, sortdir);
-    }
-    
-    
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return membershipDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
 
-    @Override
-    public Membership save(final Membership bean)
-    {
-        //Used for transaction test
-        return membershipDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final int sSearchIns,
+			final int sSearchPrvdr, final int sSearchHedisCode, final List<Integer> ruleIds, final String sort,
+			final String sortdir) {
+		return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sSearchHedisCode, ruleIds,
+				sort, sortdir);
+	}
 
-    @Override
-    public Membership update(final Membership bean)
-    {
-        Updater<Membership> updater = new Updater<>(bean);
-        return membershipDao.updateByUpdater(updater);
-    }
+	@Override
+	public Membership save(final Membership bean) {
+		// Used for transaction test
+		return membershipDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
+
+	@Override
+	public Membership update(final Membership bean) {
+		Updater<Membership> updater = new Updater<>(bean);
+		return membershipDao.updateByUpdater(updater);
+	}
 
 }

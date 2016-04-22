@@ -28,22 +28,20 @@ public class AuthenticationServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Override
-	public UserDetails loadUserByUsername(String username)
-				throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		com.pfchoice.core.entity.User user = userDao.findByLogin(username);
 		Set<Role> roles = user.getRoles();
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		for(Role r:roles){
+		for (Role r : roles) {
 			GrantedAuthority authority = new SimpleGrantedAuthority(r.getRole());
 			authorities.add(authority);
 		}
-		
-		UserDetails userDetails = (UserDetails)new User(user.getUsername(), 
-		user.getPassword(), authorities);
+
+		UserDetails userDetails = (UserDetails) new User(user.getUsername(), user.getPassword(), authorities);
 		return userDetails;
-	
-	} 
+
+	}
 }

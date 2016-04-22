@@ -23,68 +23,60 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity(name = "role")
-public class Role implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class Role implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="Id", nullable = false)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Column(name="role")
-    private String role;
-    
-    
-    @OneToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="user_roles",  
-    joinColumns={@JoinColumn(name="role_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")})  
-    private User user;
-    
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-      
-    public Role()
-    {
-    }
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "Id", nullable = false)
+	private Integer id;
 
-    public Role(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "role")
+	private String role;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_roles", joinColumns = {
+			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "user_id", referencedColumnName = "id") })
+	private User user;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
-	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public Role() {
+	}
+
+	public Role(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the role
 	 */
@@ -93,7 +85,8 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param role the role to set
+	 * @param role
+	 *            the role to set
 	 */
 	public void setRole(String role) {
 		this.role = role;
@@ -107,7 +100,8 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;
@@ -121,7 +115,8 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -135,7 +130,8 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -149,7 +145,8 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -163,7 +160,8 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -177,43 +175,37 @@ public class Role implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Role)) {
+			return false;
+		}
+		Role other = (Role) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role))
-        {
-            return false;
-        }
-        Role other = (Role) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Role[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Role[ id=" + id + " ]";
+	}
 
 }

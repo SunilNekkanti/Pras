@@ -9,17 +9,16 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface FileDao
-{
+public interface FileDao {
 
 	File deleteById(Integer id);
 
 	File findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    File save(File bean);
+	File save(File bean);
 
-    File updateByUpdater(Updater<File> updater);
+	File updateByUpdater(Updater<File> updater);
 
 }

@@ -15,62 +15,57 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity(name = "file")
-public class File implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class File implements Serializable {
 
-    @Expose
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="file_id", nullable = false)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Column(name="file_name")
-    private String fileName;
-    
-    @Expose
-    @Column(name="file_type_code")
-    private Integer fileTypeCode;
-    
-    @Column(name="created_date")
-    private Timestamp createdDate;
-    
-    @Column(name="updated_date")
-    private Timestamp updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    public File()
-    {
-    }
+	@Expose
+	@Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "file_id", nullable = false)
+	private Integer id;
 
-    public File(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "file_name")
+	private String fileName;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@Column(name = "file_type_code")
+	private Integer fileTypeCode;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
-    
-    /**
+	@Column(name = "created_date")
+	private Timestamp createdDate;
+
+	@Column(name = "updated_date")
+	private Timestamp updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public File() {
+	}
+
+	public File(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the fileName
 	 */
 	public String getFileName() {
@@ -78,7 +73,8 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param fileName the fileName to set
+	 * @param fileName
+	 *            the fileName to set
 	 */
 	public void setFileName(final String fileName) {
 		this.fileName = fileName;
@@ -92,7 +88,8 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param fileTypeCode the fileTypeCode to set
+	 * @param fileTypeCode
+	 *            the fileTypeCode to set
 	 */
 	public void setFileTypeCode(final Integer fileTypeCode) {
 		this.fileTypeCode = fileTypeCode;
@@ -106,7 +103,8 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
@@ -120,7 +118,8 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
@@ -134,7 +133,8 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -148,7 +148,8 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -162,40 +163,37 @@ public class File implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
-	
+
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof File))
-        {
-            return false;
-        }
-        File other = (File) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof File)) {
+			return false;
+		}
+		File other = (File) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Membership[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Membership[ id=" + id + " ]";
+	}
 
 }

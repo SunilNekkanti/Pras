@@ -152,13 +152,6 @@
     
      <!--   Provider Section  -->
      
-     
-     
-     
-     
-     
-     
-     
      <!--  Insurance Section -->
     
      <definition name="insuranceList" extends="base.definition">  
@@ -215,8 +208,6 @@
         <put-attribute name="title" value="Insurance Contract Details" />  
         <put-attribute name="body" value="/WEB-INF/jsp/insuranceContractEdit.jsp" /> 
     </definition>
-    
-     
     
     <!-- End of  Insurance Section -->
     
@@ -457,4 +448,56 @@
         <put-attribute name="body" value="/WEB-INF/jsp/hedisMembershipList2.jsp" />  
     </definition>
     
+   
+    <!--  plan type -->
+    	<definition name="planTypeList" extends="base.definition">  
+     		<put-attribute name="title" value="Plan Type List" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/planTypeList.jsp" />  
+    	</definition>
+    	
+    	 <definition name="planTypeNew" extends="base.definition">  
+        	<put-attribute name="title" value="New Plan Type" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/planTypeNew.jsp" />  
+    	</definition> 
+    	
+    	<definition name="planTypeEdit" extends="base.definition">  
+     		<put-attribute name="title" value="Plan Type Details" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/planTypeEdit.jsp" />  
+    	</definition>
+    <!--  plan type -->
+    
+     <!--  file type -->
+    	<definition name="fileTypeList" extends="base.definition">  
+     		<put-attribute name="title" value="File Type List" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/fileTypeList.jsp" />  
+    	</definition>
+    	
+    	 <definition name="fileTypeNew" extends="base.definition">  
+        	<put-attribute name="title" value="New File Type" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/fileTypeNew.jsp" />  
+    	</definition> 
+    	
+    	<definition name="fileTypeEdit" extends="base.definition">  
+     		<put-attribute name="title" value="File Type Details" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/fileTypeEdit.jsp" />  
+    	</definition>
+    <!--  file type -->
+    
+    <!--  Hedis Measure Group -->
+    	<definition name="hedisMeasureGroupList" extends="base.definition">  
+     		<put-attribute name="title" value="Hedis Measure Group List" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureGroupList.jsp" />  
+    	</definition>
+    	
+    	 <definition name="hedisMeasureGroupNew" extends="base.definition">  
+        	<put-attribute name="title" value="New Hedis Measure Group" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureGroupNew.jsp" />  
+    	</definition> 
+    	
+    	<definition name="hedisMeasureGroupEdit" extends="base.definition">  
+     		<put-attribute name="title" value="Hedis Measure Group Details" /> 
+        	<put-attribute name="body" value="/WEB-INF/jsp/hedisMeasureGroupEdit.jsp" />  
+    	</definition>
+    	
+     <!--  Hedis Measure Group -->
 </tiles-definitions>  

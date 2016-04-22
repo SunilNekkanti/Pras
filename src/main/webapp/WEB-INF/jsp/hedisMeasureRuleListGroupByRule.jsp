@@ -1,10 +1,11 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 
@@ -106,76 +107,77 @@ $.ajax( {
   	
     GetHedisMeasureRulesByInsAndEffYear = function (ey, insId ) {
   		
-	        var oTable = 	$('#hedisMeasureRuleTable').dataTable({
-														  	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
-														  	     "sAjaxDataProp" : 'data.list',
-														  	     "aoColumns": [
-														                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ],"sClass":"center"  },
-														                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "10%" , "sDefaultContent": "" ,"sClass":"center" ,
-														                        	 "render": function ( data, type, full, meta ) {
-														                                 return '<a href="${context}/hedisMeasureRule/'+full.id+'">'+data+'</a>';
-														                		      }
-														                         },
-														                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center",
-														                        	 "render": function  ( data, type, full, meta )  {
-												                                          			return '<span data-toggle="tooltip" title="'+full.hedisMeasure.description+'">'+data+'</span>';  
-								                                 								}
-														                         },
-														                         { "mDataProp": "cptCodes[ ].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ],"sClass":"cptCodes",
-												                                        "render": function  ( data, type, full, meta )  {
-																                                         var cptcodeList=[];
-																                                         for(var i = 0; i<full.cptCodes.length; i++)
-																                                         {
-																                                          cptcodeList[i] = '<span data-toggle="tooltip" title="'+full.cptCodes[i].shortDescription+'">'+full.cptCodes[i].code+'</span>';  
-																                                         }
-												                                   						return cptcodeList.join(', ');
-												                                 					}
-												                                  },
-												                                  { "mDataProp": "icdCodes[ ].code","bSearchable" : true, "bSortable": true,"sWidth" : "15%" , "asSorting" : [ "asc" ],"sClass":"icdCodes",
-												                                        "render": function  ( data, type, full, meta )  {
-																                                         var icdCodeList=[];
-																                                         for(var i = 0; i<full.icdCodes.length; i++)
-																                                         {
-																                                          icdCodeList[i] = '<span data-toggle="tooltip" title="'+full.icdCodes[i].description+'">'+full.icdCodes[i].code+'</span>';  
-																                                         }
-																	                                   return icdCodeList.join(', ');
-																	                               }  
-												                                 },
-														                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sClass":"center", "sDefaultContent": ""},
-														                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": "","sClass":"center"   },
-														                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "" ,"sClass":"center"  },
-														                         { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" ,"sClass":"center" },
-														                         { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "","sClass":"center",
-														                        	 "render": function (data) {
-														     		   		   		    if(data == null) return null;
-														   		   		        		var date = new Date(data);
-														   		   	        			var month = date.getMonth() + 1;
-														   		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-														   		   		   	 		 }
-														                         },
-														                         { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "","sClass":"center",
-														                        	 "render": function (data) {
-														      		   		   			if(data == null) return null;
-														   		   		        		var date = new Date(data);
-														   		   	        			var month = date.getMonth() + 1;
-														   		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
-														   		   		   	 		}
-														                         },
-														                     ],
-														  	     "bLengthChange": false,
-														  	     "iDisplayLength": 10,
-														  	     "sPaginationType": "full_numbers",
-														  	     "bProcessing": true,
-														  	     "bServerSide" : true,
-														  	     "bAutoWidth": false,
-														  	     "fnServerParams": function ( aoData ) {
-													                aoData.push(
-													                    {"name": "insId", "value": insId},
-													                    {"name": "ey", "value": ey }
-													                );
-													             }, 
-														  	     "fnServerData" : datatable2Rest
-														  	});
+	        var oTable = 	$('#hedisMeasureRuleTable')
+	        					.dataTable({
+								  	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
+								  	     "sAjaxDataProp" : 'data.list',
+								  	     "aoColumns": [
+								                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ],"sClass":"center"  },
+								                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "10%" , "sDefaultContent": "" ,"sClass":"center" ,
+								                        	 "render": function ( data, type, full, meta ) {
+								                                 return '<a href="${context}/hedisMeasureRule/'+full.id+'">'+data+'</a>';
+								                		      }
+								                         },
+								                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center",
+								                        	 "render": function  ( data, type, full, meta )  {
+						                                          			return '<span data-toggle="tooltip" title="'+full.hedisMeasure.description+'">'+data+'</span>';  
+		                                 								}
+								                         },
+								                         { "mDataProp": "cptCodes[ ].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ],"sClass":"cptCodes",
+						                                        "render": function  ( data, type, full, meta )  {
+										                                         var cptcodeList=[];
+										                                         for(var i = 0; i<full.cptCodes.length; i++)
+										                                         {
+										                                          cptcodeList[i] = '<span data-toggle="tooltip" title="'+full.cptCodes[i].shortDescription+'">'+full.cptCodes[i].code+'</span>';  
+										                                         }
+						                                   						return cptcodeList.join(', ');
+						                                 					}
+						                                  },
+						                                  { "mDataProp": "icdCodes[ ].code","bSearchable" : true, "bSortable": true,"sWidth" : "15%" , "asSorting" : [ "asc" ],"sClass":"icdCodes",
+						                                        "render": function  ( data, type, full, meta )  {
+										                                         var icdCodeList=[];
+										                                         for(var i = 0; i<full.icdCodes.length; i++)
+										                                         {
+										                                          icdCodeList[i] = '<span data-toggle="tooltip" title="'+full.icdCodes[i].description+'">'+full.icdCodes[i].code+'</span>';  
+										                                         }
+											                                   return icdCodeList.join(', ');
+											                               }  
+						                                 },
+								                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sClass":"center", "sDefaultContent": ""},
+								                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": "","sClass":"center"   },
+								                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "" ,"sClass":"center"  },
+								                         { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" ,"sClass":"center" },
+								                         { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "","sClass":"center",
+								                        	 "render": function (data) {
+								     		   		   		    if(data == null) return null;
+								   		   		        		var date = new Date(data);
+								   		   	        			var month = date.getMonth() + 1;
+								   		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+								   		   		   	 		 }
+								                         },
+								                         { "mDataProp": "ageEffectiveTo","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "","sClass":"center",
+								                        	 "render": function (data) {
+								      		   		   			if(data == null) return null;
+								   		   		        		var date = new Date(data);
+								   		   	        			var month = date.getMonth() + 1;
+								   		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+								   		   		   	 		}
+								                         },
+								                     ],
+								  	     "bLengthChange": false,
+								  	     "iDisplayLength": 10,
+								  	     "sPaginationType": "full_numbers",
+								  	     "bProcessing": true,
+								  	     "bServerSide" : true,
+								  	     "bAutoWidth": false,
+								  	     "fnServerParams": function ( aoData ) {
+							                aoData.push(
+							                    {"name": "insId", "value": insId},
+							                    {"name": "ey", "value": ey }
+							                );
+							             }, 
+								  	     "fnServerData" : datatable2Rest
+						             });
     }
 
   	
@@ -184,39 +186,41 @@ $.ajax( {
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Hedis Measure Rule List  
-			<span class="clrRed">${Message}</span>
-			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureRule/new">
-          		<span class="glyphicon glyphicon-plus-sign "></span>New Hedis Rule
-          	</a>
-         </div>	
+		<div class="panel-heading">
+			Hedis Measure Rule List <span class="clrRed">${Message}</span> <a
+				class="btn btn-danger pull-right btn-xs white-text"
+				href="${context}/hedisMeasureRule/new"> <span
+				class="glyphicon glyphicon-plus-sign "></span>New Hedis Rule
+			</a>
+		</div>
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
-					<div class="col-sm-6">
-							<div class="col-sm-4">
-								<label class="control-label col-sm-5">Eff. Year</label>
-								 <div class=" col-sm-7" id="extFilterEY">  </div>
-							</div>	 
-							<div class="col-sm-4">	 
-								<label class="control-label col-sm-4">Insurance</label>
-								 <div class="col-sm-8"  id="extFilterIns"> </div>
-							</div>	 
-					 </div>
-				<table id="hedisMeasureRuleTable" class="display table-responsive  table table-striped table-hover"> 
-				
+				<div class="col-sm-6">
+					<div class="col-sm-4">
+						<label class="control-label col-sm-5">Eff. Year</label>
+						<div class=" col-sm-7" id="extFilterEY"></div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label col-sm-4">Insurance</label>
+						<div class="col-sm-8" id="extFilterIns"></div>
+					</div>
+				</div>
+				<table id="hedisMeasureRuleTable"
+					class="display table-responsive  table table-striped table-hover">
+
 					<thead>
 						<tr>
-							<th  scope="col">Action</th> 
-							<th  scope="col">Description</th> 
-							<th  scope="col">Hedis Code</th> 
-							<th  scope="col">CPT Codes</th>  
-					        <th  scope="col">ICD Codes</th> 
-					        <th  scope="col">Dose Count</th> 
-					        <th  scope="col">Gender</th> 
-					        <th  scope="col">Lower Age Limit</th> 
-					        <th  scope="col">Upper Age Limit</th> 
-					        <th  scope="col">Eff. Date From</th> 
-					        <th  scope="col">Eff. Date To</th> 
+							<th scope="col">Action</th>
+							<th scope="col">Description</th>
+							<th scope="col">Hedis Code</th>
+							<th scope="col">CPT Codes</th>
+							<th scope="col">ICD Codes</th>
+							<th scope="col">Dose Count</th>
+							<th scope="col">Gender</th>
+							<th scope="col">Lower Age Limit</th>
+							<th scope="col">Upper Age Limit</th>
+							<th scope="col">Eff. Date From</th>
+							<th scope="col">Eff. Date To</th>
 						</tr>
 					</thead>
 

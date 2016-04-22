@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import com.pfchoice.core.service.MembershipService;
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
-
 /**
  *
  * A Membership controller class for GET/DELETE/POST/PUT.
@@ -30,36 +28,34 @@ import ml.rugal.sshcommon.springmvc.util.Message;
  * @author sarath
  */
 @Controller
-@SessionAttributes({"username","userpath"})
-public class MembershipListController
-{
+@SessionAttributes({ "username", "userpath" })
+public class MembershipListController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MembershipListController.class.getName());
-    
-    @Autowired
-    private MembershipService membershipService;
+	private static final Logger LOG = LoggerFactory.getLogger(MembershipListController.class.getName());
 
-   @RequestMapping(value = {"/admin/membershipList","/user/membershipList"})
-    public String handleRequest() throws Exception {
- 
+	@Autowired
+	private MembershipService membershipService;
+
+	@RequestMapping(value = { "/admin/membershipList", "/user/membershipList" })
+	public String handleRequest() throws Exception {
+
 		return "membershipList";
 	}
-    
-   @ResponseBody
-	@RequestMapping(value = {"/admin/membership/list","/user/membership/list"}, method = RequestMethod.GET)
-	public Message viewMembershipListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
-					@RequestParam(required = false) String sSearch,
-					@RequestParam(required = false) Integer sSearchIns,
-					@RequestParam(required = false) Integer sSearchPrvdr,
-					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
-	   //provided 0 to ignore hedisMeasureRule join  
-	    Integer i = 0;
-	    List<Integer> ruleIds =  Collections.singletonList(i) ;
-		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, 0, ruleIds, sort, sortdir);
-		
-       return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
-   }
+
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membership/list", "/user/membership/list" }, method = RequestMethod.GET)
+	public Message viewMembershipListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) Integer sSearchIns, @RequestParam(required = false) Integer sSearchPrvdr,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
+					throws Exception {
+
+		// provided 0 to ignore hedisMeasureRule join
+		Integer i = 0;
+		List<Integer> ruleIds = Collections.singletonList(i);
+		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, 0,
+				ruleIds, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
 }

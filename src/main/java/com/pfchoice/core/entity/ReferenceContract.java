@@ -23,70 +23,63 @@ import com.pfchoice.core.entity.Insurance;
  * @author Mohanasundharam
  */
 @Entity(name = "reference_contract")
-public class ReferenceContract implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class ReferenceContract implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="ref_contract_Id", nullable = false)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @OneToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name="insurance_id", referencedColumnName="insurance_id")
-    private Insurance ins;
-    
-   // @Expose
-    @OneToOne(  fetch = FetchType.LAZY)
-    @JoinColumn(name="prvdr_id",  referencedColumnName="prvdr_id")
-    private Provider prvdr;
-    
-    @OneToOne(  fetch = FetchType.LAZY, mappedBy="referenceContract")
-    private Contract contract;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-      
-    public ReferenceContract()
-    {
-    }
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "ref_contract_Id", nullable = false)
+	private Integer id;
 
-    public ReferenceContract(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "insurance_id", referencedColumnName = "insurance_id")
+	private Insurance ins;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	// @Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
+	private Provider prvdr;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "referenceContract")
+	private Contract contract;
 
-    
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public ReferenceContract() {
+	}
+
+	public ReferenceContract(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the ins
 	 */
@@ -95,7 +88,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param ins
+	 *            the ins to set
 	 */
 	public void setIns(final Insurance ins) {
 		this.ins = ins;
@@ -109,7 +103,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param prvdr
+	 *            the prvdr to set
 	 */
 	public void setPrvdr(Provider prvdr) {
 		this.prvdr = prvdr;
@@ -123,7 +118,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param contract the contract to set
+	 * @param contract
+	 *            the contract to set
 	 */
 	public void setContract(Contract contract) {
 		this.contract = contract;
@@ -137,7 +133,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -151,7 +148,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -165,7 +163,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -179,7 +178,8 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -193,43 +193,37 @@ public class ReferenceContract implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof ReferenceContract)) {
+			return false;
+		}
+		ReferenceContract other = (ReferenceContract) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReferenceContract))
-        {
-            return false;
-        }
-        ReferenceContract other = (ReferenceContract) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Contract[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Contract[ id=" + id + " ]";
+	}
 
 }

@@ -16,76 +16,66 @@ import com.pfchoice.core.entity.User;
  * @author Sarath
  */
 @Repository
-public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements UserDao
-{
+public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements UserDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(UserDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(UserDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public User findById(final Integer id)
-    {
-    	User entity = get(id);
-        return entity;
-    }
+	@Override
+	public User findById(final Integer id) {
+		User entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public User save(final User bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public User save(final User bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public User deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	User entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public User deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		User entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<User> getEntityClass()
-    {
-        return User.class;
-    }
-    
-    @Override
-    public User findByLogin(final String login)
-    {
-    	 Criteria crit = createCriteria();
-    	 crit.add(Restrictions.eq("username", login));
-    	 crit.add(Restrictions.eq("activeInd", 'Y'));
-    	User entity = (User) crit.uniqueResult();
+	@Override
+	protected Class<User> getEntityClass() {
+		return User.class;
+	}
 
-        return entity;
-    }
-    
-    @Override
-    public boolean isValidUser(final String login, final String password)
-    {
-    
-    	Criteria crit = createCriteria();
-    	crit.add(Restrictions.eq("username", login));
-    	crit.add(Restrictions.eq("password", password));
-    	crit.add(Restrictions.eq("activeInd", 'Y'));
-    	
-    	User entity = (User) crit.uniqueResult();
-    	
-    	return (entity != null)?true:false;
-    		
-    }
+	@Override
+	public User findByLogin(final String login) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("username", login));
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		User entity = (User) crit.uniqueResult();
+
+		return entity;
+	}
+
+	@Override
+	public boolean isValidUser(final String login, final String password) {
+
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("username", login));
+		crit.add(Restrictions.eq("password", password));
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+
+		User entity = (User) crit.uniqueResult();
+
+		return (entity != null) ? true : false;
+
+	}
 }

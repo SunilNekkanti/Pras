@@ -19,54 +19,47 @@ import com.pfchoice.core.service.GenderService;
  */
 @Service
 @Transactional
-public class GenderServiceImpl implements GenderService
-{
+public class GenderServiceImpl implements GenderService {
 
-    @Autowired
-    private GenderDao genderDao;
+	@Autowired
+	private GenderDao genderDao;
 
-    @Override
-    public Gender deleteById(final Byte id)
-    {
-        //Used for transaction test
-        return genderDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public Gender deleteById(final Byte id) {
+		// Used for transaction test
+		return genderDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Gender findById(final Byte id)
-    {
-        return genderDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Gender findById(final Byte id) {
+		return genderDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        return genderDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return genderDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public Gender save(final Gender bean)
-    {
-        //Used for transaction test
-        return genderDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public Gender save(final Gender bean) {
+		// Used for transaction test
+		return genderDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public Gender update(final Gender bean)
-    {
-        Updater<Gender> updater = new Updater<>(bean);
-        return genderDao.updateByUpdater(updater);
-    }
-    
-    @Override
-    public List<Gender> findAll()
-    {
-    	return genderDao.findAll();
-    }
+	@Override
+	public Gender update(final Gender bean) {
+		Updater<Gender> updater = new Updater<>(bean);
+		return genderDao.updateByUpdater(updater);
+	}
+
+	@Override
+	public List<Gender> findAll() {
+		return genderDao.findAll();
+	}
 
 }

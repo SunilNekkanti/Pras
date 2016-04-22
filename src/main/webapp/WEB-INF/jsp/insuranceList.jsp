@@ -1,14 +1,15 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 <title>Insurance List</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
 
     $(document).ready(function() {
@@ -83,25 +84,27 @@
 
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading">Insurance List 
-			<span class="clrRed">${Message}</span>
-			<a class="btn btn-danger pull-right btn-xs white-text" href="${context}/insurance/new">
-          		<span class="glyphicon glyphicon-plus-sign "></span>New Insurance
-          	</a>
+		<div class="panel-heading">
+			Insurance List <span class="clrRed">${Message}</span> <a
+				class="btn btn-danger pull-right btn-xs white-text"
+				href="${context}/insurance/new"> <span
+				class="glyphicon glyphicon-plus-sign "></span>New Insurance
+			</a>
 		</div>
-		<div class="panel-body" >
-				<table id="insuranceTable" class="table table-striped table-hover table-responsive">
-					<thead>
-						<tr>
-							<th  scope="col">Action</th>  
-							<th  scope="col">Insurance Name</th> 
-							<th  scope="col">Plan Type</th>  
-						</tr>
-					</thead>
+		<div class="panel-body">
+			<table id="insuranceTable"
+				class="table table-striped table-hover table-responsive">
+				<thead>
+					<tr>
+						<th scope="col">Action</th>
+						<th scope="col">Insurance Name</th>
+						<th scope="col">Plan Type</th>
+					</tr>
+				</thead>
 
-					<tbody >
-					</tbody>
-				</table>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

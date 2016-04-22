@@ -19,53 +19,46 @@ import com.pfchoice.core.service.PlanTypeService;
  */
 @Service
 @Transactional
-public class PlanTypeServiceImpl implements PlanTypeService
-{
+public class PlanTypeServiceImpl implements PlanTypeService {
 
-    @Autowired
-    private PlanTypeDao planTypeDao;
+	@Autowired
+	private PlanTypeDao planTypeDao;
 
-    @Override
-    public PlanType deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return planTypeDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public PlanType deleteById(final Integer id) {
+		// Used for transaction test
+		return planTypeDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public PlanType findById(final Integer id)
-    {
-        return planTypeDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public PlanType findById(final Integer id) {
+		return planTypeDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        return planTypeDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return planTypeDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public PlanType save(final PlanType bean)
-    {
-        //Used for transaction test
-        return planTypeDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public PlanType save(final PlanType bean) {
+		// Used for transaction test
+		return planTypeDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public PlanType update(final PlanType bean)
-    {
-        Updater<PlanType> updater = new Updater<>(bean);
-        return planTypeDao.updateByUpdater(updater);
-    }
+	@Override
+	public PlanType update(final PlanType bean) {
+		Updater<PlanType> updater = new Updater<>(bean);
+		return planTypeDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<PlanType> findAll()
-    {
-    	return planTypeDao.findAll();
-    }
+	@Override
+	public List<PlanType> findAll() {
+		return planTypeDao.findAll();
+	}
 }

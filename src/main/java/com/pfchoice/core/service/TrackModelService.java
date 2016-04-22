@@ -8,17 +8,16 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface TrackModelService
-{
+public interface TrackModelService {
 
 	TrackModel deleteById(Integer id);
 
 	TrackModel findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    TrackModel save(TrackModel bean);
+	TrackModel save(TrackModel bean);
 
-    TrackModel update(TrackModel bean);
+	TrackModel update(TrackModel bean);
 
 }

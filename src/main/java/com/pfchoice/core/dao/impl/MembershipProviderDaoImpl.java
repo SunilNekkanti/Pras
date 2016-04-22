@@ -18,94 +18,80 @@ import com.pfchoice.core.entity.MembershipProvider;
  * @author Sarath
  */
 @Repository
-public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvider, Integer> implements MembershipProviderDao
-{
+public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvider, Integer>
+		implements MembershipProviderDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MembershipProviderDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MembershipProviderDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public MembershipProvider findById(final Integer id)
-    {
-    	MembershipProvider entity = get(id);
-        return entity;
-    }
+	@Override
+	public MembershipProvider findById(final Integer id) {
+		MembershipProvider entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public MembershipProvider save(final MembershipProvider bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public MembershipProvider save(final MembershipProvider bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public MembershipProvider deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	MembershipProvider entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public MembershipProvider deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		MembershipProvider entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<MembershipProvider> getEntityClass()
-    {
-        return MembershipProvider.class;
-    }
+	@Override
+	protected Class<MembershipProvider> getEntityClass() {
+		return MembershipProvider.class;
+	}
 
-    @SuppressWarnings("unchecked")
-	public List<MembershipProvider> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.add(Restrictions.eq("activeInd", 'Y'));
-    	List<MembershipProvider> list = cr.list();
-    	return list;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<MembershipProvider> findAllByMbrId(final Integer id)
-    {
-    	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr")
-    			.createAlias("mbrPrvdr.mbr","mbr")
-    			.add(Restrictions.eq("mbr.id", id))
-    			.add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
-    			.add(Restrictions.eq("mbr.activeInd", 'Y'));
-    	
-    	List<MembershipProvider> list = cr.list();
-    	final String msg = "findAllByMbrId list size is %d";
-    	final String fmt = String.format(msg, list.size());
-    	LOG.info(fmt);
-    	
-    	return list;
-    }
-        
-    @SuppressWarnings("unchecked")
-	public MembershipProvider findByMbrId(final Integer id)
-    {
-    	Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr")
-    			.createAlias("mbrPrvdr.mbr","mbr")
-    			.add(Restrictions.eq("mbr.id", id))	
-    			.add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
-    			.add(Restrictions.eq("mbr.activeInd", 'Y'));
-    	List<MembershipProvider> list = cr.list();
-    	
-    	final String msg = "findByMbrId list size is %d";
-    	final String fmt = String.format(msg, list.size());
-    	LOG.info(fmt);
-    		if(list.size() == 0)
-    			return null;
-    	return list.get(0);
-    }
+	@SuppressWarnings("unchecked")
+	public List<MembershipProvider> findAll() {
+		Criteria cr = createCriteria();
+		cr.add(Restrictions.eq("activeInd", 'Y'));
+		List<MembershipProvider> list = cr.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MembershipProvider> findAllByMbrId(final Integer id) {
+		Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr").createAlias("mbrPrvdr.mbr", "mbr")
+				.add(Restrictions.eq("mbr.id", id)).add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
+				.add(Restrictions.eq("mbr.activeInd", 'Y'));
+
+		List<MembershipProvider> list = cr.list();
+		final String msg = "findAllByMbrId list size is %d";
+		final String fmt = String.format(msg, list.size());
+		LOG.info(fmt);
+
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public MembershipProvider findByMbrId(final Integer id) {
+		Criteria cr = getSession().createCriteria(getEntityClass(), "mbrPrvdr").createAlias("mbrPrvdr.mbr", "mbr")
+				.add(Restrictions.eq("mbr.id", id)).add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
+				.add(Restrictions.eq("mbr.activeInd", 'Y'));
+		List<MembershipProvider> list = cr.list();
+
+		final String msg = "findByMbrId list size is %d";
+		final String fmt = String.format(msg, list.size());
+		LOG.info(fmt);
+		if (list.size() == 0)
+			return null;
+		return list.get(0);
+	}
 }

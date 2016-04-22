@@ -19,53 +19,46 @@ import com.pfchoice.core.service.EthinicityService;
  */
 @Service
 @Transactional
-public class EthinicityServiceImpl implements EthinicityService
-{
+public class EthinicityServiceImpl implements EthinicityService {
 
-    @Autowired
-    private EthinicityDao ethinicityDao;
+	@Autowired
+	private EthinicityDao ethinicityDao;
 
-    @Override
-    public Ethinicity deleteById(Byte id)
-    {
-        //Used for transaction test
-        return ethinicityDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public Ethinicity deleteById(Byte id) {
+		// Used for transaction test
+		return ethinicityDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Ethinicity findById(final Byte id)
-    {
-        return ethinicityDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Ethinicity findById(final Byte id) {
+		return ethinicityDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        return ethinicityDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return ethinicityDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public Ethinicity save(final Ethinicity bean)
-    {
-        //Used for transaction test
-        return ethinicityDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public Ethinicity save(final Ethinicity bean) {
+		// Used for transaction test
+		return ethinicityDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public Ethinicity update(final Ethinicity bean)
-    {
-        Updater<Ethinicity> updater = new Updater<>(bean);
-        return ethinicityDao.updateByUpdater(updater);
-    }
+	@Override
+	public Ethinicity update(final Ethinicity bean) {
+		Updater<Ethinicity> updater = new Updater<>(bean);
+		return ethinicityDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<Ethinicity> findAll()
-    {
-    	return ethinicityDao.findAll();
-    }
+	@Override
+	public List<Ethinicity> findAll() {
+		return ethinicityDao.findAll();
+	}
 }

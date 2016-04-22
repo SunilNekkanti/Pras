@@ -9,17 +9,16 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface FilesUploadDao
-{
+public interface FilesUploadDao {
 
 	FilesUpload deleteById(Integer id);
 
 	FilesUpload findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    FilesUpload save(FilesUpload bean);
+	FilesUpload save(FilesUpload bean);
 
-    FilesUpload updateByUpdater(Updater<FilesUpload> updater);
-    
+	FilesUpload updateByUpdater(Updater<FilesUpload> updater);
+
 }

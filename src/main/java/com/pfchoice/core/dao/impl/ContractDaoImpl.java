@@ -18,110 +18,93 @@ import com.pfchoice.core.entity.Contract;
  * @author Sarath
  */
 @Repository
-public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> implements ContractDao
-{
+public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> implements ContractDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ContractDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ContractDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        Criteria crit = createCriteria();
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public Contract findById(final Integer id)
-    {
-    	Contract entity = get(id);
-        return entity;
-    }
+	@Override
+	public Contract findById(final Integer id) {
+		Contract entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public Contract save(final Contract bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public Contract save(final Contract bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public Contract deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	Contract entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public Contract deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		Contract entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<Contract> getEntityClass()
-    {
-        return Contract.class;
-    }
+	@Override
+	protected Class<Contract> getEntityClass() {
+		return Contract.class;
+	}
 
-    @SuppressWarnings("unchecked")
- 	public List<Contract> findAllContractsByRefId(final String refString, final Integer id)
-     {
-    	String refRestrictionString = null;
-    	Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
-    	cr.createAlias("contract.referenceContract","refContract");
-    	if("provider".equals(refString)) 
-    	{
+	@SuppressWarnings("unchecked")
+	public List<Contract> findAllContractsByRefId(final String refString, final Integer id) {
+		String refRestrictionString = null;
+		Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
+		cr.createAlias("contract.referenceContract", "refContract");
+		if ("provider".equals(refString)) {
 			refRestrictionString = "refContract.prvdr.id";
 			cr.add(Restrictions.isNull("refContract.ins.id"));
-		}else if("providerInsurance".equals(refString)) 
-		{
+		} else if ("providerInsurance".equals(refString)) {
 			refRestrictionString = "refContract.prvdr.id";
 			cr.add(Restrictions.isNotNull("refContract.ins.id"));
-		}else if("insurance".equals(refString)) 
-		{
+		} else if ("insurance".equals(refString)) {
 			refRestrictionString = "refContract.ins.id";
 			cr.add(Restrictions.isNull("refContract.prvdr.id"));
-		}
-		else if("insuranceProvider".equals(refString)) 
-		{
+		} else if ("insuranceProvider".equals(refString)) {
 			refRestrictionString = "refContract.ins.id";
 			cr.add(Restrictions.isNotNull("refContract.prvdr.id"));
 		}
-     			
-     	if(refRestrictionString != null)
-     	{
-     		cr.add(Restrictions.eq(refRestrictionString, id));
-     	}	
-     	cr.add(Restrictions.eq("contract.activeInd", 'Y'));
-     	cr.add(Restrictions.eq("refContract.activeInd", 'Y'));
-     	List<Contract> list = cr.list();
-     	return list;
-     }
-    
-    @SuppressWarnings("unchecked")
- 	public Contract findActiveContractByRefId(final String refString, final Integer id)
-     {
-    	Contract contract  = null;
-    	String refRestrictionString = null;
-    	if("provider".equals(refString)){
-				refRestrictionString = "prvdr.id";
-		}else if("insurance".equals(refString)) {
-				refRestrictionString = "refContract.ins.id";
+
+		if (refRestrictionString != null) {
+			cr.add(Restrictions.eq(refRestrictionString, id));
 		}
-				
-     	Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
-     	if(refRestrictionString != null)
-     	{
-     			cr.createAlias("contract.referenceContract","refContract");
-     			cr.createAlias("refContract.prvdr","prvdr");
-     			cr.add(Restrictions.eq(refRestrictionString, id));
-     	}		
-   				
-       	cr.add(Restrictions.eq("contract.activeInd", 'Y'));
-     	List<Contract> list = cr.list();
-     	if(list.size()>0)
-     		contract =list.get(0);
-     	return contract;
-     }
+		cr.add(Restrictions.eq("contract.activeInd", 'Y'));
+		cr.add(Restrictions.eq("refContract.activeInd", 'Y'));
+		List<Contract> list = cr.list();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Contract findActiveContractByRefId(final String refString, final Integer id) {
+		Contract contract = null;
+		String refRestrictionString = null;
+		if ("provider".equals(refString)) {
+			refRestrictionString = "prvdr.id";
+		} else if ("insurance".equals(refString)) {
+			refRestrictionString = "refContract.ins.id";
+		}
+
+		Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
+		if (refRestrictionString != null) {
+			cr.createAlias("contract.referenceContract", "refContract");
+			cr.createAlias("refContract.prvdr", "prvdr");
+			cr.add(Restrictions.eq(refRestrictionString, id));
+		}
+
+		cr.add(Restrictions.eq("contract.activeInd", 'Y'));
+		List<Contract> list = cr.list();
+		if (list.size() > 0)
+			contract = list.get(0);
+		return contract;
+	}
 }

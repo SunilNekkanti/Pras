@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -29,127 +28,128 @@ import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.PlanTypeService;
 
 @Controller
-@SessionAttributes({"username","userpath"})
-public class InsuranceController{
-	
-	private static final Logger logger = LoggerFactory
-	            .getLogger(InsuranceController.class);
-	   
-    @Autowired
-    private InsuranceService insuranceService;
-    
-    @Autowired
-    private PlanTypeService planTypeService;
-   
-    @Autowired
-    @Qualifier("insuranceValidator")
-    private Validator validator;
- 
-    @InitBinder("insurance")
-    private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
-    }
- 
+@SessionAttributes({ "username", "userpath" })
+public class InsuranceController {
+
+	private static final Logger logger = LoggerFactory.getLogger(InsuranceController.class);
+
+	@Autowired
+	private InsuranceService insuranceService;
+
+	@Autowired
+	private PlanTypeService planTypeService;
+
+	@Autowired
+	@Qualifier("insuranceValidator")
+	private Validator validator;
+
+	@InitBinder("insurance")
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(validator);
+	}
+
 	@ModelAttribute("insurance")
-    public Insurance createInsuranceModel() {
-        // ModelAttribute value should be same as used in the empSave.jsp
-        return new Insurance();
-    }
-	
+	public Insurance createInsuranceModel() {
+		// ModelAttribute value should be same as used in the empSave.jsp
+		return new Insurance();
+	}
+
 	@ModelAttribute("planTypeList")
 	public List<PlanType> populatePlanTypeList() {
-		
-		//Data referencing for county list box
+
+		// Data referencing for county list box
 		List<PlanType> planTypeList = planTypeService.findAll();
 		return planTypeList;
 	}
-	
-	@RequestMapping(value ={"/admin/insurance/new"})
-    public String addInsurancePage(Model model) {
-		
+
+	@RequestMapping(value = { "/admin/insurance/new" })
+	public String addInsurancePage(Model model) {
+
 		Insurance insurance = createInsuranceModel();
 		model.addAttribute("insurance", insurance);
-        return "insuranceNew";
-    }
-	
-	@RequestMapping(value = {"/admin/insurance/{id}","/user/insurance/{id}"}, method = RequestMethod.GET)
-    public String updateInsurancePage(@PathVariable Integer id,Model model, @ModelAttribute("username") String username) {
-		
+		return "insuranceNew";
+	}
+
+	@RequestMapping(value = { "/admin/insurance/{id}", "/user/insurance/{id}" }, method = RequestMethod.GET)
+	public String updateInsurancePage(@PathVariable Integer id, Model model,
+			@ModelAttribute("username") String username) {
+
 		Insurance dbInsurance = insuranceService.findById(id);
-		 logger.info("Returning insurance.getId()"+dbInsurance.getId());
-			       
+		logger.info("Returning insurance.getId()" + dbInsurance.getId());
+
 		model.addAttribute("insurance", dbInsurance);
-		 logger.info("Returning insuranceSave.jsp page");
-        return "insuranceDetails";
-    }
-	
-	@RequestMapping(value = {"/admin/insurance/save.do"}, method = RequestMethod.POST, params ={"add"})
-    public String newInsuranceAction(@Validated Insurance insurance,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-       
+		logger.info("Returning insuranceSave.jsp page");
+		return "insuranceDetails";
+	}
+
+	@RequestMapping(value = { "/admin/insurance/save.do" }, method = RequestMethod.POST, params = { "add" })
+	public String newInsuranceAction(@Validated Insurance insurance, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+
 		if (bindingResult.hasErrors()) {
-        	logger.info("Returning insuranceEdit.jsp page");
-            return "insuranceNew";
-        }
-        
-    	logger.info("Returning InsuranceSuccess.jsp page after create");
-    	model.addAttribute("insurance", insurance);
-    	insurance.setCreatedBy(username);
-    	insurance.setUpdatedBy(username);
-      	insuranceService.save(insurance);
-      	model.addAttribute("Message", "Insurance details added successfully");
-       return "insuranceList";
-    }
-	
-	@RequestMapping(value = {"/admin/insurance/{id}/details","/user/insurance/{id}/details"}, method = RequestMethod.GET)
-    public String viewProviderPage(@PathVariable Integer id,Model model) {
-		
+			logger.info("Returning insuranceEdit.jsp page");
+			return "insuranceNew";
+		}
+
+		logger.info("Returning InsuranceSuccess.jsp page after create");
+		model.addAttribute("insurance", insurance);
+		insurance.setCreatedBy(username);
+		insurance.setUpdatedBy(username);
+		insuranceService.save(insurance);
+		model.addAttribute("Message", "Insurance details added successfully");
+		return "insuranceList";
+	}
+
+	@RequestMapping(value = { "/admin/insurance/{id}/details",
+			"/user/insurance/{id}/details" }, method = RequestMethod.GET)
+	public String viewProviderPage(@PathVariable Integer id, Model model) {
+
 		Insurance dbInsurance = insuranceService.findById(id);
-		 logger.info("Returning insurance.getId()"+dbInsurance.getId());
-			       
+		logger.info("Returning insurance.getId()" + dbInsurance.getId());
+
 		model.addAttribute("insurance", dbInsurance);
-		 logger.info("Returning insuranceSave.jsp page");
-       return "insuranceEdit";
-    }
-	
-	@RequestMapping(value = {"/admin/insurance/{id}/save.do",}, method = RequestMethod.POST, params ={"update"})
-    public String updateInsuranceAction( @PathVariable Integer id,@ModelAttribute @Validated Insurance insurance,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("Returning insuranceSave.jsp page");
+		return "insuranceEdit";
+	}
+
+	@RequestMapping(value = { "/admin/insurance/{id}/save.do", }, method = RequestMethod.POST, params = { "update" })
+	public String updateInsuranceAction(@PathVariable Integer id, @ModelAttribute @Validated Insurance insurance,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		insurance.setActiveInd('Y');
-        if (bindingResult.hasErrors()) {
-        	logger.info("Returning insuranceEdit.jsp page");
-        	insurance.setActiveInd('Y');
-            return "insuranceEdit";
-        }
-	        
-        if (null != insurance.getId())
-        {
-        	logger.info("Returning InsuranceSuccess.jsp page after update");
-        	insurance.setUpdatedBy(username);
-        	insuranceService.update(insurance);
-        	model.addAttribute("Message", "Insurance Details Updated Successfully");
-        }
-           
-        return "insuranceEdit";
-    }
-	
-	@RequestMapping(value = {"/admin/insurance/{id}/save.do"}, method = RequestMethod.POST, params ={"delete"})
-    public String deleteInsuranceAction(@PathVariable Integer id, Model model, @ModelAttribute("username") String username) {
-        
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning insuranceEdit.jsp page");
+			insurance.setActiveInd('Y');
+			return "insuranceEdit";
+		}
+
+		if (null != insurance.getId()) {
+			logger.info("Returning InsuranceSuccess.jsp page after update");
+			insurance.setUpdatedBy(username);
+			insuranceService.update(insurance);
+			model.addAttribute("Message", "Insurance Details Updated Successfully");
+		}
+
+		return "insuranceEdit";
+	}
+
+	@RequestMapping(value = { "/admin/insurance/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
+	public String deleteInsuranceAction(@PathVariable Integer id, Model model,
+			@ModelAttribute("username") String username) {
+
 		Insurance dbInsurance = insuranceService.findById(id);
 		dbInsurance.setActiveInd(new Character('N'));
 		dbInsurance.setUpdatedBy(username);
-	    insuranceService.update(dbInsurance);
-	    model.addAttribute("insurance", dbInsurance);
-	    model.addAttribute("Message", "Insurance details deleted successfully");
-        logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
-        return "insuranceEdit";
-    }
-	
+		insuranceService.update(dbInsurance);
+		model.addAttribute("insurance", dbInsurance);
+		model.addAttribute("Message", "Insurance details deleted successfully");
+		logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
+		return "insuranceEdit";
+	}
+
 	@ModelAttribute("activeIndMap")
-	public Map<String,String> populateActiveIndList() {
-		//Data referencing for ActiveMap box
+	public Map<String, String> populateActiveIndList() {
+		// Data referencing for ActiveMap box
 		return PrasUtil.getActiveIndMap();
 	}
-	
+
 }

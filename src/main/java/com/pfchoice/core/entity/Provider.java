@@ -17,79 +17,74 @@ import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
 
-
 /**
  *
  * @author Mohanasundharam
  */
 @Entity
-@Table(name = "provider") 
-public class Provider implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
-    
-    //private Set<ProviderContract> providerContract = new HashSet<ProviderContract>(0);
+@Table(name = "provider")
+public class Provider implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="prvdr_Id",unique=true, nullable = false)
-    private Integer id;
-    
-    @Expose
-    @Column(name="code")
-    private String code;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Column(name="name")
-    private String name;
-      
-    @Column(name="created_date")
-    private Timestamp createdDate;
-    
-    @Column(name="updated_date")
-    private Timestamp updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
-    private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
-    
-    @Expose
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
-    private Set<ReferenceContract> refContracts = new HashSet<ReferenceContract>();
-    
-    public Provider()
-    {
-    	
-    }
+	// private Set<ProviderContract> providerContract = new
+	// HashSet<ProviderContract>(0);
 
-    public Provider(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "prvdr_Id", unique = true, nullable = false)
+	private Integer id;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@Column(name = "code")
+	private String code;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
-    
-    /**
+	@Expose
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "created_date")
+	private Timestamp createdDate;
+
+	@Column(name = "updated_date")
+	private Timestamp updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
+	private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
+
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
+	private Set<ReferenceContract> refContracts = new HashSet<ReferenceContract>();
+
+	public Provider() {
+
+	}
+
+	public Provider(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the code
 	 */
 	public String getCode() {
@@ -97,7 +92,8 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param code the code to set
+	 * @param code
+	 *            the code to set
 	 */
 	public void setCode(final String code) {
 		this.code = code;
@@ -111,7 +107,8 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(final String name) {
 		this.name = name;
@@ -125,7 +122,8 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
@@ -139,7 +137,8 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
@@ -153,7 +152,8 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -167,7 +167,8 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -181,13 +182,13 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
-	
-	
+
 	/**
 	 * @return the refContact
 	 */
@@ -196,12 +197,13 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param refContact the refContact to set
+	 * @param refContact
+	 *            the refContact to set
 	 */
 	public void setRefContacts(Set<ReferenceContact> refContacts) {
 		this.refContacts = refContacts;
 	}
-	
+
 	/**
 	 * @return the refContracts
 	 */
@@ -210,40 +212,37 @@ public class Provider implements Serializable
 	}
 
 	/**
-	 * @param refContracts the refContracts to set
+	 * @param refContracts
+	 *            the refContracts to set
 	 */
 	public void setRefContracts(Set<ReferenceContract> refContracts) {
 		this.refContracts = refContracts;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Provider))
-        {
-            return false;
-        }
-        Provider other = (Provider) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Provider)) {
+			return false;
+		}
+		Provider other = (Provider) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Provider[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Provider[ id=" + id + " ]";
+	}
 
 }

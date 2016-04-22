@@ -6,7 +6,11 @@ import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.google.gson.annotations.Expose;
 
@@ -15,61 +19,54 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity(name = "file_type")
-public class FileType implements Serializable
-{
+public class FileType implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="code", nullable = false)
-    private Integer code;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "code", nullable = false)
+	private Integer code;
 
-    @Expose
-    @Column(name="description")
-    private String description;
+	@Expose
+	@NotNull
+	@Size(min = 5, max = 150, message = "The description must be between {min} and {max} characters long")
+	@Column(name = "description")
+	private String description;
 
-    @Column(name="created_date")
-    private Timestamp createdDate;
-    
-    @Column(name="updated_date")
-    private Timestamp updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
+	@Column(name = "created_date")
+	private Timestamp createdDate;
 
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-   
-    
-   
-    
-    public FileType()
-    {
-    }
+	@Column(name = "updated_date")
+	private Timestamp updatedDate;
 
-    public FileType(final Integer code)
-    {
-        this.code = code;
-    }
+	@Column(name = "created_by")
+	private String createdBy;
 
-    public Integer getCode()
-    {
-        return code;
-    }
+	@Column(name = "updated_by")
+	private String updatedBy;
 
-    public void setCode(final Integer code)
-    {
-        this.code = code;
-    }
-    
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public FileType() {
+	}
+
+	public FileType(final Integer code) {
+		this.code = code;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(final Integer code) {
+		this.code = code;
+	}
+
 	/**
 	 * @return the description
 	 */
@@ -78,7 +75,8 @@ public class FileType implements Serializable
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
@@ -92,7 +90,8 @@ public class FileType implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
@@ -106,7 +105,8 @@ public class FileType implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
@@ -120,7 +120,8 @@ public class FileType implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -134,7 +135,8 @@ public class FileType implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -148,40 +150,37 @@ public class FileType implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (code != null ? code.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (code != null ? code.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the code fields are not set
-        if (!(object instanceof FileType))
-        {
-            return false;
-        }
-        FileType other = (FileType) object;
-        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the code fields
+		// are not set
+		if (!(object instanceof FileType)) {
+			return false;
+		}
+		FileType other = (FileType) object;
+		if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.County[ code=" + code + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.County[ code=" + code + " ]";
+	}
 
 }

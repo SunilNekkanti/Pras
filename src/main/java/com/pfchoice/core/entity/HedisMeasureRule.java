@@ -29,131 +29,126 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity
-@Table(name = "hedis_measure_rule") 
-public class HedisMeasureRule implements Serializable
-{
+@Table(name = "hedis_measure_rule")
+public class HedisMeasureRule implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="hedis_msr_rule_Id", nullable = false)
-    private Integer id;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "hedis_msr_rule_Id", nullable = false)
+	private Integer id;
 
-    @Expose
-    @Column(name="description")
-    private String description;
-    
-    @Expose
-    @OneToOne(fetch=FetchType.EAGER )
-    @JoinColumn(name="ins_id", referencedColumnName="Insurance_Id")
-    private Insurance insId;
-    
-    @Expose
-    @OneToOne
-    @JoinColumn(name="hedis_id", referencedColumnName="qlty_msr_id")
-    private HedisMeasure hedisMeasure;
-    
-    @Expose
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)  
-    @JoinTable(name="hedis_cpt_measure",  
-    joinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")},  
-    inverseJoinColumns={@JoinColumn(name="cpt_id", referencedColumnName="cpt_id")}) 
-    private Set<CPTMeasure> cptCodes;
-    
-    @Expose
-    @OneToMany(fetch=FetchType.LAZY,  cascade=CascadeType.ALL)  
-    @JoinTable(name="hedis_icd_measure",  
-    joinColumns={@JoinColumn(name="hedis_msr_rule_Id", referencedColumnName="hedis_msr_rule_Id")},  
-    inverseJoinColumns={@JoinColumn(name="icd_id", referencedColumnName="icd_id")}) 
-    private Set<ICDMeasure> icdCodes ;
-    
-    @Expose
-    @OneToOne(fetch=FetchType.LAZY )
-    @JoinColumn(name="gender_id", referencedColumnName="gender_id")
-    private Gender genderId;
-    
-    @Expose
-    @Column(name="lower_age_limit")
-    private BigDecimal lowerAgeLimit;
-    
-    @Expose
-    @Column(name="upper_age_limit")
-    private BigDecimal upperAgeLimit;
-    
-    @Expose
-    @Column(name="dose_count")
-    private Integer doseCount;
-    
-    @Expose
-    @Temporal(TemporalType.DATE)
-    @Column(name="age_effective_from")
-    private Date ageEffectiveFrom;
-    
-    @Expose
-    @Temporal(TemporalType.DATE)
-    @Column(name="age_effective_to")
-    private Date ageEffectiveTo;
-    
-    @Expose
-    @Column(name="effective_year")
-    private Integer	effectiveYear;
-    
-    @Column(name="created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    
-    @Column(name="updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    @Expose
-    @Transient
-    private String hedisMeasureCode;
-    
-    @Expose
-    @Transient
-    private String cptMeasureCode;
-    
-    @Expose
-    @Transient
-    private String icdMeasureCode;
-    
-    @Expose
-    @Transient
-    private String genderDescription;
-    
-    public HedisMeasureRule()
-    {
-    }
+	@Expose
+	@Column(name = "description")
+	private String description;
 
-    public HedisMeasureRule(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
+	private Insurance insId;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@OneToOne
+	@JoinColumn(name = "hedis_id", referencedColumnName = "qlty_msr_id")
+	private HedisMeasure hedisMeasure;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
-    
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "hedis_cpt_measure", joinColumns = {
+			@JoinColumn(name = "hedis_msr_rule_Id", referencedColumnName = "hedis_msr_rule_Id") }, inverseJoinColumns = {
+					@JoinColumn(name = "cpt_id", referencedColumnName = "cpt_id") })
+	private Set<CPTMeasure> cptCodes;
+
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "hedis_icd_measure", joinColumns = {
+			@JoinColumn(name = "hedis_msr_rule_Id", referencedColumnName = "hedis_msr_rule_Id") }, inverseJoinColumns = {
+					@JoinColumn(name = "icd_id", referencedColumnName = "icd_id") })
+	private Set<ICDMeasure> icdCodes;
+
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "gender_id", referencedColumnName = "gender_id")
+	private Gender genderId;
+
+	@Expose
+	@Column(name = "lower_age_limit")
+	private BigDecimal lowerAgeLimit;
+
+	@Expose
+	@Column(name = "upper_age_limit")
+	private BigDecimal upperAgeLimit;
+
+	@Expose
+	@Column(name = "dose_count")
+	private Integer doseCount;
+
+	@Expose
+	@Temporal(TemporalType.DATE)
+	@Column(name = "age_effective_from")
+	private Date ageEffectiveFrom;
+
+	@Expose
+	@Temporal(TemporalType.DATE)
+	@Column(name = "age_effective_to")
+	private Date ageEffectiveTo;
+
+	@Expose
+	@Column(name = "effective_year")
+	private Integer effectiveYear;
+
+	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
+	@Column(name = "updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	@Expose
+	@Transient
+	private String hedisMeasureCode;
+
+	@Expose
+	@Transient
+	private String cptMeasureCode;
+
+	@Expose
+	@Transient
+	private String icdMeasureCode;
+
+	@Expose
+	@Transient
+	private String genderDescription;
+
+	public HedisMeasureRule() {
+	}
+
+	public HedisMeasureRule(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the description
 	 */
@@ -162,12 +157,13 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * @return the insId
 	 */
@@ -176,7 +172,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param insId the insId to set
+	 * @param insId
+	 *            the insId to set
 	 */
 	public void setInsId(Insurance insId) {
 		this.insId = insId;
@@ -190,7 +187,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param hedisMeasure the hedisMeasure to set
+	 * @param hedisMeasure
+	 *            the hedisMeasure to set
 	 */
 	public void setHedisMeasure(final HedisMeasure hedisMeasure) {
 		this.hedisMeasure = hedisMeasure;
@@ -204,7 +202,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param effectiveYear the effectiveYear to set
+	 * @param effectiveYear
+	 *            the effectiveYear to set
 	 */
 	public void setEffectiveYear(final Integer effectiveYear) {
 		this.effectiveYear = effectiveYear;
@@ -218,7 +217,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param cptCodes the cptCodes to set
+	 * @param cptCodes
+	 *            the cptCodes to set
 	 */
 	public void setCptCodes(Set<CPTMeasure> cptCodes) {
 		this.cptCodes = cptCodes;
@@ -232,7 +232,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param icdCodes the icdCodes to set
+	 * @param icdCodes
+	 *            the icdCodes to set
 	 */
 	public void setIcdCodes(Set<ICDMeasure> icdCodes) {
 		this.icdCodes = icdCodes;
@@ -246,7 +247,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param genderId the genderId to set
+	 * @param genderId
+	 *            the genderId to set
 	 */
 	public void setGenderId(Gender genderId) {
 		this.genderId = genderId;
@@ -255,28 +257,30 @@ public class HedisMeasureRule implements Serializable
 	/**
 	 * @return the lowerAgeLimit
 	 */
-	public BigDecimal  getLowerAgeLimit() {
+	public BigDecimal getLowerAgeLimit() {
 		return lowerAgeLimit;
 	}
 
 	/**
-	 * @param lowerAgeLimit the lowerAgeLimit to set
+	 * @param lowerAgeLimit
+	 *            the lowerAgeLimit to set
 	 */
-	public void setLowerAgeLimit(BigDecimal  lowerAgeLimit) {
+	public void setLowerAgeLimit(BigDecimal lowerAgeLimit) {
 		this.lowerAgeLimit = lowerAgeLimit;
 	}
 
 	/**
 	 * @return the upperAgeLimit
 	 */
-	public BigDecimal  getUpperAgeLimit() {
+	public BigDecimal getUpperAgeLimit() {
 		return upperAgeLimit;
 	}
 
 	/**
-	 * @param upperAgeLimit the upperAgeLimit to set
+	 * @param upperAgeLimit
+	 *            the upperAgeLimit to set
 	 */
-	public void setUpperAgeLimit(BigDecimal  upperAgeLimit) {
+	public void setUpperAgeLimit(BigDecimal upperAgeLimit) {
 		this.upperAgeLimit = upperAgeLimit;
 	}
 
@@ -288,7 +292,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param doseCount the doseCount to set
+	 * @param doseCount
+	 *            the doseCount to set
 	 */
 	public void setDoseCount(Integer doseCount) {
 		this.doseCount = doseCount;
@@ -302,7 +307,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param ageEffectiveFrom the ageEffectiveFrom to set
+	 * @param ageEffectiveFrom
+	 *            the ageEffectiveFrom to set
 	 */
 	public void setAgeEffectiveFrom(Date ageEffectiveFrom) {
 		this.ageEffectiveFrom = ageEffectiveFrom;
@@ -316,7 +322,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param ageEffectiveTo the ageEffectiveTo to set
+	 * @param ageEffectiveTo
+	 *            the ageEffectiveTo to set
 	 */
 	public void setAgeEffectiveTo(Date ageEffectiveTo) {
 		this.ageEffectiveTo = ageEffectiveTo;
@@ -330,7 +337,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -344,7 +352,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -358,7 +367,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -372,7 +382,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -393,7 +404,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param hedisMeasureCode the hedisMeasureCode to set
+	 * @param hedisMeasureCode
+	 *            the hedisMeasureCode to set
 	 */
 	public void setHedisMeasureCode(String hedisMeasureCode) {
 		this.hedisMeasureCode = hedisMeasureCode;
@@ -407,7 +419,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param cptMeasureCode the cptMeasureCode to set
+	 * @param cptMeasureCode
+	 *            the cptMeasureCode to set
 	 */
 	public void setCptMeasureCode(String cptMeasureCode) {
 		this.cptMeasureCode = cptMeasureCode;
@@ -421,7 +434,8 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param icdMeasureCode the icdMeasureCode to set
+	 * @param icdMeasureCode
+	 *            the icdMeasureCode to set
 	 */
 	public void setIcdMeasureCode(String icdMeasureCode) {
 		this.icdMeasureCode = icdMeasureCode;
@@ -435,47 +449,45 @@ public class HedisMeasureRule implements Serializable
 	}
 
 	/**
-	 * @param genderDescription the genderDescription to set
+	 * @param genderDescription
+	 *            the genderDescription to set
 	 */
 	public void setGenderDescription(String genderDescription) {
 		this.genderDescription = genderDescription;
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof HedisMeasureRule))
-        {
-            return false;
-        }
-        HedisMeasureRule other = (HedisMeasureRule) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof HedisMeasureRule)) {
+			return false;
+		}
+		HedisMeasureRule other = (HedisMeasureRule) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.HedisMeasureRule[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.HedisMeasureRule[ id=" + id + " ]";
+	}
 
 }

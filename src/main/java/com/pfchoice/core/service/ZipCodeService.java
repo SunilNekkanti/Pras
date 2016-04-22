@@ -10,20 +10,19 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface ZipCodeService
-{
+public interface ZipCodeService {
 
 	ZipCode deleteById(Integer id);
 
 	ZipCode findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    ZipCode save(ZipCode bean);
+	ZipCode save(ZipCode bean);
 
-    ZipCode update(ZipCode bean);
-    
-    List<ZipCode> findAll();
+	ZipCode update(ZipCode bean);
 
-    List<ZipCode> findByStateCode(Integer stateCode);
+	List<ZipCode> findAll();
+
+	List<ZipCode> findByStateCode(Integer stateCode);
 }

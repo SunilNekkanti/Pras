@@ -19,54 +19,47 @@ import com.pfchoice.core.service.ICDMeasureService;
  */
 @Service
 @Transactional
-public class ICDMeasureServiceImpl implements ICDMeasureService
-{
+public class ICDMeasureServiceImpl implements ICDMeasureService {
 
-    @Autowired
-    private ICDMeasureDao icdMeasureDao;
+	@Autowired
+	private ICDMeasureDao icdMeasureDao;
 
-    @Override
-    public ICDMeasure deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return icdMeasureDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public ICDMeasure deleteById(final Integer id) {
+		// Used for transaction test
+		return icdMeasureDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public ICDMeasure findById(final Integer id)
-    {
-        return icdMeasureDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public ICDMeasure findById(final Integer id) {
+		return icdMeasureDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize,
-    		final String sSearch, final String sort, final String sortdir)
-    {
-        return icdMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return icdMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
 
-    @Override
-    public ICDMeasure save(final ICDMeasure bean)
-    {
-        //Used for transaction test
-        return icdMeasureDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public ICDMeasure save(final ICDMeasure bean) {
+		// Used for transaction test
+		return icdMeasureDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public ICDMeasure update(final ICDMeasure bean)
-    {
-        Updater<ICDMeasure> updater = new Updater<>(bean);
-        return icdMeasureDao.updateByUpdater(updater);
-    }
+	@Override
+	public ICDMeasure update(final ICDMeasure bean) {
+		Updater<ICDMeasure> updater = new Updater<>(bean);
+		return icdMeasureDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<ICDMeasure> findAll()
-    {
-    	return icdMeasureDao.findAll();
-    }
+	@Override
+	public List<ICDMeasure> findAll() {
+		return icdMeasureDao.findAll();
+	}
 }

@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 import com.google.gson.annotations.Expose;
 
 /**
@@ -28,119 +27,112 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity
-@Table(name = "membership") 
-public class Membership implements Serializable
-{
+@Table(name = "membership")
+public class Membership implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="mbr_id", nullable = false)
-    private Integer id;
+	@Expose
+	@Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "mbr_id", nullable = false)
+	private Integer id;
 
-    @Expose
-    @Column(name="mbr_firstname")
-    private String firstName;
-    
-    @Expose
-    @Column(name="mbr_lastname")
-    private String lastName;
+	@Expose
+	@Column(name = "mbr_firstname")
+	private String firstName;
 
-    @Expose
-    @ManyToOne(fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_genderid", referencedColumnName="gender_id")
-    private Gender genderId;
-    
-    @Expose
-    @ManyToOne(fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_countycode", referencedColumnName="code")
-    private County countyCode;
-    
-    @Expose
-    @ManyToOne(fetch=FetchType.LAZY )
-    @JoinColumn(name="mbr_ethinic_code", referencedColumnName="code")
-    private Ethinicity ethinicCode;
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
-    private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
-    
-    @Expose 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy= "mbr")
-    private List<MembershipProvider> mbrProviderList;
+	@Expose
+	@Column(name = "mbr_lastname")
+	private String lastName;
 
-    @Expose
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
-    private List<MembershipInsurance> mbrInsuranceList;
-    
-    
-    @Expose
-    @Column(name="mbr_dob")
-    @Temporal(TemporalType.DATE)
-    private Date dob;
-    
-    @Expose
-    @Column(name="mbr_medicaidno")
-    private String medicaidNo;
-    
-    @Expose
-    @Column(name="mbr_medicareno")
-    private String medicareNo;
-    
-    @Expose
-    @Column(name="file_id")
-    private Integer fileId;
-    
-    @Column(name="created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    
-    @Column(name="updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    @Expose
-    @OneToOne
-    @JoinColumn(name="mbr_status", referencedColumnName="code")
-    private MembershipStatus status;
+	@Expose
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mbr_genderid", referencedColumnName = "gender_id")
+	private Gender genderId;
 
-    @Expose
-    @OneToMany( mappedBy= "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MembershipHedisMeasure> mbrHedisMeasureList;
-  
-    
-    public Membership()
-    {
-    }
+	@Expose
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mbr_countycode", referencedColumnName = "code")
+	private County countyCode;
 
-    public Membership(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mbr_ethinic_code", referencedColumnName = "code")
+	private Ethinicity ethinicCode;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
+	private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
-    
-    /**
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
+	private List<MembershipProvider> mbrProviderList;
+
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
+	private List<MembershipInsurance> mbrInsuranceList;
+
+	@Expose
+	@Column(name = "mbr_dob")
+	@Temporal(TemporalType.DATE)
+	private Date dob;
+
+	@Expose
+	@Column(name = "mbr_medicaidno")
+	private String medicaidNo;
+
+	@Expose
+	@Column(name = "mbr_medicareno")
+	private String medicareNo;
+
+	@Expose
+	@Column(name = "file_id")
+	private Integer fileId;
+
+	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
+	@Column(name = "updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	@Expose
+	@OneToOne
+	@JoinColumn(name = "mbr_status", referencedColumnName = "code")
+	private MembershipStatus status;
+
+	@Expose
+	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MembershipHedisMeasure> mbrHedisMeasureList;
+
+	public Membership() {
+	}
+
+	public Membership(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the firstName
 	 */
 	public String getFirstName() {
@@ -148,7 +140,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName
+	 *            the firstName to set
 	 */
 	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
@@ -162,7 +155,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName
+	 *            the lastName to set
 	 */
 	public void setLastName(final String lastName) {
 		this.lastName = lastName;
@@ -176,7 +170,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param genderId the genderId to set
+	 * @param genderId
+	 *            the genderId to set
 	 */
 	public void setGenderId(final Gender genderId) {
 		this.genderId = genderId;
@@ -190,7 +185,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param countyCode the countyCode to set
+	 * @param countyCode
+	 *            the countyCode to set
 	 */
 	public void setCountyCode(final County countyCode) {
 		this.countyCode = countyCode;
@@ -204,7 +200,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param mbrProviderList the mbrProviderList to set
+	 * @param mbrProviderList
+	 *            the mbrProviderList to set
 	 */
 	public void setMbrProviderList(List<MembershipProvider> mbrProviderList) {
 		this.mbrProviderList = mbrProviderList;
@@ -218,7 +215,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param mbrInsuranceList the mbrInsuranceList to set
+	 * @param mbrInsuranceList
+	 *            the mbrInsuranceList to set
 	 */
 	public void setMbrInsuranceList(List<MembershipInsurance> mbrInsuranceList) {
 		this.mbrInsuranceList = mbrInsuranceList;
@@ -232,7 +230,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param dob the dob to set
+	 * @param dob
+	 *            the dob to set
 	 */
 	public void setDob(Date dob) {
 		this.dob = dob;
@@ -246,7 +245,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param ethinicCode the ethinicCode to set
+	 * @param ethinicCode
+	 *            the ethinicCode to set
 	 */
 	public void setEthinicCode(final Ethinicity ethinicCode) {
 		this.ethinicCode = ethinicCode;
@@ -260,7 +260,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(final MembershipStatus status) {
 		this.status = status;
@@ -274,7 +275,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param medicaidNo the medicaidNo to set
+	 * @param medicaidNo
+	 *            the medicaidNo to set
 	 */
 	public void setMedicaidNo(final String medicaidNo) {
 		this.medicaidNo = medicaidNo;
@@ -288,7 +290,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param medicareNo the medicareNo to set
+	 * @param medicareNo
+	 *            the medicareNo to set
 	 */
 	public void setMedicareNo(final String medicareNo) {
 		this.medicareNo = medicareNo;
@@ -302,7 +305,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param fileId the fileId to set
+	 * @param fileId
+	 *            the fileId to set
 	 */
 	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
@@ -316,7 +320,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -330,7 +335,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -344,7 +350,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -358,7 +365,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -372,12 +380,13 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
-	
+
 	/**
 	 * @return the refContacts
 	 */
@@ -386,13 +395,13 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param refContacts the refContacts to set
+	 * @param refContacts
+	 *            the refContacts to set
 	 */
 	public void setRefContacts(Set<ReferenceContact> refContacts) {
 		this.refMbrContacts = refContacts;
 	}
-	
-	
+
 	/**
 	 * @return the refMbrContacts
 	 */
@@ -401,7 +410,8 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param refMbrContacts the refMbrContacts to set
+	 * @param refMbrContacts
+	 *            the refMbrContacts to set
 	 */
 	public void setRefMbrContacts(Set<ReferenceContact> refMbrContacts) {
 		this.refMbrContacts = refMbrContacts;
@@ -415,41 +425,37 @@ public class Membership implements Serializable
 	}
 
 	/**
-	 * @param mbrHedisMeasureList the mbrHedisMeasureList to set
+	 * @param mbrHedisMeasureList
+	 *            the mbrHedisMeasureList to set
 	 */
 	public void setMbrHedisMeasureList(List<MembershipHedisMeasure> mbrHedisMeasureList) {
 		this.mbrHedisMeasureList = mbrHedisMeasureList;
 	}
-	
-	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
 
 	@Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Membership))
-        {
-            return false;
-        }
-        Membership other = (Membership) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Membership[ id=" + id + " ]";
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Membership)) {
+			return false;
+		}
+		Membership other = (Membership) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Membership[ id=" + id + " ]";
+	}
 
 }

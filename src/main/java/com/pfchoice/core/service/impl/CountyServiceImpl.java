@@ -19,53 +19,46 @@ import com.pfchoice.core.service.CountyService;
  */
 @Service
 @Transactional
-public class CountyServiceImpl implements CountyService
-{
+public class CountyServiceImpl implements CountyService {
 
-    @Autowired
-    private CountyDao countyDao;
+	@Autowired
+	private CountyDao countyDao;
 
-    @Override
-    public County deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return countyDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public County deleteById(final Integer id) {
+		// Used for transaction test
+		return countyDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public County findById(final Integer id)
-    {
-        return countyDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public County findById(final Integer id) {
+		return countyDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        return countyDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return countyDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public County save(final County bean)
-    {
-        //Used for transaction test
-        return countyDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public County save(final County bean) {
+		// Used for transaction test
+		return countyDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public County update(final County bean)
-    {
-        Updater<County> updater = new Updater<>(bean);
-        return countyDao.updateByUpdater(updater);
-    }
+	@Override
+	public County update(final County bean) {
+		Updater<County> updater = new Updater<>(bean);
+		return countyDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<County> findAll()
-    {
-    	return countyDao.findAll();
-    }
+	@Override
+	public List<County> findAll() {
+		return countyDao.findAll();
+	}
 }

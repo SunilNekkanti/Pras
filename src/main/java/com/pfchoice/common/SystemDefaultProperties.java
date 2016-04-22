@@ -6,12 +6,11 @@ package com.pfchoice.common;
  *
  * @author Sarath
  */
-public interface SystemDefaultProperties
-{
+public interface SystemDefaultProperties {
 
-    String map_range_default = "1000";
+	String map_range_default = "1000";
 
-    String ID = "username";
+	String ID = "username";
 
-    String CREDENTIAL = "credential";
+	String CREDENTIAL = "credential";
 }

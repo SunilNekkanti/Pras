@@ -10,20 +10,19 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface MembershipService
-{
+public interface MembershipService {
 
 	Membership deleteById(Integer id);
 
 	Membership findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
-    
-    Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchHedisCode, 
-    		  final List<Integer> ruleIds, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    Membership save(Membership bean);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchHedisCode,
+			final List<Integer> ruleIds, String sort, String sortdir);
 
-    Membership update(Membership bean);
-    
+	Membership save(Membership bean);
+
+	Membership update(Membership bean);
+
 }

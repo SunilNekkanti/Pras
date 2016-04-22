@@ -19,59 +19,51 @@ import com.pfchoice.core.service.MembershipHedisFollowupService;
  */
 @Service
 @Transactional
-public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollowupService
-{
+public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollowupService {
 
-    @Autowired
-    private MembershipHedisFollowupDao mbrHedisFollowupDao;
+	@Autowired
+	private MembershipHedisFollowupDao mbrHedisFollowupDao;
 
-    @Override
-    public MembershipHedisFollowup deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return mbrHedisFollowupDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public MembershipHedisFollowup deleteById(final Integer id) {
+		// Used for transaction test
+		return mbrHedisFollowupDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public MembershipHedisFollowup findById(final Integer id)
-    {
-        return mbrHedisFollowupDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public MembershipHedisFollowup findById(final Integer id) {
+		return mbrHedisFollowupDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize)
-    {
-        return mbrHedisFollowupDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return mbrHedisFollowupDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public MembershipHedisFollowup save(final MembershipHedisFollowup bean)
-    {
-        //Used for transaction test
-        return mbrHedisFollowupDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public MembershipHedisFollowup save(final MembershipHedisFollowup bean) {
+		// Used for transaction test
+		return mbrHedisFollowupDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public MembershipHedisFollowup update(final MembershipHedisFollowup bean)
-    {
-        Updater<MembershipHedisFollowup> updater = new Updater<>(bean);
-        return mbrHedisFollowupDao.updateByUpdater(updater);
-    }
+	@Override
+	public MembershipHedisFollowup update(final MembershipHedisFollowup bean) {
+		Updater<MembershipHedisFollowup> updater = new Updater<>(bean);
+		return mbrHedisFollowupDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<MembershipHedisFollowup> findAll()
-    {
-    	return mbrHedisFollowupDao.findAll();
-    }
-    
-    @Override
-    public List<MembershipHedisFollowup> findAllByMbrId(final Integer id)
-    {
-    	return mbrHedisFollowupDao.findAllByMbrId(id);
-    }
+	@Override
+	public List<MembershipHedisFollowup> findAll() {
+		return mbrHedisFollowupDao.findAll();
+	}
+
+	@Override
+	public List<MembershipHedisFollowup> findAllByMbrId(final Integer id) {
+		return mbrHedisFollowupDao.findAllByMbrId(id);
+	}
 }

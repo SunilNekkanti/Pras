@@ -22,61 +22,55 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "lu_state_zip")
-public class ZipCode implements Serializable
-{
+public class ZipCode implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="zipcode", nullable = false)
-    private Integer code;
+	@Expose
+	@Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "zipcode", nullable = false)
+	private Integer code;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    @Expose
-    @OneToOne(  fetch =FetchType.LAZY)
-    @JoinColumn(name="statecode", referencedColumnName="code")
-    private State stateCode;
-    
-    
-    public ZipCode()
-    {
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
 
-    public ZipCode(final Integer code)
-    {
-        this.code = code;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
 
-    public Integer getCode()
-    {
-        return code;
-    }
+	@Column(name = "created_by")
+	private String createdBy;
 
-    public void setCode(final Integer code)
-    {
-        this.code = code;
-    }
-    
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "statecode", referencedColumnName = "code")
+	private State stateCode;
+
+	public ZipCode() {
+	}
+
+	public ZipCode(final Integer code) {
+		this.code = code;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(final Integer code) {
+		this.code = code;
+	}
+
 	/**
 	 * @return the stateCode
 	 */
@@ -85,7 +79,8 @@ public class ZipCode implements Serializable
 	}
 
 	/**
-	 * @param stateCode the stateCode to set
+	 * @param stateCode
+	 *            the stateCode to set
 	 */
 	public void setStateCode(final State stateCode) {
 		this.stateCode = stateCode;
@@ -99,7 +94,8 @@ public class ZipCode implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -113,7 +109,8 @@ public class ZipCode implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -127,7 +124,8 @@ public class ZipCode implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -141,7 +139,8 @@ public class ZipCode implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -155,40 +154,37 @@ public class ZipCode implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (code != null ? code.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (code != null ? code.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the code fields are not set
-        if (!(object instanceof ZipCode))
-        {
-            return false;
-        }
-        ZipCode other = (ZipCode) object;
-        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the code fields
+		// are not set
+		if (!(object instanceof ZipCode)) {
+			return false;
+		}
+		ZipCode other = (ZipCode) object;
+		if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.ZipCode[ code=" + code + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.ZipCode[ code=" + code + " ]";
+	}
 
 }

@@ -16,54 +16,51 @@ import com.pfchoice.form.LoginForm;
 
 @Controller
 @RequestMapping(value = "*")
-@SessionAttributes({"username","userpath"})
+@SessionAttributes({ "username", "userpath" })
 public class LoginController {
-	
-	@RequestMapping(value = { "/",  "/index"}, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String login(@RequestParam(value = "error", required = false) String error,
-		@RequestParam(value = "logout", required = false) String logout, Model model) {
+			@RequestParam(value = "logout", required = false) String logout, Model model) {
 
 		LoginForm loginForm = new LoginForm();
 
 		if (error != null) {
 			model.addAttribute("error", "Invalid username and password!");
 		}
-	
+
 		if (logout != null) {
 			model.addAttribute("msg", "You've been logged out successfully.");
 		}
-		model.addAttribute("loginForm",loginForm);
-	
+		model.addAttribute("loginForm", loginForm);
+
 		return "loginForm";
 
 	}
-	
-	
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(HttpSession session, Model model) {
 		final String username = (String) session.getAttribute(SystemDefaultProperties.ID);
-		if(!model.containsAttribute("username")) {
-		      model.addAttribute("username", username);
-		    }
+		if (!model.containsAttribute("username")) {
+			model.addAttribute("username", username);
+		}
 		return "home";
 	}
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String page( WebRequest request,  SessionStatus status) {
-		
-	    status.setComplete();
-	    request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
-	    
-	    return "redirect:/loginform";
+	public String page(WebRequest request, SessionStatus status) {
+
+		status.setComplete();
+		request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
+
+		return "redirect:/loginform";
 	}
-	
-	
-	//for 403 access denied page
+
+	// for 403 access denied page
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accesssDenied(Model model) {
 
-	  return "ad403";
+		return "ad403";
 	}
-	
-	
+
 }

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html  PUBLIC  "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,16 +28,15 @@
 
 
 <script>
+	$(document).ready(function() {
 
-$(document).ready(function(){	
-	
-populateMembershipListData();
-prasPagination();
-openMembershipForm();
-updatedMembershipForm();
-deleteMembershipForm();
-resetMembershipForm('form-ajax');
-});
+		populateMembershipListData();
+		prasPagination();
+		openMembershipForm();
+		updatedMembershipForm();
+		deleteMembershipForm();
+		resetMembershipForm('form-ajax');
+	});
 </script>
 
 </head>
@@ -51,7 +50,8 @@ resetMembershipForm('form-ajax');
 			<div class="panel-heading">Membership List</div>
 			<div class="panel-body" id="tablediv">
 				<div id="formdiv">
-					<form id="form-ajax" class="form-horizontal" role="form" method="post" accept-charset="utf-8" action="membership"> 
+					<form id="form-ajax" class="form-horizontal" role="form"
+						method="post" accept-charset="utf-8" action="membership">
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="lastName">Last
 								Name:</label>
@@ -135,8 +135,10 @@ resetMembershipForm('form-ajax');
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-4">
-								<button type="submit" class="btn btn-success btn-sm" id="updateButton">Update</button>
-								<button type="submit" class="btn btn-success btn-sm" id="cancelButton">Cancel</button>
+								<button type="submit" class="btn btn-success btn-sm"
+									id="updateButton">Update</button>
+								<button type="submit" class="btn btn-success btn-sm"
+									id="cancelButton">Cancel</button>
 							</div>
 						</div>
 					</form>

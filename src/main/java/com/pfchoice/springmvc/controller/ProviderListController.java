@@ -18,7 +18,6 @@ import com.pfchoice.core.service.ProviderService;
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
-
 /**
  *
  * A Provider controller class for GET/DELETE/POST/PUT.
@@ -26,42 +25,41 @@ import ml.rugal.sshcommon.springmvc.util.Message;
  * @author sarath
  */
 @Controller
-@SessionAttributes({"username","userpath"})
-public class ProviderListController
-{
+@SessionAttributes({ "username", "userpath" })
+public class ProviderListController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProviderListController.class.getName());
-    
-    @Autowired
-    private ProviderService providerService;
+	private static final Logger LOG = LoggerFactory.getLogger(ProviderListController.class.getName());
 
-   @RequestMapping(value = {"/admin/providerList","/user/providerList"})
-    public String handleRequest() throws Exception {
- 
+	@Autowired
+	private ProviderService providerService;
+
+	@RequestMapping(value = { "/admin/providerList", "/user/providerList" })
+	public String handleRequest() throws Exception {
+
 		return "providerList";
 	}
-   
-    @ResponseBody
-    @RequestMapping(value = {"/admin/provider/list","/user/provider/list"}, method = RequestMethod.GET)
-	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
-					@RequestParam(required = false) String sSearch,
-					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
+
+	@ResponseBody
+	@RequestMapping(value = { "/admin/provider/list", "/user/provider/list" }, method = RequestMethod.GET)
+	public Message viewProviderListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
+					throws Exception {
+
 		Pagination pagination = providerService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-		
-      return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
-  }
-  
-    
-    @ResponseBody
-    @RequestMapping(value = {"/admin/insurance/providerlist","/user/insurance/providerlist"}, method = RequestMethod.GET)
-	public Message viewProviderListJsonTest(Model model,@RequestParam(required = false) Integer insId) throws Exception{
-		
+
+		return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
+	}
+
+	@ResponseBody
+	@RequestMapping(value = { "/admin/insurance/providerlist",
+			"/user/insurance/providerlist" }, method = RequestMethod.GET)
+	public Message viewProviderListJsonTest(Model model, @RequestParam(required = false) Integer insId)
+			throws Exception {
+
 		Pagination pagination = providerService.findByInsId(insId);
-		
-      return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
-  }
-    
+
+		return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
+	}
+
 }

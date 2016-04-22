@@ -19,61 +19,51 @@ import com.pfchoice.core.entity.State;
  * @author Sarath
  */
 @Repository
-public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements StateDao
-{
+public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements StateDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(StateDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(StateDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("activeInd", 'Y'));
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-    }
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+	}
 
-    @Override
-    public State findById(final Integer id)
-    {
-    	State entity = get(id);
-        return entity;
-    }
+	@Override
+	public State findById(final Integer id) {
+		State entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public State save(final State bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public State save(final State bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public State deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	State entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public State deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		State entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<State> getEntityClass()
-    {
-        return State.class;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<State> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.addOrder(Order.asc("shortName"))
-    	.add(Restrictions.eq("activeInd", 'Y'));
-    	List<State> list = cr.list();
-    	return list;
-    }
+	@Override
+	protected Class<State> getEntityClass() {
+		return State.class;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<State> findAll() {
+		Criteria cr = createCriteria();
+		cr.addOrder(Order.asc("shortName")).add(Restrictions.eq("activeInd", 'Y'));
+		List<State> list = cr.list();
+		return list;
+	}
 
 }

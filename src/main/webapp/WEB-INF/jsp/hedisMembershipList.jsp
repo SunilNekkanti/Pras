@@ -1,7 +1,7 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <script>
@@ -447,69 +447,72 @@ $(document).ready(function() {
 	}
     </script>
 
-	<div class="panel-group">
-		<div class="panel panel-success">
-			<div class="panel-heading">Hedis Report 
-			<span class="clrRed"> </span>
-			</div>
-			<div class="panel-body" >
-				<div class="table-responsive">
-					<div class="col-sm-12">
-							<div class="col-sm-3">
-								<label class="control-label col-sm-4">Insurance</label>
-								 <div class=" col-sm-8" id="extFilterIns">  </div>
-							</div>	 
-							<div class="col-sm-3">	 
-								<label class="control-label col-sm-3">Provider</label>
-								 <div class="col-sm-9"  id="extFilterPrvdr"> </div>
-							</div>	 
-							<div class="col-sm-3">	 
-								 <label class="control-label col-sm-5">Hedis Measures</label>
-								 <div class="col-sm-7" id="extFilterHedisRule"></div>
-							</div>	
-							<div class="col-sm-3">	 
-								 <button type="button" id="hedisGenerate" class="btn btn-success btn-sm btn-xs">Generate</button>
-							</div>	 
-					 	</div>
-					<table id="membershipTable" class="table table-striped table-hover table-responsive">
-					
-						<thead>
-							<tr>
-								<th scope="col" role="row"> Notes</th>
-								<th scope="col" role="row">Provider</th>
-								<th scope="col" role="row">First Name</th>
-								<th scope="col" role="row">Last Name</th>
-								<th scope="col" role="row">Birthday</th>
-								<th scope="col" role="row">Sex</th>
-								<th scope="col" role="row">Due Date</th>
-								
-							</tr>
-						</thead>
-	
-						<tbody >
-							
-						</tbody>
-	
-					</table>
-				</div>	
-				
-			</div>
-			
+<div class="panel-group">
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			Hedis Report <span class="clrRed"> </span>
 		</div>
-	</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<div class="col-sm-12">
+					<div class="col-sm-3">
+						<label class="control-label col-sm-4">Insurance</label>
+						<div class=" col-sm-8" id="extFilterIns"></div>
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label col-sm-3">Provider</label>
+						<div class="col-sm-9" id="extFilterPrvdr"></div>
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label col-sm-5">Hedis Measures</label>
+						<div class="col-sm-7" id="extFilterHedisRule"></div>
+					</div>
+					<div class="col-sm-3">
+						<button type="button" id="hedisGenerate"
+							class="btn btn-success btn-sm btn-xs">Generate</button>
+					</div>
+				</div>
+				<table id="membershipTable"
+					class="table table-striped table-hover table-responsive">
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Membership Hedis Followup</h4>
-        </div>
-        <div class="modal-body" id="modal-body">
-        		<table id="mbrHedisMeasureTable" class="table table-striped table-hover table-responsive">
+					<thead>
+						<tr>
+							<th scope="col" role="row">Notes</th>
+							<th scope="col" role="row">Provider</th>
+							<th scope="col" role="row">First Name</th>
+							<th scope="col" role="row">Last Name</th>
+							<th scope="col" role="row">Birthday</th>
+							<th scope="col" role="row">Sex</th>
+							<th scope="col" role="row">Due Date</th>
+
+						</tr>
+					</thead>
+
+					<tbody>
+
+					</tbody>
+
+				</table>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Membership Hedis Followup</h4>
+			</div>
+			<div class="modal-body" id="modal-body">
+				<table id="mbrHedisMeasureTable"
+					class="table table-striped table-hover table-responsive">
 					<thead>
 						<tr>
 							<th scope="col">Select</th>
@@ -517,22 +520,25 @@ $(document).ready(function() {
 							<th scope="col">Date of Service</th>
 						</tr>
 					</thead>
-					<tbody >
+					<tbody>
 					</tbody>
 				</table>
-         </div>
-        <div class="modal-footer">
-          <button type="button" id="followupSubmit" class="btn btn-default" >Submit</button>
-          <button type="button" id="hedisGenerate"  class="btn btn-default" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  <style>
-  	#mbrHedisMeasureTable{width:100% !important; }
-  </style>
-  <script>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="followupSubmit" class="btn btn-default">Submit</button>
+				<button type="button" id="hedisGenerate" class="btn btn-default"
+					data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<style>
+#mbrHedisMeasureTable {
+	width: 100% !important;
+}
+</style>
+<script>
   jQuery( document ).ready(function( $ ) {
 	    //set initial state.
 	    $('body').on('click',".chkRule", function(){
@@ -554,4 +560,3 @@ $(document).ready(function() {
 	    });
 	});
   </script>
-  

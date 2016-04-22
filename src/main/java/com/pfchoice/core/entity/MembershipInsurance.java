@@ -18,121 +18,112 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author sarath
  */
 @Entity
-@Table(name = "membership_insurance") 
-public class MembershipInsurance implements Serializable
-{
+@Table(name = "membership_insurance")
+public class MembershipInsurance implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "mbr_ins_id", nullable = false)
+	private Integer id;
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="mbr_ins_id", nullable = false)
-    private Integer id;
+	@Expose
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ins_id", nullable = false, referencedColumnName = "insurance_id")
+	private Insurance insId;
 
-    @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="ins_id", nullable = false, referencedColumnName="insurance_id")
-    private Insurance insId;
-    
-  //  @Expose
-    @OneToOne( fetch=FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name="mbr_id", nullable = false, referencedColumnName="mbr_id")
-    private Membership mbr;
-    
-    
-    @Expose
-    @Column(name="New_Medicare_Bene_Medicaid_Flag")
-    private char newBenifits;
+	// @Expose
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "mbr_id", nullable = false, referencedColumnName = "mbr_id")
+	private Membership mbr;
 
-    @Expose
-    @Column(name="activitydate")
-    @Temporal(TemporalType.DATE)
-    private Date activityDate;
-    
-    @Expose
-    @Column(name="activityMonth")
-    private Integer activityMonth;
-    
-    @Expose
-    @Temporal(TemporalType.DATE)
-    @Column(name="effective_strt_dt")
-    private Date effStartDate;
-    
-    @Expose
-    @Temporal(TemporalType.DATE)
-    @Column(name="effecctive_end_dt")
-    private Date effEndDate;
-    
-    @Expose
-    @Column(name="product")
-    private String product;
-    
-    @Expose
-    @Column(name="product_label")
-    private String productLabel;
-   
-    @Expose
-    @Column(name="planID")
-    private String planId;
-    
-    @Expose
-    @Column(name="SRC_SYS_MBR_NBR")
-    private String srcSysMbrNbr;
-   
-    @Expose
-    @Column(name="risk_flag")
-    private char riskFlag;
-   
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-     
-    public MembershipInsurance()
-    {
-    }
+	@Expose
+	@Column(name = "New_Medicare_Bene_Medicaid_Flag")
+	private char newBenifits;
 
-    public MembershipInsurance(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "activitydate")
+	@Temporal(TemporalType.DATE)
+	private Date activityDate;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@Column(name = "activityMonth")
+	private Integer activityMonth;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
-    
-    
-    /**
+	@Expose
+	@Temporal(TemporalType.DATE)
+	@Column(name = "effective_strt_dt")
+	private Date effStartDate;
+
+	@Expose
+	@Temporal(TemporalType.DATE)
+	@Column(name = "effecctive_end_dt")
+	private Date effEndDate;
+
+	@Expose
+	@Column(name = "product")
+	private String product;
+
+	@Expose
+	@Column(name = "product_label")
+	private String productLabel;
+
+	@Expose
+	@Column(name = "planID")
+	private String planId;
+
+	@Expose
+	@Column(name = "SRC_SYS_MBR_NBR")
+	private String srcSysMbrNbr;
+
+	@Expose
+	@Column(name = "risk_flag")
+	private char riskFlag;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public MembershipInsurance() {
+	}
+
+	public MembershipInsurance(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the insId
 	 */
 	public Insurance getInsId() {
@@ -140,7 +131,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param insId the insId to set
+	 * @param insId
+	 *            the insId to set
 	 */
 	public void setInsId(final Insurance insId) {
 		this.insId = insId;
@@ -154,7 +146,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param mbrId the mbrId to set
+	 * @param mbrId
+	 *            the mbrId to set
 	 */
 	public void setMbr(final Membership mbr) {
 		this.mbr = mbr;
@@ -168,7 +161,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param newBenifits the newBenifits to set
+	 * @param newBenifits
+	 *            the newBenifits to set
 	 */
 	public void setNewBenifits(final char newBenifits) {
 		this.newBenifits = newBenifits;
@@ -182,7 +176,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param activityDate the activityDate to set
+	 * @param activityDate
+	 *            the activityDate to set
 	 */
 	public void setActivityDate(final Date activityDate) {
 		this.activityDate = activityDate;
@@ -196,7 +191,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param activityMonth the activityMonth to set
+	 * @param activityMonth
+	 *            the activityMonth to set
 	 */
 	public void setActivityMonth(final Integer activityMonth) {
 		this.activityMonth = activityMonth;
@@ -210,7 +206,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param effStartDate the effStartDate to set
+	 * @param effStartDate
+	 *            the effStartDate to set
 	 */
 	public void setEffStartDate(final Date effStartDate) {
 		this.effStartDate = effStartDate;
@@ -224,7 +221,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param effEndDate the effEndDate to set
+	 * @param effEndDate
+	 *            the effEndDate to set
 	 */
 	public void setEffEndDate(final Date effEndDate) {
 		this.effEndDate = effEndDate;
@@ -238,7 +236,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param product the product to set
+	 * @param product
+	 *            the product to set
 	 */
 	public void setProduct(final String product) {
 		this.product = product;
@@ -252,7 +251,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param productLabel the productLabel to set
+	 * @param productLabel
+	 *            the productLabel to set
 	 */
 	public void setProductLabel(final String productLabel) {
 		this.productLabel = productLabel;
@@ -266,7 +266,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param planId the planId to set
+	 * @param planId
+	 *            the planId to set
 	 */
 	public void setPlanId(final String planId) {
 		this.planId = planId;
@@ -280,7 +281,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param srcSysMbrNbr the srcSysMbrNbr to set
+	 * @param srcSysMbrNbr
+	 *            the srcSysMbrNbr to set
 	 */
 	public void setSrcSysMbrNbr(final String srcSysMbrNbr) {
 		this.srcSysMbrNbr = srcSysMbrNbr;
@@ -294,7 +296,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param riskFlag the riskFlag to set
+	 * @param riskFlag
+	 *            the riskFlag to set
 	 */
 	public void setRiskFlag(final char riskFlag) {
 		this.riskFlag = riskFlag;
@@ -308,7 +311,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -322,7 +326,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -336,7 +341,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -350,7 +356,8 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -364,40 +371,37 @@ public class MembershipInsurance implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MembershipInsurance))
-        {
-            return false;
-        }
-        MembershipInsurance other = (MembershipInsurance) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof MembershipInsurance)) {
+			return false;
+		}
+		MembershipInsurance other = (MembershipInsurance) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.MembershipInsurance[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.MembershipInsurance[ id=" + id + " ]";
+	}
 
 }

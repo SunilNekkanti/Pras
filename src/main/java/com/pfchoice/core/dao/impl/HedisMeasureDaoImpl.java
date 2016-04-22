@@ -20,92 +20,77 @@ import com.pfchoice.core.entity.HedisMeasure;
  * @author Sarath
  */
 @Repository
-public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer> implements HedisMeasureDao
-{
+public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer> implements HedisMeasureDao {
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(HedisMeasureDaoImpl.class
-        .getName());
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(HedisMeasureDaoImpl.class.getName());
 
-    @Override
-    public Pagination getPage(final int pageNo,final  int pageSize, 
-			final String sSearch, final String sort, final String sortdir)
-	{
-    	
-    	Criteria crit = createCriteria()
-         		.createAlias("hedisMsrGrp", "hedisMsrGrp");
-    	
-    	if( sSearch != null && !"".equals(sSearch))
-    	{
-    		Disjunction or = Restrictions.disjunction();
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
 
-    		or.add(Restrictions.ilike("code","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("description","%"+sSearch+"%"))
-    		  .add(Restrictions.ilike("hedisMsrGrp.code","%"+sSearch+"%"));
-    		crit.add(or);
-    	}
-         
-         crit.add(Restrictions.eq("activeInd", 'Y'));
-         crit.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
-         
-        if(sort != null && !"".equals(sort)) 
-		{
-			if(sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir))
-			{
+		Criteria crit = createCriteria().createAlias("hedisMsrGrp", "hedisMsrGrp");
+
+		if (sSearch != null && !"".equals(sSearch)) {
+			Disjunction or = Restrictions.disjunction();
+
+			or.add(Restrictions.ilike("code", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("description", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("hedisMsrGrp.code", "%" + sSearch + "%"));
+			crit.add(or);
+		}
+
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		crit.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				crit.addOrder(Order.desc(sort));
-			}
-			else 
-			{
+			} else {
 				crit.addOrder(Order.asc(sort));
 			}
 		}
-        
-        Pagination page = findByCriteria(crit, pageNo, pageSize);
-        return page;
-        
+
+		Pagination page = findByCriteria(crit, pageNo, pageSize);
+		return page;
+
 	}
 
-    @Override
-    public HedisMeasure findById(final Integer id)
-    {
-    	HedisMeasure entity = get(id);
-        return entity;
-    }
+	@Override
+	public HedisMeasure findById(final Integer id) {
+		HedisMeasure entity = get(id);
+		return entity;
+	}
 
-    @Override
-    public HedisMeasure save(final HedisMeasure bean)
-    {
-        getSession().save(bean);
-        return bean;
-    }
+	@Override
+	public HedisMeasure save(final HedisMeasure bean) {
+		getSession().save(bean);
+		return bean;
+	}
 
-    @Override
-    public HedisMeasure deleteById(final Integer id)
-    {
-//        throw new UnsupportedOperationException();
-    	HedisMeasure entity = super.get(id);
-        if (entity != null)
-        {
-            getSession().delete(entity);
-        }
-        return entity;
-    }
+	@Override
+	public HedisMeasure deleteById(final Integer id) {
+		// throw new UnsupportedOperationException();
+		HedisMeasure entity = super.get(id);
+		if (entity != null) {
+			getSession().delete(entity);
+		}
+		return entity;
+	}
 
-    @Override
-    protected Class<HedisMeasure> getEntityClass()
-    {
-        return HedisMeasure.class;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public List<HedisMeasure> findAll()
-    {
-    	Criteria cr = createCriteria();
-    	cr.createAlias("hedisMsrGrp", "hedisMsrGrp");
-    	cr.add(Restrictions.eq("activeInd", 'Y'));
-    	cr.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
-    	cr.addOrder(Order.asc("code"));
-    	List<HedisMeasure> list = cr.list();
-    	return list;
-    }
+	@Override
+	protected Class<HedisMeasure> getEntityClass() {
+		return HedisMeasure.class;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<HedisMeasure> findAll() {
+		Criteria cr = createCriteria();
+		cr.createAlias("hedisMsrGrp", "hedisMsrGrp");
+		cr.add(Restrictions.eq("activeInd", 'Y'));
+		cr.add(Restrictions.eq("hedisMsrGrp.activeInd", 'Y'));
+		cr.addOrder(Order.asc("code"));
+		List<HedisMeasure> list = cr.list();
+		return list;
+	}
 
 }

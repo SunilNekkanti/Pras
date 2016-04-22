@@ -8,19 +8,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface ProviderService
-{
+public interface ProviderService {
 
 	Provider deleteById(Integer id);
 
 	Provider findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    Provider save(Provider bean);
+	Provider save(Provider bean);
 
-    Provider update(Provider bean);
-    
-    Pagination findByInsId(Integer id);
-    
+	Provider update(Provider bean);
+
+	Pagination findByInsId(Integer id);
+
 }

@@ -1,6 +1,5 @@
 package com.pfchoice.core.service;
 
-
 import java.util.List;
 
 import com.pfchoice.core.entity.Role;
@@ -11,18 +10,17 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface RoleService
-{
+public interface RoleService {
 
 	Role deleteById(Integer id);
 
 	Role findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    Role save(Role bean);
+	Role save(Role bean);
 
-    Role update(Role bean);
+	Role update(Role bean);
 
-    List<Role> findAll();
+	List<Role> findAll();
 }

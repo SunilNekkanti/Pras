@@ -19,59 +19,51 @@ import com.pfchoice.core.service.ZipCodeService;
  */
 @Service
 @Transactional
-public class ZipCodeServiceImpl implements ZipCodeService
-{
+public class ZipCodeServiceImpl implements ZipCodeService {
 
-    @Autowired
-    private ZipCodeDao zipCodeDao;
+	@Autowired
+	private ZipCodeDao zipCodeDao;
 
-    @Override
-    public ZipCode deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return zipCodeDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public ZipCode deleteById(final Integer id) {
+		// Used for transaction test
+		return zipCodeDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public ZipCode findById(final Integer id)
-    {
-        return zipCodeDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public ZipCode findById(final Integer id) {
+		return zipCodeDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo,final  int pageSize)
-    {
-        return zipCodeDao.getPage(pageNo, pageSize);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return zipCodeDao.getPage(pageNo, pageSize);
+	}
 
-    @Override
-    public ZipCode save(final ZipCode bean)
-    {
-        //Used for transaction test
-        return zipCodeDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public ZipCode save(final ZipCode bean) {
+		// Used for transaction test
+		return zipCodeDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public ZipCode update(final ZipCode bean)
-    {
-        Updater<ZipCode> updater = new Updater<>(bean);
-        return zipCodeDao.updateByUpdater(updater);
-    }
+	@Override
+	public ZipCode update(final ZipCode bean) {
+		Updater<ZipCode> updater = new Updater<>(bean);
+		return zipCodeDao.updateByUpdater(updater);
+	}
 
-    @Override
-    public List<ZipCode> findAll()
-    {
-    	return zipCodeDao.findAll();
-    }
-    
-    @Override
-    public List<ZipCode> findByStateCode(Integer stateCode)
-    {
-     return zipCodeDao.findByStateCode(stateCode);
-    }
+	@Override
+	public List<ZipCode> findAll() {
+		return zipCodeDao.findAll();
+	}
+
+	@Override
+	public List<ZipCode> findByStateCode(Integer stateCode) {
+		return zipCodeDao.findByStateCode(stateCode);
+	}
 }

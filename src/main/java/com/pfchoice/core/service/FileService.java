@@ -8,17 +8,16 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface FileService
-{
+public interface FileService {
 
 	File deleteById(Integer id);
 
 	File findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    File save(File bean);
+	File save(File bean);
 
-    File update(File bean);
+	File update(File bean);
 
 }

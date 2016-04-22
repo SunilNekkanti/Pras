@@ -24,87 +24,81 @@ import com.google.gson.annotations.Expose;
  * @author Mohanasundharam
  */
 @Entity(name = "contract")
-public class Contract implements Serializable
-{
-	
-    private static final long serialVersionUID = 1L;
+public class Contract implements Serializable {
 
-    @Expose
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="contract_Id", nullable = false)
-    private Integer id;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Column(name="contract_NBR")
-    private String contractNBR;
-    
-    @Expose
-    @Column(name="PMPM")
-    private Double pmpm;
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "contract_Id", nullable = false)
+	private Integer id;
 
-    @Expose
-    @Column(name="start_date")
-    private Date startDate;
-    
-    @Expose
-    @Column(name="end_date")
-    private Date endDate;
-    
-    @Expose
-    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name="ref_contract_id", referencedColumnName="ref_contract_id")
-    private ReferenceContract referenceContract;
-    
-    @Expose
-    @OneToOne(  fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="file_upload_id", referencedColumnName="file_upload_id")
-    private FilesUpload filesUpload;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_date")
-    private Date createdDate;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_date")
-    private Date updatedDate;
-    
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-    @Expose
-    @Transient
-    private Integer insId;
-    
-      
-    public Contract()
-    {
-    }
+	@Expose
+	@Column(name = "contract_NBR")
+	private String contractNBR;
 
-    public Contract(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "PMPM")
+	private Double pmpm;
 
-    public Integer getId()
-    {
-        return id;
-    }
+	@Expose
+	@Column(name = "start_date")
+	private Date startDate;
 
-    public void setId(final Integer id)
-    {
-        this.id = id;
-    }
+	@Expose
+	@Column(name = "end_date")
+	private Date endDate;
 
-    	/**
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "ref_contract_id", referencedColumnName = "ref_contract_id")
+	private ReferenceContract referenceContract;
+
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "file_upload_id", referencedColumnName = "file_upload_id")
+	private FilesUpload filesUpload;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	@Expose
+	@Transient
+	private Integer insId;
+
+	public Contract() {
+	}
+
+	public Contract(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the contractNBR
 	 */
 	public String getContractNBR() {
@@ -112,7 +106,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param contractNBR the contractNBR to set
+	 * @param contractNBR
+	 *            the contractNBR to set
 	 */
 	public void setContractNBR(final String contractNBR) {
 		this.contractNBR = contractNBR;
@@ -126,7 +121,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param pmpm the pmpm to set
+	 * @param pmpm
+	 *            the pmpm to set
 	 */
 	public void setPmpm(Double pmpm) {
 		this.pmpm = pmpm;
@@ -140,7 +136,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(final Date startDate) {
 		this.startDate = startDate;
@@ -154,7 +151,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param endDate the endDate to set
+	 * @param endDate
+	 *            the endDate to set
 	 */
 	public void setEndDate(final Date endDate) {
 		this.endDate = endDate;
@@ -168,7 +166,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param referenceContract the referenceContract to set
+	 * @param referenceContract
+	 *            the referenceContract to set
 	 */
 	public void setReferenceContract(final ReferenceContract referenceContract) {
 		this.referenceContract = referenceContract;
@@ -182,7 +181,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param filesUpload the filesUpload to set
+	 * @param filesUpload
+	 *            the filesUpload to set
 	 */
 	public void setFilesUpload(FilesUpload filesUpload) {
 		this.filesUpload = filesUpload;
@@ -196,7 +196,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param insId the insId to set
+	 * @param insId
+	 *            the insId to set
 	 */
 	public void setInsId(Integer insId) {
 		this.insId = insId;
@@ -210,7 +211,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Date createdDate) {
 		this.createdDate = createdDate;
@@ -224,7 +226,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -238,7 +241,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -252,7 +256,8 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -266,43 +271,37 @@ public class Contract implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
-	
-	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Contract)) {
+			return false;
+		}
+		Contract other = (Contract) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contract))
-        {
-            return false;
-        }
-        Contract other = (Contract) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Contract[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Contract[ id=" + id + " ]";
+	}
 
 }

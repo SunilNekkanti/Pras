@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,140 +28,135 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes({"username","userpath"})
-public class ICDMeasureController{
-	
-    @Autowired
-    private ICDMeasureService icdMeasureService;
-    
-    @Autowired
-    @Qualifier("iCDMeasureValidator")
-    private Validator validator;
- 
-    @InitBinder("icdMeasure")
-    private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
-    }
-    
-    private static final Logger logger = LoggerFactory
-            .getLogger(ICDMeasureController.class);
- 
+@SessionAttributes({ "username", "userpath" })
+public class ICDMeasureController {
+
+	@Autowired
+	private ICDMeasureService icdMeasureService;
+
+	@Autowired
+	@Qualifier("iCDMeasureValidator")
+	private Validator validator;
+
+	@InitBinder("icdMeasure")
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(validator);
+	}
+
+	private static final Logger logger = LoggerFactory.getLogger(ICDMeasureController.class);
+
 	public ICDMeasureController() {
-    }
-	
+	}
+
 	@ModelAttribute("icdMeasure")
-    public ICDMeasure createICDMeasureModel() {
-        // ModelAttribute value should be same as used in the ICDMeasureEdit.jsp
-        return new ICDMeasure();
-    }
-	
+	public ICDMeasure createICDMeasureModel() {
+		// ModelAttribute value should be same as used in the ICDMeasureEdit.jsp
+		return new ICDMeasure();
+	}
+
 	@RequestMapping(value = "/admin/icd/new")
-    public String addICDMeasurePage(Model model) {
-		
+	public String addICDMeasurePage(Model model) {
+
 		ICDMeasure icdMeasure = createICDMeasureModel();
 		model.addAttribute("icdMeasure", icdMeasure);
-        return "icdMeasureNew";
-    }
-	
-	@RequestMapping(value = {"/admin/icd/{id}","/user/icd/{id}"}, method = RequestMethod.GET)
-    public String updateICDMeasurePage(@PathVariable Integer id,Model model) {
+		return "icdMeasureNew";
+	}
+
+	@RequestMapping(value = { "/admin/icd/{id}", "/user/icd/{id}" }, method = RequestMethod.GET)
+	public String updateICDMeasurePage(@PathVariable Integer id, Model model) {
 		ICDMeasure dbICDMeasure = icdMeasureService.findById(id);
-	    logger.info("Returning icdMeasure.getId()"+dbICDMeasure.getId());
+		logger.info("Returning icdMeasure.getId()" + dbICDMeasure.getId());
 		model.addAttribute("icdMeasure", dbICDMeasure);
-        logger.info("Returning icdMeasureEdit.jsp page");
-        return "icdMeasureEdit";
-    }
-		
-	@RequestMapping(value = {"/admin/icd/{id}/display"}, method = RequestMethod.GET)
-    public String displayICDMeasurePage(@PathVariable Integer id,Model model) {
+		logger.info("Returning icdMeasureEdit.jsp page");
+		return "icdMeasureEdit";
+	}
+
+	@RequestMapping(value = { "/admin/icd/{id}/display" }, method = RequestMethod.GET)
+	public String displayICDMeasurePage(@PathVariable Integer id, Model model) {
 		ICDMeasure dbICDMeasure = icdMeasureService.findById(id);
-		 logger.info("Returning icdMeasure.getId()"+dbICDMeasure.getId());
-	       
+		logger.info("Returning icdMeasure.getId()" + dbICDMeasure.getId());
+
 		model.addAttribute("icdMeasure", dbICDMeasure);
-        logger.info("Returning icdMeasureDisplay.jsp page");
-        return "icdMeasureDisplay";
-    }
-	
-	@RequestMapping(value = {"/admin/icd/icdMeasureList","/user/icd/icdMeasureList"}, method = RequestMethod.GET)
-	public String viewICDMeasureAction(Model model) throws Exception{
+		logger.info("Returning icdMeasureDisplay.jsp page");
+		return "icdMeasureDisplay";
+	}
+
+	@RequestMapping(value = { "/admin/icd/icdMeasureList", "/user/icd/icdMeasureList" }, method = RequestMethod.GET)
+	public String viewICDMeasureAction(Model model) throws Exception {
 		logger.info("Returning view.jsp page after create");
-        return "icdMeasureList";
-    }
-	
+		return "icdMeasureList";
+	}
+
 	@ResponseBody
-	@RequestMapping(value = {"/admin/icd/icdMeasureLists","/user/icd/icdMeasureLists"}, method = RequestMethod.GET)
-	public Message viewICDMeasureActionJsonTest(Model model,@RequestParam(required = false) Integer pageNo,
-					@RequestParam(required = false) Integer pageSize,
-					@RequestParam(required = false) String sSearch,
-					@RequestParam(required = false) String sort,
-					@RequestParam(required = false) String sortdir) throws Exception{
-		
-		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize,	sSearch, sort,sortdir);
+	@RequestMapping(value = { "/admin/icd/icdMeasureLists", "/user/icd/icdMeasureLists" }, method = RequestMethod.GET)
+	public Message viewICDMeasureActionJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
+					throws Exception {
 
-        return Message.successMessage(CommonMessageContent.ICD_LIST, pagination);
-    }
-	
-	
-	@RequestMapping(value = "/admin/icd/save.do", method = RequestMethod.POST, params ={"add"})
+		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.ICD_LIST, pagination);
+	}
+
+	@RequestMapping(value = "/admin/icd/save.do", method = RequestMethod.POST, params = { "add" })
 	public String addICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-        if (bindingResult.hasErrors()) {
-            logger.info("Returning icdMeasureEdit.jsp page");
-            return "icdMeasureNew";
-        }
-        
-	 	model.addAttribute("icdMeasure", icdMeasure);
-	 	icdMeasure.setCreatedBy(username);
-	 	icdMeasure.setUpdatedBy(username);
-	 	
-    	logger.info("Returning icdEditSuccess.jsp page after create");
-      	icdMeasureService.save(icdMeasure);
-      	model.addAttribute("Message", "ICD Measure added successfully");
-      	return "icdMeasureList";
-    }
-	
-	
-	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"update"})
-	public String saveICDMeasureAction(@PathVariable Integer id,@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		icdMeasure.setActiveInd('Y');
-        if (bindingResult.hasErrors()) {
-        	 logger.info("Returning  icdMeasureEdit.jsp page");
-            return "icdMeasureEdit";
-        }
-	        
-        if (null != icdMeasure.getId())
-        {
-        	logger.info("Returning icdMeasureEditSuccess.jsp page after update");
-        	icdMeasure.setUpdatedBy(username);
-        	icdMeasureService.update(icdMeasure);
-        	model.addAttribute("icdMeasure", icdMeasure);
-        	model.addAttribute("Message", "ICD Measure updated successfully");
-        	return "icdMeasureList";
-        }
-       
-        return "icdMeasureEdit";
-    }
-	
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning icdMeasureEdit.jsp page");
+			return "icdMeasureNew";
+		}
 
-	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params ={"delete"})
-	public String deleteICDMeasureAction(@PathVariable Integer id,@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
-            BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-       
-			if (bindingResult.hasErrors()) {
-	        	icdMeasure.setActiveInd('Y');
-	        	 logger.info("Returning  icdMeasureEdit.jsp page");
-	             return "icdMeasureEdit";
-	        }
-	        if (null != icdMeasure.getId())
-	        {
-	        	logger.info("Returning icdMeasureEditSuccess.jsp page after update");
-	        	icdMeasure.setActiveInd('N');
-	        	icdMeasure.setUpdatedBy(username);
-	        	icdMeasureService.update(icdMeasure);
-	        	model.addAttribute("Message", "ICD Measure deleted successfully");
-	        	return "icdMeasureList";
-	        }
-	        return "icdMeasureEdit";
-    }
+		model.addAttribute("icdMeasure", icdMeasure);
+		icdMeasure.setCreatedBy(username);
+		icdMeasure.setUpdatedBy(username);
+
+		logger.info("Returning icdEditSuccess.jsp page after create");
+		icdMeasureService.save(icdMeasure);
+		model.addAttribute("Message", "ICD Measure added successfully");
+		return "icdMeasureList";
+	}
+
+	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params = { "update" })
+	public String saveICDMeasureAction(@PathVariable Integer id,
+			@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+		icdMeasure.setActiveInd('Y');
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning  icdMeasureEdit.jsp page");
+			return "icdMeasureEdit";
+		}
+
+		if (null != icdMeasure.getId()) {
+			logger.info("Returning icdMeasureEditSuccess.jsp page after update");
+			icdMeasure.setUpdatedBy(username);
+			icdMeasureService.update(icdMeasure);
+			model.addAttribute("icdMeasure", icdMeasure);
+			model.addAttribute("Message", "ICD Measure updated successfully");
+			return "icdMeasureList";
+		}
+
+		return "icdMeasureEdit";
+	}
+
+	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params = { "delete" })
+	public String deleteICDMeasureAction(@PathVariable Integer id,
+			@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+
+		if (bindingResult.hasErrors()) {
+			icdMeasure.setActiveInd('Y');
+			logger.info("Returning  icdMeasureEdit.jsp page");
+			return "icdMeasureEdit";
+		}
+		if (null != icdMeasure.getId()) {
+			logger.info("Returning icdMeasureEditSuccess.jsp page after update");
+			icdMeasure.setActiveInd('N');
+			icdMeasure.setUpdatedBy(username);
+			icdMeasureService.update(icdMeasure);
+			model.addAttribute("Message", "ICD Measure deleted successfully");
+			return "icdMeasureList";
+		}
+		return "icdMeasureEdit";
+	}
 }

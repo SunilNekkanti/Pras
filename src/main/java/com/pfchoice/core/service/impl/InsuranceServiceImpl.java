@@ -19,55 +19,48 @@ import com.pfchoice.core.service.InsuranceService;
  */
 @Service
 @Transactional
-public class InsuranceServiceImpl implements InsuranceService
-{
+public class InsuranceServiceImpl implements InsuranceService {
 
-    @Autowired
-    private InsuranceDao insuranceDao;
+	@Autowired
+	private InsuranceDao insuranceDao;
 
-    @Override
-    public Insurance deleteById(final Integer id)
-    {
-        //Used for transaction test
-        return insuranceDao.deleteById(id);
-//        throw new UnsupportedOperationException();
-    }
+	@Override
+	public Insurance deleteById(final Integer id) {
+		// Used for transaction test
+		return insuranceDao.deleteById(id);
+		// throw new UnsupportedOperationException();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Insurance findById(final Integer id)
-    {
-        return insuranceDao.findById(id);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Insurance findById(final Integer id) {
+		return insuranceDao.findById(id);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Pagination getPage(final int pageNo, final int pageSize, final String sSearch,
-    		final String sort, final String sortdir)
-    {
-        return insuranceDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return insuranceDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
 
-    @Override
-    public Insurance save(final Insurance bean)
-    {
-        //Used for transaction test
-        return insuranceDao.save(bean);
-//        this.deleteById(1);
-//        return null;
-    }
+	@Override
+	public Insurance save(final Insurance bean) {
+		// Used for transaction test
+		return insuranceDao.save(bean);
+		// this.deleteById(1);
+		// return null;
+	}
 
-    @Override
-    public Insurance update(final Insurance bean)
-    {
-        Updater<Insurance> updater = new Updater<>(bean);
-        return insuranceDao.updateByUpdater(updater);
-    }
-    
-    @Override
-    public List<Insurance> findAll()
-    {
-    	return insuranceDao.findAll();
-    }
+	@Override
+	public Insurance update(final Insurance bean) {
+		Updater<Insurance> updater = new Updater<>(bean);
+		return insuranceDao.updateByUpdater(updater);
+	}
+
+	@Override
+	public List<Insurance> findAll() {
+		return insuranceDao.findAll();
+	}
 
 }

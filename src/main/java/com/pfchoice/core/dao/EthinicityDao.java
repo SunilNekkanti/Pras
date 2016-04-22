@@ -11,18 +11,17 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface EthinicityDao
-{
+public interface EthinicityDao {
 
 	Ethinicity deleteById(Byte id);
 
 	Ethinicity findById(Byte id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    Ethinicity save(Ethinicity bean);
+	Ethinicity save(Ethinicity bean);
 
-    Ethinicity updateByUpdater(Updater<Ethinicity> updater);
+	Ethinicity updateByUpdater(Updater<Ethinicity> updater);
 
-    List<Ethinicity> findAll();
+	List<Ethinicity> findAll();
 }

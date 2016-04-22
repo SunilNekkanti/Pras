@@ -10,18 +10,17 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface GenderService
-{
+public interface GenderService {
 
 	Gender deleteById(Byte id);
 
 	Gender findById(Byte id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    Gender save(Gender bean);
+	Gender save(Gender bean);
 
-    Gender update(Gender bean);
+	Gender update(Gender bean);
 
-    List<Gender> findAll();
+	List<Gender> findAll();
 }

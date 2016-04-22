@@ -11,19 +11,18 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface ICDMeasureDao
-{
+public interface ICDMeasureDao {
 
 	ICDMeasure deleteById(Integer id);
 
 	ICDMeasure findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
-    
-    ICDMeasure save(ICDMeasure bean);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
-    ICDMeasure updateByUpdater(Updater<ICDMeasure> updater);
-    
-    List<ICDMeasure> findAll();
+	ICDMeasure save(ICDMeasure bean);
+
+	ICDMeasure updateByUpdater(Updater<ICDMeasure> updater);
+
+	List<ICDMeasure> findAll();
 
 }

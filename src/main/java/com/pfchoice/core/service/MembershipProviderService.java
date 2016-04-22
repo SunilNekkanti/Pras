@@ -10,23 +10,22 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author sarath
  */
-public interface MembershipProviderService
-{
+public interface MembershipProviderService {
 
 	MembershipProvider deleteById(Integer id);
 
 	MembershipProvider findById(Integer id);
 
-    Pagination getPage(int pageNo, int pageSize);
+	Pagination getPage(int pageNo, int pageSize);
 
-    MembershipProvider save(MembershipProvider bean);
+	MembershipProvider save(MembershipProvider bean);
 
-    MembershipProvider update(MembershipProvider bean);
-    
-    List<MembershipProvider> findAll();
-    
-    List<MembershipProvider> findAllByMbrId(Integer id);
-    
-    MembershipProvider findByMbrId(final Integer id);
+	MembershipProvider update(MembershipProvider bean);
+
+	List<MembershipProvider> findAll();
+
+	List<MembershipProvider> findAllByMbrId(Integer id);
+
+	MembershipProvider findByMbrId(final Integer id);
 
 }

@@ -17,65 +17,56 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "lu_gender")
-public class Gender implements Serializable
-{
+public class Gender implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Expose
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name="gender_id", nullable = false)
-    private Byte id;
+	@Expose
+	@Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "gender_id", nullable = false)
+	private Byte id;
 
-    @Expose
-    @Column(name="code")
-    private char code;
-    
-    @Expose
-    @Column(name="description")
-    private String description;
+	@Expose
+	@Column(name = "code")
+	private char code;
 
-    @Column(name="created_date")
-    private Timestamp createdDate;
-    
-    @Column(name="updated_date")
-    private Timestamp updatedDate;
+	@Expose
+	@Column(name = "description")
+	private String description;
 
-    @Column(name="created_by")
-    private String createdBy;
-    
-    @Column(name="updated_by")
-    private String updatedBy;
-    
-    @Expose
-    @Column(name="active_ind",insertable=false)
-    private Character activeInd;
-    
-   
-    
-   
-    
-    public Gender()
-    {
-    }
+	@Column(name = "created_date")
+	private Timestamp createdDate;
 
-    public Gender(final Byte id)
-    {
-        this.id = id;
-    }
+	@Column(name = "updated_date")
+	private Timestamp updatedDate;
 
-    public Byte getId()
-    {
-        return id;
-    }
+	@Column(name = "created_by")
+	private String createdBy;
 
-    public void setId(final Byte id)
-    {
-        this.id = id;
-    }
-    
+	@Column(name = "updated_by")
+	private String updatedBy;
+
+	@Expose
+	@Column(name = "active_ind", insertable = false)
+	private Character activeInd;
+
+	public Gender() {
+	}
+
+	public Gender(final Byte id) {
+		this.id = id;
+	}
+
+	public Byte getId() {
+		return id;
+	}
+
+	public void setId(final Byte id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the code
 	 */
@@ -84,7 +75,8 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param code the code to set
+	 * @param code
+	 *            the code to set
 	 */
 	public void setCode(final char code) {
 		this.code = code;
@@ -98,7 +90,8 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
@@ -112,7 +105,8 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(final Timestamp createdDate) {
 		this.createdDate = createdDate;
@@ -126,7 +120,8 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param updatedDate the updatedDate to set
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
 	public void setUpdatedDate(final Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
@@ -140,7 +135,8 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param credtedBy the credtedBy to set
+	 * @param credtedBy
+	 *            the credtedBy to set
 	 */
 	public void setCreatedBy(final String createdBy) {
 		this.createdBy = createdBy;
@@ -154,7 +150,8 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(final String updatedBy) {
 		this.updatedBy = updatedBy;
@@ -168,40 +165,37 @@ public class Gender implements Serializable
 	}
 
 	/**
-	 * @param activeInd the activeInd to set
+	 * @param activeInd
+	 *            the activeInd to set
 	 */
 	public void setActiveInd(final Character activeInd) {
 		this.activeInd = activeInd;
 	}
 
 	@Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Gender))
-        {
-            return false;
-        }
-        Gender other = (Gender) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Gender)) {
+			return false;
+		}
+		Gender other = (Gender) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "com.pfchoice.core.entity.Gender[ id=" + id + " ]";
-    }
+	@Override
+	public String toString() {
+		return "com.pfchoice.core.entity.Gender[ id=" + id + " ]";
+	}
 
 }
