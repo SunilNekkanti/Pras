@@ -19,12 +19,19 @@ import com.pfchoice.core.entity.HedisMeasure;
 @Repository
 public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer> implements HedisMeasureDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -55,17 +62,26 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public HedisMeasure findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#save(com.pfchoice.core.entity.HedisMeasure)
+	 */
 	@Override
 	public HedisMeasure save(final HedisMeasure bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public HedisMeasure deleteById(final Integer id) {
 		HedisMeasure entity = super.get(id);
@@ -75,6 +91,9 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<HedisMeasure> getEntityClass() {
 		return HedisMeasure.class;

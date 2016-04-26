@@ -3,14 +3,11 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.ICDMeasureDao;
@@ -23,12 +20,19 @@ import com.pfchoice.core.entity.ICDMeasure;
 @Repository
 public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> implements ICDMeasureDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -56,17 +60,26 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public ICDMeasure findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#save(com.pfchoice.core.entity.ICDMeasure)
+	 */
 	@Override
 	public ICDMeasure save(final ICDMeasure bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public ICDMeasure deleteById(final Integer id) {
 		ICDMeasure entity = super.get(id);
@@ -76,21 +89,12 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<ICDMeasure> getEntityClass() {
 		return ICDMeasure.class;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ICDMeasure> findAll() {
-		Criteria cr = createCriteria();
-		cr.add(Restrictions.eq("activeInd", 'Y')).addOrder(Order.asc("code"));
-		cr.setProjection(Projections.distinct(Projections.projectionList().add(Projections.property("code"), "code")
-				.add(Projections.property("id"), "id")))
-				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
-
-		return cr.list();
 	}
 
 }

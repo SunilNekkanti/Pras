@@ -20,6 +20,9 @@ import com.pfchoice.core.entity.Provider;
 @Repository
 public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> implements ProviderDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ProviderDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -50,17 +53,26 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ProviderDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public Provider findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ProviderDao#save(com.pfchoice.core.entity.Provider)
+	 */
 	@Override
 	public Provider save(final Provider bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ProviderDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Provider deleteById(final Integer id) {
 		Provider entity = super.get(id);
@@ -70,11 +82,17 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<Provider> getEntityClass() {
 		return Provider.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ProviderDao#findByInsId(java.lang.Integer)
+	 */
 	@Override
 	public Pagination findByInsId(final Integer id) {
 

@@ -22,24 +22,36 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 	static final String REF_CONTRACT_PRVDR = "refContract.prvdr.id";
 	static final String REF_CONTRACT_INS = "refContract.ins.id";
 	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContractDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
-
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContractDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public Contract findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContractDao#save(com.pfchoice.core.entity.Contract)
+	 */
 	@Override
 	public Contract save(final Contract bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContractDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Contract deleteById(final Integer id) {
 		Contract entity = super.get(id);
@@ -54,6 +66,9 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return Contract.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContractDao#findAllContractsByRefId(java.lang.String, java.lang.Integer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contract> findAllContractsByRefId(final String refString, final Integer id) {
@@ -83,6 +98,9 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return cr.list();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContractDao#findActiveContractByRefId(java.lang.String, java.lang.Integer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Contract findActiveContractByRefId(final String refString, final Integer id) {

@@ -17,6 +17,9 @@ import com.pfchoice.core.entity.PlanType;
 @Repository
 public class PlanTypeDaoImpl extends HibernateBaseDao<PlanType, Integer> implements PlanTypeDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.PlanTypeDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -24,17 +27,26 @@ public class PlanTypeDaoImpl extends HibernateBaseDao<PlanType, Integer> impleme
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.PlanTypeDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public PlanType findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.PlanTypeDao#save(com.pfchoice.core.entity.PlanType)
+	 */
 	@Override
 	public PlanType save(final PlanType bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.PlanTypeDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public PlanType deleteById(final Integer id) {
 		PlanType entity = super.get(id);
@@ -44,6 +56,9 @@ public class PlanTypeDaoImpl extends HibernateBaseDao<PlanType, Integer> impleme
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<PlanType> getEntityClass() {
 		return PlanType.class;

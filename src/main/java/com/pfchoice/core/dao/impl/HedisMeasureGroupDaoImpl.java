@@ -18,6 +18,9 @@ import com.pfchoice.core.entity.HedisMeasureGroup;
 public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup, Integer>
 		implements HedisMeasureGroupDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureGroupDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -25,6 +28,9 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureGroupDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public HedisMeasureGroup findById(final Integer id) {
 		return get(id);
@@ -36,6 +42,9 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureGroupDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public HedisMeasureGroup deleteById(final Integer id) {
 		HedisMeasureGroup entity = super.get(id);
@@ -45,6 +54,9 @@ public class HedisMeasureGroupDaoImpl extends HibernateBaseDao<HedisMeasureGroup
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<HedisMeasureGroup> getEntityClass() {
 		return HedisMeasureGroup.class;

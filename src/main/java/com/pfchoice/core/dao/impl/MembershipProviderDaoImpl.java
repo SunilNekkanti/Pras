@@ -20,6 +20,9 @@ import com.pfchoice.core.entity.MembershipProvider;
 public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvider, Integer>
 		implements MembershipProviderDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -27,17 +30,26 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipProvider findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#save(com.pfchoice.core.entity.MembershipProvider)
+	 */
 	@Override
 	public MembershipProvider save(final MembershipProvider bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipProvider deleteById(final Integer id) {
 		MembershipProvider entity = super.get(id);
@@ -52,6 +64,9 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return MembershipProvider.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#findAllByMbrId(java.lang.Integer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MembershipProvider> findAllByMbrId(final Integer id) {
@@ -62,6 +77,9 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return cr.list();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#findByMbrId(java.lang.Integer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public MembershipProvider findByMbrId(final Integer id) {

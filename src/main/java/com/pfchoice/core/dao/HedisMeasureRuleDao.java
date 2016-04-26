@@ -68,12 +68,6 @@ public interface HedisMeasureRuleDao {
 
 	/**
 	 * 
-	 * @return
-	 */
-	List<HedisMeasureRule> findAll();
-
-	/**
-	 * 
 	 * @param insId
 	 * @return
 	 */

@@ -20,12 +20,19 @@ import com.pfchoice.core.entity.Insurance;
 @Repository
 public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> implements InsuranceDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.InsuranceDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.InsuranceDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -52,17 +59,26 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.InsuranceDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public Insurance findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.InsuranceDao#save(com.pfchoice.core.entity.Insurance)
+	 */
 	@Override
 	public Insurance save(final Insurance bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.InsuranceDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Insurance deleteById(final Integer id) {
 		Insurance entity = super.get(id);
@@ -72,6 +88,9 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<Insurance> getEntityClass() {
 		return Insurance.class;

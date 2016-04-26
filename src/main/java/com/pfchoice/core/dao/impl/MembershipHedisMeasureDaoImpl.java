@@ -23,6 +23,9 @@ import com.pfchoice.core.entity.MembershipHedisMeasure;
 public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHedisMeasure, Integer>
 		implements MembershipHedisMeasureDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -49,6 +52,9 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#getPage(int, int, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final Integer sSearchHedisCode, final String sort, final String sortdir) {
@@ -92,17 +98,26 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipHedisMeasure findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#save(com.pfchoice.core.entity.MembershipHedisMeasure)
+	 */
 	@Override
 	public MembershipHedisMeasure save(final MembershipHedisMeasure bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipHedisMeasure deleteById(final Integer id) {
 		MembershipHedisMeasure entity = super.get(id);
@@ -117,6 +132,9 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 		return MembershipHedisMeasure.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#findByMbrIdAndRuleId(java.lang.Integer, java.lang.Integer)
+	 */
 	@Override
 	public Pagination findByMbrIdAndRuleId(final Integer mbrId, final Integer ruleId) {
 		Criteria cr = getSession().createCriteria(getEntityClass(), "mbrHedisMeasure");

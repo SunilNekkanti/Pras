@@ -19,24 +19,36 @@ import com.pfchoice.core.entity.ZipCode;
 @Repository
 public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implements ZipCodeDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ZipCodeDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
-
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ZipCodeDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public ZipCode findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ZipCodeDao#save(com.pfchoice.core.entity.ZipCode)
+	 */
 	@Override
 	public ZipCode save(final ZipCode bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ZipCodeDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public ZipCode deleteById(final Integer id) {
 		ZipCode entity = super.get(id);
@@ -46,11 +58,17 @@ public class ZipCodeDaoImpl extends HibernateBaseDao<ZipCode, Integer> implement
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<ZipCode> getEntityClass() {
 		return ZipCode.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ZipCodeDao#findByStateCode(java.lang.Integer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ZipCode> findByStateCode(Integer stateCode) {

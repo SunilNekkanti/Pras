@@ -19,23 +19,36 @@ import com.pfchoice.core.entity.Contact;
 @Repository
 public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implements ContactDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContactDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContactDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public Contact findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContactDao#save(com.pfchoice.core.entity.Contact)
+	 */
 	@Override
 	public Contact save(final Contact bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContactDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Contact deleteById(final Integer id) {
 		Contact entity = super.get(id);
@@ -45,6 +58,9 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<Contact> getEntityClass() {
 		return Contact.class;
@@ -67,6 +83,9 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 		return cr.list();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContactDao#findActiveContactByRefId(java.lang.String, java.lang.Integer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Contact findActiveContactByRefId(final String refString, final Integer id) {

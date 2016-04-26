@@ -17,6 +17,9 @@ import com.pfchoice.core.entity.Ethinicity;
 @Repository
 public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implements EthinicityDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.EthinicityDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -24,17 +27,26 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.EthinicityDao#findById(java.lang.Byte)
+	 */
 	@Override
 	public Ethinicity findById(final Byte id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.EthinicityDao#save(com.pfchoice.core.entity.Ethinicity)
+	 */
 	@Override
 	public Ethinicity save(final Ethinicity bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.EthinicityDao#deleteById(java.lang.Byte)
+	 */
 	@Override
 	public Ethinicity deleteById(final Byte id) {
 		Ethinicity entity = super.get(id);
@@ -44,6 +56,9 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<Ethinicity> getEntityClass() {
 		return Ethinicity.class;

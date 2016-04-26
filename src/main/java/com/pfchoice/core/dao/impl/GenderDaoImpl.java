@@ -18,6 +18,9 @@ import com.pfchoice.core.entity.Gender;
 @Repository
 public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements GenderDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.GenderDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -25,17 +28,26 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.GenderDao#findById(java.lang.Byte)
+	 */
 	@Override
 	public Gender findById(final Byte id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.GenderDao#save(com.pfchoice.core.entity.Gender)
+	 */
 	@Override
 	public Gender save(final Gender bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.GenderDao#deleteById(java.lang.Byte)
+	 */
 	@Override
 	public Gender deleteById(final Byte id) {
 		Gender entity = super.get(id);
@@ -45,6 +57,9 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<Gender> getEntityClass() {
 		return Gender.class;

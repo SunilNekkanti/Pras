@@ -24,6 +24,9 @@ import com.pfchoice.core.entity.Membership;
 @Repository
 public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> implements MembershipDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -53,6 +56,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.util.List, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final Integer sSearchHedisRule, final List<Integer> ruleIds, final String sort,
@@ -131,17 +137,26 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public Membership findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipDao#save(com.pfchoice.core.entity.Membership)
+	 */
 	@Override
 	public Membership save(final Membership bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Membership deleteById(final Integer id) {
 		Membership entity = super.get(id);
@@ -151,6 +166,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<Membership> getEntityClass() {
 		return Membership.class;

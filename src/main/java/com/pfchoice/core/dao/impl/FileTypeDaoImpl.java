@@ -16,6 +16,9 @@ import com.pfchoice.core.entity.FileType;
 @Repository
 public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> implements FileTypeDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.FileTypeDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -23,17 +26,26 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.FileTypeDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public FileType findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.FileTypeDao#save(com.pfchoice.core.entity.FileType)
+	 */
 	@Override
 	public FileType save(final FileType bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.FileTypeDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public FileType deleteById(final Integer id) {
 		FileType entity = super.get(id);
@@ -43,6 +55,9 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<FileType> getEntityClass() {
 		return FileType.class;

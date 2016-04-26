@@ -1,7 +1,5 @@
 package com.pfchoice.core.service;
 
-import java.util.List;
-
 import com.pfchoice.core.entity.CPTMeasure;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -53,10 +51,5 @@ public interface CPTMeasureService {
 	 * @return
 	 */
 	CPTMeasure update(CPTMeasure bean);
-
-	/**
-	 * @return
-	 */
-	List<CPTMeasure> findAll();
 
 }

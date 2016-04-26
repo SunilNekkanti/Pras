@@ -17,6 +17,9 @@ import com.pfchoice.core.entity.User;
 @Repository
 public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements UserDao {
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#getPage(int, int)
+	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
@@ -24,17 +27,26 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#findById(java.lang.Integer)
+	 */
 	@Override
 	public User findById(final Integer id) {
 		return get(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#save(com.pfchoice.core.entity.User)
+	 */
 	@Override
 	public User save(final User bean) {
 		getSession().save(bean);
 		return bean;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public User deleteById(final Integer id) {
 		User entity = super.get(id);
@@ -44,11 +56,17 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return entity;
 	}
 
+	/* (non-Javadoc)
+	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 */
 	@Override
 	protected Class<User> getEntityClass() {
 		return User.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#findByLogin(java.lang.String)
+	 */
 	@Override
 	public User findByLogin(final String login) {
 		Criteria crit = createCriteria();
@@ -58,6 +76,9 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return (User) crit.uniqueResult();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#isValidUser(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public boolean isValidUser(final String login, final String password) {
 
