@@ -3,8 +3,6 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,41 +22,47 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 	@Autowired
 	private HedisMeasureGroupDao hedisMeasureGroupDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureGroupService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public HedisMeasureGroup deleteById(final Integer id) {
-		// Used for transaction test
 		return hedisMeasureGroupDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public HedisMeasureGroup findById(final Integer id) {
 		return hedisMeasureGroupDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureGroupService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return hedisMeasureGroupDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureGroupService#save(com.pfchoice.core.entity.HedisMeasureGroup)
+	 */
 	@Override
 	public HedisMeasureGroup save(final HedisMeasureGroup bean) {
-		// Used for transaction test
 		return hedisMeasureGroupDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureGroupService#update(com.pfchoice.core.entity.HedisMeasureGroup)
+	 */
 	@Override
 	public HedisMeasureGroup update(final HedisMeasureGroup bean) {
 		Updater<HedisMeasureGroup> updater = new Updater<>(bean);
 		return hedisMeasureGroupDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<HedisMeasureGroup> findAll() {
-		return hedisMeasureGroupDao.findAll();
-	}
 }

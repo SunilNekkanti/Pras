@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.MembershipInsuranceDao;
@@ -21,20 +20,16 @@ import com.pfchoice.core.entity.MembershipInsurance;
 public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsurance, Integer>
 		implements MembershipInsuranceDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MembershipInsuranceDaoImpl.class.getName());
-
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public MembershipInsurance findById(final Integer id) {
-		MembershipInsurance entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -45,7 +40,6 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 
 	@Override
 	public MembershipInsurance deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		MembershipInsurance entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -59,33 +53,26 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<MembershipInsurance> findAll() {
-		Criteria cr = createCriteria();
-		cr.add(Restrictions.eq("activeInd", 'Y'));
-		List<MembershipInsurance> list = cr.list();
-		return list;
-	}
-
-	@SuppressWarnings("unchecked")
+	@Override
 	public List<MembershipInsurance> findAllByMbrId(final Integer id) {
 		Criteria cr = getSession().createCriteria(getEntityClass(), "mbrIns").createAlias("mbrIns.mbr", "mbr")
 				.add(Restrictions.eq("mbr.id", id)).add(Restrictions.eq("mbrIns.activeInd", 'Y'))
 				.add(Restrictions.eq("mbr.activeInd", 'Y'));
-		List<MembershipInsurance> list = cr.list();
-		return list;
+		return cr.list();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public MembershipInsurance findByMbrId(final Integer id) {
+		MembershipInsurance dbMembershipInsurance = null;
 		Criteria cr = getSession().createCriteria(getEntityClass(), "mbrIns").createAlias("mbrIns.mbr", "mbr")
 				.add(Restrictions.eq("mbr.id", id)).add(Restrictions.eq("mbrIns.activeInd", 'Y'))
 				.add(Restrictions.eq("mbr.activeInd", 'Y'));
 		List<MembershipInsurance> list = cr.list();
-
-		final String msg = "findByMbrId list size is %d";
-		final String fmt = String.format(msg, list.size());
-		LOG.info(fmt);
-
-		return list.get(0);
+		if(!list.isEmpty()) {
+			dbMembershipInsurance =  list.get(0);
+		}
+		 
+		return dbMembershipInsurance;
 	}
 }

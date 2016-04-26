@@ -28,17 +28,23 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 @SessionAttributes({ "username", "userpath" })
 public class FileTypeController {
 
+	private static final Logger logger = LoggerFactory.getLogger(FileTypeController.class);
+
 	@Autowired
 	private FileTypeService fileTypeService;
 
-	private static final Logger logger = LoggerFactory.getLogger(FileTypeController.class);
-
+	/**
+	 * @return
+	 */
 	@ModelAttribute("newFileType")
 	public FileType createFileTypeModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new FileType();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/fileType/new" })
 	public String addUserPage(final Model model) {
 
@@ -48,6 +54,11 @@ public class FileTypeController {
 		return "fileTypeNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/fileType/{id}", "/user/fileType/{id}" }, method = RequestMethod.GET)
 	public String updateUserPage(@PathVariable Integer id, Model model) {
 
@@ -59,6 +70,13 @@ public class FileTypeController {
 		return "fileTypeEdit";
 	}
 
+	/**
+	 * @param fileType
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/fileType/save.do",
 			"/user/fileType/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newUserAction(@ModelAttribute("fileType") @Validated FileType fileType, BindingResult bindingResult,
@@ -76,6 +94,14 @@ public class FileTypeController {
 		return "fileTypeList";
 	}
 
+	/**
+	 * @param id
+	 * @param fileType
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/fileType/{id}/save.do",
 			"/user/fileType/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateUserAction(@PathVariable Integer id, @Validated FileType fileType, BindingResult bindingResult,
@@ -94,6 +120,14 @@ public class FileTypeController {
 		return "fileTypeList";
 	}
 
+	/**
+	 * @param id
+	 * @param fileType
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/fileType/{id}/save.do",
 			"/user/fileType/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated FileType fileType,
@@ -114,18 +148,30 @@ public class FileTypeController {
 		return "fileTypeList";
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/fileTypeList", "/user/fileTypeList" })
-	public String handleRequest() throws Exception {
+	public String handleRequest() {
 
 		return "fileTypeList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/fileType/list", "/user/fileType/list" }, method = RequestMethod.GET)
-	public Message viewProviderListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false) String sortdir){
 
 		Pagination pagination = fileTypeService.getPage(pageNo, pageSize);
 

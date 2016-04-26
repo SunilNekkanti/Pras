@@ -13,17 +13,46 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface ZipCodeDao {
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	ZipCode deleteById(Integer id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	ZipCode findById(Integer id);
 
+	/**
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * 
+	 * @param bean
+	 * @return
+	 */
 	ZipCode save(ZipCode bean);
 
+	/**
+	 * 
+	 * @param updater
+	 * @return
+	 */
 	ZipCode updateByUpdater(Updater<ZipCode> updater);
 
-	List<ZipCode> findAll();
-
+	/**
+	 * 
+	 * @param stateCode
+	 * @return
+	 */
 	List<ZipCode> findByStateCode(Integer stateCode);
 }

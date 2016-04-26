@@ -8,7 +8,17 @@ package com.pfchoice.common;
  */
 public interface SystemDefaultProperties {
 
-	String map_range_default = "1000";
+	String MAP_RANGE_DEFAULT = "1000";
+	
+	Integer DEFAULT_PAGE_NO = 0;
+	
+	Integer SMALL_LIST_SIZE = 10;
+	
+	Integer MEDIUM_LIST_SIZE = 100;
+	
+	Integer LARGE_LIST_SIZE = 10000;
+	
+	Integer HUGE_LIST_SIZE = 100000;
 
 	String ID = "username";
 

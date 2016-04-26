@@ -3,8 +3,6 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,41 +22,47 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleDao roleDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.RoleService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Role deleteById(final Integer id) {
-		// Used for transaction test
 		return roleDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.RoleService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Role findById(final Integer id) {
 		return roleDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.RoleService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return roleDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.RoleService#save(com.pfchoice.core.entity.Role)
+	 */
 	@Override
 	public Role save(final Role bean) {
-		// Used for transaction test
 		return roleDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.RoleService#update(com.pfchoice.core.entity.Role)
+	 */
 	@Override
 	public Role update(final Role bean) {
 		Updater<Role> updater = new Updater<>(bean);
 		return roleDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<Role> findAll() {
-		return roleDao.findAll();
-	}
 }

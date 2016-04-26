@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.ContractDao;
@@ -20,19 +19,19 @@ import com.pfchoice.core.entity.Contract;
 @Repository
 public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> implements ContractDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ContractDaoImpl.class.getName());
-
+	static final String REF_CONTRACT_PRVDR = "refContract.prvdr.id";
+	static final String REF_CONTRACT_INS = "refContract.ins.id";
+	
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public Contract findById(final Integer id) {
-		Contract entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -43,7 +42,6 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 
 	@Override
 	public Contract deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		Contract entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -57,22 +55,24 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Contract> findAllContractsByRefId(final String refString, final Integer id) {
 		String refRestrictionString = null;
+		
 		Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
 		cr.createAlias("contract.referenceContract", "refContract");
 		if ("provider".equals(refString)) {
-			refRestrictionString = "refContract.prvdr.id";
-			cr.add(Restrictions.isNull("refContract.ins.id"));
+			refRestrictionString = REF_CONTRACT_PRVDR;
+			cr.add(Restrictions.isNull(REF_CONTRACT_INS));
 		} else if ("providerInsurance".equals(refString)) {
-			refRestrictionString = "refContract.prvdr.id";
-			cr.add(Restrictions.isNotNull("refContract.ins.id"));
+			refRestrictionString = REF_CONTRACT_PRVDR;
+			cr.add(Restrictions.isNotNull(REF_CONTRACT_INS));
 		} else if ("insurance".equals(refString)) {
-			refRestrictionString = "refContract.ins.id";
-			cr.add(Restrictions.isNull("refContract.prvdr.id"));
+			refRestrictionString = REF_CONTRACT_INS;
+			cr.add(Restrictions.isNull(REF_CONTRACT_PRVDR));
 		} else if ("insuranceProvider".equals(refString)) {
-			refRestrictionString = "refContract.ins.id";
-			cr.add(Restrictions.isNotNull("refContract.prvdr.id"));
+			refRestrictionString = REF_CONTRACT_INS;
+			cr.add(Restrictions.isNotNull(REF_CONTRACT_PRVDR));
 		}
 
 		if (refRestrictionString != null) {
@@ -80,18 +80,18 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		}
 		cr.add(Restrictions.eq("contract.activeInd", 'Y'));
 		cr.add(Restrictions.eq("refContract.activeInd", 'Y'));
-		List<Contract> list = cr.list();
-		return list;
+		return cr.list();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public Contract findActiveContractByRefId(final String refString, final Integer id) {
 		Contract contract = null;
 		String refRestrictionString = null;
 		if ("provider".equals(refString)) {
 			refRestrictionString = "prvdr.id";
 		} else if ("insurance".equals(refString)) {
-			refRestrictionString = "refContract.ins.id";
+			refRestrictionString = REF_CONTRACT_INS;
 		}
 
 		Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
@@ -103,7 +103,7 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 
 		cr.add(Restrictions.eq("contract.activeInd", 'Y'));
 		List<Contract> list = cr.list();
-		if (list.size() > 0)
+		if (!list.isEmpty())
 			contract = list.get(0);
 		return contract;
 	}

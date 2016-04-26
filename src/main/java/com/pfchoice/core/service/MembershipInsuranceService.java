@@ -12,20 +12,47 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface MembershipInsuranceService {
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	MembershipInsurance deleteById(Integer id);
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	MembershipInsurance findById(Integer id);
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * @param bean
+	 * @return
+	 */
 	MembershipInsurance save(MembershipInsurance bean);
 
+	/**
+	 * @param bean
+	 * @return
+	 */
 	MembershipInsurance update(MembershipInsurance bean);
 
-	List<MembershipInsurance> findAll();
-
+	/**
+	 * @param id
+	 * @return
+	 */
 	List<MembershipInsurance> findAllByMbrId(Integer id);
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	MembershipInsurance findByMbrId(final Integer id);
 
 }

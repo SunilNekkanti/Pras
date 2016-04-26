@@ -33,12 +33,18 @@ public class PlanTypeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PlanTypeController.class);
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("newPlanType")
 	public PlanType createPlanTypeModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new PlanType();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/planType/new" })
 	public String addUserPage(final Model model) {
 
@@ -48,6 +54,11 @@ public class PlanTypeController {
 		return "planTypeNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/planType/{id}", "/user/planType/{id}" }, method = RequestMethod.GET)
 	public String updateUserPage(@PathVariable Integer id, Model model) {
 
@@ -59,6 +70,13 @@ public class PlanTypeController {
 		return "planTypeEdit";
 	}
 
+	/**
+	 * @param planType
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/planType/save.do",
 			"/user/planType/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newUserAction(@ModelAttribute("planType") @Validated PlanType planType, BindingResult bindingResult,
@@ -76,6 +94,14 @@ public class PlanTypeController {
 		return "planTypeList";
 	}
 
+	/**
+	 * @param id
+	 * @param planType
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/planType/{id}/save.do",
 			"/user/planType/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateUserAction(@PathVariable Integer id, @Validated PlanType planType, BindingResult bindingResult,
@@ -94,6 +120,14 @@ public class PlanTypeController {
 		return "planTypeList";
 	}
 
+	/**
+	 * @param id
+	 * @param planType
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/planType/{id}/save.do",
 			"/user/planType/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated PlanType planType,
@@ -114,18 +148,28 @@ public class PlanTypeController {
 		return "planTypeList";
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/planTypeList", "/user/planTypeList" })
-	public String handleRequest() throws Exception {
+	public String handleRequest() {
 
 		return "planTypeList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/planType/list", "/user/planType/list" }, method = RequestMethod.GET)
-	public Message viewProviderListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = planTypeService.getPage(pageNo, pageSize);
 

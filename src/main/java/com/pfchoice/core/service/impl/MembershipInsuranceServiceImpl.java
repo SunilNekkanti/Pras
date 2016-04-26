@@ -24,49 +24,61 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 	@Autowired
 	private MembershipInsuranceDao membershipInsuranceDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipInsurance deleteById(final Integer id) {
-		// Used for transaction test
 		return membershipInsuranceDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#findById(java.lang.Integer)
+	 */
 	@Override
-	// @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public MembershipInsurance findById(final Integer id) {
 		return membershipInsuranceDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return membershipInsuranceDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#save(com.pfchoice.core.entity.MembershipInsurance)
+	 */
 	@Override
 	public MembershipInsurance save(final MembershipInsurance bean) {
-		// Used for transaction test
 		return membershipInsuranceDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#update(com.pfchoice.core.entity.MembershipInsurance)
+	 */
 	@Override
 	public MembershipInsurance update(final MembershipInsurance bean) {
 		Updater<MembershipInsurance> updater = new Updater<>(bean);
 		return membershipInsuranceDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<MembershipInsurance> findAll() {
-		return membershipInsuranceDao.findAll();
-	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#findAllByMbrId(java.lang.Integer)
+	 */
 	@Override
 	public List<MembershipInsurance> findAllByMbrId(Integer id) {
 		return membershipInsuranceDao.findAllByMbrId(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#findByMbrId(java.lang.Integer)
+	 */
 	@Override
 	public MembershipInsurance findByMbrId(final Integer id) {
 		return membershipInsuranceDao.findByMbrId(id);

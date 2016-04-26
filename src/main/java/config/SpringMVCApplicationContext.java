@@ -97,25 +97,36 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	@Autowired
 	private ZipCodeFormatter zipCodeFormatter;
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureDefaultServletHandling(org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer)
+	 */
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addArgumentResolvers(java.util.List)
+	 */
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		argumentResolvers.add(new FormModelMethodArgumentResolver());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureContentNegotiation(org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer)
+	 */
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		// configurer.favorPathExtension(false).favorParameter(false).parameterName("mediaType").ignoreAcceptHeader(true);
 		configurer.favorPathExtension(false).favorParameter(false).ignoreAcceptHeader(true);
 		configurer.defaultContentType(MediaType.APPLICATION_JSON);
 		configurer.mediaType("json", MediaType.APPLICATION_JSON);
 		configurer.mediaType("json", MediaType.APPLICATION_OCTET_STREAM);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureMessageConverters(java.util.List)
+	 */
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 
@@ -124,18 +135,26 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
 		messageConverter.setSupportedMediaTypes(supportedMediaTypes);
 		converters.add(messageConverter);
-		// super.configureMessageConverters(converters);
 	}
 
+	/**
+	 * @return
+	 */
 	public @Bean TilesViewResolver tilesViewResolver() {
 		return new TilesViewResolver();
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public HandlerAdapter annotationMethodHandlerAdapter() {
 		return new RequestMappingHandlerAdapter();
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public AbstractHandlerMapping defaultAnnotationHandlerMapping() {
 		RequestMappingHandlerMapping mapping = new RequestMappingHandlerMapping();
@@ -143,12 +162,18 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		return mapping;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry)
+	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// This is a very important interceptor for authentication usage
 		// registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public ViewResolver viewResolver() {
 		UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
@@ -160,12 +185,18 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry)
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		registry.setOrder(-1);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)
+	 */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("index");
@@ -192,6 +223,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		return tilesViewResolver;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addFormatters(org.springframework.format.FormatterRegistry)
+	 */
 	@Override
 	public void addFormatters(FormatterRegistry formatterRegistry) {
 		formatterRegistry.addFormatter(countyFormatter);
@@ -211,6 +245,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		formatterRegistry.addFormatter(zipCodeFormatter);
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();

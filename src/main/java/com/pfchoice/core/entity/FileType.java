@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,7 +18,7 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity(name = "file_type")
-public class FileType implements Serializable {
+public class FileType extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,33 +35,35 @@ public class FileType implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "created_date")
-	private Timestamp createdDate;
 
-	@Column(name = "updated_date")
-	private Timestamp updatedDate;
-
-	@Column(name = "created_by")
-	private String createdBy;
-
-	@Column(name = "updated_by")
-	private String updatedBy;
-
-	@Expose
-	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
-
+	/**
+	 * 
+	 */
 	public FileType() {
+		super();
 	}
 
+	/**
+	 * 
+	 * @param code
+	 */
 	public FileType(final Integer code) {
+		super();
 		this.code = code;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getCode() {
 		return code;
 	}
 
+	/**
+	 * 
+	 * @param code
+	 */
 	public void setCode(final Integer code) {
 		this.code = code;
 	}
@@ -82,81 +83,6 @@ public class FileType implements Serializable {
 		this.description = description;
 	}
 
-	/**
-	 * @return the createdDate
-	 */
-	public Timestamp getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(final Timestamp createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Timestamp getUpdatedDate() {
-		return updatedDate;
-	}
-
-	/**
-	 * @param updatedDate
-	 *            the updatedDate to set
-	 */
-	public void setUpdatedDate(final Timestamp updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param credtedBy
-	 *            the credtedBy to set
-	 */
-	public void setCreatedBy(final String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the updatedBy
-	 */
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	/**
-	 * @param updatedBy
-	 *            the updatedBy to set
-	 */
-	public void setUpdatedBy(final String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	/**
-	 * @return the activeInd
-	 */
-	public Character getActiveInd() {
-		return activeInd;
-	}
-
-	/**
-	 * @param activeInd
-	 *            the activeInd to set
-	 */
-	public void setActiveInd(final Character activeInd) {
-		this.activeInd = activeInd;
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -166,8 +92,6 @@ public class FileType implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the code fields
-		// are not set
 		if (!(object instanceof FileType)) {
 			return false;
 		}

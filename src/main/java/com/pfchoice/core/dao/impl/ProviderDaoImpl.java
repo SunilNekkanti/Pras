@@ -8,7 +8,6 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.ProviderDao;
@@ -21,16 +20,11 @@ import com.pfchoice.core.entity.Provider;
 @Repository
 public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> implements ProviderDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ProviderDaoImpl.class.getName());
-
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
 		Criteria crit = createCriteria();
-		// crit.createAlias("refContracts","refContract");
 		crit.add(Restrictions.eq("activeInd", new Character('Y')));
-		// crit.add(Restrictions.eq("refContract.activeInd", new
-		// Character('Y')));
 
 		Disjunction or = Restrictions.disjunction();
 
@@ -51,20 +45,14 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 			}
 		}
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
 
-		final String msg = "providerDaoImpl->getpage list size is %d";
-		final String fmt = String.format(msg, page.getList().size());
-		LOG.info(fmt);
-
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 
 	}
 
 	@Override
 	public Provider findById(final Integer id) {
-		Provider entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -75,7 +63,6 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 
 	@Override
 	public Provider deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		Provider entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -98,7 +85,6 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
 		crit.add(Restrictions.eq("ins.id", id));
 
-		Pagination page = findByCriteria(crit, 0, 200);
-		return page;
+		return findByCriteria(crit, 0, 200);
 	}
 }

@@ -7,7 +7,7 @@ package com.pfchoice.common;
  * @author Sarath
  */
 public interface CommonMessageContent {
-	
+
 	String SAVE_SUCCEED = "New student registered";
 
 	String PROFILE_UPDATED = "Student profile updated";
@@ -63,11 +63,11 @@ public interface CommonMessageContent {
 	String PROVIDER_INSURANCES_LIST = "Provider's Insurance List";
 
 	String CONTRACT_LIST = "Contract List";
-	
+
 	String FILE_TYPE_LIST = "File Type List";
-	    
+
 	String PLAN_TYPE_LIST = "Plan Type List";
-	    
+
 	String HEDIS_MEASURE_GROUP_LIST = "Hedis Measure Group List";
 
 }

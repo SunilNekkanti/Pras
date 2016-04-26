@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,19 +35,34 @@ public class MembershipListController {
 	@Autowired
 	private MembershipService membershipService;
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membershipList", "/user/membershipList" })
-	public String handleRequest() throws Exception {
+	public String handleRequest()  {
 
 		return "membershipList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membership/list", "/user/membership/list" }, method = RequestMethod.GET)
-	public Message viewMembershipListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) Integer sSearchIns, @RequestParam(required = false) Integer sSearchPrvdr,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message viewMembershipList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) Integer sSearchIns, 
+			@RequestParam(required = false) Integer sSearchPrvdr,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir) {
 
 		// provided 0 to ignore hedisMeasureRule join
 		Integer i = 0;

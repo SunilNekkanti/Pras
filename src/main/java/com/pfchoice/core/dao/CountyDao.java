@@ -1,7 +1,5 @@
 package com.pfchoice.core.dao;
 
-import java.util.List;
-
 import com.pfchoice.core.entity.County;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -13,16 +11,40 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface CountyDao {
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	County deleteById(Integer id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	County findById(Integer id);
 
+	/**
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * 
+	 * @param bean
+	 * @return
+	 */
 	County save(County bean);
 
+	/**
+	 * 
+	 * @param updater
+	 * @return
+	 */
 	County updateByUpdater(Updater<County> updater);
-
-	List<County> findAll();
 
 }

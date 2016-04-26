@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -12,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 import com.pfchoice.core.entity.Insurance;
@@ -23,7 +20,7 @@ import com.pfchoice.core.entity.Insurance;
  * @author Mohanasundharam
  */
 @Entity(name = "reference_contract")
-public class ReferenceContract implements Serializable {
+public class ReferenceContract extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +36,6 @@ public class ReferenceContract implements Serializable {
 	@JoinColumn(name = "insurance_id", referencedColumnName = "insurance_id")
 	private Insurance ins;
 
-	// @Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
 	private Provider prvdr;
@@ -47,35 +43,31 @@ public class ReferenceContract implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "referenceContract")
 	private Contract contract;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_date")
-	private Date createdDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_date")
-	private Date updatedDate;
-
-	@Column(name = "created_by")
-	private String createdBy;
-
-	@Column(name = "updated_by")
-	private String updatedBy;
-
-	@Expose
-	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
-
+	/**
+	 * 
+	 */
 	public ReferenceContract() {
+		super();
 	}
 
+	/**
+	 * @param id
+	 */
 	public ReferenceContract(final Integer id) {
+		super();
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
@@ -125,81 +117,6 @@ public class ReferenceContract implements Serializable {
 		this.contract = contract;
 	}
 
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(final Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	/**
-	 * @param updatedDate
-	 *            the updatedDate to set
-	 */
-	public void setUpdatedDate(final Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param credtedBy
-	 *            the credtedBy to set
-	 */
-	public void setCreatedBy(final String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the updatedBy
-	 */
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	/**
-	 * @param updatedBy
-	 *            the updatedBy to set
-	 */
-	public void setUpdatedBy(final String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	/**
-	 * @return the activeInd
-	 */
-	public Character getActiveInd() {
-		return activeInd;
-	}
-
-	/**
-	 * @param activeInd
-	 *            the activeInd to set
-	 */
-	public void setActiveInd(final Character activeInd) {
-		this.activeInd = activeInd;
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -209,8 +126,6 @@ public class ReferenceContract implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
-		// not set
 		if (!(object instanceof ReferenceContract)) {
 			return false;
 		}

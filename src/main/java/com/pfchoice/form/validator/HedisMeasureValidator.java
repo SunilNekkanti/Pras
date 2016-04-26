@@ -9,12 +9,17 @@ import com.pfchoice.core.entity.HedisMeasure;
 @Component
 public class HedisMeasureValidator implements Validator {
 
-	// which objects can be validated by this validator
+	/* (non-Javadoc)
+	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
+	 */
 	@Override
 	public boolean supports(Class<?> paramClass) {
 		return HedisMeasure.class.equals(paramClass);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 

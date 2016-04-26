@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,15 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author sarath
  */
 @Entity(name = "files_upload")
-public class FilesUpload implements Serializable {
+public class FilesUpload extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,34 +33,34 @@ public class FilesUpload implements Serializable {
 	@Column(name = "file_data", nullable = false, columnDefinition = "mediumblob")
 	private byte[] data;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_date")
-	private Date createdDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_date")
-	private Date updatedDate;
-
-	@Column(name = "created_by")
-	private String createdBy;
-
-	@Column(name = "updated_by")
-	private String updatedBy;
-
-	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
-
+	/**
+	 * 
+	 */
 	public FilesUpload() {
+		super();
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public FilesUpload(final Integer id) {
+		super();
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
@@ -113,81 +110,6 @@ public class FilesUpload implements Serializable {
 		this.data = data;
 	}
 
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(final Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	/**
-	 * @param updatedDate
-	 *            the updatedDate to set
-	 */
-	public void setUpdatedDate(final Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param credtedBy
-	 *            the credtedBy to set
-	 */
-	public void setCreatedBy(final String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the updatedBy
-	 */
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	/**
-	 * @param updatedBy
-	 *            the updatedBy to set
-	 */
-	public void setUpdatedBy(final String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	/**
-	 * @return the activeInd
-	 */
-	public Character getActiveInd() {
-		return activeInd;
-	}
-
-	/**
-	 * @param activeInd
-	 *            the activeInd to set
-	 */
-	public void setActiveInd(final Character activeInd) {
-		this.activeInd = activeInd;
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -197,8 +119,6 @@ public class FilesUpload implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
-		// not set
 		if (!(object instanceof FilesUpload)) {
 			return false;
 		}

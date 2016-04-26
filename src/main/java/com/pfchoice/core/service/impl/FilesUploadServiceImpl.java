@@ -22,33 +22,43 @@ public class FilesUploadServiceImpl implements FilesUploadService {
 	@Autowired
 	private FilesUploadDao filesUploadDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FilesUploadService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public FilesUpload deleteById(final Integer id) {
-		// Used for transaction test
 		return filesUploadDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FilesUploadService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public FilesUpload findById(final Integer id) {
 		return filesUploadDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FilesUploadService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return filesUploadDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FilesUploadService#save(com.pfchoice.core.entity.FilesUpload)
+	 */
 	@Override
 	public FilesUpload save(final FilesUpload bean) {
-		// Used for transaction test
 		return filesUploadDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FilesUploadService#update(com.pfchoice.core.entity.FilesUpload)
+	 */
 	@Override
 	public FilesUpload update(final FilesUpload bean) {
 		Updater<FilesUpload> updater = new Updater<>(bean);

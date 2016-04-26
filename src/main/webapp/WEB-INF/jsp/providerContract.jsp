@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
 	prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<h2>${provider.name} ${provider.id}</h2>
+<h2>${provider.name}${provider.id}</h2>
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">${contractType}Details</div>

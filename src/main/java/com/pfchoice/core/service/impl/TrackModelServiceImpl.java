@@ -21,33 +21,43 @@ public class TrackModelServiceImpl implements TrackModelService {
 	@Autowired
 	private TrackModelDao trackModelDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.TrackModelService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public TrackModel deleteById(final Integer id) {
-		// Used for transaction test
 		return trackModelDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.TrackModelService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public TrackModel findById(final Integer id) {
 		return trackModelDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.TrackModelService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return trackModelDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.TrackModelService#save(com.pfchoice.core.entity.TrackModel)
+	 */
 	@Override
 	public TrackModel save(final TrackModel bean) {
-		// Used for transaction test
 		return trackModelDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.TrackModelService#update(com.pfchoice.core.entity.TrackModel)
+	 */
 	@Override
 	public TrackModel update(final TrackModel bean) {
 		Updater<TrackModel> updater = new Updater<>(bean);

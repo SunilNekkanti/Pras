@@ -15,18 +15,20 @@ public class HedisMeasureFormatter implements Formatter<HedisMeasure> {
 
 	@Autowired
 	private HedisMeasureService hedisMeasureService;
-	// Some service class which can give the HedisMeasure after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(HedisMeasure hedisMeasure, Locale arg1) {
 		return hedisMeasure.getDescription();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public HedisMeasure parse(String id, Locale arg1) throws ParseException {
 		return hedisMeasureService.findById(Integer.parseInt(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

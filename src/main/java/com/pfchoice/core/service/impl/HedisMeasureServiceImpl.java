@@ -3,8 +3,6 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,19 +22,35 @@ public class HedisMeasureServiceImpl implements HedisMeasureService {
 	@Autowired
 	private HedisMeasureDao hedisMeasureDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public HedisMeasure deleteById(final Integer id) {
-		// Used for transaction test
 		return hedisMeasureDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public HedisMeasure findById(final Integer id) {
 		return hedisMeasureDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return hedisMeasureDao.getPage(pageNo, pageSize);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -44,22 +58,21 @@ public class HedisMeasureServiceImpl implements HedisMeasureService {
 		return hedisMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureService#save(com.pfchoice.core.entity.HedisMeasure)
+	 */
 	@Override
 	public HedisMeasure save(final HedisMeasure bean) {
-		// Used for transaction test
 		return hedisMeasureDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureService#update(com.pfchoice.core.entity.HedisMeasure)
+	 */
 	@Override
 	public HedisMeasure update(final HedisMeasure bean) {
 		Updater<HedisMeasure> updater = new Updater<>(bean);
 		return hedisMeasureDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<HedisMeasure> findAll() {
-		return hedisMeasureDao.findAll();
-	}
 }

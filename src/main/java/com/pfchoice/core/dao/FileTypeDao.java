@@ -11,14 +11,40 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface FileTypeDao {
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	FileType deleteById(Integer id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	FileType findById(Integer id);
 
+	/**
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * 
+	 * @param bean
+	 * @return
+	 */
 	FileType save(FileType bean);
 
+	/**
+	 * 
+	 * @param updater
+	 * @return
+	 */
 	FileType updateByUpdater(Updater<FileType> updater);
 
 }

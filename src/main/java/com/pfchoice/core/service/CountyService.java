@@ -1,7 +1,5 @@
 package com.pfchoice.core.service;
 
-import java.util.List;
-
 import com.pfchoice.core.entity.County;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -12,16 +10,35 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface CountyService {
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	County deleteById(Integer id);
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	County findById(Integer id);
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * @param bean
+	 * @return
+	 */
 	County save(County bean);
 
+	/**
+	 * @param bean
+	 * @return
+	 */
 	County update(County bean);
-
-	List<County> findAll();
 
 }

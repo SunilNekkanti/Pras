@@ -51,21 +51,36 @@ public class ReportsController {
 	@Autowired
 	private MembershipHedisMeasureService mbrHedisMeasureService;
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/reports/hedis", "/user/reports/hedis" })
-	public String handleRequest() throws Exception {
+	public String handleRequest() {
 
 		return "hedisMembershipList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchHedisRule
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/hedisMembership/list",
 			"/user/reports/hedisMembership/list" }, method = RequestMethod.GET)
-	public Message viewMembershipListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+	public Message viewMembershipList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
 			@RequestParam(required = true) Integer sSearchHedisRule,
 			@RequestParam(required = true) List<Integer> ruleIds, @RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir) throws Exception {
+			@RequestParam(required = false) String sortdir)  {
 
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
 				sSearchHedisRule, ruleIds, sort, sortdir);
@@ -73,10 +88,15 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
+	/**
+	 * @param mbrHedisFollowup
+	 * @param username
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHedis/followup",
 			"/user/reports/membershipHedis/followup" }, method = RequestMethod.POST)
-	public String addMembershipHedisFollowup(Model model, @RequestBody final MembershipHedisFollowup mbrHedisFollowup,
+	public String addMembershipHedisFollowup(@RequestBody final MembershipHedisFollowup mbrHedisFollowup,
 			@ModelAttribute("username") String username) {
 
 		List<Map<Integer, String>> mbrHedisMeasureList = mbrHedisFollowup.getMbrHedisMeasureIds();
@@ -105,6 +125,12 @@ public class ReportsController {
 		return "membershipContactEditSuccess";
 	}
 
+	/**
+	 * @param mbrId
+	 * @param username
+	 * @param model
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHedis/{mbrId}/followupDetails",
 			"/user/reports/membershipHedis/{mbrId}/followupDetails" })

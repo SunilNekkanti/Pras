@@ -15,18 +15,20 @@ public class StateFormatter implements Formatter<State> {
 
 	@Autowired
 	private StateService stateService;
-	// Some service class which can give the StateService after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(State state, Locale arg1) {
 		return state.getDescription();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public State parse(String id, Locale arg1) throws ParseException {
 		return stateService.findById(Integer.parseInt(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

@@ -24,19 +24,35 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 	@Autowired
 	private CPTMeasureDao cptMeasureDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public CPTMeasure deleteById(final Integer id) {
-		// Used for transaction test
 		return cptMeasureDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public CPTMeasure findById(final Integer id) {
 		return cptMeasureDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#getPage(int, int)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return cptMeasureDao.getPage(pageNo, pageSize);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -44,20 +60,26 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 		return cptMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#save(com.pfchoice.core.entity.CPTMeasure)
+	 */
 	@Override
 	public CPTMeasure save(final CPTMeasure bean) {
-		// Used for transaction test
 		return cptMeasureDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#update(com.pfchoice.core.entity.CPTMeasure)
+	 */
 	@Override
 	public CPTMeasure update(final CPTMeasure bean) {
 		Updater<CPTMeasure> updater = new Updater<>(bean);
 		return cptMeasureDao.updateByUpdater(updater);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.CPTMeasureService#findAll()
+	 */
 	@Override
 	public List<CPTMeasure> findAll() {
 		return cptMeasureDao.findAll();

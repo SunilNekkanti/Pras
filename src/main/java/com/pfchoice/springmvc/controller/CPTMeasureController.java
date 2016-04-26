@@ -32,6 +32,8 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 @SessionAttributes({ "username", "userpath" })
 public class CPTMeasureController {
 
+	private static final Logger logger = LoggerFactory.getLogger(CPTMeasureController.class);
+
 	@Autowired
 	private CPTMeasureService cptMeasureService;
 
@@ -43,15 +45,12 @@ public class CPTMeasureController {
 	private void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
-
-	private static final Logger logger = LoggerFactory.getLogger(CPTMeasureController.class);
-
+	
 	public CPTMeasureController() {
 	}
 
 	@ModelAttribute("cptMeasure")
 	public CPTMeasure createCPTMeasureModel() {
-		// ModelAttribute value should be same as used in the CPTMeasureEdit.jsp
 		return new CPTMeasure();
 	}
 
@@ -85,7 +84,7 @@ public class CPTMeasureController {
 	}
 
 	@RequestMapping(value = { "/admin/cpt/cptMeasureList", "/user/cpt/cptMeasureList" }, method = RequestMethod.GET)
-	public String viewCPTMeasureAction(Model model) throws Exception {
+	public String viewCPTMeasureAction(Model model) {
 
 		logger.info("Returning view.jsp page after create");
 		return "cptMeasureList";
@@ -93,10 +92,11 @@ public class CPTMeasureController {
 
 	@ResponseBody
 	@RequestMapping(value = { "/admin/cpt/cptMeasureLists", "/user/cpt/cptMeasureLists" }, method = RequestMethod.GET)
-	public Message viewCPTMeasureActionJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message viewCPTMeasureAction(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 

@@ -4,7 +4,6 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.TrackModelDao;
@@ -17,20 +16,16 @@ import com.pfchoice.core.entity.TrackModel;
 @Repository
 public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> implements TrackModelDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(TrackModelDaoImpl.class.getName());
-
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public TrackModel findById(final Integer id) {
-		TrackModel entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -41,7 +36,6 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
 
 	@Override
 	public TrackModel deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		TrackModel entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);

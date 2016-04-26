@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,18 +32,30 @@ public class InsuranceListController {
 	@Autowired
 	private InsuranceService insuranceService;
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insuranceList", "/user/insuranceList" })
-	public String handleRequest(Model model) throws Exception {
+	public String handleRequest() {
 
 		return "insuranceList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/insurance/list", "/user/insurance/list" }, method = RequestMethod.GET)
-	public Message viewInsuranceListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message viewInsuranceList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = insuranceService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 

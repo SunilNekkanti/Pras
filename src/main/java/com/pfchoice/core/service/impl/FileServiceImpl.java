@@ -21,33 +21,43 @@ public class FileServiceImpl implements FileService {
 	@Autowired
 	private FileDao fileDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public File deleteById(final Integer id) {
-		// Used for transaction test
 		return fileDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public File findById(final Integer id) {
 		return fileDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return fileDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileService#save(com.pfchoice.core.entity.File)
+	 */
 	@Override
 	public File save(final File bean) {
-		// Used for transaction test
 		return fileDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileService#update(com.pfchoice.core.entity.File)
+	 */
 	@Override
 	public File update(final File bean) {
 		Updater<File> updater = new Updater<>(bean);

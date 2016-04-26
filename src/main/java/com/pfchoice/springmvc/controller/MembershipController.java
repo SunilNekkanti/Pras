@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.Message;
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
@@ -48,6 +49,8 @@ import com.pfchoice.core.service.MembershipInsuranceService;
 import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
+
+import ml.rugal.sshcommon.page.Pagination;
 
 @Controller
 @SessionAttributes({ "username", "userpath" })
@@ -90,6 +93,9 @@ public class MembershipController {
 	@Qualifier("membershipInsuranceValidator")
 	private Validator insValidator;
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("membership")
 	private void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -98,6 +104,9 @@ public class MembershipController {
 		binder.setValidator(validator);
 	}
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("membershipInsurance")
 	private void initInsBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -106,15 +115,20 @@ public class MembershipController {
 		binder.setValidator(insValidator);
 	}
 
-	public MembershipController() {
-	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("membership")
 	public Membership createMembershipModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new Membership();
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}", "/user/membership/{id}" }, method = RequestMethod.GET)
 	public String updateMembershipPage(@PathVariable Integer id, Model model) {
 		Membership dbMembership = membershipService.findById(id);
@@ -125,6 +139,11 @@ public class MembershipController {
 		return "membershipEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/display",
 			"/user/membership/{id}/display" }, method = RequestMethod.GET)
 	public String displayMembershipPage(@PathVariable Integer id, Model model) {
@@ -136,6 +155,14 @@ public class MembershipController {
 		return "membershipDisplay";
 	}
 
+	/**
+	 * @param id
+	 * @param membership
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/save.do",
 			"/user/membership/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String saveMembershipAction(@PathVariable Integer id,
@@ -158,6 +185,14 @@ public class MembershipController {
 		return "membershipEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param membership
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/save.do",
 			"/user/membership/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteMembershipAction(@PathVariable Integer id, @Validated Membership membership,
@@ -180,6 +215,12 @@ public class MembershipController {
 		return "membershipEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param mbrInsId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/details/{mbrInsId}/display",
 			"/user/membership/{id}/details/{mbrInsId}/display" }, method = RequestMethod.GET)
 	public String displayMembershipDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId, Model model) {
@@ -191,6 +232,11 @@ public class MembershipController {
 		return "membershipDetailsDisplay";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/details/new", "/user/membership/{id}/details/new" })
 	public String newMembershipInsDetailsPage(@PathVariable Integer id, Model model) {
 
@@ -204,6 +250,15 @@ public class MembershipController {
 		return "membershipDetailsDisplay";
 	}
 
+	/**
+	 * @param id
+	 * @param mbrInsId
+	 * @param membershipInsurance
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/details/{mbrInsId}/save.do",
 			"/user/membership/{id}/details/{mbrInsId}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String saveMembershipDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId,
@@ -225,6 +280,14 @@ public class MembershipController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param membershipInsurance
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/details/save.do",
 			"/user/membership/{id}/details/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newMembershipInDetailsPage(@PathVariable Integer id,
@@ -249,6 +312,15 @@ public class MembershipController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param mbrInsId
+	 * @param membershipInsurance
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/details/{mbrInsId}/save.do",
 			"/user/membership/{id}/details/{mbrInsId}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteMembershipInsDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId,
@@ -272,8 +344,13 @@ public class MembershipController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/detailsList", "/user/membership/{id}/detailsList" })
-	public String handleRequest(@PathVariable Integer id, Model model) throws Exception {
+	public String handleRequest(@PathVariable Integer id, Model model) {
 
 		List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 		model.addAttribute("membershipDetailsList", listBean);
@@ -281,9 +358,14 @@ public class MembershipController {
 		return "membershipDetailsList";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/providerDetails",
 			"/user/membership/{id}/providerDetails" }, method = RequestMethod.GET)
-	public String displayMembershipProviderDetailsPage(@PathVariable Integer id, Model model) throws Exception {
+	public String displayMembershipProviderDetailsPage(@PathVariable Integer id, Model model) {
 
 		MembershipProvider dbMembershipProvider = membershipProviderService.findByMbrId(id);
 		dbMembershipProvider = (dbMembershipProvider != null) ? dbMembershipProvider : new MembershipProvider();
@@ -292,11 +374,19 @@ public class MembershipController {
 		return "membershipProviderEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param mbrPrvdrId
+	 * @param membershipProvider
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/memberProvider/{mbrPrvdrId}",
 			"/user/membership/{id}/memberProvider/{mbrPrvdrId}" }, method = RequestMethod.GET)
 	public String displayInactiveMembershipProviderDetailsPage(@PathVariable Integer id,
 			@PathVariable Integer mbrPrvdrId, @ModelAttribute @Validated MembershipProvider membershipProvider,
-			BindingResult bindingResult, Model model) throws Exception {
+			BindingResult bindingResult, Model model)  {
 
 		MembershipProvider dbMembershipProvider = membershipProviderService.findById(mbrPrvdrId);
 		model.addAttribute("membershipProvider", dbMembershipProvider);
@@ -304,11 +394,17 @@ public class MembershipController {
 		return "membershipProviderEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param membershipProvider
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/providerDetailsList",
 			"/user/membership/{id}/providerDetailsList" }, method = RequestMethod.GET)
 	public String displayMembershipProviderDetailsListPage(@PathVariable Integer id,
-			@Validated MembershipProvider membershipProvider, BindingResult bindingResult, Model model)
-					throws Exception {
+			@Validated MembershipProvider membershipProvider, BindingResult bindingResult, Model model) {
 
 		List<MembershipProvider> mbrPrvdrList = membershipProviderService.findAllByMbrId(id);
 		model.addAttribute("membershipProviderList", mbrPrvdrList);
@@ -316,9 +412,14 @@ public class MembershipController {
 		return "membershipProviderList";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/complete",
 			"/user/membership/{id}/complete" }, method = RequestMethod.GET)
-	public String completeMembershipProviderDetailsPage(@PathVariable Integer id, Model model) throws Exception {
+	public String completeMembershipProviderDetailsPage(@PathVariable Integer id, Model model)  {
 		Membership dbMembership = membershipService.findById(id);
 		model.addAttribute("membership", dbMembership);
 		List<MembershipInsurance> dbMembershipInsuranceList = membershipInsuranceService.findAllByMbrId(id);
@@ -352,9 +453,14 @@ public class MembershipController {
 
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/membership/{id}/hedisMeasure",
 			"/user/membership/{id}/hedisMeasure" }, method = RequestMethod.GET)
-	public String displayMembershipHedisMeasurePage(@PathVariable Integer id, Model model) throws Exception {
+	public String displayMembershipHedisMeasurePage(@PathVariable Integer id, Model model)  {
 
 		Membership dbMembership = membershipService.findById(id);
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
@@ -363,15 +469,21 @@ public class MembershipController {
 		return "membershipHedisMeasure";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @param hedisRuleId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membership/{id}/hedisMeasureList",
 			"/user/membership/{id}/hedisMeasureList" }, method = RequestMethod.GET)
 	public Message displayMembershipHedisMeasureListPage(@PathVariable Integer id, Model model,
-			@RequestParam(required = false) Integer hedisRuleId) throws Exception {
+			@RequestParam(required = false) Integer hedisRuleId)  {
 
 		Membership dbMembership = membershipService.findById(id);
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
-		if (hedisRuleId != null && !"".equals(hedisRuleId) && hedisRuleId != 9999) {
+		if (hedisRuleId != null && hedisRuleId != 9999) {
 			mbrHedisMeasureList = mbrHedisMeasureList.stream()
 					.filter(mbrHedisMeasure -> (mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
 							&& mbrHedisMeasure.getDos() == null))
@@ -384,52 +496,72 @@ public class MembershipController {
 				JsonConverter.getJsonObject(mbrHedisMeasureList));
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("countyList")
 	public List<County> populateCountyList() {
-
-		// Data referencing for county list box
-		List<County> countyList = countyService.findAll();
-		return countyList;
+		Pagination page = countyService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+					SystemDefaultProperties.LARGE_LIST_SIZE);
+		return (List<County>) page.getList();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("genderList")
 	public List<Gender> populateGenderList() {
-
-		// Data referencing for gender list box
-		List<Gender> genderList = genderService.findAll();
-		return genderList;
+		Pagination page = genderService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.SMALL_LIST_SIZE);
+		return (List<Gender>) page.getList();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("statusList")
-	public List<MembershipStatus> populateStatusList1() {
-
-		// Data referencing for Membership Status list box
-		List<MembershipStatus> mbrStatusList = membershipStatusService.findAll();
-		return mbrStatusList;
+	public List<MembershipStatus> populateStatusList() {
+		
+		Pagination page = membershipStatusService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.SMALL_LIST_SIZE);
+		return (List<MembershipStatus>) page.getList();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("ethinicityList")
-	public List<Ethinicity> populateethinicityList1() {
+	public List<Ethinicity> populateEthinicityList() {
 
-		// Data referencing for Membership Status list box
-		List<Ethinicity> mbrethinicityList = ethinicityService.findAll();
-		return mbrethinicityList;
+		Pagination page = ethinicityService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.SMALL_LIST_SIZE);
+		return (List<Ethinicity>) page.getList();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("hedisMeasureList")
 	public List<HedisMeasure> populateHedisMeasureList() {
-
-		// Data referencing for Hedis Measure Codes list box
-		List<HedisMeasure> hedisMeasureList = hedisMeasureService.findAll();
-		return hedisMeasureList;
+		Pagination page = hedisMeasureService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<HedisMeasure>) page.getList();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("insList")
 	public List<Insurance> populateInsuranceList() {
-
-		// Data referencing for Insurance list box
-		List<Insurance> insuranceList = insuranceService.findAll();
-		return insuranceList;
+		Pagination page = insuranceService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<Insurance>) page.getList();
 	}
 
 }

@@ -24,44 +24,60 @@ public class ContactServiceImpl implements ContactService {
 	@Autowired
 	private ContactDao contactDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Contact deleteById(final Integer id) {
-		// Used for transaction test
 		return contactDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Contact findById(final Integer id) {
 		return contactDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return contactDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#save(com.pfchoice.core.entity.Contact)
+	 */
 	@Override
 	public Contact save(final Contact bean) {
-		// Used for transaction test
 		return contactDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#update(com.pfchoice.core.entity.Contact)
+	 */
 	@Override
 	public Contact update(final Contact bean) {
 		Updater<Contact> updater = new Updater<>(bean);
 		return contactDao.updateByUpdater(updater);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#findAllContactsByRefId(java.lang.String, java.lang.Integer)
+	 */
 	@Override
 	public List<Contact> findAllContactsByRefId(final String refString, final Integer id) {
 		return contactDao.findAllContactsByRefId(refString, id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ContactService#findActiveContactByRefId(java.lang.String, java.lang.Integer)
+	 */
 	@Override
 	public Contact findActiveContactByRefId(final String refString, final Integer id) {
 		return contactDao.findActiveContactByRefId(refString, id);

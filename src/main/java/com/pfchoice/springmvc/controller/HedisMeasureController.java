@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureGroup;
@@ -41,6 +42,8 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 @SessionAttributes({ "username", "userpath" })
 public class HedisMeasureController {
 
+	private static final Logger logger = LoggerFactory.getLogger(HedisMeasureController.class);
+
 	@Autowired
 	private HedisMeasureService hedisMeasureService;
 
@@ -54,6 +57,9 @@ public class HedisMeasureController {
 	@Qualifier("hedisMeasureValidator")
 	private Validator validator;
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("hedisMeasure")
 	private void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -62,38 +68,50 @@ public class HedisMeasureController {
 		binder.setValidator(validator);
 	}
 
-	private static final Logger logger = LoggerFactory.getLogger(HedisMeasureController.class);
-
+	/**
+	 * @return
+	 */
 	@ModelAttribute("hedisMeasure")
 	public HedisMeasure createHedisMeasureModel() {
-		// ModelAttribute value should be same as used in the
-		// HedisMeasureEdit.jsp
 		return new HedisMeasure();
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("hedisMeasureGroup")
 	public HedisMeasureGroup createHedisMeasureGroupModel() {
-		// ModelAttribute value should be same as used in the
-		// hedisMeasureEdit.jsp
 		return new HedisMeasureGroup();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("genderList")
 	public List<Gender> populateGenderList() {
 
-		// Data referencing for gender list box
-		List<Gender> genderList = genderService.findAll();
-		return genderList;
+		Pagination page = genderService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+												 SystemDefaultProperties.SMALL_LIST_SIZE);
+		return (List<Gender>) page.getList();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("hedisMeasureGroupList")
 	public List<HedisMeasureGroup> populateHedisMeasureGroupList() {
 
-		// Data referencing for Hedis Measure Group list box
-		List<HedisMeasureGroup> hedisMeasureGroupList = hedisMeasureGroupService.findAll();
-		return hedisMeasureGroupList;
+		Pagination page = hedisMeasureGroupService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+															SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<HedisMeasureGroup>) page.getList();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedis/new" })
 	public String addHedisMeasurePage(Model model) {
 
@@ -102,6 +120,11 @@ public class HedisMeasureController {
 		return "hedisMeasureNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedis/{id}", "/user/hedis/{id}" }, method = RequestMethod.GET)
 	public String updateHedisMeasurePage(@PathVariable Integer id, Model model) {
 
@@ -112,6 +135,11 @@ public class HedisMeasureController {
 		return "hedisMeasureEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedis/{id}/display" }, method = RequestMethod.GET)
 	public String displayHedisMeasurePage(@PathVariable Integer id, Model model) {
 
@@ -123,27 +151,45 @@ public class HedisMeasureController {
 		return "hedisMeasureDisplay";
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedis/hedisMeasureList",
 			"/user/hedis/hedisMeasureList" }, method = RequestMethod.GET)
-	public String viewHedisMeasureAction(Model model) throws Exception {
+	public String viewHedisMeasureAction(Model model) {
 
 		logger.info("Returning view.jsp page after create");
 		return "hedisMeasureList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedis/hedisMeasureLists",
 			"/user/hedis/hedisMeasureLists" }, method = RequestMethod.GET)
-	public Message viewHedisMeasureActionJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
+	public Message viewHedisMeasureList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = hedisMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.HEDIS_LIST, pagination);
 	}
 
+	/**
+	 * @param hedisMeasure
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/hedis/save.do", method = RequestMethod.POST, params = { "add" })
 	public String addHedisMeasureAction(@Validated HedisMeasure hedisMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
@@ -167,6 +213,14 @@ public class HedisMeasureController {
 		return "hedisMeasureList";
 	}
 
+	/**
+	 * @param id
+	 * @param hedisMeasure
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params = { "update" })
 	public String saveHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
@@ -187,6 +241,14 @@ public class HedisMeasureController {
 		return "hedisMeasureEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param hedisMeasure
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params = { "delete" })
 	public String deleteHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {

@@ -1,14 +1,15 @@
 <%@  page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8"%>
-		
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 <title>Provider List</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
         $(document).ready(function() {
         	
@@ -81,32 +82,35 @@
         	
     } );
     </script>
- <c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
-		<div class="panel-heading"> File Type List
-		<span class="clrRed">${Message}</span>
-			<a class="btn btn-danger pull-right btn-xs white-text"href="${context}/hedisMeasureGroup/new">
-          		<span class="glyphicon glyphicon-plus-sign "></span>New File Type
-          	</a>
+		<div class="panel-heading">
+			File Type List <span class="clrRed">${Message}</span> <a
+				class="btn btn-danger pull-right btn-xs white-text"
+				href="${context}/hedisMeasureGroup/new"> <span
+				class="glyphicon glyphicon-plus-sign "></span>New File Type
+			</a>
 		</div>
-		<div class="panel-body" >
-			<table id="hedisMeasureGroupTable" class="table table-striped table-hover table-responsive">
+		<div class="panel-body">
+			<table id="hedisMeasureGroupTable"
+				class="table table-striped table-hover table-responsive">
 				<thead>
 					<tr>
-							<th scope="col">Action</th>
-							<th scope="col">Code</th>
-							<th scope="col">Description</th>
-							
-							
+						<th scope="col">Action</th>
+						<th scope="col">Code</th>
+						<th scope="col">Description</th>
+
+
 					</tr>
 				</thead>
 
-				<tbody >
-					
+				<tbody>
+
 				</tbody>
 			</table>
-			
+
 		</div>
 	</div>
 </div>

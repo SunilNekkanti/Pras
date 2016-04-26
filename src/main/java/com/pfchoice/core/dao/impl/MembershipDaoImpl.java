@@ -12,7 +12,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.hibernate.type.StringType;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.MembershipDao;
@@ -24,8 +23,6 @@ import com.pfchoice.core.entity.Membership;
  */
 @Repository
 public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> implements MembershipDao {
-
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MembershipDaoImpl.class.getName());
 
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -53,11 +50,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			}
 		}
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final Integer sSearchHedisRule, final List<Integer> ruleIds, final String sort,
@@ -78,19 +73,19 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0]))).add(Restrictions
 							.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
 		}
-		if (sSearchIns != null && !"".equals(sSearchIns)) {
+		if (sSearchIns != null) {
 
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
 
-		if (sSearchPrvdr != null && !"".equals(sSearchPrvdr) && sSearchPrvdr != 9999) {
+		if (sSearchPrvdr != null && sSearchPrvdr != 9999) {
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "ins");
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
 			and.add(Restrictions.eq("ins.id", sSearchIns));
 		}
 
-		if (sSearchHedisRule != null && !"".equals(sSearchHedisRule) && sSearchHedisRule != 9999
+		if (sSearchHedisRule != null && sSearchHedisRule != 9999
 				&& sSearchHedisRule != 0) {
 			crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 			and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
@@ -132,15 +127,13 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			}
 		}
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
 
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public Membership findById(final Integer id) {
-		Membership entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -151,7 +144,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 	@Override
 	public Membership deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		Membership entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);

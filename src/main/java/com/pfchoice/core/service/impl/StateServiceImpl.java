@@ -3,8 +3,6 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,41 +22,47 @@ public class StateServiceImpl implements StateService {
 	@Autowired
 	private StateDao stateDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.StateService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public State deleteById(final Integer id) {
-		// Used for transaction test
 		return stateDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.StateService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public State findById(final Integer id) {
 		return stateDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.StateService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return stateDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.StateService#save(com.pfchoice.core.entity.State)
+	 */
 	@Override
 	public State save(final State bean) {
-		// Used for transaction test
 		return stateDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.StateService#update(com.pfchoice.core.entity.State)
+	 */
 	@Override
 	public State update(final State bean) {
 		Updater<State> updater = new Updater<>(bean);
 		return stateDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<State> findAll() {
-		return stateDao.findAll();
-	}
 }

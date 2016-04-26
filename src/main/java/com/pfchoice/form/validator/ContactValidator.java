@@ -22,11 +22,17 @@ public class ContactValidator implements Validator {
 	// String STRING_PATTERN = "[a-zA-Z]+";
 
 	// which objects can be validated by this validator
+	/* (non-Javadoc)
+	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
+	 */
 	@Override
 	public boolean supports(Class<?> paramClass) {
 		return Contact.class.equals(paramClass);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 

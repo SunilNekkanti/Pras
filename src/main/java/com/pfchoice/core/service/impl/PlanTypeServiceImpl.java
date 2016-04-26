@@ -3,8 +3,6 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,41 +22,47 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 	@Autowired
 	private PlanTypeDao planTypeDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.PlanTypeService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public PlanType deleteById(final Integer id) {
-		// Used for transaction test
 		return planTypeDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.PlanTypeService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public PlanType findById(final Integer id) {
 		return planTypeDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.PlanTypeService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return planTypeDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.PlanTypeService#save(com.pfchoice.core.entity.PlanType)
+	 */
 	@Override
 	public PlanType save(final PlanType bean) {
-		// Used for transaction test
 		return planTypeDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.PlanTypeService#update(com.pfchoice.core.entity.PlanType)
+	 */
 	@Override
 	public PlanType update(final PlanType bean) {
 		Updater<PlanType> updater = new Updater<>(bean);
 		return planTypeDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<PlanType> findAll() {
-		return planTypeDao.findAll();
-	}
 }

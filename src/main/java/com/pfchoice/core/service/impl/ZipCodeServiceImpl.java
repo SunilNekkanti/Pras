@@ -24,44 +24,67 @@ public class ZipCodeServiceImpl implements ZipCodeService {
 	@Autowired
 	private ZipCodeDao zipCodeDao;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ZipCodeService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public ZipCode deleteById(final Integer id) {
-		// Used for transaction test
 		return zipCodeDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ZipCodeService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public ZipCode findById(final Integer id) {
 		return zipCodeDao.findById(id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ZipCodeService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return zipCodeDao.getPage(pageNo, pageSize);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ZipCodeService#save(com.pfchoice.core.entity.
+	 * ZipCode)
+	 */
 	@Override
 	public ZipCode save(final ZipCode bean) {
-		// Used for transaction test
 		return zipCodeDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ZipCodeService#update(com.pfchoice.core.entity.
+	 * ZipCode)
+	 */
 	@Override
 	public ZipCode update(final ZipCode bean) {
 		Updater<ZipCode> updater = new Updater<>(bean);
 		return zipCodeDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<ZipCode> findAll() {
-		return zipCodeDao.findAll();
-	}
-
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ZipCodeService#findByStateCode(java.lang.Integer)
+	 */
 	@Override
 	public List<ZipCode> findByStateCode(Integer stateCode) {
 		return zipCodeDao.findByStateCode(stateCode);

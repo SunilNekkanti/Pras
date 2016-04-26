@@ -28,17 +28,23 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 @SessionAttributes({ "username", "userpath" })
 public class HedisMeasureGroupController {
 
-	@Autowired
-	private HedisMeasureGroupService hedisMeasureGroupService;
-
 	private static final Logger logger = LoggerFactory.getLogger(HedisMeasureGroupController.class);
 
+	@Autowired
+	private HedisMeasureGroupService hedisMeasureGroupService;
+	
+	/**
+	 * @return
+	 */
 	@ModelAttribute("newHedisMeasureGroup")
 	public HedisMeasureGroup createHedisMeasureGroupModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new HedisMeasureGroup();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/new" })
 	public String addUserPage(final Model model) {
 
@@ -48,6 +54,11 @@ public class HedisMeasureGroupController {
 		return "hedisMeasureGroupNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/{id}",
 			"/user/hedisMeasureGroup/{id}" }, method = RequestMethod.GET)
 	public String updateUserPage(@PathVariable Integer id, Model model) {
@@ -60,6 +71,13 @@ public class HedisMeasureGroupController {
 		return "hedisMeasureGroupEdit";
 	}
 
+	/**
+	 * @param hedisMeasureGroup
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/save.do",
 			"/user/hedisMeasureGroup/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newUserAction(@ModelAttribute("hedisMeasureGroup") @Validated HedisMeasureGroup hedisMeasureGroup,
@@ -77,6 +95,14 @@ public class HedisMeasureGroupController {
 		return "hedisMeasureGroupList";
 	}
 
+	/**
+	 * @param id
+	 * @param hedisMeasureGroup
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/{id}/save.do",
 			"/user/hedisMeasureGroup/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateUserAction(@PathVariable Integer id, @Validated HedisMeasureGroup hedisMeasureGroup,
@@ -95,6 +121,14 @@ public class HedisMeasureGroupController {
 		return "hedisMeasureGroupList";
 	}
 
+	/**
+	 * @param id
+	 * @param hedisMeasureGroup
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/{id}/save.do",
 			"/user/hedisMeasureGroup/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated HedisMeasureGroup hedisMeasureGroup,
@@ -115,19 +149,31 @@ public class HedisMeasureGroupController {
 		return "hedisMeasureGroupList";
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureGroupList", "/user/hedisMeasureGroupList" })
-	public String handleRequest() throws Exception {
+	public String handleRequest() {
 
 		return "hedisMeasureGroupList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/list",
 			"/user/hedisMeasureGroup/list" }, method = RequestMethod.GET)
-	public Message viewProviderListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = hedisMeasureGroupService.getPage(pageNo, pageSize);
 

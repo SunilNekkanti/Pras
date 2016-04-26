@@ -13,20 +13,54 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface MembershipProviderDao {
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	MembershipProvider deleteById(Integer id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	MembershipProvider findById(Integer id);
 
+	/**
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * 
+	 * @param bean
+	 * @return
+	 */
 	MembershipProvider save(MembershipProvider bean);
 
+	/**
+	 * 
+	 * @param updater
+	 * @return
+	 */
 	MembershipProvider updateByUpdater(Updater<MembershipProvider> updater);
 
-	List<MembershipProvider> findAll();
-
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	List<MembershipProvider> findAllByMbrId(Integer id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	MembershipProvider findByMbrId(Integer id);
 
 }

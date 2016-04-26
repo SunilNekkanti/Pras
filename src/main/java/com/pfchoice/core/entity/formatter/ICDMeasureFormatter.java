@@ -15,18 +15,20 @@ public class ICDMeasureFormatter implements Formatter<ICDMeasure> {
 
 	@Autowired
 	private ICDMeasureService icdMeasureService;
-	// Some service class which can give the ICDMeasure after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(ICDMeasure icdMeasure, Locale arg1) {
 		return icdMeasure.getDescription();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public ICDMeasure parse(String id, Locale arg1) throws ParseException {
 		return icdMeasureService.findById(Integer.parseInt(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

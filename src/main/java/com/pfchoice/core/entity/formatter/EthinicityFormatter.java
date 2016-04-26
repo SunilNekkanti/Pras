@@ -15,18 +15,20 @@ public class EthinicityFormatter implements Formatter<Ethinicity> {
 
 	@Autowired
 	private EthinicityService ethinicityService;
-	// Some service class which can give the CountyService after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(Ethinicity ethinicity, Locale arg1) {
 		return ethinicity.getDescription();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public Ethinicity parse(String id, Locale arg1) throws ParseException {
 		return ethinicityService.findById(Byte.parseByte(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

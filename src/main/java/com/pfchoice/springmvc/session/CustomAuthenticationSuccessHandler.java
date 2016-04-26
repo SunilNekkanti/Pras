@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
 
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			Authentication authentication) throws IOException, ServletException {
-		// do some logic here if you want something to be done whenever
-		// the user successfully logs in.
 
 		HttpSession session = httpServletRequest.getSession();
 		User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		session.setAttribute(SystemDefaultProperties.ID, authUser.getUsername());
-		session.setAttribute("authorities", authentication.getAuthorities());
 		if (authentication.getAuthorities() != null) {
 			List<GrantedAuthority> adminauthorities = authentication.getAuthorities().stream()
 					.filter(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))

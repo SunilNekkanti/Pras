@@ -95,7 +95,7 @@
 									</c:otherwise>
 								</c:choose></td>
 							<td>${cntct.contactPerson}</td>
-							<td>${cntct.homePhone} <c:choose>
+							<td>${cntct.homePhone}<c:choose>
 									<c:when test="${not empty cntct.extension}">
 										<strong> X </strong>${cntct.extension}
 								   	 </c:when>

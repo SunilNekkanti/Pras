@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -11,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
@@ -22,7 +19,7 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "lu_state")
-public class State implements Serializable {
+public class State extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,38 +38,34 @@ public class State implements Serializable {
 	@Column(name = "shot_name")
 	private String shortName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_date")
-	private Date createdDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_date")
-	private Date updatedDate;
-
-	@Column(name = "created_by")
-	private String createdBy;
-
-	@Column(name = "updated_by")
-	private String updatedBy;
-
-	@Expose
-	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
-
 	@OneToMany(mappedBy = "stateCode", fetch = FetchType.LAZY)
 	private Set<ZipCode> zipCodes;
 
+	/**
+	 * 
+	 */
 	public State() {
+		super();
 	}
 
+	/**
+	 * @param code
+	 */
 	public State(final Integer code) {
+		super();
 		this.code = code;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer getCode() {
 		return code;
 	}
 
+	/**
+	 * @param code
+	 */
 	public void setCode(final Integer code) {
 		this.code = code;
 	}
@@ -122,81 +115,6 @@ public class State implements Serializable {
 		this.zipCodes = zipCodes;
 	}
 
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(final Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	/**
-	 * @param updatedDate
-	 *            the updatedDate to set
-	 */
-	public void setUpdatedDate(final Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param credtedBy
-	 *            the credtedBy to set
-	 */
-	public void setCreatedBy(final String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the updatedBy
-	 */
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	/**
-	 * @param updatedBy
-	 *            the updatedBy to set
-	 */
-	public void setUpdatedBy(final String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	/**
-	 * @return the activeInd
-	 */
-	public Character getActiveInd() {
-		return activeInd;
-	}
-
-	/**
-	 * @param activeInd
-	 *            the activeInd to set
-	 */
-	public void setActiveInd(final Character activeInd) {
-		this.activeInd = activeInd;
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -206,8 +124,6 @@ public class State implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the code fields
-		// are not set
 		if (!(object instanceof State)) {
 			return false;
 		}

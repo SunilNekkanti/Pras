@@ -15,18 +15,20 @@ public class ProviderFormatter implements Formatter<Provider> {
 
 	@Autowired
 	private ProviderService providerService;
-	// Some service class which can give the Provider after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(Provider provider, Locale arg1) {
 		return provider.getName();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public Provider parse(String id, Locale arg1) throws ParseException {
 		return providerService.findById(Integer.parseInt(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

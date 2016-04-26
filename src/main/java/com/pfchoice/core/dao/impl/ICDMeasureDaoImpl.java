@@ -11,7 +11,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.ICDMeasureDao;
@@ -24,8 +23,12 @@ import com.pfchoice.core.entity.ICDMeasure;
 @Repository
 public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> implements ICDMeasureDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ICDMeasureDaoImpl.class.getName());
-
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		Criteria crit = createCriteria();
+		return findByCriteria(crit, pageNo, pageSize);
+	}
+	
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
@@ -50,14 +53,12 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		}
 
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public ICDMeasure findById(final Integer id) {
-		ICDMeasure entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -68,7 +69,6 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 
 	@Override
 	public ICDMeasure deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		ICDMeasure entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -82,15 +82,15 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ICDMeasure> findAll() {
 		Criteria cr = createCriteria();
 		cr.add(Restrictions.eq("activeInd", 'Y')).addOrder(Order.asc("code"));
 		cr.setProjection(Projections.distinct(Projections.projectionList().add(Projections.property("code"), "code")
 				.add(Projections.property("id"), "id")))
 				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
-		List<ICDMeasure> list = cr.list();
 
-		return list;
+		return cr.list();
 	}
 
 }

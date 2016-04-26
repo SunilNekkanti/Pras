@@ -12,18 +12,41 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface MembershipHedisFollowupService {
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	MembershipHedisFollowup deleteById(Integer id);
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	MembershipHedisFollowup findById(Integer id);
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * @param bean
+	 * @return
+	 */
 	MembershipHedisFollowup save(MembershipHedisFollowup bean);
 
+	/**
+	 * @param bean
+	 * @return
+	 */
 	MembershipHedisFollowup update(MembershipHedisFollowup bean);
 
-	List<MembershipHedisFollowup> findAll();
-
+	/**
+	 * @param id
+	 * @return
+	 */
 	List<MembershipHedisFollowup> findAllByMbrId(Integer id);
 
 }

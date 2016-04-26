@@ -19,6 +19,12 @@ import com.pfchoice.form.LoginForm;
 @SessionAttributes({ "username", "userpath" })
 public class LoginController {
 
+	/**
+	 * @param error
+	 * @param logout
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model) {
@@ -38,6 +44,11 @@ public class LoginController {
 
 	}
 
+	/**
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(HttpSession session, Model model) {
 		final String username = (String) session.getAttribute(SystemDefaultProperties.ID);
@@ -47,6 +58,11 @@ public class LoginController {
 		return "home";
 	}
 
+	/**
+	 * @param request
+	 * @param status
+	 * @return
+	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String page(WebRequest request, SessionStatus status) {
 
@@ -56,9 +72,12 @@ public class LoginController {
 		return "redirect:/loginform";
 	}
 
-	// for 403 access denied page
+	/**
+	 * for 403 access denied page
+	 * @return
+	 */
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public String accesssDenied(Model model) {
+	public String accesssDenied() {
 
 		return "ad403";
 	}

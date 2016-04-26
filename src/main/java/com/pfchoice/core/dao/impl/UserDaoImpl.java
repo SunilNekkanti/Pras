@@ -5,7 +5,6 @@ import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.UserDao;
@@ -18,20 +17,16 @@ import com.pfchoice.core.entity.User;
 @Repository
 public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements UserDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(UserDaoImpl.class.getName());
-
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public User findById(final Integer id) {
-		User entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -42,7 +37,6 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 
 	@Override
 	public User deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		User entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -60,9 +54,8 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("username", login));
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		User entity = (User) crit.uniqueResult();
 
-		return entity;
+		return (User) crit.uniqueResult();
 	}
 
 	@Override

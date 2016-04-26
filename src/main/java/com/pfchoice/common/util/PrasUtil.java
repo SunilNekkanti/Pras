@@ -18,31 +18,51 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author sarath
+ * @param <T>
  *
  */
-public class PrasUtil {
+public class PrasUtil<T> {
+	
+	
+	/**
+	 * 
+	 */
+	private PrasUtil() {
+		
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static Map<String, String> getActiveIndMap() {
-		Map<String, String> activeIndMap = new HashMap<String, String>();
+		Map<String, String> activeIndMap = new HashMap<>();
 		activeIndMap.put("Y", "Yes");
 		activeIndMap.put("N", "No");
 		return activeIndMap;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static String getPricipal() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
 			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			final String loginUser = userDetail.getUsername();
-			return loginUser;
+			return userDetail.getUsername();
 		}
 
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static SortedSet<Integer> getEffectiveYearList() {
 
-		SortedSet<Integer> effYearList = new TreeSet<Integer>();
+		SortedSet<Integer> effYearList = new TreeSet<>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
 
 		LocalDate currYear = LocalDate.now();
@@ -56,9 +76,13 @@ public class PrasUtil {
 		return effYearList;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static SortedSet<Integer> getHedisEffectiveYearList() {
 
-		SortedSet<Integer> effYearList = new TreeSet<Integer>();
+		SortedSet<Integer> effYearList = new TreeSet<>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
 
 		LocalDate currYear = LocalDate.now();
@@ -69,4 +93,5 @@ public class PrasUtil {
 
 		return effYearList;
 	}
+	
 }

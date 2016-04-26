@@ -49,7 +49,7 @@
 							cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="form-group col-sm-4">
 					<c:choose>
 						<c:when

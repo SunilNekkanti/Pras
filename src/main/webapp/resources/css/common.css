@@ -1,83 +1,151 @@
-.required .control-label:after {  content: " *";color:red; }
-.drequired .control-label:after {  content: " **";color:red; }
-.fdl {height: 300px;overflow-y: scroll;}
-.icdCodes, .cptCodes{max-width:300px; word-wrap:break-word;}
-table.dataTable{width:100%;}
-.navbar {background: #556B2F !important;}
-.navbar-inverse .navbar-nav>li>a {color: #FFF !important; }
-.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {color: #9d9d9d !important; }
-footer, .footer .container-fluid{background: #556B2F !important; height:30px;}
-.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {background-color:#dff0d8 !important;}
-a {color: #3c763d !important;text-decoration: none;}
-.white-text{color: #FFFFFF !important;text-decoration: none;}
-table.dataTable > tbody tr.odd td {  background: #fafcF9 !important;}
-table tbody tr.odd td {  background: #fafcF9 !important;}
-div.dataTables_info { color: #3c763d;}
- table.pretty { clear: both;}
- 
- table.pretty tfoot th {
-    background: #b0cc7f;
-    text-align: left;
-}
- 
-table.pretty tfoot td {
-    background: #d7e1c5;
-    text-align: center;
-    font-weight: bold;
+.required .control-label:after {
+	content: " *";
+	color: red;
 }
 
- div.dataTables_wrapper {
-    background-color: #FFFFFF;
+.drequired .control-label:after {
+	content: " **";
+	color: red;
 }
 
- div.dataTables_length,
-div.dataTables_filter,
-div.dataTables_paginate,
+.fdl {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+.icdCodes, .cptCodes {
+	max-width: 300px;
+	word-wrap: break-word;
+}
+
+table.dataTable {
+	width: 100%;
+}
+
+.navbar {
+	background: #556B2F !important;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: #FFF !important;
+}
+
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover
+	{
+	color: #9d9d9d !important;
+}
+
+footer, .footer .container-fluid {
+	background: #556B2F !important;
+	height: 30px;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover
+	{
+	background-color: #dff0d8 !important;
+}
+
+a {
+	color: #3c763d !important;
+	text-decoration: none;
+}
+
+.white-text {
+	color: #FFFFFF !important;
+	text-decoration: none;
+}
+
+table.dataTable>tbody tr.odd td {
+	background: #fafcF9 !important;
+}
+
+table tbody tr.odd td {
+	background: #fafcF9 !important;
+}
+
 div.dataTables_info {
-    padding: 6px;
+	color: #3c763d;
+}
+
+table.pretty {
+	clear: both;
+}
+
+table.pretty tfoot th {
+	background: #b0cc7f;
+	text-align: left;
+}
+
+table.pretty tfoot td {
+	background: #d7e1c5;
+	text-align: center;
+	font-weight: bold;
+}
+
+div.dataTables_wrapper {
+	background-color: #FFFFFF;
+}
+
+div.dataTables_length, div.dataTables_filter, div.dataTables_paginate,
+	div.dataTables_info {
+	padding: 6px;
 }
 
 /* Self clearing - */
 div.dataTables_wrapper:after {
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
 }
-html[xmlns] .dataTables_wrapper { display: block; }
-* html .dataTables_wrapper { height: 1%; }
- 
+
+html[xmlns] .dataTables_wrapper {
+	display: block;
+}
+
+* html .dataTables_wrapper {
+	height: 1%;
+}
+
 @font-face {
-    font-family: Gothams;
-    src: url(GOTHAM-MEDIUM.TTF);
+	font-family: Gothams;
+	src: url(GOTHAM-MEDIUM.TTF);
 }
 
 #myNavbar {
-font-family: Gothams;
-    text-transform: uppercase;
-    font-size: 12px !important;
-    font-weight: 600;
-    letter-spacing: 1px;}
-    
-.panel-heading, 
-#tabs a,
-table.dataTable tr th  
-{font-family: Gothams;}    
-    
+	font-family: Gothams;
+	text-transform: uppercase;
+	font-size: 12px !important;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+.panel-heading, #tabs a, table.dataTable tr th {
+	font-family: Gothams;
+}
+
 @font-face {
-    font-family: GothamsBody;
-    src: url(GOTHAM-LIGHT.TTF);
-}    
-body{font-family: GothamsBody;}
+	font-family: GothamsBody;
+	src: url(GOTHAM-LIGHT.TTF);
+}
+
+body {
+	font-family: GothamsBody;
+}
 
 /*  Menu onclick color change */
-.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
-    color: #fff;
-    background-color: rgb(85, 107, 47);
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus,
+	.navbar-inverse .navbar-nav>.open>a:hover {
+	color: #fff;
+	background-color: rgb(85, 107, 47);
 }
+
 table#cptListTable {
-    width: 100% !important;
+	width: 100% !important;
 }
-.clrRed, .updateError{color:#FF0000 !important; }
+
+.clrRed, .updateError {
+	color: #FF0000 !important;
+}

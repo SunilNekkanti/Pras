@@ -1,7 +1,5 @@
 package com.pfchoice.core.dao;
 
-import java.util.List;
-
 import com.pfchoice.core.entity.PlanType;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -13,16 +11,40 @@ import ml.rugal.sshcommon.page.Pagination;
  */
 public interface PlanTypeDao {
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	PlanType deleteById(Integer id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	PlanType findById(Integer id);
 
+	/**
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	Pagination getPage(int pageNo, int pageSize);
 
+	/**
+	 * 
+	 * @param bean
+	 * @return
+	 */
 	PlanType save(PlanType bean);
 
+	/**
+	 * 
+	 * @param updater
+	 * @return
+	 */
 	PlanType updateByUpdater(Updater<PlanType> updater);
-
-	List<PlanType> findAll();
 
 }

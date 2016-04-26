@@ -21,15 +21,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.ProviderService;
 
+import ml.rugal.sshcommon.page.Pagination;
+
 @Controller
 @SessionAttributes({ "username", "userpath" })
 public class ProviderController {
+
+	private static final Logger logger = LoggerFactory.getLogger(ProviderController.class);
 
 	@Autowired
 	private InsuranceService insuranceService;
@@ -41,33 +46,46 @@ public class ProviderController {
 	@Qualifier("providerValidator")
 	private Validator validator;
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("provider")
 	private void initBinder(final WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 
-	private static final Logger logger = LoggerFactory.getLogger(ProviderController.class);
-
+	
+	/**
+	 * @return
+	 */
 	@ModelAttribute("provider")
 	public Provider createProviderModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new Provider();
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("activeIndMap")
 	public Map<String, String> populateActiveIndList() {
-		// Data referencing for ActiveMap box
 		return PrasUtil.getActiveIndMap();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("insuranceList")
 	public List<Insurance> populateInsuranceList() {
-
-		// Data referencing for Insurance Measure list box
-		List<Insurance> insuranceList = insuranceService.findAll();
-		return insuranceList;
+		Pagination page = insuranceService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				 SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<Insurance>) page.getList();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/new" })
 	public String addProviderPage(final Model model) {
 
@@ -76,6 +94,11 @@ public class ProviderController {
 		return "providerNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}", "/user/provider/{id}" }, method = RequestMethod.GET)
 	public String updateProviderPage(@PathVariable Integer id, Model model) {
 
@@ -87,6 +110,11 @@ public class ProviderController {
 		return "providerDetails";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}/details",
 			"/user/provider/{id}/details" }, method = RequestMethod.GET)
 	public String viewProviderPage(@PathVariable Integer id, Model model) {
@@ -99,6 +127,13 @@ public class ProviderController {
 		return "providerEdit";
 	}
 
+	/**
+	 * @param provider
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newProviderAction(@Validated Provider provider, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
@@ -117,6 +152,14 @@ public class ProviderController {
 		return "providerList";
 	}
 
+	/**
+	 * @param id
+	 * @param provider
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateProviderAction(@PathVariable Integer id, @Validated Provider provider,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
@@ -136,6 +179,13 @@ public class ProviderController {
 		return "providerEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param provider
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, Provider provider, Model model,
 			@ModelAttribute("username") String username) {

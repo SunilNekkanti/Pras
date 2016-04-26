@@ -6,58 +6,107 @@ package com.pfchoice.common;
  * @author Sarath
  */
 public class Message {
-
-	public static Message failMessage(String message) {
-		return new Message(FAIL, message);
-	}
-
-	public static Message successMessage(String message, Object data) {
-		return new Message(SUCCESS, message, data);
-	}
-
+	
 	public static final String SUCCESS = "SUCCESS";
 
 	public static final String FAIL = "FAIL";
 
 	private String status = FAIL;
 
-	private String message = null;
+	private String messages ;
 
-	private Object data = null;
-
+	private Object data ;
+	
+	/**
+	 * 
+	 */
 	private Message() {
 	}
 
-	private Message(String status, String message, Object data) {
+	/**
+	 * 
+	 * @param status
+	 * @param messages
+	 * @param data
+	 */
+	private Message(String status, String messages, Object data) {
 		this.status = status;
-		this.message = message;
+		this.messages = messages;
 		this.data = data;
 	}
 
-	private Message(String status, String message) {
-		this(status, message, null);
+	/**
+	 * 
+	 * @param status
+	 * @param messages
+	 */
+	private Message(String status, String messages) {
+		this(status, messages, null);
 	}
 
+	/**
+	 * 
+	 * @param messages
+	 * @return
+	 */
+	public static Message failMessage(String messages) {
+		return new Message(FAIL, messages);
+	}
+
+	/**
+	 * 
+	 * @param messages
+	 * @param data
+	 * @return
+	 */
+	public static Message successMessage(String messages, Object data) {
+		return new Message(SUCCESS, messages, data);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getStatus() {
 		return status;
 	}
 
+	/**
+	 * 
+	 * @param status
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public String getMessage() {
-		return message;
+	/**
+	 * 
+	 * @return
+	 */
+	public String getMessages() {
+		return messages;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	/**
+	 * 
+	 * @param messages
+	 */
+	public void setMessages(String messages) {
+		this.messages = messages;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Object getData() {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param data
+	 */
 	public void setData(Object data) {
 		this.data = data;
 	}

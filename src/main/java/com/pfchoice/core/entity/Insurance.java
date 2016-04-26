@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
@@ -27,7 +24,7 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "insurance")
-public class Insurance implements Serializable {
+public class Insurance extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,38 +44,34 @@ public class Insurance implements Serializable {
 	@JoinColumn(name = "plan_type_id", referencedColumnName = "plan_type_id")
 	private PlanType planTypeId;
 
-	@Column(name = "created_date")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	@Column(name = "updated_date")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatedDate;
-
-	@Column(name = "created_by")
-	private String createdBy;
-
-	@Column(name = "updated_by")
-	private String updatedBy;
-
-	@Expose
-	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ins")
 	private Set<ReferenceContact> refInsContacts = new HashSet<ReferenceContact>();
 
+	/**
+	 * 
+	 */
 	public Insurance() {
+		super();
 	}
 
+	/**
+	 * @param id
+	 */
 	public Insurance(final Integer id) {
+		super();
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(final Integer id) {
 		this.id = id;
 	}
@@ -114,81 +107,6 @@ public class Insurance implements Serializable {
 	}
 
 	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(final Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	/**
-	 * @param updatedDate
-	 *            the updatedDate to set
-	 */
-	public void setUpdatedDate(final Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param credtedBy
-	 *            the credtedBy to set
-	 */
-	public void setCreatedBy(final String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the updatedBy
-	 */
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	/**
-	 * @param updatedBy
-	 *            the updatedBy to set
-	 */
-	public void setUpdatedBy(final String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	/**
-	 * @return the activeInd
-	 */
-	public Character getActiveInd() {
-		return activeInd;
-	}
-
-	/**
-	 * @param activeInd
-	 *            the activeInd to set
-	 */
-	public void setActiveInd(final Character activeInd) {
-		this.activeInd = activeInd;
-	}
-
-	/**
 	 * @return the refInsContacts
 	 */
 	public Set<ReferenceContact> getRefInsContacts() {
@@ -212,8 +130,6 @@ public class Insurance implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
-		// not set
 		if (!(object instanceof Insurance)) {
 			return false;
 		}

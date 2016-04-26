@@ -50,11 +50,17 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
 		return new Class<?>[] { SpringMVCApplicationContext.class };
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#getServletMappings()
+	 */
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#getServletName()
+	 */
 	@Override
 	protected String getServletName() {
 		return "pfchoice";
@@ -65,16 +71,25 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
 		return true;
 	}
 
+	/**
+	 * @return
+	 */
 	private Filter openSessionInViewFilter() {
 		return new OpenSessionInViewFilter();
 	}
 
+	/**
+	 * @return
+	 */
 	private Filter characterEncodingFilter() {
 		CharacterEncodingFilter cef = new CharacterEncodingFilter();
 		cef.setEncoding("UTF-8");
 		return cef;
 	}
 
+	/**
+	 * @return
+	 */
 	private Filter hiddenHttpMethodFilter() {
 		return new HiddenHttpMethodFilter();
 	}

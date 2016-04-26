@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
@@ -22,7 +19,7 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "cpt_measure")
-public class CPTMeasure implements Serializable {
+public class CPTMeasure extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,35 +39,27 @@ public class CPTMeasure implements Serializable {
 	private String shortDescription;
 
 	@Expose
+	@Transient
+	private String codeAndDescription;
+	
+	@Expose
 	@Column(name = "description")
 	private String description;
 
-	@Expose
-	@Transient
-	private String codeAndDescription;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_date")
-	private Date createdDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_date")
-	private Date updatedDate;
-
-	@Column(name = "created_by")
-	private String createdBy;
-
-	@Column(name = "updated_by")
-	private String updatedBy;
-
-	@Expose
-	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
-
+	/**
+	 * Default constructor
+	 * there exists one constructor with id as parameter
+	 */
 	public CPTMeasure() {
+		super();
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public CPTMeasure(final Integer id) {
+		super();
 		this.id = id;
 	}
 
@@ -131,8 +120,7 @@ public class CPTMeasure implements Serializable {
 	 * @return the codeAndDescription
 	 */
 	public String getCodeAndDescription() {
-		String codedescription = this.code + " (" + this.shortDescription + ")";
-		return codedescription;
+		return this.code + " (" + this.shortDescription + ")";
 	}
 
 	/**
@@ -141,81 +129,6 @@ public class CPTMeasure implements Serializable {
 	 */
 	public void setCodeAndDescription(String codeAndDescription) {
 		this.codeAndDescription = codeAndDescription;
-	}
-
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(final Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	/**
-	 * @param updatedDate
-	 *            the updatedDate to set
-	 */
-	public void setUpdatedDate(final Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param credtedBy
-	 *            the credtedBy to set
-	 */
-	public void setCreatedBy(final String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the updatedBy
-	 */
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	/**
-	 * @param updatedBy
-	 *            the updatedBy to set
-	 */
-	public void setUpdatedBy(final String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	/**
-	 * @return the activeInd
-	 */
-	public Character getActiveInd() {
-		return activeInd;
-	}
-
-	/**
-	 * @param activeInd
-	 *            the activeInd to set
-	 */
-	public void setActiveInd(final Character activeInd) {
-		this.activeInd = activeInd;
 	}
 
 	@Override
@@ -227,8 +140,6 @@ public class CPTMeasure implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the code fields
-		// are not set
 		if (!(object instanceof CPTMeasure)) {
 			return false;
 		}

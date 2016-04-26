@@ -15,18 +15,20 @@ public class CPTMeasureFormatter implements Formatter<CPTMeasure> {
 
 	@Autowired
 	private CPTMeasureService cptMeasureService;
-	// Some service class which can give the CPTMeasure after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(CPTMeasure cptMeasure, Locale arg1) {
 		return cptMeasure.getDescription();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public CPTMeasure parse(String id, Locale arg1) throws ParseException {
 		return cptMeasureService.findById(Integer.parseInt(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

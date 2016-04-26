@@ -24,49 +24,60 @@ public class MembershipProviderServiceImpl implements MembershipProviderService 
 	@Autowired
 	private MembershipProviderDao membershipProviderDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipProvider deleteById(final Integer id) {
-		// Used for transaction test
 		return membershipProviderDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public MembershipProvider findById(final Integer id) {
 		return membershipProviderDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return membershipProviderDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#save(com.pfchoice.core.entity.MembershipProvider)
+	 */
 	@Override
 	public MembershipProvider save(final MembershipProvider bean) {
-		// Used for transaction test
 		return membershipProviderDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#update(com.pfchoice.core.entity.MembershipProvider)
+	 */
 	@Override
 	public MembershipProvider update(final MembershipProvider bean) {
 		Updater<MembershipProvider> updater = new Updater<>(bean);
 		return membershipProviderDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<MembershipProvider> findAll() {
-		return membershipProviderDao.findAll();
-	}
-
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#findAllByMbrId(java.lang.Integer)
+	 */
 	@Override
 	public List<MembershipProvider> findAllByMbrId(final Integer id) {
 		return membershipProviderDao.findAllByMbrId(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipProviderService#findByMbrId(java.lang.Integer)
+	 */
 	@Override
 	public MembershipProvider findByMbrId(final Integer id) {
 		return membershipProviderDao.findByMbrId(id);

@@ -21,33 +21,43 @@ public class FileTypeServiceImpl implements FileTypeService {
 	@Autowired
 	private FileTypeDao fileTypeDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileTypeService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public FileType deleteById(final Integer id) {
-		// Used for transaction test
 		return fileTypeDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileTypeService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public FileType findById(final Integer id) {
 		return fileTypeDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileTypeService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return fileTypeDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileTypeService#save(com.pfchoice.core.entity.FileType)
+	 */
 	@Override
 	public FileType save(final FileType bean) {
-		// Used for transaction test
 		return fileTypeDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileTypeService#update(com.pfchoice.core.entity.FileType)
+	 */
 	@Override
 	public FileType update(final FileType bean) {
 		Updater<FileType> updater = new Updater<>(bean);

@@ -22,45 +22,61 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public User deleteById(final Integer id) {
-		// Used for transaction test
 		return userDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public User findById(final Integer id) {
 		return userDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return userDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#save(com.pfchoice.core.entity.User)
+	 */
 	@Override
 	public User save(final User bean) {
-		// Used for transaction test
 		return userDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#update(com.pfchoice.core.entity.User)
+	 */
 	@Override
 	public User update(final User bean) {
 		Updater<User> updater = new Updater<>(bean);
 		return userDao.updateByUpdater(updater);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#findByLogin(java.lang.String)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public User findByLogin(final String login) {
 		return userDao.findByLogin(login);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#isValidUser(java.lang.String, java.lang.String)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public boolean isValidUser(final String login, final String password) {

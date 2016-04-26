@@ -22,19 +22,26 @@ public class ProviderServiceImpl implements ProviderService {
 	@Autowired
 	private ProviderDao providerDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ProviderService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public Provider deleteById(final Integer id) {
-		// Used for transaction test
 		return providerDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ProviderService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Provider findById(final Integer id) {
 		return providerDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ProviderService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -42,20 +49,26 @@ public class ProviderServiceImpl implements ProviderService {
 		return providerDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ProviderService#save(com.pfchoice.core.entity.Provider)
+	 */
 	@Override
 	public Provider save(final Provider bean) {
-		// Used for transaction test
 		return providerDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ProviderService#update(com.pfchoice.core.entity.Provider)
+	 */
 	@Override
 	public Provider update(final Provider bean) {
 		Updater<Provider> updater = new Updater<>(bean);
 		return providerDao.updateByUpdater(updater);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ProviderService#findByInsId(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination findByInsId(final Integer id) {

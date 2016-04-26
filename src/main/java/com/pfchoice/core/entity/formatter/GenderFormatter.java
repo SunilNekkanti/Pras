@@ -15,18 +15,20 @@ public class GenderFormatter implements Formatter<Gender> {
 
 	@Autowired
 	private GenderService genderService;
-	// Some service class which can give the MembershipStatus after
-	// fetching from Database
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	 */
 	@Override
 	public String print(Gender gender, Locale arg1) {
 		return gender.getDescription();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	 */
 	@Override
 	public Gender parse(String id, Locale arg1) throws ParseException {
 		return genderService.findById(Byte.parseByte(id));
-		// Else you can just return a new object by setting some values
-		// which you deem fit.
 	}
 }

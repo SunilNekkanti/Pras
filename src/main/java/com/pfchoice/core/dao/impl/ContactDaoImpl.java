@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.ContactDao;
@@ -20,19 +19,15 @@ import com.pfchoice.core.entity.Contact;
 @Repository
 public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implements ContactDao {
 
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ContactDaoImpl.class.getName());
-
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
-		Pagination page = findByCriteria(crit, pageNo, pageSize);
-		return page;
+		return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	@Override
 	public Contact findById(final Integer id) {
-		Contact entity = get(id);
-		return entity;
+		return get(id);
 	}
 
 	@Override
@@ -43,7 +38,6 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 
 	@Override
 	public Contact deleteById(final Integer id) {
-		// throw new UnsupportedOperationException();
 		Contact entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -57,8 +51,9 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Contact> findAllContactsByRefId(final String refString, final Integer id) {
-		String refRestrictionString = null;
+		String refRestrictionString;
 		if ("membership".equals(refString)) {
 			refRestrictionString = "refContact.mbr.id";
 		} else if ("provider".equals(refString)) {
@@ -69,14 +64,14 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 
 		Criteria cr = getSession().createCriteria(getEntityClass(), "contact")
 				.createAlias("contact.refContact", "refContact").add(Restrictions.eq(refRestrictionString, id));
-		List<Contact> list = cr.list();
-		return list;
+		return cr.list();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public Contact findActiveContactByRefId(final String refString, final Integer id) {
 		Contact contact = null;
-		String refRestrictionString = null;
+		String refRestrictionString ;
 		if ("membership".equals(refString)) {
 			refRestrictionString = "refContact.mbr.id";
 		} else if ("provider".equals(refString)) {
@@ -90,7 +85,7 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 
 				.add(Restrictions.eq("contact.activeInd", 'Y'));
 		List<Contact> list = cr.list();
-		if (list.size() > 0)
+		if (!list.isEmpty())
 			contact = list.get(0);
 		return contact;
 	}

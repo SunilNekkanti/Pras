@@ -49,9 +49,9 @@ public class ApplicationContext {
 	@Autowired
 	private Environment env;
 
-	// <editor-fold defaultstate="collapsed" desc="HikariCP Datasoure
-	// Configuration" >
-
+	/**
+	 * @return
+	 */
 	@Bean(destroyMethod = "close")
 	@Autowired
 	public DataSource dataSource() {
@@ -67,6 +67,10 @@ public class ApplicationContext {
 		return dataSource;
 	}
 
+	/**
+	 * @param datasouce
+	 * @return
+	 */
 	@Bean
 	@Autowired
 	public LocalSessionFactoryBean sessionFactory(DataSource datasouce) {
@@ -77,6 +81,9 @@ public class ApplicationContext {
 		return sessionFactory;
 	}
 
+	/**
+	 * @return
+	 */
 	private Properties hibernateProperties() {
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.put(hibernate_dialect, env.getProperty(hibernate_dialect));
@@ -94,6 +101,10 @@ public class ApplicationContext {
 
 	}
 
+	/**
+	 * @param sessionFactory
+	 * @return
+	 */
 	@Bean
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {

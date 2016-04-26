@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,22 +30,37 @@ public class HedisMeasureRuleListController {
 	@Autowired
 	private HedisMeasureRuleService hedisMeasureRuleService;
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/hedisMeasureRule/hedisMeasureRuleList",
 			"/user/hedisMeasureRule/hedisMeasureRuleList" })
-	public String viewHedisMeasureRuleAction(Model model) throws Exception {
+	public String viewHedisMeasureRuleAction()  {
 
 		logger.info("Returning view.jsp page after create");
 		return "hedisMeasureRuleList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @param insId
+	 * @param effYear
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureRule/hedisMeasureRuleLists",
 			"/user/hedisMeasureRule/hedisMeasureRuleLists" }, method = RequestMethod.GET)
-	public Message viewHedisMeasureRuleActionJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) Integer insId, @RequestParam(required = false) Integer effYear)
-					throws Exception {
+	public Message viewHedisMeasureRuleList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) Integer insId, 
+			@RequestParam(required = false) Integer effYear) {
 
 		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId,
 				effYear);
@@ -54,11 +68,14 @@ public class HedisMeasureRuleListController {
 		return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
+	/**
+	 * @param insId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureRule/list",
 			"/user/hedisMeasureRule/list" }, method = RequestMethod.GET)
-	public Message viewHedisMeasureRuleList(Model model, @RequestParam(required = false) Integer insId)
-			throws Exception {
+	public Message viewHedisMeasureRuleList(@RequestParam(required = false) Integer insId) {
 
 		List<HedisMeasureRule> hedisMeasureRuleList = hedisMeasureRuleService.findAllByInsId(insId);
 

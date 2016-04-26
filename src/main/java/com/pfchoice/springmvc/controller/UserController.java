@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Role;
@@ -39,6 +40,8 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 @SessionAttributes({ "username", "userpath" })
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
 	private UserService userService;
 
@@ -49,31 +52,43 @@ public class UserController {
 	@Qualifier("userValidator")
 	private Validator validator;
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("user")
 	private void initBinder(final WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
+	
+	/**
+	 * @return
+	 */
 	@ModelAttribute("newUser")
 	public User createUserModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new User();
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("activeIndMap")
 	public Map<String, String> populateActiveIndList() {
-		// Data referencing for ActiveMap box
 		return PrasUtil.getActiveIndMap();
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("effYearList")
 	public SortedSet<Integer> populateEffectiveYearList() {
-		// Data referencing for ActiveMap box
 		return PrasUtil.getEffectiveYearList();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/user/new" })
 	public String addUserPage(final Model model) {
 
@@ -83,6 +98,11 @@ public class UserController {
 		return "userNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/user/{id}", "/user/user/{id}" }, method = RequestMethod.GET)
 	public String updateUserPage(@PathVariable Integer id, Model model) {
 
@@ -94,6 +114,13 @@ public class UserController {
 		return "userEdit";
 	}
 
+	/**
+	 * @param user
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/user/save.do", "/user/user/save.do" }, method = RequestMethod.POST, params = {
 			"add" })
 	public String newUserAction(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, Model model,
@@ -111,6 +138,14 @@ public class UserController {
 		return "userList";
 	}
 
+	/**
+	 * @param id
+	 * @param user
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/user/{id}/save.do",
 			"/user/user/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateUserAction(@PathVariable Integer id, @Validated User user, BindingResult bindingResult,
@@ -129,6 +164,14 @@ public class UserController {
 		return "userList";
 	}
 
+	/**
+	 * @param id
+	 * @param user
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/user/{id}/save.do",
 			"/user/user/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated User user, BindingResult bindingResult,
@@ -149,28 +192,44 @@ public class UserController {
 		return "userList";
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/userList", "/user/userList" })
-	public String handleRequest() throws Exception {
+	public String handleRequest() {
 
 		return "userList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/user/list", "/user/user/list" }, method = RequestMethod.GET)
-	public Message viewProviderListJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = userService.getPage(pageNo, pageSize);
 
 		return Message.successMessage(CommonMessageContent.USER_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("rolesList")
 	public List<Role> populateRoles() {
-		// Data referencing for Role list box
-		List<Role> rolesList = roleService.findAll();
-		return rolesList;
+		Pagination page = roleService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				 SystemDefaultProperties.LARGE_LIST_SIZE);
+		return (List<Role>) page.getList();
 	}
 }

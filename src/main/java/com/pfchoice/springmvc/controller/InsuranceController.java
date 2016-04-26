@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.PlanType;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.PlanTypeService;
+
+import ml.rugal.sshcommon.page.Pagination;
 
 @Controller
 @SessionAttributes({ "username", "userpath" })
@@ -43,25 +46,39 @@ public class InsuranceController {
 	@Qualifier("insuranceValidator")
 	private Validator validator;
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("insurance")
 	private void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("insurance")
 	public Insurance createInsuranceModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new Insurance();
 	}
 
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	@ModelAttribute("planTypeList")
 	public List<PlanType> populatePlanTypeList() {
 
-		// Data referencing for county list box
-		List<PlanType> planTypeList = planTypeService.findAll();
-		return planTypeList;
+		Pagination page = planTypeService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				 								SystemDefaultProperties.SMALL_LIST_SIZE);
+		
+		return (List<PlanType>) page.getList();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/new" })
 	public String addInsurancePage(Model model) {
 
@@ -70,6 +87,12 @@ public class InsuranceController {
 		return "insuranceNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/{id}", "/user/insurance/{id}" }, method = RequestMethod.GET)
 	public String updateInsurancePage(@PathVariable Integer id, Model model,
 			@ModelAttribute("username") String username) {
@@ -82,6 +105,13 @@ public class InsuranceController {
 		return "insuranceDetails";
 	}
 
+	/**
+	 * @param insurance
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newInsuranceAction(@Validated Insurance insurance, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
@@ -100,6 +130,11 @@ public class InsuranceController {
 		return "insuranceList";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/{id}/details",
 			"/user/insurance/{id}/details" }, method = RequestMethod.GET)
 	public String viewProviderPage(@PathVariable Integer id, Model model) {
@@ -112,6 +147,14 @@ public class InsuranceController {
 		return "insuranceEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param insurance
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/{id}/save.do", }, method = RequestMethod.POST, params = { "update" })
 	public String updateInsuranceAction(@PathVariable Integer id, @ModelAttribute @Validated Insurance insurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
@@ -132,6 +175,12 @@ public class InsuranceController {
 		return "insuranceEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, Model model,
 			@ModelAttribute("username") String username) {
@@ -146,9 +195,11 @@ public class InsuranceController {
 		return "insuranceEdit";
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("activeIndMap")
 	public Map<String, String> populateActiveIndList() {
-		// Data referencing for ActiveMap box
 		return PrasUtil.getActiveIndMap();
 	}
 

@@ -48,12 +48,18 @@ public class ICDMeasureController {
 	public ICDMeasureController() {
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("icdMeasure")
 	public ICDMeasure createICDMeasureModel() {
-		// ModelAttribute value should be same as used in the ICDMeasureEdit.jsp
 		return new ICDMeasure();
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/icd/new")
 	public String addICDMeasurePage(Model model) {
 
@@ -62,6 +68,11 @@ public class ICDMeasureController {
 		return "icdMeasureNew";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/icd/{id}", "/user/icd/{id}" }, method = RequestMethod.GET)
 	public String updateICDMeasurePage(@PathVariable Integer id, Model model) {
 		ICDMeasure dbICDMeasure = icdMeasureService.findById(id);
@@ -71,6 +82,11 @@ public class ICDMeasureController {
 		return "icdMeasureEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/icd/{id}/display" }, method = RequestMethod.GET)
 	public String displayICDMeasurePage(@PathVariable Integer id, Model model) {
 		ICDMeasure dbICDMeasure = icdMeasureService.findById(id);
@@ -81,24 +97,43 @@ public class ICDMeasureController {
 		return "icdMeasureDisplay";
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/icd/icdMeasureList", "/user/icd/icdMeasureList" }, method = RequestMethod.GET)
-	public String viewICDMeasureAction(Model model) throws Exception {
+	public String viewICDMeasureAction()  {
 		logger.info("Returning view.jsp page after create");
 		return "icdMeasureList";
 	}
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/icd/icdMeasureLists", "/user/icd/icdMeasureLists" }, method = RequestMethod.GET)
-	public Message viewICDMeasureActionJsonTest(Model model, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir)
-					throws Exception {
+	public Message getICDMeasureList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, 
+			@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.ICD_LIST, pagination);
 	}
 
+	/**
+	 * @param icdMeasure
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/icd/save.do", method = RequestMethod.POST, params = { "add" })
 	public String addICDMeasureAction(@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {

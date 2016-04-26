@@ -24,44 +24,52 @@ public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollow
 	@Autowired
 	private MembershipHedisFollowupDao mbrHedisFollowupDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public MembershipHedisFollowup deleteById(final Integer id) {
-		// Used for transaction test
 		return mbrHedisFollowupDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public MembershipHedisFollowup findById(final Integer id) {
 		return mbrHedisFollowupDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#getPage(int, int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return mbrHedisFollowupDao.getPage(pageNo, pageSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#save(com.pfchoice.core.entity.MembershipHedisFollowup)
+	 */
 	@Override
 	public MembershipHedisFollowup save(final MembershipHedisFollowup bean) {
-		// Used for transaction test
 		return mbrHedisFollowupDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#update(com.pfchoice.core.entity.MembershipHedisFollowup)
+	 */
 	@Override
 	public MembershipHedisFollowup update(final MembershipHedisFollowup bean) {
 		Updater<MembershipHedisFollowup> updater = new Updater<>(bean);
 		return mbrHedisFollowupDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<MembershipHedisFollowup> findAll() {
-		return mbrHedisFollowupDao.findAll();
-	}
-
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#findAllByMbrId(java.lang.Integer)
+	 */
 	@Override
 	public List<MembershipHedisFollowup> findAllByMbrId(final Integer id) {
 		return mbrHedisFollowupDao.findAllByMbrId(id);

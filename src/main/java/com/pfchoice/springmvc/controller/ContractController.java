@@ -53,6 +53,8 @@ import ml.rugal.sshcommon.page.Pagination;
 @SessionAttributes({ "username", "userpath" })
 public class ContractController {
 
+	private static final Logger logger = LoggerFactory.getLogger(ContractController.class);
+
 	@Autowired
 	private ContractService contractService;
 
@@ -66,6 +68,9 @@ public class ContractController {
 	@Qualifier("contractValidator")
 	private Validator validator;
 
+	/**
+	 * @param binder
+	 */
 	@InitBinder("contract")
 	private void initBinder(final WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -74,24 +79,29 @@ public class ContractController {
 		binder.setValidator(validator);
 		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 	}
+	
 
-	private static final Logger logger = LoggerFactory.getLogger(ContractController.class);
-
-	public ContractController() {
-	}
-
+	/**
+	 * @return
+	 */
 	@ModelAttribute("contract")
 	public Contract createContractModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new Contract();
 	}
 
+	/**
+	 * @return
+	 */
 	@ModelAttribute("refContract")
 	public ReferenceContract createRefContractModel() {
-		// ModelAttribute value should be same as used in the empSave.jsp
 		return new ReferenceContract();
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/contract/new")
 	public String addProviderContractPage(@PathVariable Integer id, Model model) {
 
@@ -103,10 +113,14 @@ public class ContractController {
 		return "providerContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/contract", method = RequestMethod.GET)
 	public String updateProviderContractPage(@PathVariable Integer id, Model model) {
 		Contract dbContract = contractService.findActiveContractByRefId("provider", id);
-		// logger.info("Returning contract.getId()"+dbContract.getId());
 		if (dbContract == null) {
 			dbContract = createContractModel();
 		}
@@ -119,8 +133,13 @@ public class ContractController {
 		return "providerContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}/contractList", "/user/provider/{id}/contractList" })
-	public String handleRequest(@PathVariable Integer id, Model model) throws Exception {
+	public String handleRequest(@PathVariable Integer id, Model model) {
 
 		List<Contract> listBean = contractService.findAllContractsByRefId("provider", id);
 		model.addAttribute("contractList", listBean);
@@ -130,6 +149,11 @@ public class ContractController {
 		return "providerContractList";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/provider/{id}/contractDisplay" }, method = RequestMethod.GET)
 	public String displayProviderContractPage(@PathVariable Integer id, Model model) {
 		Contract dbContract = contractService.findActiveContractByRefId("provider", id);
@@ -141,6 +165,14 @@ public class ContractController {
 		return "contractDisplay";
 	}
 
+	/**
+	 * @param id
+	 * @param cntId
+	 * @param model
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}/contract/{cntId}" }, method = RequestMethod.GET)
 	public String updateProviderContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model,
 			HttpServletResponse response) throws IOException {
@@ -156,6 +188,15 @@ public class ContractController {
 		return "providerContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @param fileUpload
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/contract/save.do", method = RequestMethod.POST, params = { "add" })
 	public String newproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
@@ -196,6 +237,15 @@ public class ContractController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @param fileUpload
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/contract/save.do", method = RequestMethod.POST, params = { "update" })
 	public String saveproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
@@ -236,6 +286,14 @@ public class ContractController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/contract/save.do", method = RequestMethod.POST, params = { "delete" })
 	public String deleteProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
@@ -256,8 +314,13 @@ public class ContractController {
 		return "providerContractList";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/insurance/{id}/contractList", "/user/insurance/{id}/contractList" })
-	public String handleInsuranceRequest(@PathVariable Integer id, Model model) throws Exception {
+	public String handleInsuranceRequest(@PathVariable Integer id, Model model) {
 
 		List<Contract> listBean = contractService.findAllContractsByRefId("insurance", id);
 		model.addAttribute("contractList", listBean);
@@ -270,6 +333,12 @@ public class ContractController {
 
 	/** contract Display where activeInd =N **/
 
+	/**
+	 * @param id
+	 * @param cntId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/provider/{id}/contract/{cntId}/display", method = RequestMethod.GET)
 	public String displayProviderContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
 		Contract dbContract = contractService.findById(cntId);
@@ -284,6 +353,11 @@ public class ContractController {
 
 	/* -- Insurance Contract */
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/new")
 	public String addInsuranceContractPage(@PathVariable Integer id, Model model) {
 		Contract contract = createContractModel();
@@ -293,6 +367,15 @@ public class ContractController {
 		return "insuranceContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @param fileUpload
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/save.do", method = RequestMethod.POST, params = { "add" })
 	public String addMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
@@ -336,6 +419,15 @@ public class ContractController {
 		return "insuranceContractList";
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @param fileUpload
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/save.do", method = RequestMethod.POST, params = {
 			"update" })
 	public String saveMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
@@ -378,6 +470,14 @@ public class ContractController {
 		return "insuranceContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/save.do", method = RequestMethod.POST, params = {
 			"delete" })
 	public String deleteInsuranceContractAction(@PathVariable Integer id, @Validated Contract contract,
@@ -413,10 +513,15 @@ public class ContractController {
 
 	}
 
+	/**
+	 * @param id
+	 * @param cntId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/{cntId}", method = RequestMethod.GET)
 	public String updateInsuranceContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
 		Contract dbContract = contractService.findById(cntId);
-		// logger.info("Returning contract.getId()"+dbContract.getId());
 		model.addAttribute("contractType", "Contract");
 		if (dbContract == null) {
 			dbContract = createContractModel();
@@ -428,6 +533,12 @@ public class ContractController {
 		return "insuranceContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param cntId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/{cntId}/display", method = RequestMethod.GET)
 	public String displayInsuranceContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
 		Contract dbContract = contractService.findActiveContractByRefId("insurance", id);
@@ -440,10 +551,16 @@ public class ContractController {
 
 	/* -- End of Insurance Contract */
 
+	/**
+	 * @param cntId
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/admin/contract/{cntId}/file", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE })
-	public String downloadContractFile(@PathVariable Integer cntId, Model model, HttpServletResponse response)
+	public String downloadContractFile(@PathVariable Integer cntId, HttpServletResponse response)
 			throws IOException {
 		Contract dbContract = contractService.findById(cntId);
 		logger.info("fetching contractFile for contract id" + cntId);
@@ -460,6 +577,11 @@ public class ContractController {
 		return "providerContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/new")
 	public String addprvdrinsContractPage(@PathVariable Integer id, Model model) {
 
@@ -474,8 +596,13 @@ public class ContractController {
 		return "providerContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/admin/provider/{id}/prvdrInsContractList", "/user/provider/{id}/prvdrInsContractList" })
-	public String getInsuranceContractList(@PathVariable Integer id, Model model) throws Exception {
+	public String getInsuranceContractList(@PathVariable Integer id, Model model)  {
 
 		List<Contract> listBean = contractService.findAllContractsByRefId("providerInsurance", id);
 		model.addAttribute("contractList", listBean);
@@ -485,6 +612,14 @@ public class ContractController {
 		return "providerContractList";
 	}
 
+	/**
+	 * @param id
+	 * @param cntId
+	 * @param model
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/{cntId}", method = RequestMethod.GET)
 	public String updateInsuranceProviderContractPage(@PathVariable Integer id, @PathVariable Integer cntId,
@@ -516,6 +651,15 @@ public class ContractController {
 		return "providerContractEdit";
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @param fileUpload
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/save.do", method = RequestMethod.POST, params = {
 			"add" })
 	public String newInsuranceproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
@@ -565,6 +709,15 @@ public class ContractController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @param fileUpload
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/save.do", method = RequestMethod.POST, params = {
 			"update" })
 	public String saveInsuranceProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
@@ -617,6 +770,14 @@ public class ContractController {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param contract
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/save.do", method = RequestMethod.POST, params = {
 			"delete" })
 	public String deleteInsuranceProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
@@ -654,22 +815,35 @@ public class ContractController {
 
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/insurance/{id}/contractJsonList",
 			"/user/insurance/{id}/contractJsonList" }, method = RequestMethod.GET)
-	public Message viewInsuranceContract(@PathVariable Integer id, Model model) throws Exception {
+	public Message viewInsuranceContract(@PathVariable Integer id)  {
 		List<Contract> listBean = contractService.findAllContractsByRefId("insuranceProvider", id);
 		return Message.successMessage(CommonMessageContent.CONTRACT_LIST, JsonConverter.getJsonObject(listBean));
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/provider/{id}/contractJsonList",
 			"/user/provider/{id}/contractJsonList" }, method = RequestMethod.GET)
-	public Message viewProviderContract(@PathVariable Integer id, Model model) throws Exception {
+	public Message viewProviderContract(@PathVariable Integer id)  {
 		List<Contract> listBean = contractService.findAllContractsByRefId("provider", id);
 		return Message.successMessage(CommonMessageContent.CONTRACT_LIST, JsonConverter.getJsonObject(listBean));
 	}
 
+	/**
+	 * @param id
+	 * @param add
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	protected Set<Insurance> getInsuranceList(Integer id, boolean add) {
 		Pagination page = contractService.getPage(0, 20000);

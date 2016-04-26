@@ -3,8 +3,6 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,19 +22,36 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 	@Autowired
 	private ICDMeasureDao icdMeasureDao;
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ICDMeasureService#deleteById(java.lang.Integer)
+	 */
 	@Override
 	public ICDMeasure deleteById(final Integer id) {
-		// Used for transaction test
 		return icdMeasureDao.deleteById(id);
-		// throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ICDMeasureService#findById(java.lang.Integer)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public ICDMeasure findById(final Integer id) {
 		return icdMeasureDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ICDMeasureService#getPage(int, int)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize) {
+		return icdMeasureDao.getPage(pageNo, pageSize);
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ICDMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -44,22 +59,21 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 		return icdMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ICDMeasureService#save(com.pfchoice.core.entity.ICDMeasure)
+	 */
 	@Override
 	public ICDMeasure save(final ICDMeasure bean) {
-		// Used for transaction test
 		return icdMeasureDao.save(bean);
-		// this.deleteById(1);
-		// return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.ICDMeasureService#update(com.pfchoice.core.entity.ICDMeasure)
+	 */
 	@Override
 	public ICDMeasure update(final ICDMeasure bean) {
 		Updater<ICDMeasure> updater = new Updater<>(bean);
 		return icdMeasureDao.updateByUpdater(updater);
 	}
 
-	@Override
-	public List<ICDMeasure> findAll() {
-		return icdMeasureDao.findAll();
-	}
 }
