@@ -42,11 +42,11 @@ public class Provider extends RecordDetails implements Serializable {
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
-	private Set<ReferenceContact> refContacts = new HashSet<ReferenceContact>();
+	private Set<ReferenceContact> refContacts = new HashSet<>();
 
 	@Expose
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
-	private Set<ReferenceContract> refContracts = new HashSet<ReferenceContract>();
+	private Set<ReferenceContract> refContracts = new HashSet<>();
 
 	/**
 	 * 
