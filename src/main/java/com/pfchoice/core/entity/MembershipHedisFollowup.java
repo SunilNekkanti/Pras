@@ -1,6 +1,7 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,6 @@ public class MembershipHedisFollowup extends RecordDetails implements Serializab
 	@Column(name = "mbr_hedis_followup_id", nullable = false)
 	private Integer id;
 
-	// @Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", nullable = false, referencedColumnName = "mbr_id")
 	private Membership mbr;
@@ -51,7 +51,7 @@ public class MembershipHedisFollowup extends RecordDetails implements Serializab
 	private Date dateOfContact;
 
 	@Transient
-	private List<Map<Integer, String>> mbrHedisMeasureIds;
+	private List<Map<Integer, String>> mbrHedisMeasureIds = new ArrayList<>();
 
 	/**
 	 * 
