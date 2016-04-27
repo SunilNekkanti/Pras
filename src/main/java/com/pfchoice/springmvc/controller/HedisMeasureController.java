@@ -157,7 +157,7 @@ public class HedisMeasureController {
 	 */
 	@RequestMapping(value = { "/admin/hedis/hedisMeasureList",
 			"/user/hedis/hedisMeasureList" }, method = RequestMethod.GET)
-	public String viewHedisMeasureAction(Model model) {
+	public String viewHedisMeasureAction() {
 
 		logger.info("Returning view.jsp page after create");
 		return "hedisMeasureList";
