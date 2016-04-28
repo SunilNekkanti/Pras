@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @param <T>
  *
  */
-public class PrasUtil<T> {
+public class PrasUtil {
 	
 	
 	/**
