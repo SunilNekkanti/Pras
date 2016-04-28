@@ -5,3 +5,15 @@
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <tiles:insertAttribute name="body" />
+
+<script>
+$(document).ready(function() {  
+ $( "form" ).each(function( index ) {
+  var formid = $(this).attr("id");
+  if($("#"+formid+' input:hidden[name=id]').val())
+      $("#"+formid+" input").removeAttr("placeholder");
+  }); 
+});
+</script>
+
+

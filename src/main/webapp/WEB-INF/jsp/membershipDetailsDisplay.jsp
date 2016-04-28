@@ -4,15 +4,6 @@
 	prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:choose>
-	<c:when test="${membershipInsurance.id != null}">
-		<script>
-		$(document).ready(function(){	 
-		removePlaceHolder();
-		});
-	</script>
-	</c:when>
-</c:choose>
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
