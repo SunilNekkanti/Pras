@@ -7,14 +7,6 @@
 
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
-<script
-	src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
-<script>
-	$(document).ready(function() {
-		insuranceValidation();
-	});
-</script>
-
 
 <div class="panel-group">
 	<div class="panel panel-success">
