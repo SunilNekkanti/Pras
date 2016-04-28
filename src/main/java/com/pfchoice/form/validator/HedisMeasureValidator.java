@@ -24,10 +24,8 @@ public class HedisMeasureValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		HedisMeasure hedisMeasure = (HedisMeasure) obj;
-		if (hedisMeasure.getId() != null) {
-			if (hedisMeasure.getId() <= 0) {
+		if (hedisMeasure.getId() != null && hedisMeasure.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 		}
 
 		if (hedisMeasure.getCode().length() < 2 && hedisMeasure.getCode().length() >= 1) {

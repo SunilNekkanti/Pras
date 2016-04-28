@@ -27,10 +27,8 @@ public class MembershipValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		Membership mbr = (Membership) obj;
-		if (mbr.getId() != null) {
-			if (mbr.getId() <= 0) {
+		if (mbr.getId() != null && mbr.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 		}
 
 		if (mbr.getFirstName().length() < 2) {

@@ -24,10 +24,8 @@ public class HedisMeasureRuleValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		HedisMeasureRule hedisMeasureRule = (HedisMeasureRule) obj;
-		if (hedisMeasureRule.getId() != null) {
-			if (hedisMeasureRule.getId() <= 0) {
+		if (hedisMeasureRule.getId() != null && hedisMeasureRule.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "hedisMeasure", "error.hedisMeasure",

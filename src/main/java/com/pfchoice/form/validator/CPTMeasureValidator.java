@@ -24,10 +24,8 @@ public class CPTMeasureValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		CPTMeasure cptMeasure = (CPTMeasure) obj;
-		if (cptMeasure.getId() != null) {
-			if (cptMeasure.getId() <= 0) {
+		if (cptMeasure.getId() != null && cptMeasure.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 
 		}
 

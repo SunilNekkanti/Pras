@@ -23,10 +23,8 @@ public class ProviderValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		Provider prvdr = (Provider) obj;
-		if (prvdr.getId() != null) {
-			if (prvdr.getId() <= 0) {
+		if (prvdr.getId() != null && prvdr.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 		}
 
 		if (prvdr.getName().length() < 6) {

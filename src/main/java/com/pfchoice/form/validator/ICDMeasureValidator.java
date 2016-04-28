@@ -24,10 +24,8 @@ public class ICDMeasureValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		ICDMeasure icdMeasure = (ICDMeasure) obj;
-		if (icdMeasure.getId() != null) {
-			if (icdMeasure.getId() <= 0) {
+		if (icdMeasure.getId() != null && icdMeasure.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 
 		}
 

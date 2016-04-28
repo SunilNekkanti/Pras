@@ -25,10 +25,8 @@ public class InsuranceValidator implements Validator {
 
 		System.out.println("inside validator");
 		Insurance ins = (Insurance) obj;
-		if (ins.getId() != null) {
-			if (ins.getId() <= 0) {
+		if (ins.getId() != null && ins.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 		}
 
 		if (ins.getName().length() < 2) {

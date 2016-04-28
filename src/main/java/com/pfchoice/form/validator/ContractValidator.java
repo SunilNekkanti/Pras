@@ -25,10 +25,8 @@ public class ContractValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		Contract contract = (Contract) obj;
-		if (contract.getId() != null) {
-			if (contract.getId() <= 0) {
+		if (contract.getId() != null && contract.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contractNBR", "error.contractNBR", "Contract NBR Required");
 

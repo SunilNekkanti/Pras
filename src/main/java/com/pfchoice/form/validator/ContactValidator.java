@@ -38,10 +38,8 @@ public class ContactValidator implements Validator {
 
 		Contact cnt = (Contact) obj;
 
-		if (cnt.getId() != null) {
-			if (cnt.getId() <= 0) {
+		if (cnt.getId() != null && cnt.getId() <= 0) {
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
-			}
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "refContact", "error.refContact",
 					"ReferenceContact Required");
 		}
