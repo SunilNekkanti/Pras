@@ -42,13 +42,10 @@ public class CPTMeasureController {
 	private Validator validator;
 
 	@InitBinder("cptMeasure")
-	private void initBinder(WebDataBinder binder) {
+	public void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 	
-	public CPTMeasureController() {
-	}
-
 	@ModelAttribute("cptMeasure")
 	public CPTMeasure createCPTMeasureModel() {
 		return new CPTMeasure();

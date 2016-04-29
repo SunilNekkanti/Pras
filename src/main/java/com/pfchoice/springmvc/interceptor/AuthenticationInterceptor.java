@@ -38,9 +38,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
-	private final Gson gson = new Gson();
-
 	private static final Logger LOG = LoggerFactory.getLogger(AuthenticationInterceptor.class.getName());
+
+	private final Gson gson = new Gson();
 
 	@Autowired
 	UserService userService;
@@ -127,6 +127,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+		LOG.info("afterCompletion");
 	}
 
 }

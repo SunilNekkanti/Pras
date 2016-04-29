@@ -40,7 +40,7 @@ public class MembershipListController {
 	 */
 	@RequestMapping(value = { "/admin/membershipList", "/user/membershipList" })
 	public String handleRequest()  {
-
+		LOG.info("returning membershipList.jsp");
 		return "membershipList";
 	}
 
@@ -69,7 +69,7 @@ public class MembershipListController {
 		List<Integer> ruleIds = Collections.singletonList(i);
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, 0,
 				ruleIds, sort, sortdir);
-
+		LOG.info("returning membershipList");
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 }

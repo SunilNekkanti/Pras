@@ -50,7 +50,7 @@ public class ProviderController {
 	 * @param binder
 	 */
 	@InitBinder("provider")
-	private void initBinder(final WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 

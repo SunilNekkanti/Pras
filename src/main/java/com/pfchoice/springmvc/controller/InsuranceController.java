@@ -50,7 +50,7 @@ public class InsuranceController {
 	 * @param binder
 	 */
 	@InitBinder("insurance")
-	private void initBinder(WebDataBinder binder) {
+	public void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 

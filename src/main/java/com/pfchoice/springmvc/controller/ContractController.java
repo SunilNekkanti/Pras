@@ -72,7 +72,7 @@ public class ContractController {
 	 * @param binder
 	 */
 	@InitBinder("contract")
-	private void initBinder(final WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		dateFormat.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));

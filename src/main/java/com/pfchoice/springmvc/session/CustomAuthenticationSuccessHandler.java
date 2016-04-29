@@ -33,14 +33,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			List<GrantedAuthority> adminauthorities = authentication.getAuthorities().stream()
 					.filter(grantedAuthority -> "ROLE_ADMIN".equals(grantedAuthority.getAuthority()))
 					.collect(Collectors.toList());
-			if (adminauthorities.size() > 0) {
+			if (!adminauthorities.isEmpty() ) {
 				session.setAttribute("userpath", "admin");
 			} else {
 				List<GrantedAuthority> userauthorities = authentication.getAuthorities().stream()
 						.filter(grantedAuthority -> "ROLE_USER".equals(grantedAuthority.getAuthority()))
 						.collect(Collectors.toList());
 
-				if (userauthorities.size() > 0) {
+				if (!userauthorities.isEmpty()) {
 					session.setAttribute("userpath", "user");
 				}
 			}

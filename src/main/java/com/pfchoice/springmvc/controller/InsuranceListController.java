@@ -37,7 +37,7 @@ public class InsuranceListController {
 	 */
 	@RequestMapping(value = { "/admin/insuranceList", "/user/insuranceList" })
 	public String handleRequest() {
-
+		LOG.info("returning insuranceList.jsp");
 		return "insuranceList";
 	}
 
@@ -58,7 +58,7 @@ public class InsuranceListController {
 			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = insuranceService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-
+		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
 	}
 }

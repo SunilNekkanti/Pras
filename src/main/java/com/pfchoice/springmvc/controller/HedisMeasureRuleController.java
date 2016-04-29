@@ -80,7 +80,7 @@ public class HedisMeasureRuleController {
 	 * @param binder
 	 */
 	@InitBinder("hedisMeasureRule")
-	private void initBinder(WebDataBinder binder) {
+	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		dateFormat.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));

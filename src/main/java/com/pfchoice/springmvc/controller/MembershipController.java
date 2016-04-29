@@ -97,7 +97,7 @@ public class MembershipController {
 	 * @param binder
 	 */
 	@InitBinder("membership")
-	private void initBinder(WebDataBinder binder) {
+	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		dateFormat.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
@@ -108,7 +108,7 @@ public class MembershipController {
 	 * @param binder
 	 */
 	@InitBinder("membershipInsurance")
-	private void initInsBinder(WebDataBinder binder) {
+	public void initInsBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		dateFormat.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
@@ -485,12 +485,12 @@ public class MembershipController {
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		if (hedisRuleId != null && hedisRuleId != 9999) {
 			mbrHedisMeasureList = mbrHedisMeasureList.stream()
-					.filter(mbrHedisMeasure -> (mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
-							&& mbrHedisMeasure.getDos() == null))
+					.filter(mbrHedisMeasure -> mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
+							&& mbrHedisMeasure.getDos() == null)
 					.collect(Collectors.toList());
 		} else {
 			mbrHedisMeasureList = mbrHedisMeasureList.stream()
-					.filter(mbrHedisMeasure -> (mbrHedisMeasure.getDos() == null)).collect(Collectors.toList());
+					.filter(mbrHedisMeasure -> mbrHedisMeasure.getDos() == null).collect(Collectors.toList());
 		}
 		return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST,
 				JsonConverter.getJsonObject(mbrHedisMeasureList));

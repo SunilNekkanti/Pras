@@ -37,7 +37,7 @@ public class ProviderListController {
 	 */
 	@RequestMapping(value = { "/admin/providerList", "/user/providerList" })
 	public String handleRequest() {
-
+		LOG.info("returning providerList.jsp");
 		return "providerList";
 	}
 
@@ -58,7 +58,7 @@ public class ProviderListController {
 			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = providerService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-
+		LOG.info("returning providerList");
 		return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
@@ -72,7 +72,7 @@ public class ProviderListController {
 	public Message viewProviderListt(@RequestParam(required = false) Integer insId) {
 
 		Pagination pagination = providerService.findByInsId(insId);
-
+		LOG.info("returning providerList for insId"+insId);
 		return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
 	}
 

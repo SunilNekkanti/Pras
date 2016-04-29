@@ -74,7 +74,7 @@ public class ContactController {
 	 * @param binder
 	 */
 	@InitBinder("contact")
-	private void initBinder(WebDataBinder binder) {
+	public void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 	

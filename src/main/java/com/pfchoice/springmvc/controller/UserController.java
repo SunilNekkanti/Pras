@@ -56,7 +56,7 @@ public class UserController {
 	 * @param binder
 	 */
 	@InitBinder("user")
-	private void initBinder(final WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 

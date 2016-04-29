@@ -67,12 +67,14 @@ public class Contract extends RecordDetails implements Serializable {
 	 * 
 	 */
 	public Contract() {
+		super();
 	}
 
 	/**
 	 * @param id
 	 */
 	public Contract(final Integer id) {
+		super();
 		this.id = id;
 	}
 
