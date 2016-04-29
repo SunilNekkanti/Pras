@@ -84,7 +84,7 @@ public class CPTMeasureController {
 	}
 
 	@RequestMapping(value = { "/admin/cpt/cptMeasureList", "/user/cpt/cptMeasureList" }, method = RequestMethod.GET)
-	public String viewCPTMeasureAction(Model model) {
+	public String viewCPTMeasureAction() {
 
 		logger.info("Returning view.jsp page after create");
 		return "cptMeasureList";

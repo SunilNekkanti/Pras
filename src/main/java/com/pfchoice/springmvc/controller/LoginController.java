@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import javax.servlet.http.HttpSession;
 
 import com.pfchoice.common.SystemDefaultProperties;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.form.LoginForm;
 
 @Controller
@@ -55,7 +56,7 @@ public class LoginController {
 		if (!model.containsAttribute("username")) {
 			model.addAttribute("username", username);
 		}
-		return "home";
+		return TileDefinitions.HOME.toString();
 	}
 
 	/**

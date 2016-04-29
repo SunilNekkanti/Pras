@@ -633,7 +633,7 @@ public class ContractController {
 		dbContract.setInsId(dbContract.getReferenceContract().getIns().getId());
 		Pagination page = contractService.getPage(0, 20000);
 		List<Contract> contracts = (List<Contract>) page.getList();
-		List<Insurance> insList = new ArrayList<Insurance>();
+		List<Insurance> insList = new ArrayList<>();
 		insList.clear();
 		contracts.forEach(contract1 -> {
 			if (contract1.getActiveInd() == 'Y' && contract1.getReferenceContract().getActiveInd() == 'Y'
@@ -848,7 +848,7 @@ public class ContractController {
 	protected Set<Insurance> getInsuranceList(Integer id, boolean add) {
 		Pagination page = contractService.getPage(0, 20000);
 		List<Contract> contracts = (List<Contract>) page.getList();
-		Set<Insurance> insList = new HashSet<Insurance>();
+		Set<Insurance> insList = new HashSet<>();
 		insList.clear();
 		contracts.forEach(contract1 -> {
 			if (contract1.getActiveInd() == 'Y' && contract1.getReferenceContract().getActiveInd() == 'Y'

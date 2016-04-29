@@ -126,7 +126,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("cptMeasureListAjax")
 	public List<CPTMeasure> populateCPTMeasureListAjax() {
 
-		List<CPTMeasure> cptMeasureList = new ArrayList<CPTMeasure>();
+		List<CPTMeasure> cptMeasureList = new ArrayList<>();
 		return cptMeasureList;
 	}
 
@@ -148,7 +148,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("icdMeasureListAjax")
 	public List<ICDMeasure> populateICDMeasureListAjax() {
 
-		List<ICDMeasure> icdMeasureList = new ArrayList<ICDMeasure>();
+		List<ICDMeasure> icdMeasureList = new ArrayList<>();
 		return icdMeasureList;
 	}
 
@@ -395,7 +395,7 @@ public class HedisMeasureRuleController {
 		Pagination pagination = cptMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		List<CPTMeasure> cptMeasureList = (List<CPTMeasure>) pagination.getList();
 
-		List<CPTMeasure> retainCPTList = new ArrayList<CPTMeasure>(hedisRuleCPTMeasureList);
+		List<CPTMeasure> retainCPTList = new ArrayList<>(hedisRuleCPTMeasureList);
 		retainCPTList.retainAll(cptMeasureList);
 
 		cptMeasureList.removeAll(hedisRuleCPTMeasureList);
@@ -439,7 +439,7 @@ public class HedisMeasureRuleController {
 		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		List<ICDMeasure> icdMeasureList = (List<ICDMeasure>) pagination.getList();
 
-		List<ICDMeasure> retainICDList = new ArrayList<ICDMeasure>(hedisRuleICDMeasureList);
+		List<ICDMeasure> retainICDList = new ArrayList<>(hedisRuleICDMeasureList);
 		retainICDList.retainAll(icdMeasureList);
 
 		icdMeasureList.removeAll(hedisRuleICDMeasureList);

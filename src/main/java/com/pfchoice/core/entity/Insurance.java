@@ -45,7 +45,7 @@ public class Insurance extends RecordDetails implements Serializable {
 	private PlanType planTypeId;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ins")
-	private Set<ReferenceContact> refInsContacts = new HashSet<ReferenceContact>();
+	private Set<ReferenceContact> refInsContacts = new HashSet<>();
 
 	/**
 	 * 

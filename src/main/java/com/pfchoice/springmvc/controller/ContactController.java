@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Contact;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
@@ -110,8 +111,7 @@ public class ContactController {
 	@ModelAttribute("zipCodeList")
 	public List<ZipCode> populateZipCodeList() {
 
-		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(1);
-		return zipCodeList;
+		return zipCodeService.findByStateCode(1);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ContactController {
 
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
-		return "membershipContactEdit";
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString(); 
 	}
 
 	/**
@@ -137,6 +137,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/membership/{id}/contact/{cntId}",
 			"/user/membership/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateMembershipContact1Page(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		logger.info("membership id is"+id);
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();
@@ -146,7 +147,7 @@ public class ContactController {
 		model.addAttribute("zipCodeList", zipCodeList);
 		model.addAttribute("contact", dbContact);
 		logger.info("Returning contactEdit.jsp page");
-		return "membershipContactEdit";
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 	}
 
 	/**
@@ -166,7 +167,7 @@ public class ContactController {
 		model.addAttribute("zipCodeList", zipCodeList);
 		model.addAttribute("contact", dbContact);
 		logger.info("Returning contactDisplay.jsp page");
-		return "membershipContactDisplay";
+		return TileDefinitions.MEMBERSHIPCONTACTDISPLAY.toString();
 	}
 
 	/**
@@ -180,7 +181,7 @@ public class ContactController {
 		List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
 		model.addAttribute("contactList", listBean);
 
-		return "membershipContactList";
+		return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
 	}
 
 	/**
@@ -308,6 +309,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/provider/{id}/contact/{cntId}",
 			"/user/provider/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateProviderContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();

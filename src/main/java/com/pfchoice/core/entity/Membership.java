@@ -63,7 +63,7 @@ public class Membership extends RecordDetails implements Serializable {
 	private Ethinicity ethinicCode;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
-	private Set<ReferenceContact> refMbrContacts = new HashSet<ReferenceContact>();
+	private Set<ReferenceContact> refMbrContacts = new HashSet<>();
 
 	@Expose
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
