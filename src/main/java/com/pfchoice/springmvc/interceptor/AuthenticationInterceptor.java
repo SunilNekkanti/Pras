@@ -57,9 +57,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		LOG.info(MessageFormat.format(CommonLogContent.USER_TRY_ACCESS, id, request.getRequestURI(),
 				request.getRemoteAddr()));
 
-		if (!request.getRequestURI().equals("/Pras/") && !request.getRequestURI().equals("/Pras/loginform")
-				&& !request.getRequestURI().equals("/Pras/loginform.html")
-				&& !request.getRequestURI().equals("/Pras/index") && !isAuthenticatedUser(id, credential)) {
+		if (!"/Pras/".equals(request.getRequestURI()) && !"/Pras/loginform".equals(request.getRequestURI())
+				&& !"/Pras/loginform.html".equals(request.getRequestURI())
+				&& !"/Pras/index".equals(request.getRequestURI()) && !isAuthenticatedUser(id, credential)) {
 			status = false;
 			forbiddenResponse(response);
 			LOG.warn(MessageFormat.format(CommonLogContent.USER_ACCESS_FAILED, id, credential, request.getRequestURI(),

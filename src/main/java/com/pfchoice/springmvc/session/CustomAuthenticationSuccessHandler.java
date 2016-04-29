@@ -31,13 +31,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		session.setAttribute(SystemDefaultProperties.ID, authUser.getUsername());
 		if (authentication.getAuthorities() != null) {
 			List<GrantedAuthority> adminauthorities = authentication.getAuthorities().stream()
-					.filter(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))
+					.filter(grantedAuthority -> "ROLE_ADMIN".equals(grantedAuthority.getAuthority()))
 					.collect(Collectors.toList());
 			if (adminauthorities.size() > 0) {
 				session.setAttribute("userpath", "admin");
 			} else {
 				List<GrantedAuthority> userauthorities = authentication.getAuthorities().stream()
-						.filter(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USER"))
+						.filter(grantedAuthority -> "ROLE_USER".equals(grantedAuthority.getAuthority()))
 						.collect(Collectors.toList());
 
 				if (userauthorities.size() > 0) {
