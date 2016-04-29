@@ -58,14 +58,12 @@ public class ContactValidator implements Validator {
 		}
 
 		// email validation in spring
-		if (cnt.getEmail().length() > 1) {
-			if (cnt.getEmail() != null && !cnt.getEmail().isEmpty()) {
+		if (cnt.getEmail().length() > 1 && cnt.getEmail() != null && !cnt.getEmail().isEmpty()) {
 				pattern = Pattern.compile(EMAIL_PATTERN);
 				matcher = pattern.matcher(cnt.getEmail());
 				if (!matcher.matches()) {
 					errors.rejectValue("email", "email.incorrect", "Enter a correct email");
 				}
-			}
 		}
 
 	}

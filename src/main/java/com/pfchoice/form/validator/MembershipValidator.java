@@ -40,8 +40,7 @@ public class MembershipValidator implements Validator {
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "error.dob", "DOB Required");
-		if (mbr.getDob() != null) {
-			if (mbr.getDob().after(new Date()))
+		if (mbr.getDob() != null && mbr.getDob().after(new Date())) {
 				errors.rejectValue("dob", "error.date.future", "Date must be less than current date");
 		}
 

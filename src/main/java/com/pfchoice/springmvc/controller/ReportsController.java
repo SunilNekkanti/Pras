@@ -103,7 +103,6 @@ public class ReportsController {
 		if (mbrHedisMeasureList != null) {
 			mbrHedisMeasureList.forEach(ruleMap -> {
 				for (Map.Entry<Integer, String> entry : ruleMap.entrySet()) {
-					System.out.println("key :" + entry.getKey() + " value:" + entry.getValue());
 					MembershipHedisMeasure dbMembershipHedisMeasure = mbrHedisMeasureService.findById(entry.getKey());
 					SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 					String dateOfService = entry.getValue();
