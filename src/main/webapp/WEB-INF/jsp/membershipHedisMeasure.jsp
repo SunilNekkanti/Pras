@@ -20,7 +20,7 @@
 					<div class="panel-group">
 						<div class="panel panel-success">
 							<div class="panel-heading">
-								Membership Hedis Measure</span>
+								Membership Hedis Measure
 							</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12">
@@ -67,7 +67,7 @@
 					<div class="panel-group">
 						<div class="panel panel-success">
 							<div class="panel-heading">
-								Membership Hedis Measure</span>
+								Membership Hedis Measure
 							</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12 ">

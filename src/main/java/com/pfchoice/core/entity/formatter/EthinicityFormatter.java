@@ -29,6 +29,8 @@ public class EthinicityFormatter implements Formatter<Ethinicity> {
 	 */
 	@Override
 	public Ethinicity parse(String id, Locale arg1) throws ParseException {
+		
 		return ethinicityService.findById(Byte.parseByte(id));
+		
 	}
 }

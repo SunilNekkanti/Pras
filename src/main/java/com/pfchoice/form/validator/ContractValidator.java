@@ -15,7 +15,9 @@ public class ContractValidator implements Validator {
 	 */
 	@Override
 	public boolean supports(Class<?> paramClass) {
+		
 		return Contract.class.equals(paramClass);
+		
 	}
 
 	/* (non-Javadoc)
@@ -23,9 +25,11 @@ public class ContractValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
-
+		
 		Contract contract = (Contract) obj;
+		
 		if (contract.getId() != null && contract.getId() <= 0) {
+			
 				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contractNBR", "error.contractNBR", "Contract NBR Required");

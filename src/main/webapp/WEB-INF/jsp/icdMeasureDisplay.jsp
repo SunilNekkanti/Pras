@@ -32,7 +32,7 @@
 	<div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#" data-toggle="tab">ICD
+				<li class="active"><a href="#" >ICD
 						Measure</a></li>
 			</ul>
 		</div>

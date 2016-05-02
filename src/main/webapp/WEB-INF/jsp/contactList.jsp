@@ -44,8 +44,6 @@
 				</thead>
 
 				<tbody id="content">
-					<div id="show_per_page"></div>
-					<div id="current_page"></div>
 					<c:forEach items="${contactList}" var="cntct">
 						<tr>
 							<td><c:choose>
@@ -115,7 +113,6 @@
 				</tbody>
 
 				<tfoot>
-					<div class="col-md-12 text-center" id="page_navigation"></div>
 				</tfoot>
 			</table>
 		</div>

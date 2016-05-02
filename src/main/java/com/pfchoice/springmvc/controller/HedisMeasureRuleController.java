@@ -388,7 +388,7 @@ public class HedisMeasureRuleController {
 			@RequestParam(required = false) String sSearch, 
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false) String sortdir) {
-
+		
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
 		Set<CPTMeasure> hedisRuleCPTMeasureList = dbHedisMeasureRule.getCptCodes();
 
