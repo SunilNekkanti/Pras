@@ -35,6 +35,7 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 			or.add(Restrictions.ilike("code", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("shortDescription", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("description", "%" + sSearch + "%"));
+			crit.add(or);
 		}
 
 		if (sort != null && !"".equals(sort)) {
