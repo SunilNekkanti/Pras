@@ -24,6 +24,7 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
