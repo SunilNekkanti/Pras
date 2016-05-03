@@ -188,7 +188,8 @@ public class HedisMeasureRuleController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/hedisMeasureRule/new")
+	@RequestMapping(value ={ "/admin/hedisMeasureRule/new" ,
+			"/user/hedisMeasureRule/new"})
 	public String addHedisMeasureRulePage(Model model) {
 
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
