@@ -832,7 +832,7 @@ public class ContractController {
 	@RequestMapping(value = { "/admin/insurance/{id}/contractJsonList",
 			"/user/insurance/{id}/contractJsonList" }, method = RequestMethod.GET)
 	public Message viewInsuranceContract(@PathVariable Integer id)  {
-		List<Contract> listBean = contractService.findAllContractsByRefId("insuranceProvider", id);
+		List<Contract> listBean = contractService.findAllContractsByRefId("insurance", id);
 		return Message.successMessage(CommonMessageContent.CONTRACT_LIST, JsonConverter.getJsonObject(listBean));
 	}
 
