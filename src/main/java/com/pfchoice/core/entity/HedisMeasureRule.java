@@ -49,6 +49,10 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
 	private Insurance insId;
+	
+	@Expose
+	@Column(name = "cpt_or_icd")
+	private Byte cptOrIcd;
 
 	@Expose
 	@OneToOne
@@ -173,6 +177,21 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	 */
 	public void setInsId(Insurance insId) {
 		this.insId = insId;
+	}
+	
+	
+	/**
+	 * @return the cptOrIcd
+	 */
+	public Byte getCptOrIcd() {
+		return cptOrIcd;
+	}
+
+	/**
+	 * @param cptOrIcd the cptOrIcd to set
+	 */
+	public void setCptOrIcd(Byte cptOrIcd) {
+		this.cptOrIcd = cptOrIcd;
 	}
 
 	/**

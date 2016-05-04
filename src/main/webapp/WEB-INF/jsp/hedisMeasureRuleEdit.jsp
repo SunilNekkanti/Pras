@@ -236,6 +236,19 @@ $.ajax( {
 			</div>
 
 			<div class="form-group required">
+				<label class="control-label   col-sm-2" for="cptOrIcd">CPT /
+					ICD</label>
+				<div class="col-sm-6">
+					<label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="0" />CPT
+					</label> <label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="1" />ICD
+					</label>
+					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
+				</div>
+			</div>
+
+			<div class="form-group required">
 				<label class="control-label col-sm-2" for="cpt">CPT Code</label>
 				<div class="col-sm-6">
 					<springForm:select multiple="true" path="cptCodes"
@@ -467,8 +480,9 @@ $(document).ready(function() {
    		  $("#updateButton").html("Add");
    		  $("#deleteButton").attr("name", "reset");
    		  $("#deleteButton").html("Reset");
-   		  $('#insId option:selected').remove();      
-   		 
+   		  $('#insurance option:selected').remove();   
+   		  $('#insurance').hide();   
+   		  $('#insurance').show();   
    });
 	
 	 $("#effectiveYear").keydown(function(event) {
@@ -503,10 +517,10 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 	}	
 	
 	var description = $("#description").val().length;
-	if (description < 6) {
+	if (description < 3) {
 		$("#description").closest( "div" ).addClass( "has-error" );
 		$('#description').closest( "div" ).find('span').remove();
-		$( "#description" ).after("<span  class='text-danger'>Description atleast 5 characters</span>" );
+		$( "#description" ).after("<span  class='text-danger'>Description atleast 3 characters</span>" );
 		error_count++;
 	}
 	else
