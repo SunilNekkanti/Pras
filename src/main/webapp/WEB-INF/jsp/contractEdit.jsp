@@ -204,7 +204,7 @@ $(document).ready(function(){
     	else if($(".pmpmText").html().length > 0)
     	{
     		var pmpmText = $(".pmpmText").html();
-    		if(pmpmText < $("#PMPM").val())
+    		if(Number(pmpmText) < Number($("#PMPM").val()))
     		{
     			$("#PMPM").val('');
     			alert("PMPM not greater than "+ pmpmText);
