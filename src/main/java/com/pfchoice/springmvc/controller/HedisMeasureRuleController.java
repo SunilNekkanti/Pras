@@ -188,8 +188,7 @@ public class HedisMeasureRuleController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value ={ "/admin/hedisMeasureRule/new" ,
-			"/user/hedisMeasureRule/new"})
+	@RequestMapping(value = "/admin/hedisMeasureRule/new")
 	public String addHedisMeasureRulePage(Model model) {
 
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
@@ -294,6 +293,7 @@ public class HedisMeasureRuleController {
 	public String saveHedisMeasureRuleAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("hedisMeasurerule id is"+id);
 		hedisMeasureRule.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			hedisMeasureRule.setActiveInd('Y');
@@ -324,7 +324,7 @@ public class HedisMeasureRuleController {
 	public String deleteHedisMeasureAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		logger.info("hedisMeasurerule id is"+id);
 		if (bindingResult.hasErrors()) {
 			hedisMeasureRule.setActiveInd('Y');
 			logger.info("Returning  hedisMeasureRuleEdit.jsp page");

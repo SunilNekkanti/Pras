@@ -168,7 +168,7 @@ public class MembershipController {
 	public String saveMembershipAction(@PathVariable Integer id,
 			@ModelAttribute("membership") @Validated Membership membership, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-
+		logger.info("membership id is"+id);
 		if (bindingResult.hasErrors()) {
 			membership.setActiveInd('Y');
 			logger.info("Returning membershipEdit.jsp page");
@@ -197,7 +197,7 @@ public class MembershipController {
 			"/user/membership/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteMembershipAction(@PathVariable Integer id, @Validated Membership membership,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		logger.info("membership id is"+id);
 		if (bindingResult.hasErrors()) {
 			membership.setActiveInd('Y');
 			logger.info("Returning membershipEdit.jsp page");
@@ -226,7 +226,7 @@ public class MembershipController {
 	public String displayMembershipDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId, Model model) {
 		MembershipInsurance dbMembershipInsurance = membershipInsuranceService.findById(mbrInsId);
 		logger.info("Returning dbMembershipInsurance.getId()" + dbMembershipInsurance.getId());
-
+		logger.info("membership id is"+id);
 		model.addAttribute("membershipInsurance", dbMembershipInsurance);
 		logger.info("Returning membershipDetailsDisplay.jsp page");
 		return "membershipDetailsDisplay";
@@ -264,7 +264,7 @@ public class MembershipController {
 	public String saveMembershipDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId,
 			@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		logger.info("membership id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			membershipInsurance.setActiveInd('Y');
@@ -293,7 +293,7 @@ public class MembershipController {
 	public String newMembershipInDetailsPage(@PathVariable Integer id,
 			@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		logger.info("membership id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			membershipInsurance.setActiveInd('Y');
@@ -326,7 +326,7 @@ public class MembershipController {
 	public String deleteMembershipInsDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId,
 			@ModelAttribute("membershipInsurance") @Validated MembershipInsurance membershipInsurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		logger.info("membership id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			membershipInsurance.setActiveInd('Y');
@@ -387,7 +387,7 @@ public class MembershipController {
 	public String displayInactiveMembershipProviderDetailsPage(@PathVariable Integer id,
 			@PathVariable Integer mbrPrvdrId, @ModelAttribute @Validated MembershipProvider membershipProvider,
 			BindingResult bindingResult, Model model)  {
-
+		logger.info("membership id is"+id);
 		MembershipProvider dbMembershipProvider = membershipProviderService.findById(mbrPrvdrId);
 		model.addAttribute("membershipProvider", dbMembershipProvider);
 		logger.info("Returning membershipProviderEdit.jsp page");

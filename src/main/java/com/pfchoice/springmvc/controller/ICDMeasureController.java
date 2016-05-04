@@ -156,6 +156,7 @@ public class ICDMeasureController {
 	public String saveICDMeasureAction(@PathVariable Integer id,
 			@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
+		logger.info("icd measurerule id is"+id);
 		icdMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  icdMeasureEdit.jsp page");
@@ -178,7 +179,7 @@ public class ICDMeasureController {
 	public String deleteICDMeasureAction(@PathVariable Integer id,
 			@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-
+		logger.info("icd measurerule id is"+id);
 		if (bindingResult.hasErrors()) {
 			icdMeasure.setActiveInd('Y');
 			logger.info("Returning  icdMeasureEdit.jsp page");

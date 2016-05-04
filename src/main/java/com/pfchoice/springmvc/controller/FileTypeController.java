@@ -107,6 +107,7 @@ public class FileTypeController {
 	public String updateUserAction(@PathVariable Integer id, @Validated FileType fileType, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
 		fileType.setActiveInd('Y');
+		 logger.info("file type id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning fileTypeEdit.jsp page");
 			return "fileTypeEdit";
@@ -132,6 +133,7 @@ public class FileTypeController {
 			"/user/fileType/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated FileType fileType,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		 logger.info("file type id is"+id);
 		if (bindingResult.hasErrors()) {
 			fileType.setActiveInd('Y');
 			logger.info("Returning fileTypeEdit.jsp page");

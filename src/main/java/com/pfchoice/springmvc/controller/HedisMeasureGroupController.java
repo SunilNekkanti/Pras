@@ -108,6 +108,7 @@ public class HedisMeasureGroupController {
 	public String updateUserAction(@PathVariable Integer id, @Validated HedisMeasureGroup hedisMeasureGroup,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		hedisMeasureGroup.setActiveInd('Y');
+		 logger.info("hedisMeasureGroup id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
 			return "hedisMeasureGroupEdit";
@@ -133,6 +134,7 @@ public class HedisMeasureGroupController {
 			"/user/hedisMeasureGroup/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated HedisMeasureGroup hedisMeasureGroup,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("hedisMeasureGroup id is"+id);
 		if (bindingResult.hasErrors()) {
 			hedisMeasureGroup.setActiveInd('Y');
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");

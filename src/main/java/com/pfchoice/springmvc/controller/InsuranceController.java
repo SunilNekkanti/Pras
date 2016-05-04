@@ -159,6 +159,7 @@ public class InsuranceController {
 	public String updateInsuranceAction(@PathVariable Integer id, @ModelAttribute @Validated Insurance insurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		insurance.setActiveInd('Y');
+		logger.info("insurance id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning insuranceEdit.jsp page");
 			insurance.setActiveInd('Y');

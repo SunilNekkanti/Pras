@@ -151,6 +151,7 @@ public class UserController {
 	public String updateUserAction(@PathVariable Integer id, @Validated User user, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
 		user.setActiveInd('Y');
+		logger.info("user id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning userEdit.jsp page");
 			return "userEdit";
@@ -176,6 +177,7 @@ public class UserController {
 			"/user/user/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated User user, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
+		logger.info("user id is"+id);
 		if (bindingResult.hasErrors()) {
 			user.setActiveInd('Y');
 			logger.info("Returning userEdit.jsp page");

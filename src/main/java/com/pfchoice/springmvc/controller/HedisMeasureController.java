@@ -225,6 +225,7 @@ public class HedisMeasureController {
 	public String saveHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		hedisMeasure.setActiveInd('Y');
+		 logger.info("hedis measure id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
 			hedisMeasure.setUpdatedBy(username);
@@ -253,6 +254,7 @@ public class HedisMeasureController {
 	public String deleteHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		hedisMeasure.setActiveInd('Y');
+		 logger.info("hedis measure id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
 			return "hedisMeasureEdit";

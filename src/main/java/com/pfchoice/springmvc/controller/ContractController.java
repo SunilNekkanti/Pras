@@ -38,6 +38,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.Message;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Contract;
 import com.pfchoice.core.entity.FilesUpload;
 import com.pfchoice.core.entity.Insurance;
@@ -104,13 +105,13 @@ public class ContractController {
 	 */
 	@RequestMapping(value = "/admin/provider/{id}/contract/new")
 	public String addProviderContractPage(@PathVariable Integer id, Model model) {
-
+		logger.info("provider id is"+id);
 		Contract contract = createContractModel();
 		model.addAttribute("contract", contract);
 		model.addAttribute("contractType", "Standard Contract");
 		model.addAttribute("pmpmRequired", false);
 
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/**
@@ -130,7 +131,7 @@ public class ContractController {
 		model.addAttribute("contractType", "Standard Contract");
 
 		logger.info("Returning contractEdit.jsp page");
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/**
@@ -146,7 +147,7 @@ public class ContractController {
 		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", false);
 		model.addAttribute("contractType", "Standard Contract");
-		return "providerContractList";
+		return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 	}
 
 	/**
@@ -162,7 +163,7 @@ public class ContractController {
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", false);
 		logger.info("Returning contractDisplay.jsp page");
-		return "contractDisplay";
+		return TileDefinitions.PROVIDERCONTRACTDISPLAY.toString();
 	}
 
 	/**
@@ -176,6 +177,8 @@ public class ContractController {
 	@RequestMapping(value = { "/admin/provider/{id}/contract/{cntId}" }, method = RequestMethod.GET)
 	public String updateProviderContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model,
 			HttpServletResponse response) throws IOException {
+		logger.info("provider id is"+id);
+
 		Contract dbContract = contractService.findById(cntId);
 		if (dbContract == null) {
 			dbContract = createContractModel();
@@ -185,7 +188,7 @@ public class ContractController {
 		model.addAttribute("contractType", "Standard Contract");
 
 		logger.info("Returning contractEdit.jsp page");
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/**
@@ -202,9 +205,10 @@ public class ContractController {
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 		model.addAttribute("contractType", "Standard Contract");
+		logger.info("provider id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contractEdit.jsp page");
-			return "providerContractEdit";
+			return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 		} else {
 			Provider dbProvider = providerService.findById(id);
 			model.addAttribute("contract", contract);
@@ -233,7 +237,7 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", false);
 			model.addAttribute("pmpmRequired", false);
-			return "providerContractList";
+			return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 		}
 	}
 
@@ -250,12 +254,13 @@ public class ContractController {
 	public String saveproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
+		logger.info("provider id is"+id);
 		model.addAttribute("contractType", "Standard Contract");
 		contract.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contractEdit.jsp page");
 			contract.setActiveInd('Y');
-			return "providerContractEdit";
+			return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 		} else {
 			final Integer cntId = contract.getId();
 			if (cntId != null) {
@@ -282,7 +287,7 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", false);
 			model.addAttribute("pmpmRequired", false);
-			return "providerContractList";
+			return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 		}
 	}
 
@@ -311,7 +316,7 @@ public class ContractController {
 		model.addAttribute("contractList", listBean);
 		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", false);
-		return "providerContractList";
+		return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 	}
 
 	/**
@@ -328,7 +333,7 @@ public class ContractController {
 		model.addAttribute("pmpmRequired", true);
 		model.addAttribute("contractType", "Contract");
 		logger.info("Returning insuranceContractList.jsp page");
-		return "insuranceContractList";
+		return TileDefinitions.INSURANCECONTRACTLIST.toString();
 	}
 
 	/** contract Display where activeInd =N **/
@@ -343,10 +348,11 @@ public class ContractController {
 	public String displayProviderContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
 		Contract dbContract = contractService.findById(cntId);
 		logger.info("Returning contract.getId()" + dbContract.getId());
+		logger.info("provider id is"+id);
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", true);
 		logger.info("Returning contractDisplay.jsp page");
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/** End of contract display **/
@@ -360,11 +366,12 @@ public class ContractController {
 	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/new")
 	public String addInsuranceContractPage(@PathVariable Integer id, Model model) {
+		logger.info("insurance id is"+id);
 		Contract contract = createContractModel();
 		model.addAttribute("contract", contract);
 		model.addAttribute("pmpmRequired", true);
 		model.addAttribute("contractType", "Contract");
-		return "insuranceContractEdit";
+		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 	}
 
 	/**
@@ -380,12 +387,12 @@ public class ContractController {
 	public String addMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
-
+		logger.info("insurance id is"+id);
 		model.addAttribute("contractType", "Contract");
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pmpmRequired", true);
 			logger.info("Returning insuranceContractEdit.jsp page");
-			return "insuranceContractEdit";
+			return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 		}
 		Insurance dbInsurance = insuranceService.findById(id);
 		logger.info("Returning insurance.getId()" + dbInsurance.getId());
@@ -416,7 +423,7 @@ public class ContractController {
 		model.addAttribute("contractList", listBean);
 		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", true);
-		return "insuranceContractList";
+		return TileDefinitions.INSURANCECONTRACTLIST.toString();
 	}
 
 	/**
@@ -433,13 +440,13 @@ public class ContractController {
 	public String saveMembershipContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
-
+		logger.info("insurance id is"+id);
 		model.addAttribute("contractType", "Contract");
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning insuranceContractEdit.jsp page");
 			model.addAttribute("pmpmRequired", true);
 			contract.setActiveInd('Y');
-			return "insuranceContractEdit";
+			return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 		}
 
 		if (null != contract.getId()) {
@@ -465,9 +472,9 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", false);
 			model.addAttribute("pmpmRequired", true);
-			return "insuranceContractList";
+			return TileDefinitions.INSURANCECONTRACTLIST.toString();
 		}
-		return "insuranceContractEdit";
+		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 	}
 
 	/**
@@ -482,14 +489,14 @@ public class ContractController {
 			"delete" })
 	public String deleteInsuranceContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		logger.info("insurance id is"+id);
 		model.addAttribute("contractType", "Contract");
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pmpmRequired", true);
 			model.addAttribute("contractType", "Contract");
 			logger.info("Returning insuranceContractEdit.jsp page");
 			contract.setActiveInd('Y');
-			return "insuranceContractEdit";
+			return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 		}
 
 		if (null != contract.getId()) {
@@ -507,9 +514,9 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", false);
 			model.addAttribute("pmpmRequired", true);
-			return "insuranceContractList";
+			return TileDefinitions.INSURANCECONTRACTLIST.toString();
 		}
-		return "insuranceContractEdit";
+		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 
 	}
 
@@ -521,6 +528,7 @@ public class ContractController {
 	 */
 	@RequestMapping(value = "/admin/insurance/{id}/contract/{cntId}", method = RequestMethod.GET)
 	public String updateInsuranceContractPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		logger.info("insurance id is"+id);
 		Contract dbContract = contractService.findById(cntId);
 		model.addAttribute("contractType", "Contract");
 		if (dbContract == null) {
@@ -530,7 +538,7 @@ public class ContractController {
 		model.addAttribute("pmpmRequired", true);
 
 		logger.info("Returning insuranceContractEdit.jsp page");
-		return "insuranceContractEdit";
+		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 	}
 
 	/**
@@ -546,7 +554,7 @@ public class ContractController {
 		model.addAttribute("pmpmRequired", true);
 		model.addAttribute("contract", dbContract);
 		logger.info("Returning contractDisplay.jsp page");
-		return "insuranceContractEdit";
+		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 	}
 
 	/* -- End of Insurance Contract */
@@ -574,7 +582,7 @@ public class ContractController {
 		// response.getWriter().write(fileContent);
 
 		logger.info("Returning contractFile page");
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/**
@@ -593,7 +601,7 @@ public class ContractController {
 		model.addAttribute("pmpmRequired", true);
 		model.addAttribute("contractType", "Third Party Agreement");
 		model.addAttribute("insuranceList", insList);
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/**
@@ -609,7 +617,7 @@ public class ContractController {
 		model.addAttribute("insuranceRequired", true);
 		model.addAttribute("contractType", "Third Party Agreement");
 		model.addAttribute("pmpmRequired", true);
-		return "providerContractList";
+		return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 	}
 
 	/**
@@ -624,6 +632,7 @@ public class ContractController {
 	@RequestMapping(value = "/admin/provider/{id}/prvdrInsContract/{cntId}", method = RequestMethod.GET)
 	public String updateInsuranceProviderContractPage(@PathVariable Integer id, @PathVariable Integer cntId,
 			Model model, HttpServletResponse response) throws IOException {
+		logger.info("insurance id is"+id);
 		Contract dbContract = contractService.findById(cntId);
 		model.addAttribute("contractType", "Third Party Agreement");
 		if (dbContract == null) {
@@ -648,7 +657,7 @@ public class ContractController {
 		model.addAttribute("pmpmRequired", true);
 
 		logger.info("Returning contractEdit.jsp page");
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
 
 	/**
@@ -674,7 +683,7 @@ public class ContractController {
 			model.addAttribute("insuranceRequired", true);
 
 			logger.info("Returning contractEdit.jsp page");
-			return "providerContractEdit";
+			return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 		} else {
 			final Integer insId = contract.getInsId();
 			Insurance dbInsurance = insuranceService.findById(insId);
@@ -705,7 +714,7 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", true);
 			model.addAttribute("pmpmRequired", true);
-			return "providerContractList";
+			return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 		}
 	}
 
@@ -735,7 +744,7 @@ public class ContractController {
 			model.addAttribute("insuranceRequired", true);
 			logger.info("Returning contractEdit.jsp page");
 			contract.setActiveInd('Y');
-			return "providerContractEdit";
+			return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 		} else {
 			final Integer cntId = contract.getId();
 			if (cntId != null) {
@@ -766,7 +775,7 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", true);
 			model.addAttribute("pmpmRequired", true);
-			return "providerContractList";
+			return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 		}
 	}
 
@@ -791,7 +800,7 @@ public class ContractController {
 			model.addAttribute("insuranceRequired", true);
 			logger.info("Returning providerContractEdit.jsp page");
 			contract.setActiveInd('Y');
-			return "providerContractEdit";
+			return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 		}
 		final Integer cntId = contract.getId();
 		if (cntId != null) {
@@ -809,9 +818,9 @@ public class ContractController {
 			List<Contract> listBean = contractService.findAllContractsByRefId("providerInsurance", id);
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", true);
-			return "providerContractList";
+			return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 		}
-		return "providerContractEdit";
+		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 
 	}
 

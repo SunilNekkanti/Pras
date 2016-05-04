@@ -107,6 +107,7 @@ public class PlanTypeController {
 	public String updateUserAction(@PathVariable Integer id, @Validated PlanType planType, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
 		planType.setActiveInd('Y');
+		 logger.info("plan type id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning planTypeEdit.jsp page");
 			return "planTypeEdit";
@@ -132,6 +133,7 @@ public class PlanTypeController {
 			"/user/planType/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated PlanType planType,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		 logger.info("plan type id is"+id);
 		if (bindingResult.hasErrors()) {
 			planType.setActiveInd('Y');
 			logger.info("Returning planTypeEdit.jsp page");

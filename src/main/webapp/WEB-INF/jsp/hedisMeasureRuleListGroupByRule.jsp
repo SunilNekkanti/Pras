@@ -113,7 +113,7 @@ $.ajax( {
 								  	     "sAjaxDataProp" : 'data.list',
 								  	     "aoColumns": [
 								                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ],"sClass":"center"  },
-								                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "10%" , "sDefaultContent": "" ,"sClass":"center" ,
+								                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "20%" , "sDefaultContent": "" ,
 								                        	 "render": function ( data, type, full, meta ) {
 								                                 return '<a href="${context}/hedisMeasureRule/'+full.id+'">'+data+'</a>';
 								                		      }
@@ -143,8 +143,8 @@ $.ajax( {
 											                                   return icdCodeList.join(', ');
 											                               }  
 						                                 },
-								                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "10%" ,"sClass":"center", "sDefaultContent": ""},
-								                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%", "sDefaultContent": "","sClass":"center"   },
+								                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "5%" ,"sClass":"center", "sDefaultContent": ""},
+								                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "","sClass":"center"   },
 								                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "" ,"sClass":"center"  },
 								                         { "mDataProp": "upperAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%" , "sDefaultContent": "" ,"sClass":"center" },
 								                         { "mDataProp": "ageEffectiveFrom","bSearchable" : true, "bSortable": true,"sWidth" : "10%" , "sDefaultContent": "","sClass":"center",
@@ -215,8 +215,8 @@ $.ajax( {
 							<th scope="col">Hedis Code</th>
 							<th scope="col">CPT Codes</th>
 							<th scope="col">ICD Codes</th>
-							<th scope="col">Dose Count</th>
-							<th scope="col">Gender</th>
+							<th scope="col">Dose</th>
+							<th scope="col">Sex</th>
 							<th scope="col">Lower Age Limit</th>
 							<th scope="col">Upper Age Limit</th>
 							<th scope="col">Eff. Date From</th>

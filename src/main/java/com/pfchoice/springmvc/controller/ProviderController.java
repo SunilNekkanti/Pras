@@ -164,6 +164,7 @@ public class ProviderController {
 	public String updateProviderAction(@PathVariable Integer id, @Validated Provider provider,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		provider.setActiveInd('Y');
+		logger.info("provider id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning providerEdit.jsp page");
 			return "providerEdit";

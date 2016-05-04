@@ -122,7 +122,7 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/membership/{id}/contact/new", "/user/membership/{id}/contact/new" })
 	public String addContactPage(@PathVariable Integer id, @ModelAttribute("username") String username, Model model) {
-
+		logger.info("membership id is"+id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
 		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString(); 
@@ -161,7 +161,7 @@ public class ContactController {
 	public String displayMembershipContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		logger.info("Returning contact.getId()" + dbContact.getId());
-
+		logger.info("membership id is"+id);
 		final Integer stateId = dbContact.getStateCode().getCode();
 		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
 		model.addAttribute("zipCodeList", zipCodeList);
@@ -196,9 +196,10 @@ public class ContactController {
 			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("membership id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
-			return "membershipContactEdit";
+			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 		}
 
 		Membership dbMembership = membershipService.findById(id);
@@ -219,7 +220,7 @@ public class ContactController {
 		List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
 		model.addAttribute("contactList", listBean);
 
-		return "membershipContactList";
+		return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
 	}
 
 	/**
@@ -234,11 +235,12 @@ public class ContactController {
 			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("membership id is"+id);
 		contact.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			contact.setActiveInd('Y');
 			logger.info("Returning contactEdit.jsp page");
-			return "membershipContactEdit";
+			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 		}
 		if (null != contact.getId()) {
 			logger.info("Returning ContactEditSuccess.jsp page after update");
@@ -252,10 +254,10 @@ public class ContactController {
 			List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
 			model.addAttribute("contactList", listBean);
 
-			return "membershipContactList";
+			return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
 		}
 
-		return "membershipContactEdit";
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 	}
 
 	/**
@@ -282,9 +284,9 @@ public class ContactController {
 			model.addAttribute("Message", "Member Contact Deleted Successfully");
 			List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
 			model.addAttribute("contactList", listBean);
-			return "membershipContactList";
+			return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
 		}
-		return "membershipContactEdit";
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 	}
 
 	/**
@@ -294,10 +296,10 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/provider/{id}/contact/new", "/user/provider/{id}/contact/new" })
 	public String addProviderContactPage(@PathVariable Integer id, Model model) {
-
+		logger.info("provider id is"+id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
-		return "providerContactEdit";
+		return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 	}
 
 	/**
@@ -309,7 +311,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/provider/{id}/contact/{cntId}",
 			"/user/provider/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateProviderContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
-		
+		logger.info("provider id is"+id);
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();
@@ -319,7 +321,7 @@ public class ContactController {
 		model.addAttribute("zipCodeList", zipCodeList);
 		model.addAttribute("contact", dbContact);
 		logger.info("Returning contactEdit.jsp page");
-		return "providerContactEdit";
+		return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 	}
 
 	/**
@@ -331,6 +333,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/provider/{id}/contact/{cntId}/display",
 			"/user/provider/{id}/contact/{cntId}/display" }, method = RequestMethod.GET)
 	public String displayProviderContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		logger.info("provider id is"+id);
 		Contact dbContact = contactService.findById(cntId);
 		logger.info("Returning contact.getId()" + dbContact.getId());
 
@@ -339,7 +342,7 @@ public class ContactController {
 		model.addAttribute("zipCodeList", zipCodeList);
 		model.addAttribute("contact", dbContact);
 		logger.info("Returning contactDisplay.jsp page");
-		return "providerContactDisplay";
+		return TileDefinitions.PROVIDERCONTACTDISPLAY.toString();
 	}
 
 	/**
@@ -353,7 +356,7 @@ public class ContactController {
 		List<Contact> listBean = contactService.findAllContactsByRefId("provider", id);
 		model.addAttribute("contactList", listBean);
 
-		return "providerContactList";
+		return TileDefinitions.PROVIDERCONTACTLIST.toString();
 	}
 
 	/**
@@ -368,10 +371,11 @@ public class ContactController {
 			"/user/provider/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("provider id is"+id);
 		if (bindingResult.hasErrors()) {
 
 			logger.info("Returning contactEdit.jsp page");
-			return "providerContactEdit";
+			return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 		}
 
 		Provider dbProvider = providerService.findById(id);
@@ -392,7 +396,7 @@ public class ContactController {
 		model.addAttribute("Message", "Provider Contact Added Successfully");
 		List<Contact> listBean = contactService.findAllContactsByRefId("provider", id);
 		model.addAttribute("contactList", listBean);
-		return "providerContactList";
+		return TileDefinitions.PROVIDERCONTACTLIST.toString();
 	}
 
 	/**
@@ -407,11 +411,12 @@ public class ContactController {
 			"/user/provider/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("provider id is"+id);
 		contact.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			contact.setActiveInd('Y');
 			logger.info("Returning contactEdit.jsp page");
-			return "providerContactEdit";
+			return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 		}
 
 		if (null != contact.getId()) {
@@ -426,10 +431,10 @@ public class ContactController {
 			model.addAttribute("Message", "Provider Contact Updated Successfully");
 			List<Contact> listBean = contactService.findAllContactsByRefId("provider", id);
 			model.addAttribute("contactList", listBean);
-			return "providerContactList";
+			return TileDefinitions.PROVIDERCONTACTLIST.toString();
 		}
 
-		return "providerContactEdit";
+		return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 	}
 
 	/**
@@ -444,10 +449,11 @@ public class ContactController {
 			"/user/provider/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String saveProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("provider id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			contact.setActiveInd('Y');
-			return "providerContactEdit";
+			return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 		}
 
 		if (null != contact.getId()) {
@@ -462,10 +468,10 @@ public class ContactController {
 			model.addAttribute("Message", "Provider Contact Deleted Successfully");
 			List<Contact> listBean = contactService.findAllContactsByRefId("provider", id);
 			model.addAttribute("contactList", listBean);
-			return "providerContactList";
+			return TileDefinitions.PROVIDERCONTACTLIST.toString();
 		}
 
-		return "providerContactEdit";
+		return TileDefinitions.PROVIDERCONTACTEDIT.toString();
 	}
 
 	/**
@@ -475,10 +481,10 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/insurance/{id}/contact/new", "/user/insurance/{id}/contact/new" })
 	public String addInsuranceContactPage(@PathVariable Integer id, Model model) {
-
+		logger.info("insurance id is"+id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
-		return "insuranceContactEdit";
+		return TileDefinitions.INSURANCECONTACTEDIT.toString();
 	}
 
 	/**
@@ -490,6 +496,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/insurance/{id}/contact/{cntId}",
 			"/user/insurance/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateInsuranceContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		logger.info("insurance id is"+id);
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();
@@ -499,7 +506,7 @@ public class ContactController {
 		model.addAttribute("zipCodeList", zipCodeList);
 		model.addAttribute("contact", dbContact);
 		logger.info("Returning contactEdit.jsp page");
-		return "insuranceContactEdit";
+		return TileDefinitions.INSURANCECONTACTEDIT.toString();
 	}
 
 	/**
@@ -511,6 +518,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/insurance/{id}/contact/{cntId}/display",
 			"/user/insurance/{id}/contact/{cntId}/display" }, method = RequestMethod.GET)
 	public String displayInsuranceContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		logger.info("insurance id is"+id);
 		Contact dbContact = contactService.findById(cntId);
 		logger.info("Returning contact.getId()" + dbContact.getId());
 		final Integer stateId = dbContact.getStateCode().getCode();
@@ -518,7 +526,7 @@ public class ContactController {
 		model.addAttribute("zipCodeList", zipCodeList);
 		model.addAttribute("contact", dbContact);
 		logger.info("Returning contactDisplay.jsp page");
-		return "insuranceContactDisplay";
+		return TileDefinitions.INSURANCECONTACTDISPLAY.toString();
 	}
 
 	/**
@@ -532,7 +540,7 @@ public class ContactController {
 		List<Contact> listBean = contactService.findAllContactsByRefId("insurance", id);
 		model.addAttribute("contactList", listBean);
 
-		return "insuranceContactList";
+		return TileDefinitions.INSURANCECONTACTLIST.toString();
 	}
 
 	/**
@@ -547,9 +555,10 @@ public class ContactController {
 			"/user/insurance/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("insurance id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
-			return "insuranceContactEdit";
+			return TileDefinitions.INSURANCECONTACTEDIT.toString();
 		}
 
 		Insurance dbInsurance = insuranceService.findById(id);
@@ -570,7 +579,7 @@ public class ContactController {
 		List<Contact> listBean = contactService.findAllContactsByRefId("insurance", id);
 		model.addAttribute("contactList", listBean);
 
-		return "insuranceContactList";
+		return TileDefinitions.INSURANCECONTACTLIST.toString();
 
 	}
 
@@ -587,9 +596,10 @@ public class ContactController {
 	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		contact.setActiveInd('Y');
+		logger.info("insurance id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
-			return "insuranceContactEdit";
+			return TileDefinitions.INSURANCECONTACTEDIT.toString();
 		}
 
 		if (null != contact.getId()) {
@@ -605,10 +615,10 @@ public class ContactController {
 			List<Contact> listBean = contactService.findAllContactsByRefId("insurance", id);
 			model.addAttribute("contactList", listBean);
 
-			return "insuranceContactList";
+			return TileDefinitions.INSURANCECONTACTLIST.toString();
 		}
 
-		return "insuranceContactEdit";
+		return TileDefinitions.INSURANCECONTACTEDIT.toString();
 	}
 
 	/**
@@ -623,10 +633,11 @@ public class ContactController {
 			"/user/insurance/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String saveInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("insurance id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			contact.setActiveInd('Y');
-			return "insuranceContactEdit";
+			return TileDefinitions.INSURANCECONTACTEDIT.toString();
 		}
 
 		if (null != contact.getId()) {
@@ -642,10 +653,11 @@ public class ContactController {
 			List<Contact> listBean = contactService.findAllContactsByRefId("insurance", id);
 			model.addAttribute("contactList", listBean);
 
-			return "insuranceContactList";
+			return TileDefinitions.INSURANCECONTACTLIST.toString();
 		}
 
-		return "insuranceContactEdit";
+		return TileDefinitions.INSURANCECONTACTEDIT.toString();
+
 	}
 
 	/**

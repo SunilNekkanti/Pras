@@ -122,6 +122,7 @@ public class CPTMeasureController {
 			@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
 		cptMeasure.setActiveInd('Y');
+		logger.info("cpt id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  cptMeasureEdit.jsp page");
 			return "cptMeasureEdit";
@@ -144,6 +145,7 @@ public class CPTMeasureController {
 			@ModelAttribute("cptMeasure") @Validated CPTMeasure cptMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
 		cptMeasure.setActiveInd('Y');
+		logger.info("cpt id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  cptMeasureEdit.jsp page");
 			return "cptMeasureEdit";
