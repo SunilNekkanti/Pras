@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 
@@ -38,7 +39,7 @@ public class HedisMeasureRuleListController {
 	public String viewHedisMeasureRuleAction()  {
 
 		logger.info("Returning view.jsp page after create");
-		return "hedisMeasureRuleList";
+		return TileDefinitions.HEDISMEASURERULELIST.toString();
 	}
 
 	/**

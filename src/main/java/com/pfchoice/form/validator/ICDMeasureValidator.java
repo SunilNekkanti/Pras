@@ -9,7 +9,9 @@ import com.pfchoice.core.entity.ICDMeasure;
 @Component("iCDMeasureValidator")
 public class ICDMeasureValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -17,32 +19,35 @@ public class ICDMeasureValidator implements Validator {
 		return ICDMeasure.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 
 		ICDMeasure icdMeasure = (ICDMeasure) obj;
 		if (icdMeasure.getId() != null && icdMeasure.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "error.code", "Code Required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.description", "Description Required");
-		if (icdMeasure.getCode().length() < 2 && icdMeasure.getCode().length() >= 1) {
+		if (icdMeasure.getCode().length() < 2) {
 
 			errors.rejectValue("code", "error.code", "Code must be atleast 3 characters");
 		}
-		if (icdMeasure.getCode().length() > 10 && icdMeasure.getCode().length() >= 1) {
+		if (icdMeasure.getCode().length() > 10) {
 
 			errors.rejectValue("code", "error.code", "Code must be atleast 3 characters and less than 10 characters");
 		}
-		if (icdMeasure.getDescription().length() <= 5 && icdMeasure.getDescription().length() >= 1) {
+		if (icdMeasure.getDescription().length() <= 5) {
 			errors.rejectValue("description", "error.description", "Description must be atleast 5 characters");
 		}
-		if (icdMeasure.getDescription().length() > 500 && icdMeasure.getDescription().length() >= 1) {
+		if (icdMeasure.getDescription().length() > 500) {
 			errors.rejectValue("description", "error.description",
 					"Description must be atleast 5 characters and less than 500 characters");
 		}

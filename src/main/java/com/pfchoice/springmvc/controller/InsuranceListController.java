@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.service.InsuranceService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -38,7 +39,7 @@ public class InsuranceListController {
 	@RequestMapping(value = { "/admin/insuranceList", "/user/insuranceList" })
 	public String handleRequest() {
 		LOG.info("returning insuranceList.jsp");
-		return "insuranceList";
+		return TileDefinitions.INSURANCELIST.toString();
 	}
 
 	/**

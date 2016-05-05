@@ -30,6 +30,7 @@ import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.Message;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.Gender;
@@ -136,7 +137,7 @@ public class MembershipController {
 
 		model.addAttribute("membership", dbMembership);
 		logger.info("Returning membershipEdit.jsp page");
-		return "membershipEdit";
+		return TileDefinitions.MEMBERSHIPEDIT.toString();
 	}
 
 	/**
@@ -152,7 +153,7 @@ public class MembershipController {
 
 		model.addAttribute("membership", dbMembership);
 		logger.info("Returning membershipDisplay.jsp page");
-		return "membershipDisplay";
+		return TileDefinitions.MEMBERSHIPDISPLAY.toString();
 	}
 
 	/**
@@ -172,7 +173,7 @@ public class MembershipController {
 		if (bindingResult.hasErrors()) {
 			membership.setActiveInd('Y');
 			logger.info("Returning membershipEdit.jsp page");
-			return "membershipEdit";
+			return TileDefinitions.MEMBERSHIPEDIT.toString();
 		}
 		logger.info("Returning MembershipSuccess.jsp page");
 		if (null != membership.getId()) {
@@ -182,7 +183,7 @@ public class MembershipController {
 		Membership dbMembership = membershipService.findById(membership.getId());
 		model.addAttribute("Message", "Membership details updated successfully");
 		model.addAttribute("membership", dbMembership);
-		return "membershipEdit";
+		return TileDefinitions.MEMBERSHIPEDIT.toString();
 	}
 
 	/**
@@ -201,7 +202,7 @@ public class MembershipController {
 		if (bindingResult.hasErrors()) {
 			membership.setActiveInd('Y');
 			logger.info("Returning membershipEdit.jsp page");
-			return "membershipEdit";
+			return TileDefinitions.MEMBERSHIPEDIT.toString();
 		}
 		logger.info("Returning MembershipSuccess.jsp page");
 		if (null != membership.getId()) {
@@ -212,7 +213,7 @@ public class MembershipController {
 
 		model.addAttribute("Message", "Membership details deleted successfully");
 		model.addAttribute("membership", membership);
-		return "membershipEdit";
+		return TileDefinitions.MEMBERSHIPEDIT.toString();
 	}
 
 	/**
@@ -229,7 +230,7 @@ public class MembershipController {
 		logger.info("membership id is"+id);
 		model.addAttribute("membershipInsurance", dbMembershipInsurance);
 		logger.info("Returning membershipDetailsDisplay.jsp page");
-		return "membershipDetailsDisplay";
+		return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
 	}
 
 	/**
@@ -247,7 +248,7 @@ public class MembershipController {
 		model.addAttribute("membershipInsurance", dbMembershipInsurance);
 
 		logger.info("Returning membershipDetailsDisplay.jsp page");
-		return "membershipDetailsDisplay";
+		return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
 	}
 
 	/**
@@ -268,7 +269,7 @@ public class MembershipController {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			membershipInsurance.setActiveInd('Y');
-			return "membershipDetailsDisplay";
+			return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
 		} else {
 			membershipInsurance.setUpdatedBy(username);
 			MembershipInsurance dbMembershipInsurance = membershipInsuranceService.update(membershipInsurance);
@@ -276,7 +277,7 @@ public class MembershipController {
 			model.addAttribute("Message", "Membership Insurance Updated Successfully");
 			List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 			model.addAttribute("membershipDetailsList", listBean);
-			return "membershipDetailsList";
+			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
 		}
 	}
 
@@ -297,7 +298,7 @@ public class MembershipController {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			membershipInsurance.setActiveInd('Y');
-			return "membershipDetailsDisplay";
+			return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
 		} else {
 			Membership dbMembership = membershipService.findById(id);
 			membershipInsurance.setMbr(dbMembership);
@@ -308,7 +309,7 @@ public class MembershipController {
 			model.addAttribute("Message", "Membership Insurance Added Successfully");
 			List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 			model.addAttribute("membershipDetailsList", listBean);
-			return "membershipDetailsList";
+			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
 		}
 	}
 
@@ -330,7 +331,7 @@ public class MembershipController {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			membershipInsurance.setActiveInd('Y');
-			return "membershipDetailsDisplay";
+			return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
 		} else {
 			membershipInsurance.setActiveInd('N');
 			membershipInsurance.setUpdatedBy(username);
@@ -339,7 +340,7 @@ public class MembershipController {
 			model.addAttribute("Message", "Membership Insurance Deleted Successfully");
 			List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 			model.addAttribute("membershipDetailsList", listBean);
-			return "membershipDetailsList";
+			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
 
 		}
 	}
@@ -355,7 +356,7 @@ public class MembershipController {
 		List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 		model.addAttribute("membershipDetailsList", listBean);
 		logger.info("Returning membershipDetailsList.jsp page");
-		return "membershipDetailsList";
+		return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
 	}
 
 	/**
@@ -371,7 +372,7 @@ public class MembershipController {
 		dbMembershipProvider = (dbMembershipProvider != null) ? dbMembershipProvider : new MembershipProvider();
 		model.addAttribute("membershipProvider", dbMembershipProvider);
 		logger.info("Returning membershipProviderEdit.jsp page");
-		return "membershipProviderEdit";
+		return TileDefinitions.MEMBERSHIPPROVIDEREDIT.toString();
 	}
 
 	/**
@@ -391,7 +392,7 @@ public class MembershipController {
 		MembershipProvider dbMembershipProvider = membershipProviderService.findById(mbrPrvdrId);
 		model.addAttribute("membershipProvider", dbMembershipProvider);
 		logger.info("Returning membershipProviderEdit.jsp page");
-		return "membershipProviderEdit";
+		return TileDefinitions.MEMBERSHIPPROVIDEREDIT.toString();
 	}
 
 	/**
@@ -409,7 +410,7 @@ public class MembershipController {
 		List<MembershipProvider> mbrPrvdrList = membershipProviderService.findAllByMbrId(id);
 		model.addAttribute("membershipProviderList", mbrPrvdrList);
 		logger.info("Returning membershipProviderList.jsp page");
-		return "membershipProviderList";
+		return TileDefinitions.MEMBERSHIPPROVIDERLIST.toString();
 	}
 
 	/**
@@ -449,7 +450,7 @@ public class MembershipController {
 		model.addAttribute("membershipProviderList", mbrPrvdrList);
 		logger.info("Returning membershipProviderList.jsp page");
 
-		return "membershipCompleteDetails";
+		return TileDefinitions.MEMBERSHIPCOMPLETEDETAILS.toString();
 
 	}
 
@@ -466,7 +467,7 @@ public class MembershipController {
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
 		logger.info("Returning membershipHedisMeasure.jsp page");
-		return "membershipHedisMeasure";
+		return TileDefinitions.MEMBERSHIPHEDISMEASURE.toString();
 	}
 
 	/**

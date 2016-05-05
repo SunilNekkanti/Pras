@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.MembershipHedisFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.MembershipHedisFollowupService;
@@ -57,7 +58,7 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/reports/hedis", "/user/reports/hedis" })
 	public String handleRequest() {
 
-		return "hedisMembershipList";
+		return TileDefinitions.HEDISMEMBERSHIPLIST.toString();
 	}
 
 	/**
@@ -80,7 +81,7 @@ public class ReportsController {
 			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
 			@RequestParam(required = true) Integer sSearchHedisRule,
 			@RequestParam(required = true) List<Integer> ruleIds, @RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir)  {
+			@RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
 				sSearchHedisRule, ruleIds, sort, sortdir);
@@ -121,7 +122,7 @@ public class ReportsController {
 		mbrHedisFollowup.setUpdatedBy(username);
 		mbrHedisFollowupService.save(mbrHedisFollowup);
 
-		return "membershipContactEditSuccess";
+		return TileDefinitions.MEMBERSHIPCONTACTEDITSUCCESS.toString();
 	}
 
 	/**
@@ -133,8 +134,7 @@ public class ReportsController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHedis/{mbrId}/followupDetails",
 			"/user/reports/membershipHedis/{mbrId}/followupDetails" })
-	public Message membershipFollowupDetails(@PathVariable Integer mbrId, @ModelAttribute("username") String username,
-			Model model) {
+	public Message membershipFollowupDetails(@PathVariable Integer mbrId, Model model) {
 		List<MembershipHedisFollowup> dbMbrHedisFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId);
 		return Message.successMessage(CommonMessageContent.HEDIS_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(dbMbrHedisFollowup));

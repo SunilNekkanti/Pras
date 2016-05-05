@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureGroup;
@@ -117,7 +118,7 @@ public class HedisMeasureController {
 
 		HedisMeasure hedisMeasure = createHedisMeasureModel();
 		model.addAttribute("hedisMeasure", hedisMeasure);
-		return "hedisMeasureNew";
+		return TileDefinitions.HEDISMEASURENEW.toString();
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class HedisMeasureController {
 		logger.info("Returning hedisMeasure.getId()" + dbHedisMeasure.getId());
 		model.addAttribute("hedisMeasure", dbHedisMeasure);
 		logger.info("Returning hedisMeasureEdit.jsp page");
-		return "hedisMeasureEdit";
+		return TileDefinitions.HEDISMEASUREEDIT.toString();
 	}
 
 	/**
@@ -148,7 +149,7 @@ public class HedisMeasureController {
 
 		model.addAttribute("hedisMeasure", dbHedisMeasure);
 		logger.info("Returning hedisMeasureDisplay.jsp page");
-		return "hedisMeasureDisplay";
+		return TileDefinitions.HEDISMEASUREDISPLAY.toString();
 	}
 
 	/**
@@ -160,7 +161,7 @@ public class HedisMeasureController {
 	public String viewHedisMeasureAction() {
 
 		logger.info("Returning view.jsp page after create");
-		return "hedisMeasureList";
+		return TileDefinitions.HEDISMEASURELIST.toString();
 	}
 
 	/**
@@ -195,7 +196,7 @@ public class HedisMeasureController {
 			@ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureEdit.jsp page");
-			return "hedisMeasureNew";
+			return TileDefinitions.HEDISMEASURENEW.toString();
 		}
 
 		model.addAttribute("hedisMeasure", hedisMeasure);
@@ -207,10 +208,9 @@ public class HedisMeasureController {
 			hedisMeasureService.save(hedisMeasure);
 		} catch (HibernateException e) {
 			model.addAttribute("Message", e.getCause().getMessage());
-			return "hedisMeasureNew";
+			return TileDefinitions.HEDISMEASURENEW.toString();
 		}
-
-		return "hedisMeasureList";
+		return TileDefinitions.HEDISMEASURELIST.toString();
 	}
 
 	/**
@@ -229,17 +229,16 @@ public class HedisMeasureController {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
 			hedisMeasure.setUpdatedBy(username);
-			return "hedisMeasureEdit";
+			return TileDefinitions.HEDISMEASUREEDIT.toString();
 		}
 
 		if (null != hedisMeasure.getId()) {
 			logger.info("Returning hedisMeasureEditSuccess.jsp page after update");
 			hedisMeasureService.update(hedisMeasure);
 			model.addAttribute("Message", "Hedis Measure updated successfully");
-			return "hedisMeasureList";
+			return TileDefinitions.HEDISMEASURELIST.toString();
 		}
-
-		return "hedisMeasureEdit";
+		return TileDefinitions.HEDISMEASUREEDIT.toString();
 	}
 
 	/**
@@ -257,7 +256,7 @@ public class HedisMeasureController {
 		 logger.info("hedis measure id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
-			return "hedisMeasureEdit";
+			return TileDefinitions.HEDISMEASUREEDIT.toString();
 		}
 
 		if (null != hedisMeasure.getId()) {
@@ -266,9 +265,9 @@ public class HedisMeasureController {
 			hedisMeasure.setUpdatedBy(username);
 			hedisMeasureService.update(hedisMeasure);
 			model.addAttribute("Message", "Hedis Measure deleted successfully");
-			return "hedisMeasureList";
+			return TileDefinitions.HEDISMEASURELIST.toString();
 		}
-		return "hedisMeasureEdit";
+		return TileDefinitions.HEDISMEASUREEDIT.toString();
 	}
 
 }

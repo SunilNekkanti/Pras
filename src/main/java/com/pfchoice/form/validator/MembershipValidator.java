@@ -44,7 +44,7 @@ public class MembershipValidator implements Validator {
 				errors.rejectValue("dob", "error.date.future", "Date must be less than current date");
 		}
 
-		if (mbr.getMedicaidNo().length() < 1 && mbr.getMedicareNo().length() < 1) {
+		if (mbr.getMedicaidNo().length() < 1 || mbr.getMedicareNo().length() < 1) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicaidNo", "error.medicaidNo",
 					"Medicaid / Medicare Number Required");
 		}

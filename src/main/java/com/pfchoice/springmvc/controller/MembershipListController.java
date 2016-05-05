@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.service.MembershipService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -41,7 +42,7 @@ public class MembershipListController {
 	@RequestMapping(value = { "/admin/membershipList", "/user/membershipList" })
 	public String handleRequest()  {
 		LOG.info("returning membershipList.jsp");
-		return "membershipList";
+		return TileDefinitions.MEMBERSHIPLIST.toString();
 	}
 
 	/**

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.HedisMeasureGroup;
 import com.pfchoice.core.service.HedisMeasureGroupService;
 
@@ -51,7 +52,7 @@ public class HedisMeasureGroupController {
 		HedisMeasureGroup hedisMeasureGroup = createHedisMeasureGroupModel();
 		hedisMeasureGroup.setActiveInd('Y');
 		model.addAttribute("hedisMeasureGroup", hedisMeasureGroup);
-		return "hedisMeasureGroupNew";
+		return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class HedisMeasureGroupController {
 
 		model.addAttribute("hedisMeasureGroup", dbHedisMeasureGroup);
 		logger.info("Returning hedisMeasureGroupEdit.jsp page");
-		return "hedisMeasureGroupEdit";
+		return TileDefinitions.HEDISMEASUREGROUPEDIT.toString();
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class HedisMeasureGroupController {
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
-			return "hedisMeasureGroupNew";
+			return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
 		}
 
 		logger.info("Returning hedisMeasureGroupSuccess.jsp page after create");
@@ -92,7 +93,7 @@ public class HedisMeasureGroupController {
 		hedisMeasureGroup.setUpdatedBy(username);
 		hedisMeasureGroupService.save(hedisMeasureGroup);
 		model.addAttribute("Message", "New hedis measure group added successfully");
-		return "hedisMeasureGroupList";
+		return TileDefinitions.HEDISMEASUREGROUPLIST.toString();
 	}
 
 	/**
@@ -111,7 +112,7 @@ public class HedisMeasureGroupController {
 		 logger.info("hedisMeasureGroup id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
-			return "hedisMeasureGroupEdit";
+			return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
 		}
 		if (null != hedisMeasureGroup.getId()) {
 			logger.info("Returning hedisMeasureGroupEditSuccess.jsp page after update");
@@ -119,7 +120,7 @@ public class HedisMeasureGroupController {
 			model.addAttribute("Message", "Hedis measure group updated successfully");
 			hedisMeasureGroupService.update(hedisMeasureGroup);
 		}
-		return "hedisMeasureGroupList";
+		return TileDefinitions.HEDISMEASUREGROUPLIST.toString();
 	}
 
 	/**
@@ -138,7 +139,7 @@ public class HedisMeasureGroupController {
 		if (bindingResult.hasErrors()) {
 			hedisMeasureGroup.setActiveInd('Y');
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
-			return "hedisMeasureGroupEdit";
+			return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
 		}
 
 		if (null != hedisMeasureGroup.getId()) {
@@ -148,7 +149,7 @@ public class HedisMeasureGroupController {
 			model.addAttribute("Message", "Hedis measure group deleted successfully");
 			hedisMeasureGroupService.update(hedisMeasureGroup);
 		}
-		return "hedisMeasureGroupList";
+		return TileDefinitions.HEDISMEASUREGROUPLIST.toString();
 	}
 
 	/**
@@ -157,7 +158,7 @@ public class HedisMeasureGroupController {
 	@RequestMapping(value = { "/admin/hedisMeasureGroupList", "/user/hedisMeasureGroupList" })
 	public String handleRequest() {
 
-		return "hedisMeasureGroupList";
+		return TileDefinitions.HEDISMEASUREGROUPLIST.toString();
 	}
 
 	/**

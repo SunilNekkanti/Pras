@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.service.ICDMeasureService;
 
@@ -45,9 +46,6 @@ public class ICDMeasureController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ICDMeasureController.class);
 
-	public ICDMeasureController() {
-	}
-
 	/**
 	 * @return
 	 */
@@ -65,7 +63,7 @@ public class ICDMeasureController {
 
 		ICDMeasure icdMeasure = createICDMeasureModel();
 		model.addAttribute("icdMeasure", icdMeasure);
-		return "icdMeasureNew";
+		return TileDefinitions.ICDMEASURENEW.toString();
 	}
 
 	/**
@@ -79,7 +77,7 @@ public class ICDMeasureController {
 		logger.info("Returning icdMeasure.getId()" + dbICDMeasure.getId());
 		model.addAttribute("icdMeasure", dbICDMeasure);
 		logger.info("Returning icdMeasureEdit.jsp page");
-		return "icdMeasureEdit";
+		return TileDefinitions.ICDMEASUREEDIT.toString();
 	}
 
 	/**
@@ -94,7 +92,7 @@ public class ICDMeasureController {
 
 		model.addAttribute("icdMeasure", dbICDMeasure);
 		logger.info("Returning icdMeasureDisplay.jsp page");
-		return "icdMeasureDisplay";
+		return TileDefinitions.ICDMEASUREDISPLAY.toString();
 	}
 
 	/**
@@ -103,7 +101,7 @@ public class ICDMeasureController {
 	@RequestMapping(value = { "/admin/icd/icdMeasureList", "/user/icd/icdMeasureList" }, method = RequestMethod.GET)
 	public String viewICDMeasureAction()  {
 		logger.info("Returning view.jsp page after create");
-		return "icdMeasureList";
+		return TileDefinitions.ICDMEASURELIST.toString();
 	}
 
 	/**
@@ -139,7 +137,7 @@ public class ICDMeasureController {
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning icdMeasureEdit.jsp page");
-			return "icdMeasureNew";
+			return TileDefinitions.ICDMEASURENEW.toString();
 		}
 
 		model.addAttribute("icdMeasure", icdMeasure);
@@ -149,7 +147,7 @@ public class ICDMeasureController {
 		logger.info("Returning icdEditSuccess.jsp page after create");
 		icdMeasureService.save(icdMeasure);
 		model.addAttribute("Message", "ICD Measure added successfully");
-		return "icdMeasureList";
+		return TileDefinitions.ICDMEASURELIST.toString();
 	}
 
 	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params = { "update" })
@@ -160,7 +158,7 @@ public class ICDMeasureController {
 		icdMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  icdMeasureEdit.jsp page");
-			return "icdMeasureEdit";
+			return TileDefinitions.ICDMEASUREEDIT.toString();
 		}
 
 		if (null != icdMeasure.getId()) {
@@ -169,10 +167,10 @@ public class ICDMeasureController {
 			icdMeasureService.update(icdMeasure);
 			model.addAttribute("icdMeasure", icdMeasure);
 			model.addAttribute("Message", "ICD Measure updated successfully");
-			return "icdMeasureList";
+			return TileDefinitions.ICDMEASURELIST.toString();
 		}
 
-		return "icdMeasureEdit";
+		return TileDefinitions.ICDMEASUREEDIT.toString();
 	}
 
 	@RequestMapping(value = "/admin/icd/{id}/save.do", method = RequestMethod.POST, params = { "delete" })
@@ -183,7 +181,7 @@ public class ICDMeasureController {
 		if (bindingResult.hasErrors()) {
 			icdMeasure.setActiveInd('Y');
 			logger.info("Returning  icdMeasureEdit.jsp page");
-			return "icdMeasureEdit";
+			return TileDefinitions.ICDMEASUREEDIT.toString();
 		}
 		if (null != icdMeasure.getId()) {
 			logger.info("Returning icdMeasureEditSuccess.jsp page after update");
@@ -191,8 +189,8 @@ public class ICDMeasureController {
 			icdMeasure.setUpdatedBy(username);
 			icdMeasureService.update(icdMeasure);
 			model.addAttribute("Message", "ICD Measure deleted successfully");
-			return "icdMeasureList";
+			return TileDefinitions.ICDMEASURELIST.toString();
 		}
-		return "icdMeasureEdit";
+		return TileDefinitions.ICDMEASUREEDIT.toString();
 	}
 }

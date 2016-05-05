@@ -121,7 +121,7 @@ public class ContactController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/membership/{id}/contact/new", "/user/membership/{id}/contact/new" })
-	public String addContactPage(@PathVariable Integer id, @ModelAttribute("username") String username, Model model) {
+	public String addContactPage(@PathVariable Integer id, Model model) {
 		logger.info("membership id is"+id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);

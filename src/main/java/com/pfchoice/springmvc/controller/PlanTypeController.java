@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.PlanType;
 import com.pfchoice.core.service.PlanTypeService;
 
@@ -51,7 +52,7 @@ public class PlanTypeController {
 		PlanType planType = createPlanTypeModel();
 		planType.setActiveInd('Y');
 		model.addAttribute("planType", planType);
-		return "planTypeNew";
+		return TileDefinitions.PLANTYPENEW.toString();
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class PlanTypeController {
 
 		model.addAttribute("planType", dbPlanType);
 		logger.info("Returning planTypeEdit.jsp page");
-		return "planTypeEdit";
+		return TileDefinitions.PLANTYPEEDIT.toString();
 	}
 
 	/**
@@ -83,7 +84,7 @@ public class PlanTypeController {
 			Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning planTypeEdit.jsp page");
-			return "planTypeNew";
+			return TileDefinitions.PLANTYPENEW.toString();
 		}
 
 		logger.info("Returning planTypeSuccess.jsp page after create");
@@ -91,7 +92,7 @@ public class PlanTypeController {
 		planType.setUpdatedBy(username);
 		planTypeService.save(planType);
 		model.addAttribute("Message", "New plan type added successfully");
-		return "planTypeList";
+		return TileDefinitions.PLANTYPELIST.toString();
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class PlanTypeController {
 		 logger.info("plan type id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning planTypeEdit.jsp page");
-			return "planTypeEdit";
+			return TileDefinitions.PLANTYPEEDIT.toString();
 		}
 		if (null != planType.getId()) {
 			logger.info("Returning planTypeEditSuccess.jsp page after update");
@@ -118,7 +119,7 @@ public class PlanTypeController {
 			model.addAttribute("Message", "Plan Type  updated successfully");
 			planTypeService.update(planType);
 		}
-		return "planTypeList";
+		return TileDefinitions.PLANTYPELIST.toString();
 	}
 
 	/**
@@ -137,7 +138,7 @@ public class PlanTypeController {
 		if (bindingResult.hasErrors()) {
 			planType.setActiveInd('Y');
 			logger.info("Returning planTypeEdit.jsp page");
-			return "planTypeEdit";
+			return TileDefinitions.PLANTYPEEDIT.toString();
 		}
 
 		if (null != planType.getId()) {
@@ -147,7 +148,7 @@ public class PlanTypeController {
 			model.addAttribute("Message", "Plan Type  deleted successfully");
 			planTypeService.update(planType);
 		}
-		return "planTypeList";
+		return TileDefinitions.PLANTYPELIST.toString();
 	}
 
 	/**
@@ -156,7 +157,7 @@ public class PlanTypeController {
 	@RequestMapping(value = { "/admin/planTypeList", "/user/planTypeList" })
 	public String handleRequest() {
 
-		return "planTypeList";
+		return TileDefinitions.PLANTYPELIST.toString();
 	}
 
 	/**

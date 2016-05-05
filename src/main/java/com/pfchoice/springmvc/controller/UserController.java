@@ -28,6 +28,7 @@ import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Role;
 import com.pfchoice.core.entity.User;
 import com.pfchoice.core.service.RoleService;
@@ -95,7 +96,7 @@ public class UserController {
 		User user = createUserModel();
 		user.setActiveInd('Y');
 		model.addAttribute("user", user);
-		return "userNew";
+		return TileDefinitions.USERNEW.toString();
 	}
 
 	/**
@@ -111,7 +112,7 @@ public class UserController {
 
 		model.addAttribute("user", dbUser);
 		logger.info("Returning userEdit.jsp page");
-		return "userEdit";
+		return TileDefinitions.USEREDIT.toString();
 	}
 
 	/**
@@ -127,7 +128,7 @@ public class UserController {
 			@ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning userEdit.jsp page");
-			return "userNew";
+			return TileDefinitions.USERNEW.toString();
 		}
 
 		logger.info("Returning userSuccess.jsp page after create");
@@ -135,7 +136,7 @@ public class UserController {
 		user.setUpdatedBy(username);
 		userService.save(user);
 		model.addAttribute("Message", "New user added successfully");
-		return "userList";
+		return TileDefinitions.USERLIST.toString();
 	}
 
 	/**
@@ -154,7 +155,7 @@ public class UserController {
 		logger.info("user id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning userEdit.jsp page");
-			return "userEdit";
+			return TileDefinitions.USEREDIT.toString();
 		}
 		if (null != user.getId()) {
 			logger.info("Returning userEditSuccess.jsp page after update");
@@ -162,7 +163,7 @@ public class UserController {
 			model.addAttribute("Message", "User updated successfully");
 			userService.update(user);
 		}
-		return "userList";
+		return TileDefinitions.USERLIST.toString();
 	}
 
 	/**
@@ -181,7 +182,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			user.setActiveInd('Y');
 			logger.info("Returning userEdit.jsp page");
-			return "userEdit";
+			return TileDefinitions.USEREDIT.toString();
 		}
 
 		if (null != user.getId()) {
@@ -191,7 +192,7 @@ public class UserController {
 			model.addAttribute("Message", "User deleted successfully");
 			userService.update(user);
 		}
-		return "userList";
+		return TileDefinitions.USERLIST.toString();
 	}
 
 	/**
@@ -200,7 +201,7 @@ public class UserController {
 	@RequestMapping(value = { "/admin/userList", "/user/userList" })
 	public String handleRequest() {
 
-		return "userList";
+		return TileDefinitions.USERLIST.toString();
 	}
 
 	/**

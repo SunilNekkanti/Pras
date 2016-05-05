@@ -41,7 +41,7 @@ public class LoginController {
 		}
 		model.addAttribute("loginForm", loginForm);
 
-		return "loginForm";
+		return TileDefinitions.LOGINFORM.toString();
 
 	}
 
@@ -80,7 +80,7 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accesssDenied() {
 
-		return "ad403";
+		return TileDefinitions.AD403.toString();
 	}
 
 }

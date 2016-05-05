@@ -58,7 +58,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 				request.getRemoteAddr()));
 
 		if (!"/Pras/".equals(request.getRequestURI()) && !"/Pras/loginform".equals(request.getRequestURI())
-				&& !"/Pras/loginform.html".equals(request.getRequestURI())
 				&& !"/Pras/index".equals(request.getRequestURI()) && !isAuthenticatedUser(id, credential)) {
 			status = false;
 			forbiddenResponse(response);

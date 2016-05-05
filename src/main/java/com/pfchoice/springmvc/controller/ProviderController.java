@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.PrasUtil;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.InsuranceService;
@@ -54,7 +55,6 @@ public class ProviderController {
 		binder.setValidator(validator);
 	}
 
-	
 	/**
 	 * @return
 	 */
@@ -78,7 +78,7 @@ public class ProviderController {
 	@ModelAttribute("insuranceList")
 	public List<Insurance> populateInsuranceList() {
 		Pagination page = insuranceService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-				 SystemDefaultProperties.MEDIUM_LIST_SIZE);
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<Insurance>) page.getList();
 	}
 
@@ -91,7 +91,7 @@ public class ProviderController {
 
 		Provider provider = createProviderModel();
 		model.addAttribute("provider", provider);
-		return "providerNew";
+		return TileDefinitions.PROVIDERNEW.toString();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ProviderController {
 
 		model.addAttribute("provider", dbProvider);
 		logger.info("Returning providerView.jsp page");
-		return "providerDetails";
+		return TileDefinitions.PROVIDERDETAILS.toString();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class ProviderController {
 
 		model.addAttribute("provider", dbProvider);
 		logger.info("Returning providerView.jsp page");
-		return "providerEdit";
+		return TileDefinitions.PROVIDEREDIT.toString();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class ProviderController {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning providerEdit.jsp page");
-			return "providerNew";
+			return TileDefinitions.PROVIDERNEW.toString();
 		}
 
 		logger.info("Returning ProviderSuccess.jsp page after create");
@@ -149,7 +149,7 @@ public class ProviderController {
 		provider.setUpdatedBy(username);
 		providerService.save(provider);
 		model.addAttribute("Message", "Provider details added Successfully");
-		return "providerList";
+		return TileDefinitions.PROVIDERLIST.toString();
 	}
 
 	/**
@@ -164,10 +164,10 @@ public class ProviderController {
 	public String updateProviderAction(@PathVariable Integer id, @Validated Provider provider,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		provider.setActiveInd('Y');
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning providerEdit.jsp page");
-			return "providerEdit";
+			return TileDefinitions.PROVIDEREDIT.toString();
 		}
 
 		if (provider.getId() != null) {
@@ -177,7 +177,7 @@ public class ProviderController {
 			providerService.update(provider);
 			model.addAttribute("Message", "Provider Details Updated Successfully");
 		}
-		return "providerEdit";
+		return TileDefinitions.PROVIDEREDIT.toString();
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class ProviderController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/provider/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
-	public String deleteInsuranceAction(@PathVariable Integer id, Provider provider, Model model,
+	public String deleteInsuranceAction(@PathVariable Integer id, Model model,
 			@ModelAttribute("username") String username) {
 
 		Provider dbProvider = providerService.findById(id);
@@ -197,7 +197,7 @@ public class ProviderController {
 		providerService.update(dbProvider);
 		logger.info("Returning providerSuccess.jsp page after delete");
 		model.addAttribute("Message", "Provider Details Deleted Successfully");
-		return "providerEdit";
+		return TileDefinitions.PROVIDEREDIT.toString();
 	}
 
 }

@@ -10,7 +10,12 @@ import org.springframework.validation.Validator;
 
 import com.pfchoice.core.entity.Contact;
 
+/**
+ * @author sarath String MOBILE_PATTERN = "[0-9]{10}"; String STRING_PATTERN =
+ *         "[a-zA-Z]+";
+ */
 @Component
+
 public class ContactValidator implements Validator {
 
 	private final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -18,11 +23,9 @@ public class ContactValidator implements Validator {
 	private Pattern pattern;
 	private Matcher matcher;
 
-	// String MOBILE_PATTERN = "[0-9]{10}";
-	// String STRING_PATTERN = "[a-zA-Z]+";
-
-	// which objects can be validated by this validator
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -30,8 +33,11 @@ public class ContactValidator implements Validator {
 		return Contact.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
@@ -39,7 +45,7 @@ public class ContactValidator implements Validator {
 		Contact cnt = (Contact) obj;
 
 		if (cnt.getId() != null && cnt.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "refContact", "error.refContact",
 					"ReferenceContact Required");
 		}
@@ -49,21 +55,20 @@ public class ContactValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode", "error.stateCode", "StateCode Required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode", "error.zipCode", "zipCode Required");
 
-		if (cnt.getAddress1().length() < 10 && cnt.getAddress1().length() >= 1) {
+		if (cnt.getAddress1().length() < 10) {
 			errors.rejectValue("address1", "address1.tooshort", "Address1 must be at least 10 characters.");
 		}
 
-		if (cnt.getCity().length() < 5 && cnt.getCity().length() >= 1) {
+		if (cnt.getCity().length() < 5) {
 			errors.rejectValue("city", "city.tooshort", "city must be at least 5 characters.");
 		}
 
-		// email validation in spring
-		if (cnt.getEmail().length() > 1 && cnt.getEmail() != null && !cnt.getEmail().isEmpty()) {
-				pattern = Pattern.compile(EMAIL_PATTERN);
-				matcher = pattern.matcher(cnt.getEmail());
-				if (!matcher.matches()) {
-					errors.rejectValue("email", "email.incorrect", "Enter a correct email");
-				}
+		if (cnt.getEmail() != null && !cnt.getEmail().isEmpty()) {
+			pattern = Pattern.compile(EMAIL_PATTERN);
+			matcher = pattern.matcher(cnt.getEmail());
+			if (!matcher.matches()) {
+				errors.rejectValue("email", "email.incorrect", "Enter a correct email");
+			}
 		}
 
 	}

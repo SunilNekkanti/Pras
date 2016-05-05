@@ -32,6 +32,7 @@ import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.CPTMeasure;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
@@ -125,8 +126,7 @@ public class HedisMeasureRuleController {
 	 */
 	@ModelAttribute("cptMeasureListAjax")
 	public List<CPTMeasure> populateCPTMeasureListAjax() {
-
-		List<CPTMeasure> cptMeasureList = new ArrayList<>();
+		List<CPTMeasure>  cptMeasureList =  new ArrayList<>();
 		return cptMeasureList;
 	}
 
@@ -147,8 +147,7 @@ public class HedisMeasureRuleController {
 	 */
 	@ModelAttribute("icdMeasureListAjax")
 	public List<ICDMeasure> populateICDMeasureListAjax() {
-
-		List<ICDMeasure> icdMeasureList = new ArrayList<>();
+        List<ICDMeasure> icdMeasureList = new ArrayList<>();
 		return icdMeasureList;
 	}
 
@@ -193,7 +192,7 @@ public class HedisMeasureRuleController {
 
 		HedisMeasureRule hedisMeasureRule = createHedisMeasureRuleModel();
 		model.addAttribute("hedisMeasureRule", hedisMeasureRule);
-		return "hedisMeasureRuleNew";
+		return TileDefinitions.HEDISMEASURERULENEW.toString();
 	}
 
 	/**
@@ -215,7 +214,7 @@ public class HedisMeasureRuleController {
 		model.addAttribute("icdMeasureListAjax", icdMeasureList);
 		model.addAttribute("hedisMeasureRule", dbHedisMeasureRule);
 		logger.info("Returning hedisMeasureRuleEdit.jsp page");
-		return "hedisMeasureRuleEdit";
+		return TileDefinitions.HEDISMEASURERULEEDIT.toString();
 	}
 
 	/**
@@ -236,7 +235,7 @@ public class HedisMeasureRuleController {
 		model.addAttribute("cptMeasureListAjax", cptMeasureList);
 		model.addAttribute("icdMeasureListAjax", icdMeasureList);
 		logger.info("Returning hedisMeasureRuleEditAjax.jsp page");
-		return "hedisMeasureRuleEditAjax";
+		return TileDefinitions.HEDISMEASURERULEEDITAJAX.toString();
 	}
 
 	/**
@@ -252,7 +251,7 @@ public class HedisMeasureRuleController {
 
 		model.addAttribute("hedisMeasureRule", dbHedisMeasureRule);
 		logger.info("Returning hedisMeasureRuleDisplay.jsp page");
-		return "hedisMeasureRuleDisplay";
+		return TileDefinitions.HEDISMEASURERULEDISPLAY.toString();
 	}
 
 	/**
@@ -268,7 +267,7 @@ public class HedisMeasureRuleController {
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureRuleEdit.jsp page");
-			return "hedisMeasureRuleNew";
+			return TileDefinitions.HEDISMEASURERULENEW.toString();
 		}
 
 		model.addAttribute("hedisMeasureRule", hedisMeasureRule);
@@ -277,8 +276,7 @@ public class HedisMeasureRuleController {
 		model.addAttribute("Message", "Hedis Measure added successfully");
 		logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after create");
 		hedisMeasureRuleService.save(hedisMeasureRule);
-
-		return "hedisMeasureRuleList";
+		return TileDefinitions.HEDISMEASURERULELIST.toString();
 	}
 
 	/**
@@ -298,7 +296,7 @@ public class HedisMeasureRuleController {
 		if (bindingResult.hasErrors()) {
 			hedisMeasureRule.setActiveInd('Y');
 			logger.info("Returning  hedisMeasureRuleEdit.jsp page");
-			return "hedisMeasureRuleEdit";
+			return TileDefinitions.HEDISMEASURERULEEDIT.toString();
 		}
 
 		if (null != hedisMeasureRule.getId()) {
@@ -306,10 +304,9 @@ public class HedisMeasureRuleController {
 			hedisMeasureRuleService.update(hedisMeasureRule);
 			hedisMeasureRule.setUpdatedBy(username);
 			model.addAttribute("Message", "Hedis Measure update successfully");
-			return "hedisMeasureRuleList";
+			return TileDefinitions.HEDISMEASURERULELIST.toString();
 		}
-
-		return "hedisMeasureRuleEdit";
+		return TileDefinitions.HEDISMEASURERULEEDIT.toString();
 	}
 
 	/**
@@ -328,7 +325,7 @@ public class HedisMeasureRuleController {
 		if (bindingResult.hasErrors()) {
 			hedisMeasureRule.setActiveInd('Y');
 			logger.info("Returning  hedisMeasureRuleEdit.jsp page");
-			return "hedisMeasureRuleEdit";
+			return TileDefinitions.HEDISMEASURERULEEDIT.toString();
 		}
 
 		if (null != hedisMeasureRule.getId()) {
@@ -337,9 +334,9 @@ public class HedisMeasureRuleController {
 			hedisMeasureRule.setUpdatedBy(username);
 			hedisMeasureRuleService.update(hedisMeasureRule);
 			model.addAttribute("Message", "Hedis Measure delete successfully");
-			return "hedisMeasureRuleList";
+			return TileDefinitions.HEDISMEASURERULELIST.toString();
 		}
-		return "hedisMeasureRuleEdit";
+		return TileDefinitions.HEDISMEASURERULEEDIT.toString();
 	}
 
 	/**

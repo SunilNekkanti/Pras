@@ -267,7 +267,7 @@
 		var startDate = $(".datepickerfrom").val();
 		var endDate = $(".datepickerto").val();
 		var error = 0;
-		var source = getContextPath() + 'insurance/${id}/contractJsonList';
+		var source = getContextPath() + 'insurance/${id}/insuranceProviderContractJsonList';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {

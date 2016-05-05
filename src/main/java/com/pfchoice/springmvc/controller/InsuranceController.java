@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.PrasUtil;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.PlanType;
 import com.pfchoice.core.service.InsuranceService;
@@ -70,8 +71,8 @@ public class InsuranceController {
 	public List<PlanType> populatePlanTypeList() {
 
 		Pagination page = planTypeService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-				 								SystemDefaultProperties.SMALL_LIST_SIZE);
-		
+				SystemDefaultProperties.SMALL_LIST_SIZE);
+
 		return (List<PlanType>) page.getList();
 	}
 
@@ -84,7 +85,7 @@ public class InsuranceController {
 
 		Insurance insurance = createInsuranceModel();
 		model.addAttribute("insurance", insurance);
-		return "insuranceNew";
+		return TileDefinitions.INSURANCENEW.toString();
 	}
 
 	/**
@@ -94,15 +95,14 @@ public class InsuranceController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/insurance/{id}", "/user/insurance/{id}" }, method = RequestMethod.GET)
-	public String updateInsurancePage(@PathVariable Integer id, Model model,
-			@ModelAttribute("username") String username) {
+	public String updateInsurancePage(@PathVariable Integer id, Model model) {
 
 		Insurance dbInsurance = insuranceService.findById(id);
-		logger.info("Returning insurance.getId()" + dbInsurance.getId());
+		logger.info("insurance.getId()" + dbInsurance.getId());
 
 		model.addAttribute("insurance", dbInsurance);
 		logger.info("Returning insuranceSave.jsp page");
-		return "insuranceDetails";
+		return TileDefinitions.INSURANCEDETAILS.toString();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class InsuranceController {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning insuranceEdit.jsp page");
-			return "insuranceNew";
+			return TileDefinitions.INSURANCENEW.toString();
 		}
 
 		logger.info("Returning InsuranceSuccess.jsp page after create");
@@ -127,7 +127,7 @@ public class InsuranceController {
 		insurance.setUpdatedBy(username);
 		insuranceService.save(insurance);
 		model.addAttribute("Message", "Insurance details added successfully");
-		return "insuranceList";
+		return TileDefinitions.INSURANCELIST.toString();
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class InsuranceController {
 
 		model.addAttribute("insurance", dbInsurance);
 		logger.info("Returning insuranceSave.jsp page");
-		return "insuranceEdit";
+		return TileDefinitions.INSURANCEEDIT.toString();
 	}
 
 	/**
@@ -159,11 +159,11 @@ public class InsuranceController {
 	public String updateInsuranceAction(@PathVariable Integer id, @ModelAttribute @Validated Insurance insurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		insurance.setActiveInd('Y');
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning insuranceEdit.jsp page");
 			insurance.setActiveInd('Y');
-			return "insuranceEdit";
+			return TileDefinitions.INSURANCEEDIT.toString();
 		}
 
 		if (null != insurance.getId()) {
@@ -173,7 +173,7 @@ public class InsuranceController {
 			model.addAttribute("Message", "Insurance Details Updated Successfully");
 		}
 
-		return "insuranceEdit";
+		return TileDefinitions.INSURANCEEDIT.toString();
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class InsuranceController {
 		model.addAttribute("insurance", dbInsurance);
 		model.addAttribute("Message", "Insurance details deleted successfully");
 		logger.info("Returning InsuranceDeleteSuccess.jsp page after delete");
-		return "insuranceEdit";
+		return TileDefinitions.INSURANCEEDIT.toString();
 	}
 
 	/**

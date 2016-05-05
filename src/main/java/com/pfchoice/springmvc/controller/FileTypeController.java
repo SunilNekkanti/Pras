@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.service.FileTypeService;
 
@@ -51,7 +52,7 @@ public class FileTypeController {
 		FileType fileType = createFileTypeModel();
 		fileType.setActiveInd('Y');
 		model.addAttribute("fileType", fileType);
-		return "fileTypeNew";
+		return TileDefinitions.FILETYPENEW.toString();
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class FileTypeController {
 
 		model.addAttribute("fileType", dbFileType);
 		logger.info("Returning fileTypeEdit.jsp page");
-		return "fileTypeEdit";
+		return TileDefinitions.FILETYPEEDIT.toString();
 	}
 
 	/**
@@ -83,7 +84,7 @@ public class FileTypeController {
 			Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning fileTypeEdit.jsp page");
-			return "fileTypeNew";
+			return TileDefinitions.FILETYPENEW.toString();
 		}
 
 		logger.info("Returning fileTypeSuccess.jsp page after create");
@@ -91,7 +92,7 @@ public class FileTypeController {
 		fileType.setUpdatedBy(username);
 		fileTypeService.save(fileType);
 		model.addAttribute("Message", "New plan type added successfully");
-		return "fileTypeList";
+		return TileDefinitions.FILETYPELIST.toString();
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class FileTypeController {
 		 logger.info("file type id is"+id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning fileTypeEdit.jsp page");
-			return "fileTypeEdit";
+			return TileDefinitions.FILETYPEEDIT.toString();
 		}
 		if (null != fileType.getCode()) {
 			logger.info("Returning fileTypeEditSuccess.jsp page after update");
@@ -118,7 +119,7 @@ public class FileTypeController {
 			model.addAttribute("Message", "Plan Type  updated successfully");
 			fileTypeService.update(fileType);
 		}
-		return "fileTypeList";
+		return TileDefinitions.FILETYPELIST.toString();
 	}
 
 	/**
@@ -137,7 +138,7 @@ public class FileTypeController {
 		if (bindingResult.hasErrors()) {
 			fileType.setActiveInd('Y');
 			logger.info("Returning fileTypeEdit.jsp page");
-			return "fileTypeEdit";
+			return TileDefinitions.FILETYPEEDIT.toString();
 		}
 
 		if (null != fileType.getCode()) {
@@ -147,7 +148,7 @@ public class FileTypeController {
 			model.addAttribute("Message", "Plan Type  deleted successfully");
 			fileTypeService.update(fileType);
 		}
-		return "fileTypeList";
+		return TileDefinitions.FILETYPELIST.toString();
 	}
 
 	/**
@@ -156,7 +157,7 @@ public class FileTypeController {
 	@RequestMapping(value = { "/admin/fileTypeList", "/user/fileTypeList" })
 	public String handleRequest() {
 
-		return "fileTypeList";
+		return TileDefinitions.FILETYPELIST.toString();
 	}
 
 	/**
