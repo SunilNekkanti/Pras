@@ -65,4 +65,11 @@ public class HospitalServiceImpl implements HospitalService {
 		return hospitalDao.updateByUpdater(updater);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HospitalService#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId){
+		return hospitalDao.loadData(fileId);
+	}
 }

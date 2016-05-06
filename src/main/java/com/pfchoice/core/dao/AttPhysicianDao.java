@@ -47,4 +47,9 @@ public interface AttPhysicianDao {
 	 */
 	AttPhysician updateByUpdater(Updater<AttPhysician> updater);
 
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

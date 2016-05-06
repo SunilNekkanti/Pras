@@ -64,5 +64,37 @@ public class MembershipHospitalizationServiceImpl implements MembershipHospitali
 		Updater<MembershipHospitalization> updater = new Updater<>(bean);
 		return membershipHospitalizationDao.updateByUpdater(updater);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHospitalizationService#update(com.pfchoice.core.entity.MembershipHospitalization)
+	 */
+	@Override
+	public Integer loadDataCSV2Table() {
+		return membershipHospitalizationDao.loadDataCSV2Table();
+	}
 
+
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHospitalizationService#isDataExists()
+	 */
+	@Override
+	public Boolean isDataExists(){
+		return membershipHospitalizationDao.isDataExists();
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHospitalizationService#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId){
+		return membershipHospitalizationDao.loadData(fileId);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHospitalizationService#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer unloadCSV2Table(){
+		return membershipHospitalizationDao.unloadCSV2Table();
+	}
 }

@@ -47,4 +47,9 @@ public interface HospitalDao {
 	 */
 	Hospital updateByUpdater(Updater<Hospital> updater);
 
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

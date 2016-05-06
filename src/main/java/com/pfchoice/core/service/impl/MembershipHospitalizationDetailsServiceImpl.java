@@ -20,14 +20,14 @@ import com.pfchoice.core.service.MembershipHospitalizationDetailsService;
 public class MembershipHospitalizationDetailsServiceImpl implements MembershipHospitalizationDetailsService {
 
 	@Autowired
-	private MembershipHospitalizationDetailsDao MembershipHospitalizationDetailsDao;
+	private MembershipHospitalizationDetailsDao membershipHospitalizationDetailsDao;
 
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.service.MembershipHospitalizationDetailsService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public MembershipHospitalizationDetails deleteById(final Integer id) {
-		return MembershipHospitalizationDetailsDao.deleteById(id);
+		return membershipHospitalizationDetailsDao.deleteById(id);
 	}
 
 	/* (non-Javadoc)
@@ -36,7 +36,7 @@ public class MembershipHospitalizationDetailsServiceImpl implements MembershipHo
 	@Override
 	@Transactional(readOnly = true)
 	public MembershipHospitalizationDetails findById(final Integer id) {
-		return MembershipHospitalizationDetailsDao.findById(id);
+		return membershipHospitalizationDetailsDao.findById(id);
 	}
 
 	/* (non-Javadoc)
@@ -45,7 +45,7 @@ public class MembershipHospitalizationDetailsServiceImpl implements MembershipHo
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
-		return MembershipHospitalizationDetailsDao.getPage(pageNo, pageSize);
+		return membershipHospitalizationDetailsDao.getPage(pageNo, pageSize);
 	}
 
 	/* (non-Javadoc)
@@ -53,7 +53,7 @@ public class MembershipHospitalizationDetailsServiceImpl implements MembershipHo
 	 */
 	@Override
 	public MembershipHospitalizationDetails save(final MembershipHospitalizationDetails bean) {
-		return MembershipHospitalizationDetailsDao.save(bean);
+		return membershipHospitalizationDetailsDao.save(bean);
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +62,11 @@ public class MembershipHospitalizationDetailsServiceImpl implements MembershipHo
 	@Override
 	public MembershipHospitalizationDetails update(final MembershipHospitalizationDetails bean) {
 		Updater<MembershipHospitalizationDetails> updater = new Updater<>(bean);
-		return MembershipHospitalizationDetailsDao.updateByUpdater(updater);
+		return membershipHospitalizationDetailsDao.updateByUpdater(updater);
 	}
 
+	@Override
+	public Integer loadData(final Integer fileId){
+		return membershipHospitalizationDetailsDao.loadData(fileId);
+	}
 }

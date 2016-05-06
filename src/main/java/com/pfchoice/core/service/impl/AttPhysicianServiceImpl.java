@@ -65,4 +65,12 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 		return attPhysicianDao.updateByUpdater(updater);
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.AttPhysicianService#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId){
+		return attPhysicianDao.loadData(fileId);
+	}
 }

@@ -41,4 +41,9 @@ public interface MembershipHospitalizationDetailsService {
 	 */
 	MembershipHospitalizationDetails update(MembershipHospitalizationDetails bean);
 
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

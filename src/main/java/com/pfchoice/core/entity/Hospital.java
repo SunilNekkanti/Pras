@@ -30,6 +30,10 @@ public class Hospital extends RecordDetails implements Serializable {
 	private Integer id;
 
 	@Expose
+	@Column(name = "code")
+	private String code;
+	
+	@Expose
 	@Column(name = "name")
 	private String name;
 
@@ -66,6 +70,20 @@ public class Hospital extends RecordDetails implements Serializable {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	/**

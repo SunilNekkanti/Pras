@@ -47,4 +47,24 @@ public interface MembershipHospitalizationDao {
 	 */
 	MembershipHospitalization updateByUpdater(Updater<MembershipHospitalization> updater);
 
+	/**
+	 * @return
+	 */
+	Integer loadDataCSV2Table();
+	
+	/**
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
+	
+	/**
+	 * @return
+	 */
+	Boolean isDataExists();
+	
+	/**
+	 * @return
+	 */
+	Integer unloadCSV2Table();
+	
 }

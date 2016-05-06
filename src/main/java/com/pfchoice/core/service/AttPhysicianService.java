@@ -41,4 +41,9 @@ public interface AttPhysicianService {
 	 */
 	AttPhysician update(AttPhysician bean);
 
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

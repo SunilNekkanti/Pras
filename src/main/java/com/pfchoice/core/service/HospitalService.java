@@ -41,4 +41,9 @@ public interface HospitalService {
 	 */
 	Hospital update(Hospital bean);
 
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

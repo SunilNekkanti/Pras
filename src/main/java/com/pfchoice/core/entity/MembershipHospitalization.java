@@ -63,7 +63,7 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	
 	@Expose
 	@Column(name = "authnum")
-	private Integer authNum;
+	private String authNum;
 	
 	@Expose
 	@Column(name = "prior_admits")
@@ -199,14 +199,14 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	/**
 	 * @return the authNum
 	 */
-	public Integer getAuthNum() {
+	public String getAuthNum() {
 		return authNum;
 	}
 
 	/**
 	 * @param authNum the authNum to set
 	 */
-	public void setAuthNum(Integer authNum) {
+	public void setAuthNum(String authNum) {
 		this.authNum = authNum;
 	}
 

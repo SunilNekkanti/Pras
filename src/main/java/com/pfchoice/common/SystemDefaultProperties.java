@@ -23,4 +23,8 @@ public interface SystemDefaultProperties {
 	String ID = "username";
 
 	String CREDENTIAL = "credential";
+	
+	String SQL_DIRECTORY_PATH = "c:\\softwares\\gitworkspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Pras\\WEB-INF\\classes\\sql\\";
+	
+	String FILES_UPLOAD_DIRECTORY_PATH = "C:\\ProgramData\\MySQL\\MySQL Server 5.6\\Uploads\\";
 }

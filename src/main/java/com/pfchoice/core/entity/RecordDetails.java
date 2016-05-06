@@ -41,7 +41,7 @@ public class RecordDetails {
 	 * 
 	 */
 	public RecordDetails(){
-		
+		super();
 	}
 	/**
 	 * @return the createdDate

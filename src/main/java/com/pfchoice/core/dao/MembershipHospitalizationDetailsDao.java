@@ -47,4 +47,9 @@ public interface MembershipHospitalizationDetailsDao {
 	 */
 	MembershipHospitalizationDetails updateByUpdater(Updater<MembershipHospitalizationDetails> updater);
 
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

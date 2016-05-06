@@ -41,4 +41,23 @@ public interface MembershipHospitalizationService {
 	 */
 	MembershipHospitalization update(MembershipHospitalization bean);
 
+	/**
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
+	
+	/**
+	 * @return
+	 */
+	Boolean isDataExists();
+	
+	/**
+	 * @return
+	 */
+	Integer loadDataCSV2Table();
+	
+	/**
+	 * @return
+	 */
+	Integer unloadCSV2Table();
 }
