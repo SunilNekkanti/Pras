@@ -69,11 +69,11 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	@Column(name = "prior_admits")
 	private Integer priorAdmits;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "admit_date")
 	protected Date admitDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "exp_dc_date")
 	protected Date expDisDate;
 	

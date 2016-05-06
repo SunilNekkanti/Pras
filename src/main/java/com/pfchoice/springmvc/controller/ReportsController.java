@@ -1,5 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
+import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HEDIS;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,9 +24,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
-import com.pfchoice.core.entity.MembershipHedisFollowup;
+import com.pfchoice.core.entity.FollowupType;
+import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
-import com.pfchoice.core.service.MembershipHedisFollowupService;
+import com.pfchoice.core.service.FollowupTypeService;
+import com.pfchoice.core.service.MembershipFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipService;
 
@@ -44,10 +48,13 @@ public class ReportsController {
 	private static final Logger LOG = LoggerFactory.getLogger(ReportsController.class.getName());
 
 	@Autowired
+	private FollowupTypeService followupTypeService;
+
+	@Autowired
 	private MembershipService membershipService;
 
 	@Autowired
-	private MembershipHedisFollowupService mbrHedisFollowupService;
+	private MembershipFollowupService mbrHedisFollowupService;
 
 	@Autowired
 	private MembershipHedisMeasureService mbrHedisMeasureService;
@@ -97,7 +104,7 @@ public class ReportsController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHedis/followup",
 			"/user/reports/membershipHedis/followup" }, method = RequestMethod.POST)
-	public String addMembershipHedisFollowup(@RequestBody final MembershipHedisFollowup mbrHedisFollowup,
+	public String addMembershipHedisFollowup(@RequestBody final MembershipFollowup mbrHedisFollowup,
 			@ModelAttribute("username") String username) {
 
 		List<Map<Integer, String>> mbrHedisMeasureList = mbrHedisFollowup.getMbrHedisMeasureIds();
@@ -117,6 +124,9 @@ public class ReportsController {
 				}
 			});
 		}
+
+		FollowupType followupType = followupTypeService.findByCode(FOLLOWUP_TYPE_HEDIS);
+		mbrHedisFollowup.setFollowupType(followupType);
 		mbrHedisFollowup.setDateOfContact(new Date());
 		mbrHedisFollowup.setCreatedBy(username);
 		mbrHedisFollowup.setUpdatedBy(username);
@@ -135,7 +145,8 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/reports/membershipHedis/{mbrId}/followupDetails",
 			"/user/reports/membershipHedis/{mbrId}/followupDetails" })
 	public Message membershipFollowupDetails(@PathVariable Integer mbrId, Model model) {
-		List<MembershipHedisFollowup> dbMbrHedisFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId);
+		List<MembershipFollowup> dbMbrHedisFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId,
+																				FOLLOWUP_TYPE_HEDIS);
 		return Message.successMessage(CommonMessageContent.HEDIS_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(dbMbrHedisFollowup));
 	}

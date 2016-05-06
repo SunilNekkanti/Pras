@@ -2,7 +2,7 @@ package com.pfchoice.core.service;
 
 import java.util.List;
 
-import com.pfchoice.core.entity.MembershipHedisFollowup;
+import com.pfchoice.core.entity.MembershipFollowup;
 
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -10,19 +10,19 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface MembershipHedisFollowupService {
+public interface MembershipFollowupService {
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	MembershipHedisFollowup deleteById(Integer id);
+	MembershipFollowup deleteById(Integer id);
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	MembershipHedisFollowup findById(Integer id);
+	MembershipFollowup findById(Integer id);
 
 	/**
 	 * @param pageNo
@@ -35,18 +35,18 @@ public interface MembershipHedisFollowupService {
 	 * @param bean
 	 * @return
 	 */
-	MembershipHedisFollowup save(MembershipHedisFollowup bean);
+	MembershipFollowup save(MembershipFollowup bean);
 
 	/**
 	 * @param bean
 	 * @return
 	 */
-	MembershipHedisFollowup update(MembershipHedisFollowup bean);
+	MembershipFollowup update(MembershipFollowup bean);
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	List<MembershipHedisFollowup> findAllByMbrId(Integer id);
+	List<MembershipFollowup> findAllByMbrId(Integer id, String followupTypeCode);
 
 }

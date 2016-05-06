@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pfchoice.core.dao.MembershipHedisFollowupDao;
-import com.pfchoice.core.entity.MembershipHedisFollowup;
-import com.pfchoice.core.service.MembershipHedisFollowupService;
+import com.pfchoice.core.dao.MembershipFollowupDao;
+import com.pfchoice.core.entity.MembershipFollowup;
+import com.pfchoice.core.service.MembershipFollowupService;
 
 /**
  *
@@ -19,16 +19,16 @@ import com.pfchoice.core.service.MembershipHedisFollowupService;
  */
 @Service
 @Transactional
-public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollowupService {
+public class MembershipFollowupServiceImpl implements MembershipFollowupService {
 
 	@Autowired
-	private MembershipHedisFollowupDao mbrHedisFollowupDao;
+	private MembershipFollowupDao mbrHedisFollowupDao;
 
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#deleteById(java.lang.Integer)
 	 */
 	@Override
-	public MembershipHedisFollowup deleteById(final Integer id) {
+	public MembershipFollowup deleteById(final Integer id) {
 		return mbrHedisFollowupDao.deleteById(id);
 	}
 
@@ -37,7 +37,7 @@ public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollow
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public MembershipHedisFollowup findById(final Integer id) {
+	public MembershipFollowup findById(final Integer id) {
 		return mbrHedisFollowupDao.findById(id);
 	}
 
@@ -54,7 +54,7 @@ public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollow
 	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#save(com.pfchoice.core.entity.MembershipHedisFollowup)
 	 */
 	@Override
-	public MembershipHedisFollowup save(final MembershipHedisFollowup bean) {
+	public MembershipFollowup save(final MembershipFollowup bean) {
 		return mbrHedisFollowupDao.save(bean);
 	}
 
@@ -62,8 +62,8 @@ public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollow
 	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#update(com.pfchoice.core.entity.MembershipHedisFollowup)
 	 */
 	@Override
-	public MembershipHedisFollowup update(final MembershipHedisFollowup bean) {
-		Updater<MembershipHedisFollowup> updater = new Updater<>(bean);
+	public MembershipFollowup update(final MembershipFollowup bean) {
+		Updater<MembershipFollowup> updater = new Updater<>(bean);
 		return mbrHedisFollowupDao.updateByUpdater(updater);
 	}
 
@@ -71,7 +71,7 @@ public class MembershipHedisFollowupServiceImpl implements MembershipHedisFollow
 	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#findAllByMbrId(java.lang.Integer)
 	 */
 	@Override
-	public List<MembershipHedisFollowup> findAllByMbrId(final Integer id) {
-		return mbrHedisFollowupDao.findAllByMbrId(id);
+	public List<MembershipFollowup> findAllByMbrId(final Integer id, final String followupTypeCode) {
+		return mbrHedisFollowupDao.findAllByMbrId(id, followupTypeCode );
 	}
 }

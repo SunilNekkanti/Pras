@@ -449,7 +449,7 @@ $(document).ready(function () {
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a disabled="true"> <span
+					<li><a onclick="return false;"> <span
 							class="glyphicon glyphicon-user"></span> ${username}
 					</a></li>
 					<li><a href="${context}/logout"><span

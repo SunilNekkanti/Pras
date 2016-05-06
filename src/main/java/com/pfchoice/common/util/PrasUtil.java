@@ -3,6 +3,14 @@
  */
 package com.pfchoice.common.util;
 
+import static com.pfchoice.common.SystemDefaultProperties.SQL_DIRECTORY_PATH;
+import static com.pfchoice.common.SystemDefaultProperties.SQL_QUERY_EXTN;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -11,10 +19,14 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.pfchoice.core.dao.impl.MembershipHospitalizationDaoImpl;
 
 /**
  * @author sarath
@@ -23,7 +35,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class PrasUtil {
 	
-	
+	private static final Logger LOG = LoggerFactory.getLogger(MembershipHospitalizationDaoImpl.class);
 	/**
 	 * 
 	 */
@@ -93,5 +105,18 @@ public class PrasUtil {
 
 		return effYearList;
 	}
+	
+	public static <T> String getInsertQuery(final Class<T> entityClass, final String queryType) {
+		String insertQuery = null;
+		String entityClassName = entityClass.getSimpleName();
+		try{
+			Path path = FileSystems.getDefault().getPath(SQL_DIRECTORY_PATH + entityClassName + queryType + SQL_QUERY_EXTN);
+			insertQuery =  new String(Files.readAllBytes(path.toAbsolutePath()), StandardCharsets.UTF_8);
+		}catch(IOException e){
+			LOG.warn("exception "+e.getCause());
+		}
+		return insertQuery;
+	}
+	
 	
 }

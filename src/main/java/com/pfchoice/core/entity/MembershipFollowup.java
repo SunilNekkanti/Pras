@@ -25,8 +25,8 @@ import com.google.gson.annotations.Expose;
  *
  * @author Mohanasundharam
  */
-@Entity(name = "membership_hedis_followup")
-public class MembershipHedisFollowup extends RecordDetails implements Serializable {
+@Entity(name = "membership_followup")
+public class MembershipFollowup extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,6 +42,11 @@ public class MembershipHedisFollowup extends RecordDetails implements Serializab
 	private Membership mbr;
 
 	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "followup_type_id", nullable = false, referencedColumnName = "id")
+	private FollowupType followupType;
+	
+	@Expose
 	@Column(name = "followup_details")
 	private String followupDetails;
 
@@ -56,14 +61,14 @@ public class MembershipHedisFollowup extends RecordDetails implements Serializab
 	/**
 	 * 
 	 */
-	public MembershipHedisFollowup() {
+	public MembershipFollowup() {
 		super();
 	}
 
 	/**
 	 * @param id
 	 */
-	public MembershipHedisFollowup(final Integer id) {
+	public MembershipFollowup(final Integer id) {
 		super();
 		this.id = id;
 	}
@@ -95,6 +100,20 @@ public class MembershipHedisFollowup extends RecordDetails implements Serializab
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
+	}
+
+	/**
+	 * @return the followupType
+	 */
+	public FollowupType getFollowupType() {
+		return followupType;
+	}
+
+	/**
+	 * @param followupType the followupType to set
+	 */
+	public void setFollowupType(FollowupType followupType) {
+		this.followupType = followupType;
 	}
 
 	/**
@@ -151,10 +170,10 @@ public class MembershipHedisFollowup extends RecordDetails implements Serializab
 
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof MembershipHedisFollowup)) {
+		if (!(object instanceof MembershipFollowup)) {
 			return false;
 		}
-		MembershipHedisFollowup other = (MembershipHedisFollowup) object;
+		MembershipFollowup other = (MembershipFollowup) object;
 		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}

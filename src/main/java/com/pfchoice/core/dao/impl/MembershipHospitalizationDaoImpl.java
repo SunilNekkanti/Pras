@@ -1,5 +1,8 @@
 package com.pfchoice.core.dao.impl;
 
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
+
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -17,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipHospitalizationDao;
 import com.pfchoice.core.entity.MembershipHospitalization;
 
@@ -83,24 +87,12 @@ public class MembershipHospitalizationDaoImpl extends HibernateBaseDao<Membershi
 	 */
 	@Override
 	public Integer loadDataCSV2Table() {
-		Session session = getSession();
-		int rowsAffected = 0;
-		try{
-			Path path = FileSystems.getDefault().getPath(SQL_DIRECTORY_PATH+ getEntityClass().getSimpleName()+".sql");
-			String loadDataQuery = new String(Files.readAllBytes(path.toAbsolutePath()), StandardCharsets.UTF_8);
-			LOG.info("contents is"+loadDataQuery);
-			
-			//session.createSQLQuery("TRUNCATE TABLE csv2AmgHospitalization")
-			//			.executeUpdate();
-			
-			rowsAffected = session.createSQLQuery(loadDataQuery)
-				    .setString("file", FILES_UPLOAD_DIRECTORY_PATH+"Physicians First Choice Census 04-28-2016.csv")
-				    .executeUpdate();
-			
-		}catch(IOException e){
-			LOG.warn("exception "+e.getCause());
-		}
-		return rowsAffected;
+		
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
+		
+		return getSession().createSQLQuery(loadDataQuery)
+							.setString("file", FILES_UPLOAD_DIRECTORY_PATH+"Physicians First Choice Census 04-28-2016.csv")
+				    		.executeUpdate();
 	}
 
 	/* (non-Javadoc)
@@ -127,20 +119,11 @@ public class MembershipHospitalizationDaoImpl extends HibernateBaseDao<Membershi
 	 */
 	@Override 
 	public Integer loadData(final Integer fileId){
-		Session session = getSession();
-		int rowsAffected = 0;
-		try{
-			Path path = FileSystems.getDefault().getPath(SQL_DIRECTORY_PATH+ getEntityClass().getSimpleName()+"_insert.sql");
-			String loadDataQuery = new String(Files.readAllBytes(path.toAbsolutePath()), StandardCharsets.UTF_8);
-			LOG.info("contents is"+loadDataQuery);
-			
-			rowsAffected = session.createSQLQuery(loadDataQuery)
-				    .setInteger("fileId", fileId)
-				    .executeUpdate();
-		}catch(IOException e){
-			LOG.warn("exception "+e.getCause());
-		}
-		return rowsAffected;
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+		
+		return getSession().createSQLQuery(loadDataQuery)
+				    					.setInteger("fileId", fileId)
+				    					.executeUpdate();
 	}
 	
 	/* (non-Javadoc)

@@ -2,7 +2,7 @@ package com.pfchoice.core.dao;
 
 import java.util.List;
 
-import com.pfchoice.core.entity.MembershipHedisFollowup;
+import com.pfchoice.core.entity.MembershipFollowup;
 
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
@@ -11,21 +11,21 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Mohanasundharam
  */
-public interface MembershipHedisFollowupDao {
+public interface MembershipFollowupDao {
 
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	MembershipHedisFollowup deleteById(Integer id);
+	MembershipFollowup deleteById(Integer id);
 
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	MembershipHedisFollowup findById(Integer id);
+	MembershipFollowup findById(Integer id);
 
 	/**
 	 * 
@@ -40,20 +40,20 @@ public interface MembershipHedisFollowupDao {
 	 * @param bean
 	 * @return
 	 */
-	MembershipHedisFollowup save(MembershipHedisFollowup bean);
+	MembershipFollowup save(MembershipFollowup bean);
 
 	/**
 	 * 
 	 * @param updater
 	 * @return
 	 */
-	MembershipHedisFollowup updateByUpdater(Updater<MembershipHedisFollowup> updater);
+	MembershipFollowup updateByUpdater(Updater<MembershipFollowup> updater);
 
 	/**
 	 * 
 	 * @param mbrId
 	 * @return
 	 */
-	List<MembershipHedisFollowup> findAllByMbrId(Integer mbrId);
+	List<MembershipFollowup> findAllByMbrId(Integer mbrId, String followupTypeCode);
 
 }
