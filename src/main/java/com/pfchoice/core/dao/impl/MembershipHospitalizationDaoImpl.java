@@ -1,17 +1,13 @@
 package com.pfchoice.core.dao.impl;
 
+import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -24,8 +20,6 @@ import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipHospitalizationDao;
 import com.pfchoice.core.entity.MembershipHospitalization;
 
-import static com.pfchoice.common.SystemDefaultProperties.SQL_DIRECTORY_PATH;
-import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 /**
  *
  * @author Sarath

@@ -76,6 +76,18 @@ public class MembershipServiceImpl implements MembershipService {
 				sort, sortdir);
 	}
 
+
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipService#getMbrHospitalizationPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getMbrHospitalizationPage(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir) {
+		return membershipDao.getMbrHospitalizationPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

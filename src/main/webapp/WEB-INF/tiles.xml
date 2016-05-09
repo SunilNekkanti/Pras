@@ -541,12 +541,14 @@
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/hedisMeasureGroupNew.jsp" />
 	</definition>
+<!-- Hedis Measure Group -->
 
-	<definition name="hedisMeasureGroupEdit" extends="base.definition">
-		<put-attribute name="title" value="Hedis Measure Group Details" />
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/hedisMeasureGroupEdit.jsp" />
+	<definition name="membershipHospitalizationList" extends="base.definition">
+		<put-attribute name="title" value="Member Hospitalization List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/membershipHospitalizationList.jsp" />
 	</definition>
+	
+	
 
-	<!-- Hedis Measure Group -->
+	
 </tiles-definitions>  

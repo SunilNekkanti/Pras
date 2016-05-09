@@ -50,6 +50,19 @@ public interface MembershipService {
 			final List<Integer> ruleIds, String sort, String sortdir);
 
 	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getMbrHospitalizationPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr,
+			String sort, String sortdir);
+
+	/**
 	 * @param bean
 	 * @return
 	 */

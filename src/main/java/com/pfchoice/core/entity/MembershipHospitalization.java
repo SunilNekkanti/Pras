@@ -38,49 +38,47 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	@JoinColumn(name = "hos_id", referencedColumnName = "hos_id")
 	private Hospital hospital;
 
-	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
 	private Membership mbr;
 
-	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
 	private Provider prvdr;
-	
-	@Expose
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ins_id", referencedColumnName = "insurance_id")
 	private Insurance ins;
-	
+
 	@Expose
 	@Column(name = "report")
 	private String report;
-	
+
 	@Expose
 	@Column(name = "plan_desc")
 	private String planDesc;
-	
+
 	@Expose
 	@Column(name = "authnum")
 	private String authNum;
-	
+
 	@Expose
 	@Column(name = "prior_admits")
 	private Integer priorAdmits;
-	
+
+	@Expose
 	@Temporal(TemporalType.DATE)
 	@Column(name = "admit_date")
 	protected Date admitDate;
 
+	@Expose
 	@Temporal(TemporalType.DATE)
 	@Column(name = "exp_dc_date")
 	protected Date expDisDate;
-	
+
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
-
 
 	/**
 	 * 
@@ -111,7 +109,6 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 		this.id = id;
 	}
 
-	
 	/**
 	 * @return the hospital
 	 */
@@ -120,7 +117,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param hospital the hospital to set
+	 * @param hospital
+	 *            the hospital to set
 	 */
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
@@ -134,7 +132,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param mbr
+	 *            the mbr to set
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
@@ -148,7 +147,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param prvdr
+	 *            the prvdr to set
 	 */
 	public void setPrvdr(Provider prvdr) {
 		this.prvdr = prvdr;
@@ -162,7 +162,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param ins
+	 *            the ins to set
 	 */
 	public void setIns(Insurance ins) {
 		this.ins = ins;
@@ -176,7 +177,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param report the report to set
+	 * @param report
+	 *            the report to set
 	 */
 	public void setReport(String report) {
 		this.report = report;
@@ -190,7 +192,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param planDesc the planDesc to set
+	 * @param planDesc
+	 *            the planDesc to set
 	 */
 	public void setPlanDesc(String planDesc) {
 		this.planDesc = planDesc;
@@ -204,7 +207,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param authNum the authNum to set
+	 * @param authNum
+	 *            the authNum to set
 	 */
 	public void setAuthNum(String authNum) {
 		this.authNum = authNum;
@@ -218,7 +222,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param priorAdmits the priorAdmits to set
+	 * @param priorAdmits
+	 *            the priorAdmits to set
 	 */
 	public void setPriorAdmits(Integer priorAdmits) {
 		this.priorAdmits = priorAdmits;
@@ -232,7 +237,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param admitDate the admitDate to set
+	 * @param admitDate
+	 *            the admitDate to set
 	 */
 	public void setAdmitDate(Date admitDate) {
 		this.admitDate = admitDate;
@@ -246,7 +252,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param expDisDate the expDisDate to set
+	 * @param expDisDate
+	 *            the expDisDate to set
 	 */
 	public void setExpDisDate(Date expDisDate) {
 		this.expDisDate = expDisDate;

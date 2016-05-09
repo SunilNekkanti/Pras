@@ -99,6 +99,10 @@ public class Membership extends RecordDetails implements Serializable {
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MembershipHedisMeasure> mbrHedisMeasureList;
 
+	@Expose
+	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
+	private List<MembershipHospitalization> mbrHospitalizationList;
+
 	/**
 	 * 
 	 */
@@ -351,6 +355,21 @@ public class Membership extends RecordDetails implements Serializable {
 	 */
 	public void setMbrHedisMeasureList(List<MembershipHedisMeasure> mbrHedisMeasureList) {
 		this.mbrHedisMeasureList = mbrHedisMeasureList;
+	}
+
+	/**
+	 * @return the mbrHospitalizationList
+	 */
+	public List<MembershipHospitalization> getMbrHospitalizationList() {
+		return mbrHospitalizationList;
+	}
+
+	/**
+	 * @param mbrHospitalizationList
+	 *            the mbrHospitalizationList to set
+	 */
+	public void setMbrHospitalizationList(List<MembershipHospitalization> mbrHospitalizationList) {
+		this.mbrHospitalizationList = mbrHospitalizationList;
 	}
 
 	@Override

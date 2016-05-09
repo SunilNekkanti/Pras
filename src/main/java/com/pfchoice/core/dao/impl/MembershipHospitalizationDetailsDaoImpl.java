@@ -8,8 +8,6 @@ import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.common.util.PrasUtil;
@@ -23,8 +21,6 @@ import com.pfchoice.core.entity.MembershipHospitalizationDetails;
 @Repository
 public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<MembershipHospitalizationDetails, Integer> implements MembershipHospitalizationDetailsDao {
 
-	private static final Logger LOG = LoggerFactory.getLogger(HospitalDaoImpl.class);
-	
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */

@@ -151,4 +151,38 @@ public class ReportsController {
 				JsonConverter.getJsonObject(dbMbrHedisFollowup));
 	}
 
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/hospitalization", "/user/reports/hospitalization" })
+	public String handleHospitalizationRequest() {
+
+		return "membershipHospitalizationList";
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchHedisRule
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipHospitalization/list",
+			"/user/reports/membershipHospitalizatio/list" }, method = RequestMethod.GET)
+	public Message viewHospitalizationMembershipList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = membershipService.getMbrHospitalizationPage(pageNo, pageSize, sSearch, sSearchIns,
+				sSearchPrvdr, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
 }
