@@ -46,4 +46,10 @@ public interface MembershipHospitalizationDetailsService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
+	
+	/**
+	 * @param mbrHosId
+	 * @return
+	 */
+	Pagination getMbrHospitalizationDetailsPage(int mbrHosId);
 }

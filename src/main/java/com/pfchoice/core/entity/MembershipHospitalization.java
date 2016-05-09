@@ -2,6 +2,7 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -79,6 +81,10 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
+	
+	@Expose
+	@OneToMany(mappedBy = "mbrHospitalization", fetch = FetchType.LAZY)
+	private List<MembershipHospitalizationDetails> mbrHospitalizationDetailsList;
 
 	/**
 	 * 
@@ -272,6 +278,20 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	 */
 	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
+	}
+
+	/**
+	 * @return the mbrHospitalizationDetailsList
+	 */
+	public List<MembershipHospitalizationDetails> getMbrHospitalizationDetailsList() {
+		return mbrHospitalizationDetailsList;
+	}
+
+	/**
+	 * @param mbrHospitalizationDetailsList the mbrHospitalizationDetailsList to set
+	 */
+	public void setMbrHospitalizationDetailsList(List<MembershipHospitalizationDetails> mbrHospitalizationDetailsList) {
+		this.mbrHospitalizationDetailsList = mbrHospitalizationDetailsList;
 	}
 
 	@Override

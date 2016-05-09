@@ -7,6 +7,8 @@ import ml.rugal.sshcommon.page.Pagination;
 
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -78,5 +80,26 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		return getSession().createSQLQuery(loadDataQuery)
 				    		.setInteger("fileId", fileId)
 				    		.executeUpdate();
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipHospitalizationDetailsDao#getMbrHospitalizationDetailsPage(java.lang.Integer)
+	 */
+	public Pagination getMbrHospitalizationDetailsPage(final Integer mbrHosId) {
+
+		Criteria crit = createCriteria().createAlias("mbrHospitalization", "mbrHospitalization");
+		crit.createAlias("attPhysician", "attPhysician");
+		
+		Disjunction or = Restrictions.disjunction();
+		Conjunction and = Restrictions.conjunction();
+		
+		and.add(Restrictions.eq("mbrHospitalization.id", mbrHosId));
+		and.add(Restrictions.eq("activeInd", new Character('Y')));
+
+		crit.add(or);
+		crit.add(and);
+		
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return findByCriteria(crit, 0, 12);
 	}
 }

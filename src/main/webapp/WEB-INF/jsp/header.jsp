@@ -415,6 +415,23 @@ $(document).ready(function () {
 	    
 	   $('.navbar').css('background','#556B2F')
 	   
+	   $(function(){
+			$(".dropdown-menu > li > a.trigger").on("click",function(e){
+				var current=$(this).next();
+				var grandparent=$(this).parent().parent();
+				if($(this).hasClass('left-caret')||$(this).hasClass('right-caret'))
+					$(this).toggleClass('right-caret left-caret');
+				grandparent.find('.left-caret').not(this).toggleClass('right-caret left-caret');
+				grandparent.find(".sub-menu:visible").not(current).hide();
+				current.toggle();
+				e.stopPropagation();
+			});
+			$(".dropdown-menu > li > a:not(.trigger)").on("click",function(){
+				var root=$(this).closest('.dropdown');
+				root.find('.left-caret').toggleClass('right-caret left-caret');
+				root.find('.sub-menu:visible').hide();
+			});
+		});
 });
 </script>
 </head>
@@ -432,11 +449,46 @@ $(document).ready(function () {
 					<li><a href="${context}/${userpath}/insuranceList">Insurance</a></li>
 					<li><a href="${context}/${userpath}/providerList">Provider</a></li>
 					<li><a href="${context}/${userpath}/membershipList">Membership</a></li>
+					
+					<div class="dropdown" style="position:relative">
+						<a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="trigger right-caret">Level 1</a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="#">Level 2</a></li>
+									<li>
+										<a class="trigger right-caret">Level 2</a>
+										<ul class="dropdown-menu sub-menu">
+											<li><a href="#">Level 3</a></li>
+											<li><a href="#">Level 3</a></li>
+											<li>
+												<a class="trigger right-caret">Level 3</a>
+												<ul class="dropdown-menu sub-menu">
+													<li><a href="#">Level 4</a></li>
+													<li><a href="#">Level 4</a></li>
+													<li><a href="#">Level 4</a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li><a href="#">Level 2</a></li>
+								</ul>
+							</li>
+							<li><a href="#">Level 1</a></li>
+							<li><a href="#">Level 1</a></li>
+						</ul>
+					</div>
 
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					<li class="dropdown"><a href="#" class="trigger right-caret dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Admin <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+						
+					<li class="dropdown"><a href="#" class=" trigger  right-caret dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">Quality Measures <span class="caret"></span></a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu dropdown-sub-menu">
 							<li><a href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
 							<li><a href="${context}/${userpath}/cpt/cptMeasureList">CPT</a></li>
 							<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
@@ -444,7 +496,14 @@ $(document).ready(function () {
 								href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis
 									Rule</a></li>
 						</ul></li>
-					<li><a href="${context}/${userpath}/reports/hedis">Reports</a></li>
+						</ul></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Reports <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
+							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
+						</ul></li>	
 					<li><a href="${context}/${userpath}/userList">User</a></li>
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>
 				</ul>

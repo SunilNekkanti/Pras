@@ -69,4 +69,12 @@ public class MembershipHospitalizationDetailsServiceImpl implements MembershipHo
 	public Integer loadData(final Integer fileId){
 		return membershipHospitalizationDetailsDao.loadData(fileId);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHospitalizationDetailsService#getMbrHospitalizationDetailsPage(int)
+	 */
+	@Override
+	public Pagination getMbrHospitalizationDetailsPage(final int mbrHosId) {
+		return membershipHospitalizationDetailsDao.getMbrHospitalizationDetailsPage(mbrHosId);
+	}
 }

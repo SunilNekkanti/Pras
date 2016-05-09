@@ -24,12 +24,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
+import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
+import com.pfchoice.core.service.AttPhysicianService;
+import com.pfchoice.core.service.FileService;
 import com.pfchoice.core.service.FollowupTypeService;
+import com.pfchoice.core.service.HospitalService;
 import com.pfchoice.core.service.MembershipFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
+import com.pfchoice.core.service.MembershipHospitalizationDetailsService;
+import com.pfchoice.core.service.MembershipHospitalizationService;
 import com.pfchoice.core.service.MembershipService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -48,7 +54,13 @@ public class ReportsController {
 	private static final Logger LOG = LoggerFactory.getLogger(ReportsController.class.getName());
 
 	@Autowired
-	private FollowupTypeService followupTypeService;
+	private AttPhysicianService attPhysicianService;
+
+	@Autowired
+	private FileService fileService;
+
+	@Autowired
+	private HospitalService hospitalService;
 
 	@Autowired
 	private MembershipService membershipService;
@@ -58,6 +70,15 @@ public class ReportsController {
 
 	@Autowired
 	private MembershipHedisMeasureService mbrHedisMeasureService;
+
+	@Autowired
+	private MembershipHospitalizationService mbrHospitalizationService;
+
+	@Autowired
+	private MembershipHospitalizationDetailsService mbrHospitalizationDetailsService;
+
+	@Autowired
+	private FollowupTypeService followupTypeService;
 
 	/**
 	 * @return
@@ -146,7 +167,7 @@ public class ReportsController {
 			"/user/reports/membershipHedis/{mbrId}/followupDetails" })
 	public Message membershipFollowupDetails(@PathVariable Integer mbrId, Model model) {
 		List<MembershipFollowup> dbMbrHedisFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId,
-																				FOLLOWUP_TYPE_HEDIS);
+				FOLLOWUP_TYPE_HEDIS);
 		return Message.successMessage(CommonMessageContent.HEDIS_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(dbMbrHedisFollowup));
 	}
@@ -184,5 +205,80 @@ public class ReportsController {
 				sSearchPrvdr, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
+
+	/**
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membershipHospitalization/list",
+			"/user/membershipHospitalization/list" }, method = RequestMethod.GET)
+	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username) {
+		Boolean dataExists = mbrHospitalizationService.isDataExists();
+
+		if (dataExists) {
+			LOG.warn("Previous file processing is incomplete");
+			return Message.failMessage("Previous file processing is incomplete");
+		} else {
+
+			Integer fileId = 0;
+
+			try {
+				File fileRecord = new File();
+				fileRecord.setFileName("Physicians First Choice Census 04-29-2016.csv");
+				fileRecord.setFileTypeCode(2);
+				fileRecord.setCreatedBy(username);
+				fileRecord.setUpdatedBy(username);
+				File newFile = fileService.save(fileRecord);
+				fileId = newFile.getId();
+			} catch (Exception e) {
+				LOG.info("similar file already processed in past");
+				return Message.failMessage("similar file already processed in past");
+			}
+
+			LOG.info("Loading  membershipHospitalization data");
+			Integer loadedData = mbrHospitalizationService.loadDataCSV2Table();
+			LOG.info("Loaded  membershipHospitalization data");
+
+			if (loadedData < 1) {
+				LOG.info("ZERO records to process");
+				return Message.failMessage("ZERO records to process");
+			}
+
+			LOG.info("processing  membershipHospitalization data");
+			Integer hosLoadedData = hospitalService.loadData(fileId);
+			Integer attPhysicianLoadedData = attPhysicianService.loadData(fileId);
+			Integer mbrHospitalizationLoadedData = mbrHospitalizationService.loadData(fileId);
+			Integer mbrHospitalizationDetailsLoadedData = mbrHospitalizationDetailsService.loadData(fileId);
+			LOG.info("hosLoadedData " + hosLoadedData);
+			LOG.info("attPhysicianLoadedData " + attPhysicianLoadedData);
+			LOG.info("mbrHospitalizationLoadedData " + mbrHospitalizationLoadedData);
+			LOG.info("mbrHospitalizationDetailsLoadedData " + mbrHospitalizationDetailsLoadedData);
+			Integer mbrHospitalizationUnloadedData = mbrHospitalizationService.unloadCSV2Table();
+			LOG.info("mbrHospitalizationUnloadedData " + mbrHospitalizationUnloadedData);
+			LOG.info("processed  membershipHospitalization data");
+
+			LOG.info("returning membershipList");
+			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, loadedData);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipHospitalizationDetails/{mbrHosId}/list",
+			"/user/reports/membershipHospitalizationDetails/{mbrHosId}/list" })
+	public Message viewHospitalizationMembershipDetailsList(@PathVariable Integer mbrHosId) {
+		System.out.println("mbrHosId2 "+ mbrHosId);
+		Pagination pagination = mbrHospitalizationDetailsService.getMbrHospitalizationDetailsPage(mbrHosId);
+		System.out.println("mbrHosId 3"+ mbrHosId);
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
+	
+	@RequestMapping(value = { "/admin/reports/hospitalization/{mbrHosId}", "/user/reports/hospitalization/{mbrHosId}" })
+	public String handleHospitalizationRequest(@PathVariable Integer mbrHosId, Model model) {
+		System.out.println("mbrHosId "+ mbrHosId);
+		model.addAttribute("mbrHosId", mbrHosId);
+		return "membershipHospitalizationDetails";
 	}
 }

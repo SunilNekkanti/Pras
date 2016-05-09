@@ -33,7 +33,6 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	@Column(name = "mbr_hos_details_id", nullable = false)
 	private Integer id;
 
-	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_hos_id", referencedColumnName = "mbr_hos_id")
 	private MembershipHospitalization mbrHospitalization;
@@ -51,7 +50,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	@Column(name = "adm_dx")
 	private String admDx;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
+	@Temporal(TemporalType.DATE)
 	@Column(name = "exp_dc_dt")
 	protected Date expDisDate;
 	
@@ -267,7 +267,7 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 
 	@Override
 	public String toString() {
-		return "com.pfchoice.core.entity.MembershipHospitalization[ id=" + id + " ]";
+		return "com.pfchoice.core.entity.MembershipHospitalizationDetails[ id=" + id + " ]";
 	}
 
 }

@@ -548,6 +548,11 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/membershipHospitalizationList.jsp" />
 	</definition>
 	
+	<definition name="membershipHospitalizationDetails" extends="base.definition">
+		<put-attribute name="title" value="Member Hospitalization Details" />
+		<put-attribute name="body" value="/WEB-INF/jsp/membershipHospitalizationDetails.jsp" />
+	</definition>
+	
 	
 
 	
