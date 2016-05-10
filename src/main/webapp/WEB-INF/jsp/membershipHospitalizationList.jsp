@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@  taglib prefix="springForm"  uri="http://www.springframework.org/tags/form"%>
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
@@ -565,17 +565,19 @@
 		</div>
 		<div class="panel-body">
 			<span class="updateError"></span>
-			<springForm:form method="POST" id="mbrHospitalization"	commandName="mbrHospitalization" action="${id}/save.do"	class="form-horizontal" role="form" enctype="multipart/form-data">
+			<springForm:form method="POST" id="mbrHospitalization"
+				commandName="mbrHospitalization" action="fileProcessing.do"
+				class="form-horizontal" role="form" enctype="multipart/form-data">
 				<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="filesUpload">Membership Hospitalization File</label>
 							<div class="col-sm-5">
 								<span class="btn btn-danger btn-file btn-sm"> Browse <input
-									type="file" class="file" name="fileUpload">
+									type="file" accept=".xls,.xlsx, .csv" class="file" name="fileUpload">
 								</span>
 								<button type="button" class="btn btn-success btn-sm "
 								id="updateButton" name="update"
-								onclick="return modifyContract(${pmpmRequired});">Upload</button>
+								onclick="return fileUploadAndProcessing()">Upload</button>
 							</div>
 						</div>
 				</div>
@@ -745,4 +747,30 @@
 
 		});
 	});
+	
+	function fileUploadAndProcessing() {
+		var url = getContextPath()
+		+ 'reports/hospitalization/fileProcessing.do';
+		var selector = 'mbrHospitalization';
+		if (window.FormData !== undefined) // for HTML5 browsers
+		{
+			var formData = new FormData($('#mbrHospitalization')[0]);
+			formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+			$.ajax({
+				url : url,
+				type : 'POST',
+				mimeType : "multipart/form-data",
+				data : formData,
+				async : false,
+				success : function(data) {
+					$('#' + selector).html(data);
+				},
+				cache : false,
+				contentType : false,
+				processData : false
+			});
+		} else {
+			alert('fileupload error');
+		}
+	}
 </script>
