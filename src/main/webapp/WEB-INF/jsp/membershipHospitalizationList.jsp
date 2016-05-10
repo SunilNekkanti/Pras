@@ -204,11 +204,11 @@
 						}
 
 						function callDatableWithChangedDropDown() {
-							var insSelectValue = $("#insu option:selected")
-									.val();
-							var prvdrSelectValue = $("#prvdr option:selected")
-									.val();
-
+							var insSelectValue = $("#insu option:selected").val();
+							var prvdrSelectValue = $("#prvdr option:selected").val();
+							var processFromValue = $("#processfrom").val();
+							var processToValue = $("#processto").val();
+							
 							if ($.fn.DataTable
 									.isDataTable('#membershipHospitalizationTable')) {
 								$('#membershipHospitalizationTable')
@@ -216,7 +216,7 @@
 							}
 							$('#membershipHospitalizationTable tbody').empty();
 							GetMembershipByInsPrvdr(insSelectValue,
-									prvdrSelectValue, columns);
+									prvdrSelectValue, processFromValue,processToValue, columns);
 						}
 
 						$(document.body)
@@ -291,40 +291,20 @@
 
 							var sSearchIns = paramMap.sSearchIns;
 							var sSearchPrvdr = paramMap.sSearchPrvdr;
-							var sSearchHedisRule = paramMap.sSearchHedisRule;
-							var ruleIds = paramMap.ruleIds;
+							var processFrom = paramMap.processFrom;
+							var processTo = paramMap.processTo;
 
 							//create new json structure for parameters for REST request
 							var restParams = new Array();
-							restParams.push({
-								"name" : "pageSize",
-								"value" : pageSize
-							});
-							restParams.push({
-								"name" : "pageNo",
-								"value" : pageNum
-							});
-							restParams.push({
-								"name" : "sort",
-								"value" : sortName
-							});
-							restParams.push({
-								"name" : "sortdir",
-								"value" : sortDir
-							});
-							restParams.push({
-								"name" : "sSearch",
-								"value" : paramMap.sSearch
-							});
-							restParams.push({
-								"name" : "sSearchIns",
-								"value" : sSearchIns
-							});
-							restParams.push({
-								"name" : "sSearchPrvdr",
-								"value" : sSearchPrvdr
-							});
-
+							restParams.push({"name" : "pageSize","value" : pageSize});
+							restParams.push({"name" : "pageNo","value" : pageNum});
+							restParams.push({"name" : "sort","value" : sortName});
+							restParams.push({"name" : "sortdir","value" : sortDir});
+							restParams.push({"name" : "sSearch","value" : paramMap.sSearch});
+							restParams.push({"name" : "sSearchIns","value" : sSearchIns});
+							restParams.push({"name" : "sSearchPrvdr","value" : sSearchPrvdr});
+							restParams.push({"name" : "processFrom","value" : processFrom});
+							restParams.push({"name" : "processTo","value" : processTo});
 							$
 									.ajax({
 										dataType : 'json',
@@ -343,8 +323,7 @@
 									});
 						}
 
-						GetMembershipByInsPrvdr = function(insId,
-								prvdrId, aoColumns) {
+						GetMembershipByInsPrvdr = function(insId, prvdrId, processFrom, processTo, aoColumns) {
 
 							var oTable = $('#membershipHospitalizationTable')
 									.removeAttr("width")
@@ -357,25 +336,32 @@
 														+ '/reports/membershipHospitalization/list',
 												"sAjaxDataProp" : 'data.list',
 												"aoColumns" : aoColumns,
+												"aoColumnDefs": [ 
+																	{ "sName": "mbrHospitalizationList.0.admitDate", "aTargets": [ 4 ] ,
+																   	   "render": function (data) {
+																        		var date = new Date(data);
+															      			var month = date.getMonth() + 1;
+															     				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+																   	 }},
+								                  		   		    { "sName": "mbrHospitalizationList.0.expDisDate", "aTargets": [ 5 ] ,
+								                  		   		   	   "render": function (data) {
+								                  		   		        		var date = new Date(data);
+								                  		   	        			var month = date.getMonth() + 1;
+								                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+								                  		   		   	 }}
+								                  ], 
 												"bLengthChange" : false,
 												"iDisplayLength" : 12,
 												"sPaginationType" : "full_numbers",
 												"bProcessing" : true,
 												"bServerSide" : true,
-												"fnServerParams" : function(
-														aoData) {
-													aoData
-															.push(
-																	{
-																		"name" : "sSearchIns",
-																		"value" : insId
-																	},
-																	{
-																		"name" : "sSearchPrvdr",
-																		"value" : prvdrId
-																	}
-
-															);
+												"fnServerParams" : function(aoData) {
+																					aoData.push(
+																									{"name" : "sSearchIns",	"value" : insId	},
+																									{"name" : "sSearchPrvdr","value" : prvdrId},
+																									{"name" : "processFrom","value" : processFrom},
+																									{"name" : "processTo","value" : processTo}
+																							);
 												},
 												"fnServerData" : datatable2RestMembership
 											});
@@ -462,8 +448,8 @@
 			url : source,
 			success : function(data, textStatus, jqXHR) {
 				$.each(data.data, function(key, val) {
-					followup_text.append(" >>>> " + val.dateOfContact + " >>>>  "
-							+ val.dateOfContact + " >>>> ");
+					followup_text.append(" >>>> " + val.createdDate + " >>>>  "
+							+ val.createdBy + " >>>> ");
 					followup_text.append(" \n");
 					followup_text.append(val.followupDetails);
 					followup_text.append("  \n");
@@ -540,6 +526,14 @@
 											 { "mDataProp": "cmPriUser","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": "" },
 											 { "mDataProp": "expDisDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  }
 							],
+							"aoColumnDefs": [ 
+			                  		   		    { "sName": "expDisDate", "aTargets": [ 7 ] ,
+			                  		   		   	   "render": function (data) {
+			                  		   		        		var date = new Date(data);
+			                  		   	        			var month = date.getMonth() + 1;
+			                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+			                  		   		   	 }}
+			                  ],          
 							"bLengthChange" : false,
 							"paging" : false,
 							"info" : false,
@@ -594,30 +588,30 @@
 		<div class="panel-body">
 			<div class="table-responsive">
 				<div class="col-sm-12">
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<label class="control-label col-sm-4">Insurance</label>
 						<div class=" col-sm-8" id="extFilterIns"></div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<label class="control-label col-sm-3">Provider</label>
 						<div class="col-sm-9" id="extFilterPrvdr"></div>
 					</div>
 
 					<div class="col-sm-3">
-						<label class="control-label col-sm-3">Date From</label>
-						<div class="col-sm-9">
-							<input type="text" class="datepicker1">
+						<label class="control-label col-sm-5">ProcessFrom Date </label>
+						<div class="col-sm-7">
+							<input type="text"  id="processfrom" class="processfrom">
 						</div>
 					</div>
 
 					<div class="col-sm-3">
-						<label class="control-label col-sm-3">Date To</label>
-						<div class="col-sm-9">
-							<input type="text" class="datepicker3">
+						<label class="control-label col-sm-5">ProcessTo Date</label>
+						<div class="col-sm-7">
+							<input type="text" id="processto" class="processto">
 						</div>
 					</div>
 
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<button type="button" id="hospitalizationGenerate"
 							class="btn btn-success btn-sm btn-xs">Generate</button>
 					</div>
@@ -723,10 +717,43 @@
 <script>
 	jQuery(document).ready(function($) {
 		
-		$(".datepicker1, .datepicker3").datepicker({
-			maxDate : "0"
-		}).datepicker("setDate", new Date());
-		
+		 $('body').on('focus',".processfrom", function(){
+			  $(this).datepicker( "destroy" );
+			 	 $(this).datepicker({
+				          dateFormat: 'mm/dd/yy',
+				          changeMonth: true,
+				          changeYear: true,
+				          minDate:'01/01/2015',
+				          maxDate:0,
+				          onClose: function( selectedDate ) {
+				              $( ".processto" ).datepicker( "option", "minDate", selectedDate );
+				            }
+				      });
+				   });
+
+		 $('body').on('focus',".processto", function(){
+			 $(this).datepicker( "destroy" );
+	  		 var date1 = new Date($('.processfrom').val());
+			  $(this).datepicker({
+		          dateFormat: 'mm/dd/yy',
+		          changeMonth: true,
+		          changeYear: true,
+		          minDate: date1,
+		          maxDate:0,
+		      });
+
+		});
+		 
+		 if(!$(".processfrom").val()){ 
+			 var d = new Date();
+			 var month = d.getMonth()+1;
+			 var day = d.getDate();
+			 var output = 
+			     (month<10 ? '0' : '') + month + '/' +
+			     (day<10 ? '0' : '') + day + '/' + d.getFullYear();
+			 $(".processfrom").val(output);
+			 $(".processto").val(output);
+		 }
 		
 		
 		//set initial state.

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,10 +52,20 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	private String followupDetails;
 
 	@Expose
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_of_contact")
-	@Temporal(TemporalType.DATE)
 	private Date dateOfContact;
-
+	
+	@Expose
+	@AttributeOverride(name="createdDate", column=@Column(name="created_date"))
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	
+	@Expose
+	@AttributeOverride(name="createdBy", column=@Column(name="created_by"))
+	private String createdBy;
+	
+	
 	@Transient
 	private List<Map<Integer, String>> mbrHedisMeasureIds = new ArrayList<>();
 
@@ -124,6 +135,23 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	}
 
 	/**
+	 * @return the createdDate
+	 */
+	@Override
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+	/**
+	 * @return the createdBy
+	 */
+	@Override
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
 	 * @param followupDetails
 	 *            the followupDetails to set
 	 */
@@ -139,8 +167,7 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param dateOfContact
-	 *            the dateOfContact to set
+	 * @param dateOfContact the dateOfContact to set
 	 */
 	public void setDateOfContact(Date dateOfContact) {
 		this.dateOfContact = dateOfContact;

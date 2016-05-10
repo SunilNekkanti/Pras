@@ -21,14 +21,14 @@ public class RecordDetails {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date")
-	protected Date createdDate;
+	private Date createdDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_date")
 	protected Date updatedDate;
 
 	@Column(name = "created_by")
-	protected String createdBy;
+	private String createdBy;
 
 	@Column(name = "updated_by")
 	protected String updatedBy;

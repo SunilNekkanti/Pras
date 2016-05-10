@@ -1,5 +1,6 @@
 package com.pfchoice.core.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.pfchoice.core.entity.Membership;
@@ -57,10 +58,12 @@ public interface MembershipService {
 	 * @param sSearchPrvdr
 	 * @param sort
 	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
 	 * @return
 	 */
-	Pagination getMbrHospitalizationPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr,
-			String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr,
+			String sort, String sortdir, Date processingFrom, Date processingTo);
 
 	/**
 	 * @param bean

@@ -3,6 +3,7 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,14 +79,14 @@ public class MembershipServiceImpl implements MembershipService {
 
 
 	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipService#getMbrHospitalizationPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String)
+	 * @see com.pfchoice.core.service.MembershipService#getPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Pagination getMbrHospitalizationPage(final int pageNo, final int pageSize, final String sSearch,
-			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir) {
-		return membershipDao.getMbrHospitalizationPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
-				sortdir);
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom, final Date processingTo) {
+		return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processingFrom, processingTo);
 	}
 
 	/*

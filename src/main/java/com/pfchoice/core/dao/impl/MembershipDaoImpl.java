@@ -3,6 +3,7 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -24,8 +25,11 @@ import com.pfchoice.core.entity.Membership;
 @Repository
 public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> implements MembershipDao {
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -56,8 +60,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.util.List, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int,
+	 * java.lang.String, java.lang.Integer, java.lang.Integer,
+	 * java.lang.Integer, java.util.List, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
@@ -91,8 +99,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			and.add(Restrictions.eq("ins.id", sSearchIns));
 		}
 
-		if (sSearchHedisRule != null && sSearchHedisRule != 9999
-				&& sSearchHedisRule != 0) {
+		if (sSearchHedisRule != null && sSearchHedisRule != 9999 && sSearchHedisRule != 0) {
 			crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 			and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
 			and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd", new Character('Y')));
@@ -136,24 +143,23 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	
+
 	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipDao#getMbrHospitalizationPage(int, int, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Pagination getMbrHospitalizationPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
-			final Integer sSearchPrvdr, final String sort,
-			final String sortdir) {
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
+			final Integer sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
+			final Date processingTo) {
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
 				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
-		
+
 		crit.createAlias("mbrHospitalizationList", "mbrHospitalizationList", JoinType.INNER_JOIN);
 		crit.createAlias("mbrHospitalizationList.hospital", "hospital", JoinType.INNER_JOIN);
-		
+
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
 
@@ -166,9 +172,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.add(Restrictions.ilike("hospital.name", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("mbrHospitalizationList.planDesc", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("mbrHospitalizationList.authNum", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("mbrHospitalizationList.priorAdmits", "%" + sSearch + "%"))
-					.add(Restrictions
-							.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+					.add(Restrictions.sqlRestriction("CAST(prior_admits AS CHAR) like ?", "%" + sSearch + "%",
+							StringType.INSTANCE))
+					.add(Restrictions.sqlRestriction("CAST(exp_dc_date AS CHAR) like ?", "%" + sSearch + "%",
+							StringType.INSTANCE))
+					.add(Restrictions.sqlRestriction("CAST(admit_date AS CHAR) like ?", "%" + sSearch + "%",
+							StringType.INSTANCE));
 		}
 		if (sSearchIns != null) {
 
@@ -185,7 +194,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
 		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
 		and.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
-
+		
+		and.add(Restrictions.between("mbrHospitalizationList.updatedDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
+		
 		crit.add(or);
 		crit.add(and);
 
@@ -208,9 +219,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -218,8 +230,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipDao#save(com.pfchoice.core.entity.Membership)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#save(com.pfchoice.core.entity.
+	 * Membership)
 	 */
 	@Override
 	public Membership save(final Membership bean) {
@@ -227,7 +242,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -239,7 +256,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

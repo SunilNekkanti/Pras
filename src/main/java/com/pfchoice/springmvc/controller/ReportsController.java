@@ -170,7 +170,7 @@ public class ReportsController {
 
 		FollowupType followupType = followupTypeService.findByCode(FOLLOWUP_TYPE_HEDIS);
 		mbrHedisFollowup.setFollowupType(followupType);
-		mbrHedisFollowup.setDateOfContact(new Date());
+		//mbrHedisFollowup.setDateOfContact(new Date());
 		mbrHedisFollowup.setCreatedBy(username);
 		mbrHedisFollowup.setUpdatedBy(username);
 		mbrHedisFollowupService.save(mbrHedisFollowup);
@@ -191,7 +191,7 @@ public class ReportsController {
 
 		FollowupType followupType = followupTypeService.findByCode("HOSPITALIZATION_FOLLOWUP");
 		mbrHospitalizationFollowup.setFollowupType(followupType);
-		mbrHospitalizationFollowup.setDateOfContact(new Date());
+		//mbrHospitalizationFollowup.setDateOfContact(new Date());
 		mbrHospitalizationFollowup.setCreatedBy(username);
 		mbrHospitalizationFollowup.setUpdatedBy(username);
 		mbrHedisFollowupService.save(mbrHospitalizationFollowup);
@@ -278,12 +278,13 @@ public class ReportsController {
 	public Message viewHospitalizationMembershipList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo) {
 
-		Pagination pagination = membershipService.getMbrHospitalizationPage(pageNo, pageSize, sSearch, sSearchIns,
-				sSearchPrvdr, sort, sortdir);
+		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns,
+				sSearchPrvdr, sort, sortdir, processFrom, processTo);
 
-		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
 	/**
