@@ -89,7 +89,7 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 
 		Criteria crit = createCriteria().createAlias("mbrHospitalization", "mbrHospitalization");
 		crit.createAlias("attPhysician", "attPhysician");
-		
+		crit.createAlias("roomType", "roomType");
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
 		

@@ -43,8 +43,9 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	private  AttPhysician attPhysician;
 
 	@Expose
-	@Column(name = "room_type")
-	private Integer roomType;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "room_type", referencedColumnName = "code")
+	private PlaceOfService roomType;
 	
 	@Expose
 	@Column(name = "adm_dx")
@@ -136,14 +137,14 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	/**
 	 * @return the roomType
 	 */
-	public Integer getRoomType() {
+	public PlaceOfService getRoomType() {
 		return roomType;
 	}
 
 	/**
 	 * @param roomType the roomType to set
 	 */
-	public void setRoomType(Integer roomType) {
+	public void setRoomType(PlaceOfService roomType) {
 		this.roomType = roomType;
 	}
 

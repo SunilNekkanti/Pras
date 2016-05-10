@@ -215,7 +215,7 @@
 										.DataTable().destroy();
 							}
 							$('#membershipHospitalizationTable tbody').empty();
-							GetMembershipByInsPrvdrHedisRule(insSelectValue,
+							GetMembershipByInsPrvdr(insSelectValue,
 									prvdrSelectValue, columns);
 						}
 
@@ -343,7 +343,7 @@
 									});
 						}
 
-						GetMembershipByInsPrvdrHedisRule = function(insId,
+						GetMembershipByInsPrvdr = function(insId,
 								prvdrId, aoColumns) {
 
 							var oTable = $('#membershipHospitalizationTable')
@@ -386,105 +386,43 @@
 							'width' : 150
 						});
 
-						$("#followupSubmit")
-								.click(
-										function(event) {
-											var rulesList = [];
-											var ruleIds = [];
-											var dos = [];
-											$("span[name='dosError[]']").html(
-													"");
+						$( "#followupSubmit" ).click(function(event) {
+				     		
+				     		 
+				     		  if($("#followup_details").val().length <= 5)
+				     		  {
+				     		   		alert(" Followup Details must be minimum 5 charactes");
+				     		   		return false;
+				     		 }
+				     		  var followup_details  = $("#followup_details").val();
+				     		  var  mbr_id = $("#mbr_id").val();
+				     		  
+				     		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"}}";
+				     		  var source = getContextPath()+'/reports/membershipHospitalization/followup';
+				     		  
+				     		  $.ajax({
+				     			  dataType: 'json',
+				                   contentType: "application/json;charset=UTF-8",
+				     		      url : source,
+				     		      type: 'POST',
+				     		      data : restParams1,
+				     		      success: function(data, textStatus, jqXHR)
+				     		      {
+				     		    	  
+				     		          alert("Followup Success Done");
+				     		          $(".clrRed").text("Hospitalization Followup Notes recorded successfully");
+				     		          $('#myModal').modal('hide');
+				     		         callDatableWithChangedDropDown();
+				     		      },
+				     		      error: function (jqXHR, textStatus, errorThrown)
+				     		      {
+				     		    	  alert("Error");
+				     		      }
+				     		  });
+				     		  event.preventDefault();
+				     		});	
+				 } );
 
-											$
-													.each(
-															$("input[name='rule_group[]']"),
-															function(i) {
-																var ruleMap = {};
-																if (this.checked) {
-																	ruleIds
-																			.push($(
-																					this)
-																					.val());
-
-																	if ($(
-																			"input[name='dos[]']")
-																			.eq(
-																					i)
-																			.val().length < 1) {
-																		$(
-																				"span[name='dosError[]']")
-																				.eq(
-																						i)
-																				.html(
-																						"Date of Service required");
-																	} else {
-																		dos
-																				.push($(
-																						"input[name='dos[]']")
-																						.eq(
-																								i)
-																						.val());
-																		ruleMap[$(
-																				this)
-																				.val()] = $(
-																				"input[name='dos[]']")
-																				.eq(
-																						i)
-																				.val();
-																		rulesList
-																				.push(ruleMap);
-																	}
-																}
-															});
-
-											if ($("#followup_details").val().length <= 5) {
-												alert(" Followup Details must be minimum 5 charactes");
-												return false;
-											}
-											var followup_details = $(
-													"#followup_details").val();
-											var mbr_id = $("#mbr_id").val();
-
-											var restParams1 = "{\"followupDetails\" :\""
-													+ followup_details
-													+ "\",\"mbr\": {\"id\":"
-													+ mbr_id
-													+ "},\"mbrHedisMeasureIds\":"
-													+ JSON.stringify(rulesList)
-													+ "}";
-											var source = getContextPath()
-													+ '/reports/membershipHedis/followup';
-
-											$
-													.ajax({
-														dataType : 'json',
-														contentType : "application/json;charset=UTF-8",
-														url : source,
-														type : 'POST',
-														data : restParams1,
-														success : function(
-																data,
-																textStatus,
-																jqXHR) {
-
-															alert("Followup Success Done");
-															$(".clrRed")
-																	.text(
-																			"Hedis Followup Notes recorded successfully");
-															$('#myModal')
-																	.modal(
-																			'hide');
-															callDatableWithChangedDropDown();
-														},
-														error : function(jqXHR,
-																textStatus,
-																errorThrown) {
-															alert("Error");
-														}
-													});
-											event.preventDefault();
-										});
-					});
 
 	function myFunction(id, lastName, firstName) {
 		if ($.fn.DataTable.isDataTable('#mbrHospitalizationTable')) {
@@ -492,102 +430,7 @@
 		}
 		$('#mbrHospitalizationTable tbody').empty();
 
-		var datatable2MbrHedisMeasure = function(sSource, aoData, fnCallback) {
-			//extract name/value pairs into a simpler map for use later
-			var paramMap = {};
-			for (var i = 0; i < aoData.length; i++) {
-				paramMap[aoData[i].name] = aoData[i].value;
-			}
-
-			//page calculations
-			var pageSize = paramMap.iDisplayLength;
-			var start = paramMap.iDisplayStart;
-			var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
-
-			// extract sort information
-			var sortCol = paramMap.iSortCol_0;
-			var sortDir = paramMap.sSortDir_0;
-			var sortName = paramMap['mDataProp_' + sortCol];
-
-			//create new json structure for parameters for REST request
-			var restParams = new Array();
-			restParams.push({
-				"name" : "hedisRuleId",
-				"value" : $("#hedisRule").val()
-			});
-
-			$.ajax({
-				dataType : 'json',
-				contentType : "application/json;charset=UTF-8",
-				type : 'GET',
-				url : sSource,
-				data : restParams,
-				success : function(res) {
-					res.iTotalRecords = res.data.totalCount;
-					res.iTotalDisplayRecords = res.data.totalCount;
-					fnCallback(res);
-				},
-				error : function(e) {
-				}
-			});
-		}
-
-		$('#mbrHospitalizationTable')
-				.dataTable(
-						{
-							"sAjaxSource" : getContextPath() + 'membership/'
-									+ id + '/hedisMeasureList',
-							"sAjaxDataProp" : 'data',
-							"aoColumns" : [ {
-								"mDataProp" : "id",
-								"bSearchable" : false,
-								"bVisible" : true,
-								"asSorting" : [ "asc" ]
-							}, {
-								"mDataProp" : "hedisMeasureRule.description",
-								"bSearchable" : true,
-								"bSortable" : true,
-								"sWidth" : "45%"
-							}, {
-								"mDataProp" : "dos",
-								"bSearchable" : true,
-								"bSortable" : true,
-								"sWidth" : "45%"
-							}
-
-							],
-							"aoColumnDefs" : [
-									{
-										"sName" : "id",
-										"aTargets" : [ 0 ],
-										"render" : function(data, type, full,
-												meta) {
-											return '<input type="checkbox" class="chkRule" name="rule_group[]"   id="'+data+'" value="'+data+'"/>';
-										}
-									},
-									{
-										"sName" : "hedisMeasureRule.description",
-										"aTargets" : [ 1 ]
-									},
-									{
-										"sName" : "dos",
-										"aTargets" : [ 2 ],
-										"render" : function(data, type, full,
-												meta) {
-											return '<input type="text" class="'+full.id+'" name="dos[]" readonly /><span class="clrRed" name ="dosError[]"></span>';
-										}
-									}
-
-							],
-							"bLengthChange" : false,
-							"paging" : false,
-							"info" : false,
-							"bFilter" : false,
-							"bProcessing" : true,
-							"bServerSide" : true,
-							"fnServerData" : datatable2MbrHedisMeasure
-						});
-
+		
 		$(".clrRed").html("");
 
 		//	$( "#modal-body" ).html('');
@@ -610,7 +453,7 @@
 		var mbr_id = id;
 		var followup_text = $("#followup_history");
 
-		var source = getContextPath() + 'reports/membershipHedis/' + id
+		var source = getContextPath() + 'reports/membershipHospitalization/' + id
 				+ '/followupDetails';
 
 		$.ajax({
@@ -619,8 +462,8 @@
 			url : source,
 			success : function(data, textStatus, jqXHR) {
 				$.each(data.data, function(key, val) {
-					followup_text.append(" >>>> " + val.createdDate + " >>>>  "
-							+ val.createdBy + " >>>> ");
+					followup_text.append(" >>>> " + val.dateOfContact + " >>>>  "
+							+ val.dateOfContact + " >>>> ");
 					followup_text.append(" \n");
 					followup_text.append(val.followupDetails);
 					followup_text.append("  \n");
@@ -689,10 +532,12 @@
 							"sAjaxDataProp" : 'data.list',
 							"aoColumns" : [ 
  											 { "mDataProp": "attPhysician.name","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
-											 { "mDataProp": "roomType","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
+											 { "mDataProp": "roomType.name","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
 											 { "mDataProp": "admDx","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
 											 { "mDataProp": "authDays","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
-											 { "mDataProp": "diseaseCohort","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
+											 { "mDataProp": "diseaseCohort","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": ""  },
+											 { "mDataProp": "comorbidities","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": ""  },
+											 { "mDataProp": "cmPriUser","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": "" },
 											 { "mDataProp": "expDisDate","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  }
 							],
 							"bLengthChange" : false,
@@ -706,7 +551,7 @@
 
 		$(".modal-title").html(lastName+","+firstName+" - Hospital Details");
 
-		$('#myModal1').modal('show');
+		$('#mbrHospitalizationDetails').modal('show');
 			
 
 		return false;
@@ -720,9 +565,7 @@
 		</div>
 		<div class="panel-body">
 			<span class="updateError"></span>
-			<springForm:form method="POST" id="mbrHospitalization"
-				commandName="mbrHospitalization" action="${id}/save.do"
-				class="form-horizontal" role="form" enctype="multipart/form-data">
+			<springForm:form method="POST" id="mbrHospitalization"	commandName="mbrHospitalization" action="${id}/save.do"	class="form-horizontal" role="form" enctype="multipart/form-data">
 				<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="filesUpload">Membership Hospitalization File</label>
@@ -819,18 +662,7 @@
 				<h4 class="modal-title">Membership Hospital Followup</h4>
 			</div>
 			<div class="modal-body" id="modal-body">
-				<table id="mbrHospitalizationTable"
-					class="table table-striped table-hover table-responsive">
-					<thead>
-						<tr>
-							<th scope="col">Select</th>
-							<th scope="col">Hedis Measure</th>
-							<th scope="col">Date of Service</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="followupSubmit" class="btn btn-default">Submit</button>
@@ -842,14 +674,14 @@
 	</div>
 </div>
 
-<div class="modal fade" id="myModal1" role="dialog">
+<div class="modal fade" id="mbrHospitalizationDetails" role="dialog">
 	<div class="modal-dialog modal-lg">
 
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Membership Hospital Details</h4>
+				<h4 class="modal-title">Membership Hospitalization Details</h4>
 			</div>
 			<div class="modal-body" id="modal-body">
 				<table id="mbrHospitalizationDetailsTable"
@@ -862,6 +694,8 @@
 						    <th scope="col" role="row">Admit Dx</th>
 							<th scope="col" role="row">Auth Days</th>
 							<th scope="col" role="row">Disease Cohort</th>
+							<th scope="col" role="row">comorbidities</th>
+							<th scope="col" role="row">CM Pri User</th>
 							<th scope="col" role="row">Exp Discharge Date</th>
 						</tr>
 					</thead>
@@ -870,8 +704,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="followupSubmit" class="btn btn-default">Ok</button>
-				<button type="button" id="mbrHospitalizationDetailsGenerate"
+				<button type="button" id="hospitalizationGenerate"
 					class="btn btn-default" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>

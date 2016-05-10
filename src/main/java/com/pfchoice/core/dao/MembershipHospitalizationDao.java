@@ -50,7 +50,7 @@ public interface MembershipHospitalizationDao {
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table();
+	Integer loadDataCSV2Table(String fileName);
 	
 	/**
 	 * @return

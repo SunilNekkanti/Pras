@@ -69,8 +69,8 @@ public class MembershipHospitalizationServiceImpl implements MembershipHospitali
 	 * @see com.pfchoice.core.service.MembershipHospitalizationService#update(com.pfchoice.core.entity.MembershipHospitalization)
 	 */
 	@Override
-	public Integer loadDataCSV2Table() {
-		return membershipHospitalizationDao.loadDataCSV2Table();
+	public Integer loadDataCSV2Table(final String fileName) {
+		return membershipHospitalizationDao.loadDataCSV2Table(fileName);
 	}
 
 

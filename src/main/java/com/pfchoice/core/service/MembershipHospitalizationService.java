@@ -54,7 +54,7 @@ public interface MembershipHospitalizationService {
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table();
+	Integer loadDataCSV2Table(String fileName);
 	
 	/**
 	 * @return

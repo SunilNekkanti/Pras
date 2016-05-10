@@ -80,12 +80,12 @@ public class MembershipHospitalizationDaoImpl extends HibernateBaseDao<Membershi
 	 * @see com.pfchoice.core.dao.MembershipHospitalizationDao#loadData()
 	 */
 	@Override
-	public Integer loadDataCSV2Table() {
+	public Integer loadDataCSV2Table(String fileName) {
 		
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
 		
 		return getSession().createSQLQuery(loadDataQuery)
-							.setString("file", FILES_UPLOAD_DIRECTORY_PATH+"Physicians First Choice Census 04-28-2016.csv")
+							.setString("file", FILES_UPLOAD_DIRECTORY_PATH+fileName)
 				    		.executeUpdate();
 	}
 

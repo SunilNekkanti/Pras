@@ -1,17 +1,25 @@
 package com.pfchoice.springmvc.controller;
 
 import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HEDIS;
+import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
@@ -80,6 +90,18 @@ public class ReportsController {
 	@Autowired
 	private FollowupTypeService followupTypeService;
 
+	
+	/**
+	 * @param binder
+	 */
+	@InitBinder("contract")
+	public void initBinder(final WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		dateFormat.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+	}
+	
 	/**
 	 * @return
 	 */
@@ -157,6 +179,27 @@ public class ReportsController {
 	}
 
 	/**
+	 * @param mbrHospitalizationFollowup
+	 * @param username
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipHospitalization/followup",
+			"/user/reports/membershipHospitalization/followup" }, method = RequestMethod.POST)
+	public String addMembershipHospitalizationFollowup(@RequestBody final MembershipFollowup mbrHospitalizationFollowup,
+			@ModelAttribute("username") String username) {
+
+		FollowupType followupType = followupTypeService.findByCode("HOSPITALIZATION_FOLLOWUP");
+		mbrHospitalizationFollowup.setFollowupType(followupType);
+		mbrHospitalizationFollowup.setDateOfContact(new Date());
+		mbrHospitalizationFollowup.setCreatedBy(username);
+		mbrHospitalizationFollowup.setUpdatedBy(username);
+		mbrHedisFollowupService.save(mbrHospitalizationFollowup);
+
+		return TileDefinitions.MEMBERSHIPCONTACTEDITSUCCESS.toString();
+	}
+	
+	/**
 	 * @param mbrId
 	 * @param username
 	 * @param model
@@ -173,6 +216,21 @@ public class ReportsController {
 	}
 
 	/**
+	 * @param mbrId
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipHospitalization/{mbrId}/followupDetails",
+			"/user/reports/membershipmembershipHospitalization/{mbrId}/followupDetails" })
+	public Message membershipHospitalizationFollowupDetails(@PathVariable Integer mbrId, Model model) {
+		List<MembershipFollowup> dbMbrHospitalizationFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId,
+				"HOSPITALIZATION_FOLLOWUP");
+		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
+				JsonConverter.getJsonObject(dbMbrHospitalizationFollowup));
+	}
+	
+	/**
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/reports/hospitalization", "/user/reports/hospitalization" })
@@ -181,6 +239,27 @@ public class ReportsController {
 		return "membershipHospitalizationList";
 	}
 
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/hospitalization/fileProcessing.do", "/user/reports/hospitalization/fileProcessing.do" })
+	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
+			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
+			HttpServletRequest request) {
+		
+		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
+			LOG.info("fileUpload.getOriginalFilename()  is" +fileUpload.getOriginalFilename());
+					
+			try {
+				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+fileUpload.getOriginalFilename()), fileUpload.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		LOG.info("before file processing");
+		return "forward:/admin/membershipHospitalization/list?fileName="+fileUpload.getOriginalFilename();
+	}
+	
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -195,7 +274,7 @@ public class ReportsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHospitalization/list",
-			"/user/reports/membershipHospitalizatio/list" }, method = RequestMethod.GET)
+			"/user/reports/membershipHospitalization/list" }, method = RequestMethod.GET)
 	public Message viewHospitalizationMembershipList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
@@ -212,10 +291,11 @@ public class ReportsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membershipHospitalization/list",
-			"/user/membershipHospitalization/list" }, method = RequestMethod.GET)
-	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username) {
+			"/user/membershipHospitalization/list" })
+	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username,
+			@RequestParam(value = "fileName", required = true) String fileName) {
 		Boolean dataExists = mbrHospitalizationService.isDataExists();
-
+		LOG.warn("fileName for processing is "+fileName);
 		if (dataExists) {
 			LOG.warn("Previous file processing is incomplete");
 			return Message.failMessage("Previous file processing is incomplete");
@@ -225,7 +305,7 @@ public class ReportsController {
 
 			try {
 				File fileRecord = new File();
-				fileRecord.setFileName("Physicians First Choice Census 04-29-2016.csv");
+				fileRecord.setFileName(fileName);
 				fileRecord.setFileTypeCode(2);
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
@@ -237,7 +317,7 @@ public class ReportsController {
 			}
 
 			LOG.info("Loading  membershipHospitalization data");
-			Integer loadedData = mbrHospitalizationService.loadDataCSV2Table();
+			Integer loadedData = mbrHospitalizationService.loadDataCSV2Table(fileName);
 			LOG.info("Loaded  membershipHospitalization data");
 
 			if (loadedData < 1) {
@@ -267,9 +347,7 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/reports/membershipHospitalizationDetails/{mbrHosId}/list",
 			"/user/reports/membershipHospitalizationDetails/{mbrHosId}/list" })
 	public Message viewHospitalizationMembershipDetailsList(@PathVariable Integer mbrHosId) {
-		System.out.println("mbrHosId2 "+ mbrHosId);
 		Pagination pagination = mbrHospitalizationDetailsService.getMbrHospitalizationDetailsPage(mbrHosId);
-		System.out.println("mbrHosId 3"+ mbrHosId);
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 	
@@ -277,7 +355,6 @@ public class ReportsController {
 	
 	@RequestMapping(value = { "/admin/reports/hospitalization/{mbrHosId}", "/user/reports/hospitalization/{mbrHosId}" })
 	public String handleHospitalizationRequest(@PathVariable Integer mbrHosId, Model model) {
-		System.out.println("mbrHosId "+ mbrHosId);
 		model.addAttribute("mbrHosId", mbrHosId);
 		return "membershipHospitalizationDetails";
 	}
