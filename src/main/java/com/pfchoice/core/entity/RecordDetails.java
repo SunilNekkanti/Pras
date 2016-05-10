@@ -25,17 +25,17 @@ public class RecordDetails {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_date")
-	protected Date updatedDate;
+	private Date updatedDate;
 
 	@Column(name = "created_by")
 	private String createdBy;
 
 	@Column(name = "updated_by")
-	protected String updatedBy;
+	private String updatedBy;
 
 	@Expose
 	@Column(name = "active_ind", insertable = false)
-	protected Character activeInd;
+	private Character activeInd;
 	
 	/**
 	 * 

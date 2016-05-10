@@ -556,6 +556,7 @@
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			 Membership Hospitalization File Upload 
+			 <span class="clrRed mbrHosUpload"></span>
 		</div>
 		<div class="panel-body">
 			<span class="updateError"></span>
@@ -567,7 +568,7 @@
 							<label class="control-label col-sm-2" for="filesUpload">Membership Hospitalization File</label>
 							<div class="col-sm-5">
 								<span class="btn btn-danger btn-file btn-sm"> Browse <input
-									type="file" accept=".xls,.xlsx, .csv" class="file" name="fileUpload">
+									type="file" accept=".csv" class="file" name="fileUpload">
 								</span>
 								<button type="button" class="btn btn-success btn-sm "
 								id="updateButton" name="update"
@@ -776,28 +777,44 @@
 	});
 	
 	function fileUploadAndProcessing() {
-		var url = getContextPath()
-		+ 'reports/hospitalization/fileProcessing.do';
-		var selector = 'mbrHospitalization';
-		if (window.FormData !== undefined) // for HTML5 browsers
-		{
-			var formData = new FormData($('#mbrHospitalization')[0]);
-			formData.append('fileUpload', $('input[type=file]')[0].files[0]);
-			$.ajax({
-				url : url,
-				type : 'POST',
-				mimeType : "multipart/form-data",
-				data : formData,
-				async : false,
-				success : function(data) {
-					$('#' + selector).html(data);
-				},
-				cache : false,
-				contentType : false,
-				processData : false
-			});
-		} else {
-			alert('fileupload error');
+		$(".mbrHosUpload").html('');
+		var fileName = $('input[type=file]').val();
+		if(!fileName){
+			$(".mbrHosUpload").html(" Choose a file and click upload button");
 		}
+		else{
+				var validExtensions = /(\.csv)$/i;
+				if(validExtensions.test(fileName))
+				{ 
+					var url = getContextPath()
+					+ 'reports/hospitalization/fileProcessing.do';
+					var selector = 'mbrHospitalization';
+					if (window.FormData !== undefined) // for HTML5 browsers
+					{
+						var formData = new FormData($('#mbrHospitalization')[0]);
+						formData.append('fileUpload', $('input[type=file]')[0].files[0]);
+						$.ajax({
+							url : url,
+							type : 'POST',
+							mimeType : "multipart/form-data",
+							data : formData,
+							async : false,
+							success : function(data) {
+								var msg = $.parseJSON(data);
+								$(".mbrHosUpload").html(msg['message']);
+							},
+							cache : false,
+							contentType : false,
+							processData : false
+						});
+					} else {
+						alert('fileupload error');
+					}
+				}
+				else
+				{
+					$(".mbrHosUpload").html(" Only csv, xls, xlsx files are allowed ");
+				}
+		}	
 	}
 </script>

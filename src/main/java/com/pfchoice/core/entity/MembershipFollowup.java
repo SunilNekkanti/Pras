@@ -56,16 +56,6 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	@Column(name = "date_of_contact")
 	private Date dateOfContact;
 	
-	@Expose
-	@AttributeOverride(name="createdDate", column=@Column(name="created_date"))
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-	
-	@Expose
-	@AttributeOverride(name="createdBy", column=@Column(name="created_by"))
-	private String createdBy;
-	
-	
 	@Transient
 	private List<Map<Integer, String>> mbrHedisMeasureIds = new ArrayList<>();
 
@@ -132,23 +122,6 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	 */
 	public String getFollowupDetails() {
 		return followupDetails;
-	}
-
-	/**
-	 * @return the createdDate
-	 */
-	@Override
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-
-	/**
-	 * @return the createdBy
-	 */
-	@Override
-	public String getCreatedBy() {
-		return createdBy;
 	}
 
 	/**
