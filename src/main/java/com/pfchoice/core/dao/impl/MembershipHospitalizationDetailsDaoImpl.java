@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
@@ -93,15 +94,10 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		crit.createAlias("attPhysician", "attPhysician");
 		crit.createAlias("roomType", "roomType", JoinType.LEFT_OUTER_JOIN);
 		
-		Disjunction or = Restrictions.disjunction();
-		Conjunction and = Restrictions.conjunction();
-		
-		and.add(Restrictions.eq("mbrHospitalization.id", mbrHosId));
-		and.add(Restrictions.eq("activeInd", new Character('Y')));
+		crit.add(Restrictions.eq("mbrHospitalization.id", mbrHosId));
+		crit.add(Restrictions.eq("activeInd", new Character('Y')));
 
-		crit.add(or);
-		crit.add(and);
-		
+		crit.addOrder(Order.asc("id"));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return findByCriteria(crit, 0, 12);
 	}
