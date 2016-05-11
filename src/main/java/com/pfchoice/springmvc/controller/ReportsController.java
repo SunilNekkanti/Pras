@@ -1,6 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HEDIS;
+import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HOSPITALIZATION;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
+import com.pfchoice.common.util.XlstoCSV;
 import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.MembershipFollowup;
@@ -225,7 +227,7 @@ public class ReportsController {
 			"/user/reports/membershipmembershipHospitalization/{mbrId}/followupDetails" })
 	public Message membershipHospitalizationFollowupDetails(@PathVariable Integer mbrId, Model model) {
 		List<MembershipFollowup> dbMbrHospitalizationFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId,
-				"HOSPITALIZATION_FOLLOWUP");
+				FOLLOWUP_TYPE_HOSPITALIZATION );
 		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(dbMbrHospitalizationFollowup));
 	}
@@ -246,18 +248,29 @@ public class ReportsController {
 	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) {
-		
+		java.io.File sourceFile , newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
-			LOG.info("fileUpload.getOriginalFilename()  is" +fileUpload.getOriginalFilename());
-					
+			String fileName = fileUpload.getOriginalFilename();
+			String newfileName =fileName.substring(0,fileName.indexOf("."));
+			
 			try {
-				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+fileUpload.getOriginalFilename()), fileUpload.getBytes());
+				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+fileName), fileUpload.getBytes());
+				
+				sourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+fileName);
+				newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+newfileName+".csv");
+				sourceFile.createNewFile();
+				newSourceFile.createNewFile();
+				XlstoCSV.xls(sourceFile, newSourceFile);
+				if(sourceFile.exists()){
+					sourceFile.delete();
+				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		LOG.info("before file processing");
-		return "forward:/admin/membershipHospitalization/list?fileName="+fileUpload.getOriginalFilename();
+		return "forward:/admin/membershipHospitalization/list?fileName="+newSourceFile.getName();
 	}
 	
 	/**
@@ -296,9 +309,7 @@ public class ReportsController {
 	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 		Boolean dataExists = mbrHospitalizationService.isDataExists();
-		LOG.warn("fileName for processing is "+fileName);
 		if (dataExists) {
-			LOG.warn("Previous file processing is incomplete");
 			return Message.failMessage("Previous file processing is incomplete");
 		} else {
 
@@ -313,16 +324,14 @@ public class ReportsController {
 				File newFile = fileService.save(fileRecord);
 				fileId = newFile.getId();
 			} catch (Exception e) {
-				LOG.info("similar file already processed in past");
+				LOG.info("Similar file already processed in past");
 				return Message.failMessage("similar file already processed in past");
 			}
 
 			LOG.info("Loading  membershipHospitalization data");
 			Integer loadedData = mbrHospitalizationService.loadDataCSV2Table(fileName);
-			LOG.info("Loaded  membershipHospitalization data");
 
 			if (loadedData < 1) {
-				LOG.info("ZERO records to process");
 				return Message.failMessage("ZERO records to process");
 			}
 
@@ -340,7 +349,7 @@ public class ReportsController {
 			LOG.info("processed  membershipHospitalization data");
 
 			LOG.info("returning membershipList");
-			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, loadedData);
+			return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, loadedData);
 		}
 	}
 	
@@ -349,7 +358,7 @@ public class ReportsController {
 			"/user/reports/membershipHospitalizationDetails/{mbrHosId}/list" })
 	public Message viewHospitalizationMembershipDetailsList(@PathVariable Integer mbrHosId) {
 		Pagination pagination = mbrHospitalizationDetailsService.getMbrHospitalizationDetailsPage(mbrHosId);
-		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 	
 	

@@ -568,7 +568,7 @@
 							<label class="control-label col-sm-2" for="filesUpload">Membership Hospitalization File</label>
 							<div class="col-sm-5">
 								<span class="btn btn-danger btn-file btn-sm"> Browse <input
-									type="file" accept=".csv" class="file" name="fileUpload">
+									type="file" accept=".xls,.xlsx,.csv" class="file" name="fileUpload">
 								</span>
 								<button type="button" class="btn btn-success btn-sm "
 								id="updateButton" name="update"
@@ -783,7 +783,7 @@
 			$(".mbrHosUpload").html(" Choose a file and click upload button");
 		}
 		else{
-				var validExtensions = /(\.csv)$/i;
+				var validExtensions = /(\.csv|\.xls|\.xlsx)$/i;
 				if(validExtensions.test(fileName))
 				{ 
 					var url = getContextPath()
@@ -801,6 +801,9 @@
 							async : false,
 							success : function(data) {
 								var msg = $.parseJSON(data);
+								if(msg['message'] == 'Membership Hospitalization Followup List'){
+							         msg['message'] = msg['data']+" Records added successfully";
+							        }
 								$(".mbrHosUpload").html(msg['message']);
 							},
 							cache : false,

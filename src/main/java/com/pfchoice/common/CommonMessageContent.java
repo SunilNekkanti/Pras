@@ -58,9 +58,9 @@ public interface CommonMessageContent {
 
 	String HEDIS_RULE_LIST = "Hedis Rule List";
 
-	String HEDIS_FOLLOWUP_LIST = "Membership's Hedis Followup List";
+	String HEDIS_FOLLOWUP_LIST = "Membership Hedis Followup List";
 	
-	String HOSPITALIZATION_FOLLOWUP_LIST = "Membership's Hospitalization Followup List";
+	String HOSPITALIZATION_FOLLOWUP_LIST = "Membership Hospitalization Followup List";
 
 	String PROVIDER_INSURANCES_LIST = "Provider's Insurance List";
 
