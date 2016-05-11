@@ -338,10 +338,12 @@ public class ReportsController {
 			LOG.info("processing  membershipHospitalization data");
 			Integer hosLoadedData = hospitalService.loadData(fileId);
 			Integer attPhysicianLoadedData = attPhysicianService.loadData(fileId);
+			Integer mbrHospitalizationUpdatedData = mbrHospitalizationService.updateData(fileId);
 			Integer mbrHospitalizationLoadedData = mbrHospitalizationService.loadData(fileId);
 			Integer mbrHospitalizationDetailsLoadedData = mbrHospitalizationDetailsService.loadData(fileId);
 			LOG.info("hosLoadedData " + hosLoadedData);
 			LOG.info("attPhysicianLoadedData " + attPhysicianLoadedData);
+			LOG.info("mbrHospitalizationUpdatedData " + mbrHospitalizationUpdatedData);
 			LOG.info("mbrHospitalizationLoadedData " + mbrHospitalizationLoadedData);
 			LOG.info("mbrHospitalizationDetailsLoadedData " + mbrHospitalizationDetailsLoadedData);
 			Integer mbrHospitalizationUnloadedData = mbrHospitalizationService.unloadCSV2Table();

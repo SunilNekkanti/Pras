@@ -32,6 +32,8 @@ public interface SystemDefaultProperties {
 	
 	String QUERY_TYPE_LOAD= "_load";
 	
+	String QUERY_TYPE_UPDATE= "_update";
+	
 	String SQL_QUERY_EXTN= ".sql";
 	
 	String FOLLOWUP_TYPE_HEDIS= "HEDIS_FOLLOWUP";

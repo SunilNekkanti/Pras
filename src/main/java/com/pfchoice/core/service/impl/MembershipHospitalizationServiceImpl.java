@@ -97,4 +97,12 @@ public class MembershipHospitalizationServiceImpl implements MembershipHospitali
 	public Integer unloadCSV2Table(){
 		return membershipHospitalizationDao.unloadCSV2Table();
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHospitalizationService#updateData(java.lang.Integer)
+	 */
+	@Override
+	public Integer updateData(final Integer fileId){
+		return membershipHospitalizationDao.updateData(fileId);
+	}
 }

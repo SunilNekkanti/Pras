@@ -67,4 +67,9 @@ public interface MembershipHospitalizationDao {
 	 */
 	Integer unloadCSV2Table();
 	
+	/**
+	 * @return
+	 */
+	Integer updateData(Integer fileId);
+	
 }

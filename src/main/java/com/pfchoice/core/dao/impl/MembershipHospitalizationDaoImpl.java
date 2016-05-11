@@ -3,6 +3,8 @@ package com.pfchoice.core.dao.impl;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
+
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -135,6 +137,15 @@ public class MembershipHospitalizationDaoImpl extends HibernateBaseDao<Membershi
 			LOG.warn("exception "+e.getCause());
 		}
 		return rowsAffected;
+	}
+	
+	@Override 
+	public Integer updateData(final Integer fileId){
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_UPDATE);
+		
+		return getSession().createSQLQuery(loadDataQuery)
+				    					.setInteger("fileId", fileId)
+				    					.executeUpdate();
 	}
 
 }

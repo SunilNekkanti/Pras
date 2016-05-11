@@ -543,7 +543,7 @@
 							"fnServerData" : datatable2MbrHosIdDetails
 						});
 
-		$(".modal-title").html(lastName+","+firstName+" - Hospital Details");
+		$(".modal-title").html(lastName+","+firstName+" - Hospitalization Details");
 
 		$('#mbrHospitalizationDetails').modal('show');
 			
@@ -802,7 +802,7 @@
 							success : function(data) {
 								var msg = $.parseJSON(data);
 								if(msg['message'] == 'Membership Hospitalization Followup List'){
-							         msg['message'] = msg['data']+" Records added successfully";
+							         msg['message'] = msg['data']+" Records processed successfully";
 							        }
 								$(".mbrHosUpload").html(msg['message']);
 							},
