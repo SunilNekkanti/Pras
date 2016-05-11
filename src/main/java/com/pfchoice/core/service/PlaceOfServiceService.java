@@ -41,4 +41,9 @@ public interface PlaceOfServiceService {
 	 */
 	PlaceOfService update(PlaceOfService bean);
 
+	/**
+	 * @param code
+	 * @return
+	 */
+	PlaceOfService findByCode(String code);
 }

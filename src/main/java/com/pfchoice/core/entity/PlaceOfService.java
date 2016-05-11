@@ -26,9 +26,13 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-	@Column(name = "code", nullable = false)
-	private Integer code;
+	@Column(name = "id", nullable = false)
+	private Integer id;
 
+	@Expose
+	@Column(name = "code")
+	private String code;
+	
 	@Expose
 	@Column(name = "description")
 	private String description;
@@ -45,24 +49,38 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param code
+	 * @param id
 	 */
-	public PlaceOfService(final Integer code) {
+	public PlaceOfService(final Integer id) {
 		super();
-		this.code = code;
+		this.id = id;
 	}
 
 	/**
 	 * @return
 	 */
-	public Integer getCode() {
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
 		return code;
 	}
 
 	/**
-	 * @param code
+	 * @param code the code to set
 	 */
-	public void setCode(final Integer code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 
@@ -98,7 +116,7 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		hash += (code != null ? code.hashCode() : 0);
+		hash += (id != null ? id.hashCode() : 0);
 		return hash;
 	}
 
@@ -108,7 +126,7 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 			return false;
 		}
 		PlaceOfService other = (PlaceOfService) object;
-		if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
@@ -116,7 +134,7 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 
 	@Override
 	public String toString() {
-		return "com.pfchoice.core.entity.PlaceofService[ code=" + code + " ]";
+		return "com.pfchoice.core.entity.PlaceofService[ id=" + id + " ]";
 	}
 
 }

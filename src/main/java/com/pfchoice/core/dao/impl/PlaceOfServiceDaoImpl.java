@@ -64,4 +64,8 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		return PlaceOfService.class;
 	}
 
+	@Override
+	public PlaceOfService findByCode(final String code) {
+		return  findUniqueByProperty("code", code);
+	}
 }

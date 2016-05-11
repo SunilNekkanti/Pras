@@ -5,5 +5,5 @@ SELECT DISTINCT case when ATT_NAME like '%Not Assigned%' then 'NA' else ATT_PHY 
 :fileId, now(),now(),'sarath','sarath','Y' 
 FROM 
 csv2AmgHospitalization mh
-LEFT OUTER JOIN att_phy  att on att.code =  case when mh.ATT_NAME like '%Not Assigned%' then 'NA' else mh.ATT_PHY end
+LEFT OUTER JOIN att_phy  att on att.code =  case when mh.ATT_NAME like '%Not Assigned%' then 'NA' else CONVERT(mh.ATT_PHY,UNSIGNED INTEGER) end
 WHERE att.code  IS NULL

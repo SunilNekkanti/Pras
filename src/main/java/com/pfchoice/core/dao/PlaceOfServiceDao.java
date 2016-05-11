@@ -47,4 +47,10 @@ public interface PlaceOfServiceDao {
 	 */
 	PlaceOfService updateByUpdater(Updater<PlaceOfService> updater);
 
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
+	PlaceOfService findByCode(String code);
 }

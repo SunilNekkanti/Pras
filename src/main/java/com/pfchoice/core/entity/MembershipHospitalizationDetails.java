@@ -44,7 +44,7 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "room_type", referencedColumnName = "code")
+	@JoinColumn(name = "room_type_code", referencedColumnName = "code")
 	private PlaceOfService roomType;
 	
 	@Expose

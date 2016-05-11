@@ -65,4 +65,12 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 		return placeOfServiceDao.updateByUpdater(updater);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.PlaceOfServiceService#findByCode(java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public PlaceOfService findByCode(final String code) {
+		return placeOfServiceDao.findByCode(code);
+	}
 }

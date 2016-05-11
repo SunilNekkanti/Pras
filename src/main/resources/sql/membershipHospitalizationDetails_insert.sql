@@ -1,6 +1,6 @@
 INSERT INTO membership_hospitalization_details
 (
-mbr_hos_id,att_phy_id,room_type,adm_dx,exp_dc_dt,auth_days,cm_pri_user,disease_cohort,comorbidities,
+mbr_hos_id,att_phy_id,room_type_code,adm_dx,exp_dc_dt,auth_days,cm_pri_user,disease_cohort,comorbidities,
 file_id,created_date,updated_date,created_by,updated_by,active_ind
 )
 SELECT

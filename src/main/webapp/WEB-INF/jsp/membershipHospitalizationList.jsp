@@ -518,7 +518,7 @@
 							"sAjaxDataProp" : 'data.list',
 							"aoColumns" : [ 
  											 { "mDataProp": "attPhysician.name","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
-											 { "mDataProp": "roomType.name","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
+											 { "mDataProp": "roomType.name","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": ""  },
 											 { "mDataProp": "admDx","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
 											 { "mDataProp": "authDays","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  },
 											 { "mDataProp": "diseaseCohort","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%", "sDefaultContent": ""  },
@@ -691,7 +691,7 @@
 						    <th scope="col" role="row">Admit Dx</th>
 							<th scope="col" role="row">Auth Days</th>
 							<th scope="col" role="row">Disease Cohort</th>
-							<th scope="col" role="row">comorbidities</th>
+							<th scope="col" role="row">Comorbidities</th>
 							<th scope="col" role="row">CM Pri User</th>
 							<th scope="col" role="row">Exp Discharge Date</th>
 						</tr>

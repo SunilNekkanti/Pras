@@ -7,9 +7,11 @@ import ml.rugal.sshcommon.page.Pagination;
 
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.common.util.PrasUtil;
@@ -89,7 +91,8 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 
 		Criteria crit = createCriteria().createAlias("mbrHospitalization", "mbrHospitalization");
 		crit.createAlias("attPhysician", "attPhysician");
-		crit.createAlias("roomType", "roomType");
+		crit.createAlias("roomType", "roomType", JoinType.LEFT_OUTER_JOIN);
+		
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
 		
