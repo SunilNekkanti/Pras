@@ -55,8 +55,20 @@ public interface MembershipDao {
 	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
 			Integer sSearchHedisCode, final List<Integer> ruleIds, String sort, String sortdir);
 	
-	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
-			String sort, String sortdir, Date processingFrom, Date processingTo);
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
+	 * @param processHospitalization
+	 * @return
+	 */
+	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr, String sort, String sortdir, Date processingFrom, Date processingTo, Integer processHospitalization);
 
 	/**
 	 * 

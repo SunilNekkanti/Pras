@@ -39,4 +39,10 @@ public interface SystemDefaultProperties {
 	String FOLLOWUP_TYPE_HEDIS= "HEDIS_FOLLOWUP";
 	
 	String FOLLOWUP_TYPE_HOSPITALIZATION =  "HOSPITALIZATION_FOLLOWUP";
+	
+	Integer FILTER_BY_PROCESSING_DATE =  0;
+	
+	Integer FILTER_BY_HOSPOTALIZATION_DATE =  1;
+	
+	Integer ALL =  9999;
 }

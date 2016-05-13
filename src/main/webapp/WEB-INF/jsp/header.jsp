@@ -502,8 +502,19 @@ $(document).ready(function () {
 								<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
 								<li role="presentation" class="divider"></li>
 								<li><a href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
+								
 							</ul>
 						</li>
+						<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">Lookups <span class="right-caret"></span></a>
+							<ul class="dropdown-menu sub-menu">
+								<li><a href="${context}/${userpath}/hedisMeasureGroupList">Hedis Group</a></li>
+								<li><a href="${context}/${userpath}/planTypeList">Plan Type</a></li>
+								<li><a href="${context}/${userpath}/fileTypeList">File Type</a></li>
+								<li><a href="${context}/${userpath}/fileTypeList">Room Type</a></li>
+							</ul>
+						</li>	
 						<li><a href="${context}/${userpath}/userList">User Accounts</a></li>
 						</ul>
 					</li>

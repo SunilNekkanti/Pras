@@ -92,7 +92,6 @@ public class ReportsController {
 	@Autowired
 	private FollowupTypeService followupTypeService;
 
-	
 	/**
 	 * @param binder
 	 */
@@ -103,7 +102,7 @@ public class ReportsController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -172,7 +171,7 @@ public class ReportsController {
 
 		FollowupType followupType = followupTypeService.findByCode(FOLLOWUP_TYPE_HEDIS);
 		mbrHedisFollowup.setFollowupType(followupType);
-		//mbrHedisFollowup.setDateOfContact(new Date());
+		// mbrHedisFollowup.setDateOfContact(new Date());
 		mbrHedisFollowup.setCreatedBy(username);
 		mbrHedisFollowup.setUpdatedBy(username);
 		mbrHedisFollowupService.save(mbrHedisFollowup);
@@ -193,14 +192,14 @@ public class ReportsController {
 
 		FollowupType followupType = followupTypeService.findByCode("HOSPITALIZATION_FOLLOWUP");
 		mbrHospitalizationFollowup.setFollowupType(followupType);
-		//mbrHospitalizationFollowup.setDateOfContact(new Date());
+		// mbrHospitalizationFollowup.setDateOfContact(new Date());
 		mbrHospitalizationFollowup.setCreatedBy(username);
 		mbrHospitalizationFollowup.setUpdatedBy(username);
 		mbrHedisFollowupService.save(mbrHospitalizationFollowup);
 
 		return TileDefinitions.MEMBERSHIPCONTACTEDITSUCCESS.toString();
 	}
-	
+
 	/**
 	 * @param mbrId
 	 * @param username
@@ -227,11 +226,11 @@ public class ReportsController {
 			"/user/reports/membershipmembershipHospitalization/{mbrId}/followupDetails" })
 	public Message membershipHospitalizationFollowupDetails(@PathVariable Integer mbrId, Model model) {
 		List<MembershipFollowup> dbMbrHospitalizationFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId,
-				FOLLOWUP_TYPE_HOSPITALIZATION );
+				FOLLOWUP_TYPE_HOSPITALIZATION);
 		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(dbMbrHospitalizationFollowup));
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -244,35 +243,37 @@ public class ReportsController {
 	/**
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/reports/hospitalization/fileProcessing.do", "/user/reports/hospitalization/fileProcessing.do" })
+	@RequestMapping(value = { "/admin/reports/hospitalization/fileProcessing.do",
+			"/user/reports/hospitalization/fileProcessing.do" })
 	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) {
-		java.io.File sourceFile , newSourceFile = null;
+		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
-			String newfileName =fileName.substring(0,fileName.indexOf("."));
-			
+			String newfileName = fileName.substring(0, fileName.indexOf("."));
+
 			try {
-				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+fileName), fileUpload.getBytes());
-				
-				sourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+fileName);
-				newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH+newfileName+".csv");
+				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName),
+						fileUpload.getBytes());
+
+				sourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName);
+				newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + newfileName + ".csv");
 				sourceFile.createNewFile();
 				newSourceFile.createNewFile();
 				XlstoCSV.xls(sourceFile, newSourceFile);
-				if(sourceFile.exists()){
+				if (sourceFile.exists()) {
 					sourceFile.delete();
 				}
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		LOG.info("before file processing");
-		return "forward:/admin/membershipHospitalization/list?fileName="+newSourceFile.getName();
+		return "forward:/admin/membershipHospitalization/list?fileName=" + newSourceFile.getName();
 	}
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -292,20 +293,21 @@ public class ReportsController {
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo) {
+			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo,
+			@RequestParam(required = true) Integer processHospitalization) {
 
-		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns,
-				sSearchPrvdr, sort, sortdir, processFrom, processTo);
+		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processFrom, processTo, processHospitalization);
 
-		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
+				JsonConverter.getJsonObject(pagination));
 	}
 
 	/**
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/admin/membershipHospitalization/list",
-			"/user/membershipHospitalization/list" })
+	@RequestMapping(value = { "/admin/membershipHospitalization/list", "/user/membershipHospitalization/list" })
 	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 		Boolean dataExists = mbrHospitalizationService.isDataExists();
@@ -354,17 +356,16 @@ public class ReportsController {
 			return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, loadedData);
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHospitalizationDetails/{mbrHosId}/list",
 			"/user/reports/membershipHospitalizationDetails/{mbrHosId}/list" })
 	public Message viewHospitalizationMembershipDetailsList(@PathVariable Integer mbrHosId) {
 		Pagination pagination = mbrHospitalizationDetailsService.getMbrHospitalizationDetailsPage(mbrHosId);
-		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
+				JsonConverter.getJsonObject(pagination));
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/admin/reports/hospitalization/{mbrHosId}", "/user/reports/hospitalization/{mbrHosId}" })
 	public String handleHospitalizationRequest(@PathVariable Integer mbrHosId, Model model) {
 		model.addAttribute("mbrHosId", mbrHosId);

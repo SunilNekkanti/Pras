@@ -1,5 +1,9 @@
 package com.pfchoice.core.dao.impl;
 
+import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_PROCESSING_DATE;
+import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_HOSPOTALIZATION_DATE;
+import static com.pfchoice.common.SystemDefaultProperties.ALL;
+
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -92,14 +96,14 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
 
-		if (sSearchPrvdr != null && sSearchPrvdr != 9999) {
+		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "ins");
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
 			and.add(Restrictions.eq("ins.id", sSearchIns));
 		}
 
-		if (sSearchHedisRule != null && sSearchHedisRule != 9999 && sSearchHedisRule != 0) {
+		if (sSearchHedisRule != null && sSearchHedisRule != ALL && sSearchHedisRule != 0) {
 			crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 			and.add(Restrictions.eq("mbrHedisMeasureRule.hedisMeasureRule.id", sSearchHedisRule));
 			and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd", new Character('Y')));
@@ -107,7 +111,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 				or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%" + sSearch + "%",
 						StringType.INSTANCE));
 			}
-		} else if (sSearchHedisRule == 9999) {
+		} else if (sSearchHedisRule == ALL) {
 			crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 			and.add(Restrictions.in("mbrHedisMeasureRule.hedisMeasureRule.id", ruleIds));
 			and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd", new Character('Y')));
@@ -150,7 +154,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
-			final Date processingTo) {
+			final Date processingTo, final Integer processHospitalization) {
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
 				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
@@ -184,7 +188,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
 
-		if (sSearchPrvdr != null && sSearchPrvdr != 9999) {
+		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "ins");
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
@@ -195,7 +199,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
 		and.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
 		
-		and.add(Restrictions.between("mbrHospitalizationList.updatedDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
+		if(processHospitalization == FILTER_BY_PROCESSING_DATE)
+			and.add(Restrictions.between("mbrHospitalizationList.updatedDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
+		if(processHospitalization == FILTER_BY_HOSPOTALIZATION_DATE){
+			or.add(Restrictions.between("mbrHospitalizationList.admitDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
+			or.add(Restrictions.between("mbrHospitalizationList.expDisDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
+		}	
 		
 		crit.add(or);
 		crit.add(and);

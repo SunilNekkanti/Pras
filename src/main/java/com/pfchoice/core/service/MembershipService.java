@@ -60,10 +60,11 @@ public interface MembershipService {
 	 * @param sortdir
 	 * @param processingFrom
 	 * @param processingTo
+	 * * @param processHospitalization
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr,
-			String sort, String sortdir, Date processingFrom, Date processingTo);
+			String sort, String sortdir, Date processingFrom, Date processingTo, int processHospitalization);
 
 	/**
 	 * @param bean
