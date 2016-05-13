@@ -153,3 +153,4 @@ table#cptListTable, table#icdListTable {
 	padding-bottom:5px;
 }
 .process{padding-bottom:2px;}
+.table-responsive{overflow-y:hidden;}

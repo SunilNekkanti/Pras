@@ -82,5 +82,23 @@ public class UserServiceImpl implements UserService {
 	public boolean isValidUser(final String login, final String password) {
 		return userDao.isValidUser(login, password);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#isUserUnique(java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public boolean isUserUnique(Integer id, String userName) {
+		User user = findByUserName(userName);
+		return ( user == null || ((id != null) && (user.getId() == id)));
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.UserService#findByUserName(java.lang.String)
+	 */
+	@Override
+	public User findByUserName(String userName) {
+		User user = userDao.findByUserName(userName);
+		return user;
+	}
 
 }

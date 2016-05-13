@@ -41,7 +41,7 @@
 					</div>
 				</div>
 
-				<div class="form-group required">
+				<div class="form-group required col-sm-12">
 					<label class="control-label col-sm-2" for="effYear">Eff.
 						Year</label>
 					<div class="col-sm-6">
@@ -53,8 +53,8 @@
 							cssClass="error text-danger" />
 					</div>
 				</div>
-
-				<div class="col-sm-offset-2 col-sm-6">
+				
+				<div class="form-group col-sm-offset-2 col-sm-6">
 					<c:choose>
 						<c:when test="${user.id != null && user.activeInd == 89}">
 							<button type="submit" class="btn btn-success btn-sm"

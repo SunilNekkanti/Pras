@@ -74,5 +74,23 @@ public class InsuranceServiceImpl implements InsuranceService {
 		Updater<Insurance> updater = new Updater<>(bean);
 		return insuranceDao.updateByUpdater(updater);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.InsuranceService#isInsUnique(java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public boolean isInsUnique(Integer id, String insName) {
+		Insurance ins = findByInsName(insName);
+		return ( ins == null || ((id != null) && (ins.getId() == id)));
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.InsuranceService#findByInsName(java.lang.String)
+	 */
+	@Override
+	public Insurance findByInsName(String insName) {
+		Insurance ins = insuranceDao.findByInsName(insName);
+		return ins;
+	}
 
 }

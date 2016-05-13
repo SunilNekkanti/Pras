@@ -49,5 +49,18 @@ public interface ProviderService {
 	 * @return
 	 */
 	Pagination findByInsId(Integer id);
+	
+	/**
+	 * @param id
+	 * @param npi
+	 * @return
+	 */
+	boolean isUniquePrvdrNPI(Integer id, String npi);
+	
+	/**
+	 * @param npi
+	 * @return
+	 */
+	Provider findByPrvdrNPI(String npi);
 
 }

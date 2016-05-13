@@ -53,4 +53,17 @@ public interface UserService {
 	 * @return
 	 */
 	boolean isValidUser(String login, String password);
+	
+	/**
+	 * @param id
+	 * @param userName
+	 * @return
+	 */
+	boolean isUserUnique(Integer id, String userName);
+	
+	/**
+	 * @param userName
+	 * @return
+	 */
+	User findByUserName(String userName);
 }

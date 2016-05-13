@@ -105,4 +105,12 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 
 		return findByCriteria(crit, 0, 200);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ProviderDao#findByPrvdrNpi(java.lang.String)
+	 */
+	@Override
+	public Provider findByPrvdrNPI(String npi) {
+		return  findUniqueByProperty("code", npi);
+	}
 }

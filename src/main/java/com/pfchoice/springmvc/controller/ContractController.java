@@ -423,7 +423,6 @@ public class ContractController {
 		List<Contract> listBean = contractService.findAllContractsByRefId("insurance", id);
 		model.addAttribute("contractList", listBean);
 		model.addAttribute("insuranceRequired", false);
-		model.addAttribute("pmpmRequired", true);
 		return TileDefinitions.INSURANCECONTRACTLIST.toString();
 	}
 

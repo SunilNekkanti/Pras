@@ -74,5 +74,27 @@ public class ProviderServiceImpl implements ProviderService {
 	public Pagination findByInsId(final Integer id) {
 		return providerDao.findByInsId(id);
 	}
+	
+
+	/**
+	 * @param id
+	 * @param npi
+	 * @return
+	 */
+	@Override
+	public boolean isUniquePrvdrNPI(Integer id, String npi) {
+		Provider prvdr = findByPrvdrNPI(npi);
+		return ( prvdr == null || ((id != null) && (prvdr.getId() == id)));
+	}
+	
+	/**
+	 * @param npi
+	 * @return
+	 */
+	@Override
+	public Provider findByPrvdrNPI(String npi) {
+		Provider prvdr = providerDao.findByPrvdrNPI(npi);
+		return prvdr;
+	}
 
 }

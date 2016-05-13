@@ -61,4 +61,10 @@ public interface UserDao {
 	 * @return
 	 */
 	boolean isValidUser(String login, String password);
+	
+	/**
+	 * @param userName
+	 * @return
+	 */
+	User findByUserName(String userName);
 }

@@ -48,7 +48,7 @@
 					</div>
 				</div>
 
-				<div class="form-group required">
+				<div class="form-group required col-sm-12">
 					<label class="control-label col-sm-2" for="effYear">Eff.
 						Year</label>
 					<div class="col-sm-6">

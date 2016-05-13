@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.validation.annotation.Validated;
@@ -120,6 +121,12 @@ public class InsuranceController {
 			logger.info("Returning insuranceEdit.jsp page");
 			return TileDefinitions.INSURANCENEW.toString();
 		}
+		
+		if(insuranceService.findByInsName( insurance.getName()) != null ){
+			FieldError insError =new FieldError("name","name", insurance.getName(), false, null, null,insurance.getName()+" already exist");
+			bindingResult.addError(insError);
+			return TileDefinitions.INSURANCENEW.toString();
+		}
 
 		logger.info("Returning InsuranceSuccess.jsp page after create");
 		model.addAttribute("insurance", insurance);
@@ -163,6 +170,12 @@ public class InsuranceController {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning insuranceEdit.jsp page");
 			insurance.setActiveInd('Y');
+			return TileDefinitions.INSURANCEEDIT.toString();
+		}
+		
+		if(!insuranceService.isInsUnique(insurance.getId(), insurance.getName())){
+			FieldError insError =new FieldError("name","name", insurance.getName(), false, null, null,insurance.getName()+" already exist");
+			bindingResult.addError(insError);
 			return TileDefinitions.INSURANCEEDIT.toString();
 		}
 

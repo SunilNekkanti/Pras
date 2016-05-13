@@ -38,7 +38,7 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
 	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { ApplicationContext.class, SecurityConfig.class };
+		return new Class[] { ApplicationContext.class, SecurityConfig.class, MailConfig.class };
 	}
 
 	/**

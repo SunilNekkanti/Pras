@@ -16,6 +16,7 @@ import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.hibernate.type.DateType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
@@ -187,8 +188,14 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
-
+		System.out.println("sSearchPrvdr is"+sSearchPrvdr);
+		System.out.println("ALL is"+ALL);
+		if(sSearchPrvdr == ALL){
+			
+		}
+		
 		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
+			System.out.println("sSearchPrvdr is"+sSearchPrvdr);
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "ins");
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
@@ -202,8 +209,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		if(processHospitalization == FILTER_BY_PROCESSING_DATE)
 			and.add(Restrictions.between("mbrHospitalizationList.updatedDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
 		if(processHospitalization == FILTER_BY_HOSPOTALIZATION_DATE){
-			or.add(Restrictions.between("mbrHospitalizationList.admitDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
-			or.add(Restrictions.between("mbrHospitalizationList.expDisDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
+			and.add(Restrictions.sqlRestriction(" ? between admit_date and exp_dc_date", new java.sql.Date(processingFrom.getTime()),DateType.INSTANCE));
+			and.add(Restrictions.sqlRestriction(" ? between admit_date and exp_dc_date", new java.sql.Date(processingTo.getTime()),DateType.INSTANCE));
 		}	
 		
 		crit.add(or);

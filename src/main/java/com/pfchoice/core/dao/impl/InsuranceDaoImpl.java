@@ -95,5 +95,14 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 	protected Class<Insurance> getEntityClass() {
 		return Insurance.class;
 	}
+	
+	/**
+	 * @param insName
+	 * @return
+	 */
+	@Override
+	public Insurance findByInsName(String insName) {
+		return  findUniqueByProperty("name", insName);
+	}
 
 }

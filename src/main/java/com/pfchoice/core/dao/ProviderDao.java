@@ -56,4 +56,10 @@ public interface ProviderDao {
 	 * @return
 	 */
 	Pagination findByInsId(Integer id);
+	
+	/**
+	 * @param npi
+	 * @return
+	 */
+	Provider findByPrvdrNPI(String npi);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -142,6 +143,12 @@ public class ProviderController {
 			logger.info("Returning providerEdit.jsp page");
 			return TileDefinitions.PROVIDERNEW.toString();
 		}
+		
+		if(providerService.findByPrvdrNPI( provider.getCode()) != null){
+			FieldError prvdrError = new FieldError("code","code",provider.getCode(), false, null, null, provider.getCode()+" already exist");
+			bindingResult.addError(prvdrError);
+			return TileDefinitions.PROVIDERNEW.toString();
+		}
 
 		logger.info("Returning ProviderSuccess.jsp page after create");
 		model.addAttribute("provider", provider);
@@ -167,6 +174,12 @@ public class ProviderController {
 		logger.info("provider id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning providerEdit.jsp page");
+			return TileDefinitions.PROVIDEREDIT.toString();
+		}
+		
+		if(!providerService.isUniquePrvdrNPI(provider.getId(), provider.getCode())){
+			FieldError prvdrError = new FieldError("code","code",provider.getCode(), false, null, null, provider.getCode()+" already exist");
+			bindingResult.addError(prvdrError);
 			return TileDefinitions.PROVIDEREDIT.toString();
 		}
 

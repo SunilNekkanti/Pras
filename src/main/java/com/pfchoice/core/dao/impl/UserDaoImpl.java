@@ -92,4 +92,12 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return (entity != null) ? true : false;
 
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.UserDao#findByUserName(java.lang.String)
+	 */
+	@Override
+	public User findByUserName(String userName) {
+		return  findUniqueByProperty("name", userName);
+	}
 }

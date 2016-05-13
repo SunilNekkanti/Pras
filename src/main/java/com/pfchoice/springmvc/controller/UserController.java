@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -130,6 +131,12 @@ public class UserController {
 			logger.info("Returning userEdit.jsp page");
 			return TileDefinitions.USERNEW.toString();
 		}
+		
+		if(!userService.isUserUnique(user.getId(), user.getUsername())){
+			FieldError userError =new FieldError("username", "username", user.getUsername(), false, null, null, user.getUsername()+" already exist");
+			bindingResult.addError(userError);
+			return TileDefinitions.USERNEW.toString();
+		}
 
 		logger.info("Returning userSuccess.jsp page after create");
 		user.setCreatedBy(username);
@@ -157,6 +164,13 @@ public class UserController {
 			logger.info("Returning userEdit.jsp page");
 			return TileDefinitions.USEREDIT.toString();
 		}
+		
+		if(!userService.isUserUnique(user.getId(), user.getUsername())){
+			FieldError userError =new FieldError("username", "username", user.getUsername(), false, null, null, user.getUsername()+" already exist");
+			bindingResult.addError(userError);
+			return TileDefinitions.USEREDIT.toString();
+		}
+		
 		if (null != user.getId()) {
 			logger.info("Returning userEditSuccess.jsp page after update");
 			user.setUpdatedBy(username);
@@ -182,6 +196,12 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			user.setActiveInd('Y');
 			logger.info("Returning userEdit.jsp page");
+			return TileDefinitions.USEREDIT.toString();
+		}
+		
+		if(!userService.isUserUnique(user.getId(), user.getUsername())){
+			FieldError userError =new FieldError("username", "username", user.getUsername(), false, null, null, user.getUsername()+" already exist");
+			bindingResult.addError(userError);
 			return TileDefinitions.USEREDIT.toString();
 		}
 

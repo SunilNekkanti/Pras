@@ -51,5 +51,18 @@ public interface InsuranceService {
 	 * @return
 	 */
 	Insurance update(Insurance bean);
+	
+	/**
+	 * @param insName
+	 * @return
+	 */
+	Insurance findByInsName(String insName);
+
+	/**
+	 * @param id
+	 * @param name
+	 * @return
+	 */
+	boolean isInsUnique(Integer id, String name);
 
 }
