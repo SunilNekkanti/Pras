@@ -878,6 +878,7 @@
 						          minDate:'01/01/2015',
 						          onClose: function( selectedDate ) {
 						              $( ".processto" ).datepicker( "option", "minDate", selectedDate );
+						              $(".processto").val( $(".processfrom").val());
 						            }
 						      });
 						   });

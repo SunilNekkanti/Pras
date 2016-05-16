@@ -1,5 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,15 @@ import javax.servlet.http.HttpSession;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.form.LoginForm;
+import com.pfchoice.springmvc.service.ApplicationMailer;
 
 @Controller
 @RequestMapping(value = "*")
 @SessionAttributes({ "username", "userpath" })
 public class LoginController {
+	
+	@Autowired
+	ApplicationMailer  applicationMailer;
 
 	/**
 	 * @param error
@@ -56,6 +61,7 @@ public class LoginController {
 		if (!model.containsAttribute("username")) {
 			model.addAttribute("username", username);
 		}
+		//applicationMailer.sendMail("gandluri.sarathkumar@gmail.com","Welcome to PFChoice","You have successfully logged into PFChoice site");
 		return TileDefinitions.HOME.toString();
 	}
 
@@ -75,6 +81,7 @@ public class LoginController {
 
 	/**
 	 * for 403 access denied page
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
