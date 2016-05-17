@@ -34,7 +34,7 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	private String description;
 	
 	@Expose
-	@Column(name = "template")
+	@Column(name = "template", length = 65535, columnDefinition = "TEXT")
 	private String template;
 
 	/**

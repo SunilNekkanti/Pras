@@ -54,7 +54,7 @@ public class Email extends RecordDetails implements Serializable {
 	private EmailTemplate emailTemplate;
 	
 	@Expose
-	@Column(name = "body", length = 65535)
+	@Column(name = "body", length = 65535,columnDefinition = "TEXT")
 	private String body;
 
 	@Expose
