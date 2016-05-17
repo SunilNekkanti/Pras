@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -62,6 +65,23 @@ public class LoginController {
 			model.addAttribute("username", username);
 		}
 		//applicationMailer.sendMail("gandluri.sarathkumar@gmail.com","Welcome to PFChoice","You have successfully logged into PFChoice site");
+		
+		
+		// Load the file
+		final STGroup stGroup = new STGroupFile("exampleTemplate.stg");
+
+		// Pick the correct template
+		final ST templateExample = stGroup.getInstanceOf("templateExample1");
+
+		// Pass on values to use when rendering
+		templateExample.add("param", "Hello World");
+
+		// Render
+		final String render = templateExample.render();
+
+		// Print
+		System.out.println(render);
+		
 		return TileDefinitions.HOME.toString();
 	}
 

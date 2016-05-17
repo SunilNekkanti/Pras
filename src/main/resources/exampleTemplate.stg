@@ -1,0 +1,7 @@
+templateExample(param) ::= <<
+This is a template with the following param: (<param>)
+>>
+
+templateExample1(param) ::= <<
+This is a template1 with the following param: (<param>)
+>>
