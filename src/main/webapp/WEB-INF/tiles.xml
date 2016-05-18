@@ -584,9 +584,40 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/emailTemplateList.jsp" />
 	</definition>
 
-	
-
 <!--  Email Templates -->	
+
+<!--  Email -->
+	<definition name="emailList" extends="base.definition">
+		<put-attribute name="title" value=" Email List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emailList.jsp" />
+	</definition>
+
+	<definition name="email" extends="base.definition">
+		<put-attribute name="title" value="Insurnace Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/email.jsp" />
+	</definition>
+	<definition name="emailNew" extends="base.definition">
+		<put-attribute name="title" value=" Email Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emailNew.jsp" />
+	</definition>
+
+	<definition name="emailNewSuccess" extends="base.definition">
+		<put-attribute name="title" value=" Email Profile" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/emailAddSuccess.jsp" />
+	</definition>
+
+	<definition name="emailEdit" extends="base.definition">
+		<put-attribute name="title" value=" Email Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emailEdit.jsp" />
+	</definition>
+
+	<definition name="emailList" extends="base.definition">
+		<put-attribute name="title" value="Email List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emailList.jsp" />
+	</definition>
+
+<!--  Email s -->
 	
 	
 

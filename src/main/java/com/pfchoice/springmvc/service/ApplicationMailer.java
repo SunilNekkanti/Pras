@@ -30,6 +30,8 @@ public class ApplicationMailer
     private Properties emailProperties;
 
     private Session session;
+    
+    private String cc;
 
 	/**
 	 * @return the emailId
@@ -59,6 +61,19 @@ public class ApplicationMailer
 		this.session = session;
 	}
 
+	/**
+	 * @return the cc
+	 */
+	public String getCc() {
+		return cc;
+	}
+
+	/**
+	 * @param cc the cc to set
+	 */
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
 
 	/**
 	 * @param emailProperties the emailProperties to set

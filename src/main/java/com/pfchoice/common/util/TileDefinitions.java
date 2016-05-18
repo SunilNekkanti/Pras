@@ -107,6 +107,10 @@ public enum TileDefinitions {
 	EMAILTEMPLATE ("emailTemplate" ),
 	EMAILTEMPLATENEW ("emailTemplateNew" ),
 	EMAILTEMPLATEEDIT ("emailTemplateEdit" ),
+	EMAILLIST ("emailList" ),
+	EMAIL ("email" ),
+	EMAILNEW ("emailNew" ),
+	EMAILEDIT ("emailEdit" ),
 	EMAILTEMPLATEDELETESUCCESS ("emailTemplateDeleteSuccess" );
 	
 

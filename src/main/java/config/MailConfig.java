@@ -29,6 +29,9 @@ public class MailConfig {
 	
 	@Value("${emailId}")
     private String emailId;
+	
+	@Value("${cc}")
+    private String cc;
 
 	@Value("${password}")
     private String password;
@@ -59,6 +62,7 @@ public class MailConfig {
 		ApplicationMailer applicationMailer = new ApplicationMailer();
 		applicationMailer.setEmailId(emailId);
 		applicationMailer.setSession(session);
+		applicationMailer.setCc(cc);
 		applicationMailer.setEmailProperties(getEmailProperties());
 		
 		return applicationMailer;
