@@ -51,4 +51,10 @@ public interface EmailTemplateService {
 	 * @return
 	 */
 	EmailTemplate update(EmailTemplate bean);
+	
+	/**
+	 * @param description
+	 * @return
+	 */
+	EmailTemplate findBySubject(String description);
 }

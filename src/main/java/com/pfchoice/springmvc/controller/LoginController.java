@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.TileDefinitions;
+import com.pfchoice.core.entity.EmailTemplate;
+import com.pfchoice.core.service.EmailTemplateService;
 import com.pfchoice.form.LoginForm;
 import com.pfchoice.springmvc.service.ApplicationMailer;
 
@@ -27,6 +29,9 @@ public class LoginController {
 	
 	@Autowired
 	ApplicationMailer  applicationMailer;
+	
+	@Autowired
+	EmailTemplateService  emailTemplateService;
 
 	/**
 	 * @param error
@@ -64,7 +69,14 @@ public class LoginController {
 		if (!model.containsAttribute("username")) {
 			model.addAttribute("username", username);
 		}
-		//applicationMailer.sendMail("gandluri.sarathkumar@gmail.com","Welcome to PFChoice","You have successfully logged into PFChoice site");
+		
+		String emailSubject = "Amerigroup Hospitalization Followup to Provider"; 
+		EmailTemplate emailTemplate = emailTemplateService.findBySubject(emailSubject);
+		String emailContent = String.format(emailTemplate.getTemplate(), "sarath","mohan");
+		
+		String filename = "C:\\Softwares\\Mycert.cert";
+		applicationMailer.sendMailWithAttachment("gandluri.sarathkumar@gmail.com",emailSubject,emailContent, filename);
+		//applicationMailer.sendMail("gandluri.sarathkumar@gmail.com",emailSubject,emailContent);
 		
 		
 		// Load the file

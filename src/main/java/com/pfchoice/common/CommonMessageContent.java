@@ -71,5 +71,7 @@ public interface CommonMessageContent {
 	String PLAN_TYPE_LIST = "Plan Type List";
 
 	String HEDIS_MEASURE_GROUP_LIST = "Hedis Measure Group List";
+	
+	String EMAIL_TEMPLATE_LIST = "Email Templates List";
 
 }

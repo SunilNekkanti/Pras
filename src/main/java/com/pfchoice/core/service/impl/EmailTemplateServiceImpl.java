@@ -74,4 +74,13 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 		Updater<EmailTemplate> updater = new Updater<>(bean);
 		return emailTemplatesDao.updateByUpdater(updater);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.EmailTemplateService#findBySubject(java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public EmailTemplate findBySubject(final String description) {
+		return emailTemplatesDao.findByDescription(description);
+	}
 }

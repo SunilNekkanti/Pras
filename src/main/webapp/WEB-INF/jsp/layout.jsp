@@ -102,6 +102,13 @@ jQuery( document ).ready(function( $ ) {
 	  $('body').on('focus',".datepicker", function(){
 		    $(this).datepicker();
 		   });
+	  
+	  $("#deleteButton").click(function(e){
+		   if (confirm("Action cannot be undone.Click 'Ok' to delete.") == false) 
+		   {
+		    e.preventDefault();
+		   }
+		    });
 });
 
 jQuery( document ).ready(function( $ ) {
@@ -195,6 +202,7 @@ $('[data-toggle="tab"]').click(function(e) {
     });
     $(this).tab('show')
 });
+
 
 });
 </script>

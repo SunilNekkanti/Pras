@@ -4,6 +4,8 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +36,22 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
 		Criteria crit = createCriteria();
+		if (sSearch != null && !"".equals(sSearch)) {
+			Disjunction or = Restrictions.disjunction();
+
+			or.add(Restrictions.ilike("description", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("template", "%" + sSearch + "%"));
+			crit.add(or);
+		}
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				crit.addOrder(Order.desc(sort));
+			} else {
+				crit.addOrder(Order.asc(sort));
+			}
+		}
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}
@@ -73,5 +91,14 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 	@Override
 	protected Class<EmailTemplate> getEntityClass() {
 		return EmailTemplate.class;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.EmailTemplateDao#findByDescription(java.lang.String)
+	 */
+	@Override
+	public EmailTemplate findByDescription(final String description) {
+		return  findUniqueByProperty("description", description);
 	}
 }
