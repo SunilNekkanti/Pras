@@ -102,7 +102,13 @@ public enum TileDefinitions {
 	FILETYPEEDIT ("fileTypeEdit" ),
 	HEDISMEASUREGROUPLIST ("hedisMeasureGroupList" ),
 	HEDISMEASUREGROUPNEW ("hedisMeasureGroupNew" ),
-	HEDISMEASUREGROUPEDIT ("hedisMeasureGroupEdit" );
+	HEDISMEASUREGROUPEDIT ("hedisMeasureGroupEdit" ),
+	EMAILTEMPLATELIST ("emailTemplateList" ),
+	EMAILTEMPLATE ("emailTemplate" ),
+	EMAILTEMPLATENEW ("emailTemplateNew" ),
+	EMAILTEMPLATEEDIT ("emailTemplateEdit" ),
+	EMAILTEMPLATEDELETESUCCESS ("emailTemplateDeleteSuccess" );
+	
 
 	
     private final String text;
