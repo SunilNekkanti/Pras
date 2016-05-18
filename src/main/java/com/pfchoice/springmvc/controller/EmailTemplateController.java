@@ -1,0 +1,207 @@
+package com.pfchoice.springmvc.controller;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.PrasUtil;
+import com.pfchoice.common.util.TileDefinitions;
+import com.pfchoice.core.entity.EmailTemplate;
+import com.pfchoice.core.service.EmailTemplateService;
+
+import ml.rugal.sshcommon.page.Pagination;
+import ml.rugal.sshcommon.springmvc.util.Message;
+
+@Controller
+@SessionAttributes({ "username", "userpath" })
+public class EmailTemplateController {
+
+	private static final Logger logger = LoggerFactory.getLogger(EmailTemplateController.class);
+
+	@Autowired
+	private EmailTemplateService emailTemplateService;
+
+	/**
+
+	@Autowired
+	@Qualifier("insuranceValidator")
+	private Validator validator;
+
+	
+	  @param binder
+	
+	@InitBinder("insurance")
+	public void initBinder(WebDataBinder binder) {
+		binder.setValidator(validator);
+	}
+	
+	 */
+
+	/**
+	 * @return
+	 */
+	@ModelAttribute("emailTemplate")
+	public EmailTemplate createEmailTemplateModel() {
+		return new EmailTemplate();
+	}
+	
+	/**
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/emailTemplateList",
+			"/user/emailTemplateList" }, method = RequestMethod.GET)
+	public String viewEmailTemplateAction() {
+
+		logger.info("Returning view.jsp page after create");
+		return TileDefinitions.EMAILTEMPLATELIST.toString();
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/emailTemplate/list",
+			"/user/emailTemplate/list" }, method = RequestMethod.GET)
+	public Message viewEmailTemplateList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = emailTemplateService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.EMAIL_TEMPLATE_LIST, pagination);
+	}
+
+	
+	/**
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/emailTemplate/new", "/user/emailTemplate/new"  })
+	public String addEmailTemplatePage(Model model) {
+
+		EmailTemplate emailTemplate = createEmailTemplateModel();
+		model.addAttribute("emailTemplate", emailTemplate);
+		return TileDefinitions.EMAILTEMPLATENEW.toString();
+	}
+
+	/**
+	 * @param id
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/emailTemplate/{id}", "/user/emailTemplate/{id}" }, method = RequestMethod.GET)
+	public String updateEmailTemplatePage(@PathVariable Integer id, Model model) {
+
+		EmailTemplate dbEmailTemplate = emailTemplateService.findById(id);
+		logger.info("emailTemplate.getId()" + dbEmailTemplate.getId());
+
+		model.addAttribute("emailTemplate", dbEmailTemplate);
+		logger.info("Returning emailTemplate Save.jsp page");
+		return TileDefinitions.EMAILTEMPLATEEDIT.toString();
+	}
+
+	/**
+	 * @param emailTemplate
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/emailTemplate/save.do" }, method = RequestMethod.POST, params = { "add" })
+	public String newEmailTemplateAction(@Validated EmailTemplate emailTemplate, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning email Template Edit.jsp page");
+			return TileDefinitions.EMAILTEMPLATENEW.toString();
+		}
+		
+		logger.info("Returning Email Template Success.jsp page after create");
+		model.addAttribute("emailTemplate", emailTemplate);
+		emailTemplate.setCreatedBy(username);
+		emailTemplate.setUpdatedBy(username);
+		emailTemplateService.save(emailTemplate);
+		model.addAttribute("Message", "Email Template details added successfully");
+		return TileDefinitions.EMAILTEMPLATELIST.toString();
+	}
+
+	/**
+	 * @param id
+	 * @param emailTemplate
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/emailTemplate/{id}/save.do", }, method = RequestMethod.POST, params = { "update" })
+	public String updateEmailTemplateAction(@PathVariable Integer id, @ModelAttribute @Validated EmailTemplate emailTemplate,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		emailTemplate.setActiveInd('Y');
+		logger.info("emailTemplate id is" + id);
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning email Template Edit.jsp page");
+			emailTemplate.setActiveInd('Y');
+			return TileDefinitions.EMAILTEMPLATEEDIT.toString();
+		}
+
+		if (null != emailTemplate.getId()) {
+			logger.info("Returning Email Template Success.jsp page after update");
+			emailTemplate.setUpdatedBy(username);
+			emailTemplateService.update(emailTemplate);
+			model.addAttribute("Message", "Email Template Details Updated Successfully");
+		}
+
+		return TileDefinitions.EMAILTEMPLATELIST.toString();
+	}
+
+	/**
+	 * @param id
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/emailTemplate/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
+	public String deleteEmailTemplateAction(@PathVariable Integer id, Model model,
+			@ModelAttribute("username") String username) {
+
+		EmailTemplate dbEmailTemplate = emailTemplateService.findById(id);
+		dbEmailTemplate.setActiveInd(new Character('N'));
+		dbEmailTemplate.setUpdatedBy(username);
+		emailTemplateService.update(dbEmailTemplate);
+		model.addAttribute("emailTemplate", dbEmailTemplate);
+		model.addAttribute("Message", "Email Template details deleted successfully");
+		logger.info("Returning Email Template Delete Success.jsp page after delete");
+		return TileDefinitions.EMAILTEMPLATELIST.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	@ModelAttribute("activeIndMap")
+	public Map<String, String> populateActiveIndList() {
+		return PrasUtil.getActiveIndMap();
+	}
+
+}
