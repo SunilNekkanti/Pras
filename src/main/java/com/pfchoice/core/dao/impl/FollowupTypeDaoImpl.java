@@ -62,6 +62,9 @@ public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer>
 		return FollowupType.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.FollowupTypeDao#findByCode(java.lang.String)
+	 */
 	@Override
 	public FollowupType findByCode(final String code) {
 		return  findUniqueByProperty("code", code);

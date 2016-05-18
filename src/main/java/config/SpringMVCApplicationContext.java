@@ -12,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -48,7 +45,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan({ "com.pfchoice.springmvc.controller" })
-@Import({ SecurityConfig.class, MailConfig.class })
+@Import({ SecurityConfig.class })
 public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 
 	// @Autowired

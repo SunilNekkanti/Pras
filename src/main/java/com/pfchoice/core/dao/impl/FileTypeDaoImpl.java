@@ -63,4 +63,11 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return FileType.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.FileTypeDao#findByCode(java.lang.String)
+	 */
+	@Override
+	public FileType findByCode(final String code) {
+		return  findUniqueByProperty("code", code);
+	}
 }

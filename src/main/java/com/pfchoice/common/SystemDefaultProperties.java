@@ -40,6 +40,8 @@ public interface SystemDefaultProperties {
 	
 	String FOLLOWUP_TYPE_HOSPITALIZATION =  "HOSPITALIZATION_FOLLOWUP";
 	
+	String FILE_TYPE_AMG_MBR_HOSPITALIZATION =  "AMG Membership Hospitalization1";
+	
 	int FILTER_BY_PROCESSING_DATE =  0;
 	
 	int FILTER_BY_HOSPOTALIZATION_DATE =  1;

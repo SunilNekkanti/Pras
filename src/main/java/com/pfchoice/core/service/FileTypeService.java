@@ -41,4 +41,11 @@ public interface FileTypeService {
 	 */
 	FileType update(FileType bean);
 
+	
+	/**
+	 * @param code
+	 * @return
+	 */
+	FileType findByCode(String code);
+
 }

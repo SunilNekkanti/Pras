@@ -63,5 +63,14 @@ public class FileTypeServiceImpl implements FileTypeService {
 		Updater<FileType> updater = new Updater<>(bean);
 		return fileTypeDao.updateByUpdater(updater);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileTypeService#findByCode(java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public FileType findByCode(final String code) {
+		return fileTypeDao.findByCode(code);
+	}
 
 }

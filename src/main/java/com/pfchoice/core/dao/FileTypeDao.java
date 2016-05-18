@@ -47,4 +47,10 @@ public interface FileTypeDao {
 	 */
 	FileType updateByUpdater(Updater<FileType> updater);
 
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
+	FileType findByCode(String code);
 }

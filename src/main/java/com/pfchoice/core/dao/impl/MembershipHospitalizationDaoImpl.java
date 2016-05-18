@@ -100,7 +100,6 @@ public class MembershipHospitalizationDaoImpl extends HibernateBaseDao<Membershi
 		String sql = "SELECT count(*) FROM csv2AmgHospitalization";
 		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql)
 				                   .uniqueResult()).intValue() ;
-		System.out.println("rowCount"+rowCount);
 		if(rowCount > 0){
 			returnvalue = true;
 		}else{

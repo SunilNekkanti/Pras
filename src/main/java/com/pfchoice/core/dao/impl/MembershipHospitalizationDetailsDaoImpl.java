@@ -7,9 +7,6 @@ import ml.rugal.sshcommon.page.Pagination;
 
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;

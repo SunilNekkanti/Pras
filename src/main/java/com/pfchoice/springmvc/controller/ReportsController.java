@@ -1,8 +1,10 @@
 package com.pfchoice.springmvc.controller;
 
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_HOSPITALIZATION;
+import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HEDIS;
 import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HOSPITALIZATION;
-import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
+
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -37,11 +39,13 @@ import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.common.util.XlstoCSV;
 import com.pfchoice.core.entity.File;
+import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.AttPhysicianService;
 import com.pfchoice.core.service.FileService;
+import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.FollowupTypeService;
 import com.pfchoice.core.service.HospitalService;
 import com.pfchoice.core.service.MembershipFollowupService;
@@ -70,6 +74,9 @@ public class ReportsController {
 
 	@Autowired
 	private FileService fileService;
+
+	@Autowired
+	private FileTypeService fileTypeService;
 
 	@Autowired
 	private HospitalService hospitalService;
@@ -310,22 +317,39 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/membershipHospitalization/list", "/user/membershipHospitalization/list" })
 	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username,
 			@RequestParam(value = "fileName", required = true) String fileName) {
+		
+		LOG.info("1");
+		
 		Boolean dataExists = mbrHospitalizationService.isDataExists();
 		if (dataExists) {
 			return Message.failMessage("Previous file processing is incomplete");
 		} else {
 
+			LOG.info("2");
+			
 			Integer fileId = 0;
 
 			try {
+				LOG.info("3");
+				
+				FileType fileType = fileTypeService.findByCode(FILE_TYPE_AMG_MBR_HOSPITALIZATION);
+				LOG.info("4");
+				
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(2);
+				fileRecord.setFileTypeCode(fileType.getCode());
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
+				LOG.info("5");
+				
+				if (newFile != null)
 				fileId = newFile.getId();
+				else
+					LOG.info("fileId is empty");
+					
 			} catch (Exception e) {
+				LOG.info(e.getCause().getMessage());
 				LOG.info("Similar file already processed in past");
 				return Message.failMessage("similar file already processed in past");
 			}
