@@ -6,6 +6,8 @@ import ml.rugal.sshcommon.page.Pagination;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +30,41 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ContactDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		
+		Criteria crit =  getSession().createCriteria(getEntityClass(), "contact");
+		crit.createAlias("contact.refContact", "refContact");
+		crit.createAlias("refContact.prvdr", "prvdr");
+		crit.add(Restrictions.isNotNull("refContact.prvdr.id"));
+		
+		if (sSearch != null && !"".equals(sSearch)) {
+			Disjunction or = Restrictions.disjunction();
+			or.add(Restrictions.ilike("email", "%" + sSearch + "%"))
+			.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
+			.add(Restrictions.ilike("contactPerson", "%" + sSearch + "%"));
+			crit.add(or);
+		}
+		
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				crit.addOrder(Order.desc(sort));
+			} else {
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+
+		return findByCriteria(crit, pageNo, pageSize);
+
+	}
+
 
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.ContactDao#findById(java.lang.Integer)

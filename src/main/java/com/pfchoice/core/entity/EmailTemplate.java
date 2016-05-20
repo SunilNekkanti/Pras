@@ -1,13 +1,16 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
@@ -37,6 +40,11 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	@Column(name = "template", length = 65535, columnDefinition = "TEXT")
 	private String template;
 
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "emailTemplate")
+	private List<EmailTemplatePlaceholder> emailTemplatePlacholderList;
+
+	
 	/**
 	 * 
 	 */
@@ -92,6 +100,20 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	 */
 	public void setTemplate(String template) {
 		this.template = template;
+	}
+
+	/**
+	 * @return the emailTemplatePlacholderList
+	 */
+	public List<EmailTemplatePlaceholder> getEmailTemplatePlacholderList() {
+		return emailTemplatePlacholderList;
+	}
+
+	/**
+	 * @param emailTemplatePlacholderList the emailTemplatePlacholderList to set
+	 */
+	public void setEmailTemplatePlacholderList(List<EmailTemplatePlaceholder> emailTemplatePlacholderList) {
+		this.emailTemplatePlacholderList = emailTemplatePlacholderList;
 	}
 
 	@Override

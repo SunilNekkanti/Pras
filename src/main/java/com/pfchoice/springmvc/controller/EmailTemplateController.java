@@ -1,5 +1,8 @@
 package com.pfchoice.springmvc.controller;
 
+import java.io.FileNotFoundException;
+import java.text.MessageFormat;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,9 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.EmailTemplate;
+import com.pfchoice.core.entity.EmailTemplatePlaceholder;
+import com.pfchoice.core.service.EmailTemplatePlaceholderService;
 import com.pfchoice.core.service.EmailTemplateService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -36,6 +42,10 @@ public class EmailTemplateController {
 	@Autowired
 	private EmailTemplateService emailTemplateService;
 
+	@Autowired
+	private EmailTemplatePlaceholderService emailTemplatePlaceholderService;
+
+	
 	/**
 
 	@Autowired
@@ -88,8 +98,7 @@ public class EmailTemplateController {
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = emailTemplateService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-
-		return Message.successMessage(CommonMessageContent.EMAIL_TEMPLATE_LIST, pagination);
+		return Message.successMessage(CommonMessageContent.EMAIL_TEMPLATE_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
 	
@@ -102,7 +111,33 @@ public class EmailTemplateController {
 
 		EmailTemplate emailTemplate = createEmailTemplateModel();
 		model.addAttribute("emailTemplate", emailTemplate);
+	    
 		return TileDefinitions.EMAILTEMPLATENEW.toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(value = { "/admin/emailTemplate/{description}/details", "/user/emailTemplate/{description}/details" })
+	public Message getEmailTemplateContent(@PathVariable String description) {
+		EmailTemplate emailTemplate = emailTemplateService.findBySubject(description);
+		MessageFormat mf = new MessageFormat(""); 
+		String template = emailTemplate.getTemplate();
+	    mf.applyPattern(template);
+	    Pagination page = emailTemplatePlaceholderService.findByEmailTemplateId(emailTemplate.getId());
+	    List<EmailTemplatePlaceholder> emailTemplatePlaceholders = (List<EmailTemplatePlaceholder>) page.getList();
+	    System.out.println(" emailTemplatePlaceholders size is"+emailTemplatePlaceholders.size());
+	    List<Object>	arguments     = emailTemplatePlaceholderService.getSQLScriptResults(emailTemplatePlaceholders,44);
+	    Object[] objArray = arguments.toArray();
+	    String content = mf.format(objArray);
+	    List<Object[]> dataToExport = emailTemplatePlaceholderService.generateAttachmentFile(emailTemplate.getId(),44);
+	    try {
+			PrasUtil.convertToCsv(dataToExport, "c:\\softwares\\test.csv");  
+		} catch (FileNotFoundException e) {
+				System.out.println(e.getCause().getMessage());
+					e.printStackTrace();
+		} 
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, content);
+
 	}
 
 	/**

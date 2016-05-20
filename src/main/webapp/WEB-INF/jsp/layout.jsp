@@ -86,6 +86,10 @@ footer {
 		height: auto;
 	}
 }
+
+.glyphicon.glyphicon-paperclip {
+    font-size: 25px;
+}
 </style>
 
 </head>

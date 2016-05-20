@@ -6,7 +6,10 @@ package com.pfchoice.common.util;
 import static com.pfchoice.common.SystemDefaultProperties.SQL_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.SQL_QUERY_EXTN;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -15,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -118,5 +122,20 @@ public class PrasUtil {
 		return insertQuery;
 	}
 	
+	
+	public static void convertToCsv(List<Object[]> dataToExport, String  filename) throws  FileNotFoundException {
+        PrintWriter csvWriter = new PrintWriter(new File(filename)) ;
+        dataToExport.forEach(row -> {
+        	for(Object column : row ){
+        		if(column != null){
+        			csvWriter.print(column.toString()+",");
+        		}else{
+        			csvWriter.print(",");
+        		}
+        	}
+        	csvWriter.print("\n");
+        });
+        csvWriter.close();
+    }
 	
 }
