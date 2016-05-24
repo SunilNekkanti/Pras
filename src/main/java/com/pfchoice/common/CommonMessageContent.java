@@ -73,5 +73,7 @@ public interface CommonMessageContent {
 	String HEDIS_MEASURE_GROUP_LIST = "Hedis Measure Group List";
 	
 	String EMAIL_TEMPLATE_LIST = "Email Templates List";
+	
+	String EMAIL_LIST = "Email List";
 
 }

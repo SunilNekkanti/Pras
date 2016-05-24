@@ -18,7 +18,6 @@ import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.EmailTemplatePlaceholderDao;
 import com.pfchoice.core.entity.EmailTemplatePlaceholder;
-import com.pfchoice.core.entity.Membership;
 
 /**
  *
@@ -137,7 +136,7 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 			EmailTemplatePlaceholder emailTemplatePlaceholder = (EmailTemplatePlaceholder) page.getList().get(0);
 			String sqlScript = emailTemplatePlaceholder.getSqlScript();
 			SQLQuery query  = getSession().createSQLQuery(sqlScript);
-			System.out.println("before returning  attachment queries");
+			query.setInteger("prvdrId", id);
 			return  query.list();
 		}
 		

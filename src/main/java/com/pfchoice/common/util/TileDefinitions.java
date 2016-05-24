@@ -111,7 +111,10 @@ public enum TileDefinitions {
 	EMAIL ("email" ),
 	EMAILNEW ("emailNew" ),
 	EMAILEDIT ("emailEdit" ),
-	EMAILTEMPLATEDELETESUCCESS ("emailTemplateDeleteSuccess" );
+	EMAILTEMPLATEDELETESUCCESS ("emailTemplateDeleteSuccess" ),
+	ROOMTYPELIST ("roomTypeList" ),
+	ROOMTYPENEW ("roomTypeNew" ),
+	ROOMTYPEEDIT ("roomTypeEdit" );
 	
 
 	

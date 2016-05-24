@@ -106,7 +106,7 @@
 			</a>
 		</div>
 		<div class="panel-body" id="tablediv">
-			<springForm:form method="POST" commandName="email" action="save.do"
+			<springForm:form method="POST" commandName="email" action="${context}/email/${id}/save.do"
 				class="form-horizontal" role="form" enctype="multipart/form-data">
 
 				<div class="form-group required">

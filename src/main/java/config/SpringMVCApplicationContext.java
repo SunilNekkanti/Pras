@@ -56,6 +56,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private CPTMeasureFormatter cptMeasureFormatter;
+	
+	@Autowired
+	private EmailTemplateFormatter emailTemplateFormatter;
 
 	@Autowired
 	private FileTypeFormatter fileTypeFormatter;
@@ -229,6 +232,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	public void addFormatters(FormatterRegistry formatterRegistry) {
 		formatterRegistry.addFormatter(countyFormatter);
 		formatterRegistry.addFormatter(cptMeasureFormatter);
+		formatterRegistry.addFormatter(emailTemplateFormatter);
 		formatterRegistry.addFormatter(fileTypeFormatter);
 		formatterRegistry.addFormatter(genderFormatter);
 		formatterRegistry.addFormatter(hedisMeasureFormatter);

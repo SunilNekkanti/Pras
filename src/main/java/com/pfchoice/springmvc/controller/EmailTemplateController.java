@@ -118,8 +118,8 @@ public class EmailTemplateController {
 	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(value = { "/admin/emailTemplate/{description}/details", "/user/emailTemplate/{description}/details" })
-	public Message getEmailTemplateContent(@PathVariable String description) {
-		EmailTemplate emailTemplate = emailTemplateService.findBySubject(description);
+	public Message getEmailTemplateContent(@PathVariable Integer description) {
+		EmailTemplate emailTemplate = emailTemplateService.findById(description);
 		MessageFormat mf = new MessageFormat(""); 
 		String template = emailTemplate.getTemplate();
 	    mf.applyPattern(template);
@@ -131,7 +131,7 @@ public class EmailTemplateController {
 	    String content = mf.format(objArray);
 	    List<Object[]> dataToExport = emailTemplatePlaceholderService.generateAttachmentFile(emailTemplate.getId(),44);
 	    try {
-			PrasUtil.convertToCsv(dataToExport, "c:\\softwares\\test.csv");  
+			PrasUtil.convertToCsv(dataToExport, "d:\\softwares\\test.csv");  
 		} catch (FileNotFoundException e) {
 				System.out.println(e.getCause().getMessage());
 					e.printStackTrace();

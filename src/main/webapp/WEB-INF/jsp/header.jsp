@@ -512,11 +512,12 @@ $(document).ready(function () {
 								<li><a href="${context}/${userpath}/hedisMeasureGroupList">Hedis Group</a></li>
 								<li><a href="${context}/${userpath}/planTypeList">Plan Type</a></li>
 								<li><a href="${context}/${userpath}/fileTypeList">File Type</a></li>
-								<li><a href="${context}/${userpath}/fileTypeList">Room Type</a></li>
+								<li><a href="${context}/${userpath}/roomTypeList">Room Type</a></li>
 							</ul>
 						</li>	
 						<li><a href="${context}/${userpath}/userList">User Accounts</a></li>
 						<li><a href="${context}/${userpath}/emailTemplateList">Email Templates</a></li>
+						<li><a href="${context}/${userpath}/emailList">Emails</a></li>
 						</ul>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"

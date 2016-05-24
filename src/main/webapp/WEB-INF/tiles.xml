@@ -618,6 +618,23 @@
 	</definition>
 
 <!--  Email s -->
+
+<!-- Room type -->
+	<definition name="roomTypeList" extends="base.definition">
+		<put-attribute name="title" value="Room Type List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/roomTypeList.jsp" />
+	</definition>
+
+	<definition name="roomTypeNew" extends="base.definition">
+		<put-attribute name="title" value="New room Type" />
+		<put-attribute name="body" value="/WEB-INF/jsp/roomTypeNew.jsp" />
+	</definition>
+
+	<definition name="roomTypeEdit" extends="base.definition">
+		<put-attribute name="title" value="Room Type Details" />
+		<put-attribute name="body" value="/WEB-INF/jsp/roomTypeEdit.jsp" />
+	</definition>
+	<!-- Room type -->
 	
 	
 

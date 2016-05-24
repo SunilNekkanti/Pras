@@ -19,15 +19,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Email;
 import com.pfchoice.core.entity.EmailTemplate;
+import com.pfchoice.core.entity.FilesUpload;
 import com.pfchoice.core.service.EmailService;
 import com.pfchoice.core.service.EmailTemplateService;
+import com.pfchoice.core.service.FilesUploadService;
 import com.pfchoice.springmvc.service.ApplicationMailer;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -47,6 +51,9 @@ public class EmailController {
 	
 	@Autowired
 	private EmailTemplateService emailTemplateService;
+	
+	@Autowired
+	private FilesUploadService filesUploadService;
 
 	
 	/**
@@ -77,7 +84,7 @@ public class EmailController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/email/emailList",
+	@RequestMapping(value = { "/admin/emailList",
 			"/user/email/emailList" }, method = RequestMethod.GET)
 	public String viewEmailAction() {
 
@@ -94,15 +101,14 @@ public class EmailController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/admin/email/emailLists",
-			"/user/email/emailLists" }, method = RequestMethod.GET)
-	public Message viewEmailList(@RequestParam(required = false) Integer pageNo,
+	@RequestMapping(value = { "/admin/email/list",
+			"/user/emailTemplate/list" }, method = RequestMethod.GET)
+	public Message viewEmailTemplateList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = emailService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-
-		return Message.successMessage(CommonMessageContent.HEDIS_LIST, pagination);
+		return Message.successMessage(CommonMessageContent.EMAIL_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
 	
@@ -147,12 +153,23 @@ public class EmailController {
 	 */
 	@RequestMapping(value = { "/admin/email/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newEmailAction(@Validated Email email, BindingResult bindingResult, Model model,
-			@ModelAttribute("username") String username) {
+			@ModelAttribute("username") String username, @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning email Template Edit.jsp page");
 			return TileDefinitions.EMAILNEW.toString();
 		}
+		
+		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
+			FilesUpload uploadFile = new FilesUpload();
+			uploadFile.setFileName(fileUpload.getOriginalFilename());
+			uploadFile.setContentType(fileUpload.getContentType());
+			uploadFile.setData(fileUpload.getBytes());
+			uploadFile.setCreatedBy(username);
+			uploadFile.setUpdatedBy(username);
+			logger.info("Returning File Upload Success.jsp page after create");
+		}
+		
 		
 		logger.info("Returning Email Template Success.jsp page after create");
 		model.addAttribute("email", email);
@@ -177,7 +194,7 @@ public class EmailController {
 
 		model.addAttribute("email", dbEmail);
 		logger.info("Returning email Template Save.jsp page");
-		return TileDefinitions.EMAILEDIT.toString();
+		return TileDefinitions.EMAILLIST.toString();
 	}
 
 	/**

@@ -4,6 +4,8 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +35,25 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
-		Criteria crit = createCriteria();
+		Criteria crit = createCriteria().createAlias("emailTemplate", "emailTemplate");
+		if (sSearch != null && !"".equals(sSearch)) {
+			Disjunction or = Restrictions.disjunction();
+
+			or.add(Restrictions.ilike("emailTemplate.description", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("body", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("emailTo", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("emailFrom", "%" + sSearch + "%"));
+			crit.add(or);
+		}
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				crit.addOrder(Order.desc(sort));
+			} else {
+				crit.addOrder(Order.asc(sort));
+			}
+		}
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}
