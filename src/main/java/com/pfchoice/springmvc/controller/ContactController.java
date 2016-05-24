@@ -27,7 +27,6 @@ import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Contact;
-import com.pfchoice.core.entity.EmailTemplate;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;

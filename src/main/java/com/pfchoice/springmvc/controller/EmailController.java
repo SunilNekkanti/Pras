@@ -32,7 +32,6 @@ import com.pfchoice.core.entity.EmailTemplate;
 import com.pfchoice.core.entity.FilesUpload;
 import com.pfchoice.core.service.EmailService;
 import com.pfchoice.core.service.EmailTemplateService;
-import com.pfchoice.core.service.FilesUploadService;
 import com.pfchoice.springmvc.service.ApplicationMailer;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -52,10 +51,6 @@ public class EmailController {
 	
 	@Autowired
 	private EmailTemplateService emailTemplateService;
-	
-	@Autowired
-	private FilesUploadService filesUploadService;
-
 	
 	/**
 

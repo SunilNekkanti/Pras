@@ -129,27 +129,22 @@ public class EmailTemplateController {
 	@RequestMapping(value = { "/admin/emailTemplate/{description}/details", "/user/emailTemplate/{description}/details" })
 	public Message getEmailTemplateContent(@PathVariable Integer description) {
 		EmailTemplate emailTemplate = emailTemplateService.findById(description);
-		String subject = emailTemplate.getDescription();
 		MessageFormat mf = new MessageFormat(""); 
 		String template = emailTemplate.getTemplate();
 	    mf.applyPattern(template);
 	    Pagination page = emailTemplatePlaceholderService.findByEmailTemplateId(emailTemplate.getId());
 	    List<EmailTemplatePlaceholder> emailTemplatePlaceholders = (List<EmailTemplatePlaceholder>) page.getList();
-	    System.out.println(" emailTemplatePlaceholders size is"+emailTemplatePlaceholders.size());
 	    List<Object>	arguments     = emailTemplatePlaceholderService.getSQLScriptResults(emailTemplatePlaceholders,44);
 	    Object[] objArray = arguments.toArray();
 	    String content = mf.format(objArray);
 	    List<Object[]> dataToExport = emailTemplatePlaceholderService.generateAttachmentFile(emailTemplate.getId(),44);
 	    LocalDateTime dateTime = LocalDateTime.now();
 	    String fileName= EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH+"test" + dateTime.format(DateTimeFormatter.ofPattern("yyyMMddHHmmss")) + ".csv";
-	    System.out.println(fileName);
 	    try {
 			PrasUtil.convertToCsv(dataToExport, fileName);  
 		} catch (FileNotFoundException e) {
-				System.out.println(e.getCause().getMessage());
-					e.printStackTrace();
+			logger.warn("emailTemplate FileNotFoundException" + e.getCause().getMessage());
 		} 
-	    
 		
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, content);
 

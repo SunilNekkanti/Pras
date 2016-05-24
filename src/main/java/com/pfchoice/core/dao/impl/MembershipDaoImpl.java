@@ -188,14 +188,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
-		System.out.println("sSearchPrvdr is"+sSearchPrvdr);
-		System.out.println("ALL is"+ALL);
 		if(sSearchPrvdr == ALL){
 			
 		}
 		
 		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
-			System.out.println("sSearchPrvdr is"+sSearchPrvdr);
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "ins");
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));

@@ -85,7 +85,6 @@ public class MembershipHospitalizationDaoImpl extends HibernateBaseDao<Membershi
 	public Integer loadDataCSV2Table(String fileName) {
 		
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
-		System.out.println("FILES_UPLOAD_DIRECTORY_PATH+fileName"+FILES_UPLOAD_DIRECTORY_PATH+fileName);
 		return getSession().createSQLQuery(loadDataQuery)
 							.setString("file", FILES_UPLOAD_DIRECTORY_PATH+fileName)
 				    		.executeUpdate();

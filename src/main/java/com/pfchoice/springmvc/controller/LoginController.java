@@ -9,15 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
 
 import javax.servlet.http.HttpSession;
 
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.TileDefinitions;
-import com.pfchoice.core.entity.EmailTemplate;
 import com.pfchoice.core.service.EmailTemplateService;
 import com.pfchoice.form.LoginForm;
 import com.pfchoice.springmvc.service.ApplicationMailer;

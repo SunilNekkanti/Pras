@@ -112,14 +112,12 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 					.setInteger("prvdrId", id);
 			objects.add(query.uniqueResult());
 		});
-		System.out.println("before returning non attachment queries");
 		return objects;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> generateAttachmentFile(Integer  emailTemplateId, Integer id){
-		System.out.println("before   attachment queries");
 		Criteria crit = createCriteria();
 		crit.createAlias("emailTemplate", "emailTemplate");
 		
