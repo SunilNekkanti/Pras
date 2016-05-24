@@ -124,7 +124,9 @@ public class PrasUtil {
 	
 	
 	public static void convertToCsv(List<Object[]> dataToExport, String  filename) throws  FileNotFoundException {
-        PrintWriter csvWriter = new PrintWriter(new File(filename)) ;
+       System.out.println("convertToCsv "+filename);
+		PrintWriter csvWriter = new PrintWriter(new File(filename)) ;
+		System.out.println("convertToCsv after "+filename);
         dataToExport.forEach(row -> {
         	for(Object column : row ){
         		if(column != null){

@@ -1,7 +1,12 @@
 package com.pfchoice.springmvc.controller;
 
+import static  com.pfchoice.common.SystemDefaultProperties.EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH;
+
 import java.io.FileNotFoundException;
+
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +34,7 @@ import com.pfchoice.core.entity.EmailTemplate;
 import com.pfchoice.core.entity.EmailTemplatePlaceholder;
 import com.pfchoice.core.service.EmailTemplatePlaceholderService;
 import com.pfchoice.core.service.EmailTemplateService;
+import com.pfchoice.springmvc.service.ApplicationMailer;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
@@ -38,6 +44,9 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 public class EmailTemplateController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmailTemplateController.class);
+	
+	@Autowired
+	ApplicationMailer  applicationMailer;
 
 	@Autowired
 	private EmailTemplateService emailTemplateService;
@@ -120,6 +129,7 @@ public class EmailTemplateController {
 	@RequestMapping(value = { "/admin/emailTemplate/{description}/details", "/user/emailTemplate/{description}/details" })
 	public Message getEmailTemplateContent(@PathVariable Integer description) {
 		EmailTemplate emailTemplate = emailTemplateService.findById(description);
+		String subject = emailTemplate.getDescription();
 		MessageFormat mf = new MessageFormat(""); 
 		String template = emailTemplate.getTemplate();
 	    mf.applyPattern(template);
@@ -130,12 +140,17 @@ public class EmailTemplateController {
 	    Object[] objArray = arguments.toArray();
 	    String content = mf.format(objArray);
 	    List<Object[]> dataToExport = emailTemplatePlaceholderService.generateAttachmentFile(emailTemplate.getId(),44);
+	    LocalDateTime dateTime = LocalDateTime.now();
+	    String fileName= EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH+"test" + dateTime.format(DateTimeFormatter.ofPattern("yyyMMddHHmmss")) + ".csv";
+	    System.out.println(fileName);
 	    try {
-			PrasUtil.convertToCsv(dataToExport, "d:\\softwares\\test.csv");  
+			PrasUtil.convertToCsv(dataToExport, fileName);  
 		} catch (FileNotFoundException e) {
 				System.out.println(e.getCause().getMessage());
 					e.printStackTrace();
 		} 
+	    
+		
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, content);
 
 	}

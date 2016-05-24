@@ -1,5 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
+import static  com.pfchoice.common.SystemDefaultProperties.EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH;
 
 import java.util.List;
 import java.util.Map;
@@ -176,7 +177,16 @@ public class EmailController {
 		email.setCreatedBy(username);
 		email.setUpdatedBy(username);
 		emailService.save(email);
-		model.addAttribute("Message", "Email Template details added successfully");
+		
+		String subject = email.getEmailTemplate().getDescription();
+		String content = email.getBody();
+		String fileName =   EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH + fileUpload.getOriginalFilename();
+		String to = "skumar@pfchoice.com";
+		model.addAttribute("Message", "Generated Email successfully");
+		
+		applicationMailer.sendMailWithAttachment(to,subject,content, fileName);
+		model.addAttribute("Message", "Generated Email sent successfully");
+		
 		return TileDefinitions.EMAILLIST.toString();
 	}
 

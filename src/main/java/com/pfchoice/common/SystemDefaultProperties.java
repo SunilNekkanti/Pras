@@ -28,6 +28,8 @@ public interface SystemDefaultProperties {
 	
 	String FILES_UPLOAD_DIRECTORY_PATH = "C:\\ProgramData\\MySQL\\MySQL Server 5.6\\Uploads\\";
 	
+	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "C:\\Softwares\\";
+	
 	String QUERY_TYPE_INSERT= "_insert";
 	
 	String QUERY_TYPE_LOAD= "_load";
