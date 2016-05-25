@@ -185,7 +185,7 @@
 						<c:choose>
 							<c:when test="${email.id != null && email.activeInd == 89}">
 								<button type="submit" class="btn btn-success btn-sm"
-									id="updateButton" name="update">Update</button>
+									id="updateButton" name="update">Resend</button>
 								<button type="submit" class="btn btn-success btn-sm"
 									id="deleteButton" name="delete">Delete</button>
 							</c:when>

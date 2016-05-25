@@ -89,10 +89,10 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			Email Template List <span class="clrRed">${Message}</span> <a
+			Email List <span class="clrRed">${Message}</span> <a
 				class="btn btn-danger pull-right btn-xs white-text"
 				href="${context}/email/new"> <span
-				class="glyphicon glyphicon-plus-sign "></span>New Template
+				class="glyphicon glyphicon-plus-sign "></span>New Email
 			</a>
 		</div>
 		<div class="panel-body" id="tablediv">
@@ -101,8 +101,8 @@
 				<thead>
 					<tr>
 						<th scope="col">Action</th>
-						<th scope="col">EmailFrom</th>
-						<th scope="col">EmailTo</th>
+						<th scope="col">From</th>
+						<th scope="col">To</th>
 						<th scope="col">Subject</th>
 						<th scope="col">Content</th>
 					</tr>

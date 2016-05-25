@@ -113,11 +113,11 @@ public class RoomTypeController {
 			logger.info("Returning roomTypeEdit.jsp page");
 			return TileDefinitions.ROOMTYPEEDIT.toString();
 		}
-		if (null != roomType.getCode()) {
+		if (roomType.getId()  !=  null  ) {
 			logger.info("Returning roomTypeEditSuccess.jsp page after update");
 			roomType.setUpdatedBy(username);
-			model.addAttribute("Message", "Plan Type  updated successfully");
 			roomTypeService.update(roomType);
+			model.addAttribute("Message", "Plan Type  updated successfully");
 		}
 		return TileDefinitions.ROOMTYPELIST.toString();
 	}

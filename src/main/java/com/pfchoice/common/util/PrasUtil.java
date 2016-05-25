@@ -23,6 +23,9 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -138,4 +141,10 @@ public class PrasUtil {
         csvWriter.close();
     }
 	
+	public static Projection formProjection(String[] properties) {
+        ProjectionList list = Projections.projectionList();
+        for (int i = 0; i < properties.length; ++i)
+            list.add(Projections.property(properties[i]), properties[i]);
+        return list;
+  }
 }

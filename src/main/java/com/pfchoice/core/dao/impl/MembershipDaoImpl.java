@@ -12,14 +12,18 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.type.DateType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.entity.Membership;
 
@@ -72,6 +76,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 * java.lang.String, java.lang.Integer, java.lang.Integer,
 	 * java.lang.Integer, java.util.List, java.lang.String, java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final Integer sSearchHedisRule, final List<Integer> ruleIds, final String sort,
@@ -144,13 +149,24 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 				}
 			}
 		}
-		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
-		return findByCriteria(crit, pageNo, pageSize);
+		crit.setProjection(Projections.distinct(Projections.property("id")));
+		List<Integer> MbrIds = (List<Integer>) crit.list();
+		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
+		Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
+
+		Pagination page1 = findByCriteria(criteria, pageNo, pageSize);
+		page1.setTotalCount(totalCount);
+		return page1;
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int,
+	 * java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
@@ -188,10 +204,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
-		if(sSearchPrvdr == ALL){
-			
+		if (sSearchPrvdr == ALL) {
+
 		}
-		
+
 		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "ins");
@@ -202,14 +218,17 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
 		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
 		and.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
-		
-		if(processHospitalization == FILTER_BY_PROCESSING_DATE)
-			and.add(Restrictions.between("mbrHospitalizationList.updatedDate", new java.sql.Date(processingFrom.getTime()) , new java.sql.Date(processingTo.getTime()+86400000)));
-		if(processHospitalization == FILTER_BY_HOSPOTALIZATION_DATE){
-			and.add(Restrictions.sqlRestriction(" ? between admit_date and exp_dc_date", new java.sql.Date(processingFrom.getTime()),DateType.INSTANCE));
-			and.add(Restrictions.sqlRestriction(" ? between admit_date and exp_dc_date", new java.sql.Date(processingTo.getTime()),DateType.INSTANCE));
-		}	
-		
+
+		if (processHospitalization == FILTER_BY_PROCESSING_DATE)
+			and.add(Restrictions.between("mbrHospitalizationList.updatedDate",
+					new java.sql.Date(processingFrom.getTime()), new java.sql.Date(processingTo.getTime() + 86400000)));
+		if (processHospitalization == FILTER_BY_HOSPOTALIZATION_DATE) {
+			and.add(Restrictions.sqlRestriction(" ? between admit_date and exp_dc_date",
+					new java.sql.Date(processingFrom.getTime()), DateType.INSTANCE));
+			and.add(Restrictions.sqlRestriction(" ? between admit_date and exp_dc_date",
+					new java.sql.Date(processingTo.getTime()), DateType.INSTANCE));
+		}
+
 		crit.add(or);
 		crit.add(and);
 

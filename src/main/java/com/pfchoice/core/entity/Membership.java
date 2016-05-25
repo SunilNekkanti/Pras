@@ -62,9 +62,6 @@ public class Membership extends RecordDetails implements Serializable {
 	@JoinColumn(name = "mbr_ethinic_code", referencedColumnName = "code")
 	private Ethinicity ethinicCode;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
-	private Set<ReferenceContact> refMbrContacts = new HashSet<>();
-
 	@Expose
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mbr")
 	private List<MembershipProvider> mbrProviderList;
@@ -310,36 +307,6 @@ public class Membership extends RecordDetails implements Serializable {
 	 */
 	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
-	}
-
-	/**
-	 * @return the refContacts
-	 */
-	public Set<ReferenceContact> getRefContacts() {
-		return refMbrContacts;
-	}
-
-	/**
-	 * @param refContacts
-	 *            the refContacts to set
-	 */
-	public void setRefContacts(Set<ReferenceContact> refContacts) {
-		this.refMbrContacts = refContacts;
-	}
-
-	/**
-	 * @return the refMbrContacts
-	 */
-	public Set<ReferenceContact> getRefMbrContacts() {
-		return refMbrContacts;
-	}
-
-	/**
-	 * @param refMbrContacts
-	 *            the refMbrContacts to set
-	 */
-	public void setRefMbrContacts(Set<ReferenceContact> refMbrContacts) {
-		this.refMbrContacts = refMbrContacts;
 	}
 
 	/**

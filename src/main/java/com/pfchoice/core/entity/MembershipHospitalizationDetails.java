@@ -43,7 +43,7 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	private  AttPhysician attPhysician;
 
 	@Expose
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
 	@JoinColumn(name = "room_type_code", referencedColumnName = "code")
 	private PlaceOfService roomType;
 	

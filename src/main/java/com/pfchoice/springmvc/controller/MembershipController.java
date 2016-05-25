@@ -1,5 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
+import static com.pfchoice.common.SystemDefaultProperties.ALL;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -484,7 +486,7 @@ public class MembershipController {
 
 		Membership dbMembership = membershipService.findById(id);
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
-		if (hedisRuleId != null && hedisRuleId != 9999) {
+		if (hedisRuleId != null && hedisRuleId != ALL) {
 			mbrHedisMeasureList = mbrHedisMeasureList.stream()
 					.filter(mbrHedisMeasure -> mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
 							&& mbrHedisMeasure.getDos() == null)

@@ -60,9 +60,9 @@
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "25%"},
-                               { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "25%"},
-                               { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "25%"}
+                               { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
+                               { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "70%"}
                            ],
                   "aoColumnDefs": [ 
                            		    { "sName": "id", "aTargets": [ 0 ] },
