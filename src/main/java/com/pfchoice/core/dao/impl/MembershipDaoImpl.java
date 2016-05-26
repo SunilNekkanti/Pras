@@ -12,18 +12,15 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
-import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.type.DateType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
-import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.entity.Membership;
 

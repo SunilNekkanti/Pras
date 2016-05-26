@@ -114,7 +114,13 @@ public enum TileDefinitions {
 	EMAILTEMPLATEDELETESUCCESS ("emailTemplateDeleteSuccess" ),
 	ROOMTYPELIST ("roomTypeList" ),
 	ROOMTYPENEW ("roomTypeNew" ),
-	ROOMTYPEEDIT ("roomTypeEdit" );
+	ROOMTYPEEDIT ("roomTypeEdit" ),
+	PROBLEMDISPLAY ("problemDisplay" ),
+	PROBLEMEDITAJAX ("problemEditAjax" ),
+	PROBLEMEDITSUCCESS ("problemEditSuccess" ),
+	PROBLEMLIST ("problemList" ),
+	PROBLEMNEW ("problemNew" ),
+	PROBLEMEDIT ("problemEdit" );
 	
 
 	

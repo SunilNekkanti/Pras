@@ -502,6 +502,8 @@ $(document).ready(function () {
 								<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
 								<li role="presentation" class="divider"></li>
 								<li><a href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
+								<li role="presentation" class="divider"></li>
+								<li><a href="${context}/${userpath}/problemList">Problems</a></li>
 								
 							</ul>
 						</li>

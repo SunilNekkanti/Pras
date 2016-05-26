@@ -9,10 +9,12 @@
 <script>
   $(document).ready(function() {
 	  	  $('.node').prop('readonly', true);
+	  	  $('.node').css({pointerEvents: "none"})
 		  $("#addPrvdrContact").click(function (e)    {
 		      		$('#emailTo').val($('input[name=prvdr]:checked').val());
 		      		if($('#emailTo').val())
 		      			 $('#emailTemplate').prop('readonly', false);
+		      		     $('#emailTemplate').css({pointerEvents: "auto"})
 			});
         	
         	var datatable2Rest = function(sSource, aoData, fnCallback) {
@@ -185,7 +187,7 @@
 						<c:choose>
 							<c:when test="${email.id != null && email.activeInd == 89}">
 								<button type="submit" class="btn btn-success btn-sm"
-									id="updateButton" name="update">Resend</button>
+									id="updateButton" name="update">Update</button>
 								<button type="submit" class="btn btn-success btn-sm"
 									id="deleteButton" name="delete">Delete</button>
 							</c:when>
@@ -202,7 +204,9 @@
 		</div>
 	</div>
 </div>
+<div id="load">
 
+</div>
 <div id="prvdrEmail" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
 
@@ -244,7 +248,7 @@
 	</div>
 </div>
 
-
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <script>
 
 function readSingleFile(e) {
@@ -273,7 +277,8 @@ function readSingleFile(e) {
 function fileDownload(filename) 
 {
 	
-	
+	$( "#load" ).load( "${context}/resources/css/test.csv");
+	filename = "${context}/resources/css/common.css";
 	var w = 500;
 	var h = 500;
 	var left = (screen.width/2)-(w/2);

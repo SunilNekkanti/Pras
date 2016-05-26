@@ -636,6 +636,26 @@
 	</definition>
 	<!-- Room type -->
 	
+	<!--  Problelm List -->
+	<definition name="problemList" extends="base.definition">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/problemList.jsp" />
+	</definition>
+
+	<definition name="problemNew" extends="base.definition">
+		<put-attribute name="title" value="Problem" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/problemNew2.jsp" />
+	</definition>
+
+	<definition name="problemEdit" extends="base.definition">
+		<put-attribute name="title" value="Problem" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/problemEdit.jsp" />
+	</definition>
+	
+	<!--  Problem List -->
+	
 	
 
 	
