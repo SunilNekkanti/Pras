@@ -493,36 +493,42 @@ $(document).ready(function () {
 						aria-expanded="false">Admin <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 						
-						<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">Quality Measures <span class="right-caret"></span></a>
-							<ul class="dropdown-menu sub-menu">
-								<li><a href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
-								<li><a href="${context}/${userpath}/cpt/cptMeasureList">CPT</a></li>
-								<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
-								<li role="presentation" class="divider"></li>
-								<li><a href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
-								<li role="presentation" class="divider"></li>
-								<li><a href="${context}/${userpath}/problemList">Problems</a></li>
-								
-							</ul>
-						</li>
-						<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">Lookups <span class="right-caret"></span></a>
-							<ul class="dropdown-menu sub-menu">
-								<li><a href="${context}/${userpath}/hedisMeasureGroupList">Hedis Group</a></li>
-								<li><a href="${context}/${userpath}/planTypeList">Plan Type</a></li>
-								<li><a href="${context}/${userpath}/fileTypeList">File Type</a></li>
-								<li><a href="${context}/${userpath}/roomTypeList">Room Type</a></li>
-								<li><a href="${context}/${userpath}/frequencyTypeList">Frequency Type</a></li>
-							</ul>
-						</li>	
-						<li><a href="${context}/${userpath}/userList">User Accounts</a></li>
-						<li><a href="${context}/${userpath}/emailTemplateList">Email Templates</a></li>
-						<li><a href="${context}/${userpath}/emailList">Emails</a></li>
-						
-						</ul>
+							<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Quality Measures <span class="right-caret"></span></a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="${context}/${userpath}/cpt/cptMeasureList">CPT</a></li>
+									<li><a href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
+									<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
+									<li role="presentation" class="divider"></li>
+									<li><a href="${context}/${userpath}/problemList">Problem</a></li>
+									<li role="presentation" class="divider"></li>
+									<li><a href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
+								</ul>
+							</li>
+							
+							<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Lookups <span class="right-caret"></span></a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="${context}/${userpath}/hedisMeasureGroupList">Hedis Group</a></li>
+									<li><a href="${context}/${userpath}/planTypeList">Plan Type</a></li>
+									<li><a href="${context}/${userpath}/fileTypeList">File Type</a></li>
+									<li><a href="${context}/${userpath}/roomTypeList">Room Type</a></li>
+									<li><a href="${context}/${userpath}/frequencyTypeList">Frequency Type</a></li>
+								</ul>
+							</li>	
+							
+							<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Emails <span class="right-caret"></span></a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="${context}/${userpath}/emailTemplateList">Email Templates</a></li>
+									<li><a href="${context}/${userpath}/emailList">Emails</a></li>
+								</ul>
+							</li>	
+							<li><a href="${context}/${userpath}/userList">User Accounts</a></li>
+				       	</ul>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"

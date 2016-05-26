@@ -150,11 +150,17 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
-		Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
+		
+		if(totalCount == 0) {
+			return findByCriteria(crit, pageNo, pageSize);
+		}else{
+			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
 
-		Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
-		pagination.setTotalCount(totalCount);
-		return pagination;
+			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
+			pagination.setTotalCount(totalCount);
+			return pagination;
+		}
+		
 
 	}
 
