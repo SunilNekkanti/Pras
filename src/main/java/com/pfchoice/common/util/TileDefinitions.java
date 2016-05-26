@@ -120,7 +120,10 @@ public enum TileDefinitions {
 	PROBLEMEDITSUCCESS ("problemEditSuccess" ),
 	PROBLEMLIST ("problemList" ),
 	PROBLEMNEW ("problemNew" ),
-	PROBLEMEDIT ("problemEdit" );
+	PROBLEMEDIT ("problemEdit" ),
+	FREQUENCYTYPELIST ("frequencyTypeList" ),
+	FREQUENCYTYPENEW ("frequencyTypeNew" ),
+	FREQUENCYTYPEEDIT ("frequencyTypeEdit" );
 	
 
 	

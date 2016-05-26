@@ -656,6 +656,23 @@
 	
 	<!--  Problem List -->
 	
+	<!-- Frequency type -->
+		<definition name="frequencyTypeList" extends="base.definition">
+			<put-attribute name="title" value="Frquency Type List" />
+			<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeList.jsp" />
+		</definition>
+	
+		<definition name="frequencyTypeNew" extends="base.definition">
+			<put-attribute name="title" value="New Frequency Type" />
+			<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeNew.jsp" />
+		</definition>
+	
+		<definition name="frequencyTypeEdit" extends="base.definition">
+			<put-attribute name="title" value="Frequency Type Details" />
+			<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeEdit.jsp" />
+		</definition>
+	<!-- Frequency type -->
+	
 	
 
 	
