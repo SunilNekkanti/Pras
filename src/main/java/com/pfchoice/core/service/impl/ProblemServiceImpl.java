@@ -22,16 +22,21 @@ public class ProblemServiceImpl implements ProblemService {
 	@Autowired
 	private ProblemDao problemDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProblemsService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProblemService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public Problem deleteById(final Integer id) {
 		return problemDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProblemsService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ProblemService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,35 +44,48 @@ public class ProblemServiceImpl implements ProblemService {
 		return problemDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProblemsService#getPage(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ProblemService#getPage(int, int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return problemDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProblemsService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ProblemService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String, int, int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
-			final String sortdir) {
-		return problemDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+			final String sortdir, final int insId, final int effYear) {
+		return problemDao.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId, effYear);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailsService#save(com.pfchoice.core.entity.Problems)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProblemService#save(com.pfchoice.core.entity.
+	 * Problems)
 	 */
 	@Override
 	public Problem save(final Problem bean) {
 		return problemDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProblemsService#update(com.pfchoice.core.entity.Problems)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProblemService#update(com.pfchoice.core.entity.
+	 * Problems)
 	 */
 	@Override
 	public Problem update(final Problem bean) {

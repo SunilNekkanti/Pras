@@ -75,5 +75,7 @@ public interface CommonMessageContent {
 	String EMAIL_TEMPLATE_LIST = "Email Templates List";
 	
 	String EMAIL_LIST = "Email List";
+	
+	String PROBLEM_LIST = "Problem list";
 
 }

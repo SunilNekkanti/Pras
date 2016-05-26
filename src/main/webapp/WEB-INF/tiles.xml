@@ -645,7 +645,7 @@
 	<definition name="problemNew" extends="base.definition">
 		<put-attribute name="title" value="Problem" />
 		<put-attribute name="body"
-			value="/WEB-INF/jsp/problemNew2.jsp" />
+			value="/WEB-INF/jsp/problemNew.jsp" />
 	</definition>
 
 	<definition name="problemEdit" extends="base.definition">

@@ -36,6 +36,7 @@
 	     $.each(data.data.list, function(key, val){
 	    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
 	     });
+	     s.append('<option value="9999">All</option>');
 	     s.append('</select>');
 	     $selectIns.html(s);
 	    

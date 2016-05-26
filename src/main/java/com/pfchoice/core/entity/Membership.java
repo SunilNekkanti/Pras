@@ -46,12 +46,12 @@ public class Membership extends RecordDetails implements Serializable {
 	private String lastName;
 
 	@Expose
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "mbr_genderid", referencedColumnName = "gender_id")
 	private Gender genderId;
 
 	@Expose
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "mbr_countycode", referencedColumnName = "code")
 	private County countyCode;
 

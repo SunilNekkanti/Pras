@@ -2,16 +2,10 @@ package com.pfchoice.springmvc.controller;
 
 import ml.rugal.sshcommon.springmvc.util.Message;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 
 import com.pfchoice.ControllerClientSideTestBase;
-import com.pfchoice.core.entity.Membership;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 /**

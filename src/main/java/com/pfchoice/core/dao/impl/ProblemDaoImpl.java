@@ -1,9 +1,15 @@
 package com.pfchoice.core.dao.impl;
 
+import static com.pfchoice.common.SystemDefaultProperties.ALL;
+
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -28,16 +34,45 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ProblemDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 * @see com.pfchoice.core.dao.ProblemDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
-			final String sortdir) {
-		Criteria crit = createCriteria();
+			final String sortdir, final Integer insId, final Integer effYear) {
 		
-		return findByCriteria(crit, pageNo, pageSize);
+		Criteria crit = createCriteria();
 
+		Conjunction and = Restrictions.conjunction();
+		if (sSearch != null && !"".equals(sSearch)) {
+			Disjunction or = Restrictions.disjunction();
+
+			or.add(Restrictions.ilike("description", sSearch, MatchMode.ANYWHERE));
+
+			crit.add(or);
+		}
+
+		if (insId != null && insId != ALL) {
+			crit.createAlias("insId", "insId");
+			and.add(Restrictions.eq("insId.id", insId));
+		}
+
+		if (effYear != null) {
+			and.add(Restrictions.eq("effectiveYear", effYear));
+		}
+		crit.add(and);
+
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				crit.addOrder(Order.desc(sort));
+			} else {
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+		return findByCriteria(crit, pageNo, pageSize);
 	}
+
 
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.ProblemDao#findById(java.lang.Integer)

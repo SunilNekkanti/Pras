@@ -28,17 +28,19 @@ public interface ProblemService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-
 	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
 	 * @param sSearch
 	 * @param sort
 	 * @param sortdir
+	 * @param insId
+	 * @param effYear
 	 * @return
 	 */
-	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir, int insId, int effYear);
 
 	/**
 	 * @param bean

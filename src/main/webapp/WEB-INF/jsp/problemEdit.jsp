@@ -13,14 +13,14 @@ $(document).ready(function() {
 	var checkedICDItemsMap = {};
 	
 	$("#addICD").click(function (e)    {
-       	var icdCodes = $("#icdCodes"); 
+       	var cptCodes = $("#icdCodes"); 
        	
        	for (var e in checkedICDItemsMap){
        		var value = checkedICDItemsMap[e];
        		var optionExists = ($('#icdCodes option[value=' + e + ']').length > 0);
                if(!optionExists)
                {
-            	   icdCodes.append('<option value ="'+e+'" selected ="selected">'+value+'</option>');
+            	   cptCodes.append('<option value ="'+e+'" selected ="selected">'+value+'</option>');
                }
        	} 
 	});
@@ -31,6 +31,7 @@ $(document).ready(function() {
           });
              e.preventDefault();
     });
+
 
    $('#icdListTable tbody').on('click', 'input[type="checkbox"]', function (e) {
 
@@ -83,8 +84,37 @@ $.ajax( {
        } );
   	}
   	
-  	var hedisRuleId =  $('#id').val();
+  	var problemRuleId =  $('#id').val();
   	
+  	 // CPT POPUP  
+  	 
+  	$('#cptListTable').dataTable({
+  	     "sAjaxSource" : getContextPath()+'/cpt/cptMeasureLists',
+  	     "sAjaxDataProp" : 'data.list',
+  	     "aoColumns": [
+						 { "mData" : "id",  
+		  				  "render" : function(data, type, full, meta) {
+										return '<input type="checkbox" name="cptchkbox"   id="'+data+'" value="'+full.code+' ('+full.shortDescription+')"/>';
+									 }, 
+					  		"sWidth" : "10%", "bSearchable" : false,  "asSorting" : [ "asc" ]
+						 },
+                         { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"}, 
+                         { "mDataProp": "shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "80%"}
+                     ],
+  	     "bLengthChange": false,
+  	     "sPaginationType": "full_numbers",
+  	     "bProcessing": true,
+  	     "bServerSide" : true,
+  	     "fnRowCallback": function(row, data, dataIndex){
+  	         // If row ID is in the list of selected row IDs
+               if ( (data.id in checkedCPTItemsMap) ) {
+              	 $(row).find('input[type="checkbox"]').prop('checked', true);
+               }
+  	      },
+  	      "fnServerData" : datatable2Rest
+  	});
+  	
+      
         // ICD POPUP   	
    	$('#icdListTable').dataTable({
    	     "sAjaxSource" : getContextPath()+'/icd/icdMeasureLists',
@@ -117,17 +147,27 @@ $.ajax( {
         
 </script>
 
-<div class="panel  panel-success">
+<div class="panel panel-success">
 	<div class="panel-heading">
-		Problem <a class="btn btn-danger pull-right btn-xs white-text"
+		Problem <span class="clrRed">${Message}</span> <a
+			class="btn btn-danger pull-right btn-xs white-text"
 			href="${context}/problemList"> <span
 			class="glyphicon glyphicon-plus-sign "></span>Problem List
 		</a>
 	</div>
+	<div class="col-sm-12">
+		<div class="col-sm-10 copyRule">
+			<a href="#" id="copyRule"
+				class="btn btn-success btn-sm pull-right white-text"> <span
+				class="glyphicon glyphicon-plus-sign"></span>Copy
+			</a>
+		</div>
+	</div>
 	<div class="panel-body" id="tablediv">
-		<springForm:form id="problem" method="POST" commandName="problem"
-			action="${context}/problem/save.do" class="form-horizontal"
-			role="form">
+		<springForm:form id="problem" method="POST"
+			commandName="problem"
+			action="${context}/problem/${id}/save.do"
+			class="form-horizontal" role="form">
 			<springForm:hidden path="id" />
 			
 			<div class="form-group required">
@@ -142,12 +182,12 @@ $.ajax( {
 						cssClass="error text-danger" />
 				</div>
 			</div>
-
+			
 			<div class="form-group required">
 				<label class="control-label   col-sm-2" for="description">Description</label>
 				<div class="col-sm-6">
 					<springForm:input path="description" class="form-control"
-						maxlength="500" id="description" placeholder="description" />
+						id="description" maxlength="500" placeholder="description" />
 					<springForm:errors path="description" cssClass="error text-danger" />
 				</div>
 			</div>
@@ -164,11 +204,8 @@ $.ajax( {
 				</div>
 			</div>
 
-
-
-
 			<div class="form-group required">
-				<label class="control-label col-sm-2" for="icd">ICD Code</label>
+				<label class="control-label col-sm-2" for="cpt">ICD Code</label>
 				<div class="col-sm-6">
 					<springForm:select multiple="true" path="icdCodes"
 						class="form-control" size="9" items="${icdMeasureListAjax}"
@@ -248,7 +285,22 @@ $.ajax( {
 <script>
 $(document).ready(function() {
 	
-    $("#effectiveYear").keydown(function(event) {
+	$("#copyRule").click(function(event) {
+   		  event.preventDefault();     // Prevent character input
+   		  $(".copyRule").html("");
+   		  var action = "${context}/problem/save.do";
+   		  $("#problem").attr("action", action);
+   		  $("#id").attr("value", "");
+   		  $("#updateButton").attr("name", "add");
+   		  $("#updateButton").html("Add");
+   		  $("#deleteButton").attr("name", "reset");
+   		  $("#deleteButton").html("Reset");
+   		  $('#insurance option:selected').remove();   
+   		  $('#insurance').hide();   
+   		  $('#insurance').show();   
+   });
+	
+	 $("#effectiveYear").keydown(function(event) {
     	 if( !(event.keyCode == 8                                // backspace
     		        || event.keyCode == 46                              // delete
     		        || (event.keyCode >= 35 && event.keyCode <= 40)     // arrow keys/home/end
@@ -262,6 +314,7 @@ $(document).ready(function() {
 $( "#problem" ).submit(function( event ) {
 	$(".text-danger").html('');
 	$( "has-error" ).remove();
+	$('#cptCodes option').prop('selected', true);
 	$('#icdCodes option').prop('selected', true);
 	
 	var error_count=0;
@@ -324,3 +377,14 @@ $( "#problem" ).submit(function( event ) {
 
 </script>
 
+
+<script>
+	$(document).ready(function(){
+		 $("#deleteButton").click(function(event){
+			 if (confirm("Action cannot be undone.Click 'Ok' to delete.") == false) 
+			{
+				 event.preventDefault();
+			} 	
+		 });		
+});
+</script>

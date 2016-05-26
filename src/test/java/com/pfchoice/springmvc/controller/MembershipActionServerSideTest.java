@@ -1,17 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-import java.util.HashMap;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.pfchoice.ControllerServerSideTestBase;
-import com.pfchoice.core.entity.Membership;
-
 /**
  *
  * @author Sarath

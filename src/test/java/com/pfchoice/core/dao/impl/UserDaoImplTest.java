@@ -45,30 +45,31 @@ public class UserDaoImplTest extends JUnitSpringTestBase
         System.out.println("findById");
         Integer id = 3;
         User result = userDao.findById(id);
+        System.out.println("testSave end" +result.getId());
     }
 
-//   @Test
+  // @Test
     public void testSave()
     {
         System.out.println("testSave start");
         User bean = new User();
         bean.setId(1);
         bean.setUsername("sara");
-        Role role = roleDao.findById(3);
+        Role role = roleDao.findById(1);
         bean.setRoles(Collections.singleton(role));
         bean.setPassword("sara");
         bean.setCreatedBy("sarath");
         bean.setUpdatedBy("sarath");
         bean.setActiveInd('Y');
         User result = userDao.save(bean);
-        System.out.println("testSave end");
+        System.out.println("testSave end" +result.getId());
     }
 
-    @Test
+   // @Test
     public void testDeleteById()
     {
         System.out.println("deleteById");
-        Integer id = 199999;
+        Integer id = 1;
         User result = userDao.deleteById(id);
     }
 

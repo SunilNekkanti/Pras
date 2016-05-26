@@ -1,6 +1,5 @@
 package com.pfchoice.core.dao;
 
-import java.util.List;
 
 import com.pfchoice.core.entity.Problem;
 
@@ -34,7 +33,7 @@ public interface ProblemDao {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-
+	
 	/**
 	 * 
 	 * @param pageNo
@@ -42,9 +41,12 @@ public interface ProblemDao {
 	 * @param sSearch
 	 * @param sort
 	 * @param sortdir
+	 * @param insId
+	 * @param effYear
 	 * @return
 	 */
-	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir, Integer insId,
+			Integer effYear);
 
 	/**
 	 * 

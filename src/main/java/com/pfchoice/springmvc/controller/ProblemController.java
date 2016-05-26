@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
@@ -138,13 +137,11 @@ public class ProblemController {
 	@RequestMapping(value = { "/admin/problem/{id}", "/user/problem/{id}" }, method = RequestMethod.GET)
 	public String updateProblemPage(@PathVariable Integer id, Model model) {
 
-		Problem dbProblem = problemService.findById(id);
-		logger.info("Returning Problem.getId()" + dbProblem.getId());
-
-		Set<ICDMeasure> icdMeasureList = dbProblem.getIcdCodes();
-
+		Problem problem = problemService.findById(id);
+		logger.info("Returning Problem.getId()" + problem.getId());
+		Set<ICDMeasure> icdMeasureList = problem.getIcdCodes();
 		model.addAttribute("icdMeasureListAjax", icdMeasureList);
-		model.addAttribute("Problem", dbProblem);
+		model.addAttribute("problem", problem);
 		logger.info("Returning ProblemEdit.jsp page");
 		return TileDefinitions.PROBLEMEDIT.toString();
 	}
@@ -336,18 +333,23 @@ public class ProblemController {
 	 * @param sSearch
 	 * @param sort
 	 * @param sortdir
+	 * @param insId
+	 * @param effYear
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/problem/list", "/user/problem/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize,
+			@RequestParam(required = false) Integer pageSize, 
 			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir){
+			@RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) Integer insId, 
+			@RequestParam(required = false) Integer effYear) {
 
-		Pagination pagination = problemService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+		Pagination pagination = problemService.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId,
+				effYear);
 
-		return Message.successMessage(ICD_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(sSearch, JsonConverter.getJsonObject(pagination));
 	}
 }
