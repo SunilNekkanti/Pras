@@ -1,5 +1,10 @@
 package com.pfchoice.springmvc.controller;
 
+import static com.pfchoice.common.SystemDefaultProperties.DEFAULT_PAGE_NO;
+import static com.pfchoice.common.SystemDefaultProperties.HUGE_LIST_SIZE;
+import static com.pfchoice.common.SystemDefaultProperties.MEDIUM_LIST_SIZE;
+import static com.pfchoice.common.SystemDefaultProperties.SMALL_LIST_SIZE;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,17 +34,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
-import com.pfchoice.common.SystemDefaultProperties;
+
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.CPTMeasure;
+import com.pfchoice.core.entity.FrequencyType;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.service.CPTMeasureService;
+import com.pfchoice.core.service.FrequencyTypeService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureRuleService;
 import com.pfchoice.core.service.HedisMeasureService;
@@ -65,6 +72,9 @@ public class HedisMeasureRuleController {
 	private CPTMeasureService cptMeasureService;
 
 	@Autowired
+	private FrequencyTypeService frequencyTypeService;
+
+	@Autowired
 	private ICDMeasureService icdMeasureService;
 
 	@Autowired
@@ -88,7 +98,6 @@ public class HedisMeasureRuleController {
 		binder.setValidator(validator);
 	}
 
-
 	/**
 	 * @return
 	 */
@@ -104,8 +113,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("hedisMeasureList")
 	public List<HedisMeasure> populateHedisMeasureList() {
 
-		Pagination page = hedisMeasureService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-				 								SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		Pagination page = hedisMeasureService.getPage(DEFAULT_PAGE_NO, MEDIUM_LIST_SIZE);
 		return (List<HedisMeasure>) page.getList();
 	}
 
@@ -116,8 +124,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("cptMeasureList")
 	public List<CPTMeasure> populateCPTMeasureList() {
 
-		Pagination page = cptMeasureService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-										SystemDefaultProperties.HUGE_LIST_SIZE);
+		Pagination page = cptMeasureService.getPage(DEFAULT_PAGE_NO, HUGE_LIST_SIZE);
 		return (List<CPTMeasure>) page.getList();
 	}
 
@@ -126,8 +133,19 @@ public class HedisMeasureRuleController {
 	 */
 	@ModelAttribute("cptMeasureListAjax")
 	public List<CPTMeasure> populateCPTMeasureListAjax() {
-		List<CPTMeasure>  cptMeasureList =  new ArrayList<>();
+		List<CPTMeasure> cptMeasureList = new ArrayList<>();
 		return cptMeasureList;
+	}
+
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("frequencyTypeList")
+	public List<FrequencyType> populateFrequencyList() {
+
+		Pagination page = frequencyTypeService.getPage(DEFAULT_PAGE_NO, SMALL_LIST_SIZE);
+		return (List<FrequencyType>) page.getList();
 	}
 
 	/**
@@ -137,8 +155,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("genderList")
 	public List<Gender> populateGenderList() {
 
-		Pagination page = genderService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-				 								SystemDefaultProperties.SMALL_LIST_SIZE);
+		Pagination page = genderService.getPage(DEFAULT_PAGE_NO, SMALL_LIST_SIZE);
 		return (List<Gender>) page.getList();
 	}
 
@@ -147,7 +164,7 @@ public class HedisMeasureRuleController {
 	 */
 	@ModelAttribute("icdMeasureListAjax")
 	public List<ICDMeasure> populateICDMeasureListAjax() {
-        List<ICDMeasure> icdMeasureList = new ArrayList<>();
+		List<ICDMeasure> icdMeasureList = new ArrayList<>();
 		return icdMeasureList;
 	}
 
@@ -158,8 +175,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("icdMeasureList")
 	public List<ICDMeasure> populateICDMeasureList() {
 
-		Pagination page = icdMeasureService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-													SystemDefaultProperties.HUGE_LIST_SIZE);
+		Pagination page = icdMeasureService.getPage(DEFAULT_PAGE_NO, HUGE_LIST_SIZE);
 		return (List<ICDMeasure>) page.getList();
 	}
 
@@ -170,8 +186,7 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("insuranceList")
 	public List<Insurance> populateInsuranceList() {
 
-		Pagination page = insuranceService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-												SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		Pagination page = insuranceService.getPage(DEFAULT_PAGE_NO, MEDIUM_LIST_SIZE);
 		return (List<Insurance>) page.getList();
 	}
 
@@ -291,7 +306,7 @@ public class HedisMeasureRuleController {
 	public String saveHedisMeasureRuleAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("hedisMeasurerule id is"+id);
+		logger.info("hedisMeasurerule id is" + id);
 		hedisMeasureRule.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			hedisMeasureRule.setActiveInd('Y');
@@ -321,7 +336,7 @@ public class HedisMeasureRuleController {
 	public String deleteHedisMeasureAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("hedisMeasurerule id is"+id);
+		logger.info("hedisMeasurerule id is" + id);
 		if (bindingResult.hasErrors()) {
 			hedisMeasureRule.setActiveInd('Y');
 			logger.info("Returning  hedisMeasureRuleEdit.jsp page");
@@ -346,8 +361,7 @@ public class HedisMeasureRuleController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureRule/cpt", "/user/hedisMeasureRule/cpt" })
 	public Message getCPTMeasure() {
-		Pagination page = cptMeasureService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-													SystemDefaultProperties.HUGE_LIST_SIZE);
+		Pagination page = cptMeasureService.getPage(DEFAULT_PAGE_NO, HUGE_LIST_SIZE);
 		List<CPTMeasure> cptMeasureList = (List<CPTMeasure>) page.getList();
 		return Message.successMessage(CommonMessageContent.CPT_LIST, cptMeasureList);
 
@@ -360,8 +374,7 @@ public class HedisMeasureRuleController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureRule/icd", "/user/hedisMeasureRule/icd" })
 	public Message getICDMeasure() {
-		Pagination page = icdMeasureService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-													SystemDefaultProperties.HUGE_LIST_SIZE);
+		Pagination page = icdMeasureService.getPage(DEFAULT_PAGE_NO, HUGE_LIST_SIZE);
 		List<ICDMeasure> icdMeasureList = (List<ICDMeasure>) page.getList();
 		return Message.successMessage(CommonMessageContent.ICD_LIST, JsonConverter.getJsonObject(icdMeasureList));
 
@@ -380,13 +393,10 @@ public class HedisMeasureRuleController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureRule/{id}/cpt/cptMeasureLists",
 			"/user/hedisMeasureRule/{id}/cpt/cptMeasureLists" }, method = RequestMethod.GET)
-	public Message viewCPTMeasureList(@PathVariable Integer id,
-			@RequestParam(required = false) Integer pageNo, 
-			@RequestParam(required = false) Integer pageSize,
-			@RequestParam(required = false) String sSearch, 
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir) {
-		
+	public Message viewCPTMeasureList(@PathVariable Integer id, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
 		Set<CPTMeasure> hedisRuleCPTMeasureList = dbHedisMeasureRule.getCptCodes();
 
@@ -424,12 +434,9 @@ public class HedisMeasureRuleController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/hedisMeasureRule/{id}/icd/icdMeasureLists",
 			"/user/hedisMeasureRule/{id}/icd/icdMeasureLists" }, method = RequestMethod.GET)
-	public Message viewICDMeasureList(@PathVariable Integer id,
-			@RequestParam(required = false) Integer pageNo, 
-			@RequestParam(required = false) Integer pageSize,
-			@RequestParam(required = false) String sSearch, 
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir) {
+	public Message viewICDMeasureList(@PathVariable Integer id, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		HedisMeasureRule dbHedisMeasureRule = hedisMeasureRuleService.findById(id);
 		Set<ICDMeasure> hedisRuleICDMeasureList = dbHedisMeasureRule.getIcdCodes();

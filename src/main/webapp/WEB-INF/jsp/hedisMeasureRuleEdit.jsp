@@ -236,13 +236,14 @@ $.ajax( {
 			</div>
 
 			<div class="form-group required">
-				<label class="control-label   col-sm-2" for="cptOrIcd">CPT /
-					ICD</label>
+				<label class="control-label   col-sm-2" for="cptOrIcd">CPT / ICD / Problem</label>
 				<div class="col-sm-6">
 					<label class="radio-inline"> <springForm:radiobutton
 							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="0" />CPT
 					</label> <label class="radio-inline"> <springForm:radiobutton
 							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="1" />ICD
+					</label> <label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="2" />Problem
 					</label>
 					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
 				</div>
@@ -296,6 +297,18 @@ $.ajax( {
 					</springForm:select>
 					<springForm:errors path="effectiveYear"
 						cssClass="error text-danger" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="gender">Frequency</label>
+				<div class="col-sm-6">
+					<springForm:select path="genderId" class="form-control" id="gender">
+						<springForm:option value="${null}" label="Select One" />
+						<springForm:options items="${frequencyTypeList}" itemValue="id"
+							itemLabel="description" />
+					</springForm:select>
+					<springForm:errors path="genderId" cssClass="error text-danger" />
 				</div>
 			</div>
 
