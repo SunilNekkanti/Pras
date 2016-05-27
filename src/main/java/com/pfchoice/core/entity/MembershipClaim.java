@@ -2,6 +2,7 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -131,66 +133,6 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	private String diagnosis;
 
 	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS1", referencedColumnName = "code")
-	private ICDMeasure diagnosis1;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS2", referencedColumnName = "code")
-	private ICDMeasure diagnosis2;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS3", referencedColumnName = "code")
-	private ICDMeasure diagnosis3;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS4", referencedColumnName = "code")
-	private ICDMeasure diagnosis4;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS5", referencedColumnName = "code")
-	private ICDMeasure diagnosis5;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS6", referencedColumnName = "code")
-	private ICDMeasure diagnosis6;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS7", referencedColumnName = "code")
-	private ICDMeasure diagnosis7;
-	
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "DIAGNOSIS8", referencedColumnName = "code")
-	private ICDMeasure diagnosis8;
-	
-	@Expose
-	@Column(name = "ICDPROCCODE1")
-	private String icdProcCode1;
-	
-	@Expose
-	@Column(name = "ICDPROCCODE2")
-	private String icdProcCode2;
-	
-	@Expose
-	@Column(name = "ICDPROCCODE3")
-	private String icdProcCode3;
-	
-	@Expose
-	@Column(name = "ICDPROCCODE4")
-	private String icdProcCode4;
-	
-	@Expose
-	@Column(name = "ICDPROCCODE5")
-	private String icdProcCode5;
-	
-	@Expose
 	@Column(name = "product_label")
 	private String productLabel;
 	
@@ -274,10 +216,10 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@Column(name = "file_id")
 	private Integer fileId;
 	
-/*	@Expose
+	@Expose
 	@OneToMany(mappedBy = "mbrClaim", fetch = FetchType.LAZY)
 	private List<MembershipClaimDetails> mbrClaimDetailsList;
-*/
+
 	/**
 	 * 
 	 */
@@ -588,188 +530,6 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @return the diagnosis1
-	 */
-	public ICDMeasure getDiagnosis1() {
-		return diagnosis1;
-	}
-
-	/**
-	 * @param diagnosis1 the diagnosis1 to set
-	 */
-	public void setDiagnosis1(ICDMeasure diagnosis1) {
-		this.diagnosis1 = diagnosis1;
-	}
-
-	/**
-	 * @return the diagnosis2
-	 */
-	public ICDMeasure getDiagnosis2() {
-		return diagnosis2;
-	}
-
-	/**
-	 * @param diagnosis2 the diagnosis2 to set
-	 */
-	public void setDiagnosis2(ICDMeasure diagnosis2) {
-		this.diagnosis2 = diagnosis2;
-	}
-
-	/**
-	 * @return the diagnosis3
-	 */
-	public ICDMeasure getDiagnosis3() {
-		return diagnosis3;
-	}
-
-	/**
-	 * @param diagnosis3 the diagnosis3 to set
-	 */
-	public void setDiagnosis3(ICDMeasure diagnosis3) {
-		this.diagnosis3 = diagnosis3;
-	}
-
-	/**
-	 * @return the diagnosis4
-	 */
-	public ICDMeasure getDiagnosis4() {
-		return diagnosis4;
-	}
-
-	/**
-	 * @param diagnosis4 the diagnosis4 to set
-	 */
-	public void setDiagnosis4(ICDMeasure diagnosis4) {
-		this.diagnosis4 = diagnosis4;
-	}
-
-	/**
-	 * @return the diagnosis5
-	 */
-	public ICDMeasure getDiagnosis5() {
-		return diagnosis5;
-	}
-
-	/**
-	 * @param diagnosis5 the diagnosis5 to set
-	 */
-	public void setDiagnosis5(ICDMeasure diagnosis5) {
-		this.diagnosis5 = diagnosis5;
-	}
-
-	/**
-	 * @return the diagnosis6
-	 */
-	public ICDMeasure getDiagnosis6() {
-		return diagnosis6;
-	}
-
-	/**
-	 * @param diagnosis6 the diagnosis6 to set
-	 */
-	public void setDiagnosis6(ICDMeasure diagnosis6) {
-		this.diagnosis6 = diagnosis6;
-	}
-
-	/**
-	 * @return the diagnosis7
-	 */
-	public ICDMeasure getDiagnosis7() {
-		return diagnosis7;
-	}
-
-	/**
-	 * @param diagnosis7 the diagnosis7 to set
-	 */
-	public void setDiagnosis7(ICDMeasure diagnosis7) {
-		this.diagnosis7 = diagnosis7;
-	}
-
-	/**
-	 * @return the diagnosis8
-	 */
-	public ICDMeasure getDiagnosis8() {
-		return diagnosis8;
-	}
-
-	/**
-	 * @param diagnosis8 the diagnosis8 to set
-	 */
-	public void setDiagnosis8(ICDMeasure diagnosis8) {
-		this.diagnosis8 = diagnosis8;
-	}
-
-	/**
-	 * @return the icdProcCode1
-	 */
-	public String getIcdProcCode1() {
-		return icdProcCode1;
-	}
-
-	/**
-	 * @param icdProcCode1 the icdProcCode1 to set
-	 */
-	public void setIcdProcCode1(String icdProcCode1) {
-		this.icdProcCode1 = icdProcCode1;
-	}
-
-	/**
-	 * @return the icdProcCode2
-	 */
-	public String getIcdProcCode2() {
-		return icdProcCode2;
-	}
-
-	/**
-	 * @param icdProcCode2 the icdProcCode2 to set
-	 */
-	public void setIcdProcCode2(String icdProcCode2) {
-		this.icdProcCode2 = icdProcCode2;
-	}
-
-	/**
-	 * @return the icdProcCode3
-	 */
-	public String getIcdProcCode3() {
-		return icdProcCode3;
-	}
-
-	/**
-	 * @param icdProcCode3 the icdProcCode3 to set
-	 */
-	public void setIcdProcCode3(String icdProcCode3) {
-		this.icdProcCode3 = icdProcCode3;
-	}
-
-	/**
-	 * @return the icdProcCode4
-	 */
-	public String getIcdProcCode4() {
-		return icdProcCode4;
-	}
-
-	/**
-	 * @param icdProcCode4 the icdProcCode4 to set
-	 */
-	public void setIcdProcCode4(String icdProcCode4) {
-		this.icdProcCode4 = icdProcCode4;
-	}
-
-	/**
-	 * @return the icdProcCode5
-	 */
-	public String getIcdProcCode5() {
-		return icdProcCode5;
-	}
-
-	/**
-	 * @param icdProcCode5 the icdProcCode5 to set
-	 */
-	public void setIcdProcCode5(String icdProcCode5) {
-		this.icdProcCode5 = icdProcCode5;
-	}
-
-	/**
 	 * @return the productLabel
 	 */
 	public String getProductLabel() {
@@ -1061,6 +821,20 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	 */
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
+	}
+
+	/**
+	 * @return the mbrClaimDetailsList
+	 */
+	public List<MembershipClaimDetails> getMbrClaimDetailsList() {
+		return mbrClaimDetailsList;
+	}
+
+	/**
+	 * @param mbrClaimDetailsList the mbrClaimDetailsList to set
+	 */
+	public void setMbrClaimDetailsList(List<MembershipClaimDetails> mbrClaimDetailsList) {
+		this.mbrClaimDetailsList = mbrClaimDetailsList;
 	}
 
 	@Override

@@ -201,6 +201,20 @@ $.ajax( {
 			action="${context}/hedisMeasureRule/${id}/save.do"
 			class="form-horizontal" role="form">
 			<springForm:hidden path="id" />
+			
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="effYear">Effective
+					Year (YYYY)</label>
+				<div class="col-sm-6">
+					<springForm:select path="effectiveYear" class="form-control"
+						id="effectiveYear">
+						<springForm:options items="${effYearList}" />
+					</springForm:select>
+					<springForm:errors path="effectiveYear"
+						cssClass="error text-danger" />
+				</div>
+			</div>
+			
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
 				<div class="col-sm-6">
@@ -287,28 +301,15 @@ $.ajax( {
 				</div>
 			</div>
 
-			<div class="form-group required">
-				<label class="control-label col-sm-2" for="effYear">Effective
-					Year (YYYY)</label>
-				<div class="col-sm-6">
-					<springForm:select path="effectiveYear" class="form-control"
-						id="effectiveYear">
-						<springForm:options items="${effYearList}" />
-					</springForm:select>
-					<springForm:errors path="effectiveYear"
-						cssClass="error text-danger" />
-				</div>
-			</div>
-
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="gender">Frequency</label>
 				<div class="col-sm-6">
-					<springForm:select path="genderId" class="form-control" id="gender">
+					<springForm:select path="frequencyType" class="form-control" id="frequencyType">
 						<springForm:option value="${null}" label="Select One" />
 						<springForm:options items="${frequencyTypeList}" itemValue="id"
 							itemLabel="description" />
 					</springForm:select>
-					<springForm:errors path="genderId" cssClass="error text-danger" />
+					<springForm:errors path="frequencyType" cssClass="error text-danger" />
 				</div>
 			</div>
 

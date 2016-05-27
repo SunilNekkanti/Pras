@@ -536,6 +536,7 @@ $(document).ready(function () {
 						<ul class="dropdown-menu">
 							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
+							<li><a href="${context}/${userpath}/reports/hospitalization">Claims</a></li>
 						</ul></li>	
 					
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>

@@ -21,7 +21,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author sarath
  */
-@Entity(name = "membership_hospitalization_details")
+@Entity(name = "membership_claim_details")
 public class MembershipClaimDetails extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,52 +30,124 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-	@Column(name = "mbr_hos_details_id", nullable = false)
+	@Column(name = "mbr_claim_details_id", nullable = false)
 	private Integer id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mbr_hos_id", referencedColumnName = "mbr_hos_id")
-	private MembershipHospitalization mbrHospitalization;
-
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "att_phy_id", referencedColumnName = "att_phy_id")
-	private  AttPhysician attPhysician;
-
-	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "room_type_code", referencedColumnName = "code")
-	private PlaceOfService roomType;
+	@JoinColumn(name = "mbr_claim_id", referencedColumnName = "mbr_claim_id")
+	private MembershipClaim mbrClaim;
 	
 	@Expose
-	@Column(name = "adm_dx")
-	private String admDx;
+	@Column(name = "claim_line_seq_nbr")
+	private String claimLineseqNbr;
+	
+	@Expose
+	@Column(name = "clm_line_adj_seq_nbr")
+	private String clmLineAdjSeqNbr;
+	
+	@Expose
+	@Column(name = "revenue_code")
+	private String revenueCode;
+	
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@JoinColumn(name = "cpt_code", referencedColumnName = "cpt_id")
+	private CPTMeasure cpt;
+	
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@JoinColumn(name = "cpt_code_modifier1", referencedColumnName = "cpt_id")
+	private CPTMeasure cptCodeModifier1;
+	
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@JoinColumn(name = "cpt_code_modifier2", referencedColumnName = "cpt_id")
+	private CPTMeasure cptCodeModifier2;
+	
+	@Expose
+	@Column(name = "claim_status")
+	private String claimStatus;
+	
+	@Expose
+	@Column(name = "amount_paid")
+	private Double amountPaid;
+	
+	@Expose
+	@Column(name = "allow_amt")
+	private double allowAmt;
+	
+	@Expose
+	@Column(name = "co_insurance")
+	private Double coInsurance;
+	
+	@Expose
+	@Column(name = "co_pay")
+	private Double coPay;
+	
+	@Expose
+	@Column(name = "deductible")
+	private Double deductible;
+	
+	@Expose
+	@Column(name = "cob_paid_amount")
+	private Double cobPaidAmount;
+		
+	@Expose
+	@Column(name = "processing_status")
+	private String processingStatus;
+	
+	@Expose
+	@Column(name = "pharmacy_name")
+	private String pharmacyName;
+	
+	@Expose
+	@Column(name = "quantity")
+	private Integer quantity;
+	
+	@Expose
+	@Column(name = "npos")
+	private String npos;
+	
+	@Expose
+	@Column(name = "risk_id")
+	private Character riskId;
 	
 	@Expose
 	@Temporal(TemporalType.DATE)
-	@Column(name = "exp_dc_dt")
-	protected Date expDisDate;
+	@Column(name = "runn_date")
+	protected Date runnDate;
 	
 	@Expose
-	@Column(name = "auth_days")
-	private Integer authDays;
+	@Column(name = "ndc")
+	private String ndc;
 	
 	@Expose
-	@Column(name = "cm_pri_user")
-	private String cmPriUser;
+	@Column(name = "pharmacy")
+	private String pharmacy;
 	
 	@Expose
-	@Column(name = "disease_cohort")
-	private String diseaseCohort;
+	@Column(name = "membership_claims")
+	private String membershipClaims;
 	
 	@Expose
-	@Column(name = "comorbidities")
-	private String comorbidities;
+	@Column(name = "psychare")
+	private String psychare;
+	
+	@Expose
+	@Column(name = "simple_county")
+	private String simpleCounty;
+	
+	@Expose
+	@Column(name = "triangles")
+	private String triangles;
+	
+	@Expose
+	@Column(name = "cover")
+	private String cover;
 	
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
-
 
 	/**
 	 * 
@@ -107,129 +179,381 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	}
 
 	/**
-	 * @return the mbrHospitalization
+	 * @return the mbrClaim
 	 */
-	public MembershipHospitalization getMbrHospitalization() {
-		return mbrHospitalization;
+	public MembershipClaim getMbrClaim() {
+		return mbrClaim;
 	}
 
 	/**
-	 * @param mbrHospitalization the mbrHospitalization to set
+	 * @param mbrClaim the mbrClaim to set
 	 */
-	public void setMbrHospitalization(MembershipHospitalization mbrHospitalization) {
-		this.mbrHospitalization = mbrHospitalization;
+	public void setMbrClaim(MembershipClaim mbrClaim) {
+		this.mbrClaim = mbrClaim;
 	}
 
 	/**
-	 * @return the attPhysician
+	 * @return the claimLineseqNbr
 	 */
-	public AttPhysician getAttPhysician() {
-		return attPhysician;
+	public String getClaimLineseqNbr() {
+		return claimLineseqNbr;
 	}
 
 	/**
-	 * @param attPhysician the attPhysician to set
+	 * @param claimLineseqNbr the claimLineseqNbr to set
 	 */
-	public void setAttPhysician(AttPhysician attPhysician) {
-		this.attPhysician = attPhysician;
+	public void setClaimLineseqNbr(String claimLineseqNbr) {
+		this.claimLineseqNbr = claimLineseqNbr;
 	}
 
 	/**
-	 * @return the roomType
+	 * @return the clmLineAdjSeqNbr
 	 */
-	public PlaceOfService getRoomType() {
-		return roomType;
+	public String getClmLineAdjSeqNbr() {
+		return clmLineAdjSeqNbr;
 	}
 
 	/**
-	 * @param roomType the roomType to set
+	 * @param clmLineAdjSeqNbr the clmLineAdjSeqNbr to set
 	 */
-	public void setRoomType(PlaceOfService roomType) {
-		this.roomType = roomType;
+	public void setClmLineAdjSeqNbr(String clmLineAdjSeqNbr) {
+		this.clmLineAdjSeqNbr = clmLineAdjSeqNbr;
 	}
 
 	/**
-	 * @return the admDx
+	 * @return the revenueCode
 	 */
-	public String getAdmDx() {
-		return admDx;
+	public String getRevenueCode() {
+		return revenueCode;
 	}
 
 	/**
-	 * @param admDx the admDx to set
+	 * @param revenueCode the revenueCode to set
 	 */
-	public void setAdmDx(String admDx) {
-		this.admDx = admDx;
+	public void setRevenueCode(String revenueCode) {
+		this.revenueCode = revenueCode;
 	}
 
 	/**
-	 * @return the expDisDate
+	 * @return the cpt
 	 */
-	public Date getExpDisDate() {
-		return expDisDate;
+	public CPTMeasure getCpt() {
+		return cpt;
 	}
 
 	/**
-	 * @param expDisDate the expDisDate to set
+	 * @param cpt the cpt to set
 	 */
-	public void setExpDisDate(Date expDisDate) {
-		this.expDisDate = expDisDate;
+	public void setCpt(CPTMeasure cpt) {
+		this.cpt = cpt;
 	}
 
 	/**
-	 * @return the authDays
+	 * @return the cptCodeModifier1
 	 */
-	public Integer getAuthDays() {
-		return authDays;
+	public CPTMeasure getCptCodeModifier1() {
+		return cptCodeModifier1;
 	}
 
 	/**
-	 * @param authDays the authDays to set
+	 * @param cptCodeModifier1 the cptCodeModifier1 to set
 	 */
-	public void setAuthDays(Integer authDays) {
-		this.authDays = authDays;
+	public void setCptCodeModifier1(CPTMeasure cptCodeModifier1) {
+		this.cptCodeModifier1 = cptCodeModifier1;
 	}
 
 	/**
-	 * @return the cmPriUser
+	 * @return the cptCodeModifier2
 	 */
-	public String getCmPriUser() {
-		return cmPriUser;
+	public CPTMeasure getCptCodeModifier2() {
+		return cptCodeModifier2;
 	}
 
 	/**
-	 * @param cmPriUser the cmPriUser to set
+	 * @param cptCodeModifier2 the cptCodeModifier2 to set
 	 */
-	public void setCmPriUser(String cmPriUser) {
-		this.cmPriUser = cmPriUser;
+	public void setCptCodeModifier2(CPTMeasure cptCodeModifier2) {
+		this.cptCodeModifier2 = cptCodeModifier2;
 	}
 
 	/**
-	 * @return the diseaseCohort
+	 * @return the claimStatus
 	 */
-	public String getDiseaseCohort() {
-		return diseaseCohort;
+	public String getClaimStatus() {
+		return claimStatus;
 	}
 
 	/**
-	 * @param diseaseCohort the diseaseCohort to set
+	 * @param claimStatus the claimStatus to set
 	 */
-	public void setDiseaseCohort(String diseaseCohort) {
-		this.diseaseCohort = diseaseCohort;
+	public void setClaimStatus(String claimStatus) {
+		this.claimStatus = claimStatus;
 	}
 
 	/**
-	 * @return the comorbidities
+	 * @return the amountPaid
 	 */
-	public String getComorbidities() {
-		return comorbidities;
+	public Double getAmountPaid() {
+		return amountPaid;
 	}
 
 	/**
-	 * @param comorbidities the comorbidities to set
+	 * @param amountPaid the amountPaid to set
 	 */
-	public void setComorbidities(String comorbidities) {
-		this.comorbidities = comorbidities;
+	public void setAmountPaid(Double amountPaid) {
+		this.amountPaid = amountPaid;
+	}
+
+	/**
+	 * @return the allowAmt
+	 */
+	public double getAllowAmt() {
+		return allowAmt;
+	}
+
+	/**
+	 * @param allowAmt the allowAmt to set
+	 */
+	public void setAllowAmt(double allowAmt) {
+		this.allowAmt = allowAmt;
+	}
+
+	/**
+	 * @return the coInsurance
+	 */
+	public Double getCoInsurance() {
+		return coInsurance;
+	}
+
+	/**
+	 * @param coInsurance the coInsurance to set
+	 */
+	public void setCoInsurance(Double coInsurance) {
+		this.coInsurance = coInsurance;
+	}
+
+	/**
+	 * @return the coPay
+	 */
+	public Double getCoPay() {
+		return coPay;
+	}
+
+	/**
+	 * @param coPay the coPay to set
+	 */
+	public void setCoPay(Double coPay) {
+		this.coPay = coPay;
+	}
+
+	/**
+	 * @return the deductible
+	 */
+	public Double getDeductible() {
+		return deductible;
+	}
+
+	/**
+	 * @param deductible the deductible to set
+	 */
+	public void setDeductible(Double deductible) {
+		this.deductible = deductible;
+	}
+
+	/**
+	 * @return the cobPaidAmount
+	 */
+	public Double getCobPaidAmount() {
+		return cobPaidAmount;
+	}
+
+	/**
+	 * @param cobPaidAmount the cobPaidAmount to set
+	 */
+	public void setCobPaidAmount(Double cobPaidAmount) {
+		this.cobPaidAmount = cobPaidAmount;
+	}
+
+	/**
+	 * @return the processingStatus
+	 */
+	public String getProcessingStatus() {
+		return processingStatus;
+	}
+
+	/**
+	 * @param processingStatus the processingStatus to set
+	 */
+	public void setProcessingStatus(String processingStatus) {
+		this.processingStatus = processingStatus;
+	}
+
+	/**
+	 * @return the pharmacyName
+	 */
+	public String getPharmacyName() {
+		return pharmacyName;
+	}
+
+	/**
+	 * @param pharmacyName the pharmacyName to set
+	 */
+	public void setPharmacyName(String pharmacyName) {
+		this.pharmacyName = pharmacyName;
+	}
+
+	/**
+	 * @return the quantity
+	 */
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	/**
+	 * @return the npos
+	 */
+	public String getNpos() {
+		return npos;
+	}
+
+	/**
+	 * @param npos the npos to set
+	 */
+	public void setNpos(String npos) {
+		this.npos = npos;
+	}
+
+	/**
+	 * @return the riskId
+	 */
+	public Character getRiskId() {
+		return riskId;
+	}
+
+	/**
+	 * @param riskId the riskId to set
+	 */
+	public void setRiskId(Character riskId) {
+		this.riskId = riskId;
+	}
+
+	/**
+	 * @return the runnDate
+	 */
+	public Date getRunnDate() {
+		return runnDate;
+	}
+
+	/**
+	 * @param runnDate the runnDate to set
+	 */
+	public void setRunnDate(Date runnDate) {
+		this.runnDate = runnDate;
+	}
+
+	/**
+	 * @return the ndc
+	 */
+	public String getNdc() {
+		return ndc;
+	}
+
+	/**
+	 * @param ndc the ndc to set
+	 */
+	public void setNdc(String ndc) {
+		this.ndc = ndc;
+	}
+
+	/**
+	 * @return the pharmacy
+	 */
+	public String getPharmacy() {
+		return pharmacy;
+	}
+
+	/**
+	 * @param pharmacy the pharmacy to set
+	 */
+	public void setPharmacy(String pharmacy) {
+		this.pharmacy = pharmacy;
+	}
+
+	/**
+	 * @return the membershipClaims
+	 */
+	public String getMembershipClaims() {
+		return membershipClaims;
+	}
+
+	/**
+	 * @param membershipClaims the membershipClaims to set
+	 */
+	public void setMembershipClaims(String membershipClaims) {
+		this.membershipClaims = membershipClaims;
+	}
+
+	/**
+	 * @return the psychare
+	 */
+	public String getPsychare() {
+		return psychare;
+	}
+
+	/**
+	 * @param psychare the psychare to set
+	 */
+	public void setPsychare(String psychare) {
+		this.psychare = psychare;
+	}
+
+	/**
+	 * @return the simpleCounty
+	 */
+	public String getSimpleCounty() {
+		return simpleCounty;
+	}
+
+	/**
+	 * @param simpleCounty the simpleCounty to set
+	 */
+	public void setSimpleCounty(String simpleCounty) {
+		this.simpleCounty = simpleCounty;
+	}
+
+	/**
+	 * @return the triangles
+	 */
+	public String getTriangles() {
+		return triangles;
+	}
+
+	/**
+	 * @param triangles the triangles to set
+	 */
+	public void setTriangles(String triangles) {
+		this.triangles = triangles;
+	}
+
+	/**
+	 * @return the cover
+	 */
+	public String getCover() {
+		return cover;
+	}
+
+	/**
+	 * @param cover the cover to set
+	 */
+	public void setCover(String cover) {
+		this.cover = cover;
 	}
 
 	/**
@@ -268,7 +592,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 
 	@Override
 	public String toString() {
-		return "com.pfchoice.core.entity.MembershipHospitalizationDetails[ id=" + id + " ]";
+		return "com.pfchoice.core.entity.MembershipClaimDetails[ id=" + id + " ]";
 	}
 
 }
