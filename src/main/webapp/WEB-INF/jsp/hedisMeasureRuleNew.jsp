@@ -245,13 +245,23 @@ $.ajax( {
 				<label class="control-label   col-sm-2" for="cptOrIcd">CPT / ICD / Problem</label>
 				<div class="col-sm-6">
 					<label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="0" />CPT
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" class="cptOrIcd" value="0" />CPT
 					</label> <label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="1" />ICD
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" class="cptOrIcd" value="1" />ICD
 					</label> <label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" value="2" />Problem
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" class="cptOrIcd" value="2" />Problem
 					</label>
 					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
+				</div>
+			</div>
+			
+			<div class="form-group pbmList">
+				<label class="control-label col-sm-2" for="Problem">Problem</label>
+				<div class="col-sm-6">
+					<springForm:select path="pbm" class="form-control problemList" id="pbm">
+						<springForm:option value="${null}" label="Select One" />
+					</springForm:select>
+					<springForm:errors path="pbm" cssClass="error text-danger" />
 				</div>
 			</div>
 
@@ -305,6 +315,8 @@ $.ajax( {
 					<springForm:errors path="frequencyType" cssClass="error text-danger" />
 				</div>
 			</div>
+			
+			
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="gender">Gender</label>
@@ -475,8 +487,43 @@ $.ajax( {
 	</div>
 </div>
 <script>
-$(document).ready(function() {
+$(document).ready(function() {	
 	
+	alert("${hedisMeasureRule}");
+	$(".cptOrIcd").click(function() {
+		$(".pbmList").hide();
+		var insId = $("#insurance").val();
+		var effectiveYear = $("#effectiveYear").val();
+		
+		 if($('input[name=cptOrIcd]:checked').val() == 2){
+			 var source = getContextPath()+'/problem/list';
+			 var restParams = new Array();
+			  restParams.push({"name" : "pageSize", "value" : 10000});
+			  restParams.push({"name" : "pageNo", "value" : 0 });
+			  restParams.push({"name" : "insId" , "value" : insId  });
+			  restParams.push({"name" : "effYear" , "value" : effectiveYear  });
+			  $.ajax( {
+			           dataType: 'json',
+			           contentType: "application/json;charset=UTF-8",
+			           type: 'GET',
+			           url: source,
+			           data: restParams,
+			           success: function(data) {
+			        	   var $select = $('.problemList');
+			        	   $select.html('');
+			        	   $.each(data.data.list, function(key, val){
+			        		   $select.append('<option value="'+val.id+'">' + val.description +'</option>');
+		 				     });
+			        	   $(".pbmList").show();
+			           },
+			           error : function (e) {
+			        	   alert("error");
+			           }
+			       } );
+		 } 
+	});	
+	
+	$(".pbmList").hide();
 	$('input:radio[name=cptOrIcd]').filter('[value="0"]').attr('checked', true);
     $("#effectiveYear").keydown(function(event) {
     	 if( !(event.keyCode == 8                                // backspace

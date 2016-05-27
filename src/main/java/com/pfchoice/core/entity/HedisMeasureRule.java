@@ -22,6 +22,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
+
 import com.google.gson.annotations.Expose;
 
 /**
@@ -30,6 +33,7 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "hedis_measure_rule")
+@DynamicUpdate(value=true)
 public class HedisMeasureRule extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -75,29 +79,39 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "gender_id", referencedColumnName = "gender_id")
+	@JoinColumn(nullable=true,name = "gender_id", referencedColumnName = "gender_id")
 	private Gender genderId;
-
+	
 	@Expose
-	@Column(name = "lower_age_limit")
+	@Column(nullable=true,name = "lower_age_limit")
 	private BigDecimal lowerAgeLimit;
 
 	@Expose
-	@Column(name = "upper_age_limit")
+	@Column(nullable=true,name = "upper_age_limit")
 	private BigDecimal upperAgeLimit;
 
 	@Expose
 	@Column(name = "dose_count")
 	private Integer doseCount;
+	
+	@Expose
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "frequency_type_code", referencedColumnName = "code")
+	private FrequencyType frequencyType;
+	
+	@Expose
+	@OneToOne(optional = true)
+	@JoinColumn(nullable = true, name = "problem_id", referencedColumnName = "pbm_Id")
+	private Problem pbm;
 
 	@Expose
 	@Temporal(TemporalType.DATE)
-	@Column(name = "age_effective_from")
+	@Column(nullable=true, name = "age_effective_from")
 	private Date ageEffectiveFrom;
 
 	@Expose
 	@Temporal(TemporalType.DATE)
-	@Column(name = "age_effective_to")
+	@Column(nullable=true,name = "age_effective_to")
 	private Date ageEffectiveTo;
 
 	@Expose
@@ -312,6 +326,34 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	 */
 	public void setDoseCount(Integer doseCount) {
 		this.doseCount = doseCount;
+	}
+	
+	/**
+	 * @return the frequencyType
+	 */
+	public FrequencyType getFrequencyType() {
+		return frequencyType;
+	}
+
+	/**
+	 * @param frequencyType the frequencyType to set
+	 */
+	public void setFrequencyType(FrequencyType frequencyType) {
+		this.frequencyType = frequencyType;
+	}
+	
+	/**
+	 * @return the pbm
+	 */
+	public Problem getPbm() {
+		return pbm;
+	}
+
+	/**
+	 * @param pbm the pbm to set
+	 */
+	public void setPbm(Problem pbm) {
+		this.pbm = pbm;
 	}
 
 	/**

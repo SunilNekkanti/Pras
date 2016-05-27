@@ -45,6 +45,7 @@ import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.Problem;
 import com.pfchoice.core.service.CPTMeasureService;
 import com.pfchoice.core.service.FrequencyTypeService;
 import com.pfchoice.core.service.GenderService;
@@ -316,6 +317,12 @@ public class HedisMeasureRuleController {
 
 		if (null != hedisMeasureRule.getId()) {
 			logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
+			
+			if(hedisMeasureRule.getCptOrIcd() != 2){
+				System.out.println("set problem to null");
+			    hedisMeasureRule.setPbm(null);
+			   }
+			
 			hedisMeasureRuleService.update(hedisMeasureRule);
 			hedisMeasureRule.setUpdatedBy(username);
 			model.addAttribute("Message", "Hedis Measure update successfully");

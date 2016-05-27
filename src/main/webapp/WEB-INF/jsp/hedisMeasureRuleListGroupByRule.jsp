@@ -123,6 +123,8 @@ $.ajax( {
 						                                          			return '<span data-toggle="tooltip" title="'+full.hedisMeasure.description+'">'+data+'</span>';  
 		                                 								}
 								                         },
+								                         { "mDataProp": "pbm.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center", "sDefaultContent": ""
+								                         },
 								                         { "mDataProp": "cptCodes[ ].code","bSearchable" : true, "bSortable" : true,"sWidth" : "15%", "asSorting" : [ "asc" ],"sClass":"cptCodes",
 						                                        "render": function  ( data, type, full, meta )  {
 										                                         var cptcodeList=[];
@@ -143,6 +145,8 @@ $.ajax( {
 											                                   return icdCodeList.join(', ');
 											                               }  
 						                                 },
+						                                 { "mDataProp": "frequencyType.description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center", "sDefaultContent": ""
+								                         },
 								                         { "mDataProp": "doseCount","bSearchable" : true, "bSortable": true,"sWidth" : "5%" ,"sClass":"center", "sDefaultContent": ""},
 								                         { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "","sClass":"center"   },
 								                         { "mDataProp": "lowerAgeLimit","bSearchable" : true, "bSortable": true,"sWidth" : "5%", "sDefaultContent": "" ,"sClass":"center"  },
@@ -213,8 +217,10 @@ $.ajax( {
 							<th scope="col">Action</th>
 							<th scope="col">Description</th>
 							<th scope="col">Hedis Code</th>
+							<th scope="col">Problem</th>
 							<th scope="col">CPT Codes</th>
 							<th scope="col">ICD Codes</th>
+							<th scope="col">Frequency</th>
 							<th scope="col">Dose</th>
 							<th scope="col">Sex</th>
 							<th scope="col">Lower Age Limit</th>

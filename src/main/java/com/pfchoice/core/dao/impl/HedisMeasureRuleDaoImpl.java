@@ -99,8 +99,11 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir, final Integer insId, final Integer effYear) {
-		Criteria crit = createCriteria().createAlias("hedisMeasure", "hedisMeasure").createAlias("genderId", "genderId",
-				JoinType.LEFT_OUTER_JOIN);
+		Criteria crit = createCriteria()
+				.createAlias("hedisMeasure", "hedisMeasure")
+				.createAlias("pbm", "pbm",JoinType.LEFT_OUTER_JOIN)
+				.createAlias("frequencyType", "frequencyType",JoinType.LEFT_OUTER_JOIN)
+				.createAlias("genderId", "genderId",JoinType.LEFT_OUTER_JOIN);
 
 		Conjunction and = Restrictions.conjunction();
 		if (sSearch != null && !"".equals(sSearch)) {
