@@ -64,6 +64,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	private FileTypeFormatter fileTypeFormatter;
 
 	@Autowired
+	private FrequencyTypeFormatter frequencyTypeFormatter;
+
+	@Autowired
 	private GenderFormatter genderFormatter;
 
 	@Autowired
@@ -87,6 +90,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	@Autowired
 	private PlanTypeFormatter planTypeFormatter;
 
+	@Autowired
+	private ProblemFormatter problemFormatter;
+	
 	@Autowired
 	private ProviderFormatter providerFormatter;
 
@@ -234,6 +240,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		formatterRegistry.addFormatter(cptMeasureFormatter);
 		formatterRegistry.addFormatter(emailTemplateFormatter);
 		formatterRegistry.addFormatter(fileTypeFormatter);
+		formatterRegistry.addFormatter(frequencyTypeFormatter);
 		formatterRegistry.addFormatter(genderFormatter);
 		formatterRegistry.addFormatter(hedisMeasureFormatter);
 		formatterRegistry.addFormatter(hedisMeasureGroupFormatter);
@@ -242,6 +249,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		formatterRegistry.addFormatter(membershipFormatter);
 		formatterRegistry.addFormatter(membershipStatusFormatter);
 		formatterRegistry.addFormatter(planTypeFormatter);
+		formatterRegistry.addFormatter(problemFormatter);
 		formatterRegistry.addFormatter(providerFormatter);
 		formatterRegistry.addFormatter(roleFormatter);
 		formatterRegistry.addFormatter(stateFormatter);
