@@ -4,8 +4,13 @@ import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_HOSP
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HEDIS;
 import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_HOSPITALIZATION;
+import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
 
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +20,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +54,7 @@ import com.pfchoice.core.service.FileService;
 import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.FollowupTypeService;
 import com.pfchoice.core.service.HospitalService;
+import com.pfchoice.core.service.MembershipClaimService;
 import com.pfchoice.core.service.MembershipFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipHospitalizationDetailsService;
@@ -83,6 +90,9 @@ public class ReportsController {
 
 	@Autowired
 	private MembershipService membershipService;
+
+	@Autowired
+	private MembershipClaimService mbrClaimService;
 
 	@Autowired
 	private MembershipFollowupService mbrHedisFollowupService;
@@ -251,10 +261,14 @@ public class ReportsController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/reports/hospitalization/fileProcessing.do",
-			"/user/reports/hospitalization/fileProcessing.do" })
+			"/user/reports/hospitalization/fileProcessing.do" ,
+			"/admin/reports/claim/fileProcessing.do",
+			"/user/reports/claim/fileProcessing.do" })
 	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
-			HttpServletRequest request) {
+			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
+			HttpServletRequest request) throws InvalidFormatException,FileNotFoundException,IOException{
+		LOG.info("started file processsing");
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
@@ -278,7 +292,17 @@ public class ReportsController {
 			}
 		}
 		LOG.info("before file processing");
-		return "forward:/admin/membershipHospitalization/list?fileName=" + newSourceFile.getName();
+		String forwardToClaimOrHospital = null;
+		
+		if(claimOrHospital == HOSPITALIZATION){
+			LOG.info("forwarding to hospitalization");
+			forwardToClaimOrHospital=	"forward:/admin/membershipHospitalization/list?fileName=" + newSourceFile.getName();
+		} else if(claimOrHospital == CLAIM){
+			LOG.info("forwarding to claims");
+			forwardToClaimOrHospital=	"forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
+		}
+		
+		return forwardToClaimOrHospital;
 	}
 
 	/**
@@ -317,24 +341,24 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/membershipHospitalization/list", "/user/membershipHospitalization/list" })
 	public Message viewmembershipHospitalizationList(@ModelAttribute("username") String username,
 			@RequestParam(value = "fileName", required = true) String fileName) {
-		
+
 		LOG.info("1");
-		
+
 		Boolean dataExists = mbrHospitalizationService.isDataExists();
 		if (dataExists) {
 			return Message.failMessage("Previous file processing is incomplete");
 		} else {
 
 			LOG.info("2");
-			
+
 			Integer fileId = 0;
 
 			try {
 				LOG.info("3");
-				
+
 				FileType fileType = fileTypeService.findByCode(FILE_TYPE_AMG_MBR_HOSPITALIZATION);
 				LOG.info("4");
-				
+
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
 				fileRecord.setFileTypeCode(fileType.getCode());
@@ -342,12 +366,12 @@ public class ReportsController {
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
 				LOG.info("5");
-				
+
 				if (newFile != null)
-				fileId = newFile.getId();
+					fileId = newFile.getId();
 				else
 					LOG.info("fileId is empty");
-					
+
 			} catch (Exception e) {
 				LOG.info(e.getCause().getMessage());
 				LOG.info("Similar file already processed in past");
@@ -380,6 +404,10 @@ public class ReportsController {
 			return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, loadedData);
 		}
 	}
+	
+	/**
+	 * @return
+	 */
 
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipHospitalizationDetails/{mbrHosId}/list",
@@ -389,10 +417,133 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(pagination));
 	}
-
+	
+	/**
+	 * @return
+	 */
+	
 	@RequestMapping(value = { "/admin/reports/hospitalization/{mbrHosId}", "/user/reports/hospitalization/{mbrHosId}" })
 	public String handleHospitalizationRequest(@PathVariable Integer mbrHosId, Model model) {
 		model.addAttribute("mbrHosId", mbrHosId);
 		return "membershipHospitalizationDetails";
 	}
+	
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/claim", "/user/reports/claim" })
+	public String handleClaimRequest() {
+		return TileDefinitions.MEMBERSHIPCLIAMLIST.toString();
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchHedisRule
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipClaim/list",
+			"/user/reports/membershipClaim/list" }, method = RequestMethod.GET)
+	public Message viewMembershipClaimList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo,
+			@RequestParam(required = true) Integer processClaim) {
+
+		Pagination pagination = membershipService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processFrom, processTo, processClaim);
+
+		return Message.successMessage(CommonMessageContent.CLAIM_FOLLOWUP_LIST,
+				JsonConverter.getJsonObject(pagination));
+	}
+	
+	
+	
+	/**
+	 * @param mbrId
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipClaim/{mbrId}/followupDetails",
+			"/user/reports/membershipmembershipHospitalization/{mbrId}/followupDetails" })
+	public Message membershipClaimFollowupDetails(@PathVariable Integer mbrId, Model model) {
+		List<MembershipFollowup> dbMbrHospitalizationFollowup = mbrHedisFollowupService.findAllByMbrId(mbrId,
+				FOLLOWUP_TYPE_CLAIM);
+		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
+				JsonConverter.getJsonObject(dbMbrHospitalizationFollowup));
+	}
+	
+	/**
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membershipClaim/list", "/user/membershipClaim/list" })
+	public Message viewmembershipClaimList(@ModelAttribute("username") String username,
+			@RequestParam(value = "fileName", required = true) String fileName) {
+
+		LOG.info("1");
+
+		Boolean dataExists = mbrClaimService.isDataExists();
+		if (dataExists) {
+			return Message.failMessage("Previous file processing is incomplete");
+		} else {
+			Integer fileId = 0;
+			try {
+				FileType fileType = fileTypeService.findByCode(FILE_TYPE_AMG_MBR_CLAIM);
+
+				File fileRecord = new File();
+				fileRecord.setFileName(fileName);
+				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setCreatedBy(username);
+				fileRecord.setUpdatedBy(username);
+				File newFile = fileService.save(fileRecord);
+				LOG.info("5");
+
+				if (newFile != null)
+					fileId = newFile.getId();
+				else
+					LOG.info("fileId is empty");
+
+			} catch (Exception e) {
+				LOG.info(e.getCause().getMessage());
+				LOG.info("Similar file already processed in past");
+				return Message.failMessage("similar file already processed in past");
+			}
+
+			LOG.info("Loading  membershipClaim data");
+			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName);
+
+			if (loadedData < 1) {
+				return Message.failMessage("ZERO records to process");
+			}
+
+			LOG.info("processing  membershipClaim data");
+		/*	Integer attPhysicianLoadedData = attPhysicianService.loadData(fileId);
+			Integer mbrClaimUpdatedData = mbrClaimService.updateData(fileId);
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId);
+			LOG.info("hosLoadedData " + hosLoadedData);
+			LOG.info("attPhysicianLoadedData " + attPhysicianLoadedData);
+			LOG.info("membershipClaimUpdatedData " + mbrClaimUpdatedData);
+			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
+			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
+			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);*/
+			LOG.info("processed  membershipClaim data");
+
+			LOG.info("returning membershipClaimList");
+			return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, loadedData);
+		}
+	}
+	
+
 }
