@@ -50,16 +50,22 @@ public class ServletContainerInitializer extends AbstractAnnotationConfigDispatc
 		return new Class<?>[] { SpringMVCApplicationContext.class };
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#getServletMappings()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.support.
+	 * AbstractDispatcherServletInitializer#getServletMappings()
 	 */
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#getServletName()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.support.
+	 * AbstractDispatcherServletInitializer#getServletName()
 	 */
 	@Override
 	protected String getServletName() {

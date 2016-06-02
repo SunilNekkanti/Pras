@@ -24,16 +24,22 @@ public class ContractServiceImpl implements ContractService {
 	@Autowired
 	private ContractDao contractDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ContractService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ContractService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public Contract deleteById(final Integer id) {
 		return contractDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ContractService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ContractService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -41,7 +47,9 @@ public class ContractServiceImpl implements ContractService {
 		return contractDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.ContractService#getPage(int, int)
 	 */
 	@Override
@@ -50,16 +58,24 @@ public class ContractServiceImpl implements ContractService {
 		return contractDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ContractService#save(com.pfchoice.core.entity.Contract)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ContractService#save(com.pfchoice.core.entity.
+	 * Contract)
 	 */
 	@Override
 	public Contract save(final Contract bean) {
 		return contractDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ContractService#update(com.pfchoice.core.entity.Contract)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ContractService#update(com.pfchoice.core.entity
+	 * .Contract)
 	 */
 	@Override
 	public Contract update(final Contract bean) {
@@ -67,16 +83,24 @@ public class ContractServiceImpl implements ContractService {
 		return contractDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ContractService#findAllContractsByRefId(java.lang.String, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ContractService#findAllContractsByRefId(java.
+	 * lang.String, java.lang.Integer)
 	 */
 	@Override
 	public List<Contract> findAllContractsByRefId(final String refString, Integer id) {
 		return contractDao.findAllContractsByRefId(refString, id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ContractService#findActiveContractByRefId(java.lang.String, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ContractService#findActiveContractByRefId(java.
+	 * lang.String, java.lang.Integer)
 	 */
 	@Override
 	public Contract findActiveContractByRefId(final String refString, Integer id) {

@@ -16,16 +16,22 @@ public class ProviderFormatter implements Formatter<Provider> {
 	@Autowired
 	private ProviderService providerService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Printer#print(java.lang.Object,
+	 * java.util.Locale)
 	 */
 	@Override
 	public String print(Provider provider, Locale arg1) {
 		return provider.getName();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Parser#parse(java.lang.String,
+	 * java.util.Locale)
 	 */
 	@Override
 	public Provider parse(String id, Locale arg1) throws ParseException {

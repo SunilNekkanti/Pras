@@ -45,25 +45,25 @@ public interface MembershipClaimService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
-	
+
 	/**
 	 * @return
 	 */
 	Boolean isDataExists();
-	
+
 	/**
 	 * @return
 	 */
 	Integer loadDataCSV2Table(String fileName);
-	
+
 	/**
 	 * @return
 	 */
 	Integer unloadCSV2Table();
-	
+
 	/**
 	 * @return
 	 */
 	Integer updateData(Integer fileId);
-	
+
 }

@@ -35,23 +35,22 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	@Expose
 	@Column(name = "description")
 	private String description;
-	
+
 	@Expose
-	@Column(name = "sql_script", length = 65535,columnDefinition = "TEXT")
+	@Column(name = "sql_script", length = 65535, columnDefinition = "TEXT")
 	private String sqlScript;
-	
+
 	@Expose
 	@Column(name = "attachment_flag", insertable = false)
 	private Character attachmentFlag;
-	
+
 	@Expose
 	@Column(name = "order_no")
 	private Integer orderNo;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "email_temp_id", nullable = false, referencedColumnName = "email_temp_id")
 	private EmailTemplate emailTemplate;
-	
 
 	/**
 	 * 
@@ -81,7 +80,7 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	public void setId(final Integer id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the description
 	 */
@@ -90,7 +89,8 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -104,7 +104,8 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	}
 
 	/**
-	 * @param sqlScript the sqlScript to set
+	 * @param sqlScript
+	 *            the sqlScript to set
 	 */
 	public void setSqlScript(String sqlScript) {
 		this.sqlScript = sqlScript;
@@ -118,7 +119,8 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	}
 
 	/**
-	 * @param attachmentFlag the attachmentFlag to set
+	 * @param attachmentFlag
+	 *            the attachmentFlag to set
 	 */
 	public void setAttachmentFlag(Character attachmentFlag) {
 		this.attachmentFlag = attachmentFlag;
@@ -132,7 +134,8 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	}
 
 	/**
-	 * @param orderNo the orderNo to set
+	 * @param orderNo
+	 *            the orderNo to set
 	 */
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
@@ -146,13 +149,13 @@ public class EmailTemplatePlaceholder extends RecordDetails implements Serializa
 	}
 
 	/**
-	 * @param emailTemplate the emailTemplate to set
+	 * @param emailTemplate
+	 *            the emailTemplate to set
 	 */
 	public void setEmailTemplate(EmailTemplate emailTemplate) {
 		this.emailTemplate = emailTemplate;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		int hash = 0;

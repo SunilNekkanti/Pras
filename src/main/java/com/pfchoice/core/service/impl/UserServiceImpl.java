@@ -22,7 +22,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.UserService#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -30,7 +32,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.UserService#findById(java.lang.Integer)
 	 */
 	@Override
@@ -39,7 +43,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.UserService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +54,23 @@ public class UserServiceImpl implements UserService {
 		return userDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.UserService#save(com.pfchoice.core.entity.User)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.UserService#save(com.pfchoice.core.entity.User)
 	 */
 	@Override
 	public User save(final User bean) {
 		return userDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.UserService#update(com.pfchoice.core.entity.User)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.UserService#update(com.pfchoice.core.entity.
+	 * User)
 	 */
 	@Override
 	public User update(final User bean) {
@@ -65,7 +78,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.UserService#findByLogin(java.lang.String)
 	 */
 	@Override
@@ -74,26 +89,36 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByLogin(login);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.UserService#isValidUser(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.UserService#isValidUser(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public boolean isValidUser(final String login, final String password) {
 		return userDao.isValidUser(login, password);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.UserService#isUserUnique(java.lang.Integer, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.UserService#isUserUnique(java.lang.Integer,
+	 * java.lang.String)
 	 */
 	@Override
 	public boolean isUserUnique(Integer id, String userName) {
 		User user = findByUserName(userName);
-		return ( user == null || ((id != null) && (user.getId() == id)));
+		return (user == null || ((id != null) && (user.getId() == id)));
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.UserService#findByUserName(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.UserService#findByUserName(java.lang.String)
 	 */
 	@Override
 	public User findByUserName(String userName) {

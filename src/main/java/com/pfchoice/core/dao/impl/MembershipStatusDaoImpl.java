@@ -16,7 +16,9 @@ import com.pfchoice.core.entity.MembershipStatus;
 @Repository
 public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, Byte> implements MembershipStatusDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipStatusDao#getPage(int, int)
 	 */
 	@Override
@@ -26,7 +28,9 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipStatusDao#findById(java.lang.Byte)
 	 */
 	@Override
@@ -34,8 +38,12 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipStatusDao#save(com.pfchoice.core.entity.MembershipStatus)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipStatusDao#save(com.pfchoice.core.entity.
+	 * MembershipStatus)
 	 */
 	@Override
 	public MembershipStatus save(final MembershipStatus bean) {
@@ -43,7 +51,9 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipStatusDao#deleteById(java.lang.Byte)
 	 */
 	@Override
@@ -55,7 +65,9 @@ public class MembershipStatusDaoImpl extends HibernateBaseDao<MembershipStatus, 
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

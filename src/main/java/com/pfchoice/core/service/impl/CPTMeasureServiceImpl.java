@@ -22,16 +22,22 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 	@Autowired
 	private CPTMeasureDao cptMeasureDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.CPTMeasureService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.CPTMeasureService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public CPTMeasure deleteById(final Integer id) {
 		return cptMeasureDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.CPTMeasureService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.CPTMeasureService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +45,9 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 		return cptMeasureDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.CPTMeasureService#getPage(int, int)
 	 */
 	@Override
@@ -47,9 +55,12 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return cptMeasureDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.CPTMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.CPTMeasureService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -58,16 +69,24 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 		return cptMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.CPTMeasureService#save(com.pfchoice.core.entity.CPTMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.CPTMeasureService#save(com.pfchoice.core.entity
+	 * .CPTMeasure)
 	 */
 	@Override
 	public CPTMeasure save(final CPTMeasure bean) {
 		return cptMeasureDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.CPTMeasureService#update(com.pfchoice.core.entity.CPTMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.CPTMeasureService#update(com.pfchoice.core.
+	 * entity.CPTMeasure)
 	 */
 	@Override
 	public CPTMeasure update(final CPTMeasure bean) {

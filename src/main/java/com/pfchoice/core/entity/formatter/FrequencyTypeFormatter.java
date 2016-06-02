@@ -16,16 +16,22 @@ public class FrequencyTypeFormatter implements Formatter<FrequencyType> {
 	@Autowired
 	private FrequencyTypeService frequencyTypeService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Printer#print(java.lang.Object,
+	 * java.util.Locale)
 	 */
 	@Override
 	public String print(FrequencyType frequencyType, Locale arg1) {
-		return frequencyType.getDescription() ;
+		return frequencyType.getDescription();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Parser#parse(java.lang.String,
+	 * java.util.Locale)
 	 */
 	@Override
 	public FrequencyType parse(String id, Locale arg1) throws ParseException {

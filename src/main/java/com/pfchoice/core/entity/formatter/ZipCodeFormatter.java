@@ -16,16 +16,22 @@ public class ZipCodeFormatter implements Formatter<ZipCode> {
 	@Autowired
 	private ZipCodeService zipCodeService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Printer#print(java.lang.Object,
+	 * java.util.Locale)
 	 */
 	@Override
 	public String print(ZipCode ZipCode, Locale arg1) {
 		return ZipCode.getCode().toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Parser#parse(java.lang.String,
+	 * java.util.Locale)
 	 */
 	@Override
 	public ZipCode parse(String id, Locale arg1) throws ParseException {

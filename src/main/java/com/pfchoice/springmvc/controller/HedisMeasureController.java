@@ -93,7 +93,7 @@ public class HedisMeasureController {
 	public List<Gender> populateGenderList() {
 
 		Pagination page = genderService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-												 SystemDefaultProperties.SMALL_LIST_SIZE);
+				SystemDefaultProperties.SMALL_LIST_SIZE);
 		return (List<Gender>) page.getList();
 	}
 
@@ -105,7 +105,7 @@ public class HedisMeasureController {
 	public List<HedisMeasureGroup> populateHedisMeasureGroupList() {
 
 		Pagination page = hedisMeasureGroupService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-															SystemDefaultProperties.MEDIUM_LIST_SIZE);
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<HedisMeasureGroup>) page.getList();
 	}
 
@@ -225,7 +225,7 @@ public class HedisMeasureController {
 	public String saveHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		hedisMeasure.setActiveInd('Y');
-		 logger.info("hedis measure id is"+id);
+		logger.info("hedis measure id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
 			hedisMeasure.setUpdatedBy(username);
@@ -253,7 +253,7 @@ public class HedisMeasureController {
 	public String deleteHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		hedisMeasure.setActiveInd('Y');
-		 logger.info("hedis measure id is"+id);
+		logger.info("hedis measure id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
 			return TileDefinitions.HEDISMEASUREEDIT.toString();

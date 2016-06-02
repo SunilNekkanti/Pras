@@ -20,7 +20,9 @@ import com.pfchoice.core.entity.Insurance;
 @Repository
 public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> implements InsuranceDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.InsuranceDao#getPage(int, int)
 	 */
 	@Override
@@ -29,9 +31,12 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.InsuranceDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.InsuranceDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -59,7 +64,9 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.InsuranceDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -67,8 +74,11 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.InsuranceDao#save(com.pfchoice.core.entity.Insurance)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.InsuranceDao#save(com.pfchoice.core.entity.
+	 * Insurance)
 	 */
 	@Override
 	public Insurance save(final Insurance bean) {
@@ -76,7 +86,9 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.InsuranceDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -88,21 +100,23 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
 	protected Class<Insurance> getEntityClass() {
 		return Insurance.class;
 	}
-	
+
 	/**
 	 * @param insName
 	 * @return
 	 */
 	@Override
 	public Insurance findByInsName(String insName) {
-		return  findUniqueByProperty("name", insName);
+		return findUniqueByProperty("name", insName);
 	}
 
 }

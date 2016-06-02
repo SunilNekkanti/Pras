@@ -108,7 +108,7 @@ public class FileTypeController {
 	public String updateUserAction(@PathVariable Integer id, @Validated FileType fileType, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
 		fileType.setActiveInd('Y');
-		 logger.info("file type id is"+id);
+		logger.info("file type id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning fileTypeEdit.jsp page");
 			return TileDefinitions.FILETYPEEDIT.toString();
@@ -134,7 +134,7 @@ public class FileTypeController {
 			"/user/fileType/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated FileType fileType,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		 logger.info("file type id is"+id);
+		logger.info("file type id is" + id);
 		if (bindingResult.hasErrors()) {
 			fileType.setActiveInd('Y');
 			logger.info("Returning fileTypeEdit.jsp page");
@@ -171,10 +171,8 @@ public class FileTypeController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/fileType/list", "/user/fileType/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize,
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir){
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = fileTypeService.getPage(pageNo, pageSize);
 

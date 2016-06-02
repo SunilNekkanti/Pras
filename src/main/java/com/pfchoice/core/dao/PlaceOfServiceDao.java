@@ -32,7 +32,7 @@ public interface PlaceOfServiceDao {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * 
 	 * @param pageNo

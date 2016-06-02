@@ -28,7 +28,7 @@ public interface PlaceOfServiceService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize

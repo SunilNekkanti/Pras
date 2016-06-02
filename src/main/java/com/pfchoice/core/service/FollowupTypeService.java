@@ -41,7 +41,6 @@ public interface FollowupTypeService {
 	 */
 	FollowupType update(FollowupType bean);
 
-	
 	/**
 	 * @param code
 	 * @return

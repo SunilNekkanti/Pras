@@ -21,7 +21,9 @@ public class FileServiceImpl implements FileService {
 	@Autowired
 	private FileDao fileDao;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.FileService#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -29,7 +31,9 @@ public class FileServiceImpl implements FileService {
 		return fileDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.FileService#findById(java.lang.Integer)
 	 */
 	@Override
@@ -38,7 +42,9 @@ public class FileServiceImpl implements FileService {
 		return fileDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.FileService#getPage(int, int)
 	 */
 	@Override
@@ -47,16 +53,23 @@ public class FileServiceImpl implements FileService {
 		return fileDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileService#save(com.pfchoice.core.entity.File)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileService#save(com.pfchoice.core.entity.File)
 	 */
 	@Override
 	public File save(final File bean) {
 		return fileDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileService#update(com.pfchoice.core.entity.File)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileService#update(com.pfchoice.core.entity.
+	 * File)
 	 */
 	@Override
 	public File update(final File bean) {

@@ -17,13 +17,14 @@
 		</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="emailTemplate"
-				action="${context}/emailTemplate/${id}/save.do" class="form-horizontal" role="form">
+				action="${context}/emailTemplate/${id}/save.do"
+				class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-3" for="code">Description</label>
 					<div class="col-sm-8">
 						<springForm:hidden path="id" />
-						<springForm:input path="description" class="form-control" maxlength="250"
-							id="code" placeholder="Description" />
+						<springForm:input path="description" class="form-control"
+							maxlength="250" id="code" placeholder="Description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>
@@ -31,12 +32,12 @@
 				<div class="form-group required">
 					<label class="control-label col-sm-3" for="template">Template</label>
 					<div class="col-sm-8">
-						<springForm:textarea path="template" rows="15" class="form-control"
-							id="template" placeholder="Template" /> 
+						<springForm:textarea path="template" rows="15"
+							class="form-control" id="template" placeholder="Template" />
 						<springForm:errors path="template" cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="col-sm-12">
 					<div class="col-sm-offset-3 col-sm-9">
 						<c:choose>

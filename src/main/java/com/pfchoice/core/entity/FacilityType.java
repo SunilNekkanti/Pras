@@ -90,7 +90,8 @@ public class FacilityType extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param shortName the shortName to set
+	 * @param shortName
+	 *            the shortName to set
 	 */
 	public void setShortName(String shortName) {
 		this.shortName = shortName;

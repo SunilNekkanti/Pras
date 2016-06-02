@@ -22,16 +22,24 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 	@Autowired
 	private MembershipClaimDetailsDao membershipClaimDetailsDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipClaimDetailsService#deleteById(java.
+	 * lang.Integer)
 	 */
 	@Override
 	public MembershipClaimDetails deleteById(final Integer id) {
 		return membershipClaimDetailsDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipClaimDetailsService#findById(java.
+	 * lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,8 +47,11 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 		return membershipClaimDetailsDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#getPage(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#getPage(int,
+	 * int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -48,16 +59,23 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 		return membershipClaimDetailsDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#save(com.pfchoice.core.entity.MembershipClaimDetails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipClaimDetailsService#save(com.pfchoice
+	 * .core.entity.MembershipClaimDetails)
 	 */
 	@Override
 	public MembershipClaimDetails save(final MembershipClaimDetails bean) {
 		return membershipClaimDetailsDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#update(com.pfchoice.core.entity.MembershipClaimDetails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#update(com.
+	 * pfchoice.core.entity.MembershipClaimDetails)
 	 */
 	@Override
 	public MembershipClaimDetails update(final MembershipClaimDetails bean) {
@@ -66,12 +84,15 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 	}
 
 	@Override
-	public Integer loadData(final Integer fileId){
+	public Integer loadData(final Integer fileId) {
 		return membershipClaimDetailsDao.loadData(fileId);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#getMbrClaimDetailsPage(int)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#
+	 * getMbrClaimDetailsPage(int)
 	 */
 	@Override
 	public Pagination getMbrClaimDetailsPage(final int mbrHosId) {

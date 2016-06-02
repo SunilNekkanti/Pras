@@ -24,16 +24,24 @@ public class MembershipProviderServiceImpl implements MembershipProviderService 
 	@Autowired
 	private MembershipProviderDao membershipProviderDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProviderService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public MembershipProvider deleteById(final Integer id) {
 		return membershipProviderDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProviderService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -41,8 +49,11 @@ public class MembershipProviderServiceImpl implements MembershipProviderService 
 		return membershipProviderDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#getPage(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipProviderService#getPage(int,
+	 * int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -50,16 +61,24 @@ public class MembershipProviderServiceImpl implements MembershipProviderService 
 		return membershipProviderDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#save(com.pfchoice.core.entity.MembershipProvider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProviderService#save(com.pfchoice.
+	 * core.entity.MembershipProvider)
 	 */
 	@Override
 	public MembershipProvider save(final MembershipProvider bean) {
 		return membershipProviderDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#update(com.pfchoice.core.entity.MembershipProvider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProviderService#update(com.pfchoice.
+	 * core.entity.MembershipProvider)
 	 */
 	@Override
 	public MembershipProvider update(final MembershipProvider bean) {
@@ -67,16 +86,24 @@ public class MembershipProviderServiceImpl implements MembershipProviderService 
 		return membershipProviderDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#findAllByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProviderService#findAllByMbrId(java.
+	 * lang.Integer)
 	 */
 	@Override
 	public List<MembershipProvider> findAllByMbrId(final Integer id) {
 		return membershipProviderDao.findAllByMbrId(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProviderService#findByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProviderService#findByMbrId(java.lang
+	 * .Integer)
 	 */
 	@Override
 	public MembershipProvider findByMbrId(final Integer id) {

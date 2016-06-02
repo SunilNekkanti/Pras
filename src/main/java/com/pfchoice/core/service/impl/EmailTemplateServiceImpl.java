@@ -22,16 +22,23 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 	@Autowired
 	private EmailTemplateDao emailTemplatesDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailTemplatesService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailTemplatesService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public EmailTemplate deleteById(final Integer id) {
 		return emailTemplatesDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailTemplatesService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.EmailTemplatesService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +46,9 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 		return emailTemplatesDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.EmailTemplatesService#getPage(int, int)
 	 */
 	@Override
@@ -47,9 +56,12 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return emailTemplatesDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailTemplatesService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.EmailTemplatesService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -58,25 +70,37 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 		return emailTemplatesDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailTemplatesService#save(com.pfchoice.core.entity.Emails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailTemplatesService#save(com.pfchoice.core.
+	 * entity.Emails)
 	 */
 	@Override
 	public EmailTemplate save(final EmailTemplate bean) {
 		return emailTemplatesDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailsService#update(com.pfchoice.core.entity.Emails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailsService#update(com.pfchoice.core.entity.
+	 * Emails)
 	 */
 	@Override
 	public EmailTemplate update(final EmailTemplate bean) {
 		Updater<EmailTemplate> updater = new Updater<>(bean);
 		return emailTemplatesDao.updateByUpdater(updater);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailTemplateService#findBySubject(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailTemplateService#findBySubject(java.lang.
+	 * String)
 	 */
 	@Override
 	@Transactional(readOnly = true)

@@ -35,7 +35,6 @@ public class County extends RecordDetails implements Serializable {
 	@Column(name = "short_name")
 	private String shortName;
 
-
 	/**
 	 * 
 	 */
@@ -110,7 +109,7 @@ public class County extends RecordDetails implements Serializable {
 
 	/**
 	 * @param object
-	 *   	the object to compare
+	 *            the object to compare
 	 */
 	@Override
 	public boolean equals(Object object) {

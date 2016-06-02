@@ -22,16 +22,24 @@ public class FollowupTypeServiceImpl implements FollowupTypeService {
 	@Autowired
 	private FollowupTypeDao followupTypeDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public FollowupType deleteById(final Integer id) {
 		return followupTypeDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +47,9 @@ public class FollowupTypeServiceImpl implements FollowupTypeService {
 		return followupTypeDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.HedisMeasureGroupService#getPage(int, int)
 	 */
 	@Override
@@ -48,31 +58,42 @@ public class FollowupTypeServiceImpl implements FollowupTypeService {
 		return followupTypeDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#save(com.pfchoice.core.entity.HedisMeasureGroup)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#save(com.pfchoice.core
+	 * .entity.HedisMeasureGroup)
 	 */
 	@Override
 	public FollowupType save(final FollowupType bean) {
 		return followupTypeDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#update(com.pfchoice.core.entity.HedisMeasureGroup)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#update(com.pfchoice.
+	 * core.entity.HedisMeasureGroup)
 	 */
 	@Override
 	public FollowupType update(final FollowupType bean) {
 		Updater<FollowupType> updater = new Updater<>(bean);
 		return followupTypeDao.updateByUpdater(updater);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public FollowupType findByCode(final String code) {
 		return followupTypeDao.findByCode(code);
 	}
-
 
 }

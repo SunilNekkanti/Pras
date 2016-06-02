@@ -32,7 +32,7 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "code")
 	private String code;
-	
+
 	@Expose
 	@Column(name = "description")
 	private String description;
@@ -78,7 +78,8 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param code the code to set
+	 * @param code
+	 *            the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -107,7 +108,8 @@ public class PlaceOfService extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;

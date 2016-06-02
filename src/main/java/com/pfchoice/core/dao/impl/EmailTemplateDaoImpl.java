@@ -19,7 +19,9 @@ import com.pfchoice.core.entity.EmailTemplate;
 @Repository
 public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Integer> implements EmailTemplateDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailTemplatesDao#getPage(int, int)
 	 */
 	@Override
@@ -28,9 +30,12 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int, java.lang.String,
+	 * java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -44,7 +49,7 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 			crit.add(or);
 		}
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		
+
 		if (sort != null && !"".equals(sort)) {
 			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				crit.addOrder(Order.desc(sort));
@@ -56,7 +61,9 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailTemplatesDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -64,8 +71,12 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailTemplatesDao#save(com.pfchoice.core.entity.EmailTemplates)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.EmailTemplatesDao#save(com.pfchoice.core.entity.
+	 * EmailTemplates)
 	 */
 	@Override
 	public EmailTemplate save(final EmailTemplate bean) {
@@ -73,8 +84,11 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 		return bean;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailTemplatesDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.EmailTemplatesDao#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public EmailTemplate deleteById(final Integer id) {
@@ -85,20 +99,24 @@ public class EmailTemplateDaoImpl extends HibernateBaseDao<EmailTemplate, Intege
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
 	protected Class<EmailTemplate> getEntityClass() {
 		return EmailTemplate.class;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailTemplateDao#findByDescription(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.EmailTemplateDao#findByDescription(java.lang.
+	 * String)
 	 */
 	@Override
 	public EmailTemplate findByDescription(final String description) {
-		return  findUniqueByProperty("description", description);
+		return findUniqueByProperty("description", description);
 	}
 }

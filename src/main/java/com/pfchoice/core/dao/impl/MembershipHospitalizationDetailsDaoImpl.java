@@ -5,7 +5,6 @@ import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -21,9 +20,12 @@ import com.pfchoice.core.entity.MembershipHospitalizationDetails;
  * @author Sarath
  */
 @Repository
-public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<MembershipHospitalizationDetails, Integer> implements MembershipHospitalizationDetailsDao {
+public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<MembershipHospitalizationDetails, Integer>
+		implements MembershipHospitalizationDetailsDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */
 	@Override
@@ -33,7 +35,9 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -41,8 +45,11 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.MembershipHospitalizationDetails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.
+	 * MembershipHospitalizationDetails)
 	 */
 	@Override
 	public MembershipHospitalizationDetails save(final MembershipHospitalizationDetails bean) {
@@ -50,7 +57,9 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -62,7 +71,9 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -70,27 +81,30 @@ public class MembershipHospitalizationDetailsDaoImpl extends HibernateBaseDao<Me
 		return MembershipHospitalizationDetails.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipHospitalizationDao#loadData()
 	 */
-	@Override 
-	public Integer loadData(final Integer fileId){
+	@Override
+	public Integer loadData(final Integer fileId) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-		
-		return getSession().createSQLQuery(loadDataQuery)
-				    		.setInteger("fileId", fileId)
-				    		.executeUpdate();
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipHospitalizationDetailsDao#getMbrHospitalizationDetailsPage(java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipHospitalizationDetailsDao#
+	 * getMbrHospitalizationDetailsPage(java.lang.Integer)
 	 */
 	public Pagination getMbrHospitalizationDetailsPage(final Integer mbrHosId) {
 
 		Criteria crit = createCriteria().createAlias("mbrHospitalization", "mbrHospitalization");
 		crit.createAlias("attPhysician", "attPhysician");
 		crit.createAlias("roomType", "roomType", JoinType.LEFT_OUTER_JOIN);
-		
+
 		crit.add(Restrictions.eq("mbrHospitalization.id", mbrHosId));
 		crit.add(Restrictions.eq("activeInd", new Character('Y')));
 

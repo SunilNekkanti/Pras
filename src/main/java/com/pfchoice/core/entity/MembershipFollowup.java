@@ -45,7 +45,7 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "followup_type_id", nullable = false, referencedColumnName = "id")
 	private FollowupType followupType;
-	
+
 	@Expose
 	@Column(name = "followup_details")
 	private String followupDetails;
@@ -54,7 +54,7 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_of_contact")
 	private Date dateOfContact;
-	
+
 	@Transient
 	private List<Map<Integer, String>> mbrHedisMeasureIds = new ArrayList<>();
 
@@ -110,7 +110,8 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param followupType the followupType to set
+	 * @param followupType
+	 *            the followupType to set
 	 */
 	public void setFollowupType(FollowupType followupType) {
 		this.followupType = followupType;
@@ -139,7 +140,8 @@ public class MembershipFollowup extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param dateOfContact the dateOfContact to set
+	 * @param dateOfContact
+	 *            the dateOfContact to set
 	 */
 	public void setDateOfContact(Date dateOfContact) {
 		this.dateOfContact = dateOfContact;

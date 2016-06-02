@@ -1,6 +1,5 @@
 package com.pfchoice.core.dao;
 
-
 import com.pfchoice.core.entity.Problem;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -33,7 +32,7 @@ public interface ProblemDao {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * 
 	 * @param pageNo
@@ -61,6 +60,5 @@ public interface ProblemDao {
 	 * @return
 	 */
 	Problem updateByUpdater(Updater<Problem> updater);
-	
-	
+
 }

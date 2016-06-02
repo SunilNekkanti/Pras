@@ -18,7 +18,7 @@ import com.pfchoice.springmvc.session.CustomAuthenticationSuccessHandler;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	Environment env;
 
@@ -28,19 +28,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * 
 	 */
-	/* (non-Javadoc)
-	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.WebSecurity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.config.annotation.web.configuration.
+	 * WebSecurityConfigurerAdapter#configure(org.springframework.security.
+	 * config.annotation.web.builders.WebSecurity)
 	 */
 	@Override
-	public void configure(WebSecurity web)  {
+	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/resources/**", "/index");
 	}
 
 	/**
 	 * 
 	 */
-	/* (non-Javadoc)
-	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.config.annotation.web.configuration.
+	 * WebSecurityConfigurerAdapter#configure(org.springframework.security.
+	 * config.annotation.web.builders.HttpSecurity)
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -67,12 +75,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * use below two lines when encoder is enabled in password
 	 * ShaPasswordEncoder encoder = new ShaPasswordEncoder();
 	 * auth.userDetailsService(authenticationService).passwordEncoder(encoder);
+	 * 
 	 * @param auth
 	 * @throws Exception
 	 */
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception  {
-		
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
 		auth.userDetailsService(authenticationService);
 	}
 }

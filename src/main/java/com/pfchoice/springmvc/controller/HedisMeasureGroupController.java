@@ -33,7 +33,7 @@ public class HedisMeasureGroupController {
 
 	@Autowired
 	private HedisMeasureGroupService hedisMeasureGroupService;
-	
+
 	/**
 	 * @return
 	 */
@@ -109,7 +109,7 @@ public class HedisMeasureGroupController {
 	public String updateUserAction(@PathVariable Integer id, @Validated HedisMeasureGroup hedisMeasureGroup,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		hedisMeasureGroup.setActiveInd('Y');
-		 logger.info("hedisMeasureGroup id is"+id);
+		logger.info("hedisMeasureGroup id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
 			return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
@@ -135,7 +135,7 @@ public class HedisMeasureGroupController {
 			"/user/hedisMeasureGroup/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated HedisMeasureGroup hedisMeasureGroup,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("hedisMeasureGroup id is"+id);
+		logger.info("hedisMeasureGroup id is" + id);
 		if (bindingResult.hasErrors()) {
 			hedisMeasureGroup.setActiveInd('Y');
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
@@ -173,10 +173,8 @@ public class HedisMeasureGroupController {
 	@RequestMapping(value = { "/admin/hedisMeasureGroup/list",
 			"/user/hedisMeasureGroup/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = hedisMeasureGroupService.getPage(pageNo, pageSize);
 

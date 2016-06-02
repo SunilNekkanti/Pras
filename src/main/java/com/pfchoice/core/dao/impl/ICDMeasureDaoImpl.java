@@ -3,7 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
@@ -20,7 +19,9 @@ import com.pfchoice.core.entity.ICDMeasure;
 @Repository
 public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> implements ICDMeasureDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ICDMeasureDao#getPage(int, int)
 	 */
 	@Override
@@ -29,9 +30,12 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ICDMeasureDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -60,7 +64,9 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ICDMeasureDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -68,8 +74,11 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ICDMeasureDao#save(com.pfchoice.core.entity.ICDMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#save(com.pfchoice.core.entity.
+	 * ICDMeasure)
 	 */
 	@Override
 	public ICDMeasure save(final ICDMeasure bean) {
@@ -77,7 +86,9 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ICDMeasureDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -89,7 +100,9 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

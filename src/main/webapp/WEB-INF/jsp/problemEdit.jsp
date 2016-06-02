@@ -164,12 +164,11 @@ $.ajax( {
 		</div>
 	</div>
 	<div class="panel-body" id="tablediv">
-		<springForm:form id="problem" method="POST"
-			commandName="problem"
-			action="${context}/problem/${id}/save.do"
-			class="form-horizontal" role="form">
+		<springForm:form id="problem" method="POST" commandName="problem"
+			action="${context}/problem/${id}/save.do" class="form-horizontal"
+			role="form">
 			<springForm:hidden path="id" />
-			
+
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="effYear">Effective
 					Year (YYYY)</label>
@@ -182,7 +181,7 @@ $.ajax( {
 						cssClass="error text-danger" />
 				</div>
 			</div>
-			
+
 			<div class="form-group required">
 				<label class="control-label   col-sm-2" for="description">Description</label>
 				<div class="col-sm-6">

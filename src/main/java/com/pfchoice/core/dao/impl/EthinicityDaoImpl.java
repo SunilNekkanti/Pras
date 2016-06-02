@@ -17,7 +17,9 @@ import com.pfchoice.core.entity.Ethinicity;
 @Repository
 public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implements EthinicityDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EthinicityDao#getPage(int, int)
 	 */
 	@Override
@@ -27,7 +29,9 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EthinicityDao#findById(java.lang.Byte)
 	 */
 	@Override
@@ -35,8 +39,11 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EthinicityDao#save(com.pfchoice.core.entity.Ethinicity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.EthinicityDao#save(com.pfchoice.core.entity.
+	 * Ethinicity)
 	 */
 	@Override
 	public Ethinicity save(final Ethinicity bean) {
@@ -44,7 +51,9 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EthinicityDao#deleteById(java.lang.Byte)
 	 */
 	@Override
@@ -56,7 +65,9 @@ public class EthinicityDaoImpl extends HibernateBaseDao<Ethinicity, Byte> implem
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

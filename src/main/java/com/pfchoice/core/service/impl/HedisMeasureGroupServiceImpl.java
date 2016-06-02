@@ -22,16 +22,24 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 	@Autowired
 	private HedisMeasureGroupDao hedisMeasureGroupDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public HedisMeasureGroup deleteById(final Integer id) {
 		return hedisMeasureGroupDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +47,9 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 		return hedisMeasureGroupDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.HedisMeasureGroupService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +58,24 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 		return hedisMeasureGroupDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#save(com.pfchoice.core.entity.HedisMeasureGroup)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#save(com.pfchoice.core
+	 * .entity.HedisMeasureGroup)
 	 */
 	@Override
 	public HedisMeasureGroup save(final HedisMeasureGroup bean) {
 		return hedisMeasureGroupDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureGroupService#update(com.pfchoice.core.entity.HedisMeasureGroup)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureGroupService#update(com.pfchoice.
+	 * core.entity.HedisMeasureGroup)
 	 */
 	@Override
 	public HedisMeasureGroup update(final HedisMeasureGroup bean) {

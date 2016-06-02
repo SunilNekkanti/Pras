@@ -36,13 +36,14 @@ public class RecordDetails {
 	@Expose
 	@Column(name = "active_ind", insertable = false)
 	private Character activeInd;
-	
+
 	/**
 	 * 
 	 */
-	public RecordDetails(){
+	public RecordDetails() {
 		super();
 	}
+
 	/**
 	 * @return the createdDate
 	 */

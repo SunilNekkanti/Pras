@@ -6,17 +6,17 @@ package com.pfchoice.common;
  * @author Sarath
  */
 public class Message {
-	
+
 	public static final String SUCCESS = "SUCCESS";
 
 	public static final String FAIL = "FAIL";
 
 	private String status = FAIL;
 
-	private String messages ;
+	private String messages;
 
-	private Object data ;
-	
+	private Object data;
+
 	/**
 	 * 
 	 */
@@ -62,7 +62,7 @@ public class Message {
 	public static Message successMessage(String messages, Object data) {
 		return new Message(SUCCESS, messages, data);
 	}
-	
+
 	/**
 	 * 
 	 * @return

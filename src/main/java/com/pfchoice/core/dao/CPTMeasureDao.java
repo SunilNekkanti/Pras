@@ -33,7 +33,6 @@ public interface CPTMeasureDao {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * 
 	 * @param pageNo

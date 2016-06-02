@@ -15,9 +15,12 @@ import com.pfchoice.core.entity.MembershipProblem;
  * @author Mohanasundharam
  */
 @Repository
-public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem, Integer> implements MembershipProblemDao {
+public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem, Integer>
+		implements MembershipProblemDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipProblemDao#getPage(int, int)
 	 */
 	@Override
@@ -26,29 +29,39 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProblemDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipProblemDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
 		Criteria crit = createCriteria();
-		
+
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProblemDao#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProblemDao#findById(java.lang.Integer)
 	 */
 	@Override
 	public MembershipProblem findById(final Integer id) {
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProblemDao#save(com.pfchoice.core.entity.Problem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProblemDao#save(com.pfchoice.core.entity.
+	 * Problem)
 	 */
 	@Override
 	public MembershipProblem save(final MembershipProblem bean) {
@@ -56,8 +69,11 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 		return bean;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProblemDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProblemDao#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public MembershipProblem deleteById(final Integer id) {
@@ -68,7 +84,9 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

@@ -39,22 +39,22 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", nullable = false, referencedColumnName = "mbr_id")
 	private Membership mbr;
-	
+
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pbm_id", nullable = false, referencedColumnName = "pbm_id")
 	private Problem pbm;
-	
+
 	@Expose
 	@Column(name = "start_date")
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
-	
+
 	@Expose
 	@Column(name = "resolved_date")
 	@Temporal(TemporalType.DATE)
 	private Date resolvedDate;
-	
+
 	/**
 	 * 
 	 */
@@ -92,7 +92,8 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param mbr
+	 *            the mbr to set
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
@@ -106,7 +107,8 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param pbm the pbm to set
+	 * @param pbm
+	 *            the pbm to set
 	 */
 	public void setPbm(Problem pbm) {
 		this.pbm = pbm;
@@ -120,7 +122,8 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
@@ -134,7 +137,8 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param resolvedDate the resolvedDate to set
+	 * @param resolvedDate
+	 *            the resolvedDate to set
 	 */
 	public void setResolvedDate(Date resolvedDate) {
 		this.resolvedDate = resolvedDate;

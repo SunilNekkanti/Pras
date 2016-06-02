@@ -19,9 +19,7 @@
 				<div class="tab-pane active" id="pending">
 					<div class="panel-group">
 						<div class="panel panel-success">
-							<div class="panel-heading">
-								Membership Hedis Measure
-							</div>
+							<div class="panel-heading">Membership Hedis Measure</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12">
 									<table id="tab" class="table table-striped table-hover">
@@ -66,9 +64,7 @@
 				<div class="tab-pane" id="completed">
 					<div class="panel-group">
 						<div class="panel panel-success">
-							<div class="panel-heading">
-								Membership Hedis Measure
-							</div>
+							<div class="panel-heading">Membership Hedis Measure</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12 ">
 									<table id="tab" class="table table-striped table-hover">

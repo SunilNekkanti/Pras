@@ -20,8 +20,11 @@ import com.pfchoice.core.entity.Provider;
 @Repository
 public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> implements ProviderDao {
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ProviderDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.ProviderDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -53,7 +56,9 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProviderDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -61,8 +66,11 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ProviderDao#save(com.pfchoice.core.entity.Provider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.ProviderDao#save(com.pfchoice.core.entity.Provider)
 	 */
 	@Override
 	public Provider save(final Provider bean) {
@@ -70,7 +78,9 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProviderDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -82,7 +92,9 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -90,7 +102,9 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		return Provider.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProviderDao#findByInsId(java.lang.Integer)
 	 */
 	@Override
@@ -105,12 +119,14 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 
 		return findByCriteria(crit, 0, 200);
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProviderDao#findByPrvdrNpi(java.lang.String)
 	 */
 	@Override
 	public Provider findByPrvdrNPI(String npi) {
-		return  findUniqueByProperty("code", npi);
+		return findUniqueByProperty("code", npi);
 	}
 }

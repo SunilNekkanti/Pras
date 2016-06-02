@@ -19,7 +19,9 @@ import com.pfchoice.core.entity.PlaceOfService;
 @Repository
 public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Integer> implements PlaceOfServiceDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */
 	@Override
@@ -28,9 +30,12 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -39,13 +44,12 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		if (sSearch != null && !"".equals(sSearch)) {
 			Disjunction or = Restrictions.disjunction();
 
-			or.add(Restrictions.ilike("code", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("name", "%" + sSearch + "%"))
+			or.add(Restrictions.ilike("code", "%" + sSearch + "%")).add(Restrictions.ilike("name", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("description", "%" + sSearch + "%"));
 			crit.add(or);
 		}
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		
+
 		if (sort != null && !"".equals(sort)) {
 			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				crit.addOrder(Order.desc(sort));
@@ -57,7 +61,9 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -65,8 +71,12 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#save(com.pfchoice.core.entity.PlaceOfService)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.PlaceOfServiceDao#save(com.pfchoice.core.entity.
+	 * PlaceOfService)
 	 */
 	@Override
 	public PlaceOfService save(final PlaceOfService bean) {
@@ -74,8 +84,11 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		return bean;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.PlaceOfServiceDao#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public PlaceOfService deleteById(final Integer id) {
@@ -86,7 +99,9 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -96,6 +111,6 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 
 	@Override
 	public PlaceOfService findByCode(final String code) {
-		return  findUniqueByProperty("code", code);
+		return findUniqueByProperty("code", code);
 	}
 }

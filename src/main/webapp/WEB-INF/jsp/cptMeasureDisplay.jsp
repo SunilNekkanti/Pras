@@ -32,8 +32,7 @@
 	<div class="panel with-nav-tabs panel-primary">
 		<div class="panel-heading">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#" >CPT
-						Measure</a></li>
+				<li class="active"><a href="#">CPT Measure</a></li>
 			</ul>
 		</div>
 		<div class="panel-body" id="tablediv">

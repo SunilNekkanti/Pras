@@ -38,13 +38,14 @@ import com.pfchoice.core.dao.impl.MembershipHospitalizationDaoImpl;
  *
  */
 public class PrasUtil {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(MembershipHospitalizationDaoImpl.class);
+
 	/**
 	 * 
 	 */
 	private PrasUtil() {
-		
+
 	}
 
 	/**
@@ -109,33 +110,37 @@ public class PrasUtil {
 
 		return effYearList;
 	}
-	
+
 	public static <T> String getInsertQuery(final Class<T> entityClass, final String queryType) {
 		String insertQuery = null;
 		String entityClassName = entityClass.getSimpleName();
-		try{
-			Path path = FileSystems.getDefault().getPath(SQL_DIRECTORY_PATH + entityClassName + queryType + SQL_QUERY_EXTN);
-			insertQuery =  new String(Files.readAllBytes(path.toAbsolutePath()), StandardCharsets.UTF_8);
-		}catch(IOException e){
-			LOG.warn("exception "+e.getCause());
+		try {
+			Path path = FileSystems.getDefault()
+					.getPath(SQL_DIRECTORY_PATH + entityClassName + queryType + SQL_QUERY_EXTN);
+			insertQuery = new String(Files.readAllBytes(path.toAbsolutePath()), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			LOG.warn("exception " + e.getCause());
 		}
 		return insertQuery;
 	}
-	
-	
-	public static void convertToCsv(List<Object[]> dataToExport, String  filename) throws  FileNotFoundException {
-		PrintWriter csvWriter = new PrintWriter(new File(filename)) ;
-        dataToExport.forEach(row -> {
-        	for(Object column : row ){
-        		if(column != null){
-        			csvWriter.print(column.toString()+",");
-        		}else{
-        			csvWriter.print(",");
-        		}
-        	}
-        	csvWriter.print("\n");
-        });
-        csvWriter.close();
-    }
-	
+
+	public static void convertToCsv(List<Object[]> dataToExport, String filename) throws FileNotFoundException {
+		PrintWriter csvWriter = new PrintWriter(new File(filename));
+		dataToExport.forEach(row -> {
+			for (Object column : row) {
+				if (column != null) {
+					csvWriter.print(column.toString() + ",");
+				} else {
+					csvWriter.print(",");
+				}
+			}
+			csvWriter.print("\n");
+		});
+		csvWriter.close();
+	}
+
+	public static void getHeapSize() {
+		long heapsize = Runtime.getRuntime().totalMemory();
+		System.out.println("heapsize is :: " + heapsize);
+	}
 }

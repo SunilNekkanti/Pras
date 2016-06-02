@@ -86,7 +86,6 @@ public class Contact extends RecordDetails implements Serializable {
 	@Column(name = "file_id")
 	private Integer fileId;
 
-
 	/**
 	 * 
 	 */

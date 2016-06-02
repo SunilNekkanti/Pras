@@ -99,7 +99,7 @@ public class ICDMeasureController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/icd/icdMeasureList", "/user/icd/icdMeasureList" }, method = RequestMethod.GET)
-	public String viewICDMeasureAction()  {
+	public String viewICDMeasureAction() {
 		logger.info("Returning view.jsp page after create");
 		return TileDefinitions.ICDMEASURELIST.toString();
 	}
@@ -115,10 +115,8 @@ public class ICDMeasureController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/icd/icdMeasureLists", "/user/icd/icdMeasureLists" }, method = RequestMethod.GET)
 	public Message getICDMeasureList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = icdMeasureService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
@@ -154,7 +152,7 @@ public class ICDMeasureController {
 	public String saveICDMeasureAction(@PathVariable Integer id,
 			@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-		logger.info("icd measurerule id is"+id);
+		logger.info("icd measurerule id is" + id);
 		icdMeasure.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  icdMeasureEdit.jsp page");
@@ -177,7 +175,7 @@ public class ICDMeasureController {
 	public String deleteICDMeasureAction(@PathVariable Integer id,
 			@ModelAttribute("icdMeasure") @Validated ICDMeasure icdMeasure, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-		logger.info("icd measurerule id is"+id);
+		logger.info("icd measurerule id is" + id);
 		if (bindingResult.hasErrors()) {
 			icdMeasure.setActiveInd('Y');
 			logger.info("Returning  icdMeasureEdit.jsp page");

@@ -22,16 +22,22 @@ public class HospitalServiceImpl implements HospitalService {
 	@Autowired
 	private HospitalDao hospitalDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HospitalService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HospitalService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public Hospital deleteById(final Integer id) {
 		return hospitalDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HospitalService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HospitalService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +45,9 @@ public class HospitalServiceImpl implements HospitalService {
 		return hospitalDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.HospitalService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +56,24 @@ public class HospitalServiceImpl implements HospitalService {
 		return hospitalDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HospitalService#save(com.pfchoice.core.entity.Hospital)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HospitalService#save(com.pfchoice.core.entity.
+	 * Hospital)
 	 */
 	@Override
 	public Hospital save(final Hospital bean) {
 		return hospitalDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HospitalService#update(com.pfchoice.core.entity.Hospital)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HospitalService#update(com.pfchoice.core.entity
+	 * .Hospital)
 	 */
 	@Override
 	public Hospital update(final Hospital bean) {
@@ -65,11 +81,14 @@ public class HospitalServiceImpl implements HospitalService {
 		return hospitalDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HospitalService#loadData(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HospitalService#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId){
+	public Integer loadData(final Integer fileId) {
 		return hospitalDao.loadData(fileId);
 	}
 }

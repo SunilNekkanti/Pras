@@ -22,16 +22,24 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 	@Autowired
 	private MembershipProblemDao mbrProblemDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProblemService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProblemService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public MembershipProblem deleteById(final Integer id) {
 		return mbrProblemDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProblemService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProblemService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +47,9 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 		return mbrProblemDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.MembershipProblemService#getPage(int, int)
 	 */
 	@Override
@@ -47,9 +57,12 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return mbrProblemDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProblemService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipProblemService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -58,16 +71,24 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 		return mbrProblemDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProblemService#save(com.pfchoice.core.entity.Problems)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProblemService#save(com.pfchoice.core
+	 * .entity.Problems)
 	 */
 	@Override
 	public MembershipProblem save(final MembershipProblem bean) {
 		return mbrProblemDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipProblemService#update(com.pfchoice.core.entity.Problems)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipProblemService#update(com.pfchoice.
+	 * core.entity.Problems)
 	 */
 	@Override
 	public MembershipProblem update(final MembershipProblem bean) {

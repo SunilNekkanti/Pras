@@ -50,10 +50,12 @@ import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.AttPhysicianService;
+import com.pfchoice.core.service.FacilityTypeService;
 import com.pfchoice.core.service.FileService;
 import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.FollowupTypeService;
 import com.pfchoice.core.service.HospitalService;
+import com.pfchoice.core.service.MembershipClaimDetailsService;
 import com.pfchoice.core.service.MembershipClaimService;
 import com.pfchoice.core.service.MembershipFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
@@ -80,6 +82,9 @@ public class ReportsController {
 	private AttPhysicianService attPhysicianService;
 
 	@Autowired
+	private FacilityTypeService facilityTypeService;
+
+	@Autowired
 	private FileService fileService;
 
 	@Autowired
@@ -90,6 +95,9 @@ public class ReportsController {
 
 	@Autowired
 	private MembershipService membershipService;
+
+	@Autowired
+	private MembershipClaimDetailsService mbrClaimDetailsService;
 
 	@Autowired
 	private MembershipClaimService mbrClaimService;
@@ -261,13 +269,12 @@ public class ReportsController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/reports/hospitalization/fileProcessing.do",
-			"/user/reports/hospitalization/fileProcessing.do" ,
-			"/admin/reports/claim/fileProcessing.do",
+			"/user/reports/hospitalization/fileProcessing.do", "/admin/reports/claim/fileProcessing.do",
 			"/user/reports/claim/fileProcessing.do" })
 	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
-			HttpServletRequest request) throws InvalidFormatException,FileNotFoundException,IOException{
+			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
 		LOG.info("started file processsing");
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
@@ -293,15 +300,16 @@ public class ReportsController {
 		}
 		LOG.info("before file processing");
 		String forwardToClaimOrHospital = null;
-		
-		if(claimOrHospital == HOSPITALIZATION){
+
+		if (claimOrHospital == HOSPITALIZATION) {
 			LOG.info("forwarding to hospitalization");
-			forwardToClaimOrHospital=	"forward:/admin/membershipHospitalization/list?fileName=" + newSourceFile.getName();
-		} else if(claimOrHospital == CLAIM){
+			forwardToClaimOrHospital = "forward:/admin/membershipHospitalization/list?fileName="
+					+ newSourceFile.getName();
+		} else if (claimOrHospital == CLAIM) {
 			LOG.info("forwarding to claims");
-			forwardToClaimOrHospital=	"forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
+			forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
 		}
-		
+
 		return forwardToClaimOrHospital;
 	}
 
@@ -404,7 +412,7 @@ public class ReportsController {
 			return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, loadedData);
 		}
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -417,17 +425,17 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(pagination));
 	}
-	
+
 	/**
 	 * @return
 	 */
-	
+
 	@RequestMapping(value = { "/admin/reports/hospitalization/{mbrHosId}", "/user/reports/hospitalization/{mbrHosId}" })
 	public String handleHospitalizationRequest(@PathVariable Integer mbrHosId, Model model) {
 		model.addAttribute("mbrHosId", mbrHosId);
 		return "membershipHospitalizationDetails";
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -458,15 +466,13 @@ public class ReportsController {
 			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo,
 			@RequestParam(required = true) Integer processClaim) {
 
-		Pagination pagination = membershipService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
-				sortdir, processFrom, processTo, processClaim);
+		Pagination pagination = membershipService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
+				sort, sortdir, processFrom, processTo, processClaim);
 
-		return Message.successMessage(CommonMessageContent.CLAIM_FOLLOWUP_LIST,
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST,
 				JsonConverter.getJsonObject(pagination));
 	}
-	
-	
-	
+
 	/**
 	 * @param mbrId
 	 * @param model
@@ -481,7 +487,7 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(dbMbrHospitalizationFollowup));
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -527,23 +533,34 @@ public class ReportsController {
 			}
 
 			LOG.info("processing  membershipClaim data");
-		/*	Integer attPhysicianLoadedData = attPhysicianService.loadData(fileId);
-			Integer mbrClaimUpdatedData = mbrClaimService.updateData(fileId);
+			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId);
 			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId);
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId);
-			LOG.info("hosLoadedData " + hosLoadedData);
-			LOG.info("attPhysicianLoadedData " + attPhysicianLoadedData);
-			LOG.info("membershipClaimUpdatedData " + mbrClaimUpdatedData);
+			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
-			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
-			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);*/
+			/*
+			 * Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
+			 * LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
+			 */
 			LOG.info("processed  membershipClaim data");
 
 			LOG.info("returning membershipClaimList");
-			return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST, loadedData);
+			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
 		}
 	}
-	
+
+	/**
+	 * @return
+	 */
+
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipClaimDetails/{mbrClaimId}/list",
+			"/user/reports/membershipClaimDetails/{mbrClaimId}/list" })
+	public Message viewClaimMembershipDetailsList(@PathVariable Integer mbrClaimId) {
+		Pagination pagination = mbrClaimDetailsService.getMbrClaimDetailsPage(mbrClaimId);
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIM_DETAILS_LIST,
+				JsonConverter.getJsonObject(pagination));
+	}
 
 }

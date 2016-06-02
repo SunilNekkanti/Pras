@@ -3,7 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -18,7 +17,9 @@ import com.pfchoice.core.entity.Gender;
 @Repository
 public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements GenderDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.GenderDao#getPage(int, int)
 	 */
 	@Override
@@ -28,7 +29,9 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.GenderDao#findById(java.lang.Byte)
 	 */
 	@Override
@@ -36,8 +39,11 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.GenderDao#save(com.pfchoice.core.entity.Gender)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.GenderDao#save(com.pfchoice.core.entity.Gender)
 	 */
 	@Override
 	public Gender save(final Gender bean) {
@@ -45,7 +51,9 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.GenderDao#deleteById(java.lang.Byte)
 	 */
 	@Override
@@ -57,7 +65,9 @@ public class GenderDaoImpl extends HibernateBaseDao<Gender, Byte> implements Gen
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

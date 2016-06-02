@@ -22,16 +22,23 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 	@Autowired
 	private PlaceOfServiceDao placeOfServiceDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlaceOfServiceService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlaceOfServiceService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public PlaceOfService deleteById(final Integer id) {
 		return placeOfServiceDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlaceOfServiceService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.PlaceOfServiceService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +46,9 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 		return placeOfServiceDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.PlaceOfServiceService#getPage(int, int)
 	 */
 	@Override
@@ -47,9 +56,12 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return placeOfServiceDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlaceOfServiceService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.PlaceOfServiceService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -58,16 +70,24 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 		return placeOfServiceDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlaceOfServiceService#save(com.pfchoice.core.entity.PlaceOfService)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlaceOfServiceService#save(com.pfchoice.core.
+	 * entity.PlaceOfService)
 	 */
 	@Override
 	public PlaceOfService save(final PlaceOfService bean) {
 		return placeOfServiceDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlaceOfServiceService#update(com.pfchoice.core.entity.PlaceOfService)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlaceOfServiceService#update(com.pfchoice.core.
+	 * entity.PlaceOfService)
 	 */
 	@Override
 	public PlaceOfService update(final PlaceOfService bean) {
@@ -75,8 +95,12 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 		return placeOfServiceDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlaceOfServiceService#findByCode(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlaceOfServiceService#findByCode(java.lang.
+	 * String)
 	 */
 	@Override
 	@Transactional(readOnly = true)

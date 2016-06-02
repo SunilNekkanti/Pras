@@ -108,7 +108,6 @@ public class Provider extends RecordDetails implements Serializable {
 		this.name = name;
 	}
 
-
 	/**
 	 * @return the refContact
 	 */

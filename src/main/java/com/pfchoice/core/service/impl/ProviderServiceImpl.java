@@ -22,16 +22,22 @@ public class ProviderServiceImpl implements ProviderService {
 	@Autowired
 	private ProviderDao providerDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProviderService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProviderService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public Provider deleteById(final Integer id) {
 		return providerDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProviderService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProviderService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,8 +45,11 @@ public class ProviderServiceImpl implements ProviderService {
 		return providerDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProviderService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ProviderService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -49,16 +58,24 @@ public class ProviderServiceImpl implements ProviderService {
 		return providerDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProviderService#save(com.pfchoice.core.entity.Provider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProviderService#save(com.pfchoice.core.entity.
+	 * Provider)
 	 */
 	@Override
 	public Provider save(final Provider bean) {
 		return providerDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProviderService#update(com.pfchoice.core.entity.Provider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProviderService#update(com.pfchoice.core.entity
+	 * .Provider)
 	 */
 	@Override
 	public Provider update(final Provider bean) {
@@ -66,15 +83,17 @@ public class ProviderServiceImpl implements ProviderService {
 		return providerDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ProviderService#findByInsId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ProviderService#findByInsId(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination findByInsId(final Integer id) {
 		return providerDao.findByInsId(id);
 	}
-	
 
 	/**
 	 * @param id
@@ -84,9 +103,9 @@ public class ProviderServiceImpl implements ProviderService {
 	@Override
 	public boolean isUniquePrvdrNPI(Integer id, String npi) {
 		Provider prvdr = findByPrvdrNPI(npi);
-		return ( prvdr == null || ((id != null) && (prvdr.getId() == id)));
+		return (prvdr == null || ((id != null) && (prvdr.getId() == id)));
 	}
-	
+
 	/**
 	 * @param npi
 	 * @return

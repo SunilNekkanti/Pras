@@ -20,7 +20,9 @@ import com.pfchoice.core.entity.Hospital;
 @Repository
 public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> implements HospitalDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */
 	@Override
@@ -30,7 +32,9 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -38,8 +42,11 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.Hospital)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.Hospital)
 	 */
 	@Override
 	public Hospital save(final Hospital bean) {
@@ -47,7 +54,9 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -59,25 +68,26 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
 	protected Class<Hospital> getEntityClass() {
 		return Hospital.class;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#loadData(java.lang.Integer)
 	 */
 	@Override
 	public Integer loadData(final Integer fileId) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-		
-		return getSession().createSQLQuery(loadDataQuery)
-				    		.setInteger("fileId", fileId)
-				    		.executeUpdate();
-	}
 
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
+	}
 
 }

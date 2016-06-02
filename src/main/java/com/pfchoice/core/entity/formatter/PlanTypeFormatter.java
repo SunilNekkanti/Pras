@@ -16,16 +16,22 @@ public class PlanTypeFormatter implements Formatter<PlanType> {
 	@Autowired
 	private PlanTypeService planTypeService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Printer#print(java.lang.Object,
+	 * java.util.Locale)
 	 */
 	@Override
 	public String print(PlanType planType, Locale arg1) {
 		return planType.getCode();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Parser#parse(java.lang.String,
+	 * java.util.Locale)
 	 */
 	@Override
 	public PlanType parse(String id, Locale arg1) throws ParseException {

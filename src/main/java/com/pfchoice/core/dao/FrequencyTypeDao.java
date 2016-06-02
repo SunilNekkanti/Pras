@@ -32,7 +32,7 @@ public interface FrequencyTypeDao {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * 
 	 * @param pageNo

@@ -16,7 +16,9 @@ import com.pfchoice.core.entity.FileType;
 @Repository
 public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> implements FileTypeDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileTypeDao#getPage(int, int)
 	 */
 	@Override
@@ -26,7 +28,9 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileTypeDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -34,8 +38,11 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.FileTypeDao#save(com.pfchoice.core.entity.FileType)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.FileTypeDao#save(com.pfchoice.core.entity.FileType)
 	 */
 	@Override
 	public FileType save(final FileType bean) {
@@ -43,7 +50,9 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileTypeDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -55,7 +64,9 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -63,11 +74,13 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 		return FileType.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileTypeDao#findByCode(java.lang.String)
 	 */
 	@Override
 	public FileType findByCode(final String code) {
-		return  findUniqueByProperty("code", code);
+		return findUniqueByProperty("description", code);
 	}
 }

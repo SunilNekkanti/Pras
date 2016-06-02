@@ -54,5 +54,4 @@ public interface FollowupTypeDao {
 	 */
 	FollowupType findByCode(String code);
 
-	
 }

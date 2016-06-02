@@ -23,7 +23,9 @@ import com.pfchoice.core.entity.Problem;
 @Repository
 public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implements ProblemDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProblemDao#getPage(int, int)
 	 */
 	@Override
@@ -32,14 +34,17 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ProblemDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.ProblemDao#getPage(int, int, java.lang.String,
+	 * java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir, final Integer insId, final Integer effYear) {
-		
+
 		Criteria crit = createCriteria();
 
 		Conjunction and = Restrictions.conjunction();
@@ -73,8 +78,9 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProblemDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -82,8 +88,11 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ProblemDao#save(com.pfchoice.core.entity.Problem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.ProblemDao#save(com.pfchoice.core.entity.Problem)
 	 */
 	@Override
 	public Problem save(final Problem bean) {
@@ -91,7 +100,9 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ProblemDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -103,7 +114,9 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

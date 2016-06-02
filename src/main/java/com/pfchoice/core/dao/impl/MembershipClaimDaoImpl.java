@@ -5,7 +5,6 @@ import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
 
-
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -30,8 +29,10 @@ import com.pfchoice.core.entity.MembershipClaim;
 public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, Integer> implements MembershipClaimDao {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MembershipClaimDaoImpl.class);
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */
 	@Override
@@ -41,7 +42,9 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -49,8 +52,11 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.MembershipClaim)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.
+	 * MembershipClaim)
 	 */
 	@Override
 	public MembershipClaim save(final MembershipClaim bean) {
@@ -58,7 +64,9 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -70,7 +78,9 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -78,49 +88,53 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		return MembershipClaim.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
 	public Integer loadDataCSV2Table(String fileName) {
-		
+
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
-		return getSession().createSQLQuery(loadDataQuery)
-							.setString("file", FILES_UPLOAD_DIRECTORY_PATH+fileName)
-				    		.executeUpdate();
+		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
+				.executeUpdate();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
 	public Boolean isDataExists() {
-		boolean returnvalue =false;
-		String sql = "SELECT count(*) FROM csv2AmgHospitalization";
-		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql)
-				                   .uniqueResult()).intValue() ;
-		if(rowCount > 0){
+		boolean returnvalue = false;
+		String sql = "SELECT count(*) FROM csv2Table_Amg_Claim";
+		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql).uniqueResult()).intValue();
+		if (rowCount > 0) {
 			returnvalue = true;
-		}else{
+		} else {
 			returnvalue = false;
 		}
-		
+
 		return returnvalue;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
-	@Override 
-	public Integer loadData(final Integer fileId){
+	@Override
+	public Integer loadData(final Integer fileId) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-		
-		return getSession().createSQLQuery(loadDataQuery)
-				    					.setInteger("fileId", fileId)
-				    					.executeUpdate();
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#unloadCSV2Table()
 	 */
 	@Override
@@ -128,22 +142,19 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		Session session = getSession();
 		int rowsAffected = 0;
 
-		try{
-			rowsAffected =  session.createSQLQuery("TRUNCATE TABLE csv2AmgHospitalization")
-						.executeUpdate();
-		}catch(Exception e){
-			LOG.warn("exception "+e.getCause());
+		try {
+			rowsAffected = session.createSQLQuery("TRUNCATE TABLE csv2Table_Amg_Claim").executeUpdate();
+		} catch (Exception e) {
+			LOG.warn("exception " + e.getCause());
 		}
 		return rowsAffected;
 	}
-	
-	@Override 
-	public Integer updateData(final Integer fileId){
+
+	@Override
+	public Integer updateData(final Integer fileId) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_UPDATE);
-		
-		return getSession().createSQLQuery(loadDataQuery)
-				    					.setInteger("fileId", fileId)
-				    					.executeUpdate();
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
 
 }

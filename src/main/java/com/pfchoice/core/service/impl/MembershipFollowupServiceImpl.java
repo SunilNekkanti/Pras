@@ -24,16 +24,24 @@ public class MembershipFollowupServiceImpl implements MembershipFollowupService 
 	@Autowired
 	private MembershipFollowupDao mbrHedisFollowupDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipHedisFollowupService#deleteById(java.
+	 * lang.Integer)
 	 */
 	@Override
 	public MembershipFollowup deleteById(final Integer id) {
 		return mbrHedisFollowupDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipHedisFollowupService#findById(java.
+	 * lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -41,8 +49,12 @@ public class MembershipFollowupServiceImpl implements MembershipFollowupService 
 		return mbrHedisFollowupDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#getPage(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipHedisFollowupService#getPage(int,
+	 * int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -50,16 +62,22 @@ public class MembershipFollowupServiceImpl implements MembershipFollowupService 
 		return mbrHedisFollowupDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#save(com.pfchoice.core.entity.MembershipHedisFollowup)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#save(com.
+	 * pfchoice.core.entity.MembershipHedisFollowup)
 	 */
 	@Override
 	public MembershipFollowup save(final MembershipFollowup bean) {
 		return mbrHedisFollowupDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#update(com.pfchoice.core.entity.MembershipHedisFollowup)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#update(com.
+	 * pfchoice.core.entity.MembershipHedisFollowup)
 	 */
 	@Override
 	public MembershipFollowup update(final MembershipFollowup bean) {
@@ -67,11 +85,15 @@ public class MembershipFollowupServiceImpl implements MembershipFollowupService 
 		return mbrHedisFollowupDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipHedisFollowupService#findAllByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipHedisFollowupService#findAllByMbrId(
+	 * java.lang.Integer)
 	 */
 	@Override
 	public List<MembershipFollowup> findAllByMbrId(final Integer id, final String followupTypeCode) {
-		return mbrHedisFollowupDao.findAllByMbrId(id, followupTypeCode );
+		return mbrHedisFollowupDao.findAllByMbrId(id, followupTypeCode);
 	}
 }

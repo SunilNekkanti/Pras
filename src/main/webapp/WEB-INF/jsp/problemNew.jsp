@@ -129,7 +129,7 @@ $.ajax( {
 			action="${context}/problem/save.do" class="form-horizontal"
 			role="form">
 			<springForm:hidden path="id" />
-			
+
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="effYear">Effective
 					Year (YYYY)</label>

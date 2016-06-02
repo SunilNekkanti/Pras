@@ -16,7 +16,9 @@ import com.pfchoice.core.entity.File;
 @Repository
 public class FileDaoImpl extends HibernateBaseDao<File, Integer> implements FileDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileDao#getPage(int, int)
 	 */
 	@Override
@@ -27,7 +29,9 @@ public class FileDaoImpl extends HibernateBaseDao<File, Integer> implements File
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -35,7 +39,9 @@ public class FileDaoImpl extends HibernateBaseDao<File, Integer> implements File
 		return get(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileDao#save(com.pfchoice.core.entity.File)
 	 */
 	@Override
@@ -44,7 +50,9 @@ public class FileDaoImpl extends HibernateBaseDao<File, Integer> implements File
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FileDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -56,7 +64,9 @@ public class FileDaoImpl extends HibernateBaseDao<File, Integer> implements File
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

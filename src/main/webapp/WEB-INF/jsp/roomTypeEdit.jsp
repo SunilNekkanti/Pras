@@ -23,21 +23,21 @@
 					<label class="control-label  col-sm-2" for="code">Code</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
-						<springForm:input path="code" class="form-control"
-							id="code" placeholder="code" />
+						<springForm:input path="code" class="form-control" id="code"
+							placeholder="code" />
 						<springForm:errors path="code" cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="form-group required col-sm-12">
 					<label class="control-label  col-sm-2" for="name">Name</label>
 					<div class="col-sm-6">
-						<springForm:input path="name" class="form-control"
-							id="name" placeholder="Name" />
+						<springForm:input path="name" class="form-control" id="name"
+							placeholder="Name" />
 						<springForm:errors path="name" cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="form-group required col-sm-12">
 					<label class="control-label  col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">

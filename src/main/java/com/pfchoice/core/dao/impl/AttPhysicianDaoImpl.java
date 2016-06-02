@@ -13,8 +13,6 @@ import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.AttPhysicianDao;
 import com.pfchoice.core.entity.AttPhysician;
 
-
-
 /**
  *
  * @author Sarath
@@ -22,7 +20,9 @@ import com.pfchoice.core.entity.AttPhysician;
 @Repository
 public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer> implements AttPhysicianDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */
 	@Override
@@ -32,7 +32,9 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.AttPhysicianDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -40,8 +42,11 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.AttPhysicianDao#save(com.pfchoice.core.entity.AttPhysician)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.AttPhysicianDao#save(com.pfchoice.core.entity.
+	 * AttPhysician)
 	 */
 	@Override
 	public AttPhysician save(final AttPhysician bean) {
@@ -49,7 +54,9 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.AttPhysicianDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -61,7 +68,9 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -69,16 +78,16 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		return AttPhysician.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.AttPhysicianDao#loadData(java.lang.Integer)
 	 */
 	@Override
 	public Integer loadData(final Integer fileId) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-			
-		return getSession().createSQLQuery(loadDataQuery)
-				    		.setInteger("fileId", fileId)
-				    		.executeUpdate();
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
 
 }

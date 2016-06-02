@@ -80,8 +80,8 @@ public class RoomTypeController {
 	 */
 	@RequestMapping(value = { "/admin/roomType/save.do",
 			"/user/roomType/save.do" }, method = RequestMethod.POST, params = { "add" })
-	public String newUserAction(@ModelAttribute("roomType") @Validated PlaceOfService roomType, BindingResult bindingResult,
-			Model model, @ModelAttribute("username") String username) {
+	public String newUserAction(@ModelAttribute("roomType") @Validated PlaceOfService roomType,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning roomTypeEdit.jsp page");
 			return TileDefinitions.ROOMTYPENEW.toString();
@@ -105,15 +105,15 @@ public class RoomTypeController {
 	 */
 	@RequestMapping(value = { "/admin/roomType/{id}/save.do",
 			"/user/roomType/{id}/save.do" }, method = RequestMethod.POST, params = { "update" })
-	public String updateUserAction(@PathVariable Integer id, @Validated PlaceOfService roomType, BindingResult bindingResult,
-			Model model, @ModelAttribute("username") String username) {
+	public String updateUserAction(@PathVariable Integer id, @Validated PlaceOfService roomType,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		roomType.setActiveInd('Y');
-		 logger.info("room type id is"+id);
+		logger.info("room type id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning roomTypeEdit.jsp page");
 			return TileDefinitions.ROOMTYPEEDIT.toString();
 		}
-		if (roomType.getId()  !=  null  ) {
+		if (roomType.getId() != null) {
 			logger.info("Returning roomTypeEditSuccess.jsp page after update");
 			roomType.setUpdatedBy(username);
 			roomTypeService.update(roomType);
@@ -134,7 +134,7 @@ public class RoomTypeController {
 			"/user/roomType/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated PlaceOfService roomType,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		 logger.info("room type id is"+id);
+		logger.info("room type id is" + id);
 		if (bindingResult.hasErrors()) {
 			roomType.setActiveInd('Y');
 			logger.info("Returning roomTypeEdit.jsp page");
@@ -171,10 +171,8 @@ public class RoomTypeController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/roomType/list", "/user/roomType/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize,
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false) String sortdir){
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = roomTypeService.getPage(pageNo, pageSize);
 

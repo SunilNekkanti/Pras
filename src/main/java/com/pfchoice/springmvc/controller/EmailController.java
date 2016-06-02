@@ -1,6 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
-import static  com.pfchoice.common.SystemDefaultProperties.EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH;
+import static com.pfchoice.common.SystemDefaultProperties.EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH;
 
 import java.util.List;
 import java.util.Map;
@@ -44,28 +44,24 @@ public class EmailController {
 	private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 
 	@Autowired
-	ApplicationMailer  applicationMailer;
-	
+	ApplicationMailer applicationMailer;
+
 	@Autowired
 	private EmailService emailService;
-	
+
 	@Autowired
 	private EmailTemplateService emailTemplateService;
-	
+
 	/**
-
-	@Autowired
-	@Qualifier("insuranceValidator")
-	private Validator validator;
-
-	
-	  @param binder
-	
-	@InitBinder("insurance")
-	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
-	}
-	
+	 * 
+	 * @Autowired @Qualifier("insuranceValidator") private Validator validator;
+	 * 
+	 * 
+	 * @param binder
+	 * 
+	 * 			@InitBinder("insurance") public void initBinder(WebDataBinder
+	 *            binder) { binder.setValidator(validator); }
+	 * 
 	 */
 
 	/**
@@ -75,13 +71,12 @@ public class EmailController {
 	public Email createEmailModel() {
 		return new Email();
 	}
-	
+
 	/**
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/emailList",
-			"/user/email/emailList" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/emailList", "/user/email/emailList" }, method = RequestMethod.GET)
 	public String viewEmailAction() {
 
 		logger.info("Returning view.jsp page after create");
@@ -97,8 +92,7 @@ public class EmailController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/admin/email/list",
-			"/user/emailTemplate/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/email/list", "/user/emailTemplate/list" }, method = RequestMethod.GET)
 	public Message viewEmailTemplateList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
@@ -107,7 +101,6 @@ public class EmailController {
 		return Message.successMessage(CommonMessageContent.EMAIL_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
-	
 	/**
 	 * @param model
 	 * @return
@@ -119,7 +112,7 @@ public class EmailController {
 		email.setEmailFrom(applicationMailer.getEmailId());
 		email.setEmailCc(applicationMailer.getCc());
 		model.addAttribute("email", email);
-		
+
 		return TileDefinitions.EMAILNEW.toString();
 	}
 
@@ -149,13 +142,14 @@ public class EmailController {
 	 */
 	@RequestMapping(value = { "/admin/email/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String newEmailAction(@Validated Email email, BindingResult bindingResult, Model model,
-			@ModelAttribute("username") String username, @RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
+			@ModelAttribute("username") String username,
+			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning email Template Edit.jsp page");
 			return TileDefinitions.EMAILNEW.toString();
 		}
-		
+
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			FilesUpload uploadFile = new FilesUpload();
 			uploadFile.setFileName(fileUpload.getOriginalFilename());
@@ -165,23 +159,22 @@ public class EmailController {
 			uploadFile.setUpdatedBy(username);
 			logger.info("Returning File Upload Success.jsp page after create");
 		}
-		
-		
+
 		logger.info("Returning Email Template Success.jsp page after create");
 		model.addAttribute("email", email);
 		email.setCreatedBy(username);
 		email.setUpdatedBy(username);
 		emailService.save(email);
-		
+
 		String subject = email.getEmailTemplate().getDescription();
 		String content = email.getBody();
-		String fileName =   EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH + fileUpload.getOriginalFilename();
+		String fileName = EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH + fileUpload.getOriginalFilename();
 		String to = "skumar@pfchoice.com";
 		model.addAttribute("Message", "Generated Email successfully");
-		
-		applicationMailer.sendMailWithAttachment(to,subject,content, fileName);
+
+		applicationMailer.sendMailWithAttachment(to, subject, content, fileName);
 		model.addAttribute("Message", "Generated Email sent successfully");
-		
+
 		return TileDefinitions.EMAILLIST.toString();
 	}
 
@@ -190,8 +183,7 @@ public class EmailController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/email/{id}/details",
-			"/user/email/{id}/details" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/email/{id}/details", "/user/email/{id}/details" }, method = RequestMethod.GET)
 	public String viewProviderPage(@PathVariable Integer id, Model model) {
 
 		Email dbEmail = emailService.findById(id);
@@ -258,7 +250,7 @@ public class EmailController {
 	public Map<String, String> populateActiveIndList() {
 		return PrasUtil.getActiveIndMap();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@ModelAttribute("emailTemplateList")
 	public List<EmailTemplate> populateInsuranceList() {

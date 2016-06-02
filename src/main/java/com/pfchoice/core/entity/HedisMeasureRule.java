@@ -33,7 +33,8 @@ import com.google.gson.annotations.Expose;
  */
 @Entity
 @Table(name = "hedis_measure_rule")
-@DynamicUpdate(value=true)
+@DynamicUpdate
+@SelectBeforeUpdate
 public class HedisMeasureRule extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,7 +54,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
 	private Insurance insId;
-	
+
 	@Expose
 	@Column(name = "cpt_or_icd")
 	private Byte cptOrIcd;
@@ -79,39 +80,39 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable=true,name = "gender_id", referencedColumnName = "gender_id")
+	@JoinColumn(name = "gender_id", referencedColumnName = "gender_id")
 	private Gender genderId;
-	
+
 	@Expose
-	@Column(nullable=true,name = "lower_age_limit")
+	@Column(name = "lower_age_limit")
 	private BigDecimal lowerAgeLimit;
 
 	@Expose
-	@Column(nullable=true,name = "upper_age_limit")
+	@Column(name = "upper_age_limit")
 	private BigDecimal upperAgeLimit;
 
 	@Expose
 	@Column(name = "dose_count")
 	private Integer doseCount;
-	
+
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "frequency_type_code", referencedColumnName = "code")
 	private FrequencyType frequencyType;
-	
+
 	@Expose
-	@OneToOne(optional = true)
-	@JoinColumn(nullable = true, name = "problem_id", referencedColumnName = "pbm_Id")
+	@OneToOne
+	@JoinColumn(name = "problem_id", referencedColumnName = "pbm_Id")
 	private Problem pbm;
 
 	@Expose
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=true, name = "age_effective_from")
+	@Column(name = "age_effective_from")
 	private Date ageEffectiveFrom;
 
 	@Expose
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=true,name = "age_effective_to")
+	@Column(name = "age_effective_to")
 	private Date ageEffectiveTo;
 
 	@Expose
@@ -192,8 +193,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	public void setInsId(Insurance insId) {
 		this.insId = insId;
 	}
-	
-	
+
 	/**
 	 * @return the cptOrIcd
 	 */
@@ -202,7 +202,8 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param cptOrIcd the cptOrIcd to set
+	 * @param cptOrIcd
+	 *            the cptOrIcd to set
 	 */
 	public void setCptOrIcd(Byte cptOrIcd) {
 		this.cptOrIcd = cptOrIcd;
@@ -327,7 +328,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	public void setDoseCount(Integer doseCount) {
 		this.doseCount = doseCount;
 	}
-	
+
 	/**
 	 * @return the frequencyType
 	 */
@@ -336,12 +337,13 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param frequencyType the frequencyType to set
+	 * @param frequencyType
+	 *            the frequencyType to set
 	 */
 	public void setFrequencyType(FrequencyType frequencyType) {
 		this.frequencyType = frequencyType;
 	}
-	
+
 	/**
 	 * @return the pbm
 	 */
@@ -350,7 +352,8 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param pbm the pbm to set
+	 * @param pbm
+	 *            the pbm to set
 	 */
 	public void setPbm(Problem pbm) {
 		this.pbm = pbm;

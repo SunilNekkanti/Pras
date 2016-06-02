@@ -170,18 +170,15 @@
 				</div>
 
 				<div class="form-group">
-				       <label class="control-label col-sm-2" for="filesUpload">Attachment</label>
-				       <div class="col-sm-8">
-				        <span class="btn btn-danger btn-file btn-sm">  <input
-				         type="file" class="file" name="fileUpload"  id="fileUpload">
-				        </span>
-				        
-				        
-				          <a href="#" onclick="fileDownload('C:\Softwares\test.csv')"><span
-				           class="glyphicon glyphicon-paperclip"></span></a>
-			       		</div>
-			    </div>
-      
+					<label class="control-label col-sm-2" for="filesUpload">Attachment</label>
+					<div class="col-sm-8">
+						<span class="btn btn-danger btn-file btn-sm"> <input
+							type="file" class="file" name="fileUpload" id="fileUpload">
+						</span> <a href="#" onclick="fileDownload('C:\Softwares\test.csv')"><span
+							class="glyphicon glyphicon-paperclip"></span></a>
+					</div>
+				</div>
+
 				<div class="col-sm-12">
 					<div class="col-sm-offset-2 col-sm-9">
 						<c:choose>
@@ -204,9 +201,7 @@
 		</div>
 	</div>
 </div>
-<div id="load">
-
-</div>
+<div id="load"></div>
 <div id="prvdrEmail" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
 

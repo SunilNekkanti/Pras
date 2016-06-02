@@ -45,8 +45,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Autowired
 	UserService userService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.
+	 * servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * java.lang.Object)
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -109,8 +113,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		return StringUtils.equals(username, login) && StringUtils.equals(credential, password);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.
+	 * servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * java.lang.Object, org.springframework.web.servlet.ModelAndView)
 	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -120,8 +128,13 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 				request.getRemoteAddr()));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.
+	 * servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * java.lang.Object, java.lang.Exception)
 	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)

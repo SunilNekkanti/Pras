@@ -78,7 +78,7 @@ public class ContactController {
 	public void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -102,7 +102,8 @@ public class ContactController {
 	@ModelAttribute("stateList")
 	public List<State> populateStateList() {
 
-		Pagination page = stateService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO , SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		Pagination page = stateService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<State>) page.getList();
 	}
 
@@ -123,10 +124,10 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/membership/{id}/contact/new", "/user/membership/{id}/contact/new" })
 	public String addContactPage(@PathVariable Integer id, Model model) {
-		logger.info("membership id is"+id);
+		logger.info("membership id is" + id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
-		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString(); 
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 	}
 
 	/**
@@ -138,7 +139,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/membership/{id}/contact/{cntId}",
 			"/user/membership/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateMembershipContact1Page(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
-		logger.info("membership id is"+id);
+		logger.info("membership id is" + id);
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();
@@ -162,7 +163,7 @@ public class ContactController {
 	public String displayMembershipContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
 		Contact dbContact = contactService.findById(cntId);
 		logger.info("Returning contact.getId()" + dbContact.getId());
-		logger.info("membership id is"+id);
+		logger.info("membership id is" + id);
 		final Integer stateId = dbContact.getStateCode().getCode();
 		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
 		model.addAttribute("zipCodeList", zipCodeList);
@@ -197,7 +198,7 @@ public class ContactController {
 			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("membership id is"+id);
+		logger.info("membership id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
@@ -236,7 +237,7 @@ public class ContactController {
 			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String saveMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("membership id is"+id);
+		logger.info("membership id is" + id);
 		contact.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			contact.setActiveInd('Y');
@@ -270,8 +271,8 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/membership/{id}/contact/save.do",
 			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
-	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
-			 Model model, @ModelAttribute("username") String username) {
+	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact, Model model,
+			@ModelAttribute("username") String username) {
 
 		if (null != contact.getId()) {
 			logger.info("Returning ContactEditSuccess.jsp page after update");
@@ -297,7 +298,7 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/provider/{id}/contact/new", "/user/provider/{id}/contact/new" })
 	public String addProviderContactPage(@PathVariable Integer id, Model model) {
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
 		return TileDefinitions.PROVIDERCONTACTEDIT.toString();
@@ -312,7 +313,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/provider/{id}/contact/{cntId}",
 			"/user/provider/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateProviderContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();
@@ -334,7 +335,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/provider/{id}/contact/{cntId}/display",
 			"/user/provider/{id}/contact/{cntId}/display" }, method = RequestMethod.GET)
 	public String displayProviderContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		Contact dbContact = contactService.findById(cntId);
 		logger.info("Returning contact.getId()" + dbContact.getId());
 
@@ -372,7 +373,7 @@ public class ContactController {
 			"/user/provider/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		if (bindingResult.hasErrors()) {
 
 			logger.info("Returning contactEdit.jsp page");
@@ -412,7 +413,7 @@ public class ContactController {
 			"/user/provider/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
 	public String updateProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		contact.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			contact.setActiveInd('Y');
@@ -450,7 +451,7 @@ public class ContactController {
 			"/user/provider/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String saveProviderContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("provider id is"+id);
+		logger.info("provider id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			contact.setActiveInd('Y');
@@ -482,7 +483,7 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/insurance/{id}/contact/new", "/user/insurance/{id}/contact/new" })
 	public String addInsuranceContactPage(@PathVariable Integer id, Model model) {
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		Contact contact = createContactModel();
 		model.addAttribute("contact", contact);
 		return TileDefinitions.INSURANCECONTACTEDIT.toString();
@@ -497,7 +498,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/insurance/{id}/contact/{cntId}",
 			"/user/insurance/{id}/contact/{cntId}" }, method = RequestMethod.GET)
 	public String updateInsuranceContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		Contact dbContact = contactService.findById(cntId);
 		if (dbContact == null) {
 			dbContact = createContactModel();
@@ -519,7 +520,7 @@ public class ContactController {
 	@RequestMapping(value = { "/admin/insurance/{id}/contact/{cntId}/display",
 			"/user/insurance/{id}/contact/{cntId}/display" }, method = RequestMethod.GET)
 	public String displayInsuranceContactPage(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		Contact dbContact = contactService.findById(cntId);
 		logger.info("Returning contact.getId()" + dbContact.getId());
 		final Integer stateId = dbContact.getStateCode().getCode();
@@ -556,7 +557,7 @@ public class ContactController {
 			"/user/insurance/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			return TileDefinitions.INSURANCECONTACTEDIT.toString();
@@ -597,7 +598,7 @@ public class ContactController {
 	public String updateInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		contact.setActiveInd('Y');
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			return TileDefinitions.INSURANCECONTACTEDIT.toString();
@@ -634,7 +635,7 @@ public class ContactController {
 			"/user/insurance/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String saveInsuranceContactAction(@PathVariable Integer id, @Validated Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("insurance id is"+id);
+		logger.info("insurance id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contactEdit.jsp page");
 			contact.setActiveInd('Y');
@@ -672,7 +673,7 @@ public class ContactController {
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(zipCodeList));
 
 	}
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -684,10 +685,8 @@ public class ContactController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/prvdrContact/list", "/user/prvdrContact/list" }, method = RequestMethod.GET)
 	public Message viewInsuranceList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = contactService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		logger.info("returning provider Contact List");

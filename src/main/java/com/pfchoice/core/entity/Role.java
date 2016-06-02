@@ -37,8 +37,8 @@ public class Role extends RecordDetails implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_roles", joinColumns = {
-	@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
-	@JoinColumn(name = "user_id", referencedColumnName = "id") })
+			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "user_id", referencedColumnName = "id") })
 	private User user;
 
 	/**

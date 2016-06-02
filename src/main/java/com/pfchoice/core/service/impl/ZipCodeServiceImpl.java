@@ -82,8 +82,11 @@ public class ZipCodeServiceImpl implements ZipCodeService {
 		return zipCodeDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ZipCodeService#findByStateCode(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ZipCodeService#findByStateCode(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public List<ZipCode> findByStateCode(Integer stateCode) {

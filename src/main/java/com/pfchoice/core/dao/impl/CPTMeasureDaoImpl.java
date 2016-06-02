@@ -19,9 +19,11 @@ import com.pfchoice.core.entity.CPTMeasure;
 @Repository
 public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> implements CPTMeasureDao {
 
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.CPTMeasureDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.CPTMeasureDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -50,7 +52,9 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.CPTMeasureDao#getPage(int, int)
 	 */
 	@Override
@@ -60,7 +64,9 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.CPTMeasureDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -68,8 +74,11 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.CPTMeasureDao#save(com.pfchoice.core.entity.CPTMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.CPTMeasureDao#save(com.pfchoice.core.entity.
+	 * CPTMeasure)
 	 */
 	@Override
 	public CPTMeasure save(final CPTMeasure bean) {
@@ -77,7 +86,9 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.CPTMeasureDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -89,7 +100,9 @@ public class CPTMeasureDaoImpl extends HibernateBaseDao<CPTMeasure, Integer> imp
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

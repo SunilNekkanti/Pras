@@ -41,7 +41,6 @@ public interface FileTypeService {
 	 */
 	FileType update(FileType bean);
 
-	
 	/**
 	 * @param code
 	 * @return

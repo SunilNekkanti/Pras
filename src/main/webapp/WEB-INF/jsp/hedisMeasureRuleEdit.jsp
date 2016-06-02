@@ -201,7 +201,7 @@ $.ajax( {
 			action="${context}/hedisMeasureRule/${id}/save.do"
 			class="form-horizontal" role="form">
 			<springForm:hidden path="id" />
-			
+
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="effYear">Effective
 					Year (YYYY)</label>
@@ -214,7 +214,7 @@ $.ajax( {
 						cssClass="error text-danger" />
 				</div>
 			</div>
-			
+
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="hedis">Hedis Code</label>
 				<div class="col-sm-6">
@@ -250,23 +250,28 @@ $.ajax( {
 			</div>
 
 			<div class="form-group required">
-				<label class="control-label   col-sm-2" for="cptOrIcd">CPT / ICD / Problem</label>
+				<label class="control-label   col-sm-2" for="cptOrIcd">CPT /
+					ICD / Problem</label>
 				<div class="col-sm-6">
 					<label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" class="cptOrIcd" value="0" />CPT
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="0" />CPT
 					</label> <label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" class="cptOrIcd" value="1" />ICD
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="1" />ICD
 					</label> <label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd" class="cptOrIcd" value="2" />Problem
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="2" />Problem
 					</label>
 					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
 				</div>
 			</div>
-			
+
 			<div class="form-group pbmList">
 				<label class="control-label col-sm-2" for="Problem">Problem</label>
 				<div class="col-sm-6">
-					<springForm:select path="pbm" class="form-control problemList" id="pbm">
+					<springForm:select path="pbm" class="form-control problemList"
+						id="pbm">
 						<springForm:option value="${null}" label="Select One" />
 					</springForm:select>
 					<springForm:errors path="pbm" cssClass="error text-danger" />
@@ -314,12 +319,14 @@ $.ajax( {
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="gender">Frequency</label>
 				<div class="col-sm-6">
-					<springForm:select path="frequencyType" class="form-control" id="frequencyType">
+					<springForm:select path="frequencyType" class="form-control"
+						id="frequencyType">
 						<springForm:option value="${null}" label="Select One" />
 						<springForm:options items="${frequencyTypeList}" itemValue="id"
 							itemLabel="description" />
 					</springForm:select>
-					<springForm:errors path="frequencyType" cssClass="error text-danger" />
+					<springForm:errors path="frequencyType"
+						cssClass="error text-danger" />
 				</div>
 			</div>
 

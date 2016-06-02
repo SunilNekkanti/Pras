@@ -15,10 +15,11 @@ import com.pfchoice.core.entity.FollowupType;
  * @author Sarath
  */
 @Repository
-public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer>
-		implements FollowupTypeDao {
+public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer> implements FollowupTypeDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HedisMeasureGroupDao#getPage(int, int)
 	 */
 	@Override
@@ -28,8 +29,11 @@ public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer>
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HedisMeasureGroupDao#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.HedisMeasureGroupDao#findById(java.lang.Integer)
 	 */
 	@Override
 	public FollowupType findById(final Integer id) {
@@ -42,8 +46,11 @@ public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer>
 		return bean;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HedisMeasureGroupDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.HedisMeasureGroupDao#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public FollowupType deleteById(final Integer id) {
@@ -54,7 +61,9 @@ public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer>
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -62,11 +71,13 @@ public class FollowupTypeDaoImpl extends HibernateBaseDao<FollowupType, Integer>
 		return FollowupType.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FollowupTypeDao#findByCode(java.lang.String)
 	 */
 	@Override
 	public FollowupType findByCode(final String code) {
-		return  findUniqueByProperty("code", code);
+		return findUniqueByProperty("code", code);
 	}
 }

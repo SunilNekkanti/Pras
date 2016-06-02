@@ -9,43 +9,46 @@
 <meta charset="UTF-8">
 <title>PF Choice head page</title>
 <style type="text/css">
-
-.dropdown-menu>li
-{	position:relative;
-	-webkit-user-select: none; /* Chrome/Safari */        
+.dropdown-menu>li {
+	position: relative;
+	-webkit-user-select: none; /* Chrome/Safari */
 	-moz-user-select: none; /* Firefox */
 	-ms-user-select: none; /* IE10+ */
 	/* Rules below not implemented in browsers yet */
 	-o-user-select: none;
 	user-select: none;
-	cursor:pointer;
+	cursor: pointer;
 }
+
 .dropdown-menu .sub-menu {
-    left: 100%;
-    position: absolute;
-    top: 0;
-    display:none;
-    margin-top: -1px;
-	border-top-left-radius:0;
-	border-bottom-left-radius:0;
-	border-left-color:#fff;
-	box-shadow:none;
+	left: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	margin-top: -1px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-left-color: #fff;
+	box-shadow: none;
 }
-.right-caret:after,.left-caret:after
- {	content:"";
-    border-bottom: 5px solid transparent;
-    border-top: 5px solid transparent;
-    display: inline-block;
-    height: 0;
-    vertical-align: middle;
-    width: 0;
-	margin-left:5px;
+
+.right-caret:after, .left-caret:after {
+	content: "";
+	border-bottom: 5px solid transparent;
+	border-top: 5px solid transparent;
+	display: inline-block;
+	height: 0;
+	vertical-align: middle;
+	width: 0;
+	margin-left: 5px;
 }
-.right-caret:after
-{	border-left: 5px solid #ffaf46;
+
+.right-caret:after {
+	border-left: 5px solid #ffaf46;
 }
-.left-caret:after
-{	border-right: 5px solid #ffaf46;
+
+.left-caret:after {
+	border-right: 5px solid #ffaf46;
 }
 
 .navigation {
@@ -488,57 +491,70 @@ $(document).ready(function () {
 					<li><a href="${context}/${userpath}/insuranceList">Insurance</a></li>
 					<li><a href="${context}/${userpath}/providerList">Provider</a></li>
 					<li><a href="${context}/${userpath}/membershipList">Membership</a></li>
-					<li class="dropdown"><a href="#" 
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Admin <span class="caret"></span></a>
+					<li class="dropdown"><a href="#" data-toggle="dropdown"
+						role="button" aria-haspopup="true" aria-expanded="false">Admin
+							<span class="caret"></span>
+					</a>
 						<ul class="dropdown-menu">
-						
-							<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Quality Measures <span class="right-caret"></span></a>
+
+							<li class="dropdown"><a href="#"
+								class="trigger  dropdown-toggle" data-toggle="dropdown"
+								role="button" aria-haspopup="true" aria-expanded="false">Quality
+									Measures <span class="right-caret"></span>
+							</a>
 								<ul class="dropdown-menu sub-menu">
 									<li><a href="${context}/${userpath}/cpt/cptMeasureList">CPT</a></li>
-									<li><a href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
+									<li><a
+										href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
 									<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
 									<li role="presentation" class="divider"></li>
 									<li><a href="${context}/${userpath}/problemList">Problem</a></li>
 									<li role="presentation" class="divider"></li>
-									<li><a href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis Rule</a></li>
-								</ul>
-							</li>
-							
-							<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Lookups <span class="right-caret"></span></a>
+									<li><a
+										href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis
+											Rule</a></li>
+								</ul></li>
+
+							<li class="dropdown"><a href="#"
+								class="trigger  dropdown-toggle" data-toggle="dropdown"
+								role="button" aria-haspopup="true" aria-expanded="false">Lookups
+									<span class="right-caret"></span>
+							</a>
 								<ul class="dropdown-menu sub-menu">
-									<li><a href="${context}/${userpath}/hedisMeasureGroupList">Hedis Group</a></li>
-									<li><a href="${context}/${userpath}/planTypeList">Plan Type</a></li>
-									<li><a href="${context}/${userpath}/fileTypeList">File Type</a></li>
-									<li><a href="${context}/${userpath}/roomTypeList">Room Type</a></li>
-									<li><a href="${context}/${userpath}/frequencyTypeList">Frequency Type</a></li>
-								</ul>
-							</li>	
-							
-							<li class="dropdown"><a href="#" class="trigger  dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Emails <span class="right-caret"></span></a>
+									<li><a href="${context}/${userpath}/hedisMeasureGroupList">Hedis
+											Group</a></li>
+									<li><a href="${context}/${userpath}/planTypeList">Plan
+											Type</a></li>
+									<li><a href="${context}/${userpath}/fileTypeList">File
+											Type</a></li>
+									<li><a href="${context}/${userpath}/roomTypeList">Room
+											Type</a></li>
+									<li><a href="${context}/${userpath}/frequencyTypeList">Frequency
+											Type</a></li>
+								</ul></li>
+
+							<li class="dropdown"><a href="#"
+								class="trigger  dropdown-toggle" data-toggle="dropdown"
+								role="button" aria-haspopup="true" aria-expanded="false">Emails
+									<span class="right-caret"></span>
+							</a>
 								<ul class="dropdown-menu sub-menu">
-									<li><a href="${context}/${userpath}/emailTemplateList">Email Templates</a></li>
+									<li><a href="${context}/${userpath}/emailTemplateList">Email
+											Templates</a></li>
 									<li><a href="${context}/${userpath}/emailList">Emails</a></li>
-								</ul>
-							</li>	
-							<li><a href="${context}/${userpath}/userList">User Accounts</a></li>
-				       	</ul>
-					</li>
+								</ul></li>
+							<li><a href="${context}/${userpath}/userList">User
+									Accounts</a></li>
+						</ul></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">Reports <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
-							<li><a href="${context}/${userpath}/reports/hospitalization">Claims</a></li>
-						</ul></li>	
-					
+							<li><a href="${context}/${userpath}/reports/claim">Claims</a></li>
+						</ul></li>
+
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

@@ -22,15 +22,20 @@ public class EthinicityServiceImpl implements EthinicityService {
 	@Autowired
 	private EthinicityDao ethinicityDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EthinicityService#deleteById(java.lang.Byte)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EthinicityService#deleteById(java.lang.Byte)
 	 */
 	@Override
 	public Ethinicity deleteById(Byte id) {
 		return ethinicityDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.EthinicityService#findById(java.lang.Byte)
 	 */
 	@Override
@@ -39,7 +44,9 @@ public class EthinicityServiceImpl implements EthinicityService {
 		return ethinicityDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.EthinicityService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +55,24 @@ public class EthinicityServiceImpl implements EthinicityService {
 		return ethinicityDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EthinicityService#save(com.pfchoice.core.entity.Ethinicity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EthinicityService#save(com.pfchoice.core.entity
+	 * .Ethinicity)
 	 */
 	@Override
 	public Ethinicity save(final Ethinicity bean) {
 		return ethinicityDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EthinicityService#update(com.pfchoice.core.entity.Ethinicity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EthinicityService#update(com.pfchoice.core.
+	 * entity.Ethinicity)
 	 */
 	@Override
 	public Ethinicity update(final Ethinicity bean) {

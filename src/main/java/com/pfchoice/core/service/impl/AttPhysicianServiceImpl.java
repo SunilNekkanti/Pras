@@ -22,16 +22,22 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 	@Autowired
 	private AttPhysicianDao attPhysicianDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.AttPhysicianService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.AttPhysicianService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public AttPhysician deleteById(final Integer id) {
 		return attPhysicianDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.AttPhysicianService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.AttPhysicianService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +45,9 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 		return attPhysicianDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.AttPhysicianService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +56,24 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 		return attPhysicianDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.AttPhysicianService#save(com.pfchoice.core.entity.AttPhysician)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.AttPhysicianService#save(com.pfchoice.core.
+	 * entity.AttPhysician)
 	 */
 	@Override
 	public AttPhysician save(final AttPhysician bean) {
 		return attPhysicianDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.AttPhysicianService#update(com.pfchoice.core.entity.AttPhysician)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.AttPhysicianService#update(com.pfchoice.core.
+	 * entity.AttPhysician)
 	 */
 	@Override
 	public AttPhysician update(final AttPhysician bean) {
@@ -65,12 +81,14 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 		return attPhysicianDao.updateByUpdater(updater);
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.AttPhysicianService#loadData(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.AttPhysicianService#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId){
+	public Integer loadData(final Integer fileId) {
 		return attPhysicianDao.loadData(fileId);
 	}
 }

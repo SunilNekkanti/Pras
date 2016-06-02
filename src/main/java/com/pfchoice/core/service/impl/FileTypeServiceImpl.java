@@ -21,16 +21,22 @@ public class FileTypeServiceImpl implements FileTypeService {
 	@Autowired
 	private FileTypeDao fileTypeDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileTypeService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileTypeService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public FileType deleteById(final Integer id) {
 		return fileTypeDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileTypeService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileTypeService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -38,7 +44,9 @@ public class FileTypeServiceImpl implements FileTypeService {
 		return fileTypeDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.FileTypeService#getPage(int, int)
 	 */
 	@Override
@@ -47,25 +55,36 @@ public class FileTypeServiceImpl implements FileTypeService {
 		return fileTypeDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileTypeService#save(com.pfchoice.core.entity.FileType)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileTypeService#save(com.pfchoice.core.entity.
+	 * FileType)
 	 */
 	@Override
 	public FileType save(final FileType bean) {
 		return fileTypeDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileTypeService#update(com.pfchoice.core.entity.FileType)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileTypeService#update(com.pfchoice.core.entity
+	 * .FileType)
 	 */
 	@Override
 	public FileType update(final FileType bean) {
 		Updater<FileType> updater = new Updater<>(bean);
 		return fileTypeDao.updateByUpdater(updater);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FileTypeService#findByCode(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FileTypeService#findByCode(java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)

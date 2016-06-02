@@ -51,25 +51,25 @@ public interface MembershipHospitalizationDao {
 	 * @return
 	 */
 	Integer loadDataCSV2Table(String fileName);
-	
+
 	/**
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
-	
+
 	/**
 	 * @return
 	 */
 	Boolean isDataExists();
-	
+
 	/**
 	 * @return
 	 */
 	Integer unloadCSV2Table();
-	
+
 	/**
 	 * @return
 	 */
 	Integer updateData(Integer fileId);
-	
+
 }

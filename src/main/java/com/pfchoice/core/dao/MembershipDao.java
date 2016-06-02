@@ -54,7 +54,7 @@ public interface MembershipDao {
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
 			Integer sSearchHedisCode, final List<Integer> ruleIds, String sort, String sortdir);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -68,7 +68,24 @@ public interface MembershipDao {
 	 * @param processHospitalization
 	 * @return
 	 */
-	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr, String sort, String sortdir, Date processingFrom, Date processingTo, Integer processHospitalization);
+	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr, String sort,
+			String sortdir, Date processingFrom, Date processingTo, Integer processHospitalization);
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
+	 * @param processClaim
+	 * @return
+	 */
+	Pagination getClaimPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
+			String sort, String sortdir, Date processingFrom, Date processingTo, Integer processClaim);
 
 	/**
 	 * 

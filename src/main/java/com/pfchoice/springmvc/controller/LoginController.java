@@ -22,12 +22,12 @@ import com.pfchoice.springmvc.service.ApplicationMailer;
 @RequestMapping(value = "*")
 @SessionAttributes({ "username", "userpath" })
 public class LoginController {
-	
+
 	@Autowired
-	ApplicationMailer  applicationMailer;
-	
+	ApplicationMailer applicationMailer;
+
 	@Autowired
-	EmailTemplateService  emailTemplateService;
+	EmailTemplateService emailTemplateService;
 
 	/**
 	 * @param error
@@ -65,7 +65,7 @@ public class LoginController {
 		if (!model.containsAttribute("username")) {
 			model.addAttribute("username", username);
 		}
-		
+
 		return TileDefinitions.HOME.toString();
 	}
 

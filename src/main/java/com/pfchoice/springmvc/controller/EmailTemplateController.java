@@ -1,6 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
-import static  com.pfchoice.common.SystemDefaultProperties.EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH;
+import static com.pfchoice.common.SystemDefaultProperties.EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH;
 
 import java.io.FileNotFoundException;
 
@@ -44,9 +44,9 @@ import ml.rugal.sshcommon.springmvc.util.Message;
 public class EmailTemplateController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmailTemplateController.class);
-	
+
 	@Autowired
-	ApplicationMailer  applicationMailer;
+	ApplicationMailer applicationMailer;
 
 	@Autowired
 	private EmailTemplateService emailTemplateService;
@@ -54,21 +54,16 @@ public class EmailTemplateController {
 	@Autowired
 	private EmailTemplatePlaceholderService emailTemplatePlaceholderService;
 
-	
 	/**
-
-	@Autowired
-	@Qualifier("insuranceValidator")
-	private Validator validator;
-
-	
-	  @param binder
-	
-	@InitBinder("insurance")
-	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
-	}
-	
+	 * 
+	 * @Autowired @Qualifier("insuranceValidator") private Validator validator;
+	 * 
+	 * 
+	 * @param binder
+	 * 
+	 * 			@InitBinder("insurance") public void initBinder(WebDataBinder
+	 *            binder) { binder.setValidator(validator); }
+	 * 
 	 */
 
 	/**
@@ -78,13 +73,12 @@ public class EmailTemplateController {
 	public EmailTemplate createEmailTemplateModel() {
 		return new EmailTemplate();
 	}
-	
+
 	/**
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/emailTemplateList",
-			"/user/emailTemplateList" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/emailTemplateList", "/user/emailTemplateList" }, method = RequestMethod.GET)
 	public String viewEmailTemplateAction() {
 
 		logger.info("Returning view.jsp page after create");
@@ -100,52 +94,53 @@ public class EmailTemplateController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/admin/emailTemplate/list",
-			"/user/emailTemplate/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/emailTemplate/list", "/user/emailTemplate/list" }, method = RequestMethod.GET)
 	public Message viewEmailTemplateList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = emailTemplateService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
-		return Message.successMessage(CommonMessageContent.EMAIL_TEMPLATE_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.EMAIL_TEMPLATE_LIST,
+				JsonConverter.getJsonObject(pagination));
 	}
 
-	
 	/**
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/emailTemplate/new", "/user/emailTemplate/new"  })
+	@RequestMapping(value = { "/admin/emailTemplate/new", "/user/emailTemplate/new" })
 	public String addEmailTemplatePage(Model model) {
 
 		EmailTemplate emailTemplate = createEmailTemplateModel();
 		model.addAttribute("emailTemplate", emailTemplate);
-	    
+
 		return TileDefinitions.EMAILTEMPLATENEW.toString();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@ResponseBody
-	@RequestMapping(value = { "/admin/emailTemplate/{description}/details", "/user/emailTemplate/{description}/details" })
+	@RequestMapping(value = { "/admin/emailTemplate/{description}/details",
+			"/user/emailTemplate/{description}/details" })
 	public Message getEmailTemplateContent(@PathVariable Integer description) {
 		EmailTemplate emailTemplate = emailTemplateService.findById(description);
-		MessageFormat mf = new MessageFormat(""); 
+		MessageFormat mf = new MessageFormat("");
 		String template = emailTemplate.getTemplate();
-	    mf.applyPattern(template);
-	    Pagination page = emailTemplatePlaceholderService.findByEmailTemplateId(emailTemplate.getId());
-	    List<EmailTemplatePlaceholder> emailTemplatePlaceholders = (List<EmailTemplatePlaceholder>) page.getList();
-	    List<Object>	arguments     = emailTemplatePlaceholderService.getSQLScriptResults(emailTemplatePlaceholders,44);
-	    Object[] objArray = arguments.toArray();
-	    String content = mf.format(objArray);
-	    List<Object[]> dataToExport = emailTemplatePlaceholderService.generateAttachmentFile(emailTemplate.getId(),44);
-	    LocalDateTime dateTime = LocalDateTime.now();
-	    String fileName= EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH+"test" + dateTime.format(DateTimeFormatter.ofPattern("yyyMMddHHmmss")) + ".csv";
-	    try {
-			PrasUtil.convertToCsv(dataToExport, fileName);  
+		mf.applyPattern(template);
+		Pagination page = emailTemplatePlaceholderService.findByEmailTemplateId(emailTemplate.getId());
+		List<EmailTemplatePlaceholder> emailTemplatePlaceholders = (List<EmailTemplatePlaceholder>) page.getList();
+		List<Object> arguments = emailTemplatePlaceholderService.getSQLScriptResults(emailTemplatePlaceholders, 44);
+		Object[] objArray = arguments.toArray();
+		String content = mf.format(objArray);
+		List<Object[]> dataToExport = emailTemplatePlaceholderService.generateAttachmentFile(emailTemplate.getId(), 44);
+		LocalDateTime dateTime = LocalDateTime.now();
+		String fileName = EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH + "test"
+				+ dateTime.format(DateTimeFormatter.ofPattern("yyyMMddHHmmss")) + ".csv";
+		try {
+			PrasUtil.convertToCsv(dataToExport, fileName);
 		} catch (FileNotFoundException e) {
 			logger.warn("emailTemplate FileNotFoundException" + e.getCause().getMessage());
-		} 
-		
+		}
+
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, content);
 
 	}
@@ -175,14 +170,14 @@ public class EmailTemplateController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/emailTemplate/save.do" }, method = RequestMethod.POST, params = { "add" })
-	public String newEmailTemplateAction(@Validated EmailTemplate emailTemplate, BindingResult bindingResult, Model model,
-			@ModelAttribute("username") String username) {
+	public String newEmailTemplateAction(@Validated EmailTemplate emailTemplate, BindingResult bindingResult,
+			Model model, @ModelAttribute("username") String username) {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning email Template Edit.jsp page");
 			return TileDefinitions.EMAILTEMPLATENEW.toString();
 		}
-		
+
 		logger.info("Returning Email Template Success.jsp page after create");
 		model.addAttribute("emailTemplate", emailTemplate);
 		emailTemplate.setCreatedBy(username);
@@ -200,9 +195,11 @@ public class EmailTemplateController {
 	 * @param username
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/emailTemplate/{id}/save.do", }, method = RequestMethod.POST, params = { "update" })
-	public String updateEmailTemplateAction(@PathVariable Integer id, @ModelAttribute @Validated EmailTemplate emailTemplate,
-			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+	@RequestMapping(value = { "/admin/emailTemplate/{id}/save.do", }, method = RequestMethod.POST, params = {
+			"update" })
+	public String updateEmailTemplateAction(@PathVariable Integer id,
+			@ModelAttribute @Validated EmailTemplate emailTemplate, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
 		emailTemplate.setActiveInd('Y');
 		logger.info("emailTemplate id is" + id);
 		if (bindingResult.hasErrors()) {

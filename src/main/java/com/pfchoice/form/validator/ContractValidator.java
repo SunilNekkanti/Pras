@@ -10,27 +10,32 @@ import com.pfchoice.core.entity.Contract;
 @Component
 public class ContractValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
 	public boolean supports(Class<?> paramClass) {
-		
+
 		return Contract.class.equals(paramClass);
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
-		
+
 		Contract contract = (Contract) obj;
-		
+
 		if (contract.getId() != null && contract.getId() <= 0) {
-			
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contractNBR", "error.contractNBR", "Contract NBR Required");
 

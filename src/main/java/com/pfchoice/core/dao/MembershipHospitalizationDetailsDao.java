@@ -52,7 +52,7 @@ public interface MembershipHospitalizationDetailsDao {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
-	
+
 	/**
 	 * @param mbrHosId
 	 * @return

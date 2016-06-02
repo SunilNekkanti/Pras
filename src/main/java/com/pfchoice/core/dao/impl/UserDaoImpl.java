@@ -17,7 +17,9 @@ import com.pfchoice.core.entity.User;
 @Repository
 public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements UserDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.UserDao#getPage(int, int)
 	 */
 	@Override
@@ -27,7 +29,9 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.UserDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -35,7 +39,9 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return get(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.UserDao#save(com.pfchoice.core.entity.User)
 	 */
 	@Override
@@ -44,7 +50,9 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.UserDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -56,7 +64,9 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -64,7 +74,9 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return User.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.UserDao#findByLogin(java.lang.String)
 	 */
 	@Override
@@ -76,8 +88,11 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return (User) crit.uniqueResult();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.UserDao#isValidUser(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.UserDao#isValidUser(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public boolean isValidUser(final String login, final String password) {
@@ -92,12 +107,14 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 		return (entity != null) ? true : false;
 
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.UserDao#findByUserName(java.lang.String)
 	 */
 	@Override
 	public User findByUserName(String userName) {
-		return  findUniqueByProperty("name", userName);
+		return findUniqueByProperty("name", userName);
 	}
 }

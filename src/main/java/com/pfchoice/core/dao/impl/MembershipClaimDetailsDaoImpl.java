@@ -5,7 +5,6 @@ import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -21,9 +20,12 @@ import com.pfchoice.core.entity.MembershipClaimDetails;
  * @author Sarath
  */
 @Repository
-public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipClaimDetails, Integer> implements MembershipClaimDetailsDao {
+public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipClaimDetails, Integer>
+		implements MembershipClaimDetailsDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
 	 */
 	@Override
@@ -33,7 +35,9 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -41,8 +45,11 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.MembershipClaimDetails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.
+	 * MembershipClaimDetails)
 	 */
 	@Override
 	public MembershipClaimDetails save(final MembershipClaimDetails bean) {
@@ -50,7 +57,9 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HospitalDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -62,7 +71,9 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -70,28 +81,32 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		return MembershipClaimDetails.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
-	@Override 
-	public Integer loadData(final Integer fileId){
+	@Override
+	public Integer loadData(final Integer fileId) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-		
-		return getSession().createSQLQuery(loadDataQuery)
-				    		.setInteger("fileId", fileId)
-				    		.executeUpdate();
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipClaimDetailsDao#getMbrClaimDetailsPage(java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipClaimDetailsDao#getMbrClaimDetailsPage(
+	 * java.lang.Integer)
 	 */
-	public Pagination getMbrClaimDetailsPage(final Integer mbrHosId) {
+	public Pagination getMbrClaimDetailsPage(final Integer mbrClaimId) {
 
 		Criteria crit = createCriteria().createAlias("mbrClaim", "mbrClaim");
-		crit.createAlias("attPhysician", "attPhysician");
+		crit.createAlias("cpt", "cpt", JoinType.LEFT_OUTER_JOIN);
 		crit.createAlias("roomType", "roomType", JoinType.LEFT_OUTER_JOIN);
-		
-		crit.add(Restrictions.eq("mbrClaim.id", mbrHosId));
+
+		crit.add(Restrictions.eq("mbrClaim.id", mbrClaimId));
 		crit.add(Restrictions.eq("activeInd", new Character('Y')));
 
 		crit.addOrder(Order.asc("id"));

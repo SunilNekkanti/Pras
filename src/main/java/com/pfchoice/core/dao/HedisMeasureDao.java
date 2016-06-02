@@ -33,7 +33,6 @@ public interface HedisMeasureDao {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * 
 	 * @param pageNo

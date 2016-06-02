@@ -88,7 +88,7 @@ footer {
 }
 
 .glyphicon.glyphicon-paperclip {
-    font-size: 25px;
+	font-size: 25px;
 }
 </style>
 

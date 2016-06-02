@@ -3,7 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -18,7 +17,9 @@ import com.pfchoice.core.entity.County;
 @Repository
 public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements CountyDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.CountyDao#getPage(int, int)
 	 */
 	@Override
@@ -29,7 +30,9 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.CountyDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -37,8 +40,11 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.CountyDao#save(com.pfchoice.core.entity.County)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.CountyDao#save(com.pfchoice.core.entity.County)
 	 */
 	@Override
 	public County save(final County bean) {
@@ -46,7 +52,9 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.CountyDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -58,7 +66,9 @@ public class CountyDaoImpl extends HibernateBaseDao<County, Integer> implements 
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

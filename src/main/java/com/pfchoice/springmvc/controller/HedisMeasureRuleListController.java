@@ -36,7 +36,7 @@ public class HedisMeasureRuleListController {
 	 */
 	@RequestMapping(value = { "/admin/hedisMeasureRule/hedisMeasureRuleList",
 			"/user/hedisMeasureRule/hedisMeasureRuleList" })
-	public String viewHedisMeasureRuleAction()  {
+	public String viewHedisMeasureRuleAction() {
 
 		logger.info("Returning view.jsp page after create");
 		return TileDefinitions.HEDISMEASURERULELIST.toString();
@@ -56,12 +56,9 @@ public class HedisMeasureRuleListController {
 	@RequestMapping(value = { "/admin/hedisMeasureRule/hedisMeasureRuleLists",
 			"/user/hedisMeasureRule/hedisMeasureRuleLists" }, method = RequestMethod.GET)
 	public Message viewHedisMeasureRuleList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) Integer insId, 
-			@RequestParam(required = false) Integer effYear) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) Integer insId, @RequestParam(required = false) Integer effYear) {
 
 		Pagination pagination = hedisMeasureRuleService.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId,
 				effYear);

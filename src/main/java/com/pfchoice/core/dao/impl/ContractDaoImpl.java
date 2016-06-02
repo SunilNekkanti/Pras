@@ -21,8 +21,10 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 
 	static final String REF_CONTRACT_PRVDR = "refContract.prvdr.id";
 	static final String REF_CONTRACT_INS = "refContract.ins.id";
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ContractDao#getPage(int, int)
 	 */
 	@Override
@@ -32,7 +34,9 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ContractDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -40,8 +44,11 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ContractDao#save(com.pfchoice.core.entity.Contract)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.ContractDao#save(com.pfchoice.core.entity.Contract)
 	 */
 	@Override
 	public Contract save(final Contract bean) {
@@ -49,7 +56,9 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ContractDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -66,14 +75,17 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return Contract.class;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ContractDao#findAllContractsByRefId(java.lang.String, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.ContractDao#findAllContractsByRefId(java.lang.
+	 * String, java.lang.Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contract> findAllContractsByRefId(final String refString, final Integer id) {
 		String refRestrictionString = null;
-		
+
 		Criteria cr = getSession().createCriteria(getEntityClass(), "contract");
 		cr.createAlias("contract.referenceContract", "refContract");
 		if ("provider".equals(refString)) {
@@ -98,8 +110,12 @@ public class ContractDaoImpl extends HibernateBaseDao<Contract, Integer> impleme
 		return cr.list();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.ContractDao#findActiveContractByRefId(java.lang.String, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.ContractDao#findActiveContractByRefId(java.lang.
+	 * String, java.lang.Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

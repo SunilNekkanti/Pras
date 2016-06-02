@@ -40,42 +40,41 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "att_phy_id", referencedColumnName = "att_phy_id")
-	private  AttPhysician attPhysician;
+	private AttPhysician attPhysician;
 
 	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "room_type_code", referencedColumnName = "code")
 	private PlaceOfService roomType;
-	
+
 	@Expose
 	@Column(name = "adm_dx")
 	private String admDx;
-	
+
 	@Expose
 	@Temporal(TemporalType.DATE)
 	@Column(name = "exp_dc_dt")
 	protected Date expDisDate;
-	
+
 	@Expose
 	@Column(name = "auth_days")
 	private Integer authDays;
-	
+
 	@Expose
 	@Column(name = "cm_pri_user")
 	private String cmPriUser;
-	
+
 	@Expose
 	@Column(name = "disease_cohort")
 	private String diseaseCohort;
-	
+
 	@Expose
 	@Column(name = "comorbidities")
 	private String comorbidities;
-	
+
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
-
 
 	/**
 	 * 
@@ -114,7 +113,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param mbrHospitalization the mbrHospitalization to set
+	 * @param mbrHospitalization
+	 *            the mbrHospitalization to set
 	 */
 	public void setMbrHospitalization(MembershipHospitalization mbrHospitalization) {
 		this.mbrHospitalization = mbrHospitalization;
@@ -128,7 +128,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param attPhysician the attPhysician to set
+	 * @param attPhysician
+	 *            the attPhysician to set
 	 */
 	public void setAttPhysician(AttPhysician attPhysician) {
 		this.attPhysician = attPhysician;
@@ -142,7 +143,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param roomType the roomType to set
+	 * @param roomType
+	 *            the roomType to set
 	 */
 	public void setRoomType(PlaceOfService roomType) {
 		this.roomType = roomType;
@@ -156,7 +158,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param admDx the admDx to set
+	 * @param admDx
+	 *            the admDx to set
 	 */
 	public void setAdmDx(String admDx) {
 		this.admDx = admDx;
@@ -170,7 +173,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param expDisDate the expDisDate to set
+	 * @param expDisDate
+	 *            the expDisDate to set
 	 */
 	public void setExpDisDate(Date expDisDate) {
 		this.expDisDate = expDisDate;
@@ -184,7 +188,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param authDays the authDays to set
+	 * @param authDays
+	 *            the authDays to set
 	 */
 	public void setAuthDays(Integer authDays) {
 		this.authDays = authDays;
@@ -198,7 +203,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param cmPriUser the cmPriUser to set
+	 * @param cmPriUser
+	 *            the cmPriUser to set
 	 */
 	public void setCmPriUser(String cmPriUser) {
 		this.cmPriUser = cmPriUser;
@@ -212,7 +218,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param diseaseCohort the diseaseCohort to set
+	 * @param diseaseCohort
+	 *            the diseaseCohort to set
 	 */
 	public void setDiseaseCohort(String diseaseCohort) {
 		this.diseaseCohort = diseaseCohort;
@@ -226,7 +233,8 @@ public class MembershipHospitalizationDetails extends RecordDetails implements S
 	}
 
 	/**
-	 * @param comorbidities the comorbidities to set
+	 * @param comorbidities
+	 *            the comorbidities to set
 	 */
 	public void setComorbidities(String comorbidities) {
 		this.comorbidities = comorbidities;

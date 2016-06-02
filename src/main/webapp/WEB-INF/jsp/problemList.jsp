@@ -181,7 +181,7 @@ $.ajax( {
 							<th scope="col">Action</th>
 							<th scope="col">Description</th>
 							<th scope="col">ICD Codes</th>
-							
+
 						</tr>
 					</thead>
 

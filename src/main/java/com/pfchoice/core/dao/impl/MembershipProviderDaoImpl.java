@@ -20,7 +20,9 @@ import com.pfchoice.core.entity.MembershipProvider;
 public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvider, Integer>
 		implements MembershipProviderDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipProviderDao#getPage(int, int)
 	 */
 	@Override
@@ -30,16 +32,23 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProviderDao#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProviderDao#findById(java.lang.Integer)
 	 */
 	@Override
 	public MembershipProvider findById(final Integer id) {
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProviderDao#save(com.pfchoice.core.entity.MembershipProvider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProviderDao#save(com.pfchoice.core.entity
+	 * .MembershipProvider)
 	 */
 	@Override
 	public MembershipProvider save(final MembershipProvider bean) {
@@ -47,8 +56,11 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return bean;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProviderDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProviderDao#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public MembershipProvider deleteById(final Integer id) {
@@ -64,8 +76,12 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return MembershipProvider.class;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProviderDao#findAllByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProviderDao#findAllByMbrId(java.lang.
+	 * Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -77,8 +93,11 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 		return cr.list();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProviderDao#findByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipProviderDao#findByMbrId(java.lang.
+	 * Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -88,7 +107,7 @@ public class MembershipProviderDaoImpl extends HibernateBaseDao<MembershipProvid
 				.add(Restrictions.eq("mbr.id", id)).add(Restrictions.eq("mbrPrvdr.activeInd", 'Y'))
 				.add(Restrictions.eq("mbr.activeInd", 'Y'));
 		List<MembershipProvider> list = cr.list();
-		if(!list.isEmpty()){
+		if (!list.isEmpty()) {
 			dbMembershipProvider = list.get(0);
 		}
 		return dbMembershipProvider;

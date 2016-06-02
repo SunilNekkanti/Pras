@@ -39,22 +39,22 @@ public class Email extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "email_to")
 	private String emailTo;
-	
+
 	@Expose
 	@Column(name = "email_from")
 	private String emailFrom;
-	
+
 	@Expose
 	@Column(name = "email_cc")
 	private String emailCc;
-	
+
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject", nullable = false, referencedColumnName = "email_temp_id")
 	private EmailTemplate emailTemplate;
-	
+
 	@Expose
-	@Column(name = "body", length = 65535,columnDefinition = "TEXT")
+	@Column(name = "body", length = 65535, columnDefinition = "TEXT")
 	private String body;
 
 	@Expose
@@ -64,7 +64,6 @@ public class Email extends RecordDetails implements Serializable {
 					@JoinColumn(name = "files_upload_id", referencedColumnName = "file_upload_id") })
 	private Set<FilesUpload> filesUpload;
 
-	
 	/**
 	 * 
 	 */
@@ -102,7 +101,8 @@ public class Email extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param emailTo the emailTo to set
+	 * @param emailTo
+	 *            the emailTo to set
 	 */
 	public void setEmailTo(String emailTo) {
 		this.emailTo = emailTo;
@@ -116,7 +116,8 @@ public class Email extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param emailFrom the emailFrom to set
+	 * @param emailFrom
+	 *            the emailFrom to set
 	 */
 	public void setEmailFrom(String emailFrom) {
 		this.emailFrom = emailFrom;
@@ -130,7 +131,8 @@ public class Email extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param emailCc the emailCc to set
+	 * @param emailCc
+	 *            the emailCc to set
 	 */
 	public void setEmailCc(String emailCc) {
 		this.emailCc = emailCc;
@@ -144,7 +146,8 @@ public class Email extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param emailTemplate the emailTemplate to set
+	 * @param emailTemplate
+	 *            the emailTemplate to set
 	 */
 	public void setEmailTemplate(EmailTemplate emailTemplate) {
 		this.emailTemplate = emailTemplate;
@@ -158,7 +161,8 @@ public class Email extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param body the body to set
+	 * @param body
+	 *            the body to set
 	 */
 	public void setBody(String body) {
 		this.body = body;
@@ -172,7 +176,8 @@ public class Email extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param filesUpload the filesUpload to set
+	 * @param filesUpload
+	 *            the filesUpload to set
 	 */
 	public void setFilesUpload(Set<FilesUpload> filesUpload) {
 		this.filesUpload = filesUpload;

@@ -81,7 +81,7 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
-	
+
 	@Expose
 	@OneToMany(mappedBy = "mbrHospitalization", fetch = FetchType.LAZY)
 	private List<MembershipHospitalizationDetails> mbrHospitalizationDetailsList;
@@ -288,7 +288,8 @@ public class MembershipHospitalization extends RecordDetails implements Serializ
 	}
 
 	/**
-	 * @param mbrHospitalizationDetailsList the mbrHospitalizationDetailsList to set
+	 * @param mbrHospitalizationDetailsList
+	 *            the mbrHospitalizationDetailsList to set
 	 */
 	public void setMbrHospitalizationDetailsList(List<MembershipHospitalizationDetails> mbrHospitalizationDetailsList) {
 		this.mbrHospitalizationDetailsList = mbrHospitalizationDetailsList;

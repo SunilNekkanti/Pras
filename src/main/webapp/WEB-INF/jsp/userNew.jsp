@@ -53,7 +53,7 @@
 							cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="form-group col-sm-offset-2 col-sm-6">
 					<c:choose>
 						<c:when test="${user.id != null && user.activeInd == 89}">

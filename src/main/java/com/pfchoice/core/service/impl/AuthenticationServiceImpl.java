@@ -29,8 +29,11 @@ public class AuthenticationServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserDao userDao;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.core.userdetails.UserDetailsService#
+	 * loadUserByUsername(java.lang.String)
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,7 +46,7 @@ public class AuthenticationServiceImpl implements UserDetailsService {
 			authorities.add(authority);
 		}
 
-		return  new User(user.getUsername(), user.getPassword(), authorities);
+		return new User(user.getUsername(), user.getPassword(), authorities);
 
 	}
 }

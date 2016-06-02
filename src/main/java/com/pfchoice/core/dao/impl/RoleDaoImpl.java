@@ -17,7 +17,9 @@ import com.pfchoice.core.entity.Role;
 @Repository
 public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements RoleDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.RoleDao#getPage(int, int)
 	 */
 	@Override
@@ -28,7 +30,9 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.RoleDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -36,7 +40,9 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
 		return get(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.RoleDao#save(com.pfchoice.core.entity.Role)
 	 */
 	@Override
@@ -45,7 +51,9 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.RoleDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -57,7 +65,9 @@ public class RoleDaoImpl extends HibernateBaseDao<Role, Integer> implements Role
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

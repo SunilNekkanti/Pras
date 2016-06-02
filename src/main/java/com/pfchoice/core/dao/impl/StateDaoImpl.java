@@ -17,7 +17,9 @@ import com.pfchoice.core.entity.State;
 @Repository
 public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements StateDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.StateDao#getPage(int, int)
 	 */
 	@Override
@@ -27,7 +29,9 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.StateDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -35,7 +39,9 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
 		return get(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.StateDao#save(com.pfchoice.core.entity.State)
 	 */
 	@Override
@@ -44,7 +50,9 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.StateDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -56,7 +64,9 @@ public class StateDaoImpl extends HibernateBaseDao<State, Integer> implements St
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

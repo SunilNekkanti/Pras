@@ -121,9 +121,10 @@ public class InsuranceController {
 			logger.info("Returning insuranceEdit.jsp page");
 			return TileDefinitions.INSURANCENEW.toString();
 		}
-		
-		if(insuranceService.findByInsName( insurance.getName()) != null ){
-			FieldError insError =new FieldError("name","name", insurance.getName(), false, null, null,insurance.getName()+" already exist");
+
+		if (insuranceService.findByInsName(insurance.getName()) != null) {
+			FieldError insError = new FieldError("name", "name", insurance.getName(), false, null, null,
+					insurance.getName() + " already exist");
 			bindingResult.addError(insError);
 			return TileDefinitions.INSURANCENEW.toString();
 		}
@@ -172,9 +173,10 @@ public class InsuranceController {
 			insurance.setActiveInd('Y');
 			return TileDefinitions.INSURANCEEDIT.toString();
 		}
-		
-		if(!insuranceService.isInsUnique(insurance.getId(), insurance.getName())){
-			FieldError insError =new FieldError("name","name", insurance.getName(), false, null, null,insurance.getName()+" already exist");
+
+		if (!insuranceService.isInsUnique(insurance.getId(), insurance.getName())) {
+			FieldError insError = new FieldError("name", "name", insurance.getName(), false, null, null,
+					insurance.getName() + " already exist");
 			bindingResult.addError(insError);
 			return TileDefinitions.INSURANCEEDIT.toString();
 		}

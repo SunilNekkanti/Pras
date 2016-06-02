@@ -16,9 +16,9 @@ import com.pfchoice.core.entity.serializer.MembershipFollowupSerializer;
  * @author Sarath
  */
 public class JsonConverter {
-	
+
 	private JsonConverter() {
-		
+
 	}
 
 	/**
@@ -30,8 +30,7 @@ public class JsonConverter {
 	public static <T> List<T> getJsonObject(List<T> bean) {
 
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-				.registerTypeAdapter(MembershipFollowup.class, new MembershipFollowupSerializer())
-				.create();
+				.registerTypeAdapter(MembershipFollowup.class, new MembershipFollowupSerializer()).create();
 		String json = gson.toJson(bean);
 		return gson.fromJson(json, List.class);
 	}
@@ -45,8 +44,7 @@ public class JsonConverter {
 	public static <T> T getJsonObject(T bean) {
 
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-				.registerTypeAdapter(MembershipFollowup.class, new MembershipFollowupSerializer())
-				.create();
+				.registerTypeAdapter(MembershipFollowup.class, new MembershipFollowupSerializer()).create();
 		String json = gson.toJson(bean);
 		return (T) gson.fromJson(json, bean.getClass());
 	}

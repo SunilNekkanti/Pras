@@ -16,21 +16,27 @@ public class EthinicityFormatter implements Formatter<Ethinicity> {
 	@Autowired
 	private EthinicityService ethinicityService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Printer#print(java.lang.Object,
+	 * java.util.Locale)
 	 */
 	@Override
 	public String print(Ethinicity ethinicity, Locale arg1) {
 		return ethinicity.getDescription();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Parser#parse(java.lang.String,
+	 * java.util.Locale)
 	 */
 	@Override
 	public Ethinicity parse(String id, Locale arg1) throws ParseException {
-		
+
 		return ethinicityService.findById(Byte.parseByte(id));
-		
+
 	}
 }

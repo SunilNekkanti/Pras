@@ -9,7 +9,9 @@ import com.pfchoice.core.entity.HedisMeasure;
 @Component
 public class HedisMeasureValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -17,15 +19,18 @@ public class HedisMeasureValidator implements Validator {
 		return HedisMeasure.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 
 		HedisMeasure hedisMeasure = (HedisMeasure) obj;
 		if (hedisMeasure.getId() != null && hedisMeasure.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 		}
 
 		if (hedisMeasure.getCode().length() < 2 && hedisMeasure.getCode().length() >= 1) {

@@ -35,7 +35,7 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "description")
 	private String description;
-	
+
 	@Expose
 	@Column(name = "template", length = 65535, columnDefinition = "TEXT")
 	private String template;
@@ -44,7 +44,6 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "emailTemplate")
 	private List<EmailTemplatePlaceholder> emailTemplatePlacholderList;
 
-	
 	/**
 	 * 
 	 */
@@ -73,7 +72,7 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	public void setId(final Integer id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the description
 	 */
@@ -82,7 +81,8 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -96,7 +96,8 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param template the template to set
+	 * @param template
+	 *            the template to set
 	 */
 	public void setTemplate(String template) {
 		this.template = template;
@@ -110,7 +111,8 @@ public class EmailTemplate extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param emailTemplatePlacholderList the emailTemplatePlacholderList to set
+	 * @param emailTemplatePlacholderList
+	 *            the emailTemplatePlacholderList to set
 	 */
 	public void setEmailTemplatePlacholderList(List<EmailTemplatePlaceholder> emailTemplatePlacholderList) {
 		this.emailTemplatePlacholderList = emailTemplatePlacholderList;

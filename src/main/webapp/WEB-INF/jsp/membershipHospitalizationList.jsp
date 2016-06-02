@@ -747,8 +747,8 @@
 					<div class="col-sm-6">
 						<div class="col-sm-12">
 							<label class="radio-inline col-sm-4"> <input type="radio"
-								name="processHospitalization" id="processHospitalization" value="0" />Fi1e Process
-								Date
+								name="processHospitalization" id="processHospitalization"
+								value="0" />Fi1e Process Date
 							</label> <span class="col-sm-2"> From </span> <input type="text"
 								id="processfrom" class="processfrom col-sm-4">
 
@@ -936,7 +936,7 @@
 				var validExtensions = /(\.csv|\.xls|\.xlsx)$/i;
 				if (validExtensions.test(fileName)) {
 					var url = getContextPath()
-							+ 'reports/hospitalization/fileProcessing.do';
+							+ 'reports/hospitalization/fileProcessing.do?claimOrHospital=1';
 					var selector = 'mbrHospitalization';
 					if (window.FormData !== undefined) // for HTML5 browsers
 					{

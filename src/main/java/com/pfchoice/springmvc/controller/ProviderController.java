@@ -143,9 +143,10 @@ public class ProviderController {
 			logger.info("Returning providerEdit.jsp page");
 			return TileDefinitions.PROVIDERNEW.toString();
 		}
-		
-		if(providerService.findByPrvdrNPI( provider.getCode()) != null){
-			FieldError prvdrError = new FieldError("code","code",provider.getCode(), false, null, null, provider.getCode()+" already exist");
+
+		if (providerService.findByPrvdrNPI(provider.getCode()) != null) {
+			FieldError prvdrError = new FieldError("code", "code", provider.getCode(), false, null, null,
+					provider.getCode() + " already exist");
 			bindingResult.addError(prvdrError);
 			return TileDefinitions.PROVIDERNEW.toString();
 		}
@@ -176,9 +177,10 @@ public class ProviderController {
 			logger.info("Returning providerEdit.jsp page");
 			return TileDefinitions.PROVIDEREDIT.toString();
 		}
-		
-		if(!providerService.isUniquePrvdrNPI(provider.getId(), provider.getCode())){
-			FieldError prvdrError = new FieldError("code","code",provider.getCode(), false, null, null, provider.getCode()+" already exist");
+
+		if (!providerService.isUniquePrvdrNPI(provider.getId(), provider.getCode())) {
+			FieldError prvdrError = new FieldError("code", "code", provider.getCode(), false, null, null,
+					provider.getCode() + " already exist");
 			bindingResult.addError(prvdrError);
 			return TileDefinitions.PROVIDEREDIT.toString();
 		}

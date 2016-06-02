@@ -53,10 +53,8 @@ public class ProviderListController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/provider/list", "/user/provider/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = providerService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		LOG.info("returning providerList");
@@ -73,7 +71,7 @@ public class ProviderListController {
 	public Message viewProviderListt(@RequestParam(required = false) Integer insId) {
 
 		Pagination pagination = providerService.findByInsId(insId);
-		LOG.info("returning providerList for insId"+insId);
+		LOG.info("returning providerList for insId" + insId);
 		return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
 	}
 

@@ -57,7 +57,7 @@ public interface InsuranceDao {
 	 * @return
 	 */
 	Insurance updateByUpdater(Updater<Insurance> updater);
-	
+
 	/**
 	 * @param insName
 	 * @return

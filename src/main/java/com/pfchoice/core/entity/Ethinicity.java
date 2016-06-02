@@ -28,7 +28,6 @@ public class Ethinicity extends RecordDetails implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-
 	/**
 	 * 
 	 */

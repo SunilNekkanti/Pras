@@ -52,58 +52,28 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	private Insurance ins;
 
 	@Expose
-	@Temporal(TemporalType.DATE)
-	@Column(name = "activity_date")
-	protected Date activityDate;
-
-	@Expose
-	@Column(name = "activity_month")
-	private Integer activityMonth;
-	
-	@Expose
 	@Column(name = "claim_type")
 	private String claimType;
 
 	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
-	@JoinColumn(name = "location_id", referencedColumnName = "code")
-	private PlaceOfService roomType;
-	
-/*	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "facility_type_code", referencedColumnName = "code")
 	private FacilityType facilityType;
-	
+
 	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "bill_type_code", referencedColumnName = "code")
 	private BillType billType;
-	*/
-	
+
 	@Expose
-	@OneToOne(fetch = FetchType.LAZY,  orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "frequency_type_code", referencedColumnName = "code")
 	private FrequencyType frequencyType;
-	
-	@Expose
-	@Temporal(TemporalType.DATE)
-	@Column(name = "claim_start_date")
-	protected Date claimStartDate;
-
-	@Expose
-	@Temporal(TemporalType.DATE)
-	@Column(name = "claim_end_date")
-	protected Date claimEndDate;
-
-	@Expose
-	@Temporal(TemporalType.DATE)
-	@Column(name = "paid_date")
-	protected Date paidDate;
 
 	@Expose
 	@Column(name = "bill_type")
-	private String billType;
-	
+	private String billTypec;
+
 	@Expose
 	@Column(name = "ndc")
 	private String ndc;
@@ -135,87 +105,83 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "product_label")
 	private String productLabel;
-	
+
 	@Expose
 	@Column(name = "product_lvl1")
 	private String productLvl1;
-	
+
 	@Expose
 	@Column(name = "product_lvl2")
 	private String productLvl2;
-	
+
 	@Expose
 	@Column(name = "product_lvl3")
 	private String productLvl3;
-	
+
 	@Expose
 	@Column(name = "product_lvl4")
 	private String productLvl4;
-	
+
 	@Expose
 	@Column(name = "product_lvl5")
 	private String productLvl5;
-	
+
 	@Expose
 	@Column(name = "product_lvl6")
 	private String productLvl6;
-	
+
 	@Expose
 	@Column(name = "product_lvl7")
 	private String productLvl7;
-	
+
 	@Expose
 	@Column(name = "market_lvl1")
 	private String marketLvl1;
-	
+
 	@Expose
 	@Column(name = "market_lvl2")
 	private String marketLvl2;
-	
+
 	@Expose
 	@Column(name = "market_lvl3")
 	private String marketLvl3;
-	
+
 	@Expose
 	@Column(name = "market_lvl4")
 	private String marketLvl4;
-	
+
 	@Expose
 	@Column(name = "market_lvl5")
 	private String marketLvl5;
-	
+
 	@Expose
 	@Column(name = "market_lvl6")
 	private String marketLvl6;
-	
+
 	@Expose
 	@Column(name = "market_lvl7")
 	private String marketLvl7;
-	
+
 	@Expose
 	@Column(name = "market_lvl8")
 	private String marketLvl8;
-	
-	@Expose
-	@Column(name = "risk_recon_cos_des")
-	private String riskReconCosDes;
-	
+
 	@Expose
 	@Column(name = "tin")
 	private String tin;
-	
+
 	@Expose
 	@Column(name = "dx_type_cd")
 	private String dxTypeCode;
-	
+
 	@Expose
 	@Column(name = "proc_type_cd")
 	private String procTypeCode;
-	
+
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
-	
+
 	@Expose
 	@OneToMany(mappedBy = "mbrClaim", fetch = FetchType.LAZY)
 	private List<MembershipClaimDetails> mbrClaimDetailsList;
@@ -257,7 +223,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param claimNumber the claimNumber to set
+	 * @param claimNumber
+	 *            the claimNumber to set
 	 */
 	public void setClaimNumber(String claimNumber) {
 		this.claimNumber = claimNumber;
@@ -271,7 +238,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param mbr
+	 *            the mbr to set
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
@@ -285,7 +253,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param prvdr
+	 *            the prvdr to set
 	 */
 	public void setPrvdr(Provider prvdr) {
 		this.prvdr = prvdr;
@@ -299,38 +268,11 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param ins the ins to set
+	 * @param ins
+	 *            the ins to set
 	 */
 	public void setIns(Insurance ins) {
 		this.ins = ins;
-	}
-
-	/**
-	 * @return the activityDate
-	 */
-	public Date getActivityDate() {
-		return activityDate;
-	}
-
-	/**
-	 * @param activityDate the activityDate to set
-	 */
-	public void setActivityDate(Date activityDate) {
-		this.activityDate = activityDate;
-	}
-
-	/**
-	 * @return the activityMonth
-	 */
-	public Integer getActivityMonth() {
-		return activityMonth;
-	}
-
-	/**
-	 * @param activityMonth the activityMonth to set
-	 */
-	public void setActivityMonth(Integer activityMonth) {
-		this.activityMonth = activityMonth;
 	}
 
 	/**
@@ -341,24 +283,11 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param claimType the claimType to set
+	 * @param claimType
+	 *            the claimType to set
 	 */
 	public void setClaimType(String claimType) {
 		this.claimType = claimType;
-	}
-
-	/**
-	 * @return the roomType
-	 */
-	public PlaceOfService getRoomType() {
-		return roomType;
-	}
-
-	/**
-	 * @param roomType the roomType to set
-	 */
-	public void setRoomType(PlaceOfService roomType) {
-		this.roomType = roomType;
 	}
 
 	/**
@@ -369,66 +298,26 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param frequencyType the frequencyType to set
+	 * @param frequencyType
+	 *            the frequencyType to set
 	 */
 	public void setFrequencyType(FrequencyType frequencyType) {
 		this.frequencyType = frequencyType;
 	}
 
 	/**
-	 * @return the claimStartDate
-	 */
-	public Date getClaimStartDate() {
-		return claimStartDate;
-	}
-
-	/**
-	 * @param claimStartDate the claimStartDate to set
-	 */
-	public void setClaimStartDate(Date claimStartDate) {
-		this.claimStartDate = claimStartDate;
-	}
-
-	/**
-	 * @return the claimEndDate
-	 */
-	public Date getClaimEndDate() {
-		return claimEndDate;
-	}
-
-	/**
-	 * @param claimEndDate the claimEndDate to set
-	 */
-	public void setClaimEndDate(Date claimEndDate) {
-		this.claimEndDate = claimEndDate;
-	}
-
-	/**
-	 * @return the paidDate
-	 */
-	public Date getPaidDate() {
-		return paidDate;
-	}
-
-	/**
-	 * @param paidDate the paidDate to set
-	 */
-	public void setPaidDate(Date paidDate) {
-		this.paidDate = paidDate;
-	}
-
-	/**
 	 * @return the billType
 	 */
-	public String getBillType() {
-		return billType;
+	public String getBillTypec() {
+		return billTypec;
 	}
 
 	/**
-	 * @param billType the billType to set
+	 * @param billType
+	 *            the billType to set
 	 */
-	public void setBillType(String billType) {
-		this.billType = billType;
+	public void setBillTypec(String billTypec) {
+		this.billTypec = billTypec;
 	}
 
 	/**
@@ -439,7 +328,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param ndc the ndc to set
+	 * @param ndc
+	 *            the ndc to set
 	 */
 	public void setNdc(String ndc) {
 		this.ndc = ndc;
@@ -453,7 +343,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param mony the mony to set
+	 * @param mony
+	 *            the mony to set
 	 */
 	public void setMony(String mony) {
 		this.mony = mony;
@@ -467,7 +358,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param drugLabelName the drugLabelName to set
+	 * @param drugLabelName
+	 *            the drugLabelName to set
 	 */
 	public void setDrugLabelName(String drugLabelName) {
 		this.drugLabelName = drugLabelName;
@@ -481,7 +373,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param drugVersion the drugVersion to set
+	 * @param drugVersion
+	 *            the drugVersion to set
 	 */
 	public void setDrugVersion(String drugVersion) {
 		this.drugVersion = drugVersion;
@@ -495,7 +388,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param dischargeStatus the dischargeStatus to set
+	 * @param dischargeStatus
+	 *            the dischargeStatus to set
 	 */
 	public void setDischargeStatus(String dischargeStatus) {
 		this.dischargeStatus = dischargeStatus;
@@ -509,7 +403,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param memEnrollId the memEnrollId to set
+	 * @param memEnrollId
+	 *            the memEnrollId to set
 	 */
 	public void setMemEnrollId(String memEnrollId) {
 		MemEnrollId = memEnrollId;
@@ -523,7 +418,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param diagnosis the diagnosis to set
+	 * @param diagnosis
+	 *            the diagnosis to set
 	 */
 	public void setDiagnosis(String diagnosis) {
 		this.diagnosis = diagnosis;
@@ -537,7 +433,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLabel the productLabel to set
+	 * @param productLabel
+	 *            the productLabel to set
 	 */
 	public void setProductLabel(String productLabel) {
 		this.productLabel = productLabel;
@@ -551,7 +448,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl1 the productLvl1 to set
+	 * @param productLvl1
+	 *            the productLvl1 to set
 	 */
 	public void setProductLvl1(String productLvl1) {
 		this.productLvl1 = productLvl1;
@@ -565,7 +463,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl2 the productLvl2 to set
+	 * @param productLvl2
+	 *            the productLvl2 to set
 	 */
 	public void setProductLvl2(String productLvl2) {
 		this.productLvl2 = productLvl2;
@@ -579,7 +478,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl3 the productLvl3 to set
+	 * @param productLvl3
+	 *            the productLvl3 to set
 	 */
 	public void setProductLvl3(String productLvl3) {
 		this.productLvl3 = productLvl3;
@@ -593,7 +493,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl4 the productLvl4 to set
+	 * @param productLvl4
+	 *            the productLvl4 to set
 	 */
 	public void setProductLvl4(String productLvl4) {
 		this.productLvl4 = productLvl4;
@@ -607,7 +508,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl5 the productLvl5 to set
+	 * @param productLvl5
+	 *            the productLvl5 to set
 	 */
 	public void setProductLvl5(String productLvl5) {
 		this.productLvl5 = productLvl5;
@@ -621,7 +523,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl6 the productLvl6 to set
+	 * @param productLvl6
+	 *            the productLvl6 to set
 	 */
 	public void setProductLvl6(String productLvl6) {
 		this.productLvl6 = productLvl6;
@@ -635,7 +538,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param productLvl7 the productLvl7 to set
+	 * @param productLvl7
+	 *            the productLvl7 to set
 	 */
 	public void setProductLvl7(String productLvl7) {
 		this.productLvl7 = productLvl7;
@@ -649,7 +553,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl1 the marketLvl1 to set
+	 * @param marketLvl1
+	 *            the marketLvl1 to set
 	 */
 	public void setMarketLvl1(String marketLvl1) {
 		this.marketLvl1 = marketLvl1;
@@ -663,7 +568,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl2 the marketLvl2 to set
+	 * @param marketLvl2
+	 *            the marketLvl2 to set
 	 */
 	public void setMarketLvl2(String marketLvl2) {
 		this.marketLvl2 = marketLvl2;
@@ -677,7 +583,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl3 the marketLvl3 to set
+	 * @param marketLvl3
+	 *            the marketLvl3 to set
 	 */
 	public void setMarketLvl3(String marketLvl3) {
 		this.marketLvl3 = marketLvl3;
@@ -691,7 +598,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl4 the marketLvl4 to set
+	 * @param marketLvl4
+	 *            the marketLvl4 to set
 	 */
 	public void setMarketLvl4(String marketLvl4) {
 		this.marketLvl4 = marketLvl4;
@@ -705,7 +613,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl5 the marketLvl5 to set
+	 * @param marketLvl5
+	 *            the marketLvl5 to set
 	 */
 	public void setMarketLvl5(String marketLvl5) {
 		this.marketLvl5 = marketLvl5;
@@ -719,7 +628,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl6 the marketLvl6 to set
+	 * @param marketLvl6
+	 *            the marketLvl6 to set
 	 */
 	public void setMarketLvl6(String marketLvl6) {
 		this.marketLvl6 = marketLvl6;
@@ -733,7 +643,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl7 the marketLvl7 to set
+	 * @param marketLvl7
+	 *            the marketLvl7 to set
 	 */
 	public void setMarketLvl7(String marketLvl7) {
 		this.marketLvl7 = marketLvl7;
@@ -747,24 +658,11 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param marketLvl8 the marketLvl8 to set
+	 * @param marketLvl8
+	 *            the marketLvl8 to set
 	 */
 	public void setMarketLvl8(String marketLvl8) {
 		this.marketLvl8 = marketLvl8;
-	}
-
-	/**
-	 * @return the riskReconCosDes
-	 */
-	public String getRiskReconCosDes() {
-		return riskReconCosDes;
-	}
-
-	/**
-	 * @param riskReconCosDes the riskReconCosDes to set
-	 */
-	public void setRiskReconCosDes(String riskReconCosDes) {
-		this.riskReconCosDes = riskReconCosDes;
 	}
 
 	/**
@@ -775,7 +673,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param tin the tin to set
+	 * @param tin
+	 *            the tin to set
 	 */
 	public void setTin(String tin) {
 		this.tin = tin;
@@ -789,7 +688,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param dxTypeCode the dxTypeCode to set
+	 * @param dxTypeCode
+	 *            the dxTypeCode to set
 	 */
 	public void setDxTypeCode(String dxTypeCode) {
 		this.dxTypeCode = dxTypeCode;
@@ -803,7 +703,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param procTypeCode the procTypeCode to set
+	 * @param procTypeCode
+	 *            the procTypeCode to set
 	 */
 	public void setProcTypeCode(String procTypeCode) {
 		this.procTypeCode = procTypeCode;
@@ -817,7 +718,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param fileId the fileId to set
+	 * @param fileId
+	 *            the fileId to set
 	 */
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
@@ -831,10 +733,41 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param mbrClaimDetailsList the mbrClaimDetailsList to set
+	 * @param mbrClaimDetailsList
+	 *            the mbrClaimDetailsList to set
 	 */
 	public void setMbrClaimDetailsList(List<MembershipClaimDetails> mbrClaimDetailsList) {
 		this.mbrClaimDetailsList = mbrClaimDetailsList;
+	}
+
+	/**
+	 * @return the facilityType
+	 */
+	public FacilityType getFacilityType() {
+		return facilityType;
+	}
+
+	/**
+	 * @param facilityType
+	 *            the facilityType to set
+	 */
+	public void setFacilityType(FacilityType facilityType) {
+		this.facilityType = facilityType;
+	}
+
+	/**
+	 * @return the billType
+	 */
+	public BillType getBillType() {
+		return billType;
+	}
+
+	/**
+	 * @param billType
+	 *            the billType to set
+	 */
+	public void setBillType(BillType billType) {
+		this.billType = billType;
 	}
 
 	@Override
@@ -858,7 +791,7 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 
 	@Override
 	public String toString() {
-		return "com.pfchoice.core.entity.MembershipHospitalization[ id=" + id + " ]";
+		return "com.pfchoice.core.entity.MembershipClaim[ id=" + id + " ]";
 	}
 
 }

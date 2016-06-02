@@ -38,6 +38,10 @@ public class Contract extends RecordDetails implements Serializable {
 	private String contractNBR;
 
 	@Expose
+	@Column(name = "pcp_provider_nbr")
+	private String pcpPrvdrNBR;
+
+	@Expose
 	@Column(name = "PMPM")
 	private Double pmpm;
 
@@ -97,6 +101,21 @@ public class Contract extends RecordDetails implements Serializable {
 	 */
 	public String getContractNBR() {
 		return contractNBR;
+	}
+
+	/**
+	 * @return the pcpPrvdrNBR
+	 */
+	public String getPcpPrvdrNBR() {
+		return pcpPrvdrNBR;
+	}
+
+	/**
+	 * @param pcpPrvdrNBR
+	 *            the pcpPrvdrNBR to set
+	 */
+	public void setPcpPrvdrNBR(String pcpPrvdrNBR) {
+		this.pcpPrvdrNBR = pcpPrvdrNBR;
 	}
 
 	/**

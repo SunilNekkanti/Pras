@@ -22,16 +22,24 @@ public class MembershipStatusServiceImpl implements MembershipStatusService {
 	@Autowired
 	private MembershipStatusDao membershipStatusDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipStatusService#deleteById(java.lang.Byte)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipStatusService#deleteById(java.lang.
+	 * Byte)
 	 */
 	@Override
 	public MembershipStatus deleteById(final Byte id) {
 		return membershipStatusDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipStatusService#findById(java.lang.Byte)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipStatusService#findById(java.lang.
+	 * Byte)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +47,9 @@ public class MembershipStatusServiceImpl implements MembershipStatusService {
 		return membershipStatusDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.MembershipStatusService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +58,24 @@ public class MembershipStatusServiceImpl implements MembershipStatusService {
 		return membershipStatusDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipStatusService#save(com.pfchoice.core.entity.MembershipStatus)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipStatusService#save(com.pfchoice.core.
+	 * entity.MembershipStatus)
 	 */
 	@Override
 	public MembershipStatus save(final MembershipStatus bean) {
 		return membershipStatusDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipStatusService#update(com.pfchoice.core.entity.MembershipStatus)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipStatusService#update(com.pfchoice.
+	 * core.entity.MembershipStatus)
 	 */
 	@Override
 	public MembershipStatus update(final MembershipStatus bean) {

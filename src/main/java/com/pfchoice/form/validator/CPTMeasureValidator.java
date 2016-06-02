@@ -9,7 +9,9 @@ import com.pfchoice.core.entity.CPTMeasure;
 @Component("cPTMeasureValidator")
 public class CPTMeasureValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -17,15 +19,18 @@ public class CPTMeasureValidator implements Validator {
 		return CPTMeasure.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 
 		CPTMeasure cptMeasure = (CPTMeasure) obj;
 		if (cptMeasure.getId() != null && cptMeasure.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 
 		}
 

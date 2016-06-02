@@ -52,7 +52,7 @@ public interface MembershipClaimDetailsDao {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
-	
+
 	/**
 	 * @param mbrHosId
 	 * @return

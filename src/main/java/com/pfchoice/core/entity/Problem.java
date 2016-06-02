@@ -39,12 +39,12 @@ public class Problem extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "description")
 	private String description;
-	
+
 	@Expose
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
 	private Insurance insId;
-	
+
 	@Expose
 	@Column(name = "effective_year")
 	private Integer effectiveYear;
@@ -53,7 +53,7 @@ public class Problem extends RecordDetails implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "problems_icd", joinColumns = {
 			@JoinColumn(name = "pbm_Id", referencedColumnName = "pbm_Id") }, inverseJoinColumns = {
-			@JoinColumn(name = "icd_id", referencedColumnName = "icd_id") })
+					@JoinColumn(name = "icd_id", referencedColumnName = "icd_id") })
 	private Set<ICDMeasure> icdCodes;
 
 	/**
@@ -85,7 +85,6 @@ public class Problem extends RecordDetails implements Serializable {
 		this.id = id;
 	}
 
-	
 	/**
 	 * @return the description
 	 */
@@ -94,7 +93,8 @@ public class Problem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -108,7 +108,8 @@ public class Problem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param insId the insId to set
+	 * @param insId
+	 *            the insId to set
 	 */
 	public void setInsId(Insurance insId) {
 		this.insId = insId;
@@ -122,7 +123,8 @@ public class Problem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param effectiveYear the effectiveYear to set
+	 * @param effectiveYear
+	 *            the effectiveYear to set
 	 */
 	public void setEffectiveYear(Integer effectiveYear) {
 		this.effectiveYear = effectiveYear;
@@ -136,7 +138,8 @@ public class Problem extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param icdCodes the icdCodes to set
+	 * @param icdCodes
+	 *            the icdCodes to set
 	 */
 	public void setIcdCodes(Set<ICDMeasure> icdCodes) {
 		this.icdCodes = icdCodes;

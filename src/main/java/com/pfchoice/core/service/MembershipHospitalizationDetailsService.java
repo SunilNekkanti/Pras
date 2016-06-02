@@ -46,7 +46,7 @@ public interface MembershipHospitalizationDetailsService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
-	
+
 	/**
 	 * @param mbrHosId
 	 * @return

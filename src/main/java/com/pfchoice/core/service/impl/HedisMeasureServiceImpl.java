@@ -22,16 +22,22 @@ public class HedisMeasureServiceImpl implements HedisMeasureService {
 	@Autowired
 	private HedisMeasureDao hedisMeasureDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.HedisMeasureService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public HedisMeasure deleteById(final Integer id) {
 		return hedisMeasureDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,17 +45,23 @@ public class HedisMeasureServiceImpl implements HedisMeasureService {
 		return hedisMeasureDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.HedisMeasureService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return hedisMeasureDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.HedisMeasureService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -58,16 +70,24 @@ public class HedisMeasureServiceImpl implements HedisMeasureService {
 		return hedisMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureService#save(com.pfchoice.core.entity.HedisMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureService#save(com.pfchoice.core.
+	 * entity.HedisMeasure)
 	 */
 	@Override
 	public HedisMeasure save(final HedisMeasure bean) {
 		return hedisMeasureDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.HedisMeasureService#update(com.pfchoice.core.entity.HedisMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HedisMeasureService#update(com.pfchoice.core.
+	 * entity.HedisMeasure)
 	 */
 	@Override
 	public HedisMeasure update(final HedisMeasure bean) {

@@ -57,7 +57,7 @@ public interface EmailTemplateDao {
 	 * @return
 	 */
 	EmailTemplate updateByUpdater(Updater<EmailTemplate> updater);
-	
+
 	/**
 	 * 
 	 * @param description

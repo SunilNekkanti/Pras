@@ -16,7 +16,9 @@ import com.pfchoice.core.entity.TrackModel;
 @Repository
 public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> implements TrackModelDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.TrackModelDao#getPage(int, int)
 	 */
 	@Override
@@ -26,7 +28,9 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.TrackModelDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -34,8 +38,11 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.TrackModelDao#save(com.pfchoice.core.entity.TrackModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.TrackModelDao#save(com.pfchoice.core.entity.
+	 * TrackModel)
 	 */
 	@Override
 	public TrackModel save(final TrackModel bean) {
@@ -43,7 +50,9 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.TrackModelDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -55,7 +64,9 @@ public class TrackModelDaoImpl extends HibernateBaseDao<TrackModel, Integer> imp
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

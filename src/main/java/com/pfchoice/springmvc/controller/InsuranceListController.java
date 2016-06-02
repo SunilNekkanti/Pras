@@ -53,10 +53,8 @@ public class InsuranceListController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/insurance/list", "/user/insurance/list" }, method = RequestMethod.GET)
 	public Message viewInsuranceList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = insuranceService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		LOG.info("returning insuranceList");

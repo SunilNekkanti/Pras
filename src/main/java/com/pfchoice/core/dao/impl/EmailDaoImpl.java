@@ -19,7 +19,9 @@ import com.pfchoice.core.entity.Email;
 @Repository
 public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements EmailDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int)
 	 */
 	@Override
@@ -28,9 +30,12 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int, java.lang.String,
+	 * java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -46,7 +51,7 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 			crit.add(or);
 		}
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-		
+
 		if (sort != null && !"".equals(sort)) {
 			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				crit.addOrder(Order.desc(sort));
@@ -58,7 +63,9 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailsDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -66,8 +73,11 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailsDao#save(com.pfchoice.core.entity.Emails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.EmailsDao#save(com.pfchoice.core.entity.Emails)
 	 */
 	@Override
 	public Email save(final Email bean) {
@@ -75,7 +85,9 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailsDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -87,7 +99,9 @@ public class EmailDaoImpl extends HibernateBaseDao<Email, Integer> implements Em
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

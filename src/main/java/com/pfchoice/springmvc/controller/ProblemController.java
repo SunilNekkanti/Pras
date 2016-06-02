@@ -189,8 +189,8 @@ public class ProblemController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/problem/save.do", method = RequestMethod.POST, params = { "add" })
-	public String addProblemAction(@ModelAttribute("problem") @Validated Problem problem,
-			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+	public String addProblemAction(@ModelAttribute("problem") @Validated Problem problem, BindingResult bindingResult,
+			Model model, @ModelAttribute("username") String username) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning ProblemEdit.jsp page");
 			return TileDefinitions.PROBLEMNEW.toString();
@@ -243,9 +243,8 @@ public class ProblemController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/problem/{id}/save.do", method = RequestMethod.POST, params = { "delete" })
-	public String deleteProblemAction(@PathVariable Integer id,
-			@ModelAttribute("problem") @Validated Problem problem, BindingResult bindingResult, Model model,
-			@ModelAttribute("username") String username) {
+	public String deleteProblemAction(@PathVariable Integer id, @ModelAttribute("problem") @Validated Problem problem,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		logger.info("Problem id is" + id);
 		if (bindingResult.hasErrors()) {
 			problem.setActiveInd('Y');
@@ -326,7 +325,7 @@ public class ProblemController {
 
 		return TileDefinitions.PROBLEMLIST.toString();
 	}
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -340,15 +339,11 @@ public class ProblemController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/problem/list", "/user/problem/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) Integer insId, 
-			@RequestParam(required = false) Integer effYear) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) Integer insId, @RequestParam(required = false) Integer effYear) {
 
-		Pagination pagination = problemService.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId,
-				effYear);
+		Pagination pagination = problemService.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId, effYear);
 
 		return Message.successMessage(sSearch, JsonConverter.getJsonObject(pagination));
 	}

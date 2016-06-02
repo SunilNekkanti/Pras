@@ -41,14 +41,13 @@ public class CPTMeasure extends RecordDetails implements Serializable {
 	@Expose
 	@Transient
 	private String codeAndDescription;
-	
+
 	@Expose
 	@Column(name = "description")
 	private String description;
 
 	/**
-	 * Default constructor
-	 * there exists one constructor with id as parameter
+	 * Default constructor there exists one constructor with id as parameter
 	 */
 	public CPTMeasure() {
 		super();

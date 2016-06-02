@@ -20,7 +20,9 @@ import com.pfchoice.core.entity.MembershipInsurance;
 public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsurance, Integer>
 		implements MembershipInsuranceDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#getPage(int, int)
 	 */
 	@Override
@@ -30,16 +32,22 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipInsuranceDao#findById(java.lang.Integer)
 	 */
 	@Override
 	public MembershipInsurance findById(final Integer id) {
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#save(com.pfchoice.core.entity.MembershipInsurance)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#save(com.pfchoice.core.
+	 * entity.MembershipInsurance)
 	 */
 	@Override
 	public MembershipInsurance save(final MembershipInsurance bean) {
@@ -47,8 +55,11 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 		return bean;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public MembershipInsurance deleteById(final Integer id) {
@@ -59,7 +70,9 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -67,8 +80,12 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 		return MembershipInsurance.class;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#findAllByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipInsuranceDao#findAllByMbrId(java.lang.
+	 * Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,8 +96,11 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 		return cr.list();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#findByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipInsuranceDao#findByMbrId(java.lang.
+	 * Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -90,10 +110,10 @@ public class MembershipInsuranceDaoImpl extends HibernateBaseDao<MembershipInsur
 				.add(Restrictions.eq("mbr.id", id)).add(Restrictions.eq("mbrIns.activeInd", 'Y'))
 				.add(Restrictions.eq("mbr.activeInd", 'Y'));
 		List<MembershipInsurance> list = cr.list();
-		if(!list.isEmpty()) {
-			dbMembershipInsurance =  list.get(0);
+		if (!list.isEmpty()) {
+			dbMembershipInsurance = list.get(0);
 		}
-		 
+
 		return dbMembershipInsurance;
 	}
 }

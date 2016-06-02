@@ -22,16 +22,22 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 	@Autowired
 	private PlanTypeDao planTypeDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlanTypeService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlanTypeService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public PlanType deleteById(final Integer id) {
 		return planTypeDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlanTypeService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlanTypeService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +45,9 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 		return planTypeDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.PlanTypeService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +56,24 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 		return planTypeDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlanTypeService#save(com.pfchoice.core.entity.PlanType)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlanTypeService#save(com.pfchoice.core.entity.
+	 * PlanType)
 	 */
 	@Override
 	public PlanType save(final PlanType bean) {
 		return planTypeDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.PlanTypeService#update(com.pfchoice.core.entity.PlanType)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.PlanTypeService#update(com.pfchoice.core.entity
+	 * .PlanType)
 	 */
 	@Override
 	public PlanType update(final PlanType bean) {

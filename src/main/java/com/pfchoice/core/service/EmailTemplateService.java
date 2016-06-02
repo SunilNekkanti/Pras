@@ -29,7 +29,6 @@ public interface EmailTemplateService {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -51,7 +50,7 @@ public interface EmailTemplateService {
 	 * @return
 	 */
 	EmailTemplate update(EmailTemplate bean);
-	
+
 	/**
 	 * @param description
 	 * @return

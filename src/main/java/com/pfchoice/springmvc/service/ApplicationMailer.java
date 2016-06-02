@@ -20,18 +20,16 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-
-public class ApplicationMailer 
-{
+public class ApplicationMailer {
 	private static final Logger LOGGER = Logger.getAnonymousLogger();
-	
-    private String emailId;
-    
-    private Properties emailProperties;
 
-    private Session session;
-    
-    private String cc;
+	private String emailId;
+
+	private Properties emailProperties;
+
+	private Session session;
+
+	private String cc;
 
 	/**
 	 * @return the emailId
@@ -41,7 +39,8 @@ public class ApplicationMailer
 	}
 
 	/**
-	 * @param emailId the emailId to set
+	 * @param emailId
+	 *            the emailId to set
 	 */
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
@@ -55,7 +54,8 @@ public class ApplicationMailer
 	}
 
 	/**
-	 * @param session the session to set
+	 * @param session
+	 *            the session to set
 	 */
 	public void setSession(Session session) {
 		this.session = session;
@@ -69,14 +69,16 @@ public class ApplicationMailer
 	}
 
 	/**
-	 * @param cc the cc to set
+	 * @param cc
+	 *            the cc to set
 	 */
 	public void setCc(String cc) {
 		this.cc = cc;
 	}
 
 	/**
-	 * @param emailProperties the emailProperties to set
+	 * @param emailProperties
+	 *            the emailProperties to set
 	 */
 	public void setEmailProperties(Properties emailProperties) {
 		this.emailProperties = emailProperties;
@@ -89,12 +91,11 @@ public class ApplicationMailer
 		return emailProperties;
 	}
 
-    /**
-     * This method will send compose and send the message 
-     * */
-	public void sendMail(String to, String subject, String body) 
-    {
-    	 
+	/**
+	 * This method will send compose and send the message
+	 */
+	public void sendMail(String to, String subject, String body) {
+
 		final Message message = new MimeMessage(session);
 		try {
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -108,59 +109,54 @@ public class ApplicationMailer
 		} catch (MessagingException e) {
 			LOGGER.log(Level.INFO, "MessagingException: " + e.getMessage(), e);
 		}
-    }
-	
-	
-	 /**
-     * This method will send compose and send the message 
-     * */
-	public void sendMailWithAttachment(String to, String subject, String body, String filename) 
-    {
-    	 
+	}
+
+	/**
+	 * This method will send compose and send the message
+	 */
+	public void sendMailWithAttachment(String to, String subject, String body, String filename) {
+
 		final Message message = new MimeMessage(session);
-		
+
 		try {
-	         // Set From: header field of the header.
-	         message.setFrom(new InternetAddress("skumar@pfchoice.com"));
+			// Set From: header field of the header.
+			message.setFrom(new InternetAddress("skumar@pfchoice.com"));
 
-	         // Set To: header field of the header.
-	         message.setRecipients(Message.RecipientType.TO,
-	            InternetAddress.parse(to));
+			// Set To: header field of the header.
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 
-	         // Set Subject: header field
-	         message.setSubject(subject);
+			// Set Subject: header field
+			message.setSubject(subject);
 
-	         // Create the message part
-	         BodyPart messageBodyPart = new MimeBodyPart();
+			// Create the message part
+			BodyPart messageBodyPart = new MimeBodyPart();
 
-	         // Now set the actual message
-	         messageBodyPart.setText(body);
+			// Now set the actual message
+			messageBodyPart.setText(body);
 
-	         // Create a multipar message
-	         Multipart multipart = new MimeMultipart();
+			// Create a multipar message
+			Multipart multipart = new MimeMultipart();
 
-	         // Set text message part
-	         multipart.addBodyPart(messageBodyPart);
+			// Set text message part
+			multipart.addBodyPart(messageBodyPart);
 
-	         // Part two is attachment
-	         messageBodyPart = new MimeBodyPart();
-	         
-	         DataSource source = new FileDataSource(filename);
-	         messageBodyPart.setDataHandler(new DataHandler(source));
-	         messageBodyPart.setFileName(filename);
-	         multipart.addBodyPart(messageBodyPart);
+			// Part two is attachment
+			messageBodyPart = new MimeBodyPart();
 
-	         // Send the complete message parts
-	         message.setContent(multipart);
+			DataSource source = new FileDataSource(filename);
+			messageBodyPart.setDataHandler(new DataHandler(source));
+			messageBodyPart.setFileName(filename);
+			multipart.addBodyPart(messageBodyPart);
 
-	         // Send message
-	         Transport.send(message);
-	  
-	      } catch (MessagingException e) {
-	         throw new RuntimeException(e);
-	      }
-    }
-	
-	
- 
+			// Send the complete message parts
+			message.setContent(multipart);
+
+			// Send message
+			Transport.send(message);
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

@@ -22,15 +22,20 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private EmailDao emailsDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailsService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailsService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public Email deleteById(final Integer id) {
 		return emailsDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.EmailsService#findById(java.lang.Integer)
 	 */
 	@Override
@@ -39,7 +44,9 @@ public class EmailServiceImpl implements EmailService {
 		return emailsDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.EmailsService#getPage(int, int)
 	 */
 	@Override
@@ -47,9 +54,12 @@ public class EmailServiceImpl implements EmailService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return emailsDao.getPage(pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailsService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.EmailsService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -58,16 +68,24 @@ public class EmailServiceImpl implements EmailService {
 		return emailsDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailsService#save(com.pfchoice.core.entity.Emails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailsService#save(com.pfchoice.core.entity.
+	 * Emails)
 	 */
 	@Override
 	public Email save(final Email bean) {
 		return emailsDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.EmailsService#update(com.pfchoice.core.entity.Emails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.EmailsService#update(com.pfchoice.core.entity.
+	 * Emails)
 	 */
 	@Override
 	public Email update(final Email bean) {

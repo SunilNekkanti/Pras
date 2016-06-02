@@ -21,26 +21,27 @@
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" commandName="frequencyType"
 				action="save.do">
-				
+
 				<div class="form-group required col-sm-12">
 					<label class="control-label  col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
 						<springForm:input path="description" class="form-control"
-							id="description" placeholder="Description" maxlength="150"/>
+							id="description" placeholder="Description" maxlength="150" />
 						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="form-group required col-sm-12">
-					<label class="control-label  col-sm-2" for="shortName">Short Name</label>
+					<label class="control-label  col-sm-2" for="shortName">Short
+						Name</label>
 					<div class="col-sm-6">
 						<springForm:input path="shortName" class="form-control"
-							id="shortName" placeholder="shortName" maxlength="50"/>
+							id="shortName" placeholder="shortName" maxlength="50" />
 						<springForm:errors path="shortName" cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="col-sm-offset-2 col-sm-6">
 					<c:choose>
 						<c:when

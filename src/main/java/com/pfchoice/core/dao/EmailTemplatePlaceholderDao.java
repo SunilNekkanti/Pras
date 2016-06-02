@@ -59,23 +59,23 @@ public interface EmailTemplatePlaceholderDao {
 	 * @return
 	 */
 	EmailTemplatePlaceholder updateByUpdater(Updater<EmailTemplatePlaceholder> updater);
-	
+
 	/**
 	 * @param emailTemplateId
 	 * @return
 	 */
-	Pagination findByEmailTemplateId(Integer  emailTemplateId);
-	
+	Pagination findByEmailTemplateId(Integer emailTemplateId);
+
 	/**
 	 * @param emailTemplatePlaceholders
 	 * @return
 	 */
-	List<Object> getSQLScriptResults(List<EmailTemplatePlaceholder> emailTemplateId, Integer id) ;
-	
+	List<Object> getSQLScriptResults(List<EmailTemplatePlaceholder> emailTemplateId, Integer id);
+
 	/**
 	 * @param emailTemplateId
 	 * @param id
 	 * @return
 	 */
-	List<Object[]> generateAttachmentFile(Integer emailTemplateId, Integer id) ;
+	List<Object[]> generateAttachmentFile(Integer emailTemplateId, Integer id);
 }

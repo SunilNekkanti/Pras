@@ -9,7 +9,9 @@ import com.pfchoice.core.entity.Insurance;
 @Component
 public class InsuranceValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -17,15 +19,18 @@ public class InsuranceValidator implements Validator {
 		return Insurance.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 
 		Insurance ins = (Insurance) obj;
 		if (ins.getId() != null && ins.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 		}
 
 		if (ins.getName().length() < 2) {

@@ -16,16 +16,22 @@ public class HedisMeasureFormatter implements Formatter<HedisMeasure> {
 	@Autowired
 	private HedisMeasureService hedisMeasureService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Printer#print(java.lang.Object, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Printer#print(java.lang.Object,
+	 * java.util.Locale)
 	 */
 	@Override
 	public String print(HedisMeasure hedisMeasure, Locale arg1) {
 		return hedisMeasure.getDescription();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.format.Parser#parse(java.lang.String, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.format.Parser#parse(java.lang.String,
+	 * java.util.Locale)
 	 */
 	@Override
 	public HedisMeasure parse(String id, Locale arg1) throws ParseException {

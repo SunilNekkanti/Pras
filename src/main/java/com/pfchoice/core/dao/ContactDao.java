@@ -34,7 +34,7 @@ public interface ContactDao {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * 
 	 * @param pageNo

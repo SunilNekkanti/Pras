@@ -32,7 +32,7 @@ public class Hospital extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "code")
 	private String code;
-	
+
 	@Expose
 	@Column(name = "name")
 	private String name;
@@ -40,7 +40,6 @@ public class Hospital extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "file_id", nullable = false)
 	private Integer file_id;
-	
 
 	/**
 	 * 
@@ -66,7 +65,8 @@ public class Hospital extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
@@ -80,7 +80,8 @@ public class Hospital extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param code the code to set
+	 * @param code
+	 *            the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -94,7 +95,8 @@ public class Hospital extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -108,7 +110,8 @@ public class Hospital extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param file_id the file_id to set
+	 * @param file_id
+	 *            the file_id to set
 	 */
 	public void setFile_id(Integer file_id) {
 		this.file_id = file_id;
@@ -126,7 +129,7 @@ public class Hospital extends RecordDetails implements Serializable {
 
 	/**
 	 * @param object
-	 *   	the object to compare
+	 *            the object to compare
 	 */
 	@Override
 	public boolean equals(Object object) {

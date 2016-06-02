@@ -19,7 +19,9 @@ import com.pfchoice.core.entity.HedisMeasure;
 @Repository
 public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer> implements HedisMeasureDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HedisMeasureDao#getPage(int, int)
 	 */
 	@Override
@@ -28,9 +30,12 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HedisMeasureDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -62,7 +67,9 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HedisMeasureDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -70,8 +77,11 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.HedisMeasureDao#save(com.pfchoice.core.entity.HedisMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.HedisMeasureDao#save(com.pfchoice.core.entity.
+	 * HedisMeasure)
 	 */
 	@Override
 	public HedisMeasure save(final HedisMeasure bean) {
@@ -79,7 +89,9 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.HedisMeasureDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -91,7 +103,9 @@ public class HedisMeasureDaoImpl extends HibernateBaseDao<HedisMeasure, Integer>
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

@@ -10,7 +10,9 @@ import com.pfchoice.core.entity.MembershipInsurance;
 @Component
 public class MembershipInsuranceValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -18,8 +20,11 @@ public class MembershipInsuranceValidator implements Validator {
 		return MembershipInsurance.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {

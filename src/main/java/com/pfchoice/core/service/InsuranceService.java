@@ -29,7 +29,6 @@ public interface InsuranceService {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -51,7 +50,7 @@ public interface InsuranceService {
 	 * @return
 	 */
 	Insurance update(Insurance bean);
-	
+
 	/**
 	 * @param insName
 	 * @return

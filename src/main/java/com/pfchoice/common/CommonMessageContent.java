@@ -59,7 +59,7 @@ public interface CommonMessageContent {
 	String HEDIS_RULE_LIST = "Hedis Rule List";
 
 	String HEDIS_FOLLOWUP_LIST = "Membership Hedis Followup List";
-	
+
 	String HOSPITALIZATION_FOLLOWUP_LIST = "Membership Hospitalization Followup List";
 
 	String PROVIDER_INSURANCES_LIST = "Provider's Insurance List";
@@ -71,11 +71,15 @@ public interface CommonMessageContent {
 	String PLAN_TYPE_LIST = "Plan Type List";
 
 	String HEDIS_MEASURE_GROUP_LIST = "Hedis Measure Group List";
-	
+
 	String EMAIL_TEMPLATE_LIST = "Email Templates List";
-	
+
 	String EMAIL_LIST = "Email List";
-	
+
 	String PROBLEM_LIST = "Problem list";
+
+	String MEMBERSHIP_CLAIMS_LIST = "Membership Claims List";
+
+	String MEMBERSHIP_CLAIM_DETAILS_LIST = "Membership Claim Details List";
 
 }

@@ -12,7 +12,9 @@ import com.pfchoice.core.entity.Membership;
 @Component
 public class MembershipValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -20,15 +22,18 @@ public class MembershipValidator implements Validator {
 		return Membership.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 
 		Membership mbr = (Membership) obj;
 		if (mbr.getId() != null && mbr.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 		}
 
 		if (mbr.getFirstName().length() < 2) {
@@ -41,7 +46,7 @@ public class MembershipValidator implements Validator {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "error.dob", "DOB Required");
 		if (mbr.getDob() != null && mbr.getDob().after(new Date())) {
-				errors.rejectValue("dob", "error.date.future", "Date must be less than current date");
+			errors.rejectValue("dob", "error.date.future", "Date must be less than current date");
 		}
 
 		if (mbr.getMedicaidNo().length() < 1 || mbr.getMedicareNo().length() < 1) {

@@ -40,7 +40,6 @@ public class AttPhysician extends RecordDetails implements Serializable {
 	@Column(name = "file_id", nullable = false)
 	private Integer fileId;
 
-	
 	/**
 	 * 
 	 */
@@ -96,7 +95,8 @@ public class AttPhysician extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -110,7 +110,8 @@ public class AttPhysician extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param fileId the fileId to set
+	 * @param fileId
+	 *            the fileId to set
 	 */
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;

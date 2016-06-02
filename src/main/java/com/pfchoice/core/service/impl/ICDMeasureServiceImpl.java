@@ -22,16 +22,22 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 	@Autowired
 	private ICDMeasureDao icdMeasureDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ICDMeasureService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ICDMeasureService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public ICDMeasure deleteById(final Integer id) {
 		return icdMeasureDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ICDMeasureService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ICDMeasureService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +45,9 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 		return icdMeasureDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.ICDMeasureService#getPage(int, int)
 	 */
 	@Override
@@ -48,9 +56,11 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 		return icdMeasureDao.getPage(pageNo, pageSize);
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ICDMeasureService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.ICDMeasureService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -59,16 +69,24 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 		return icdMeasureDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ICDMeasureService#save(com.pfchoice.core.entity.ICDMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ICDMeasureService#save(com.pfchoice.core.entity
+	 * .ICDMeasure)
 	 */
 	@Override
 	public ICDMeasure save(final ICDMeasure bean) {
 		return icdMeasureDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ICDMeasureService#update(com.pfchoice.core.entity.ICDMeasure)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ICDMeasureService#update(com.pfchoice.core.
+	 * entity.ICDMeasure)
 	 */
 	@Override
 	public ICDMeasure update(final ICDMeasure bean) {

@@ -17,8 +17,9 @@ import com.pfchoice.core.entity.FilesUpload;
 @Repository
 public class FilesUploadDaoImpl extends HibernateBaseDao<FilesUpload, Integer> implements FilesUploadDao {
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FilesUploadDao#getPage(int, int)
 	 */
 	@Override
@@ -28,7 +29,9 @@ public class FilesUploadDaoImpl extends HibernateBaseDao<FilesUpload, Integer> i
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FilesUploadDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -36,8 +39,11 @@ public class FilesUploadDaoImpl extends HibernateBaseDao<FilesUpload, Integer> i
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.FilesUploadDao#save(com.pfchoice.core.entity.FilesUpload)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.FilesUploadDao#save(com.pfchoice.core.entity.
+	 * FilesUpload)
 	 */
 	@Override
 	public FilesUpload save(final FilesUpload bean) {
@@ -45,7 +51,9 @@ public class FilesUploadDaoImpl extends HibernateBaseDao<FilesUpload, Integer> i
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.FilesUploadDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -57,7 +65,9 @@ public class FilesUploadDaoImpl extends HibernateBaseDao<FilesUpload, Integer> i
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override

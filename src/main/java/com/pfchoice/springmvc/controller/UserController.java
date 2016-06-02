@@ -62,7 +62,6 @@ public class UserController {
 		binder.setValidator(validator);
 	}
 
-	
 	/**
 	 * @return
 	 */
@@ -131,9 +130,10 @@ public class UserController {
 			logger.info("Returning userEdit.jsp page");
 			return TileDefinitions.USERNEW.toString();
 		}
-		
-		if(!userService.isUserUnique(user.getId(), user.getUsername())){
-			FieldError userError =new FieldError("username", "username", user.getUsername(), false, null, null, user.getUsername()+" already exist");
+
+		if (!userService.isUserUnique(user.getId(), user.getUsername())) {
+			FieldError userError = new FieldError("username", "username", user.getUsername(), false, null, null,
+					user.getUsername() + " already exist");
 			bindingResult.addError(userError);
 			return TileDefinitions.USERNEW.toString();
 		}
@@ -159,18 +159,19 @@ public class UserController {
 	public String updateUserAction(@PathVariable Integer id, @Validated User user, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
 		user.setActiveInd('Y');
-		logger.info("user id is"+id);
+		logger.info("user id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning userEdit.jsp page");
 			return TileDefinitions.USEREDIT.toString();
 		}
-		
-		if(!userService.isUserUnique(user.getId(), user.getUsername())){
-			FieldError userError =new FieldError("username", "username", user.getUsername(), false, null, null, user.getUsername()+" already exist");
+
+		if (!userService.isUserUnique(user.getId(), user.getUsername())) {
+			FieldError userError = new FieldError("username", "username", user.getUsername(), false, null, null,
+					user.getUsername() + " already exist");
 			bindingResult.addError(userError);
 			return TileDefinitions.USEREDIT.toString();
 		}
-		
+
 		if (null != user.getId()) {
 			logger.info("Returning userEditSuccess.jsp page after update");
 			user.setUpdatedBy(username);
@@ -192,15 +193,16 @@ public class UserController {
 			"/user/user/{id}/save.do" }, method = RequestMethod.POST, params = { "delete" })
 	public String deleteInsuranceAction(@PathVariable Integer id, @Validated User user, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
-		logger.info("user id is"+id);
+		logger.info("user id is" + id);
 		if (bindingResult.hasErrors()) {
 			user.setActiveInd('Y');
 			logger.info("Returning userEdit.jsp page");
 			return TileDefinitions.USEREDIT.toString();
 		}
-		
-		if(!userService.isUserUnique(user.getId(), user.getUsername())){
-			FieldError userError =new FieldError("username", "username", user.getUsername(), false, null, null, user.getUsername()+" already exist");
+
+		if (!userService.isUserUnique(user.getId(), user.getUsername())) {
+			FieldError userError = new FieldError("username", "username", user.getUsername(), false, null, null,
+					user.getUsername() + " already exist");
 			bindingResult.addError(userError);
 			return TileDefinitions.USEREDIT.toString();
 		}
@@ -235,10 +237,8 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/user/list", "/user/user/list" }, method = RequestMethod.GET)
 	public Message viewProviderList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, 
-			@RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = userService.getPage(pageNo, pageSize);
 
@@ -252,7 +252,7 @@ public class UserController {
 	@ModelAttribute("rolesList")
 	public List<Role> populateRoles() {
 		Pagination page = roleService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
-				 SystemDefaultProperties.LARGE_LIST_SIZE);
+				SystemDefaultProperties.LARGE_LIST_SIZE);
 		return (List<Role>) page.getList();
 	}
 }

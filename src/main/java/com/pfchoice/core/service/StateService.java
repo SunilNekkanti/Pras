@@ -41,5 +41,4 @@ public interface StateService {
 	 */
 	State update(State bean);
 
-
 }

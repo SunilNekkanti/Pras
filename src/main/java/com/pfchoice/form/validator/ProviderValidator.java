@@ -8,7 +8,9 @@ import com.pfchoice.core.entity.Provider;
 @Component
 public class ProviderValidator implements Validator {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@Override
@@ -16,15 +18,18 @@ public class ProviderValidator implements Validator {
 		return Provider.class.equals(paramClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
 
 		Provider prvdr = (Provider) obj;
 		if (prvdr.getId() != null && prvdr.getId() <= 0) {
-				errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
+			errors.rejectValue("id", "negativeValue", new Object[] { "'id'" }, "id can't be negative");
 		}
 
 		if (prvdr.getName().length() < 6) {

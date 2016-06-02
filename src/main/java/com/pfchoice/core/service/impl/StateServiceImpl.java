@@ -22,7 +22,9 @@ public class StateServiceImpl implements StateService {
 	@Autowired
 	private StateDao stateDao;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.StateService#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -30,7 +32,9 @@ public class StateServiceImpl implements StateService {
 		return stateDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.StateService#findById(java.lang.Integer)
 	 */
 	@Override
@@ -39,7 +43,9 @@ public class StateServiceImpl implements StateService {
 		return stateDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.StateService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +54,24 @@ public class StateServiceImpl implements StateService {
 		return stateDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.StateService#save(com.pfchoice.core.entity.State)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.StateService#save(com.pfchoice.core.entity.
+	 * State)
 	 */
 	@Override
 	public State save(final State bean) {
 		return stateDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.StateService#update(com.pfchoice.core.entity.State)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.StateService#update(com.pfchoice.core.entity.
+	 * State)
 	 */
 	@Override
 	public State update(final State bean) {

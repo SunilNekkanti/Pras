@@ -22,7 +22,9 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleDao roleDao;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.RoleService#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -30,7 +32,9 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.RoleService#findById(java.lang.Integer)
 	 */
 	@Override
@@ -39,7 +43,9 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.RoleService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +54,23 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.RoleService#save(com.pfchoice.core.entity.Role)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.RoleService#save(com.pfchoice.core.entity.Role)
 	 */
 	@Override
 	public Role save(final Role bean) {
 		return roleDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.RoleService#update(com.pfchoice.core.entity.Role)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.RoleService#update(com.pfchoice.core.entity.
+	 * Role)
 	 */
 	@Override
 	public Role update(final Role bean) {

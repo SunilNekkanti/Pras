@@ -150,17 +150,16 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
-		
-		if(totalCount == 0) {
+
+		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
-		}else{
+		} else {
 			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
 
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
 		}
-		
 
 	}
 
@@ -253,6 +252,105 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return findByCriteria(crit, pageNo, pageSize);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int,
+	 * java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String,
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Pagination getClaimPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
+			final Integer sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
+			final Date processingTo, final Integer processClaim) {
+
+		Criteria crit = createCriteria().createAlias("genderId", "genderId")
+				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
+				.createAlias("mbrProvider.prvdr", "prvdr");
+		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
+
+		crit.createAlias("mbrClaimList", "mbrClaim", JoinType.INNER_JOIN);
+		crit.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN);
+		crit.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN);
+		crit.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
+
+		Disjunction or = Restrictions.disjunction();
+		Conjunction and = Restrictions.conjunction();
+
+		if (sSearch != null && !"".equals(sSearch)) {
+			or.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("genderId.description", "%" + sSearch + "%"))
+					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0])));
+		}
+		if (sSearchIns != null) {
+
+			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
+		}
+		if (sSearchPrvdr == ALL) {
+
+		}
+
+		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
+			crit.createAlias("prvdr.refContracts", "refContract");
+			crit.createAlias("refContract.ins", "ins");
+			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
+			and.add(Restrictions.eq("ins.id", sSearchIns));
+		}
+
+		and.add(Restrictions.eq("activeInd", new Character('Y')));
+
+		if (processClaim == FILTER_BY_PROCESSING_DATE)
+			and.add(Restrictions.between("mbrClaim.updatedDate", new java.sql.Date(processingFrom.getTime()),
+					new java.sql.Date(processingTo.getTime() + 86400000)));
+		if (processClaim == FILTER_BY_HOSPOTALIZATION_DATE) {
+			and.add(Restrictions.sqlRestriction(" ? between claim_start_date and claim_end_date",
+					new java.sql.Date(processingFrom.getTime()), DateType.INSTANCE));
+			and.add(Restrictions.sqlRestriction(" ? between claim_start_date and claim_end_date",
+					new java.sql.Date(processingTo.getTime()), DateType.INSTANCE));
+		}
+
+		crit.add(or);
+		crit.add(and);
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
+					crit.addOrder(Order.desc("prvdr.name"));
+				} else {
+					crit.addOrder(Order.desc(sort));
+				}
+			} else {
+				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
+					crit.addOrder(Order.asc("prvdr.name"));
+				} else {
+					crit.addOrder(Order.asc(sort));
+				}
+			}
+		}
+
+		crit.setProjection(Projections.distinct(Projections.property("mbrClaim.id")));
+		List<Integer> MbrClaimIds = (List<Integer>) crit.list();
+		int totalCount = (MbrClaimIds.isEmpty()) ? 0 : MbrClaimIds.size();
+
+		if (totalCount == 0) {
+			return findByCriteria(crit, pageNo, pageSize);
+		} else {
+			Criteria criteria = createCriteria().createAlias("mbrClaimList", "mbrClaim", JoinType.INNER_JOIN)
+					.add(Restrictions.in("mbrClaim.id", MbrClaimIds));
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
+			pagination.setTotalCount(totalCount);
+			return pagination;
+		}
+
+		// crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		// return findByCriteria(crit, pageNo, pageSize);
+
 	}
 
 	/*

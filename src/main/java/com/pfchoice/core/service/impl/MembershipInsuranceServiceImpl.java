@@ -24,16 +24,24 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 	@Autowired
 	private MembershipInsuranceDao membershipInsuranceDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipInsuranceService#deleteById(java.lang
+	 * .Integer)
 	 */
 	@Override
 	public MembershipInsurance deleteById(final Integer id) {
 		return membershipInsuranceDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipInsuranceService#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -41,8 +49,11 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 		return membershipInsuranceDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#getPage(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipInsuranceService#getPage(int,
+	 * int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -50,16 +61,24 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 		return membershipInsuranceDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#save(com.pfchoice.core.entity.MembershipInsurance)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipInsuranceService#save(com.pfchoice.
+	 * core.entity.MembershipInsurance)
 	 */
 	@Override
 	public MembershipInsurance save(final MembershipInsurance bean) {
 		return membershipInsuranceDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#update(com.pfchoice.core.entity.MembershipInsurance)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipInsuranceService#update(com.pfchoice.
+	 * core.entity.MembershipInsurance)
 	 */
 	@Override
 	public MembershipInsurance update(final MembershipInsurance bean) {
@@ -67,17 +86,24 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 		return membershipInsuranceDao.updateByUpdater(updater);
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#findAllByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipInsuranceService#findAllByMbrId(java.
+	 * lang.Integer)
 	 */
 	@Override
 	public List<MembershipInsurance> findAllByMbrId(Integer id) {
 		return membershipInsuranceDao.findAllByMbrId(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipInsuranceService#findByMbrId(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipInsuranceService#findByMbrId(java.
+	 * lang.Integer)
 	 */
 	@Override
 	public MembershipInsurance findByMbrId(final Integer id) {

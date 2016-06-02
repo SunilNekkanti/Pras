@@ -35,7 +35,6 @@ public class File extends RecordDetails implements Serializable {
 	@Column(name = "file_type_code")
 	private Integer fileTypeCode;
 
-
 	/**
 	 * 
 	 */

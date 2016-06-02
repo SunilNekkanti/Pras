@@ -29,7 +29,6 @@ public interface MembershipProblemService {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * @param pageNo
 	 * @param pageSize

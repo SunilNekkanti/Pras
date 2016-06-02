@@ -29,7 +29,6 @@ public interface HedisMeasureService {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * @param pageNo
 	 * @param pageSize

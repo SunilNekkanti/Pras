@@ -31,7 +31,6 @@ public interface EmailTemplatePlaceholderService {
 	 */
 	Pagination getPage(int pageNo, int pageSize);
 
-	
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -53,26 +52,23 @@ public interface EmailTemplatePlaceholderService {
 	 * @return
 	 */
 	EmailTemplatePlaceholder update(EmailTemplatePlaceholder bean);
-	
-	
+
 	/**
 	 * @param emailTemplateId
 	 * @return
 	 */
-	Pagination findByEmailTemplateId(Integer  emailTemplateId);
-	
+	Pagination findByEmailTemplateId(Integer emailTemplateId);
+
 	/**
 	 * @param emailTemplatePlaceholders
 	 * @return
 	 */
-	List<Object> getSQLScriptResults(List<EmailTemplatePlaceholder> emailTemplatePlaceholders, Integer id) ;
-	
-	
+	List<Object> getSQLScriptResults(List<EmailTemplatePlaceholder> emailTemplatePlaceholders, Integer id);
+
 	/**
 	 * @param emailTemplateId
 	 * @param id
 	 * @return
 	 */
-	List<Object[]> generateAttachmentFile(Integer emailTemplateId, Integer id) ;
+	List<Object[]> generateAttachmentFile(Integer emailTemplateId, Integer id);
 }
-

@@ -26,12 +26,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource({ "classpath:jdbc.properties", "classpath:hibernate.properties" })
 @ComponentScan(value = "com.pfchoice")
 public class ApplicationContext {
-	
+
 	public static final String HIBERNATE_CONNECTION_AUTOCOMMIT = "hibernate.connection.autocommit";
 
 	public static final String HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
 
-	public static final String HIBERNATE_HBM2DDL_AUTO  = "hibernate.hbm2ddl.auto";
+	public static final String HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
 
 	public static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
 

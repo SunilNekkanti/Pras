@@ -19,8 +19,13 @@ import java.util.stream.Collectors;
 
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.web.authentication.
+	 * AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * org.springframework.security.core.Authentication)
 	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -33,7 +38,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			List<GrantedAuthority> adminauthorities = authentication.getAuthorities().stream()
 					.filter(grantedAuthority -> "ROLE_ADMIN".equals(grantedAuthority.getAuthority()))
 					.collect(Collectors.toList());
-			if (!adminauthorities.isEmpty() ) {
+			if (!adminauthorities.isEmpty()) {
 				session.setAttribute("userpath", "admin");
 			} else {
 				List<GrantedAuthority> userauthorities = authentication.getAuthorities().stream()

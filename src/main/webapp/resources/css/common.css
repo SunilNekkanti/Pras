@@ -149,8 +149,15 @@ table#cptListTable, table#icdListTable {
 .clrRed, .updateError {
 	color: #FF0000 !important;
 }
-.hosFilter{
-	padding-bottom:5px;
+
+.hosFilter {
+	padding-bottom: 5px;
 }
-.process{padding-bottom:2px;}
-.table-responsive{overflow-y:hidden;}
+
+.process {
+	padding-bottom: 2px;
+}
+
+.table-responsive {
+	overflow-y: hidden;
+}

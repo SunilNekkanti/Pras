@@ -317,12 +317,11 @@ public class HedisMeasureRuleController {
 
 		if (null != hedisMeasureRule.getId()) {
 			logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
-			
-			if(hedisMeasureRule.getCptOrIcd() != 2){
-				System.out.println("set problem to null");
-			    hedisMeasureRule.setPbm(null);
-			   }
-			
+
+			if (hedisMeasureRule.getCptOrIcd() != 2) {
+				Problem pbm = new Problem();
+				hedisMeasureRule.setPbm(pbm);
+			}
 			hedisMeasureRuleService.update(hedisMeasureRule);
 			hedisMeasureRule.setUpdatedBy(username);
 			model.addAttribute("Message", "Hedis Measure update successfully");

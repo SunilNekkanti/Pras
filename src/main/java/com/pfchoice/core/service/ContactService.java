@@ -30,7 +30,7 @@ public interface ContactService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize

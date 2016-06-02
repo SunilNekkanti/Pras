@@ -22,16 +22,22 @@ public class FilesUploadServiceImpl implements FilesUploadService {
 	@Autowired
 	private FilesUploadDao filesUploadDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FilesUploadService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.FilesUploadService#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public FilesUpload deleteById(final Integer id) {
 		return filesUploadDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FilesUploadService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FilesUploadService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -39,7 +45,9 @@ public class FilesUploadServiceImpl implements FilesUploadService {
 		return filesUploadDao.findById(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.service.FilesUploadService#getPage(int, int)
 	 */
 	@Override
@@ -48,16 +56,23 @@ public class FilesUploadServiceImpl implements FilesUploadService {
 		return filesUploadDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FilesUploadService#save(com.pfchoice.core.entity.FilesUpload)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.FilesUploadService#save(com.pfchoice.core.
+	 * entity.FilesUpload)
 	 */
 	@Override
 	public FilesUpload save(final FilesUpload bean) {
 		return filesUploadDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.FilesUploadService#update(com.pfchoice.core.entity.FilesUpload)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FilesUploadService#update(com.pfchoice.core.
+	 * entity.FilesUpload)
 	 */
 	@Override
 	public FilesUpload update(final FilesUpload bean) {

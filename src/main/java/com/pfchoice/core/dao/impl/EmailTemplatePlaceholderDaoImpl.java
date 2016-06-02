@@ -24,9 +24,12 @@ import com.pfchoice.core.entity.EmailTemplatePlaceholder;
  * @author Mohanasundharam
  */
 @Repository
-public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTemplatePlaceholder, Integer> implements EmailTemplatePlaceholderDao {
+public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTemplatePlaceholder, Integer>
+		implements EmailTemplatePlaceholderDao {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int)
 	 */
 	@Override
@@ -35,9 +38,12 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.EmailsDao#getPage(int, int, java.lang.String,
+	 * java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -47,7 +53,9 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailsDao#findById(java.lang.Integer)
 	 */
 	@Override
@@ -55,8 +63,11 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 		return get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailsDao#save(com.pfchoice.core.entity.Emails)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.EmailsDao#save(com.pfchoice.core.entity.Emails)
 	 */
 	@Override
 	public EmailTemplatePlaceholder save(final EmailTemplatePlaceholder bean) {
@@ -64,7 +75,9 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 		return bean;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.EmailsDao#deleteById(java.lang.Integer)
 	 */
 	@Override
@@ -76,69 +89,73 @@ public class EmailTemplatePlaceholderDaoImpl extends HibernateBaseDao<EmailTempl
 		return entity;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
 	protected Class<EmailTemplatePlaceholder> getEntityClass() {
 		return EmailTemplatePlaceholder.class;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.EmailTemplatePlaceholderDao#findByEmailTemplateId(java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.EmailTemplatePlaceholderDao#findByEmailTemplateId(
+	 * java.lang.Integer)
 	 */
 	@Override
-	public Pagination findByEmailTemplateId(Integer  emailTemplateId){
+	public Pagination findByEmailTemplateId(Integer emailTemplateId) {
 		Criteria crit = createCriteria();
 		crit.createAlias("emailTemplate", "emailTemplate");
 		crit.add(Restrictions.eq("emailTemplate.id", emailTemplateId));
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		crit.add(Restrictions.eq("attachmentFlag", 'N'));
-		
+
 		crit.addOrder(Order.asc("orderNo"));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		
+
 		Pagination page = findByCriteria(crit, DEFAULT_PAGE_NO, MEDIUM_LIST_SIZE);
 		return page;
 	}
-	
-	
+
 	@Override
 	public List<Object> getSQLScriptResults(List<EmailTemplatePlaceholder> emailTemplatePlaceholders, Integer id) {
 		List<Object> objects = new ArrayList<>();
 		emailTemplatePlaceholders.forEach(emailTemplatePlaceholder -> {
 			String sqlScript = emailTemplatePlaceholder.getSqlScript();
-			Query query  = getSession().createSQLQuery(sqlScript) 
-					.setInteger("prvdrId", id);
+			Query query = getSession().createSQLQuery(sqlScript).setInteger("prvdrId", id);
 			objects.add(query.uniqueResult());
 		});
 		return objects;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object[]> generateAttachmentFile(Integer  emailTemplateId, Integer id){
+	public List<Object[]> generateAttachmentFile(Integer emailTemplateId, Integer id) {
 		Criteria crit = createCriteria();
 		crit.createAlias("emailTemplate", "emailTemplate");
-		
+
 		crit.add(Restrictions.eq("emailTemplate.id", emailTemplateId));
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		crit.add(Restrictions.eq("attachmentFlag", 'Y'));
-		
+
 		crit.addOrder(Order.asc("orderNo"));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		
+
 		Pagination page = findByCriteria(crit, DEFAULT_PAGE_NO, MEDIUM_LIST_SIZE);
-		
-		if(!page.getList().isEmpty()){
+
+		if (!page.getList().isEmpty()) {
 			EmailTemplatePlaceholder emailTemplatePlaceholder = (EmailTemplatePlaceholder) page.getList().get(0);
 			String sqlScript = emailTemplatePlaceholder.getSqlScript();
-			SQLQuery query  = getSession().createSQLQuery(sqlScript);
+			SQLQuery query = getSession().createSQLQuery(sqlScript);
 			query.setInteger("prvdrId", id);
-			return  query.list();
+			return query.list();
 		}
-		
+
 		return null;
-		
+
 	}
 }
