@@ -115,11 +115,12 @@
 								}
 							});
 							columns.push({
-								"mDataProp" : "mbrProviderList.0.prvdr.name",
+								"mDataProp" : "mbrProviderList[0].name",
 								"bSearchable" : true,
 								"bSortable" : true,
 								"sClass" : "center",
-								"sWidth" : "10%"
+								"sWidth" : "10%",
+								
 							});
 							
 							

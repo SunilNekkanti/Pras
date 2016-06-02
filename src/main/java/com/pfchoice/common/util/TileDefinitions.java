@@ -117,7 +117,8 @@ public enum TileDefinitions {
 																																																																																																																																																																																																																									"frequencyTypeList"), FREQUENCYTYPENEW(
 																																																																																																																																																																																																																											"frequencyTypeNew"), FREQUENCYTYPEEDIT(
 																																																																																																																																																																																																																													"frequencyTypeEdit"), MEMBERSHIPCLIAMLIST(
-																																																																																																																																																																																																																															"membershipClaimList");
+																																																																																																																																																																																																																															"membershipClaimList"), MEMBERSHIPPROBLEMLIST(
+																																																																																																																																																																																																																																	"membershipProblemList");
 
 	private final String text;
 

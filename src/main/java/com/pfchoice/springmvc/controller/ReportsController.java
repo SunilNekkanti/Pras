@@ -8,7 +8,6 @@ import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -563,4 +562,40 @@ public class ReportsController {
 				JsonConverter.getJsonObject(pagination));
 	}
 
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/problem", "/user/reports/problem" })
+	public String viewMembershipProblemList() {
+
+		return TileDefinitions.MEMBERSHIPPROBLEMLIST.toString();
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchHedisRule
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/problemMembership/list",
+			"/user/reports/problemMembership/list" }, method = RequestMethod.GET)
+	public Message viewMembershipProblemList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
+			@RequestParam(required = true) Integer sSearchProblemRule,
+			@RequestParam(required = true) List<Integer> ruleIds, @RequestParam(required = false) String sort,
+			@RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = membershipService.getMembershipProblemPage(pageNo, pageSize, sSearch, sSearchIns,
+				sSearchPrvdr, sSearchProblemRule, ruleIds, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
 }

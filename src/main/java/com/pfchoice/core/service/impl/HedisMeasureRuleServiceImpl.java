@@ -24,24 +24,16 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService {
 	@Autowired
 	private HedisMeasureRuleDao hedisMeasureRuleDao;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.service.HedisMeasureRuleService#deleteById(java.lang.
-	 * Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public HedisMeasureRule deleteById(final Integer id) {
 		return hedisMeasureRuleDao.deleteById(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.service.HedisMeasureRuleService#findById(java.lang.
-	 * Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -49,11 +41,8 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService {
 		return hedisMeasureRuleDao.findById(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.service.HedisMeasureRuleService#getPage(int, int,
-	 * java.lang.String, java.lang.String, java.lang.String)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -62,11 +51,8 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService {
 		return hedisMeasureRuleDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.service.HedisMeasureRuleService#getPage(int, int,
-	 * java.lang.String, java.lang.String, java.lang.String, int, int)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String, int, int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -75,24 +61,16 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService {
 		return hedisMeasureRuleDao.getPage(pageNo, pageSize, sSearch, sort, sortdir, insId, effYear);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.service.HedisMeasureRuleService#save(com.pfchoice.core.
-	 * entity.HedisMeasureRule)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#save(com.pfchoice.core.entity.HedisMeasureRule)
 	 */
 	@Override
 	public HedisMeasureRule save(final HedisMeasureRule bean) {
 		return hedisMeasureRuleDao.save(bean);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.service.HedisMeasureRuleService#update(com.pfchoice.
-	 * core.entity.HedisMeasureRule)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#update(com.pfchoice.core.entity.HedisMeasureRule)
 	 */
 	@Override
 	public HedisMeasureRule update(final HedisMeasureRule bean) {
@@ -100,16 +78,20 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService {
 		return hedisMeasureRuleDao.updateByUpdater(updater);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.service.HedisMeasureRuleService#findAllByInsId(java.
-	 * lang.Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#findAllByInsId(java.lang.Integer)
 	 */
 	@Override
 	public List<HedisMeasureRule> findAllByInsId(final Integer insId) {
 		return hedisMeasureRuleDao.findAllByInsId(insId);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.HedisMeasureRuleService#findAllByInsId(java.lang.Integer)
+	 */
+	@Override
+	public List<HedisMeasureRule> findAllByInsAndPbm(final Integer insId) {
+		return hedisMeasureRuleDao.findAllByInsAndPbm(insId);
 	}
 
 }

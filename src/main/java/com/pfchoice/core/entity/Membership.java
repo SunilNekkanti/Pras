@@ -102,6 +102,10 @@ public class Membership extends RecordDetails implements Serializable {
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
 	private List<MembershipClaim> mbrClaimList;
 
+	@Expose
+	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MembershipProblem> mbrProblemList;
+
 	/**
 	 * 
 	 */
@@ -346,6 +350,21 @@ public class Membership extends RecordDetails implements Serializable {
 	 */
 	public List<MembershipClaim> getMbrClaimList() {
 		return mbrClaimList;
+	}
+
+	/**
+	 * @return the mbrProblemList
+	 */
+	public List<MembershipProblem> getMbrProblemList() {
+		return mbrProblemList;
+	}
+
+	/**
+	 * @param mbrProblemList
+	 *            the mbrProblemList to set
+	 */
+	public void setMbrProblemList(List<MembershipProblem> mbrProblemList) {
+		this.mbrProblemList = mbrProblemList;
 	}
 
 	/**

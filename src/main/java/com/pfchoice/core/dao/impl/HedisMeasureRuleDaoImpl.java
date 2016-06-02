@@ -29,11 +29,9 @@ import com.pfchoice.core.entity.HedisMeasureRule;
 public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, Integer>
 		implements HedisMeasureRuleDao {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#getPage(int, int,
-	 * java.lang.String, java.lang.String, java.lang.String)
+
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
@@ -95,20 +93,17 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#getPage(int, int,
-	 * java.lang.String, java.lang.String, java.lang.String, java.lang.Integer,
-	 * java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir, final Integer insId, final Integer effYear) {
-		Criteria crit = createCriteria().createAlias("hedisMeasure", "hedisMeasure")
-				.createAlias("pbm", "pbm", JoinType.LEFT_OUTER_JOIN)
-				.createAlias("frequencyType", "frequencyType", JoinType.LEFT_OUTER_JOIN)
-				.createAlias("genderId", "genderId", JoinType.LEFT_OUTER_JOIN);
+		Criteria crit = createCriteria()
+				.createAlias("hedisMeasure", "hedisMeasure")
+				.createAlias("pbm", "pbm",JoinType.LEFT_OUTER_JOIN)
+				.createAlias("frequencyType", "frequencyType",JoinType.LEFT_OUTER_JOIN)
+				.createAlias("genderId", "genderId",JoinType.LEFT_OUTER_JOIN);
 
 		Conjunction and = Restrictions.conjunction();
 		if (sSearch != null && !"".equals(sSearch)) {
@@ -153,23 +148,16 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.dao.HedisMeasureRuleDao#findById(java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#findById(java.lang.Integer)
 	 */
 	@Override
 	public HedisMeasureRule findById(final Integer id) {
 		return get(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.dao.HedisMeasureRuleDao#save(com.pfchoice.core.entity.
-	 * HedisMeasureRule)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#save(com.pfchoice.core.entity.HedisMeasureRule)
 	 */
 	@Override
 	public HedisMeasureRule save(final HedisMeasureRule bean) {
@@ -177,11 +165,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 		return bean;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pfchoice.core.dao.HedisMeasureRuleDao#deleteById(java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public HedisMeasureRule deleteById(final Integer id) {
@@ -192,9 +177,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 		return entity;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
 	 */
 	@Override
@@ -202,11 +185,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 		return HedisMeasureRule.class;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#findAllByInsId(java.lang.
-	 * Integer)
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#findAllByInsId(java.lang.Integer)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -220,6 +200,29 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 
 		cr.setProjection(Projections.distinct(Projections.projectionList()
 				.add(Projections.property("description"), "description").add(Projections.property("id"), "id")))
+				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
+
+		return cr.list();
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.HedisMeasureRuleDao#findAllByInsId(java.lang.Integer)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HedisMeasureRule> findAllByInsAndPbm(final Integer insId) {
+
+		Criteria cr = createCriteria();
+		cr.createAlias("insId", "ins");
+		cr.createAlias("pbm", "pbm", JoinType.LEFT_OUTER_JOIN);
+		cr.add(Restrictions.eq("activeInd", 'Y'));
+		cr.add(Restrictions.eq("ins.activeInd", 'Y'));
+		cr.add(Restrictions.eq("ins.id", insId));
+		cr.add(Restrictions.isNotNull("pbm.id"));
+		
+
+		cr.setProjection(Projections.distinct(Projections.projectionList()
+				.add(Projections.property("pbm.description"), "description").add(Projections.property("pbm.id"), "id")))
 				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
 
 		return cr.list();

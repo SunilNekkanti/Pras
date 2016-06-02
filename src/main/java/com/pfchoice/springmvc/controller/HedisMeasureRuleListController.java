@@ -81,4 +81,19 @@ public class HedisMeasureRuleListController {
 				JsonConverter.getJsonObject(hedisMeasureRuleList));
 	}
 
+	/**
+	 * @param insId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/problemMeasureRule/list",
+			"/user/problemMeasureRule/list" }, method = RequestMethod.GET)
+	public Message viewProblemMeasureRuleList(@RequestParam(required = false) Integer insId) {
+
+		List<HedisMeasureRule> hedisMeasureRuleList = hedisMeasureRuleService.findAllByInsAndPbm(insId);
+
+		return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST,
+				JsonConverter.getJsonObject(hedisMeasureRuleList));
+	}
+
 }

@@ -508,7 +508,7 @@ $(document).ready(function () {
 										href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
 									<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
 									<li role="presentation" class="divider"></li>
-									<li><a href="${context}/${userpath}/problemList">Problem</a></li>
+									<li><a href="${context}/${userpath}/problemList">Problem List</a></li>
 									<li role="presentation" class="divider"></li>
 									<li><a
 										href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis
@@ -553,6 +553,7 @@ $(document).ready(function () {
 							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
 							<li><a href="${context}/${userpath}/reports/claim">Claims</a></li>
+							<li><a href="${context}/${userpath}/reports/problem">Problems</a></li>
 						</ul></li>
 
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>

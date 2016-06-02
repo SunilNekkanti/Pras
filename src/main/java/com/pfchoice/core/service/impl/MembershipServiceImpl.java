@@ -76,37 +76,48 @@ public class MembershipServiceImpl implements MembershipService {
 		return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sSearchHedisCode, ruleIds,
 				sort, sortdir);
 	}
-
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.pfchoice.core.service.MembershipService#getPage(int, int,
-	 * java.lang.String, int, int, java.lang.String, java.lang.String,
-	 * java.util.Date, java.util.Date, int)
+	 * java.lang.String, int, int, int, java.util.List, java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final int sSearchIns,
-			final int sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
-			final Date processingTo, final int processHospitalization) {
-		return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort, sortdir, processingFrom,
-				processingTo, processHospitalization);
+	public Pagination getMembershipProblemPage(final int pageNo, final int pageSize, final String sSearch, final int sSearchIns,
+			final int sSearchPrvdr, final int sSearchPbmCode, final List<Integer> ruleIds, final String sort,
+			final String sortdir) {
+		return membershipDao.getMembershipProblemPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sSearchPbmCode, ruleIds,
+				sort, sortdir);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.service.MembershipService#getPage(int, int,
-	 * java.lang.String, int, int, java.lang.String, java.lang.String,
-	 * java.util.Date, java.util.Date, int)
+
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipService#getPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String, java.util.Date, java.util.Date, int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Pagination getClaimPage(final int pageNo, final int pageSize, final String sSearch, final int sSearchIns,
-			final int sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
-			final Date processingTo, final int processClaim) {
-		return membershipDao.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort, sortdir,
-				processingFrom, processingTo, processClaim);
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom, final Date processingTo,
+			final int processHospitalization) {
+		return membershipDao.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processingFrom, processingTo, processHospitalization);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipService#getPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String, java.util.Date, java.util.Date, int)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getClaimPage(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom, final Date processingTo,
+			final int processClaim) {
+		return membershipDao.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processingFrom, processingTo, processClaim);
 	}
 
 	/*

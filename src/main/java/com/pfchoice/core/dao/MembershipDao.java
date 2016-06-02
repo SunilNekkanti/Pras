@@ -56,6 +56,22 @@ public interface MembershipDao {
 			Integer sSearchHedisCode, final List<Integer> ruleIds, String sort, String sortdir);
 
 	/**
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchHedisCode
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getMembershipProblemPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns,
+			Integer sSearchPrvdr, Integer sSearchPbmCode, final List<Integer> ruleIds, String sort, String sortdir);
+
+	/**
 	 * @param pageNo
 	 * @param pageSize
 	 * @param sSearch
