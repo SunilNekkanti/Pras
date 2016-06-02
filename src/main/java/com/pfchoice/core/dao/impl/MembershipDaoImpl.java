@@ -220,8 +220,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
-		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
-		and.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
 
 		crit.add(or);
 		crit.add(and);
@@ -368,11 +366,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 
-		crit.createAlias("mbrClaimList", "mbrClaimList", JoinType.INNER_JOIN);
-		crit.createAlias("mbrClaimList.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN);
-		crit.createAlias("mbrClaimList.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN);
-		crit.createAlias("mbrClaimList.billTypeCode", "billTypeCode", JoinType.LEFT_OUTER_JOIN);
-		crit.createAlias("mbrClaimList.roomType", "roomType", JoinType.LEFT_OUTER_JOIN);
+		crit.createAlias("mbrClaimList", "mbrClaim", JoinType.INNER_JOIN);
+		crit.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN);
+		crit.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN);
+		crit.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
 
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
@@ -400,14 +397,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
-		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
-		and.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
-		
-		System.out.println( " processingFrom "+processingFrom);
-		System.out.println( " processingTo "+processingTo);
 		
 		if (processClaim== FILTER_BY_PROCESSING_DATE)
-			and.add(Restrictions.between("mbrClaimList.updatedDate",
+			and.add(Restrictions.between("mbrClaim.updatedDate",
 					new java.sql.Date(processingFrom.getTime()), new java.sql.Date(processingTo.getTime() + 86400000)));
 		if (processClaim == FILTER_BY_HOSPOTALIZATION_DATE) {
 			and.add(Restrictions.sqlRestriction(" ? between claim_start_date and claim_end_date",
@@ -434,9 +426,20 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 				}
 			}
 		}
-		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		crit.setProjection(Projections.distinct(Projections.property("mbrClaim.id")));
+		List<Integer> MbrClaimIds = (List<Integer>) crit.list();
+		int totalCount = (MbrClaimIds.isEmpty()) ? 0 : MbrClaimIds.size();
 
-		return findByCriteria(crit, pageNo, pageSize);
+		if (totalCount == 0) {
+			return findByCriteria(crit, pageNo, pageSize);
+		} else {
+			Criteria criteria = createCriteria().createAlias("mbrClaimList", "mbrClaim", JoinType.INNER_JOIN)
+					.add(Restrictions.in("mbrClaim.id", MbrClaimIds));
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
+			pagination.setTotalCount(totalCount);
+			return pagination;
+		}
 	}
 
 	/*
