@@ -60,6 +60,7 @@ import com.pfchoice.core.service.MembershipFollowupService;
 import com.pfchoice.core.service.MembershipHedisMeasureService;
 import com.pfchoice.core.service.MembershipHospitalizationDetailsService;
 import com.pfchoice.core.service.MembershipHospitalizationService;
+import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -91,6 +92,9 @@ public class ReportsController {
 
 	@Autowired
 	private HospitalService hospitalService;
+	
+	@Autowired
+	private MembershipProblemService mbrProblemService;
 
 	@Autowired
 	private MembershipService membershipService;
@@ -535,9 +539,12 @@ public class ReportsController {
 			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId);
 			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId);
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId);
+			//Integer mbrHedisLoadedData = mbrHedisService.loadData(fileId);
 			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
+			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
 			/*
 			 * Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
 			 * LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);

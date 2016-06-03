@@ -95,4 +95,15 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 		Updater<MembershipProblem> updater = new Updater<>(bean);
 		return mbrProblemDao.updateByUpdater(updater);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipClaimService#loadData(java.lang.
+	 * Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId) {
+		return mbrProblemDao.loadData(fileId);
+	}
 }

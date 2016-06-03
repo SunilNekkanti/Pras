@@ -3,10 +3,13 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipProblemDao;
 import com.pfchoice.core.entity.MembershipProblem;
 
@@ -92,5 +95,15 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 	@Override
 	protected Class<MembershipProblem> getEntityClass() {
 		return MembershipProblem.class;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MembershipProblemDao#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId) {
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
 }
