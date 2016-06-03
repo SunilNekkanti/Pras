@@ -55,6 +55,11 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date resolvedDate;
 	
+	@Expose
+	@Column(name = "file_id")
+	private Integer fileId;
+
+	
 	/**
 	 * 
 	 */
@@ -138,6 +143,20 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 	 */
 	public void setResolvedDate(Date resolvedDate) {
 		this.resolvedDate = resolvedDate;
+	}
+
+	/**
+	 * @return the fileId
+	 */
+	public Integer getFileId() {
+		return fileId;
+	}
+
+	/**
+	 * @param fileId the fileId to set
+	 */
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
 	}
 
 	@Override

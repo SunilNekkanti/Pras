@@ -356,6 +356,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 * java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String,
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Pagination getClaimPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
