@@ -1,4 +1,4 @@
-INSERT INTO membership_claim_details (
+INSERT INTO membership_problems (
 mbr_id,pbm_id,start_date,resolved_date,created_date,updated_date,
 created_by,updated_by,active_ind,file_id
  )

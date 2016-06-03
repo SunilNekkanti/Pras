@@ -193,7 +193,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("genderId.description", "%" + sSearch + "%"))
 					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0]))).add(Restrictions
-							.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+							.sqlRestriction("CAST(start_date AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
 		}
 		if (sSearchIns != null) {
 

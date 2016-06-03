@@ -6,7 +6,6 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -46,25 +45,21 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 			final String sortdir, final Integer insId, final Integer effYear) {
 
 		Criteria crit = createCriteria();
-
-		Conjunction and = Restrictions.conjunction();
+		crit.createAlias("insId", "insId");
+		
 		if (sSearch != null && !"".equals(sSearch)) {
 			Disjunction or = Restrictions.disjunction();
-
 			or.add(Restrictions.ilike("description", sSearch, MatchMode.ANYWHERE));
-
 			crit.add(or);
 		}
 
 		if (insId != null && insId != ALL) {
-			crit.createAlias("insId", "insId");
-			and.add(Restrictions.eq("insId.id", insId));
+			crit.add(Restrictions.eq("insId.id", insId));
 		}
 
 		if (effYear != null) {
-			and.add(Restrictions.eq("effectiveYear", effYear));
+			crit.add(Restrictions.eq("effectiveYear", effYear));
 		}
-		crit.add(and);
 
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 

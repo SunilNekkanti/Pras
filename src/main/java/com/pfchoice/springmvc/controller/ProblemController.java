@@ -91,17 +91,6 @@ public class ProblemController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@ModelAttribute("icdMeasureList")
-	public List<ICDMeasure> populateICDMeasureList() {
-
-		Pagination page = icdMeasureService.getPage(DEFAULT_PAGE_NO, HUGE_LIST_SIZE);
-		return (List<ICDMeasure>) page.getList();
-	}
-
-	/**
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
 	@ModelAttribute("insuranceList")
 	public List<Insurance> populateInsuranceList() {
 

@@ -63,10 +63,4 @@ public interface HedisMeasureRuleService {
 	 * @return
 	 */
 	List<HedisMeasureRule> findAllByInsId(Integer insId);
-
-	/**
-	 * @param insId
-	 * @return
-	 */
-	List<HedisMeasureRule> findAllByInsAndPbm(Integer insId);
 }

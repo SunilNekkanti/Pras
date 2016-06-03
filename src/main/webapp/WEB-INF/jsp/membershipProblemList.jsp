@@ -6,7 +6,7 @@
 
 <script>
 $(document).ready(function() {
-	
+		
 		$("#problemGenerate").click(function(event)
 		{
 			callProblemGenerate();
@@ -25,10 +25,13 @@ $(document).ready(function() {
 			     $selectIns.html(s);
 			    
 		 }).success(function() { 
+			 problemRuleDropdown(false);
 			 providerDropdown();
+			 
 		 });
 		 
 		 var providerDropdown = function(){
+			 $("#problemGenerate").hide();
     		  var insSelectValue= $("#insu option:selected").val();
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
@@ -42,38 +45,52 @@ $(document).ready(function() {
  				     s.append('<option value="9999">All</option>');
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
- 			 }).success(function() { 
- 				 problemRuleDropdown(true);
- 	    	 });
+ 			 });
     	  }
     	  
     	  var columns ;
     	  var problemRuleDropdown = function(problemDropDownSet){
-    		 
-    		  if(problemDropDownSet)
-    		  	$('#problemRule').find('option').remove();
+    	
+    		if(problemDropDownSet){
+    			$('#problemRule').find('option').remove();
+    			if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
+					$('#membershipTable').DataTable().destroy();
+	   			}
+    			$('#membershipTable tbody').empty();
+    		}
+    		  	
 				
-				var $selectProblemRule = $('#extFilterProblemRule');
-				var insSelectValue1 = $("#insu option:selected").val();
-				//var problemSelectValue1 = $("#").val();
-		 		 if( $("#insu option:selected").val() == null){
-		     		 insSelectValue1 = 1;
-		     	 }
-		 		
-		    	  $.getJSON(getContextPath()+'/problemMeasureRule/list?insId='+insSelectValue1, function(data){
-		    		  if(problemDropDownSet)
-		    		  {
-		    			  //clear the current content of the select
-						     var s = $('<select id=\"problemRule\" style=\"width:150px;\">');
-						     //iterate over the data and append a select option
-						     $.each(data.data, function(key, val){
-						    	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
-						     });
-						     s.append('<option value="9999">All</option>');
-						     s.append('</select>');
-						     $selectProblemRule.html(s);
-		    		  }
+			var $selectProblemRule = $('#extFilterProblemRule');
+			var insSelectValue1 = $("#insu option:selected").val();
+			//var problemSelectValue1 = $("#").val();
+		 	 if( $("#insu option:selected").val() == null){
+		    	 insSelectValue1 = 1;
+		     }
+		 	
+		     var insSelectValue= $("#insu option:selected").val();
+		 	 var $selectPrvdr = $('#extFilterPrvdr');
+		 	 var restParams = new Array();
+		 	 restParams.push({"name" : "pageSize", "value" : 12});
+		 	 restParams.push({"name" : "pageNo", "value" : 0 });
+		 	 restParams.push({"name" : "insId" , "value" :  insSelectValue });
+		 	 restParams.push({"name" : "effYear" , "value" : 2016  });
+		 	 $.ajax({
+		 		  method: "GET",
+		 		  url: getContextPath()+"/problem/list",
+		 		  data: restParams
+		 	})
+		 	 .done(function( data ) {
+		 		 var s = $('<select id=\"problemRule\" style=\"width:150px;\">');
+				 //iterate over the data and append a select option
+				 $.each(data.data.list, function(key, val){
+				   	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
 				 });
+				 s.append('<option value="9999">All</option>');
+				 s.append('</select>');
+				 $selectProblemRule.html(s);	
+				 $("#problemGenerate").show();
+		 	});
+		    	 
     	  }
     	  
     	  var callProblemGenerate = function(){
@@ -84,12 +101,27 @@ $(document).ready(function() {
 		      								return '<a href="javascript:void(0)" id="'+data+'" onclick="myFunction('+data+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
 		        						  }
 	     					});
-	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "15%"});
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "8%"  });
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "7%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%"  });
 	     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
-	     		columns.push({ "mDataProp": "mbrProblemMeasureList.0.dueDate","bSearchable" : true, "bSortable": false,"sClass": "center","sWidth" : "5%", "sDefaultContent": ""  });
+	     		columns.push({ "mDataProp": "mbrProblemList.0.startDate","bSearchable" : true, "bSortable": false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+	     			 "render": function (data) {
+		   		   		    if(data == null) return null;
+	   		        		var date = new Date(data);
+	   	        			var month = date.getMonth() + 1;
+	   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+	   		   	 		 }	
+	     		});
+	     		columns.push({ "mDataProp": "mbrProblemList.0.resolvedDate","bSearchable" : true, "bSortable": false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+	     			 "render": function (data) {
+		   		   		    if(data == null) return null;
+	   		        		var date = new Date(data);
+	   	        			var month = date.getMonth() + 1;
+	   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+	   		   	 		 }	
+	     		});
 	     		
 	     		var myTable = $("#membershipTable");
 	     		var thead = myTable.find("thead");  
@@ -157,11 +189,9 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
-    		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
-					$('#membershipTable').DataTable().destroy();
-	   		}
-    		$('#membershipTable tbody').empty();
+    		problemRuleDropdown(true);
     		providerDropdown();
+    		
   		});
     	
     	$(document.body).on('change',"#prvdr",function (e) {
@@ -176,7 +206,7 @@ $(document).ready(function() {
 			$('#membershipTable').DataTable().destroy();
 			}
   			$('#membershipTable tbody').empty();
-  			problemRuleDropdown(false);
+  			
    		});
      	
   	  var datatable2RestMembership = function(sSource, aoData, fnCallback) {
@@ -479,11 +509,12 @@ $(document).ready(function() {
 						<tr>
 							<th scope="col" role="row">Notes</th>
 							<th scope="col" role="row">Provider</th>
-							<th scope="col" role="row">First Name</th>
 							<th scope="col" role="row">Last Name</th>
+							<th scope="col" role="row">First Name</th>
 							<th scope="col" role="row">Birthday</th>
 							<th scope="col" role="row">Sex</th>
-							<th scope="col" role="row">Due Date</th>
+							<th scope="col" role="row">Start Date</th>
+							<th scope="col" role="row">Resolved Date</th>
 
 						</tr>
 					</thead>

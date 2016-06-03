@@ -73,12 +73,4 @@ public interface HedisMeasureRuleDao {
 	 */
 	List<HedisMeasureRule> findAllByInsId(Integer insId);
 
-	/**
-	 * 
-	 * @param insId
-	 * @param PbmId
-	 * @return
-	 */
-	List<HedisMeasureRule> findAllByInsAndPbm(Integer insId);
-
 }
