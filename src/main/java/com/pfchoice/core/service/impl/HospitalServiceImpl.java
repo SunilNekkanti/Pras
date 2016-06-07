@@ -59,6 +59,19 @@ public class HospitalServiceImpl implements HospitalService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.pfchoice.core.service.HospitalService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return hospitalDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.pfchoice.core.service.HospitalService#save(com.pfchoice.core.entity.
 	 * Hospital)
@@ -90,5 +103,30 @@ public class HospitalServiceImpl implements HospitalService {
 	@Override
 	public Integer loadData(final Integer fileId) {
 		return hospitalDao.loadData(fileId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.HospitalService#isNameUnique(java.lang.Integer,
+	 * java.lang.String)
+	 */
+	@Override
+	public boolean isNameUnique(Integer id, String insName) {
+		Hospital hospital = findByName(insName);
+		return (hospital == null || ((id != null) && (hospital.getId() == id)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.HospitalService#findByName(java.lang.
+	 * String)
+	 */
+	@Override
+	public Hospital findByName(String hospitalName) {
+		Hospital hospital = hospitalDao.findByName(hospitalName);
+		return hospital;
 	}
 }

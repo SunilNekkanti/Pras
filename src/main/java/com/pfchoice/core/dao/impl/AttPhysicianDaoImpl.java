@@ -6,6 +6,8 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +32,37 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		Disjunction or = Restrictions.disjunction();
+
+		if (sSearch != null && !"".equals(sSearch)) {
+			or.add(Restrictions.ilike("name", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("code", "%" + sSearch + "%"));
+		}
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		crit.add(or);
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				crit.addOrder(Order.desc(sort));
+			} else {
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+
+		return findByCriteria(crit, pageNo, pageSize);
+
 	}
 
 	/*
@@ -88,6 +121,15 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
+	}
+
+	/**
+	 * @param code
+	 * @return
+	 */
+	@Override
+	public AttPhysician findByCode(String code) {
+		return findUniqueByProperty("code", code);
 	}
 
 }

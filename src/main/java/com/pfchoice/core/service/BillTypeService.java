@@ -1,25 +1,26 @@
 package com.pfchoice.core.service;
 
-import com.pfchoice.core.entity.AttPhysician;
+import com.pfchoice.core.entity.BillType;
+
 import ml.rugal.sshcommon.page.Pagination;
 
 /**
  *
  * @author sarath
  */
-public interface AttPhysicianService {
+public interface BillTypeService {
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	AttPhysician deleteById(Integer id);
+	BillType deleteById(Integer id);
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	AttPhysician findById(Integer id);
+	BillType findById(Integer id);
 
 	/**
 	 * @param pageNo
@@ -27,7 +28,7 @@ public interface AttPhysicianService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-
+	
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -37,35 +38,31 @@ public interface AttPhysicianService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	
 
 	/**
 	 * @param bean
 	 * @return
 	 */
-	AttPhysician save(AttPhysician bean);
+	BillType save(BillType bean);
 
 	/**
 	 * @param bean
 	 * @return
 	 */
-	AttPhysician update(AttPhysician bean);
+	BillType update(BillType bean);
 
 	/**
-	 * @param fileId
+	 * @param Name
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
-
-	/**
-	 * @param code
-	 * @return
-	 */
-	AttPhysician findByCode(String code);
+	BillType findByDescription(String billTypeDescription);
 
 	/**
 	 * @param id
-	 * @param code
+	 * @param name
 	 * @return
 	 */
-	boolean isCodeUnique(Integer id, String code);
+	boolean isDescriptionUnique(Integer id, String billTypeDescription);
+
 }

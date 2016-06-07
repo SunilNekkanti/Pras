@@ -8,6 +8,12 @@ package com.pfchoice.common;
  */
 public interface CommonMessageContent {
 
+	String ATTPHYSICIAN_LIST = "ATT PHYSICIAN List";
+
+	String BILLTYPE_LIST = "Bill Type List";
+
+	String FACILITYTYPE_LIST = "Facility Type List";
+
 	String SAVE_SUCCEED = "New student registered";
 
 	String PROFILE_UPDATED = "Student profile updated";
@@ -59,6 +65,8 @@ public interface CommonMessageContent {
 	String HEDIS_RULE_LIST = "Hedis Rule List";
 
 	String HEDIS_FOLLOWUP_LIST = "Membership Hedis Followup List";
+
+	String HOSPITAL_LIST = "Hospital List";
 
 	String HOSPITALIZATION_FOLLOWUP_LIST = "Membership Hospitalization Followup List";
 

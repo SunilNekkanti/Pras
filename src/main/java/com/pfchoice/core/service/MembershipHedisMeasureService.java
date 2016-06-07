@@ -65,4 +65,9 @@ public interface MembershipHedisMeasureService {
 	 */
 	Pagination findByMbrIdAndRuleId(Integer mbrId, Integer ruleId);
 
+	/**
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
+
 }

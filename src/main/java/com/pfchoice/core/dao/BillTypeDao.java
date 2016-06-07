@@ -1,6 +1,7 @@
 package com.pfchoice.core.dao;
 
-import com.pfchoice.core.entity.AttPhysician;
+import com.pfchoice.core.entity.BillType;
+
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -8,21 +9,21 @@ import ml.rugal.sshcommon.page.Pagination;
  *
  * @author Sarath
  */
-public interface AttPhysicianDao {
+public interface BillTypeDao {
 
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	AttPhysician deleteById(Integer id);
+	BillType deleteById(Integer id);
 
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	AttPhysician findById(Integer id);
+	BillType findById(Integer id);
 
 	/**
 	 * 
@@ -48,24 +49,19 @@ public interface AttPhysicianDao {
 	 * @param bean
 	 * @return
 	 */
-	AttPhysician save(AttPhysician bean);
+	BillType save(BillType bean);
 
 	/**
 	 * 
 	 * @param updater
 	 * @return
 	 */
-	AttPhysician updateByUpdater(Updater<AttPhysician> updater);
-
+	BillType updateByUpdater(Updater<BillType> updater);
+	
 	/**
-	 * @param fileId
+	 * @param billtypeName
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
+	BillType findByDescription(String billTypeDescription);
 
-	/**
-	 * @param code
-	 * @return
-	 */
-	AttPhysician findByCode(String code);
 }

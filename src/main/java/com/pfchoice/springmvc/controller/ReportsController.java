@@ -92,7 +92,7 @@ public class ReportsController {
 
 	@Autowired
 	private HospitalService hospitalService;
-	
+
 	@Autowired
 	private MembershipProblemService mbrProblemService;
 
@@ -540,11 +540,12 @@ public class ReportsController {
 			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId);
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId);
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId);
-			//Integer mbrHedisLoadedData = mbrHedisService.loadData(fileId);
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId);
 			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
+			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
 			/*
 			 * Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
 			 * LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);

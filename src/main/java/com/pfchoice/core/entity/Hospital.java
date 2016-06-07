@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.google.gson.annotations.Expose;
 
@@ -30,16 +32,19 @@ public class Hospital extends RecordDetails implements Serializable {
 	private Integer id;
 
 	@Expose
+	@Size(min = 3, max = 15, message = "The code must be between {min} and {max} characters long")
 	@Column(name = "code")
 	private String code;
 
 	@Expose
+	@NotNull
+	@Size(min = 5, max = 100, message = "The name must be between {min} and {max} characters long")
 	@Column(name = "name")
 	private String name;
 
 	@Expose
 	@Column(name = "file_id", nullable = false)
-	private Integer file_id;
+	private Integer fileId;
 
 	/**
 	 * 
@@ -103,18 +108,18 @@ public class Hospital extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @return the file_id
+	 * @return the fileId
 	 */
-	public Integer getFile_id() {
-		return file_id;
+	public Integer getFileId() {
+		return fileId;
 	}
 
 	/**
-	 * @param file_id
-	 *            the file_id to set
+	 * @param fileId
+	 *            the fileId to set
 	 */
-	public void setFile_id(Integer file_id) {
-		this.file_id = file_id;
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
 	}
 
 	/**

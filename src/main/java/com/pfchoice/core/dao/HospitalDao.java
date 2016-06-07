@@ -1,7 +1,6 @@
 package com.pfchoice.core.dao;
 
 import com.pfchoice.core.entity.Hospital;
-
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -35,6 +34,17 @@ public interface HospitalDao {
 
 	/**
 	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+
+	/**
+	 * 
 	 * @param bean
 	 * @return
 	 */
@@ -52,4 +62,10 @@ public interface HospitalDao {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
+
+	/**
+	 * @param hospitalName
+	 * @return
+	 */
+	Hospital findByName(String hosptialName);
 }

@@ -73,4 +73,8 @@ public interface MembershipHedisMeasureDao {
 	 */
 	Pagination findByMbrIdAndRuleId(Integer mbrId, Integer ruleId);
 
+	/**
+	 * @return
+	 */
+	Integer loadData(Integer fileId);
 }

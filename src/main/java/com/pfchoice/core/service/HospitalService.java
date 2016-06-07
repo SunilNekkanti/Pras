@@ -30,6 +30,16 @@ public interface HospitalService {
 	Pagination getPage(int pageNo, int pageSize);
 
 	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+
+	/**
 	 * @param bean
 	 * @return
 	 */
@@ -46,4 +56,18 @@ public interface HospitalService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
+
+	/**
+	 * @param Name
+	 * @return
+	 */
+	Hospital findByName(String hospitalName);
+
+	/**
+	 * @param id
+	 * @param name
+	 * @return
+	 */
+	boolean isNameUnique(Integer id, String name);
+
 }

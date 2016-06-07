@@ -108,4 +108,16 @@ public class MembershipHedisMeasureServiceImpl implements MembershipHedisMeasure
 	public Pagination findByMbrIdAndRuleId(final Integer mbrId, final Integer ruleId) {
 		return membershipHedisMeasureDao.findByMbrIdAndRuleId(mbrId, ruleId);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipHedisMeasureService#loadData(java.
+	 * lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId) {
+		return membershipHedisMeasureDao.loadData(fileId);
+	}
 }

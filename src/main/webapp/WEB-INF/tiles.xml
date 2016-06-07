@@ -541,19 +541,21 @@
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/hedisMeasureGroupNew.jsp" />
 	</definition>
-<!-- Hedis Measure Group -->
+	<!-- Hedis Measure Group -->
 
 	<definition name="membershipHospitalizationList" extends="base.definition">
 		<put-attribute name="title" value="Member Hospitalization List" />
-		<put-attribute name="body" value="/WEB-INF/jsp/membershipHospitalizationList.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipHospitalizationList.jsp" />
 	</definition>
-	
+
 	<definition name="membershipHospitalizationDetails" extends="base.definition">
 		<put-attribute name="title" value="Member Hospitalization Details" />
-		<put-attribute name="body" value="/WEB-INF/jsp/membershipHospitalizationDetails.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipHospitalizationDetails.jsp" />
 	</definition>
-	
-<!--  Email Templates -->
+
+	<!-- Email Templates -->
 	<definition name="emailTemplateList" extends="base.definition">
 		<put-attribute name="title" value=" Email Template List" />
 		<put-attribute name="body" value="/WEB-INF/jsp/emailTemplateList.jsp" />
@@ -584,9 +586,9 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/emailTemplateList.jsp" />
 	</definition>
 
-<!--  Email Templates -->	
+	<!-- Email Templates -->
 
-<!--  Email -->
+	<!-- Email -->
 	<definition name="emailList" extends="base.definition">
 		<put-attribute name="title" value=" Email List" />
 		<put-attribute name="body" value="/WEB-INF/jsp/emailList.jsp" />
@@ -603,8 +605,7 @@
 
 	<definition name="emailNewSuccess" extends="base.definition">
 		<put-attribute name="title" value=" Email Profile" />
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/emailAddSuccess.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emailAddSuccess.jsp" />
 	</definition>
 
 	<definition name="emailEdit" extends="base.definition">
@@ -617,9 +618,9 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/emailList.jsp" />
 	</definition>
 
-<!--  Email s -->
+	<!-- Email s -->
 
-<!-- Room type -->
+	<!-- Room type -->
 	<definition name="roomTypeList" extends="base.definition">
 		<put-attribute name="title" value="Room Type List" />
 		<put-attribute name="body" value="/WEB-INF/jsp/roomTypeList.jsp" />
@@ -635,61 +636,136 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/roomTypeEdit.jsp" />
 	</definition>
 	<!-- Room type -->
-	
-	<!--  Problelm List -->
+
+	<!-- Problelm List -->
 	<definition name="problemList" extends="base.definition">
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/problemList.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/problemList.jsp" />
 	</definition>
 
 	<definition name="problemNew" extends="base.definition">
 		<put-attribute name="title" value="Problem" />
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/problemNew.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/problemNew.jsp" />
 	</definition>
 
 	<definition name="problemEdit" extends="base.definition">
 		<put-attribute name="title" value="Problem" />
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/problemEdit.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/problemEdit.jsp" />
 	</definition>
-	
-	<!--  Problem List -->
-	
-	<!-- Frequency type -->
-		<definition name="frequencyTypeList" extends="base.definition">
-			<put-attribute name="title" value="Frquency Type List" />
-			<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeList.jsp" />
-		</definition>
-	
-		<definition name="frequencyTypeNew" extends="base.definition">
-			<put-attribute name="title" value="New Frequency Type" />
-			<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeNew.jsp" />
-		</definition>
-	
-		<definition name="frequencyTypeEdit" extends="base.definition">
-			<put-attribute name="title" value="Frequency Type Details" />
-			<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeEdit.jsp" />
-		</definition>
-	<!-- Frequency type -->
-	
-	<!-- membershipClaimList -->
-		<definition name="membershipClaimList" extends="base.definition">
-			<put-attribute name="title" value="Member Claim List" />
-			<put-attribute name="body" value="/WEB-INF/jsp/membershipClaimList.jsp" />
-		</definition>
-	
-	<!-- membershipClaimList -->
-	
-	<!--  membershipProblemList -->
-		<definition name="membershipProblemList" extends="base.definition">
-				<put-attribute name="title" value="Membership Problem Report" />
-				<put-attribute name="body"
-					value="/WEB-INF/jsp/membershipProblemList.jsp" />
-		</definition>
-	<!--  membershipProblemList -->
-	
-	
 
-	
+	<!-- Problem List -->
+
+	<!-- Frequency type -->
+	<definition name="frequencyTypeList" extends="base.definition">
+		<put-attribute name="title" value="Frquency Type List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeList.jsp" />
+	</definition>
+
+	<definition name="frequencyTypeNew" extends="base.definition">
+		<put-attribute name="title" value="New Frequency Type" />
+		<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeNew.jsp" />
+	</definition>
+
+	<definition name="frequencyTypeEdit" extends="base.definition">
+		<put-attribute name="title" value="Frequency Type Details" />
+		<put-attribute name="body" value="/WEB-INF/jsp/frequencyTypeEdit.jsp" />
+	</definition>
+	<!-- Frequency type -->
+
+	<!-- membershipClaimList -->
+	<definition name="membershipClaimList" extends="base.definition">
+		<put-attribute name="title" value="Member Claim List" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipClaimList.jsp" />
+	</definition>
+
+	<!-- membershipClaimList -->
+
+	<!-- membershipProblemList -->
+	<definition name="membershipProblemList" extends="base.definition">
+		<put-attribute name="title" value="Membership Problem Report" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipProblemList.jsp" />
+	</definition>
+	<!-- membershipProblemList -->
+
+	<!-- Hospital Section -->
+
+	<definition name="hospitalList" extends="base.definition">
+		<put-attribute name="title" value="Hospital List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/hospitalList.jsp" />
+	</definition>
+
+	<definition name="hospital" extends="base.definition">
+		<put-attribute name="title" value="Hospital Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/hospital.jsp" />
+	</definition>
+	<definition name="hospitalNew" extends="base.definition">
+		<put-attribute name="title" value="Hospital Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/hospitalNew.jsp" />
+	</definition>
+
+	<definition name="hospitalEdit" extends="base.definition">
+		<put-attribute name="title" value="Hospital Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/hospitalEdit.jsp" />
+	</definition>
+	<!-- Hospital Section -->
+
+	<!-- BillType Section -->
+	<definition name="billTypeList" extends="base.definition">
+		<put-attribute name="title" value="BillType List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/billTypeList.jsp" />
+	</definition>
+
+	<definition name="billType" extends="base.definition">
+		<put-attribute name="title" value="Hospital Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/billType.jsp" />
+	</definition>
+	<definition name="billTypeNew" extends="base.definition">
+		<put-attribute name="title" value="BillType Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/billTypeNew.jsp" />
+	</definition>
+
+	<definition name="billTypeEdit" extends="base.definition">
+		<put-attribute name="title" value="BillType Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/billTypeEdit.jsp" />
+	</definition>
+	<!-- BillType Section -->
+
+	<!-- Att Physician Section -->
+	<definition name="attPhysicianList" extends="base.definition">
+		<put-attribute name="title" value="AttPhysician List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/attPhysicianList.jsp" />
+	</definition>
+
+	<definition name="attPhysicianNew" extends="base.definition">
+		<put-attribute name="title" value="AttPhysician Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/attPhysicianNew.jsp" />
+	</definition>
+
+	<definition name="attPhysicianEdit" extends="base.definition">
+		<put-attribute name="title" value="AttPhysician Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/attPhysicianEdit.jsp" />
+	</definition>
+	<!-- Att Physician Section -->
+
+	<!-- Facility Type Section -->
+	<definition name="facilityTypeList" extends="base.definition">
+		<put-attribute name="title" value="Facility Type List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeList.jsp" />
+	</definition>
+
+	<definition name="facilityType" extends="base.definition">
+		<put-attribute name="title" value="Facility Type Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/facilityType.jsp" />
+	</definition>
+
+	<definition name="facilityTypeEdit" extends="base.definition">
+		<put-attribute name="title" value="Facility Type Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeEdit.jsp" />
+	</definition>
+	<!-- Att Physician Section -->
+
+
+
+
 </tiles-definitions>  

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.google.gson.annotations.Expose;
 
@@ -30,10 +31,12 @@ public class AttPhysician extends RecordDetails implements Serializable {
 	private Integer id;
 
 	@Expose
+	@Size(min = 1, max = 20, message = "The code must be between {min} and {max} characters long")
 	@Column(name = "code")
 	private String code;
 
 	@Expose
+	@Size(min = 1, max = 100, message = "The name must be between {min} and {max} characters long")
 	@Column(name = "name")
 	private String name;
 

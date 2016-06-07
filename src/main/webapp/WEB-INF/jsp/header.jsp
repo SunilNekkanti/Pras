@@ -508,7 +508,8 @@ $(document).ready(function () {
 										href="${context}/${userpath}/hedis/hedisMeasureList">Hedis</a></li>
 									<li><a href="${context}/${userpath}/icd/icdMeasureList">ICD</a></li>
 									<li role="presentation" class="divider"></li>
-									<li><a href="${context}/${userpath}/problemList">Problem List</a></li>
+									<li><a href="${context}/${userpath}/problemList">Problem
+											List</a></li>
 									<li role="presentation" class="divider"></li>
 									<li><a
 										href="${context}/${userpath}/hedisMeasureRule/hedisMeasureRuleList">Hedis
@@ -531,6 +532,11 @@ $(document).ready(function () {
 											Type</a></li>
 									<li><a href="${context}/${userpath}/frequencyTypeList">Frequency
 											Type</a></li>
+									<li><a href="${context}/${userpath}/billTypeList">Bill
+											Type</a></li>
+									<li><a href="${context}/${userpath}/hospitalList">Hospitals</a></li>
+									<li><a href="${context}/${userpath}/attPhysicianList">ATT
+											Physician</a></li>
 								</ul></li>
 
 							<li class="dropdown"><a href="#"

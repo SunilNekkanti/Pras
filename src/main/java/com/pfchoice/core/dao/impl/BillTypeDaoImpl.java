@@ -1,6 +1,6 @@
 package com.pfchoice.core.dao.impl;
 
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -10,21 +10,20 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.pfchoice.common.util.PrasUtil;
-import com.pfchoice.core.dao.HospitalDao;
-import com.pfchoice.core.entity.Hospital;
+import com.pfchoice.core.dao.BillTypeDao;
+import com.pfchoice.core.entity.BillType;
 
 /**
  *
  * @author Sarath
  */
 @Repository
-public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> implements HospitalDao {
+public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> implements BillTypeDao {
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#getPage(int, int)
+	 * @see com.pfchoice.core.dao.BillTypeDao#getPage(int, int)
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
@@ -32,11 +31,11 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.pfchoice.core.dao.InsuranceDao#getPage(int, int,
+	 * @see com.pfchoice.core.dao.BillTypeDao#getPage(int, int,
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -45,8 +44,8 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 		Disjunction or = Restrictions.disjunction();
 
 		if (sSearch != null && !"".equals(sSearch)) {
-			or.add(Restrictions.ilike("name", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("code", "%" + sSearch + "%"));
+			or.add(Restrictions.ilike("description", "%" + sSearch + "%"))
+			.add(Restrictions.ilike("shortName", "%" + sSearch + "%"));
 		}
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
@@ -67,10 +66,10 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.pfchoice.core.dao.HospitalDao#findById(java.lang.Integer)
+	 * @see com.pfchoice.core.dao.BillTypeDao#findById(java.lang.Integer)
 	 */
 	@Override
-	public Hospital findById(final Integer id) {
+	public BillType findById(final Integer id) {
 		return get(id);
 	}
 
@@ -78,10 +77,10 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.pfchoice.core.dao.HospitalDao#save(com.pfchoice.core.entity.Hospital)
+	 * com.pfchoice.core.dao.BillTypeDao#save(com.pfchoice.core.entity.Hospital)
 	 */
 	@Override
-	public Hospital save(final Hospital bean) {
+	public BillType save(final BillType bean) {
 		getSession().save(bean);
 		return bean;
 	}
@@ -89,11 +88,11 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.pfchoice.core.dao.HospitalDao#deleteById(java.lang.Integer)
+	 * @see com.pfchoice.core.dao.BillTypeDao#deleteById(java.lang.Integer)
 	 */
 	@Override
-	public Hospital deleteById(final Integer id) {
-		Hospital entity = super.get(id);
+	public BillType deleteById(final Integer id) {
+		BillType entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
 		}
@@ -103,32 +102,21 @@ public class HospitalDaoImpl extends HibernateBaseDao<Hospital, Integer> impleme
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see ml.rugal.sshcommon.hibernate.HibernateBaseDao#getEntityClass()
+	 * @see ml.rugal.sshcommon.hibernate.BillTypeDao#getEntityClass()
 	 */
 	@Override
-	protected Class<Hospital> getEntityClass() {
-		return Hospital.class;
+	protected Class<BillType> getEntityClass() {
+		return BillType.class;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pfchoice.core.dao.HospitalDao#loadData(java.lang.Integer)
-	 */
-	@Override
-	public Integer loadData(final Integer fileId) {
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-
-		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
-	}
-
+	
 	/**
 	 * @param name
 	 * @return
 	 */
 	@Override
-	public Hospital findByName(String hospitalName) {
-		return findUniqueByProperty("name", hospitalName);
+	public BillType findByDescription(String billTypeDescription) {
+		return findUniqueByProperty("description", billTypeDescription);
 	}
 
 }

@@ -3,6 +3,8 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
@@ -12,6 +14,7 @@ import org.hibernate.sql.JoinType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipHedisMeasureDao;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 
@@ -167,5 +170,18 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 		cr.add(Restrictions.eq("activeInd", new Character('Y')));
 
 		return findByCriteria(cr, 0, 1);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#loadData(java.lang.
+	 * Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId) {
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
 }

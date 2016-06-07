@@ -59,6 +59,19 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.pfchoice.core.service.AttPhysicianService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return attPhysicianDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.pfchoice.core.service.AttPhysicianService#save(com.pfchoice.core.
 	 * entity.AttPhysician)
@@ -90,5 +103,30 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 	@Override
 	public Integer loadData(final Integer fileId) {
 		return attPhysicianDao.loadData(fileId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.AttPhysicianService#isNameUnique(java.lang.
+	 * Integer, java.lang.String)
+	 */
+	@Override
+	public boolean isCodeUnique(Integer id, String code) {
+		AttPhysician attPhysician = findByCode(code);
+		return (attPhysician == null || ((id != null) && (attPhysician.getId() == id)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.AttPhysicianService#findByName(java.lang.
+	 * String)
+	 */
+	@Override
+	public AttPhysician findByCode(String code) {
+		AttPhysician attPhysician = attPhysicianDao.findByCode(code);
+		return attPhysician;
 	}
 }
