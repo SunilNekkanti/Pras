@@ -12,10 +12,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.sql.JoinType;
 import org.hibernate.type.DateType;
 import org.hibernate.type.StringType;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipStatus;
 
 /**
  *
@@ -81,6 +84,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
 				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
+				.createAlias("status", "mbrStatus")
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 		Disjunction or = Restrictions.disjunction();
@@ -127,7 +131,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
 		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
 		and.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
-
+		and.add(Restrictions.ne("mbrStatus.description", "Terminated"));
 		crit.add(or);
 		crit.add(and);
 
@@ -150,12 +154,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
-		
 		if(totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		}else{
-			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
-
+			System.out.println("===========================================mbr stat=========================================");
+			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds))	;
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
@@ -180,6 +183,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
 				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
+				.createAlias("status", "mbrStatus")
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 		crit.createAlias("mbrProblemList", "mbrProblemList");
@@ -220,7 +224,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
-
+		and.add(Restrictions.ne("mbrStatus.description", "Terminated"));
+		
 		crit.add(or);
 		crit.add(and);
 
@@ -243,12 +248,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
-		
+
+				   
 		if(totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		}else{
 			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
-
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;

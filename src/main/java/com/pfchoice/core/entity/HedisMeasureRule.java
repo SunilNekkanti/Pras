@@ -99,7 +99,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	private FrequencyType frequencyType;
 
 	@Expose
-	@OneToOne(optional = true)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(nullable = true, name = "problem_id", referencedColumnName = "pbm_Id")
 	private Problem pbm;
 

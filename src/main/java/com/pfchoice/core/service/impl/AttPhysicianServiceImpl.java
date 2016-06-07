@@ -90,7 +90,9 @@ public class AttPhysicianServiceImpl implements AttPhysicianService {
 	 */
 	@Override
 	public AttPhysician update(final AttPhysician bean) {
-		Updater<AttPhysician> updater = new Updater<>(bean);
+		Updater<AttPhysician> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return attPhysicianDao.updateByUpdater(updater);
 	}
 

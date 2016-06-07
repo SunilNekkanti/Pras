@@ -541,16 +541,14 @@ public class ReportsController {
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId);
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId);
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId);
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
 			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
-			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
-			
 			LOG.info("processed  membershipClaim data");
-
 			LOG.info("returning membershipClaimList");
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
 		}

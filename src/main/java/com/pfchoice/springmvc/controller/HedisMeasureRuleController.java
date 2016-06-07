@@ -54,6 +54,7 @@ import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.ICDMeasureService;
 import com.pfchoice.core.service.InsuranceService;
 
+import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
@@ -307,6 +308,7 @@ public class HedisMeasureRuleController {
 	public String saveHedisMeasureRuleAction(@PathVariable Integer id,
 			@ModelAttribute("hedisMeasureRule") @Validated HedisMeasureRule hedisMeasureRule,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		
 		logger.info("hedisMeasurerule id is" + id);
 		hedisMeasureRule.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
@@ -315,15 +317,14 @@ public class HedisMeasureRuleController {
 			return TileDefinitions.HEDISMEASURERULEEDIT.toString();
 		}
 
-		if (null != hedisMeasureRule.getId()) {
+		if (hedisMeasureRule.getId() != null) {
 			logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
 
 			if (hedisMeasureRule.getCptOrIcd() != 2) {
-				Problem pbm = new Problem();
-				hedisMeasureRule.setPbm(pbm);
+				hedisMeasureRule.setPbm(null);
 			}
-			hedisMeasureRuleService.update(hedisMeasureRule);
 			hedisMeasureRule.setUpdatedBy(username);
+			hedisMeasureRuleService.update(hedisMeasureRule);
 			model.addAttribute("Message", "Hedis Measure update successfully");
 			return TileDefinitions.HEDISMEASURERULELIST.toString();
 		}
