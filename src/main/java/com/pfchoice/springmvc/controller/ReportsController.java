@@ -546,10 +546,9 @@ public class ReportsController {
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
-			/*
-			 * Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
-			 * LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
-			 */
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
+			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
+			
 			LOG.info("processed  membershipClaim data");
 
 			LOG.info("returning membershipClaimList");
