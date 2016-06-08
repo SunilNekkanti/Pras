@@ -4,6 +4,10 @@ import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_UPDATE;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -126,8 +130,12 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId) {
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+	public Integer loadData(final Integer fileId, final String tableName) {
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_CLIAM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
@@ -138,12 +146,12 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#unloadCSV2Table()
 	 */
 	@Override
-	public Integer unloadCSV2Table() {
+	public Integer unloadCSV2Table(String tableName) {
 		Session session = getSession();
 		int rowsAffected = 0;
 
 		try {
-			rowsAffected = session.createSQLQuery("TRUNCATE TABLE csv2Table_Amg_Claim").executeUpdate();
+			rowsAffected = session.createSQLQuery("TRUNCATE TABLE "+tableName).executeUpdate();
 		} catch (Exception e) {
 			LOG.warn("exception " + e.getCause());
 		}
@@ -151,8 +159,12 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	}
 
 	@Override
-	public Integer updateData(final Integer fileId) {
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_UPDATE);
+	public Integer updateData(final Integer fileId, final String tableName) {
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_CLIAM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_UPDATE);
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_UPDATE);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}

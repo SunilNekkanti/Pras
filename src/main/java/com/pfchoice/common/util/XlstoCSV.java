@@ -6,43 +6,94 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.text.SimpleDateFormat;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.NumberToTextConverter;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;
+import org.apache.poi.xssf.eventusermodel.XSSFReader;
+import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
+import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;
+import org.apache.poi.xssf.model.StylesTable;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import com.pfchoice.springmvc.controller.ReportsController;
 
 public class XlstoCSV {
 
+	private static final Logger LOG = LoggerFactory.getLogger(ReportsController.class.getName());
+	
 	public static void xls(File inputFile, File outputFile)
 			throws InvalidFormatException, FileNotFoundException, IOException {
 		// For storing data into CSV files
+		
+
 		StringBuilder data = new StringBuilder();
 		FileOutputStream fos = new FileOutputStream(outputFile);
-		InputStream excelFileToRead = new FileInputStream(inputFile);
+		InputStream  is = new FileInputStream(inputFile);
 		String fileExtn = GetFileExtension(inputFile.getName());
+		
+		LOG.info("xls tocsv");
 		XSSFWorkbook wb_xssf; // Declare XSSF WorkBook
 		HSSFWorkbook wb_hssf; // Declare HSSF WorkBook
 		Sheet sheet = null; // sheet can be used as common for XSSF and HSSF
 		OPCPackage pkg = null;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		LOG.info("creating workbook");
+		
+		LOG.info("started xlsx file processsing");
+	
+		//parseExcel(inputFile);
+		LOG.info("before workbook builder");
+		
+	/*	ZipOutputStream zos = new ZipOutputStream(fos);
+		
+		ZipFile templateZip = new ZipFile(inputFile);
+		Enumeration<ZipEntry> templateEntries = (Enumeration<ZipEntry>) templateZip.entries();
+		try {
+		  while (templateEntries.hasMoreElements()) {
+		    // copy all template content to the ZipOutputStream zos
+		    // except the sheet itself
+		  }
+		  zos.putNextEntry(new ZipEntry("sheet1"));
+		  OutputStreamWriter sheetOut = new OutputStreamWriter(zos, "UTF-8");
+		  try {
+		    sheetOut.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		    sheetOut.write("<worksheet><sheetData>");
+		    // write the content – rows and cells
+		    sheetOut.write("</sheetData></worksheet>");
+		  }
+		  finally { sheetOut.close();
+		  }
+		  }
+		finally { zos.close(); 
+		fos.close();
+		is.close();
+		}*/
+		LOG.info("created worksheet");
+		/*
+		Workbook workbook = WorkbookFactory.create(fis);
+		sheet = workbook.getSheetAt(0);
+		LOG.info("creating worksheet");
 
-		if (fileExtn.equalsIgnoreCase("xlsx")) {
-			pkg = OPCPackage.open(excelFileToRead);
-			wb_xssf = new XSSFWorkbook(pkg);
-			sheet = wb_xssf.getSheetAt(0);
-			pkg.flush();
-			pkg.close();
-		} else if (fileExtn.equalsIgnoreCase("xls")) {
-			wb_hssf = new HSSFWorkbook(excelFileToRead);
-			sheet = wb_hssf.getSheetAt(0);
-		}
 
 		Cell cell;
 		Row row;
@@ -107,12 +158,14 @@ public class XlstoCSV {
 		}
 
 		try {
+			LOG.info("xls2csv write 1");
 			fos.write(data.toString().getBytes());
+			LOG.info("xls2csv write 2");
 		} finally {
-
+			LOG.info("xls2csv close");
 			fos.close();
 			PrasUtil.getHeapSize();
-		}
+		}*/
 	}
 
 	private static String GetFileExtension(String fname2) {
@@ -122,5 +175,34 @@ public class XlstoCSV {
 		ext = fileName.substring(mid + 1, fileName.length());
 		return ext;
 	}
+
+	public static Workbook  create(POIFSFileSystem fs) throws IOException {
+			return new HSSFWorkbook(fs);
+		}
+		
+	public static Workbook  create(OPCPackage pkg) throws IOException {
+			return new XSSFWorkbook(pkg);
+	}
+	
+	public static Workbook  create(InputStream inp) throws IOException, InvalidFormatException {
+		// If clearly doesn't do mark/reset, wrap up
+		if(! inp.markSupported()) {
+			inp = new PushbackInputStream(inp, 8);
+		}
+		
+		if(POIFSFileSystem.hasPOIFSHeader(inp)) {
+			return new HSSFWorkbook(inp);
+		}
+		if(POIXMLDocument.hasOOXMLHeader(inp)) {
+			return new XSSFWorkbook(OPCPackage.open(inp));
+		}
+		throw new IllegalArgumentException("Your InputStream was neither an OLE2 stream, nor an OOXML stream");
+	}
+	
+	
+	
+
+
+
 
 }

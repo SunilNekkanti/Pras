@@ -55,6 +55,19 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return facilityTypeDao.getPage(pageNo, pageSize);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.FacilityTypeService#getPage(int, int,
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return facilityTypeDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -90,5 +103,30 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
 	@Override
 	public Integer loadData(final Integer fileId) {
 		return facilityTypeDao.loadData(fileId);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.FacilityTypeService#isNameUnique(java.lang.Integer,
+	 * java.lang.String)
+	 */
+	@Override
+	public boolean isDescriptionUnique(Integer id, String facilityDescription) {
+		FacilityType facilityType = findByDescription(facilityDescription);
+		return (facilityType == null || ((id != null) && (facilityType.getId() == id)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.FacilityTypeService#findByName(java.lang.
+	 * String)
+	 */
+	@Override
+	public FacilityType findByDescription(String facilityDescription) {
+		FacilityType facilityType = facilityTypeDao.findByDescription(facilityDescription);
+		return facilityType;
 	}
 }

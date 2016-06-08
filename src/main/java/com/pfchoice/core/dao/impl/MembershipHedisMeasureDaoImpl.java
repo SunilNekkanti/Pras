@@ -3,6 +3,9 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 
 import org.hibernate.Criteria;
@@ -179,8 +182,12 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId) {
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+	public Integer loadData(final Integer fileId, final String tableName) {
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_CLIAM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}

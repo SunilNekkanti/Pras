@@ -31,10 +31,16 @@ public interface SystemDefaultProperties {
 	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "C:\\Softwares\\";
 
 	String QUERY_TYPE_INSERT = "_insert";
+	
+	String QUERY_TYPE_BH_INSERT = "_bh_insert";
 
 	String QUERY_TYPE_LOAD = "_load";
+	
+	String QUERY_TYPE_BH_LOAD = "bh_load";
 
 	String QUERY_TYPE_UPDATE = "_update";
+	
+	String QUERY_TYPE_BH_UPDATE = "bh_update";
 
 	String SQL_QUERY_EXTN = ".sql";
 

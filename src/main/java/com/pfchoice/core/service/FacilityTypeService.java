@@ -28,6 +28,17 @@ public interface FacilityTypeService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+
 
 	/**
 	 * @param bean
@@ -46,4 +57,17 @@ public interface FacilityTypeService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
+	
+	/**
+	 * @param Description
+	 * @return
+	 */
+	FacilityType findByDescription(String facilityDescription);
+
+	/**
+	 * @param id
+	 * @param description
+	 * @return
+	 */
+	boolean isDescriptionUnique(Integer id, String Description);
 }

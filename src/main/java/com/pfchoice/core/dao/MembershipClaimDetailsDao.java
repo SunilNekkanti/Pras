@@ -51,7 +51,7 @@ public interface MembershipClaimDetailsDao {
 	 * @param fileId
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
+	Integer loadData(Integer fileId, String tableName);
 
 	/**
 	 * @param mbrHosId

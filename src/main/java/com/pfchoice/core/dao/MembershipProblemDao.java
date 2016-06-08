@@ -61,6 +61,6 @@ public interface MembershipProblemDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
+	Integer loadData(Integer fileId, String tableName);
 
 }

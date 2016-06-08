@@ -413,13 +413,12 @@
 			<version>1.4.7</version>
 		</dependency>
 
-		<!-- http://mvnrepository.com/artifact/org.antlr/stringtemplate -->
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>stringtemplate</artifactId>
-			<version>4.0.2</version>
-		</dependency>
 
+	<dependency>
+    <groupId>com.monitorjbl</groupId>
+    <artifactId>xlsx-streamer</artifactId>
+    <version>1.0.0</version>
+  </dependency>
 	</dependencies>
 
 

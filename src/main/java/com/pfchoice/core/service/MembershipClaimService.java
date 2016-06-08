@@ -44,7 +44,7 @@ public interface MembershipClaimService {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
+	Integer loadData(Integer fileId, String tableName);
 
 	/**
 	 * @return
@@ -59,11 +59,11 @@ public interface MembershipClaimService {
 	/**
 	 * @return
 	 */
-	Integer unloadCSV2Table();
+	Integer unloadCSV2Table(String tableName);
 
 	/**
 	 * @return
 	 */
-	Integer updateData(Integer fileId);
+	Integer updateData(Integer fileId, String tableName);
 
 }

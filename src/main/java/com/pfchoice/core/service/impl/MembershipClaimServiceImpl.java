@@ -111,8 +111,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId) {
-		return membershipClaimDao.loadData(fileId);
+	public Integer loadData(final Integer fileId, final String tableName) {
+		return membershipClaimDao.loadData(fileId, tableName);
 	}
 
 	/*
@@ -122,8 +122,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * Integer)
 	 */
 	@Override
-	public Integer unloadCSV2Table() {
-		return membershipClaimDao.unloadCSV2Table();
+	public Integer unloadCSV2Table(String tableName) {
+		return membershipClaimDao.unloadCSV2Table(tableName);
 	}
 
 	/*
@@ -134,7 +134,7 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * Integer)
 	 */
 	@Override
-	public Integer updateData(final Integer fileId) {
-		return membershipClaimDao.updateData(fileId);
+	public Integer updateData(final Integer fileId, final String tableName) {
+		return membershipClaimDao.updateData(fileId, tableName);
 	}
 }

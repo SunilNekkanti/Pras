@@ -8,6 +8,7 @@ import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -310,7 +311,8 @@ public class ReportsController {
 					+ newSourceFile.getName();
 		} else if (claimOrHospital == CLAIM) {
 			LOG.info("forwarding to claims");
-			forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
+			forwardToClaimOrHospital = "forward:/admin/membershipBHClaim/list?fileName=" + newSourceFile.getName();
+			//forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
 		}
 
 		return forwardToClaimOrHospital;
@@ -537,22 +539,90 @@ public class ReportsController {
 
 			LOG.info("processing  membershipClaim data");
 			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId);
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId);
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId);
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId);
-			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId);
-			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table();
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
 			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table("csv2Table_AMG_Claim");
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
+			
 			LOG.info("processed  membershipClaim data");
+
 			LOG.info("returning membershipClaimList");
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
 		}
 	}
+	
+	/**
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membershipBHClaim/list", "/user/membershipBHClaim/list" })
+	public Message viewBHMmbershipClaimList(@ModelAttribute("username") String username,
+			@RequestParam(value = "fileName", required = true) String fileName) {
+
+		LOG.info("1");
+
+		Boolean dataExists = mbrClaimService.isDataExists();
+		if (dataExists) {
+			return Message.failMessage("Previous file processing is incomplete");
+		} else {
+			Integer fileId = 0;
+			try {
+				FileType fileType = fileTypeService.findByCode(FILE_TYPE_BH_MBR_CLIAM);
+
+				File fileRecord = new File();
+				fileRecord.setFileName(fileName);
+				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setCreatedBy(username);
+				fileRecord.setUpdatedBy(username);
+				File newFile = fileService.save(fileRecord);
+				LOG.info("5");
+
+				if (newFile != null)
+					fileId = newFile.getId();
+				else
+					LOG.info("fileId is empty");
+
+			} catch (Exception e) {
+				LOG.info(e.getCause().getMessage());
+				LOG.info("Similar file already processed in past");
+				return Message.failMessage("similar file already processed in past");
+			}
+
+			LOG.info("Loading  membershipClaim data");
+			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName);
+
+			if (loadedData < 1) {
+				return Message.failMessage("ZERO records to process");
+			}
+
+			LOG.info("processing  membershipBHClaim data");
+			//Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId);
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
+			///LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
+			LOG.info("BHmembershipClaimLoadedData " + mbrClaimLoadedData);
+			LOG.info("BHmembershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
+			LOG.info("BHmbrProblemLoadedData " + mbrProblemLoadedData);
+			LOG.info("BHmbrHedisLoadedData " + mbrHedisLoadedData);
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table("csv2Table_bh_Claim");
+			LOG.info("BHmembershipClaimUnloadedData " + mbrClaimUnloadedData);
+			
+			LOG.info("BHprocessed  membershipClaim data");
+
+			LOG.info("returning membershipClaimList");
+			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
+		}
+	}
+	
 
 	/**
 	 * @return

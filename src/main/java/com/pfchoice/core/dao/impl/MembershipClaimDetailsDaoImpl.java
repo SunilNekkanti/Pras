@@ -1,5 +1,8 @@
 package com.pfchoice.core.dao.impl;
 
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
@@ -87,8 +90,12 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId) {
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+	public Integer loadData(final Integer fileId, final String tableName) {
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_CLIAM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
