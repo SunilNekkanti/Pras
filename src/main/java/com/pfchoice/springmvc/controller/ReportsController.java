@@ -311,8 +311,8 @@ public class ReportsController {
 					+ newSourceFile.getName();
 		} else if (claimOrHospital == CLAIM) {
 			LOG.info("forwarding to claims");
-			forwardToClaimOrHospital = "forward:/admin/membershipBHClaim/list?fileName=" + newSourceFile.getName();
-			//forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
+			//forwardToClaimOrHospital = "forward:/admin/membershipBHClaim/list?fileName=" + newSourceFile.getName();
+			forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
 		}
 
 		return forwardToClaimOrHospital;
@@ -532,7 +532,7 @@ public class ReportsController {
 
 			LOG.info("Loading  membershipClaim data");
 			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName);
-
+			LOG.info("loadedData  "+loadedData);
 			if (loadedData < 1) {
 				return Message.failMessage("ZERO records to process");
 			}

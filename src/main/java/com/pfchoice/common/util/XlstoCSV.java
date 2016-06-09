@@ -6,18 +6,27 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PushbackInputStream;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -26,6 +35,7 @@ import org.apache.poi.xssf.eventusermodel.XSSFReader;
 import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
 import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;
 import org.apache.poi.xssf.model.StylesTable;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.slf4j.Logger;
@@ -40,15 +50,39 @@ import com.pfchoice.springmvc.controller.ReportsController;
 public class XlstoCSV {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReportsController.class.getName());
-	
+	private static int rownum = 0;
 	public static void xls(File inputFile, File outputFile)
 			throws InvalidFormatException, FileNotFoundException, IOException {
 		// For storing data into CSV files
 		
 
+		
+	     if (!inputFile.exists()) {
+	         System.err.println("Not found or not a file: " + inputFile.getPath());
+	         return;
+	     }
+	     int minColumns = 1;
+
+	     // The package open is instantaneous, as it should be.
+			XLSX2CSV xlsx2csv = new XLSX2CSV(inputFile, outputFile);
+			try {
+				xlsx2csv.process();
+			} catch (OpenXML4JException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		/*	
 		StringBuilder data = new StringBuilder();
 		FileOutputStream fos = new FileOutputStream(outputFile);
-		InputStream  is = new FileInputStream(inputFile);
+		InputStream  fis = new FileInputStream(inputFile);
 		String fileExtn = GetFileExtension(inputFile.getName());
 		
 		LOG.info("xls tocsv");
@@ -60,11 +94,15 @@ public class XlstoCSV {
 		LOG.info("creating workbook");
 		
 		LOG.info("started xlsx file processsing");
-	
+		
+		data = parseExcel(inputFile);
+		XSSFWorkbook xssfWb = new XSSFWorkbook(OPCPackage.open(inputFile));
+		SXSSFWorkbook wb = new SXSSFWorkbook(xssfWb, 100);
+		sheet = wb.getSheetAt(0);
 		//parseExcel(inputFile);
 		LOG.info("before workbook builder");
 		
-	/*	ZipOutputStream zos = new ZipOutputStream(fos);
+		ZipOutputStream zos = new ZipOutputStream(fos);
 		
 		ZipFile templateZip = new ZipFile(inputFile);
 		Enumeration<ZipEntry> templateEntries = (Enumeration<ZipEntry>) templateZip.entries();
@@ -87,9 +125,9 @@ public class XlstoCSV {
 		finally { zos.close(); 
 		fos.close();
 		is.close();
-		}*/
+		}
 		LOG.info("created worksheet");
-		/*
+		
 		Workbook workbook = WorkbookFactory.create(fis);
 		sheet = workbook.getSheetAt(0);
 		LOG.info("creating worksheet");
@@ -157,6 +195,7 @@ public class XlstoCSV {
 			data.append('\n');
 		}
 
+		
 		try {
 			LOG.info("xls2csv write 1");
 			fos.write(data.toString().getBytes());
@@ -165,7 +204,7 @@ public class XlstoCSV {
 			LOG.info("xls2csv close");
 			fos.close();
 			PrasUtil.getHeapSize();
-		}*/
+		}
 	}
 
 	private static String GetFileExtension(String fname2) {
@@ -200,9 +239,72 @@ public class XlstoCSV {
 	}
 	
 	
-	
+	public static StringBuilder parseExcel(File file) throws IOException {
+		StringBuilder data = new StringBuilder();
+        OPCPackage container;
+        try {
+            container = OPCPackage.open(file.getAbsolutePath());
+            ReadOnlySharedStringsTable strings = new ReadOnlySharedStringsTable(container);
+            XSSFReader xssfReader = new XSSFReader(container);
+            StylesTable styles = xssfReader.getStylesTable();
+            XSSFReader.SheetIterator iter = (XSSFReader.SheetIterator) xssfReader.getSheetsData();
+            while (iter.hasNext()) {
+                InputStream stream = iter.next();
 
+              data = data.append(processSheet(styles, strings, stream));
+                stream.close();
+            }
+            if(container != null) container.close();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (OpenXML4JException e) {
+            e.printStackTrace();
+        }
+        	return data;
+   }
 
+       protected static StringBuilder  processSheet(StylesTable styles, ReadOnlySharedStringsTable strings, InputStream sheetInputStream) throws IOException, SAXException {
+    	   StringBuilder data = new StringBuilder();
+    	   System.out.println("sheet");
+        InputSource sheetSource = new InputSource(sheetInputStream);
+        SAXParserFactory saxFactory = SAXParserFactory.newInstance();
+        try {
+            SAXParser saxParser = saxFactory.newSAXParser();
+            XMLReader sheetParser = saxParser.getXMLReader();
+            ContentHandler handler = new XSSFSheetXMLHandler(styles, strings, new SheetContentsHandler() {
 
+            @Override
+                public void startRow(int rowNum) {
+            	System.out.println("start row");
+                }
+                @Override
+                public void endRow() {
+                	data.append('\r');
+        			data.append('\n');
+                }
+                @Override
+                public void cell(String cellReference, String formattedValue) {
+                	data.append(formattedValue + ",");
+                }
+                @Override
+                public void headerFooter(String text, boolean isHeader, String tagName) {
 
+                }
+
+            }, 
+            false//means result instead of formula
+            );
+            sheetParser.setContentHandler(handler);
+            sheetParser.parse(sheetSource);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException("SAX parser appears to be broken - " + e.getMessage());
+        }
+        return data;
+       }
+
+*/
+
+	}
 }
