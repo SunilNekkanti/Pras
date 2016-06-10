@@ -570,18 +570,44 @@
 		<div class="panel-body">
 			<span class="updateError"></span>
 			<springForm:form method="POST" id="mbrClaim" commandName="mbrClaim"
-				action="fileProcessing.do" class="form-horizontal" role="form"
+				action="fileProcessing.do" class="form-inline" role="form"
 				enctype="multipart/form-data">
 				<div class="col-sm-12">
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="filesUpload">Membership
-							Claim File</label>
+					<div class="form-group insId">
 						<div class="col-sm-5">
+							<label for="insurance">Insurance</label>
+							 <select id="insId" name="insId">
+							 	<option value="">Select One</option>
+						     <c:forEach items="${insList}" var="ins">
+						        <option value="${ins.id}">${ins.name}</option>
+						     </c:forEach>
+						    </select>
+						</div>
+					</div>	
+					<div class="form-group fileType">
+						<div class="col-sm-5">
+							<label for="fileType">File Type</label>
+							 <select id="fileType" name="fileType">
+							 <option value="">Select One</option>
+						     <c:forEach items="${fileTypeList}" var="fileType">
+						        <option value="${fileType.code}">${fileType.description}</option>
+						     </c:forEach>
+						    </select>
+						</div>
+					</div>	
+					<div class="form-group fileUpload">
+						<div class="col-sm-5">
+							<label for="filesUpload">Membership
+							Claim File</label>
 							<span class="btn btn-danger btn-file btn-sm"> Browse <input
 								type="file" accept=".xls,.xlsx,.csv" class="file"
 								name="fileUpload">
 							</span>
-							<button type="button" class="btn btn-success btn-sm "
+						</div>
+					</div>
+					<div class="form-group">	
+						<div class="col-sm-1">
+						 <button type="button" class="btn btn-success btn-sm "
 								id="updateButton" name="update"
 								onclick="return fileUploadAndProcessing()">Upload</button>
 						</div>
@@ -821,6 +847,16 @@
 
 		function fileUploadAndProcessing() {
 			$(".mbrHosUpload").html('');
+			if(!$('#insId').val()){
+				$(".mbrHosUpload").html(
+				" Choose a insurance");
+				return false;
+			}
+			if(!$('#fileType').val()){
+				$(".mbrHosUpload").html(
+				" Choose a fileType");
+				return false;
+			}
 			var fileName = $('input[type=file]').val();
 			if (!fileName) {
 				$(".mbrHosUpload").html(
@@ -864,4 +900,27 @@
 				}
 			}
 		}
+		$(".fileType").hide();
+		$(".fileUpload").hide();
+		$( "#insId" ).change(function() {
+			    $(".fileUpload").hide();
+			  if($( "#insId" ).val())
+			  {
+				  $(".fileType").show();
+				  $("#fileType").val('');
+			  }
+			  else{
+				    $(".fileType").hide();
+				    $(".fileUpload").hide();
+			   }
+			});
+		$( "#fileType" ).change(function() {
+			  if($( "#fileType" ).val())
+			  {
+				  $(".fileUpload").show();
+			  }
+			  else{
+				    $(".fileUpload").hide();
+			   }
+			});
 	</script>

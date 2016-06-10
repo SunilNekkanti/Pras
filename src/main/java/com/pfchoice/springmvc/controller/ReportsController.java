@@ -8,7 +8,7 @@ import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,20 +41,24 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.common.util.XlstoCSV;
 import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FollowupType;
+import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.AttPhysicianService;
+import com.pfchoice.core.service.BillTypeService;
 import com.pfchoice.core.service.FacilityTypeService;
 import com.pfchoice.core.service.FileService;
 import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.FollowupTypeService;
 import com.pfchoice.core.service.HospitalService;
+import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipClaimDetailsService;
 import com.pfchoice.core.service.MembershipClaimService;
 import com.pfchoice.core.service.MembershipFollowupService;
@@ -84,6 +88,9 @@ public class ReportsController {
 
 	@Autowired
 	private FacilityTypeService facilityTypeService;
+	
+	@Autowired
+	private BillTypeService billTypeService;
 
 	@Autowired
 	private FileService fileService;
@@ -121,6 +128,9 @@ public class ReportsController {
 	@Autowired
 	private FollowupTypeService followupTypeService;
 
+	@Autowired
+	private InsuranceService insuranceService;
+	
 	/**
 	 * @param binder
 	 */
@@ -276,6 +286,7 @@ public class ReportsController {
 			"/user/reports/hospitalization/fileProcessing.do", "/admin/reports/claim/fileProcessing.do",
 			"/user/reports/claim/fileProcessing.do" })
 	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
+			@RequestParam(required = false, value="insId") Integer insId,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
 			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
@@ -311,8 +322,8 @@ public class ReportsController {
 					+ newSourceFile.getName();
 		} else if (claimOrHospital == CLAIM) {
 			LOG.info("forwarding to claims");
-			//forwardToClaimOrHospital = "forward:/admin/membershipBHClaim/list?fileName=" + newSourceFile.getName();
-			forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName();
+			
+				forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName()+"&insId="+insId;
 		}
 
 		return forwardToClaimOrHospital;
@@ -499,17 +510,26 @@ public class ReportsController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membershipClaim/list", "/user/membershipClaim/list" })
 	public Message viewmembershipClaimList(@ModelAttribute("username") String username,
+			@RequestParam(required = true, value="insId") Integer insId,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 
 		LOG.info("1");
-
-		Boolean dataExists = mbrClaimService.isDataExists();
+		
+		LOG.info(" insId is"+insId);
+		String mbrClaim = null;
+		
+		if(insId == 1)
+			mbrClaim = FILE_TYPE_BH_MBR_CLAIM;
+		else if(insId == 2)
+			mbrClaim = FILE_TYPE_AMG_MBR_CLAIM;
+		
+		Boolean dataExists = mbrClaimService.isDataExists(mbrClaim);
 		if (dataExists) {
 			return Message.failMessage("Previous file processing is incomplete");
 		} else {
 			Integer fileId = 0;
 			try {
-				FileType fileType = fileTypeService.findByCode(FILE_TYPE_AMG_MBR_CLAIM);
+				FileType fileType = fileTypeService.findByCode(mbrClaim);
 
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
@@ -531,24 +551,29 @@ public class ReportsController {
 			}
 
 			LOG.info("Loading  membershipClaim data");
-			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName);
-			LOG.info("loadedData  "+loadedData);
+			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName, mbrClaim);
+
 			if (loadedData < 1) {
 				return Message.failMessage("ZERO records to process");
 			}
 
 			LOG.info("processing  membershipClaim data");
-			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId);
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
-			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, FILE_TYPE_AMG_MBR_CLAIM);
+			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId, mbrClaim);
+			Integer billTypeLoadedData = 0;
+			if(insId == 1){
+				 billTypeLoadedData =billTypeService.loadData(fileId, mbrClaim);
+			}	
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, mbrClaim);
 			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
+			LOG.info("billTypeLoadedData " + billTypeLoadedData);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
-			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table("csv2Table_AMG_Claim");
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
 			
 			LOG.info("processed  membershipClaim data");
@@ -558,75 +583,7 @@ public class ReportsController {
 		}
 	}
 	
-	/**
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = { "/admin/membershipBHClaim/list", "/user/membershipBHClaim/list" })
-	public Message viewBHMmbershipClaimList(@ModelAttribute("username") String username,
-			@RequestParam(value = "fileName", required = true) String fileName) {
-
-		LOG.info("1");
-
-		Boolean dataExists = mbrClaimService.isDataExists();
-		if (dataExists) {
-			return Message.failMessage("Previous file processing is incomplete");
-		} else {
-			Integer fileId = 0;
-			try {
-				FileType fileType = fileTypeService.findByCode(FILE_TYPE_BH_MBR_CLIAM);
-
-				File fileRecord = new File();
-				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
-				fileRecord.setCreatedBy(username);
-				fileRecord.setUpdatedBy(username);
-				File newFile = fileService.save(fileRecord);
-				LOG.info("5");
-
-				if (newFile != null)
-					fileId = newFile.getId();
-				else
-					LOG.info("fileId is empty");
-
-			} catch (Exception e) {
-				LOG.info(e.getCause().getMessage());
-				LOG.info("Similar file already processed in past");
-				return Message.failMessage("similar file already processed in past");
-			}
-
-			LOG.info("Loading  membershipClaim data");
-			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName);
-
-			if (loadedData < 1) {
-				return Message.failMessage("ZERO records to process");
-			}
-
-			LOG.info("processing  membershipBHClaim data");
-			//Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId);
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
-			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, FILE_TYPE_BH_MBR_CLIAM);
-			///LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
-			LOG.info("BHmembershipClaimLoadedData " + mbrClaimLoadedData);
-			LOG.info("BHmembershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
-			LOG.info("BHmbrProblemLoadedData " + mbrProblemLoadedData);
-			LOG.info("BHmbrHedisLoadedData " + mbrHedisLoadedData);
-			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table("csv2Table_bh_Claim");
-			LOG.info("BHmembershipClaimUnloadedData " + mbrClaimUnloadedData);
-			
-			LOG.info("BHprocessed  membershipClaim data");
-
-			LOG.info("returning membershipClaimList");
-			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
-		}
-	}
 	
-
-	/**
-	 * @return
-	 */
 
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipClaimDetails/{mbrClaimId}/list",
@@ -672,5 +629,27 @@ public class ReportsController {
 				sSearchPrvdr, sSearchProblemRule, ruleIds, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("insList")
+	public List<Insurance> populateInsuranceList() {
+		Pagination page = insuranceService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<Insurance>) page.getList();
+	}
+	
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("fileTypeList")
+	public List<FileType> populateFileTypeList() {
+		Pagination page = fileTypeService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<FileType>) page.getList();
 	}
 }

@@ -49,12 +49,12 @@ public interface MembershipClaimService {
 	/**
 	 * @return
 	 */
-	Boolean isDataExists();
+	Boolean isDataExists(String tableName);
 
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table(String fileName);
+	Integer loadDataCSV2Table(String fileName, String tableName);
 
 	/**
 	 * @return

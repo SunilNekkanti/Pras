@@ -54,7 +54,7 @@ public interface SystemDefaultProperties {
 
 	String FILE_TYPE_AMG_MBR_CLAIM = "AMG Membership Claim";
 
-	String FILE_TYPE_BH_MBR_CLIAM = "BH Membership Claim";
+	String FILE_TYPE_BH_MBR_CLAIM = "BH Membership Claim";
 
 	int FILTER_BY_PROCESSING_DATE = 0;
 

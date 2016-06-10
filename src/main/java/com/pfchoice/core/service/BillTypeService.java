@@ -64,5 +64,11 @@ public interface BillTypeService {
 	 * @return
 	 */
 	boolean isDescriptionUnique(Integer id, String billTypeDescription);
+	
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId, String tableName);
 
 }

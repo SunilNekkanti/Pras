@@ -101,8 +101,8 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
 	 * com.pfchoice.core.service.FacilityTypeService#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId) {
-		return facilityTypeDao.loadData(fileId);
+	public Integer loadData(final Integer fileId, final String tableName) {
+		return facilityTypeDao.loadData(fileId, tableName);
 	}
 	
 	/*

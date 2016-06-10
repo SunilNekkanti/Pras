@@ -3,9 +3,10 @@ package com.pfchoice.core.dao.impl;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLIAM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_UPDATE;
 
@@ -98,10 +99,14 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadDataCSV2Table(String fileName) {
+	public Integer loadDataCSV2Table(String fileName, String tableName) {
 
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
-		System.out.println("loadDataQuery"+loadDataQuery);
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
+		System.out.println(" File Name"+ FILES_UPLOAD_DIRECTORY_PATH + fileName + " table Name " +tableName);
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
 	}
@@ -112,9 +117,14 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Boolean isDataExists() {
+	public Boolean isDataExists(String tableName) {
 		boolean returnvalue = false;
-		String sql = "SELECT count(*) FROM csv2Table_Amg_Claim";
+		String sql ="null"; 
+		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+			sql = "SELECT count(*) FROM csv2Table_BH_Claim";
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			sql = "SELECT count(*) FROM csv2Table_AMG_Claim";
+		
 		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql).uniqueResult()).intValue();
 		if (rowCount > 0) {
 			returnvalue = true;
@@ -133,7 +143,7 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	@Override
 	public Integer loadData(final Integer fileId, final String tableName) {
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_CLIAM)
+		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
 		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
@@ -150,9 +160,15 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	public Integer unloadCSV2Table(String tableName) {
 		Session session = getSession();
 		int rowsAffected = 0;
+		String table = null;
+		
+		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+			table = "csv2Table_BH_Claim" ;
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			table = "csv2Table_AMG_Claim" ;
 
 		try {
-			rowsAffected = session.createSQLQuery("TRUNCATE TABLE "+tableName).executeUpdate();
+			rowsAffected = session.createSQLQuery("TRUNCATE TABLE "+table).executeUpdate();
 		} catch (Exception e) {
 			LOG.warn("exception " + e.getCause());
 		}
@@ -162,7 +178,7 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	@Override
 	public Integer updateData(final Integer fileId, final String tableName) {
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_CLIAM)
+		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_UPDATE);
 		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_UPDATE);

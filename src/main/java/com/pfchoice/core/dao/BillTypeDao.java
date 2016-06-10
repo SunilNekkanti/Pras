@@ -63,5 +63,11 @@ public interface BillTypeDao {
 	 * @return
 	 */
 	BillType findByDescription(String billTypeDescription);
+	
+	/**
+	 * @param fileId
+	 * @return
+	 */
+	Integer loadData(Integer fileId , String tableName);
 
 }

@@ -90,8 +90,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * .entity.MembershipClaim)
 	 */
 	@Override
-	public Integer loadDataCSV2Table(final String fileName) {
-		return membershipClaimDao.loadDataCSV2Table(fileName);
+	public Integer loadDataCSV2Table(final String fileName, final String tableName) {
+		return membershipClaimDao.loadDataCSV2Table(fileName, tableName);
 	}
 
 	/*
@@ -100,8 +100,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * @see com.pfchoice.core.service.MembershipClaimService#isDataExists()
 	 */
 	@Override
-	public Boolean isDataExists() {
-		return membershipClaimDao.isDataExists();
+	public Boolean isDataExists(final String tableName) {
+		return membershipClaimDao.isDataExists(tableName);
 	}
 
 	/*

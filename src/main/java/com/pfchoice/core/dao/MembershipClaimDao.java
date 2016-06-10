@@ -50,7 +50,7 @@ public interface MembershipClaimDao {
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table(String fileName);
+	Integer loadDataCSV2Table(String fileName, String tableName);
 
 	/**
 	 * @return
@@ -60,7 +60,7 @@ public interface MembershipClaimDao {
 	/**
 	 * @return
 	 */
-	Boolean isDataExists();
+	Boolean isDataExists(String tableName);
 
 	/**
 	 * @return

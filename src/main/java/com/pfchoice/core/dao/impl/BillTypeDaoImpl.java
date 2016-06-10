@@ -4,12 +4,18 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.BillTypeDao;
 import com.pfchoice.core.entity.BillType;
 
@@ -117,6 +123,25 @@ public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> impleme
 	@Override
 	public BillType findByDescription(String billTypeDescription) {
 		return findUniqueByProperty("description", billTypeDescription);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.BillTypeDao#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId, String tableName) {
+		
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
+		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+
+		return getSession().createSQLQuery(loadDataQuery)
+				// .setInteger("fileId", fileId)
+				.executeUpdate();
 	}
 
 }

@@ -112,12 +112,23 @@ public class BillTypeServiceImpl implements BillTypeService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.pfchoice.core.service.HospitalService#findByName(java.lang.
+	 * @see com.pfchoice.core.service.BillTypeService#findByName(java.lang.
 	 * String)
 	 */
 	@Override
 	public BillType findByDescription(String billTypeDescription) {
 		BillType billType = billTypeDao.findByDescription(billTypeDescription);
 		return billType;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.BillTypeService#loadData(java.lang.Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId, final String tableName) {
+		return billTypeDao.loadData(fileId, tableName);
 	}
 }
