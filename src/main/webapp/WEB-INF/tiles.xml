@@ -754,9 +754,9 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeList.jsp" />
 	</definition>
 
-	<definition name="facilityType" extends="base.definition">
+	<definition name="facilityTypeNew" extends="base.definition">
 		<put-attribute name="title" value="Facility Type Profile" />
-		<put-attribute name="body" value="/WEB-INF/jsp/facilityType.jsp" />
+			<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeNew.jsp" />
 	</definition>
 
 	<definition name="facilityTypeEdit" extends="base.definition">

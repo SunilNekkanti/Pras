@@ -154,7 +154,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		if(totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		}else{
-			System.out.println("===========================================mbr stat=========================================");
 			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds))	;
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);

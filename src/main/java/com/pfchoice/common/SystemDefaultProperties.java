@@ -24,11 +24,11 @@ public interface SystemDefaultProperties {
 
 	String CREDENTIAL = "credential";
 
-	String SQL_DIRECTORY_PATH = "c:\\softwares\\gitworkspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Pras\\WEB-INF\\classes\\sql\\";
+	String SQL_DIRECTORY_PATH = "D:\\JEE WORKSPACE\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Pras\\WEB-INF\\classes\\sql\\";
 
 	String FILES_UPLOAD_DIRECTORY_PATH = "C:\\ProgramData\\MySQL\\MySQL Server 5.6\\Uploads\\";
 
-	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "C:\\Softwares\\";
+	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "D:\\Softwares\\";
 
 	String QUERY_TYPE_INSERT = "_insert";
 	
@@ -36,11 +36,11 @@ public interface SystemDefaultProperties {
 
 	String QUERY_TYPE_LOAD = "_load";
 	
-	String QUERY_TYPE_BH_LOAD = "bh_load";
+	String QUERY_TYPE_BH_LOAD = "_bh_load";
 
 	String QUERY_TYPE_UPDATE = "_update";
 	
-	String QUERY_TYPE_BH_UPDATE = "bh_update";
+	String QUERY_TYPE_BH_UPDATE = "_bh_update";
 
 	String SQL_QUERY_EXTN = ".sql";
 

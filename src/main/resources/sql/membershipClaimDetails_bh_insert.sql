@@ -9,7 +9,8 @@
  co_pay, deductible, cob_paid_amount, processing_status, pharmacy_name,
 quantity, npos, risk_id, runn_date, ndc,
 pharmacy, membership_claims, psychare, simple_county, triangles,
-cover, created_date, updated_date, created_by, updated_by, active_ind, file_id
+cover, created_date, updated_date, created_by, updated_by, active_ind, file_id,
+ mony, drug_label_name, drug_version
  )
  
  SELECT distinct mc.mbr_claim_id, csv2BhClaim.ClaimLine, null clm_line_adj_seq_nbr, 
@@ -32,7 +33,8 @@ cover, created_date, updated_date, created_by, updated_by, active_ind, file_id
  
  csv2BhClaim.PHARMACY, csv2BhClaim.Claims, csv2BhClaim.Psychare, csv2BhClaim.Simple_County, csv2BhClaim.Triangles,  
  
-csv2BhClaim.Cover, now() created_date, now() updated_date, 'sarath' created_by ,'sarath' updated_by,'Y', :fileId
+csv2BhClaim.Cover, now() created_date, now() updated_date, 'sarath' created_by ,'sarath' updated_by,'Y', :fileId,
+  csv2BhClaim.Mony, csv2BhClaim.DrugLabelName, null drug_version
   
   FROM csv2Table_BH_Claim csv2BhClaim
   

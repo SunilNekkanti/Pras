@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.google.gson.annotations.Expose;
 
@@ -30,10 +31,12 @@ public class FacilityType extends RecordDetails implements Serializable {
 	private Integer id;
 
 	@Expose
+	@Size(min = 3, max = 150, message = "The description must be between {min} and {max} characters long")
 	@Column(name = "description")
 	private String description;
 
 	@Expose
+	@Size(min = 3, max = 50, message = "The shortName must be between {min} and {max} characters long")
 	@Column(name = "shortName")
 	private String shortName;
 

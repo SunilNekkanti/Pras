@@ -141,7 +141,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 
 	@Expose
 	@Column(name = "risk_id")
-	private Character riskId;
+	private String riskId;
 
 	@Expose
 	@Temporal(TemporalType.DATE)
@@ -151,6 +151,18 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	@Expose
 	@Column(name = "ndc")
 	private String ndc;
+
+	@Expose
+	@Column(name = "mony")
+	private String mony;
+
+	@Expose
+	@Column(name = "drug_label_name")
+	private String drugLabelName;
+
+	@Expose
+	@Column(name = "drug_version")
+	private String drugVersion;
 
 	@Expose
 	@Column(name = "pharmacy")
@@ -587,7 +599,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	/**
 	 * @return the riskId
 	 */
-	public Character getRiskId() {
+	public String getRiskId() {
 		return riskId;
 	}
 
@@ -595,7 +607,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	 * @param riskId
 	 *            the riskId to set
 	 */
-	public void setRiskId(Character riskId) {
+	public void setRiskId(String riskId) {
 		this.riskId = riskId;
 	}
 
@@ -732,6 +744,51 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	 */
 	public void setFileId(final Integer fileId) {
 		this.fileId = fileId;
+	}
+
+	/**
+	 * @return the mony
+	 */
+	public String getMony() {
+		return mony;
+	}
+
+	/**
+	 * @param mony
+	 *            the mony to set
+	 */
+	public void setMony(String mony) {
+		this.mony = mony;
+	}
+
+	/**
+	 * @return the drugLabelName
+	 */
+	public String getDrugLabelName() {
+		return drugLabelName;
+	}
+
+	/**
+	 * @param drugLabelName
+	 *            the drugLabelName to set
+	 */
+	public void setDrugLabelName(String drugLabelName) {
+		this.drugLabelName = drugLabelName;
+	}
+
+	/**
+	 * @return the drugVersion
+	 */
+	public String getDrugVersion() {
+		return drugVersion;
+	}
+
+	/**
+	 * @param drugVersion
+	 *            the drugVersion to set
+	 */
+	public void setDrugVersion(String drugVersion) {
+		this.drugVersion = drugVersion;
 	}
 
 	@Override

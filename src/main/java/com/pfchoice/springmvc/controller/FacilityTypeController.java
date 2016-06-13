@@ -142,7 +142,7 @@ public class FacilityTypeController {
 			return TileDefinitions.FACILITYTYPENEW.toString();
 		}
 
-		logger.info("Returning FacilityType Success.jsp page after create");
+		logger.info("Returning FACILITYTYPESuccess.jsp page after create");
 		model.addAttribute("facilityType", facilityType);
 		facilityType.setCreatedBy(username);
 		facilityType.setUpdatedBy(username);

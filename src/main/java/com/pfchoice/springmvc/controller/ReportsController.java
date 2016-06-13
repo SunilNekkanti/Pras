@@ -515,7 +515,7 @@ public class ReportsController {
 
 		LOG.info("1");
 		
-		LOG.info(" insId is"+insId);
+		
 		String mbrClaim = null;
 		
 		if(insId == 1)
@@ -573,8 +573,8 @@ public class ReportsController {
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
-			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
-			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
+		//Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
+		//	LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
 			
 			LOG.info("processed  membershipClaim data");
 
