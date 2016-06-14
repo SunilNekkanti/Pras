@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -46,11 +47,19 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	private Membership mbr;
 
 	@Expose
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "prvdr_id", nullable = false, referencedColumnName = "prvdr_id")
+	private Provider prvdr;
+	
+	@Expose
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ins_id", nullable = false, referencedColumnName = "insurance_id")
+	private Insurance insId;
+	
+	@Expose
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "file_id", nullable = false, referencedColumnName = "file_id")
 	private File file;
-
-
 
 	/**
 	 * 
@@ -107,6 +116,34 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
+	}
+
+	/**
+	 * @return the prvdr
+	 */
+	public Provider getPrvdr() {
+		return prvdr;
+	}
+
+	/**
+	 * @param prvdr the prvdr to set
+	 */
+	public void setPrvdr(Provider prvdr) {
+		this.prvdr = prvdr;
+	}
+
+	/**
+	 * @return the insId
+	 */
+	public Insurance getInsId() {
+		return insId;
+	}
+
+	/**
+	 * @param insId the insId to set
+	 */
+	public void setInsId(Insurance insId) {
+		this.insId = insId;
 	}
 
 	/**
