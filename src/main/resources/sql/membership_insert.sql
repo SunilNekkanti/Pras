@@ -9,6 +9,8 @@ case when c2m.status = 'ENR' then 1
 	end as status,
 c2m.MCDMCR,
 :fileId fileid,
+now() created_date,
+now() updated_date,
 'sarath' created_by,
 'sarath' updated_by,
 min(MEMBEREFFDT) MEMBEREFFDT
@@ -20,9 +22,9 @@ group by MCDMCR;
 
 
 
-insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_by,updated_by)
+insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
 select lastname,firstname, sex,  county, DATE_FORMAT(str_to_date(dob , '%c/%e/%Y %H:%i'),'%Y-%c-%e'),
-status,MCDMCR, :fileId fileid,tm.created_by,tm.updated_by   from  temp_membership tm
+status,MCDMCR, :fileId fileid,tm.created_date,tm.updated_date,tm.created_by,tm.updated_by   from  temp_membership tm
 LEFT OUTER JOIN membership m on m.Mbr_MedicaidNo = tm.MCDMCR
 where m.Mbr_MedicaidNo is null;
 
@@ -85,7 +87,7 @@ group by mp.mbr_id,mp.prvdr_id,DATE_FORMAT(str_to_date(( b.PROVEFFDT) , '%c/%e/%
 ) a on mp.mbr_id = a.mbr_id and mp.prvdr_id= a.prvdr_id and mp.eff_start_date =a.eff_start_date
 set  mp.eff_end_date = a.eff_end_date ;
  
-insert into membership_provider (mbr_id,prvdr_id,file_id,eff_start_date,eff_end_date,created_by,updated_by) 
+insert into membership_provider (mbr_id,prvdr_id,file_id,eff_start_date,eff_end_date,created_date,updated_date,created_by,updated_by) 
 select 
   mi.mbr_id, 
  d.prvdr_id,
@@ -95,6 +97,8 @@ case when b.PROVTERMDT is null then null
 	 when b.PROVTERMDT = '' then null
      else  DATE_FORMAT(str_to_date(b.PROVTERMDT, '%c/%e/%Y %H:%i'),'%Y-%c-%e')
      end eff_end_date,
+ now() created_date,
+ now() updated_date,
  'sarath' created_by,
 'sarath' updated_by
  from csv2table_amg_roster  b
@@ -126,7 +130,7 @@ now() updated_date,
   join provider p  on   CONVERT( p.code , unsigned integer) =convert(  b.PRPRNPI,   unsigned integer)  and p.prvdr_id=mp.prvdr_id
   
 left outer join membership_activity_month mam on mam.mbr_id= mi.mbr_id and mam.ins_id=mi.ins_id and mam.prvdr_id=mp.prvdr_id and mam.activity_Month=DATE_FORMAT(NOW() ,'%Y%m')
-where mam.activity_Month is null 
+where mam.activity_Month is null  and mp.active_ind='Y'
  group by mi.mbr_id,mi.ins_id,mp.prvdr_id,activityMonth  ;
  
  

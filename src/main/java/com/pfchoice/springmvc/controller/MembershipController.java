@@ -1,11 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 import static com.pfchoice.common.SystemDefaultProperties.ALL;
-import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_ROSTER;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_ROSTER;
 
@@ -701,7 +697,6 @@ public class MembershipController {
 			}
 
 			logger.info("Loading  membershipRoster data");
-			System.out.println("fileName "+ fileName+ " mbrRoster "+mbrRoster);
 			Integer loadedData = membershipService.loadDataCSV2Table(fileName, mbrRoster);
 
 			if (loadedData < 1) {

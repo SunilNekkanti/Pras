@@ -106,7 +106,6 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
 		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
-		System.out.println(" File Name"+ FILES_UPLOAD_DIRECTORY_PATH + fileName + " table Name " +tableName);
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
 	}

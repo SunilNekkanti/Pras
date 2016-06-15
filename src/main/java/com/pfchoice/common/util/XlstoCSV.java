@@ -267,7 +267,6 @@ public class XlstoCSV {
 
        protected static StringBuilder  processSheet(StylesTable styles, ReadOnlySharedStringsTable strings, InputStream sheetInputStream) throws IOException, SAXException {
     	   StringBuilder data = new StringBuilder();
-    	   System.out.println("sheet");
         InputSource sheetSource = new InputSource(sheetInputStream);
         SAXParserFactory saxFactory = SAXParserFactory.newInstance();
         try {
@@ -277,7 +276,6 @@ public class XlstoCSV {
 
             @Override
                 public void startRow(int rowNum) {
-            	System.out.println("start row");
                 }
                 @Override
                 public void endRow() {

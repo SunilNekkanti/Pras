@@ -45,7 +45,6 @@ import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.HedisMeasureRule;
 import com.pfchoice.core.entity.ICDMeasure;
 import com.pfchoice.core.entity.Insurance;
-import com.pfchoice.core.entity.Problem;
 import com.pfchoice.core.service.CPTMeasureService;
 import com.pfchoice.core.service.FrequencyTypeService;
 import com.pfchoice.core.service.GenderService;
