@@ -108,5 +108,25 @@ public interface MembershipService {
 	 * @return
 	 */
 	Membership update(Membership bean);
+	
+	/**
+	 * @return
+	 */
+	Integer loadData(Integer fileId, String tableName);
+
+	/**
+	 * @return
+	 */
+	Boolean isDataExists(String tableName);
+
+	/**
+	 * @return
+	 */
+	Integer loadDataCSV2Table(String fileName, String tableName);
+
+	/**
+	 * @return
+	 */
+	Integer unloadCSV2Table(String tableName);
 
 }

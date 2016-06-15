@@ -116,5 +116,25 @@ public interface MembershipDao {
 	 * @return
 	 */
 	Membership updateByUpdater(Updater<Membership> updater);
+	
+	/**
+	 * @return
+	 */
+	Integer loadDataCSV2Table(String fileName, String tableName);
+
+	/**
+	 * @return
+	 */
+	Integer loadData(Integer fileId, String tablename);
+
+	/**
+	 * @return
+	 */
+	Boolean isDataExists(String tableName);
+
+	/**
+	 * @return
+	 */
+	Integer unloadCSV2Table(String tableName);
 
 }

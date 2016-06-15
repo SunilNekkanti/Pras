@@ -1,16 +1,25 @@
 package com.pfchoice.core.dao.impl;
 
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_PROCESSING_DATE;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_LOAD;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_HOSPOTALIZATION_DATE;
 import static com.pfchoice.common.SystemDefaultProperties.ALL;
+import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_ROSTER;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_ROSTER;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
@@ -19,8 +28,11 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.hibernate.type.DateType;
 import org.hibernate.type.StringType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.entity.Membership;
 
@@ -30,6 +42,8 @@ import com.pfchoice.core.entity.Membership;
  */
 @Repository
 public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> implements MembershipDao {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(MembershipDaoImpl.class);
 
 	/*
 	 * (non-Javadoc)
@@ -479,6 +493,90 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 		return entity;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#loadData()
+	 */
+	@Override
+	public Integer loadDataCSV2Table(String fileName, String tableName) {
+
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
+		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
+		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
+				.executeUpdate();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#loadData()
+	 */
+	@Override
+	public Boolean isDataExists(String tableName) {
+		boolean returnvalue = false;
+		StringBuilder sql = new StringBuilder(); 
+		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+			  sql.append("SELECT count(*) FROM csv2Table_BH_Roster");
+		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+			  sql.append("SELECT count(*) FROM csv2Table_AMG_Roster");
+		
+		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql.toString()).uniqueResult()).intValue();
+		if (rowCount > 0) {
+			returnvalue = true;
+		} else {
+			returnvalue = false;
+		}
+
+		return returnvalue;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#loadData()
+	 */
+	@Override
+	public Integer loadData(final Integer fileId, final String tableName) {
+		String loadDataQuery = null;
+		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
+		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+
+		return getSession().createSQLQuery(loadDataQuery)
+				.setInteger("insId", 2)
+				.setInteger("fileId", fileId).executeUpdate();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#unloadCSV2Table()
+	 */
+	@Override
+	public Integer unloadCSV2Table(String tableName) {
+		Session session = getSession();
+		int rowsAffected = 0;
+		String table = null;
+		
+		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+			table = "csv2Table_BH_Roster" ;
+		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+			table = "csv2Table_AMG_Roster" ;
+
+		try {
+			rowsAffected = session.createSQLQuery("TRUNCATE TABLE "+table).executeUpdate();
+		} catch (Exception e) {
+			LOG.warn("exception " + e.getCause());
+		}
+		return rowsAffected;
+	}
+	
 
 	/*
 	 * (non-Javadoc)

@@ -144,5 +144,48 @@ public class MembershipServiceImpl implements MembershipService {
 		Updater<Membership> updater = new Updater<>(bean);
 		return membershipDao.updateByUpdater(updater);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipService#update(com.pfchoice.core
+	 * .entity.MembershipClaim)
+	 */
+	@Override
+	public Integer loadDataCSV2Table(final String fileName, final String tableName) {
+		return membershipDao.loadDataCSV2Table(fileName, tableName);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipService#isDataExists()
+	 */
+	@Override
+	public Boolean isDataExists(final String tableName) {
+		return membershipDao.isDataExists(tableName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipService#loadData(java.lang.
+	 * Integer)
+	 */
+	@Override
+	public Integer loadData(final Integer fileId, final String tableName) {
+		return membershipDao.loadData(fileId, tableName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipService#loadData(java.lang.
+	 * Integer)
+	 */
+	@Override
+	public Integer unloadCSV2Table(String tableName) {
+		return membershipDao.unloadCSV2Table(tableName);
+	}
 }

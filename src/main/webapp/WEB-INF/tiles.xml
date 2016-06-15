@@ -764,8 +764,12 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeEdit.jsp" />
 	</definition>
 	<!-- Att Physician Section -->
-
-
-
-
+	
+	<!--  MEMBERSHIP ROSTER -->
+	<definition name="membershipRoster" extends="base.definition">
+		<put-attribute name="title" value="Member Claim List" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipRoster.jsp" />
+			</definition>
+	<!--  MEMBERSHIP ROSTER -->
 </tiles-definitions>  
