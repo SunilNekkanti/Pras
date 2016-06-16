@@ -555,6 +555,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		return getSession().createSQLQuery(loadDataQuery)
 				.setInteger("insId", insId)
+				.setInteger("activityMonth", 201605)
 				.setInteger("fileId", fileId).executeUpdate();
 	}
 

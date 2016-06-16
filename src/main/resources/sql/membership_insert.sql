@@ -118,7 +118,7 @@ select
 mi.mbr_id,
 mi.ins_id,
 mp.prvdr_id,
-DATE_FORMAT(NOW() ,'%Y%m')  activityMonth, 
+:activityMonth  activityMonth, 
 :fileId fileId,
 now() created_date,
 now() updated_date,

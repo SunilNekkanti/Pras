@@ -6,7 +6,7 @@ SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, status , pcpStatus , lastname ,
 MCDMCR , sex , dob ,   effstartdate memeffstartdate ,
 case when status = 'Termed Membership' then  effenddate 
-     else cast(str_to_date('2099-12-31', '%Y-%m-%d')as date) end  memeffenddate,
+     else '12/31/2099' end  memeffenddate,
 case when pcpStatus = 'PCP EFF' then effenddate else effstartdate end  pcpstartdate,
 case when pcpStatus = 'PCP Term' then effenddate end pcpenddate, 
  phone , MemberCounty , firstname , REPLACE(upper(SUBSTRING(address1, 1, LOCATE(SUBSTRING_INDEX(address1, ' ', -3),address1)-2)), 'TEMPLE', '') address1, REPLACE(upper(SUBSTRING_INDEX(SUBSTRING_INDEX(address1, ' ', -3), ' ', 1)), 'TERRACE', 'TEMPLE TERRACE') city, SUBSTRING_INDEX(SUBSTRING_INDEX(address1, ' ', -2), ' ', 1) state, 
@@ -18,7 +18,7 @@ insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_Cou
  case when trim(a.status)='Current Membership' then 2
       when trim(a.status)='New Membership' then 1
       when trim(a.status)='Termed Membership' then 3 end status,
-      MCDMCR,:fileId fileId
+      MCDMCR,:fileId fileId,
       now() created_date,
       now() updated_date,'sarath' created_by,'sarath' updated_by 
  from temp_bh_membership a
@@ -27,14 +27,13 @@ insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_Cou
  left outer join lu_county_zip lcz on lcz.countycode=lc.code and lcz.zipcode=a.zipcode
  left outer join membership m on m.Mbr_MedicaidNo=a.MCDMCR
  where m.mbr_id is null  
- group by MCDMCR
+ group by a.MCDMCR
  having max(memeffenddate) ;
 
 update membership_insurance mi
  join membership m on mi.mbr_id= m.mbr_id
 join temp_bh_membership  b on  b.mcdmcr =m.Mbr_MedicaidNo
-set  mi.New_Medicare_Bene_Medicaid_Flag = 
-case when b.Status ='New Membership' then 'Y' else 'N' end ,
+set  mi.New_Medicare_Bene_Medicaid_Flag = case when b.Status ='New Membership' then 'Y' else 'N' end ,
  mi.effecctive_end_dt =  cast( str_to_date(b.memeffenddate, '%c/%e/%Y') as date) 
 where m.Mbr_MedicaidNo is not null;
 
@@ -85,27 +84,26 @@ group by m.mbr_id,p.prvdr_id,DATE_FORMAT(str_to_date(( b.pcpstartdate) , '%c/%e/
 ) a on mp.mbr_id = a.mbr_id and mp.prvdr_id= a.prvdr_id and mp.eff_start_date =a.eff_start_date
 set  mp.eff_end_date = a.eff_end_date ;
 
-
 insert into membership_provider (mbr_id,prvdr_id,file_id,eff_start_date,eff_end_date,created_date,updated_date,created_by,updated_by)
+select a.mbr_id,a.prvdr_id,1 file_id,a.eff_start_date,a.eff_end_date,now() created_date, now() updated_date, 'sarath' created_by,'sarath' updated_by
+from 
+(
 select
  m.mbr_id, 
  p.prvdr_id,
- :fileId file_id,
- DATE_FORMAT(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date,
- DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date,
- now() created_date,
- now() updated_date,
- 'sarath' created_by,
-'sarath' updated_by
-  from  membership m  
-  join temp_bh_membership b on convert(b.mcdmcr, unsigned integer) =m.mbr_medicaidNo
+  DATE_FORMAT(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date,
+ DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date 
+ 
+  from   temp_bh_membership b  
+  join  membership m on m.mbr_medicaidNo=convert(b.mcdmcr, unsigned integer) 
   join provider p on ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 
          and  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', -1),'.','')),'%')  
-  left outer join  membership_provider mp  on mp.prvdr_id = p.prvdr_id and mp.mbr_id =m.mbr_id
+)a 
+  left outer join  membership_provider mp  on mp.prvdr_id = a.prvdr_id and mp.mbr_id =a.mbr_id
 where 	case when mp.mbr_id is not null  then mp.prvdr_id is null else mp.mbr_id is   null end
-group by m.mbr_id,p.prvdr_id,DATE_FORMAT(str_to_date(( b.pcpstartdate) , '%c/%e/%Y %H:%i'),'%Y-%c-%e')
+group by a.mbr_id,a.prvdr_id,a.eff_start_date;
 
-update  membership_provider set active_ind='N' where eff_end_date is not null;
+update  membership_provider set active_ind='N' where eff_end_date is not null and eff_end_date < cast(now() as date);
 
  
 insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by) 
@@ -113,7 +111,7 @@ select
 mi.mbr_id,
 mi.ins_id,
 mp.prvdr_id,
-DATE_FORMAT(NOW() ,'%Y%m')  activityMonth, 
+:activityMonth activityMonth, 
 :fileId fileId,
 now() created_date,
 now() updated_date,
@@ -130,7 +128,6 @@ where mam.activity_Month is null  and mp.active_ind='Y'
  group by mi.mbr_id,mi.ins_id,mp.prvdr_id,activityMonth  ;
 
  
-
 insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 
 select m.Mbr_Id ,now() created_date,now()updated_date, 'sarath','sarath' from membership m
 left outer join reference_contact rc on rc.mbr_id =m.mbr_id
