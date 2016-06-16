@@ -125,7 +125,7 @@ public interface MembershipDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, String tablename);
+	Integer loadData(Integer insId, Integer fileId, String tablename);
 
 	/**
 	 * @return

@@ -174,8 +174,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final String tableName) {
-		return membershipDao.loadData(fileId, tableName);
+	public Integer loadData(final Integer insId, final Integer fileId, final String tableName) {
+		return membershipDao.loadData(insId, fileId, tableName);
 	}
 
 	/*

@@ -112,7 +112,7 @@ public interface MembershipService {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, String tableName);
+	Integer loadData(Integer insId, Integer fileId, String tableName);
 
 	/**
 	 * @return

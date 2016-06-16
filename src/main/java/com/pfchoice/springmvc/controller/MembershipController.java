@@ -2,8 +2,6 @@ package com.pfchoice.springmvc.controller;
 
 import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_ROSTER;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_ROSTER;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -614,11 +612,13 @@ public class MembershipController {
 	@RequestMapping(value = { "/admin/membership/membershipRoster/fileProcessing.do",
 			"/user/membership/membershipRoster/fileProcessing.do" })
 	public String mbrRosterFileProcessing(Model model, @ModelAttribute("username") String username,
-			@RequestParam(required = false, value="insId") Integer insId,
+			@RequestParam(required = true, value="insId") Integer insId,
+			@RequestParam(required = true, value="fileTypeId") Integer fileTypeId,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
 		
 			logger.info("started file processsing");
+			System.out.println("insId"+insId + " fileTypeId"+fileTypeId);
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
@@ -643,7 +643,7 @@ public class MembershipController {
 		}
 		logger.info("before file processing");
 		String mbrRoster = null;
-		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()+"&insId="+insId;
+		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()+"&insId="+insId+"&fileTypeId="+fileTypeId;
 		return mbrRoster;
 	}
 	
@@ -655,17 +655,13 @@ public class MembershipController {
 	@RequestMapping(value = { "/admin/membership/membershipRoster/list", "/user/membership/membershipRoster/list" })
 	public Message viewmembershipRosterList(@ModelAttribute("username") String username,
 			@RequestParam(required = true, value="insId") Integer insId,
+			@RequestParam(required = true, value="fileTypeId") Integer fileTypeId,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 
 		logger.info("1");
-		
-		String mbrRoster = null;
-		
-		if(insId == 1)
-			mbrRoster = FILE_TYPE_BH_MBR_ROSTER;
-		else if(insId == 2)
-			mbrRoster = FILE_TYPE_AMG_MBR_ROSTER;
-		logger.info("2");
+		FileType fileType = fileTypeService.findById(fileTypeId);
+		String mbrRoster = fileType.getDescription();
+		logger.info("2 mbrRoster is"+mbrRoster);
 		Boolean dataExists = membershipService.isDataExists(mbrRoster);
 		logger.info("3");
 		if (dataExists) {
@@ -674,8 +670,6 @@ public class MembershipController {
 		} else {
 			Integer fileId = 0;
 			try {
-				logger.info("mbrRoster "+mbrRoster);
-				FileType fileType = fileTypeService.findByCode(mbrRoster);
 				logger.info("4");
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
@@ -705,25 +699,11 @@ public class MembershipController {
 
 			logger.info("processing  membershipRoster data");
 		
-			Integer membershipLoadedData = membershipService.loadData(fileId, mbrRoster);
+			Integer membershipLoadedData = membershipService.loadData(insId, fileId, mbrRoster);
 			logger.info("membershipLoadedData " + membershipLoadedData);
-			/*Integer billTypeLoadedData = 0;
-			if(insId == 1){
-				 billTypeLoadedData =billTypeService.loadData(fileId, mbrClaim);
-			}	
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
-			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, mbrClaim);
-			logger.info("facilityTypeLoadedData " + facilityTypeLoadedData);
-			logger.info("billTypeLoadedData " + billTypeLoadedData);
-			logger.info("membershipClaimLoadedData " + mbrClaimLoadedData);
-			logger.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
-			logger.info("mbrProblemLoadedData " + mbrProblemLoadedData);
-			logger.info("mbrHedisLoadedData " + mbrHedisLoadedData);
-		//Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
-		//	logger.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
-			*/	
+			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
+			logger.info("membershipUnloadedData " + membershipUnloadedData);
+			
 			logger.info("processed  membership roster data");
 
 			logger.info("returning membership roster");

@@ -503,9 +503,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	public Integer loadDataCSV2Table(String fileName, String tableName) {
 
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
-		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
@@ -520,9 +520,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	public Boolean isDataExists(String tableName) {
 		boolean returnvalue = false;
 		StringBuilder sql = new StringBuilder(); 
-		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
 			  sql.append("SELECT count(*) FROM csv2Table_BH_Roster");
-		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			  sql.append("SELECT count(*) FROM csv2Table_AMG_Roster");
 		
 		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql.toString()).uniqueResult()).intValue();
@@ -541,21 +541,18 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 * @see com.pfchoice.core.dao.MembershipDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final String tableName) {
-		String loadDataQuery = null;
-		int insId = 0;
-		if(tableName == FILE_TYPE_BH_MBR_ROSTER){
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-			insId = 1;
+	public Integer loadData(final Integer insId, final Integer fileId, final String tableName) {
+		StringBuilder loadDataQuery = new StringBuilder(); 
+		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER)){
+			loadDataQuery.append(PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT));
 		}			
-		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER){
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
-			insId = 2;
+		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER)){
+			loadDataQuery.append(PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT));
 		}
 
-		return getSession().createSQLQuery(loadDataQuery)
+		return getSession().createSQLQuery(loadDataQuery.toString())
 				.setInteger("insId", insId)
-				.setInteger("activityMonth", 201605)
+				.setInteger("activityMonth", 201512)
 				.setInteger("fileId", fileId).executeUpdate();
 	}
 
@@ -570,9 +567,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		int rowsAffected = 0;
 		String table = null;
 		
-		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+		if(tableName.equals( FILE_TYPE_BH_MBR_ROSTER))
 			table = "csv2Table_BH_Roster" ;
-		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			table = "csv2Table_AMG_Roster" ;
 
 		try {
