@@ -543,13 +543,18 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	@Override
 	public Integer loadData(final Integer fileId, final String tableName) {
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_ROSTER)
+		int insId = 0;
+		if(tableName == FILE_TYPE_BH_MBR_ROSTER){
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER)
+			insId = 1;
+		}			
+		else if(tableName == FILE_TYPE_AMG_MBR_ROSTER){
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+			insId = 2;
+		}
 
 		return getSession().createSQLQuery(loadDataQuery)
-				.setInteger("insId", 2)
+				.setInteger("insId", insId)
 				.setInteger("fileId", fileId).executeUpdate();
 	}
 
