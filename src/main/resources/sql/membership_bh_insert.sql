@@ -18,7 +18,7 @@ insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_Cou
  case when trim(a.status)='Current Membership' then 2
       when trim(a.status)='New Membership' then 1
       when trim(a.status)='Termed Membership' then 3 end status,
-      MCDMCR,:fileId fileId,
+      convert(MCDMCR,unsigned),:fileId fileId,
       now() created_date,
       now() updated_date,'sarath' created_by,'sarath' updated_by 
  from temp_bh_membership a
@@ -76,7 +76,7 @@ join (
  m.mbr_id    ,  date_format(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date
     ,   DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date    
   from  membership m  
-  join temp_bh_membership b on convert(b.mcdmcr, unsigned integer) =m.mbr_medicaidNo
+  join temp_bh_membership b on convert(b.mcdmcr, unsigned ) =m.mbr_medicaidNo
   join provider p on ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 
          and  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', -1),'.','')),'%')   
 where 	  b.pcpenddate is not null and  b.pcpenddate != ''
@@ -95,7 +95,7 @@ select
  DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date 
  
   from   temp_bh_membership b  
-  join  membership m on m.mbr_medicaidNo=convert(b.mcdmcr, unsigned integer) 
+  join  membership m on m.mbr_medicaidNo=convert(b.mcdmcr, unsigned ) 
   join provider p on ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 
          and  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', -1),'.','')),'%')  
 )a 
@@ -118,7 +118,7 @@ now() updated_date,
 'sarath' created_by,
 'sarath' updated_by 
  from temp_bh_membership  b 
-  join membership m on convert(b.mcdmcr, unsigned integer) =m.mbr_medicaidNo
+  join membership m on convert(b.mcdmcr, unsigned ) =m.mbr_medicaidNo
   join membership_insurance mi on  mi.mbr_id=m.mbr_id
   join membership_provider mp on  mp.mbr_id=mi.mbr_id
   join provider p  on  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 

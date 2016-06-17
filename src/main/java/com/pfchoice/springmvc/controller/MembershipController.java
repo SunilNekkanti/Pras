@@ -660,26 +660,21 @@ public class MembershipController {
 			@RequestParam(required = true, value="activityMonth") Integer activityMonth,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 
-		logger.info("1");
 		FileType fileType = fileTypeService.findById(fileTypeId);
 		String mbrRoster = fileType.getDescription();
-		logger.info("2 mbrRoster is"+mbrRoster);
 		Boolean dataExists = membershipService.isDataExists(mbrRoster);
-		logger.info("3");
 		if (dataExists) {
 			logger.info("Previous file processing is incomplete " );
 			return Message.failMessage("Previous file processing is incomplete");
 		} else {
 			Integer fileId = 0;
 			try {
-				logger.info("4");
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
 				fileRecord.setFileTypeCode(fileType.getCode());
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
-				logger.info("5");
 
 				if (newFile != null)
 					fileId = newFile.getId();
@@ -708,8 +703,6 @@ public class MembershipController {
 			
 			logger.info("processed  membership roster data");
 
-			logger.info("returning membership roster");
-		
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, membershipLoadedData);
 		}
 	}

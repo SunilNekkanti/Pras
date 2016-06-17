@@ -7,7 +7,7 @@ case when c2m.status = 'ENR' then 1
      when c2m.status = 'DIS' then 3
      else  2 
 	end as status,
-c2m.MCDMCR,
+convert(c2m.MCDMCR,unsigned),
 :fileId fileid,
 now() created_date,
 now() updated_date,
@@ -59,7 +59,7 @@ case when cast(str_to_date( b.MEMBERTERMDT, '%m/%d/%y')  as date) = cast( str_to
 b.PRODUCT,
 b.PRODUCT,
 b.PLAN,
-b.SBSB_ID,
+convert(b.SBSB_ID, unsigned),
 'N' risk_flag,
 now() created_date,
 now() updated_date,
@@ -72,7 +72,6 @@ now() updated_date,
  group by a.mbr_id,effective_strt_dt,effective_end_dt, b.PRODUCT,b.PRODUCT,b.PLAN;
  
 
-
 update  membership_insurance set active_ind='N' where effecctive_end_dt < cast(now() as date);
 
 update  membership_provider mp 
@@ -80,8 +79,8 @@ join (
  select mp.mbr_id,mp.prvdr_id, DATE_FORMAT(str_to_date(( b.PROVEFFDT) , '%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_start_date,
  DATE_FORMAT(str_to_date(b.PROVTERMDT, '%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date from  membership_provider mp 
 join  membership_insurance mi on  mp.mbr_id = mi.mbr_id 
-join  csv2table_amg_roster  b on convert( b.SBSB_ID , unsigned integer) =mi.SRC_SYS_MBR_NBR
-join  provider   d  on convert(  b.PRPRNPI,   unsigned integer)  = CONVERT( d.code , unsigned integer) and d.prvdr_id = mp.prvdr_id    
+join  csv2table_amg_roster  b on convert( b.SBSB_ID , unsigned ) =mi.SRC_SYS_MBR_NBR
+join  provider   d  on convert(  b.PRPRNPI,   unsigned )  = CONVERT( d.code , unsigned ) and d.prvdr_id = mp.prvdr_id    
 where 	  b.PROVTERMDT is not null and  b.PROVTERMDT != ''
 group by mp.mbr_id,mp.prvdr_id,DATE_FORMAT(str_to_date(( b.PROVEFFDT) , '%c/%e/%Y %H:%i'),'%Y-%c-%e')
 ) a on mp.mbr_id = a.mbr_id and mp.prvdr_id= a.prvdr_id and mp.eff_start_date =a.eff_start_date
@@ -102,8 +101,8 @@ case when b.PROVTERMDT is null then null
  'sarath' created_by,
 'sarath' updated_by
  from csv2table_amg_roster  b
- join  provider   d  on  CONVERT( d.code , unsigned integer) =convert(  b.PRPRNPI,   unsigned integer) 
- join membership_insurance mi on mi.SRC_SYS_MBR_NBR = convert( b.SBSB_ID , unsigned integer) 
+ join  provider   d  on  CONVERT( d.code , unsigned ) =convert(  b.PRPRNPI,   unsigned ) 
+ join membership_insurance mi on mi.SRC_SYS_MBR_NBR = convert( b.SBSB_ID , unsigned ) 
  join  membership   m on  m.mbr_id=mi.mbr_id 
  left outer join membership_provider mp on mp.prvdr_id= d.prvdr_id and mp.mbr_id=m.mbr_id 
  where case when mp.mbr_id is not null then mp.prvdr_id is null  else 1=1 end 
@@ -113,28 +112,17 @@ update  membership_provider set active_ind='N' where eff_end_date is not null;
 
 
  
-insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by) 
+insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
 select 
-mi.mbr_id,
-mi.ins_id,
-mp.prvdr_id,
-:activityMonth  activityMonth, 
-:fileId fileId,
-now() created_date,
-now() updated_date,
-'sarath' created_by,
-'sarath' updated_by 
- from csv2table_amg_roster  b     
-  join membership_insurance mi on  mi.SRC_SYS_MBR_NBR=b.SBSB_ID
-  join membership_provider mp on  mp.mbr_id=mi.mbr_id
-  join provider p  on   CONVERT( p.code , unsigned integer) =convert(  b.PRPRNPI,   unsigned integer)  and p.prvdr_id=mp.prvdr_id
-  
-left outer join membership_activity_month mam on mam.mbr_id= mi.mbr_id and mam.ins_id=mi.ins_id and mam.prvdr_id=mp.prvdr_id and mam.activity_Month=DATE_FORMAT(NOW() ,'%Y%m')
-where mam.activity_Month is null  and mp.active_ind='Y' and mi.active_ind='Y'
- group by mi.mbr_id,mi.ins_id,mp.prvdr_id,activityMonth  ;
- 
- 
+mi.mbr_id,mi.ins_id,mp.prvdr_id,:activityMonth  activityMonth, :fileId fileId,
+now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by  
+from  membership  m  
+join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=2
+join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
+left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month =201606
+where mam.mbr_id is null  and mi.active_ind='Y' and mp.active_ind='Y' and m.mbr_status in (1,2)
 
+ 
 insert ignore into reference_contact (mbr_id, created_by,updated_by) 
 select m.Mbr_Id , 'sarath','sarath' from membership m
 left outer join reference_contact rc on rc.mbr_id =m.mbr_id
