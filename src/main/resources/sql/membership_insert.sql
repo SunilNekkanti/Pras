@@ -117,7 +117,7 @@ select
 mi.mbr_id,mi.ins_id,mp.prvdr_id,:activityMonth  activityMonth, :fileId fileId,
 now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by  
 from  membership  m  
-join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=2
+join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId
 join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
 left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month =201606
 where mam.mbr_id is null  and mi.active_ind='Y' and mp.active_ind='Y' and m.mbr_status in (1,2)

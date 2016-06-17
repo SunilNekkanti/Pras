@@ -694,14 +694,14 @@ public class MembershipController {
 				return Message.failMessage("ZERO records to process");
 			}
 
-			logger.info("processing  membershipRoster data");
+			logger.info("processing  membershipRoster data" +new Date());
 		
 			Integer membershipLoadedData = membershipService.loadData(insId, fileId, activityMonth, mbrRoster);
 			logger.info("membershipLoadedData " + membershipLoadedData);
-			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
-			logger.info("membershipUnloadedData " + membershipUnloadedData);
+		//	Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
+		//	logger.info("membershipUnloadedData " + membershipUnloadedData);
 			
-			logger.info("processed  membership roster data");
+			logger.info("processed  membership roster data" +new Date());
 
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, membershipLoadedData);
 		}
