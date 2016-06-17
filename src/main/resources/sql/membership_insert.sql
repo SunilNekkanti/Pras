@@ -130,7 +130,7 @@ now() updated_date,
   join provider p  on   CONVERT( p.code , unsigned integer) =convert(  b.PRPRNPI,   unsigned integer)  and p.prvdr_id=mp.prvdr_id
   
 left outer join membership_activity_month mam on mam.mbr_id= mi.mbr_id and mam.ins_id=mi.ins_id and mam.prvdr_id=mp.prvdr_id and mam.activity_Month=DATE_FORMAT(NOW() ,'%Y%m')
-where mam.activity_Month is null  and mp.active_ind='Y'
+where mam.activity_Month is null  and mp.active_ind='Y' and mi.active_ind='Y'
  group by mi.mbr_id,mi.ins_id,mp.prvdr_id,activityMonth  ;
  
  

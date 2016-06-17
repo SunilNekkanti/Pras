@@ -19,44 +19,47 @@
 				action="fileProcessing.do" class="form-inline" role="form"
 				enctype="multipart/form-data">
 				<div class="col-sm-12">
-					<div class="form-group insId">
-						<div class="col-sm-5">
-							<label for="insurance">Insurance</label>
-							 <select id="insId" name="insId">
+					<div class="form-group insId col-sm-2">
+						
+							<label for="insurance" class="col-offset-12">Insurance</label>
+							 <select id="insId" name="insId" class="form-control">
 							 	<option value="">Select One</option>
 						     <c:forEach items="${insList}" var="ins">
 						        <option value="${ins.id}">${ins.name}</option>
 						     </c:forEach>
 						    </select>
-						</div>
 					</div>	
-					<div class="form-group fileType">
-						<div class="col-sm-5">
-							<label for="fileType">File Type</label>
-							 <select id="fileType" name="fileType">
+					<div class="form-group fileType col-sm-3">
+						
+							<label for="fileType" class="col-offset-12">File Type</label>
+							 <select id="fileType" name="fileType" class="form-control">
 							 <option value="">Select One</option>
 						     <c:forEach items="${fileTypeList}" var="fileType">
 						        <option value="${fileType.code}">${fileType.description}</option>
 						     </c:forEach>
 						    </select>
-						</div>
 					</div>	
-					<div class="form-group fileUpload">
-						<div class="col-sm-5">
-							<label for="filesUpload">Membership
+				    <div class="form-group activityMonth col-sm-3">
+						
+							<label for="activityMonth" class="col-offset-12 text-center">Activity Month</label>
+							<input type="text" id="activityMonth" class="activityMonth form-control datepicker" />
+						
+					</div>	
+					<div class="form-group fileUpload col-sm-3">
+						
+							<label for="filesUpload" class="col-offset-2">Membership
 							Claim File</label>
 							<span class="btn btn-danger btn-file btn-sm"> Browse <input
 								type="file" accept=".xls,.xlsx,.csv" class="file"
 								name="fileUpload">
 							</span>
-						</div>
 					</div>
-					<div class="form-group">	
-						<div class="col-sm-1">
+				</div>
+				<div class="col-sm-12">	
+					<div class="form-group col-sm-offset-10">	
 						 <button type="button" class="btn btn-success btn-sm "
 								id="updateButton" name="update"
 								onclick="return fileUploadAndProcessing()">Upload</button>
-						</div>
 					</div>
 				</div>
 			</springForm:form>
@@ -66,6 +69,7 @@
 
 
 <script>
+		
 		function fileUploadAndProcessing() {
 			$(".mbrRosterUpload").html('');
 			if(!$('#insId').val()){
@@ -74,8 +78,15 @@
 				return false;
 			}
 			if(!$('#fileType').val()){
+				
 				$(".mbrRosterUpload").html(
 				" Choose a fileType");
+				return false;
+			}
+			if(!$('.datepicker').val()){
+				
+				$(".mbrRosterUpload").html(
+				" Choose activity month");
 				return false;
 			}
 			var fileName = $('input[type=file]').val();
@@ -123,6 +134,8 @@
 		}
 		$(".fileType").hide();
 		$(".fileUpload").hide();
+		 $(".activityMonth").hide();
+		 $("#updateButton").hide();
 		$( "#insId" ).change(function() {
 			    $(".fileUpload").hide();
 			  if($( "#insId" ).val())
@@ -132,6 +145,7 @@
 			  }
 			  else{
 				    $(".fileType").hide();
+				    $(".activityMonth").hide();
 				    $(".fileUpload").hide();
 			   }
 			});
@@ -139,9 +153,20 @@
 			  if($( "#fileType" ).val())
 			  {
 				  $(".fileUpload").show();
+				  $(".activityMonth").show();
+				  $("#updateButton").show();
 			  }
 			  else{
 				    $(".fileUpload").hide();
+				    $(".activityMonth").hide();
+				    $("#updateButton").show();
 			   }
 			});
+		
+		$(".datepicker").datepicker({maxDate: '0',dateFormat: 'yymm' });
 	</script>
+	<style>
+		#fileType{
+		width:220px !important;
+}
+	</style>
