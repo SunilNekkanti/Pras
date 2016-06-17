@@ -618,8 +618,8 @@ public class MembershipController {
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
 		
-			logger.info("started file processsing");
-			activityMonth = 201601;
+			logger.info("started file processsing for"+ activityMonth);
+			 
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
