@@ -614,11 +614,12 @@ public class MembershipController {
 	public String mbrRosterFileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = true, value="insId") Integer insId,
 			@RequestParam(required = true, value="fileTypeId") Integer fileTypeId,
+			@RequestParam(required = false, value="activityMonth") Integer activityMonth,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
 		
 			logger.info("started file processsing");
-			System.out.println("insId"+insId + " fileTypeId"+fileTypeId);
+			activityMonth = 201601;
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
@@ -643,7 +644,7 @@ public class MembershipController {
 		}
 		logger.info("before file processing");
 		String mbrRoster = null;
-		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()+"&insId="+insId+"&fileTypeId="+fileTypeId;
+		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()+"&insId="+insId+"&fileTypeId="+fileTypeId+"&activityMonth="+activityMonth;
 		return mbrRoster;
 	}
 	
@@ -656,6 +657,7 @@ public class MembershipController {
 	public Message viewmembershipRosterList(@ModelAttribute("username") String username,
 			@RequestParam(required = true, value="insId") Integer insId,
 			@RequestParam(required = true, value="fileTypeId") Integer fileTypeId,
+			@RequestParam(required = true, value="activityMonth") Integer activityMonth,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 
 		logger.info("1");
@@ -699,7 +701,7 @@ public class MembershipController {
 
 			logger.info("processing  membershipRoster data");
 		
-			Integer membershipLoadedData = membershipService.loadData(insId, fileId, mbrRoster);
+			Integer membershipLoadedData = membershipService.loadData(insId, fileId, activityMonth, mbrRoster);
 			logger.info("membershipLoadedData " + membershipLoadedData);
 			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
 			logger.info("membershipUnloadedData " + membershipUnloadedData);

@@ -541,7 +541,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 * @see com.pfchoice.core.dao.MembershipDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer insId, final Integer fileId, final String tableName) {
+	public Integer loadData(final Integer insId, final Integer fileId, final Integer activityMonth, final String tableName) {
 		StringBuilder loadDataQuery = new StringBuilder(); 
 		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER)){
 			loadDataQuery.append(PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT));
@@ -552,7 +552,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		return getSession().createSQLQuery(loadDataQuery.toString())
 				.setInteger("insId", insId)
-				.setInteger("activityMonth", 201512)
+				.setInteger("activityMonth", activityMonth)
 				.setInteger("fileId", fileId).executeUpdate();
 	}
 
