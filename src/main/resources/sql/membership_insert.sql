@@ -7,7 +7,7 @@ case when c2m.status = 'ENR' then 1
      when c2m.status = 'DIS' then 3
      else  2 
 	end as status,
-convert(c2m.MCDMCR,unsigned),
+convert(c2m.MCDMCR,unsigned) MCDMCR,
 :fileId fileid,
 now() created_date,
 now() updated_date,
@@ -120,11 +120,11 @@ from  membership  m
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId
 join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
 left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month =201606
-where mam.mbr_id is null  and mi.active_ind='Y' and mp.active_ind='Y' and m.mbr_status in (1,2)
+where mam.mbr_id is null  and mi.active_ind='Y' and mp.active_ind='Y' and m.mbr_status in (1,2);
 
  
-insert ignore into reference_contact (mbr_id, created_by,updated_by) 
-select m.Mbr_Id , 'sarath','sarath' from membership m
+insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 
+select m.Mbr_Id, now() created_date, now() updated_date,'sarath','sarath' from membership m
 left outer join reference_contact rc on rc.mbr_id =m.mbr_id
 where rc.mbr_id is null ;
 

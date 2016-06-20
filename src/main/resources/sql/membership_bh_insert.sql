@@ -4,7 +4,7 @@ select  PcpName , textbox44 pcpaddress1 ,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, textbox165 lastname,
-textbox214 mcdmcr, textbox2 sex , textbox9 dob,   textbox64 memeffstartdate ,
+convert(textbox214,unsigned) mcdmcr, textbox2 sex , textbox9 dob,   textbox64 memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
      else '12/31/2099' end  memeffenddate,
 case when textbox65 = 'PCP EFF' then textbox74 else textbox64 end  pcpstartdate,
@@ -75,7 +75,7 @@ join (
  m.mbr_id    ,  date_format(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date
     ,   DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date    
   from  membership m  
-  join temp_bh_membership b on convert(b.mcdmcr, unsigned ) =m.mbr_medicaidNo
+  join temp_bh_membership b on b.mcdmcr =m.mbr_medicaidNo
   join provider p on ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 
          and  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', -1),'.','')),'%')   
 where 	  b.pcpenddate is not null and  b.pcpenddate != '' 
@@ -95,7 +95,7 @@ select
  DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date 
  
   from   temp_bh_membership b  
-  join  membership m on m.mbr_medicaidNo=convert(b.mcdmcr, unsigned ) 
+  join  membership m on m.mbr_medicaidNo=b.mcdmcr 
   join provider p on ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 
          and  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', -1),'.','')),'%')  
 )a 
