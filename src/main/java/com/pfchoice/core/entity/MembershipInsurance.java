@@ -83,7 +83,7 @@ public class MembershipInsurance extends RecordDetails implements Serializable {
 
 	@Expose
 	@Column(name = "SRC_SYS_MBR_NBR")
-	private Integer srcSysMbrNbr;
+	private Long srcSysMbrNbr;
 
 	@Expose
 	@Column(name = "risk_flag")
@@ -271,7 +271,7 @@ public class MembershipInsurance extends RecordDetails implements Serializable {
 	/**
 	 * @return the srcSysMbrNbr
 	 */
-	public Integer getSrcSysMbrNbr() {
+	public Long getSrcSysMbrNbr() {
 		return srcSysMbrNbr;
 	}
 
@@ -279,7 +279,7 @@ public class MembershipInsurance extends RecordDetails implements Serializable {
 	 * @param srcSysMbrNbr
 	 *            the srcSysMbrNbr to set
 	 */
-	public void setSrcSysMbrNbr(final Integer srcSysMbrNbr) {
+	public void setSrcSysMbrNbr(final Long srcSysMbrNbr) {
 		this.srcSysMbrNbr = srcSysMbrNbr;
 	}
 
