@@ -78,7 +78,9 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 */
 	@Override
 	public MembershipClaim update(final MembershipClaim bean) {
-		Updater<MembershipClaim> updater = new Updater<>(bean);
+		Updater<MembershipClaim> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return membershipClaimDao.updateByUpdater(updater);
 	}
 

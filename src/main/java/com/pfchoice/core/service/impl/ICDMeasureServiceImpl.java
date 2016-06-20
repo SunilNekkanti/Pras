@@ -90,7 +90,9 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 	 */
 	@Override
 	public ICDMeasure update(final ICDMeasure bean) {
-		Updater<ICDMeasure> updater = new Updater<>(bean);
+		Updater<ICDMeasure> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return icdMeasureDao.updateByUpdater(updater);
 	}
 

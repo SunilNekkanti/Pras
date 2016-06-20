@@ -91,7 +91,9 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 	 */
 	@Override
 	public EmailTemplate update(final EmailTemplate bean) {
-		Updater<EmailTemplate> updater = new Updater<>(bean);
+		Updater<EmailTemplate> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return emailTemplatesDao.updateByUpdater(updater);
 	}
 

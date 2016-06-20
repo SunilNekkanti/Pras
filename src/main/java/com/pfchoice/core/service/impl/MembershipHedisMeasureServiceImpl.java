@@ -94,7 +94,9 @@ public class MembershipHedisMeasureServiceImpl implements MembershipHedisMeasure
 	 */
 	@Override
 	public MembershipHedisMeasure update(final MembershipHedisMeasure bean) {
-		Updater<MembershipHedisMeasure> updater = new Updater<>(bean);
+		Updater<MembershipHedisMeasure> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return membershipHedisMeasureDao.updateByUpdater(updater);
 	}
 

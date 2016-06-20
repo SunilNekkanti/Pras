@@ -90,7 +90,9 @@ public class CPTMeasureServiceImpl implements CPTMeasureService {
 	 */
 	@Override
 	public CPTMeasure update(final CPTMeasure bean) {
-		Updater<CPTMeasure> updater = new Updater<>(bean);
+		Updater<CPTMeasure> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return cptMeasureDao.updateByUpdater(updater);
 	}
 

@@ -91,7 +91,9 @@ public class BillTypeServiceImpl implements BillTypeService {
 	 */
 	@Override
 	public BillType update(final BillType bean) {
-		Updater<BillType> updater = new Updater<>(bean);
+		Updater<BillType> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return billTypeDao.updateByUpdater(updater);
 	}
 

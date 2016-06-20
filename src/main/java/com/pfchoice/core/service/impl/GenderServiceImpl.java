@@ -75,7 +75,9 @@ public class GenderServiceImpl implements GenderService {
 	 */
 	@Override
 	public Gender update(final Gender bean) {
-		Updater<Gender> updater = new Updater<>(bean);
+		Updater<Gender> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return genderDao.updateByUpdater(updater);
 	}
 

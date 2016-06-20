@@ -79,7 +79,9 @@ public class ContractServiceImpl implements ContractService {
 	 */
 	@Override
 	public Contract update(final Contract bean) {
-		Updater<Contract> updater = new Updater<>(bean);
+		Updater<Contract> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return contractDao.updateByUpdater(updater);
 	}
 

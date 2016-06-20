@@ -76,7 +76,9 @@ public class FilesUploadServiceImpl implements FilesUploadService {
 	 */
 	@Override
 	public FilesUpload update(final FilesUpload bean) {
-		Updater<FilesUpload> updater = new Updater<>(bean);
+		Updater<FilesUpload> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return filesUploadDao.updateByUpdater(updater);
 	}
 

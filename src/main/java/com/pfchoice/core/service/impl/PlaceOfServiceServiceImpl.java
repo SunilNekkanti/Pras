@@ -91,7 +91,9 @@ public class PlaceOfServiceServiceImpl implements PlaceOfServiceService {
 	 */
 	@Override
 	public PlaceOfService update(final PlaceOfService bean) {
-		Updater<PlaceOfService> updater = new Updater<>(bean);
+		Updater<PlaceOfService> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return placeOfServiceDao.updateByUpdater(updater);
 	}
 

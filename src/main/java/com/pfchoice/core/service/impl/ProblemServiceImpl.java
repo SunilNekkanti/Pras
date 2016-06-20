@@ -89,7 +89,9 @@ public class ProblemServiceImpl implements ProblemService {
 	 */
 	@Override
 	public Problem update(final Problem bean) {
-		Updater<Problem> updater = new Updater<>(bean);
+		Updater<Problem> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return problemDao.updateByUpdater(updater);
 	}
 }

@@ -90,7 +90,9 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
 	 */
 	@Override
 	public FacilityType update(final FacilityType bean) {
-		Updater<FacilityType> updater = new Updater<>(bean);
+		Updater<FacilityType> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return facilityTypeDao.updateByUpdater(updater);
 	}
 

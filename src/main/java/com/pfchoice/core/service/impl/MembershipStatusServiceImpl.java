@@ -79,7 +79,9 @@ public class MembershipStatusServiceImpl implements MembershipStatusService {
 	 */
 	@Override
 	public MembershipStatus update(final MembershipStatus bean) {
-		Updater<MembershipStatus> updater = new Updater<>(bean);
+		Updater<MembershipStatus> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return membershipStatusDao.updateByUpdater(updater);
 	}
 

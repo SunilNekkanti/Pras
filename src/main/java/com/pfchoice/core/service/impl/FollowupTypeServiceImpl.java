@@ -79,7 +79,9 @@ public class FollowupTypeServiceImpl implements FollowupTypeService {
 	 */
 	@Override
 	public FollowupType update(final FollowupType bean) {
-		Updater<FollowupType> updater = new Updater<>(bean);
+		Updater<FollowupType> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return followupTypeDao.updateByUpdater(updater);
 	}
 

@@ -91,7 +91,9 @@ public class ContactServiceImpl implements ContactService {
 	 */
 	@Override
 	public Contact update(final Contact bean) {
-		Updater<Contact> updater = new Updater<>(bean);
+		Updater<Contact> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return contactDao.updateByUpdater(updater);
 	}
 

@@ -74,7 +74,9 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public Role update(final Role bean) {
-		Updater<Role> updater = new Updater<>(bean);
+		Updater<Role> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return roleDao.updateByUpdater(updater);
 	}
 

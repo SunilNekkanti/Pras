@@ -90,7 +90,9 @@ public class FrequencyTypeServiceImpl implements FrequencyTypeService {
 	 */
 	@Override
 	public FrequencyType update(final FrequencyType bean) {
-		Updater<FrequencyType> updater = new Updater<>(bean);
+		Updater<FrequencyType> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return frequencyTypeDao.updateByUpdater(updater);
 	}
 

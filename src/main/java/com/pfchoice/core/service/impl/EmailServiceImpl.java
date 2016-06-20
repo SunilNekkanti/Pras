@@ -89,7 +89,9 @@ public class EmailServiceImpl implements EmailService {
 	 */
 	@Override
 	public Email update(final Email bean) {
-		Updater<Email> updater = new Updater<>(bean);
+		Updater<Email> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return emailsDao.updateByUpdater(updater);
 	}
 }

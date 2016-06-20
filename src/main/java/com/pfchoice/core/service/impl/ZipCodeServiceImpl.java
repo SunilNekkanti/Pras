@@ -78,7 +78,9 @@ public class ZipCodeServiceImpl implements ZipCodeService {
 	 */
 	@Override
 	public ZipCode update(final ZipCode bean) {
-		Updater<ZipCode> updater = new Updater<>(bean);
+		Updater<ZipCode> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return zipCodeDao.updateByUpdater(updater);
 	}
 

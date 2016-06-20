@@ -77,7 +77,9 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 	 */
 	@Override
 	public PlanType update(final PlanType bean) {
-		Updater<PlanType> updater = new Updater<>(bean);
+		Updater<PlanType> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return planTypeDao.updateByUpdater(updater);
 	}
 

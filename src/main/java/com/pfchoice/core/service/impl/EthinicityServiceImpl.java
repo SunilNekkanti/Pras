@@ -76,7 +76,9 @@ public class EthinicityServiceImpl implements EthinicityService {
 	 */
 	@Override
 	public Ethinicity update(final Ethinicity bean) {
-		Updater<Ethinicity> updater = new Updater<>(bean);
+		Updater<Ethinicity> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return ethinicityDao.updateByUpdater(updater);
 	}
 

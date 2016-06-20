@@ -90,7 +90,9 @@ public class HospitalServiceImpl implements HospitalService {
 	 */
 	@Override
 	public Hospital update(final Hospital bean) {
-		Updater<Hospital> updater = new Updater<>(bean);
+		Updater<Hospital> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return hospitalDao.updateByUpdater(updater);
 	}
 

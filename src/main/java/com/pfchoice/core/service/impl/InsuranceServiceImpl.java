@@ -89,7 +89,9 @@ public class InsuranceServiceImpl implements InsuranceService {
 	 */
 	@Override
 	public Insurance update(final Insurance bean) {
-		Updater<Insurance> updater = new Updater<>(bean);
+		Updater<Insurance> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return insuranceDao.updateByUpdater(updater);
 	}
 

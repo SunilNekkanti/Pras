@@ -76,7 +76,9 @@ public class CountyServiceImpl implements CountyService {
 	 */
 	@Override
 	public County update(final County bean) {
-		Updater<County> updater = new Updater<>(bean);
+		Updater<County> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return countyDao.updateByUpdater(updater);
 	}
 

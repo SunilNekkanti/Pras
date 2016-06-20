@@ -74,7 +74,9 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User update(final User bean) {
-		Updater<User> updater = new Updater<>(bean);
+		Updater<User> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return userDao.updateByUpdater(updater);
 	}
 

@@ -75,7 +75,9 @@ public class StateServiceImpl implements StateService {
 	 */
 	@Override
 	public State update(final State bean) {
-		Updater<State> updater = new Updater<>(bean);
+		Updater<State> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return stateDao.updateByUpdater(updater);
 	}
 

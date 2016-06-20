@@ -79,7 +79,9 @@ public class ProviderServiceImpl implements ProviderService {
 	 */
 	@Override
 	public Provider update(final Provider bean) {
-		Updater<Provider> updater = new Updater<>(bean);
+		Updater<Provider> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return providerDao.updateByUpdater(updater);
 	}
 

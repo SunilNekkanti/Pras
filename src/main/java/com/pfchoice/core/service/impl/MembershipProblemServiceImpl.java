@@ -92,7 +92,9 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 	 */
 	@Override
 	public MembershipProblem update(final MembershipProblem bean) {
-		Updater<MembershipProblem> updater = new Updater<>(bean);
+		Updater<MembershipProblem> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return mbrProblemDao.updateByUpdater(updater);
 	}
 	

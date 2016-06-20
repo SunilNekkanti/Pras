@@ -82,7 +82,9 @@ public class MembershipProviderServiceImpl implements MembershipProviderService 
 	 */
 	@Override
 	public MembershipProvider update(final MembershipProvider bean) {
-		Updater<MembershipProvider> updater = new Updater<>(bean);
+		Updater<MembershipProvider> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return membershipProviderDao.updateByUpdater(updater);
 	}
 

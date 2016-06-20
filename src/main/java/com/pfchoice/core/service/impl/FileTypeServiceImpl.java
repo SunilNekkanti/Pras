@@ -76,7 +76,9 @@ public class FileTypeServiceImpl implements FileTypeService {
 	 */
 	@Override
 	public FileType update(final FileType bean) {
-		Updater<FileType> updater = new Updater<>(bean);
+		Updater<FileType> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return fileTypeDao.updateByUpdater(updater);
 	}
 

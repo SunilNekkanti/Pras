@@ -81,7 +81,9 @@ public class MembershipFollowupServiceImpl implements MembershipFollowupService 
 	 */
 	@Override
 	public MembershipFollowup update(final MembershipFollowup bean) {
-		Updater<MembershipFollowup> updater = new Updater<>(bean);
+		Updater<MembershipFollowup> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return mbrHedisFollowupDao.updateByUpdater(updater);
 	}
 

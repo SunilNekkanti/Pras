@@ -91,7 +91,9 @@ public class EmailTemplatePlaceholderServiceImpl implements EmailTemplatePlaceho
 	 */
 	@Override
 	public EmailTemplatePlaceholder update(final EmailTemplatePlaceholder bean) {
-		Updater<EmailTemplatePlaceholder> updater = new Updater<>(bean);
+		Updater<EmailTemplatePlaceholder> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return emailTemplatePlaceholderDao.updateByUpdater(updater);
 	}
 

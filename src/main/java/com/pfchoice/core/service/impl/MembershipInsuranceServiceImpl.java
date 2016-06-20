@@ -82,7 +82,9 @@ public class MembershipInsuranceServiceImpl implements MembershipInsuranceServic
 	 */
 	@Override
 	public MembershipInsurance update(final MembershipInsurance bean) {
-		Updater<MembershipInsurance> updater = new Updater<>(bean);
+		Updater<MembershipInsurance> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return membershipInsuranceDao.updateByUpdater(updater);
 	}
 

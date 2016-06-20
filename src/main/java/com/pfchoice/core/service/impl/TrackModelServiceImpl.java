@@ -76,7 +76,9 @@ public class TrackModelServiceImpl implements TrackModelService {
 	 */
 	@Override
 	public TrackModel update(final TrackModel bean) {
-		Updater<TrackModel> updater = new Updater<>(bean);
+		Updater<TrackModel> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return trackModelDao.updateByUpdater(updater);
 	}
 

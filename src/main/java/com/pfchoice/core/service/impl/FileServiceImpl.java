@@ -73,7 +73,9 @@ public class FileServiceImpl implements FileService {
 	 */
 	@Override
 	public File update(final File bean) {
-		Updater<File> updater = new Updater<>(bean);
+		Updater<File> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return fileDao.updateByUpdater(updater);
 	}
 

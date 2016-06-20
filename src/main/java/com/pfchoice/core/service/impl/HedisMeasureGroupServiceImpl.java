@@ -79,7 +79,9 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 	 */
 	@Override
 	public HedisMeasureGroup update(final HedisMeasureGroup bean) {
-		Updater<HedisMeasureGroup> updater = new Updater<>(bean);
+		Updater<HedisMeasureGroup> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return hedisMeasureGroupDao.updateByUpdater(updater);
 	}
 

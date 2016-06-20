@@ -60,7 +60,9 @@ public class MembershipActivityMonthServiceImpl implements MembershipActivityMon
 	 */
 	@Override
 	public MembershipActivityMonth update(final MembershipActivityMonth bean) {
-		Updater<MembershipActivityMonth> updater = new Updater<>(bean);
+		Updater<MembershipActivityMonth> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
+		updater.exclude("createdBy");
+		updater.exclude("createdDate");
 		return membershipActivityMonthDao.updateByUpdater(updater);
 	}
 
