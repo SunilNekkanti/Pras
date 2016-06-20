@@ -132,10 +132,6 @@
 							
 							columns.push({	"mDataProp" : "mbrClaimList.0.frequencyType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							
-							columns.push({	"mDataProp" : "mbrClaimList.0.ndc", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "mbrClaimList.0.mony", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "mbrClaimList.0.drugLabelName", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "mbrClaimList.0.drugVersion", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "mbrClaimList.0.dischargeStatus", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "mbrClaimList.0.MemEnrollId", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							
@@ -537,6 +533,9 @@
 							                {"mDataProp" : "riskId", "bSearchable" : true,	"bSortable" : true,"sClass" : "center", "sWidth" : "10%", "sDefaultContent" : ""},
 							                {"mDataProp" : "runnDate", "bSearchable" : true,	"bSortable" : true,"sClass" : "center", "sWidth" : "10%", "sDefaultContent" : ""},
 							                {"mDataProp" : "ndc", "bSearchable" : true,	"bSortable" : true,"sClass" : "center", "sWidth" : "10%", "sDefaultContent" : ""},
+											{"mDataProp" : "mony", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" },
+											{"mDataProp" : "drugLabelName", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" },
+											{"mDataProp" : "drugVersion", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" },
 							                {"mDataProp" : "pharmacy", "bSearchable" : true,	"bSortable" : true,"sClass" : "center", "sWidth" : "10%", "sDefaultContent" : ""},
 							                {"mDataProp" : "psychare", "bSearchable" : true,	"bSortable" : true,"sClass" : "center", "sWidth" : "10%", "sDefaultContent" : ""},
 							                {"mDataProp" : "simpleCounty", "bSearchable" : true,	"bSortable" : true,"sClass" : "center", "sWidth" : "10%", "sDefaultContent" : ""},
@@ -670,10 +669,6 @@
 							<th scope="col" role="row">Facility</th>
 							<th scope="col" role="row">Bill Type Code</th>
 							<th scope="col" role="row">Frequency</th>
-							<th scope="col" role="row">NDC</th>
-							<th scope="col" role="row">Mony</th>
-							<th scope="col" role="row">Drug Label Name</th>
-							<th scope="col" role="row">Drug Version</th>
 							<th scope="col" role="row">Discharge Status</th>
 							<th scope="col" role="row">Mem Enroll Id</th>
 							<th scope="col" role="row">Diagnoses</th>
@@ -755,6 +750,9 @@
 							<th scope="col" role="row">Npos</th>
 							<th scope="col" role="row">Risk Id</th>
 							<th scope="col" role="row">Ndc</th>
+							<th scope="col" role="row">Mony</th>
+							<th scope="col" role="row">Drug Label Name</th>
+							<th scope="col" role="row">Drug Version</th>
 							<th scope="col" role="row">Pharmacy</th>
 							<th scope="col" role="row">Membership Claims</th>
 							<th scope="col" role="row">Psychare</th>

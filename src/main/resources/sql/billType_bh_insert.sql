@@ -1,4 +1,4 @@
-INSERT INTO LU_BILL_TYPE (
+INSERT IGNORE INTO LU_BILL_TYPE (
 code,description,shortName,created_date,updated_date,created_by,updated_by,active_ind
 )
 SELECT DISTINCT  BillClassCode, BillClasification, BillClasification,

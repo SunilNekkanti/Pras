@@ -1,4 +1,4 @@
-INSERT INTO LU_FACILITY_TYPE (
+INSERT IGNORE INTO LU_FACILITY_TYPE (
 code,description,shortName,created_date,updated_date,created_by,updated_by,active_ind
 )
 SELECT DISTINCT  FacilityCode, FacilityType, FacilityType,
