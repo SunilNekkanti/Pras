@@ -36,14 +36,17 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@Column(name = "claim_id_number")
 	private String claimNumber;
 
+	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
 	private Membership mbr;
-
+	
+	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
 	private Provider prvdr;
 
+	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ins_id", referencedColumnName = "insurance_id")
 	private Insurance ins;

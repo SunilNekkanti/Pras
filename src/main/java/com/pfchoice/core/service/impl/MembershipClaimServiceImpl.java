@@ -3,6 +3,8 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,5 +140,17 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	@Override
 	public Integer updateData(final Integer fileId, final String tableName) {
 		return membershipClaimDao.updateData(fileId, tableName);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipClaimService#getPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String, java.util.Date, java.util.Date, int)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getClaimPage(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom, final Date processingTo,
+			final int processClaim) {
+		return membershipClaimDao.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processingFrom, processingTo, processClaim);
 	}
 }

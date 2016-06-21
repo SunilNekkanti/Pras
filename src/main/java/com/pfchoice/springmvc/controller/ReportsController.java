@@ -482,7 +482,7 @@ public class ReportsController {
 			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo,
 			@RequestParam(required = true) Integer processClaim) {
 
-		Pagination pagination = membershipService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
+		Pagination pagination = mbrClaimService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
 				sort, sortdir, processFrom, processTo, processClaim);
 
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST,

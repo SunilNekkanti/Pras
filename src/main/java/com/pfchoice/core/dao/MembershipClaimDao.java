@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.Date;
+
 import com.pfchoice.core.entity.MembershipClaim;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -39,6 +41,22 @@ public interface MembershipClaimDao {
 	 * @return
 	 */
 	MembershipClaim save(MembershipClaim bean);
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
+	 * @param processClaim
+	 * @return
+	 */
+	Pagination getClaimPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
+			String sort, String sortdir, Date processingFrom, Date processingTo, Integer processClaim);
 
 	/**
 	 * 

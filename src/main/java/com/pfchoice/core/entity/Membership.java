@@ -98,7 +98,7 @@ public class Membership extends RecordDetails implements Serializable {
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
 	private List<MembershipHospitalization> mbrHospitalizationList;
 
-	@Expose
+	
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
 	private List<MembershipClaim> mbrClaimList;
 

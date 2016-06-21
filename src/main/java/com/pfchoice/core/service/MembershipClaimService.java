@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.Date;
+
 import com.pfchoice.core.entity.MembershipClaim;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -65,5 +67,21 @@ public interface MembershipClaimService {
 	 * @return
 	 */
 	Integer updateData(Integer fileId, String tableName);
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
+	 *            * @param processClaim
+	 * @return
+	 */
+	Pagination getClaimPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, String sort,
+			String sortdir, Date processingFrom, Date processingTo, int processClaim);
 
 }
