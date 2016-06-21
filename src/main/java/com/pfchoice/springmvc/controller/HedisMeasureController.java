@@ -224,15 +224,15 @@ public class HedisMeasureController {
 	@RequestMapping(value = "/admin/hedis/{id}/save.do", method = RequestMethod.POST, params = { "update" })
 	public String saveHedisMeasureAction(@PathVariable Integer id, @Validated HedisMeasure hedisMeasure,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		hedisMeasure.setActiveInd('Y');
 		logger.info("hedis measure id is" + id);
+		hedisMeasure.setActiveInd('Y');
+		hedisMeasure.setUpdatedBy(username);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning  hedisMeasureEdit.jsp page");
-			hedisMeasure.setUpdatedBy(username);
 			return TileDefinitions.HEDISMEASUREEDIT.toString();
 		}
 
-		if (null != hedisMeasure.getId()) {
+		if (hedisMeasure.getId() != null) {
 			logger.info("Returning hedisMeasureEditSuccess.jsp page after update");
 			hedisMeasureService.update(hedisMeasure);
 			model.addAttribute("Message", "Hedis Measure updated successfully");

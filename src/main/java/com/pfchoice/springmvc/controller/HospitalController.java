@@ -144,7 +144,7 @@ public class HospitalController {
 
 		logger.info("Returning HospitalSuccess.jsp page after create");
 		model.addAttribute("hospital", hospital);
-		hospital.setFileId(1);;
+		hospital.setFileId(1);
 		hospital.setCreatedBy(username);
 		hospital.setUpdatedBy(username);
 		hospitalService.save(hospital);

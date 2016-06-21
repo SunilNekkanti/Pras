@@ -698,8 +698,8 @@ public class MembershipController {
 		
 			Integer membershipLoadedData = membershipService.loadData(insId, fileId, activityMonth, mbrRoster);
 			logger.info("membershipLoadedData " + membershipLoadedData);
-		//	Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
-		//	logger.info("membershipUnloadedData " + membershipUnloadedData);
+			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
+			logger.info("membershipUnloadedData " + membershipUnloadedData);
 			
 			logger.info("processed  membership roster data" +new Date());
 

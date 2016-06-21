@@ -112,7 +112,7 @@ public class HedisMeasureGroupController {
 		logger.info("hedisMeasureGroup id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
-			return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
+			return TileDefinitions.HEDISMEASUREGROUPEDIT.toString();
 		}
 		if (null != hedisMeasureGroup.getId()) {
 			logger.info("Returning hedisMeasureGroupEditSuccess.jsp page after update");
@@ -139,7 +139,7 @@ public class HedisMeasureGroupController {
 		if (bindingResult.hasErrors()) {
 			hedisMeasureGroup.setActiveInd('Y');
 			logger.info("Returning hedisMeasureGroupEdit.jsp page");
-			return TileDefinitions.HEDISMEASUREGROUPNEW.toString();
+			return TileDefinitions.HEDISMEASUREGROUPEDIT.toString();
 		}
 
 		if (null != hedisMeasureGroup.getId()) {
