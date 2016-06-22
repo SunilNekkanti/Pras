@@ -105,14 +105,57 @@ group by a.mbr_id,a.prvdr_id,a.eff_start_date;
 
 update  membership_provider set active_ind='N' where eff_end_date is not null and eff_end_date < cast(now() as date);
 
-insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
+
+drop table if exists activity_month_span;
+create temporary table activity_month_span as 
 select 
-mi.mbr_id,mi.ins_id,mp.prvdr_id,:activityMonth  activityMonth, :fileId fileId,
+DATE_FORMAT(m1, '%Y%m') as activitymonth
+
+from
+(
+select 
+(select min(strt_date)
+from 
+ (
+select min(effective_strt_dt) strt_date from membership_insurance  mi where :insId =mi.ins_id
+union 
+select min(eff_start_date) strt_date  from membership_provider 
+) a)
++INTERVAL m MONTH as m1
+from
+(
+select @rownum\:=@rownum+1 as m from
+(select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9 )  t1,
+(select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+(select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+(select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4,
+(select @rownum\:=-1) t0
+) d1
+) d2 
+where m1<=cast(now() as date)
+order by m1;
+
+
+insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
+select  
+mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth, :fileId fileId,
 now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by  
 from  membership  m  
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId
 join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
-left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month =:activityMonth
+join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    and ams.activitymonth <= DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') 
+								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')      and ams.activitymonth <= case when mp.eff_end_date is not null then DATE_FORMAT(mp.eff_end_date, '%Y%m')  else  :activityMonth end
+left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
+where    mam.activity_month is null  ; 
+
+insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
+select 
+mi.mbr_id,mi.ins_id,mp.prvdr_id,:activityMonth  activityMonth, :fileId fileId,
+now() created_date,now() updated_date,'mohan' created_by,'mohan' updated_by  
+from  membership  m  
+join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId
+join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
+left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month = :activityMonth
 where mam.mbr_id is null  and mi.active_ind='Y' and mp.active_ind='Y' and m.mbr_status in (1,2);
 
 insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 

@@ -772,4 +772,9 @@
 			value="/WEB-INF/jsp/membershipRoster.jsp" />
 			</definition>
 	<!--  MEMBERSHIP ROSTER -->
+	
+	<definition name="hedisMeasureGroupEdit" extends="base.definition">
+  		<put-attribute name="title" value="Hedis Measure Group" />
+  		<put-attribute name="body"	value="/WEB-INF/jsp/hedisMeasureGroupEdit.jsp" />
+ 	</definition>
 </tiles-definitions>  

@@ -108,7 +108,8 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 			final Integer sSearchPrvdr, final String sort, final String sortdir, final Date processingFrom,
 			final Date processingTo, final Integer processClaim) {
 
-		Criteria crit = createCriteria().createAlias("mbr", "mbr")
+		Criteria crit = createCriteria().createAlias("mbrClaimDetailsList", "mbrClaimDetails")
+				 .createAlias("mbr", "mbr")
 				 .createAlias("mbr.genderId", "genderId")
 				 .createAlias("prvdr", "prvdr") 
 		         .createAlias("ins", "ins" );
