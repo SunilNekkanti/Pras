@@ -29,6 +29,10 @@ insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_Cou
  group by a.MCDMCR
  having max(memeffenddate) ;
 
+ update membership m
+ join temp_bh_membership tm on tm.mcdmcr =m.Mbr_MedicaidNo
+ set m.mbr_status= tm.status;
+ 
 update membership_insurance mi
  join membership m on mi.mbr_id= m.mbr_id
 join temp_bh_membership  b on  b.mcdmcr =m.Mbr_MedicaidNo
@@ -146,7 +150,8 @@ join  membership_provider mp  on  mp.mbr_id = mi.mbr_id
 join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    and ams.activitymonth <= DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') 
 								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')      and ams.activitymonth <= case when mp.eff_end_date is not null then DATE_FORMAT(mp.eff_end_date, '%Y%m')  else  :activityMonth end
 left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
-where    mam.activity_month is null  ; 
+where    mam.activity_month is null 
+group by mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth; 
 
 insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
 select 

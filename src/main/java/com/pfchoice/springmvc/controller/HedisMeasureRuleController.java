@@ -317,7 +317,7 @@ public class HedisMeasureRuleController {
 		if (null != hedisMeasureRule.getId()) {
 			logger.info("Returning hedisMeasureRuleEditSuccess.jsp page after update");
 
-			if (hedisMeasureRule.getCptOrIcd() != 2) {
+			if (hedisMeasureRule.getProblemFlag() != 'Y') {
 				hedisMeasureRule.setPbm(null);
 			}
 			hedisMeasureRule.setUpdatedBy(username);

@@ -248,25 +248,22 @@ $.ajax( {
 					<springForm:errors path="insId" cssClass="error text-danger" />
 				</div>
 			</div>
-
+			
 			<div class="form-group required">
-				<label class="control-label   col-sm-2" for="cptOrIcd">CPT /
-					ICD / Problem</label>
+				<label class="control-label   col-sm-2" for="problemFlag">Problem Flag</label>
 				<div class="col-sm-6">
 					<label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
-							class="cptOrIcd" value="0" />CPT
-					</label> <label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
-							class="cptOrIcd" value="1" />ICD
-					</label> <label class="radio-inline"> <springForm:radiobutton
-							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
-							class="cptOrIcd" value="2" />Problem
-					</label>
-					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
+							path="problemFlag" id="problemFlag" 
+							class="problemFlag" value="Y" />Yes
+					</label> 
+					<label class="radio-inline"> <springForm:radiobutton
+							path="problemFlag" id="problemFlag" 
+							class="problemFlag" value="N" />N0
+					</label> 
+					<springForm:errors path="problemFlag" cssClass="error text-danger" />
 				</div>
 			</div>
-
+			
 			<div class="form-group pbmList">
 				<label class="control-label col-sm-2" for="Problem">Problem</label>
 				<div class="col-sm-6">
@@ -277,6 +274,26 @@ $.ajax( {
 					<springForm:errors path="pbm" cssClass="error text-danger" />
 				</div>
 			</div>
+
+			<div class="form-group required">
+				<label class="control-label   col-sm-2" for="cptOrIcd">CPT /
+					ICD / Medication</label>
+				<div class="col-sm-6">
+					<label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="0" />CPT
+					</label> <label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="1" />ICD
+					</label> <label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="2" />Medication
+					</label>
+					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
+				</div>
+			</div>
+
+			
 
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="cpt">CPT Code</label>
@@ -502,15 +519,15 @@ $.ajax( {
 $(document).ready(function() {
 	
 	
-	$(".cptOrIcd").click(function() {
+	$(".problemFlag").click(function() {
 		$(".pbmList").hide();
-		 if($('input[name=cptOrIcd]:checked').val() == 2)
+		 if($('input[name=problemFlag]:checked').val() == 'Y')
 			 insPbmList();
 	});	
 	
 	$(".pbmList").hide();
 	
-	if($('input[name=cptOrIcd]:checked').val() == 2)
+	 if($('input[name=problemFlag]:checked').val() == 'Y')
 		 insPbmList();
 	
 	$("#copyRule").click(function(event) {
@@ -615,10 +632,20 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 	    if(error_count >0){ event.preventDefault();}
 	});
 	
+	$('#insurance').change(function(){
+		$('input:radio[name=problemFlag]').filter('[value="N"]').attr('checked', true);
+		$(".pbmList").hide();
+	});
 	
 	function  insPbmList()
 	{
 		var insId = $("#insurance").val();
+		if(!insId){
+			$('#insurance').focus();
+			$('input[name=problemFlag]').removeAttr('checked')
+			$('input:radio[name=problemFlag]').filter('[value="N"]').attr('checked', true);
+			return false;
+		}
 		var effectiveYear = $("#effectiveYear").val();
 		var source = getContextPath()+'/problem/list';
 		 var restParams = new Array();

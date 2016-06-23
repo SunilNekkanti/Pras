@@ -13,8 +13,26 @@
 
 						$("#claimGenerate").click(function(event) {
 							callClaimGenerate();
+							var index = 0;
+							 $('#membershipClaimTable tr').each(function()
+							 {
+								$('.mbrClaimField').each(function() {
+									if (!this.checked) {
+									
+										$('table#membershipClaimTable tr th').eq(index).hide();
+									}
+									else
+									{
+										$('table#membershipClaimTable tr th').eq(index).show();
+									}	
+									index++;
+								});
+								        	
+							});
+							
 						});
-
+						
+						
 						var $selectIns = $('#extFilterIns');
 						$
 								.getJSON(
@@ -79,69 +97,6 @@
 						var callClaimGenerate = function() {
 
 							columns = new Array();
-							columns.push({
-										"mDataProp" : "mbr.id",
-										"bSearchable" : false,
-										"bVisible" : false,
-										"asSorting" : [ "asc" ],
-										"sClass" : "center",
-										"sWidth" : "3%",
-										"render" : function(data, type, full,
-												meta) {
-											return '<a href="javascript:void(0)" id="'
-													+ data
-													+ '" onclick="myFunction('
-													+ data
-													+ ',\''
-													+ full.mbr.lastName
-													+ '\',\''
-													+ full.mbr.firstName
-													+ '\')"><span class="glyphicon glyphicon-pencil"></span></a>';
-										}
-									});
-							columns.push({	"mDataProp" : "claimNumber", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });							
-							columns.push({
-								"mDataProp" : "mbr.firstName",
-								"bSearchable" : true,
-								"bSortable" : true,
-								"sClass" : "center",
-								"sWidth" : "10%",
-								"render" : function(data, type, full,
-										meta) {
-									return '<a href="${context}/membership/'+full.mbr.id+'/complete">'
-											+ full.mbr.lastName
-											+ ', '
-											+ full.mbr.firstName + '</a>';
-								}
-							});
-							columns.push({  "mDataProp" : "prvdr.name",	"bSearchable" : true,	"bSortable" : true,	"sClass" : "center",	"sWidth" : "10%", "sDefaultContent": ""  });
-							columns.push({	"mDataProp" : "claimType", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
-							columns.push({	"mDataProp" : "billType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "facilityType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "billTypec", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "frequencyType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "dischargeStatus", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "MemEnrollId", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "diagnosis", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
-							columns.push({	"mDataProp" : "productLabel", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl1", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl2", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl3", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl4", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl5", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl6", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "productLvl7", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl1", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl2", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": ""});
-							columns.push({	"mDataProp" : "marketLvl3", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl4", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl5", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl6", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl7", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "marketLvl8", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" , "sDefaultContent": ""});
-							columns.push({	"mDataProp" : "tin", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "dxTypeCode", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "procTypeCode", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							
 							columns.push({
 								"mDataProp" : "id",
@@ -162,6 +117,51 @@
 											+ '\')"><span class="glyphicon glyphicon-book"></span></a>';
 								}
 							});
+							columns.push({
+								"mDataProp" : "mbr.firstName",
+								"bSearchable" : true,
+								"bSortable" : true,
+								"sClass" : "center",
+								"sWidth" : "10%",
+								"render" : function(data, type, full,
+										meta) {
+									return '<a href="${context}/membership/'+full.mbr.id+'/complete">'
+											+ full.mbr.lastName
+											+ ', '
+											+ full.mbr.firstName + '</a>';
+								}
+							});
+							columns.push({	"mDataProp" : "claimNumber", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });							
+							columns.push({  "mDataProp" : "prvdr.name",	"bSearchable" : true,	"bSortable" : true,	"sClass" : "center",	"sWidth" : "10%", "sDefaultContent": ""  });
+							columns.push({	"mDataProp" : "claimType", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
+							columns.push({	"mDataProp" : "facilityType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "diagnosis",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
+							columns.push({	"mDataProp" : "tin", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "billType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "billTypec", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "frequencyType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "dischargeStatus",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "MemEnrollId",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLabel","bVisible":false,  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl1", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl2", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl3", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl4", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl5", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl6", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "productLvl7", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl1", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl2", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": ""});
+							columns.push({	"mDataProp" : "marketLvl3", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl4", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl5", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl6", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl7", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "marketLvl8", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" , "sDefaultContent": ""});
+							columns.push({	"mDataProp" : "dxTypeCode", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "procTypeCode", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							
+							
 							
 
 							var myTable = $("#membershipClaimTable");
@@ -251,7 +251,6 @@
 
 						var datatable2RestMembership = function(sSource,
 								aoData, fnCallback) {
-
 							//extract name/value pairs into a simpler map for use later
 							var paramMap = {};
 							for (var i = 0; i < aoData.length; i++) {
@@ -329,7 +328,27 @@
 											res.iTotalRecords = res.data.totalCount;
 											res.iTotalDisplayRecords = res.data.totalCount;
 											fnCallback(res);
-											/*	$('#membershipClaimTable').width(1000); */
+											var index1 = 0; var row = 0;
+											var mbrClaimFieldCheck = [];
+											$('.mbrClaimField').each(function(index, value) {
+												if (this.checked) {
+													mbrClaimFieldCheck[row++] = index;
+												}
+											});
+								           $('table#membershipClaimTable tr').each(function(trindex){
+								        	  
+								        	   $('table#membershipClaimTable tr:eq('+trindex+') td').each(function(tdindex){
+								        		   if($.inArray(tdindex, mbrClaimFieldCheck) != -1)
+								        			{
+								        			  $(this).show();
+								        			}   
+							        		       else{
+							        		    	   $(this).hide();
+							        		       }
+								        	   });
+								           }); 
+												$('#membershipClaimTable').width('100%'); 
+											
 										},
 										error : function(e) {
 										}
@@ -355,6 +374,9 @@
 												"sPaginationType" : "full_numbers",
 												"bProcessing" : true,
 												"bServerSide" : true,
+												"initComplete": function () {
+													
+												},
 												"fnServerParams" : function(
 														aoData) {
 													aoData
@@ -384,7 +406,7 @@
 											});
 
 						}
-
+						
 						$('select').css({
 							'width' : 150
 						});
@@ -631,15 +653,25 @@
 		<div class="panel-body">
 			<div class="table-responsive">
 				<div class="col-sm-12 hosFilter">
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<label class="control-label col-sm-5">Insurance</label>
 						<div class=" col-sm-7" id="extFilterIns"></div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<label class="control-label col-sm-5">Provider</label>
 						<div class="col-sm-7" id="extFilterPrvdr"></div>
 					</div>
-					<div class="col-sm-6">
+					
+					<div class="col-sm-4">
+						<label class="control-label col-sm-2">Fields</label>
+						<div class="col-sm-7" id="mbrClaimField">
+							<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
+								<ul class="dropdown-menu"></ul>
+						</div>
+					</div>
+					<br />
+					<br />
+					<div class="col-sm-offset-6 col-sm-6">
 						<div class="col-sm-12">
 							<label class="radio-inline col-sm-4"> <input type="radio"
 								name="processClaim" id="processClaim" value="0" />Fi1e Process
@@ -666,18 +698,19 @@
 
 					<thead>
 						<tr>
-							<th scope="col" role="row">Notes</th>
+							<th scope="col" role="row">Details</th>
+							<th scope="col" data-value="Member Name" role="row">Member Name</th>
 							<th scope="col" role="row">claim Id Number</th>
-							<th scope="col" role="row">Member Name</th>
 							<th scope="col" role="row">Provider Name</th>
 							<th scope="col" role="row">Claim Type</th>
-							<th scope="col" role="row">Bill Type</th>
 							<th scope="col" role="row">Facility</th>
+							<th scope="col" role="row">Diagnoses</th>
+							<th scope="col" role="row">TIN</th>
+							<th scope="col" role="row">Bill Type</th>
 							<th scope="col" role="row">Bill Type Code</th>
 							<th scope="col" role="row">Frequency</th>
 							<th scope="col" role="row">Discharge Status</th>
 							<th scope="col" role="row">Mem Enroll Id</th>
-							<th scope="col" role="row">Diagnoses</th>
 							<th scope="col" role="row">Product Label</th>
 							<th scope="col" role="row">Product Level1</th>
 							<th scope="col" role="row">Product Level2</th>
@@ -694,10 +727,9 @@
 							<th scope="col" role="row">Market Level6</th>
 							<th scope="col" role="row">Market Level7</th>
 							<th scope="col" role="row">Market Level8</th>
-							<th scope="col" role="row">TIN</th>
 							<th scope="col" role="row">DX Type Cd</th>
 							<th scope="col" role="row">Proc Type Cd</th>
-							<th scope="col" role="row">Details</th>
+							
 
 						</tr>
 					</thead>
@@ -929,3 +961,46 @@
 			   }
 			});
 	</script>
+	
+	<br/>
+<div class="container">
+  <div class="row">
+       <div class="col-lg-12">
+     <div class="button-group">
+        
+  </div>
+</div>
+  </div>
+</div>
+<script>
+var options = [];
+
+$('#membershipClaimTable tr th').each(function(index)
+ {
+			var mbrclaimcheck ="";
+			if(index < 8){
+				mbrclaimcheck = "checked";
+			}
+				$("#mbrClaimField ul").append('<li><a href="#" class="small" data-value="'+$(this).html()+'" tabIndex="-1"><input type="checkbox" class="mbrClaimField" '+mbrclaimcheck+' />&nbsp;'+$(this).html()+'</a></li>');
+});
+$( '.dropdown-menu a' ).on( 'click', function( event ) {
+	
+   var $target = $( event.currentTarget ),
+       val = $target.attr( 'data-value' ),
+       $inp = $target.find( 'input' ),
+       idx;
+
+   if ( ( idx = options.indexOf( val ) ) > -1 ) {
+      options.splice( idx, 1 );
+      setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
+   } else {
+      options.push( val );
+      setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+   }
+
+   $( event.target ).blur();
+      
+   console.log( options );
+   return false;
+});
+</script>

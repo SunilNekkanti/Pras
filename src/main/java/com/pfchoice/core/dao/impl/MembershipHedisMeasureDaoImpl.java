@@ -182,13 +182,15 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final String tableName) {
+	public Integer loadData(final Integer fileId, final Integer insId, final String tableName) {
 		String loadDataQuery = null;
 		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
 		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
-		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
+		return getSession().createSQLQuery(loadDataQuery)
+				            .setInteger("fileId", fileId)
+				            .setInteger("insId", insId).executeUpdate();
 	}
 }

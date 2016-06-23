@@ -13,14 +13,18 @@ now() created_date,
 now() updated_date,
 'sarath' created_by,
 'sarath' updated_by,
-min(MEMBEREFFDT) MEMBEREFFDT
+min(MEMBEREFFDT) MEMBEREFFDT,
+ SBSB_ID
   from  csv2table_amg_roster c2m
 join lu_gender lg on lg.code = c2m.sex
 left outer join lu_county  lc on lc.description = c2m.county
 left outer join lu_county_zip  lcz on  lcz.countycode = lc.code and lcz.zipcode = c2m.zip
 group by MCDMCR;
 
-
+ update membership m
+ join membership_insurance mi on mi.mbr_id = m.mbr_id
+ join temp_membership tm on tm.SBSB_ID=mi.SRC_SYS_MBR_NBR
+ set m.mbr_status= tm.status;
 
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
 select lastname,firstname, sex,  county, DATE_FORMAT(str_to_date(dob , '%c/%e/%Y %H:%i'),'%Y-%c-%e'),
@@ -66,10 +70,10 @@ now() updated_date,
 'sarath' created_by,
 'sarath' updated_by
  from csv2table_amg_roster  b  
-  join membership   a on   a.mbr_medicaidNo=b.MCDMCR  
-  left outer join membership_insurance mi on mi.mbr_id=a.mbr_id and mi.SRC_SYS_MBR_NBR=b.SBSB_ID
+  join membership   a on   convert( a.mbr_medicaidNo,unsigned)= convert(b.MCDMCR,unsigned)
+  left outer join membership_insurance mi on mi.mbr_id=a.mbr_id and  convert(mi.SRC_SYS_MBR_NBR,unsigned) = convert(b.SBSB_ID,unsigned)
   where   mi.mbr_id is  null 
- group by a.mbr_id,effective_strt_dt,effective_end_dt, b.PRODUCT,b.PRODUCT,b.PLAN;
+ group by a.mbr_id,effective_strt_dt,effective_end_dt, b.PRODUCT,b.PLAN;
  
 
 update  membership_insurance set active_ind='N' where effecctive_end_dt < cast(now() as date);
@@ -151,7 +155,8 @@ join  membership_provider mp  on  mp.mbr_id = mi.mbr_id
 join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    and ams.activitymonth <= DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') 
 								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')      and ams.activitymonth <= case when mp.eff_end_date is not null then DATE_FORMAT(mp.eff_end_date, '%Y%m')  else  :activityMonth end
 left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
-where    mam.activity_month is null  ; 
+where    mam.activity_month is null
+group by mi.mbr_id,mi.ins_id,mp.prvdr_id,ams.activityMonth; 
 
 
  
@@ -171,28 +176,29 @@ select m.Mbr_Id, now() created_date, now() updated_date,'sarath','sarath' from m
 left outer join reference_contact rc on rc.mbr_id =m.mbr_id
 where rc.mbr_id is null ;
 
-insert ignore into contact (ref_cnt_id,home_phone,mobile_phone,address1,address2,city,zipcode,statecode,file_id,created_Date,updated_date,created_by,updated_by)
+insert  into contact (ref_cnt_id,home_phone,mobile_phone,address1,address2,city,zipcode,statecode,file_id,created_Date,updated_date,created_by,updated_by)
 select
-c.ref_cnt_id,
+ rc.ref_cnt_id,
 a.phone,
 a.phone,
 a.address1,
 a.address2,
 a.city,
-a.zip,
-d.statecode,
+ a.zip,
+ d.statecode,
 :fileId fileId ,
 now() created_date,
 now() updated_date,
-'sarath',
-'sarath'
+'sarath' created_by,
+'sarath' updated_by
 from csv2table_amg_roster a
-join membership b on  b.Mbr_MedicaidNo = a.mcdmcr
-join reference_contact c on  c.mbr_id = b.mbr_id  
-join lu_state_zip d on  d.zipcode = a.zip
-join lu_state e on e.shot_name =  a.state and  e.code=d.statecode
-left outer join contact cnt on cnt.ref_cnt_id = c.ref_cnt_id
-where cnt.ref_cnt_id is null
+join membership_insurance mi on convert(a.SBSB_ID, unsigned) =mi.SRC_SYS_MBR_NBR
+join membership b on  b.Mbr_id = mi.mbr_id
+join reference_contact rc on  rc.mbr_id = b.mbr_id  
+ join lu_state_zip d on  d.zipcode = a.zip
+ join lu_state e on e.shot_name =  a.state and  e.code=d.statecode
+left outer join contact cnt on cnt.ref_cnt_id = rc.ref_cnt_id
+  where cnt.ref_cnt_id is null
 group by b.Mbr_id;
- 
+
 drop table if exists temp_membership  ;

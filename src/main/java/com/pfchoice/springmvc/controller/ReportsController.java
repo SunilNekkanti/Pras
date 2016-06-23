@@ -559,19 +559,19 @@ public class ReportsController {
 
 			LOG.info("processing  membershipClaim data");
 			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId, mbrClaim);
+			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			Integer billTypeLoadedData = 0;
 			if(insId == 1){
 				 billTypeLoadedData =billTypeService.loadData(fileId, mbrClaim);
 			}	
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
-			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, mbrClaim);
-			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
 			LOG.info("billTypeLoadedData " + billTypeLoadedData);
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, mbrClaim);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
 		    Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);

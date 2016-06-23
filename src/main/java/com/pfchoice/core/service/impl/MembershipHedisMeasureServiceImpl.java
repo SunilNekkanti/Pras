@@ -119,7 +119,7 @@ public class MembershipHedisMeasureServiceImpl implements MembershipHedisMeasure
 	 * lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final String tableName) {
-		return membershipHedisMeasureDao.loadData(fileId, tableName);
+	public Integer loadData(final Integer fileId, final Integer insId, final String tableName) {
+		return membershipHedisMeasureDao.loadData(fileId, insId, tableName);
 	}
 }

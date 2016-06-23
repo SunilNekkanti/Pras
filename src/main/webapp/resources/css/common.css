@@ -161,3 +161,4 @@ table#cptListTable, table#icdListTable {
 .table-responsive {
 	overflow-y: hidden;
 }
+#mbrClaimField ul.dropdown-menu{position:relative;}
