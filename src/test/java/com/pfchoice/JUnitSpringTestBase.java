@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Sarath
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = config.ApplicationContext.class)
+@ContextConfiguration(classes = {config.ApplicationContext.class,config.MailConfig.class})
 @Ignore
 public abstract class JUnitSpringTestBase
 {
