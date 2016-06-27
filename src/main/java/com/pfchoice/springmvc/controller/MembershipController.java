@@ -728,7 +728,6 @@ public class MembershipController {
 
 		Pagination pagination = membershipService.getMembershipActivityMonthPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
 				sSearchActivityYear, ruleIds, sort, sortdir);;
-				System.out.println(" After pagination ");
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_ACTIVITY_LIST, JsonConverter.getJsonObject(pagination));
 	}
 	

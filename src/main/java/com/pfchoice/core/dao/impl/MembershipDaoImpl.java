@@ -207,7 +207,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		if (sSearchYear != null && sSearchYear != ALL && sSearchYear != 0) {
-			System.out.println("mbrActivityMonthList");
 			and.add(Restrictions.sqlRestriction("CAST(activity_month AS CHAR) like ?", "%" + sSearchYear + "%",
 					StringType.INSTANCE));
 			
