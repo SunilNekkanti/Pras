@@ -134,7 +134,7 @@ public enum TileDefinitions {
 																																																																																																																																																																																																																																																											"facilityTypeList"), FACILITYTYPE(
 																																																																																																																																																																																																																																																													"facilityType"), FACILITYTYPENEW(
 																																																																																																																																																																																																																																																															"facilityTypeNew"), FACILITYTYPEEDIT(
-																																																																																																																																																																																																																																																																	"facilityTypeEdit"), MEMBERSHIPROSTER("membershipRoster");
+																																																																																																																																																																																																																																																																	"facilityTypeEdit"), MEMBERSHIPROSTER("membershipRoster"), MEMBERSHIPACTIVITYMONTHLIST("membershipActivityMonth");
 
 	private final String text;
 

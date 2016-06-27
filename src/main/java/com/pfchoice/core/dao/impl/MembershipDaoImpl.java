@@ -187,6 +187,92 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public Pagination getMembershipActivityMonthPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
+			final Integer sSearchPrvdr, final Integer sSearchYear, final List<Integer> ruleIds, final String sort,
+			final String sortdir) {
+
+		Criteria crit = createCriteria().createAlias("mbrActivityMonthList", "mbrActivityMonth")
+						.createAlias("mbrActivityMonth.prvdr", "prvdr")
+						.createAlias("mbrActivityMonth.insId", "insId");
+		Disjunction or = Restrictions.disjunction();
+		Conjunction and = Restrictions.conjunction();
+
+		if (sSearch != null && !"".equals(sSearch)) {
+			or.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
+					.add(Restrictions
+					.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+		}
+		if (sSearchIns != null) {
+
+			and.add(Restrictions.eq("insId.id", sSearchIns));
+		}
+
+		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
+			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
+			and.add(Restrictions.eq("insId.id", sSearchIns));
+		}
+
+		if (sSearchYear != null && sSearchYear != ALL && sSearchYear != 0) {
+			System.out.println("mbrActivityMonthList");
+			and.add(Restrictions.sqlRestriction("CAST(activity_month AS CHAR) like ?", "%" + sSearchYear + "%",
+					StringType.INSTANCE));
+			
+		} else if (sSearchYear == ALL) {
+			
+		}
+
+		and.add(Restrictions.eq("activeInd", new Character('Y')));
+		and.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
+		and.add(Restrictions.eq("insId.activeInd", new Character('Y')));
+		crit.add(or);
+		crit.add(and);
+		
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
+					crit.addOrder(Order.desc("prvdr.name"));
+				} else {
+					crit.addOrder(Order.desc(sort));
+				}
+			} else {
+				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
+					crit.addOrder(Order.asc("prvdr.name"));
+				} else {
+					crit.addOrder(Order.asc(sort));
+				}
+			}
+		}
+
+		crit.setProjection(Projections.distinct(Projections.property("id")));
+		List<Integer> MbrIds = (List<Integer>) crit.list();
+		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
+		if(totalCount == 0) {
+			return findByCriteria(crit, pageNo, pageSize);
+		}else{
+			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds))	;
+			criteria.addOrder(Order.asc("firstName"));
+			criteria.addOrder(Order.asc("id"));
+			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
+			pagination.setTotalCount(totalCount);
+			return pagination;
+		}
+		
+
+	}
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipDao#getPage(int, int,
+	 * java.lang.String, java.lang.Integer, java.lang.Integer,
+	 * java.lang.Integer, java.util.List, java.lang.String, java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Pagination getMembershipProblemPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final Integer sSearchPbmRule, final List<Integer> ruleIds, final String sort,
 			final String sortdir) {

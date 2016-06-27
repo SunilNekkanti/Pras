@@ -630,6 +630,19 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 	
+	
+	/**
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/membershipActivityMonthList",
+			"/user/reports/membershipActivityMonthList" }, method = RequestMethod.GET)
+	public String viewHedisMeasureAction() {
+
+		LOG.info("Returning view.jsp page after create");
+		return TileDefinitions.MEMBERSHIPACTIVITYMONTHLIST.toString();
+	}
+	
 	/**
 	 * @return
 	 */

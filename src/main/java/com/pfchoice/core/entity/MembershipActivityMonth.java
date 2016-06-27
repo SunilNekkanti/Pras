@@ -38,7 +38,7 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	@Column(name = "activity_month")
 	private Integer activityMonth;
 
-	@Expose
+	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "mbr_id", nullable = false, referencedColumnName = "mbr_id")
 	private Membership mbr;

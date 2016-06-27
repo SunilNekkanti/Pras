@@ -49,6 +49,21 @@ public interface MembershipService {
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchHedisCode,
 			final List<Integer> ruleIds, String sort, String sortdir);
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchYear
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getMembershipActivityMonthPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchYear,
+			final List<Integer> ruleIds, String sort, String sortdir);
 
 	/**
 	 * @param pageNo

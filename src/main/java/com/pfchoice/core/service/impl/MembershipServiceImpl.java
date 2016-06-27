@@ -77,6 +77,22 @@ public class MembershipServiceImpl implements MembershipService {
 				sort, sortdir);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipService#getPage(int, int,
+	 * java.lang.String, int, int, int, java.util.List, java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getMembershipActivityMonthPage(final int pageNo, final int pageSize, final String sSearch, final int sSearchIns,
+			final int sSearchPrvdr, final int sSearchHedisCode, final List<Integer> ruleIds, final String sort,
+			final String sortdir) {
+		return membershipDao.getMembershipActivityMonthPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sSearchHedisCode, ruleIds,
+				sort, sortdir);
+	}
+	
 	
 	/*
 	 * (non-Javadoc)

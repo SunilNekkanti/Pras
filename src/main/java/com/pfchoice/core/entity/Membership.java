@@ -105,6 +105,10 @@ public class Membership extends RecordDetails implements Serializable {
 	@Expose
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MembershipProblem> mbrProblemList;
+	
+	@Expose
+	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
+	private List<MembershipActivityMonth> mbrActivityMonthList;
 
 	/**
 	 * 

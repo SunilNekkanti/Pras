@@ -89,5 +89,7 @@ public interface CommonMessageContent {
 	String MEMBERSHIP_CLAIMS_LIST = "Membership Claims List";
 
 	String MEMBERSHIP_CLAIM_DETAILS_LIST = "Membership Claim Details List";
-
+	
+	String MEMBERSHIP_ACTIVITY_LIST = "Membership Activity Month List";
+	
 }

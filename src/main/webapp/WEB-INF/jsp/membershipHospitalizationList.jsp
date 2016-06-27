@@ -369,7 +369,14 @@
 									.removeAttr("width")
 									.dataTable(
 											{
-
+												"sDom": 'Bfrtip',
+									        	 "buttons": [
+									        	             {
+									        	                 extend: 'excelHtml5',
+									        	                 title: 'Membership Hospitalization Report Export'
+									        	             }
+									        	             
+										                   ],
 												"bDestroy" : true,
 												"sAjaxSource" : getContextPath()
 														+ '/reports/membershipHospitalization/list',

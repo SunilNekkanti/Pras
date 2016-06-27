@@ -551,6 +551,7 @@ $(document).ready(function () {
 								</ul></li>
 							<li><a href="${context}/${userpath}/userList">User
 									Accounts</a></li>
+							<li><a href="${context}/${userpath}/membership/membershipRoster">Membership Roster Upload</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -560,6 +561,7 @@ $(document).ready(function () {
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
 							<li><a href="${context}/${userpath}/reports/claim">Claims</a></li>
 							<li><a href="${context}/${userpath}/reports/problem">Problems</a></li>
+							<li><a href="${context}/${userpath}/reports/membershipActivityMonthList">Activity Month</a></li>
 						</ul></li>
 
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>

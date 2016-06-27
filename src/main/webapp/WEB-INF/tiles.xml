@@ -770,8 +770,15 @@
 		<put-attribute name="title" value="Member Claim List" />
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/membershipRoster.jsp" />
-			</definition>
+	</definition>
 	<!--  MEMBERSHIP ROSTER -->
+		<definition name="membershipActivityMonth" extends="base.definition">
+			<put-attribute name="title" value="Membership Activity Month List" />
+			<put-attribute name="body"
+				value="/WEB-INF/jsp/membershipActivityMonthList.jsp" />
+		</definition>
+	<!--  MEMBERSHIP ACTIVITY MONTH -->
+	
 	
 	<definition name="hedisMeasureGroupEdit" extends="base.definition">
   		<put-attribute name="title" value="Hedis Measure Group" />

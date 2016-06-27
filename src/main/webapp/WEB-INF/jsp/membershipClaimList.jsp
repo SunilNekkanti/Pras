@@ -362,7 +362,14 @@
 									.removeAttr("width")
 									.dataTable(
 											{
-
+												"sDom": 'Bfrtip',
+									        	 "buttons": [
+									        	             {
+									        	                 extend: 'excelHtml5',
+									        	                 title: 'Membership Claim Report Export'
+									        	             }
+									        	             
+										                   ],
 												"bDestroy" : true,
 												"sAjaxSource" : getContextPath()
 														+ '/reports/membershipClaim/list',
@@ -983,7 +990,7 @@ $('#membershipClaimTable tr th').each(function(index)
 			}
 				$("#mbrClaimField ul").append('<li><a href="#" class="small" data-value="'+$(this).html()+'" tabIndex="-1"><input type="checkbox" class="mbrClaimField" '+mbrclaimcheck+' />&nbsp;'+$(this).html()+'</a></li>');
 });
-$( '.dropdown-menu a' ).on( 'click', function( event ) {
+$( '.panel-body .dropdown-menu a' ).on( 'click', function( event ) {
 	
    var $target = $( event.currentTarget ),
        val = $target.attr( 'data-value' ),

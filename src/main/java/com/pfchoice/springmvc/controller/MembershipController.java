@@ -708,4 +708,29 @@ public class MembershipController {
 	}
 	
 
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membership/membershipActivityMonth/list",
+			"/user/membership/membershipActivityMonth/list" }, method = RequestMethod.GET)
+	public Message viewMembershipActivityMonthList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
+			@RequestParam(required = true) Integer sSearchActivityYear,
+			@RequestParam(required = true) List<Integer> ruleIds, @RequestParam(required = false) String sort,
+			@RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = membershipService.getMembershipActivityMonthPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
+				sSearchActivityYear, ruleIds, sort, sortdir);;
+				System.out.println(" After pagination ");
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_ACTIVITY_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+
 }
