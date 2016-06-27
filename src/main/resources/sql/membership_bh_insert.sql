@@ -44,7 +44,7 @@ where m.Mbr_MedicaidNo is not null;
 insert into membership_insurance 
 (
 ins_id,mbr_id,New_Medicare_Bene_Medicaid_Flag,activitydate,activityMonth,effective_strt_dt,effecctive_end_dt,
-product,product_label,planID,SRC_SYS_MBR_NBR,risk_flag,created_date,updated_date,created_by,updated_by)
+product,product_label,planID,SRC_SYS_MBR_NBR,risk_flag,file_Id,created_date,updated_date,created_by,updated_by)
 select 
 :insId ins_id,
 a.mbr_id,
@@ -59,6 +59,7 @@ null PRODUCT,
 null PLAN,
 null SBSB_ID,
 'N' risk_flag,
+:fileId fileId,
 now() created_date,
 now() updated_date,
 'sarath' created_by,

@@ -23,7 +23,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -41,7 +40,6 @@ import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
 import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;
 import org.apache.poi.xssf.extractor.XSSFEventBasedExcelExtractor;
 import org.apache.poi.xssf.model.StylesTable;
-import org.apache.poi.xssf.usermodel.XSSFComment;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

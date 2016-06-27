@@ -549,32 +549,31 @@ public class ReportsController {
 				LOG.info("Similar file already processed in past");
 				return Message.failMessage("similar file already processed in past");
 			}
-
-			LOG.info("Loading  membershipClaim data");
+			LOG.info("Loading  membershipClaim data"+new Date());
 			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName, mbrClaim);
 
 			if (loadedData < 1) {
 				return Message.failMessage("ZERO records to process");
 			}
 
-			LOG.info("processing  membershipClaim data");
+			LOG.info("processing  membershipClaim data"+new Date());
 			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId, mbrClaim);
-			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData);
+			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData + new Date());
 			Integer billTypeLoadedData = 0;
 			if(insId == 1){
 				 billTypeLoadedData =billTypeService.loadData(fileId, mbrClaim);
 			}	
-			LOG.info("billTypeLoadedData " + billTypeLoadedData);
+			LOG.info("billTypeLoadedData " + billTypeLoadedData +new Date());
 			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
-			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData);
+			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData +new Date());
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
-			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData);
+			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData +new Date());
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
-			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData);
+			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData +new Date());
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, mbrClaim);
-			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData);
+			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData +new Date());
 		    Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
-			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData);
+			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData +new Date());
 			
 			LOG.info("processed  membershipClaim data");
 

@@ -88,6 +88,10 @@ public class MembershipInsurance extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "risk_flag")
 	private char riskFlag;
+	
+	@Expose
+	@Column(name = "file_id")
+	private Integer fileId;
 
 	/**
 	 * 

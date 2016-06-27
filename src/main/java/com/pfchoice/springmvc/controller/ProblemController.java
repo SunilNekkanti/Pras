@@ -208,15 +208,15 @@ public class ProblemController {
 		logger.info("Problem id is" + id);
 		problem.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
-			problem.setActiveInd('Y');
 			logger.info("Returning  ProblemEdit.jsp page");
 			return TileDefinitions.PROBLEMEDIT.toString();
 		}
 
 		if (null != problem.getId()) {
 			logger.info("Returning ProblemEditSuccess.jsp page after update");
-			problemService.update(problem);
 			problem.setUpdatedBy(username);
+			problemService.update(problem);
+			
 			model.addAttribute("Message", "Problem updated successfully");
 			return TileDefinitions.PROBLEMLIST.toString();
 		}

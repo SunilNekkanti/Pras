@@ -1,49 +1,17 @@
 package com.pfchoice.common.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.PushbackInputStream;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.poi.POIXMLDocument;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.openxml4j.opc.PackageAccess;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;
-import org.apache.poi.xssf.eventusermodel.XSSFReader;
-import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
-import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;
-import org.apache.poi.xssf.model.StylesTable;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 
 import com.pfchoice.springmvc.controller.ReportsController;
 
