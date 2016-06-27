@@ -161,4 +161,9 @@ table#cptListTable, table#icdListTable {
 .table-responsive {
 	overflow-y: hidden;
 }
-#mbrClaimField ul.dropdown-menu{position:relative;}
+.membershipHedisReport ul.dropdown-menu, .membershipClaimReport ul.dropdown-menu{position:relative;}
+
+.membershipClaimReport .dropdown-menu>.active>a, .membershipHedisReport .dropdown-menu>.active>a {
+    background-color: #fff !important;
+}
+.membershipClaimReport .btn-default:hover , .membershipHedisReport .btn-default:hover { background-color:#fff;}

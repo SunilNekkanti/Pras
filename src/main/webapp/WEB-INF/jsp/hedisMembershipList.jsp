@@ -9,6 +9,7 @@ $(document).ready(function() {
 	
 		$("#hedisGenerate").click(function(event)
 		{
+			$(".clrRed").text("");
 			callHedisGenerate();
 		});
 	 		
@@ -16,7 +17,7 @@ $(document).ready(function() {
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
-			     var s = $('<select id=\"insu\" style=\"width:150px;\">');
+			     var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
 			     //iterate over the data and append a select option
 			     $.each(data.data.list, function(key, val){
 			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -32,9 +33,8 @@ $(document).ready(function() {
     		  var insSelectValue= $("#insu option:selected").val();
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
- 				    
  				     //clear the current content of the select
- 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+ 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
  				     //iterate over the data and append a select option
  				     $.each(data.data.list, function(key, val){
  				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -64,19 +64,27 @@ $(document).ready(function() {
 		    		  if(hedisDropDownSet)
 		    		  {
 		    			  //clear the current content of the select
-						     var s = $('<select id=\"hedisRule\" style=\"width:150px;\">');
+						     var s = $('<select id=\"hedisRule\" style=\"width:150px;\" multiple=\"multiple\">');
 						     //iterate over the data and append a select option
 						     $.each(data.data, function(key, val){
 						    	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
 						     });
-						     s.append('<option value="9999">All</option>');
 						     s.append('</select>');
 						     $selectHedisRule.html(s);
+						     $('#hedisRule').multiselect({numberDisplayed: 0, 
+						    	 buttonWidth: '150px',
+						    	 includeSelectAllOption: true,
+						    	 });
 		    		  }
 				 });
     	  }
     	  
     	  var callHedisGenerate = function(){
+    		  if(!$("#hedisRule option:selected").text())
+    			  {
+    			  	$(".clrRed").text("Select atleast one hedis measure");
+    			  	return false;
+    			  }
 
 				columns = new Array();
 	     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center","sWidth" : "3%",
@@ -104,18 +112,15 @@ $(document).ready(function() {
 	     		var hedisRuleList = document.getElementById('hedisRule').options;
 	     		
 	     		$.each( hedisRuleList, function(m, value ){
-	     			if(m < hedisRuleList.length-1){
 	     				$('#membershipTable').find('tr').each(function(){
-	     					if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
-	             				$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>');
+	     					if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
+	     					{	$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>'); }
 	     				});
-	     			}
 	     		});
 					
 				
 	     		$.each( hedisRuleList, function( i, value ){
-	     			if(i < hedisRuleList.length-1){
-	     				if(value.text == $("#hedisRule option:selected").text() || $("#hedisRule option:selected").text() == "All")
+	     				if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
 	     				{
 		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
@@ -132,7 +137,6 @@ $(document).ready(function() {
 				      								  
 		      								}
 		      						  });	
-	     				}	
 	      			}
 	      		});
 	     		callDatableWithChangedDropDown();
@@ -144,7 +148,7 @@ $(document).ready(function() {
     		   var hedisRuleSelectValue= $("#hedisRule option:selected").val();
     		   
     		   var ruleArray = new Array;
-    		    $("#hedisRule option").each  ( function() {
+    		   $("#hedisRule option:selected").each  ( function() {
     		    	ruleArray.push ( $(this).val() );
     		    });
 
@@ -447,7 +451,7 @@ $(document).ready(function() {
 	}
     </script>
 
-<div class="panel-group">
+<div class="panel-group membershipHedisReport">
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Hedis Report <span class="clrRed"> </span>
@@ -499,7 +503,8 @@ $(document).ready(function() {
 
 	</div>
 </div>
-
+<link rel="stylesheet" href="${context}/resources/css/bootstrap-multiselect.css" type="text/css">
+<script type="text/javascript" src="${context}/resources/js/bootstrap-multiselect.js"></script>
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
 	<div class="modal-dialog modal-lg">
@@ -558,6 +563,9 @@ $(document).ready(function() {
 	    	}
 	       		
 	    });
+	    $(document).ready(function() {
+	    	
+	    	});
 	});
   </script>
 

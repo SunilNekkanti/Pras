@@ -6,6 +6,8 @@
 	uri="http://www.springframework.org/tags/form"%>
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
+	<c:set var="contextHome"
+	value="${pageContext.request.contextPath}" />
 <script>
 	$(document)
 			.ready(
@@ -16,8 +18,8 @@
 							var index = 0;
 							 $('#membershipClaimTable tr').each(function()
 							 {
-								$('.mbrClaimField').each(function() {
-									if (!this.checked) {
+								$('#mbrClaimField option').each(function() {
+									if(!$(this).is(':selected')){
 									
 										$('table#membershipClaimTable tr th').eq(index).hide();
 									}
@@ -330,8 +332,8 @@
 											fnCallback(res);
 											var index1 = 0; var row = 0;
 											var mbrClaimFieldCheck = [];
-											$('.mbrClaimField').each(function(index, value) {
-												if (this.checked) {
+											$('#mbrClaimField option').each(function(index, value) {
+												if($(this).is(':selected')){
 													mbrClaimFieldCheck[row++] = index;
 												}
 											});
@@ -595,7 +597,8 @@
 		return false;
 	}
 </script>
-
+<link rel="stylesheet" href="${contextHome}/resources/css/bootstrap-multiselect.css" type="text/css">
+<script type="text/javascript" src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
@@ -652,7 +655,7 @@
 	</div>
 </div>
 
-<div class="panel-group">
+<div class="panel-group membershipClaimReport">
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Claim Report <span class="clrRed"> </span>
@@ -671,11 +674,11 @@
 					
 					<div class="col-sm-4">
 						<label class="control-label col-sm-2">Fields</label>
-						<div class="col-sm-7" id="mbrClaimField">
-							<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
-								<ul class="dropdown-menu"></ul>
+						<div class="col-sm-7" class="mbrClaimField">
+								<select id="mbrClaimField" class="btn btn-default" multiple></select>
 						</div>
 					</div>
+					
 					<br />
 					<br />
 					<div class="col-sm-offset-6 col-sm-6">
@@ -985,29 +988,15 @@ var options = [];
 $('#membershipClaimTable tr th').each(function(index)
  {
 			var mbrclaimcheck ="";
+			var mbrclaimselect ="";
 			if(index < 8){
-				mbrclaimcheck = "checked";
+				mbrclaimcheck ="selected";
 			}
-				$("#mbrClaimField ul").append('<li><a href="#" class="small" data-value="'+$(this).html()+'" tabIndex="-1"><input type="checkbox" class="mbrClaimField" '+mbrclaimcheck+' />&nbsp;'+$(this).html()+'</a></li>');
+				$("#mbrClaimField").append('<option value="'+$(this).html()+'"' +mbrclaimcheck+'>' + $(this).html() +'</option>');
 });
-$( '.panel-body .dropdown-menu a' ).on( 'click', function( event ) {
-	
-   var $target = $( event.currentTarget ),
-       val = $target.attr( 'data-value' ),
-       $inp = $target.find( 'input' ),
-       idx;
+$('#mbrClaimField').multiselect({numberDisplayed: 0, 
+	 buttonWidth: '150px',
+	 includeSelectAllOption: true,
+	 });
 
-   if ( ( idx = options.indexOf( val ) ) > -1 ) {
-      options.splice( idx, 1 );
-      setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
-   } else {
-      options.push( val );
-      setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
-   }
-
-   $( event.target ).blur();
-      
-   console.log( options );
-   return false;
-});
 </script>
