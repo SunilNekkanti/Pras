@@ -69,5 +69,9 @@ public interface SystemDefaultProperties {
 	int CLAIM = 0;
 
 	int HOSPITALIZATION = 1;
+	
+	int ACCEPTABLE_CLAIM = 1;
+	
+	int UNACCEPTABLE_CLAIM = 2;
 
 }

@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.MembershipClaimDetails;
 
 import ml.rugal.sshcommon.hibernate.Updater;
@@ -58,4 +60,20 @@ public interface MembershipClaimDetailsDao {
 	 * @return
 	 */
 	Pagination getMbrClaimDetailsPage(Integer mbrHosId);
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
+	 * @param processClaim
+	 * @return
+	 */
+	Pagination getMbrClaimDetailsByActivityMonth(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
+			String sort, String sortdir, List<Integer> monthPicker,  Integer processClaim);
 }

@@ -33,7 +33,8 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	@Column(name = "mbr_claim_details_id", nullable = false)
 	private Integer id;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@Expose
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "mbr_claim_id", referencedColumnName = "mbr_claim_id")
 	private MembershipClaim mbrClaim;
 

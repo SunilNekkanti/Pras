@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.MembershipClaimDetails;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -52,4 +54,20 @@ public interface MembershipClaimDetailsService {
 	 * @return
 	 */
 	Pagination getMbrClaimDetailsPage(int mbrHosId);
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sort
+	 * @param sortdir
+	 * @param processingFrom
+	 * @param processingTo
+	 *            * @param processClaim
+	 * @return
+	 */
+	Pagination getMbrClaimDetailsByActivityMonth(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, String sort,
+			String sortdir,  final List<Integer> monthPicker, int processClaim);
 }

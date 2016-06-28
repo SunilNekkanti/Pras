@@ -167,7 +167,7 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@Column(name = "file_id")
 	private Integer fileId;
 
-	@Expose
+	
 	@OneToMany(mappedBy = "mbrClaim", fetch = FetchType.LAZY)
 	private List<MembershipClaimDetails> mbrClaimDetailsList;
 

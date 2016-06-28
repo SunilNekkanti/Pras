@@ -3,6 +3,8 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,5 +101,17 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 	@Override
 	public Pagination getMbrClaimDetailsPage(final int mbrHosId) {
 		return membershipClaimDetailsDao.getMbrClaimDetailsPage(mbrHosId);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#getPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String, java.util.Date, java.util.Date, int)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getMbrClaimDetailsByActivityMonth(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir, final List<Integer> monthPicker,
+			final int processClaim) {
+		return membershipClaimDetailsDao.getMbrClaimDetailsByActivityMonth(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, monthPicker, processClaim);
 	}
 }

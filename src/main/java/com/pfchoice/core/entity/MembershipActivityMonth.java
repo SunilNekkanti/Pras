@@ -51,7 +51,7 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	@Expose
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ins_id", nullable = false, referencedColumnName = "insurance_id")
-	private Insurance insId;
+	private Insurance ins;
 	
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -132,15 +132,15 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	/**
 	 * @return the insId
 	 */
-	public Insurance getInsId() {
-		return insId;
+	public Insurance getIns() {
+		return ins;
 	}
 
 	/**
 	 * @param insId the insId to set
 	 */
-	public void setInsId(Insurance insId) {
-		this.insId = insId;
+	public void setIns(Insurance ins) {
+		this.ins = ins;
 	}
 
 	/**

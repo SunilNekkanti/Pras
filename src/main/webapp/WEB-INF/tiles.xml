@@ -779,6 +779,14 @@
 		</definition>
 	<!--  MEMBERSHIP ACTIVITY MONTH -->
 	
+	<!--  MEMBERSHIP MAM CLAIM DETAILS -->
+	<definition name="membershipMamClaimDetailList" extends="base.definition">
+			<put-attribute name="title" value="Membership MAM Claim Detail List" />
+			<put-attribute name="body"
+				value="/WEB-INF/jsp/membershipMamClaimDetailList.jsp" />
+		</definition>
+	<!--  MEMBERSHIP MAM CLAIM DETAILS -->
+	
 	
 	<definition name="hedisMeasureGroupEdit" extends="base.definition">
   		<put-attribute name="title" value="Hedis Measure Group" />

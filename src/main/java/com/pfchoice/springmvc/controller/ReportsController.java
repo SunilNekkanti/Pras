@@ -88,7 +88,7 @@ public class ReportsController {
 
 	@Autowired
 	private FacilityTypeService facilityTypeService;
-	
+
 	@Autowired
 	private BillTypeService billTypeService;
 
@@ -130,7 +130,7 @@ public class ReportsController {
 
 	@Autowired
 	private InsuranceService insuranceService;
-	
+
 	/**
 	 * @param binder
 	 */
@@ -286,7 +286,7 @@ public class ReportsController {
 			"/user/reports/hospitalization/fileProcessing.do", "/admin/reports/claim/fileProcessing.do",
 			"/user/reports/claim/fileProcessing.do" })
 	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
-			@RequestParam(required = false, value="insId") Integer insId,
+			@RequestParam(required = false, value = "insId") Integer insId,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
 			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
@@ -322,8 +322,9 @@ public class ReportsController {
 					+ newSourceFile.getName();
 		} else if (claimOrHospital == CLAIM) {
 			LOG.info("forwarding to claims");
-			
-				forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName()+"&insId="+insId;
+
+			forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName()
+					+ "&insId=" + insId;
 		}
 
 		return forwardToClaimOrHospital;
@@ -482,10 +483,47 @@ public class ReportsController {
 			@RequestParam(required = true) Date processFrom, @RequestParam(required = true) Date processTo,
 			@RequestParam(required = true) Integer processClaim) {
 
-		Pagination pagination = mbrClaimService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
-				sort, sortdir, processFrom, processTo, processClaim);
+		Pagination pagination = mbrClaimService.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
+				sortdir, processFrom, processTo, processClaim);
 
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST,
+				JsonConverter.getJsonObject(pagination));
+	}
+
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/mamClaim", "/user/reports/mamClaim" })
+	public String handleMembershipClaimDetailsRequest() {
+		return TileDefinitions.MEMBERSHIPMAMCLAIMDETAILLIST.toString();
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sSearchIns
+	 * @param sSearchPrvdr
+	 * @param sSearchHedisRule
+	 * @param ruleIds
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/membershipMamClaim/list",
+			"/user/reports/membershipMamClaim/list" }, method = RequestMethod.GET)
+	public Message viewMembershipClaimDetailList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = true) List<Integer> monthPicker,
+			@RequestParam(required = true) Integer processClaim) {
+
+		Pagination pagination = mbrClaimDetailsService.getMbrClaimDetailsByActivityMonth(pageNo, pageSize, sSearch,
+				sSearchIns, sSearchPrvdr, sort, sortdir, monthPicker, processClaim);
+
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_MAM_CLAIM_DETAIL_LIST,
 				JsonConverter.getJsonObject(pagination));
 	}
 
@@ -510,19 +548,18 @@ public class ReportsController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membershipClaim/list", "/user/membershipClaim/list" })
 	public Message viewmembershipClaimList(@ModelAttribute("username") String username,
-			@RequestParam(required = true, value="insId") Integer insId,
+			@RequestParam(required = true, value = "insId") Integer insId,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 
 		LOG.info("1");
-		
-		
+
 		String mbrClaim = null;
-		
-		if(insId == 1)
+
+		if (insId == 1)
 			mbrClaim = FILE_TYPE_BH_MBR_CLAIM;
-		else if(insId == 2)
+		else if (insId == 2)
 			mbrClaim = FILE_TYPE_AMG_MBR_CLAIM;
-		
+
 		Boolean dataExists = mbrClaimService.isDataExists(mbrClaim);
 		if (dataExists) {
 			return Message.failMessage("Previous file processing is incomplete");
@@ -549,40 +586,38 @@ public class ReportsController {
 				LOG.info("Similar file already processed in past");
 				return Message.failMessage("similar file already processed in past");
 			}
-			LOG.info("Loading  membershipClaim data"+new Date());
+			LOG.info("Loading  membershipClaim data" + new Date());
 			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName, mbrClaim);
 
 			if (loadedData < 1) {
 				return Message.failMessage("ZERO records to process");
 			}
 
-			LOG.info("processing  membershipClaim data"+new Date());
+			LOG.info("processing  membershipClaim data" + new Date());
 			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId, mbrClaim);
 			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData + new Date());
 			Integer billTypeLoadedData = 0;
-			if(insId == 1){
-				 billTypeLoadedData =billTypeService.loadData(fileId, mbrClaim);
-			}	
-			LOG.info("billTypeLoadedData " + billTypeLoadedData +new Date());
+			if (insId == 1) {
+				billTypeLoadedData = billTypeService.loadData(fileId, mbrClaim);
+			}
+			LOG.info("billTypeLoadedData " + billTypeLoadedData + new Date());
 			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
-			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData +new Date());
+			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
-			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData +new Date());
+			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
-			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData +new Date());
+			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, mbrClaim);
-			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData +new Date());
-		    Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
-			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData +new Date());
-			
+			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(mbrClaim);
+			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData + new Date());
+
 			LOG.info("processed  membershipClaim data");
 
 			LOG.info("returning membershipClaimList");
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
 		}
 	}
-	
-	
 
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/membershipClaimDetails/{mbrClaimId}/list",
@@ -629,8 +664,7 @@ public class ReportsController {
 
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
-	
-	
+
 	/**
 	 * @param model
 	 * @return
@@ -642,7 +676,7 @@ public class ReportsController {
 		LOG.info("Returning view.jsp page after create");
 		return TileDefinitions.MEMBERSHIPACTIVITYMONTHLIST.toString();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -653,7 +687,7 @@ public class ReportsController {
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<Insurance>) page.getList();
 	}
-	
+
 	/**
 	 * @return
 	 */
