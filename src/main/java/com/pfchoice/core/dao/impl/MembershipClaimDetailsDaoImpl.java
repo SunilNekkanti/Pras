@@ -191,16 +191,19 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
-			Criteria criteria = createCriteria().createAlias("mbrClaim", "mbrClaim").createAlias("mbrClaim.mbr", "mbr")
-					.createAlias("mbr.genderId", "genderId").
-					createAlias("mbrClaim.prvdr", "prvdr")
+			Criteria criteria = createCriteria()
+					.createAlias("mbrClaim", "mbrClaim")
+					.createAlias("mbrClaim.mbr", "mbr")
+					.createAlias("mbrClaim.prvdr", "prvdr")
 					.createAlias("mbrClaim.ins", "ins")
 					.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN)
 					.add(Restrictions.in("id", MbrClaimDetailIds));
-			criteria.addOrder(Order.asc("mbr.lastName"));
-			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.addOrder(Order.asc("mbr.lastName"))
+					.addOrder(Order.asc("mbr.firstName"))
+					.addOrder(Order.asc("mbrClaim.claimNumber"))
+					.addOrder(Order.asc("claimLineseqNbr"));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 

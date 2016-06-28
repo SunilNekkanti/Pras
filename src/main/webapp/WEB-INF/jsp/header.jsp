@@ -559,7 +559,17 @@ $(document).ready(function () {
 						<ul class="dropdown-menu">
 							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
-							<li><a href="${context}/${userpath}/reports/claim">Claims</a></li>
+							<li>
+							<li class="dropdown">
+							    <a href="#"	class="trigger  dropdown-toggle" data-toggle="dropdown"
+								role="button" aria-haspopup="true" aria-expanded="false">Claims
+									 <span class="right-caret"></span>
+							   </a>
+							    <ul class="dropdown-menu sub-menu">
+									<li><a href="${context}/${userpath}/reports/claim">All Claims</a></li>
+									<li><a href="${context}/${userpath}/reports/mamClaim">Wanted/Unwanted Claims</a></li>
+							   </ul>
+							</li>
 							<li><a href="${context}/${userpath}/reports/problem">Problems</a></li>
 							<li><a href="${context}/${userpath}/reports/membershipActivityMonthList">Activity Month</a></li>
 						</ul></li>
