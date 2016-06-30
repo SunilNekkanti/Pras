@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.ICDMeasure;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -51,4 +53,10 @@ public interface ICDMeasureService {
 	 */
 	ICDMeasure update(ICDMeasure bean);
 
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
+	List<ICDMeasure> findByCodes(String[] icdCodes);
 }

@@ -138,6 +138,7 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		crit.createAlias("mbrClaim.mbr", "mbr");
 		crit.createAlias("mbrClaim.prvdr", "mbrClaimprvdr");
 		crit.createAlias("mbrClaim.ins", "mbrClaimins");
+		crit.createAlias("cpt", "cpt");
 		crit.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN);
 		crit.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN);
 		crit.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
@@ -194,16 +195,20 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 			Criteria criteria = createCriteria()
 					.createAlias("mbrClaim", "mbrClaim")
 					.createAlias("mbrClaim.mbr", "mbr")
+					.createAlias("cpt", "cpt")
 					.createAlias("mbrClaim.prvdr", "prvdr")
 					.createAlias("mbrClaim.ins", "ins")
 					.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
-					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN)
-					.add(Restrictions.in("id", MbrClaimDetailIds));
+					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
+			
+			criteria.add(Restrictions.in("id", MbrClaimDetailIds));
+			
 			criteria.addOrder(Order.asc("mbr.lastName"))
 					.addOrder(Order.asc("mbr.firstName"))
 					.addOrder(Order.asc("mbrClaim.claimNumber"))
 					.addOrder(Order.asc("claimLineseqNbr"));
+			
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 

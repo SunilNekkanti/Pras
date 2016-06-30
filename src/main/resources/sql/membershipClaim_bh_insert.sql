@@ -10,7 +10,7 @@ created_date, updated_date, created_by, updated_by, active_ind, file_id
 )
 SELECT  ClaimId, mi.mbr_id, mp.prvdr_id, mi.ins_id, NULL,
 NULLIF(lft.code,''), NULLIF(lbt.code,''), NULLIF(csv2BhClaim.FrequencyCode,''), csv2BhClaim.BillClassCode,  null dischargestatus, csv2BhClaim.MemEnrollId,
-group_concat( distinct csv2BhClaim.Diagnoses), null product_label, null product_lvl1, null product_lvl2, null market_lvl1, 
+replace(group_concat( distinct csv2BhClaim.Diagnoses),'|',','), null product_label, null product_lvl1, null product_lvl2, null market_lvl1, 
 null product_lvl4, null product_lvl5, null product_lvl6, null product_lvl7, null product_lvl1, 
 null market_lvl2, null market_lvl3, null market_lvl4, null market_lvl5, null market_lvl6,
 null market_lvl7, null market_lvl8, null tin,'ICD10', null proc_type_cd,

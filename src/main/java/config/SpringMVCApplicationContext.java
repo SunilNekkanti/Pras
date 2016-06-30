@@ -1,10 +1,12 @@
 package config;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentResolver;
 
+import com.pfchoice.core.entity.converter.ICDMeasureListConverter;
 import com.pfchoice.core.entity.formatter.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ConversionServiceFactoryBean;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -291,7 +295,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		formatterRegistry.addFormatter(roleFormatter);
 		formatterRegistry.addFormatter(stateFormatter);
 		formatterRegistry.addFormatter(zipCodeFormatter);
-	}
+		}
 
 	/**
 	 * @return
@@ -304,5 +308,5 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		multipartResolver.setDefaultEncoding("utf-8");
 		return multipartResolver;
 	}
-
+	
 }

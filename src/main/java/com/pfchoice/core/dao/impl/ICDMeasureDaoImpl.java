@@ -1,7 +1,10 @@
 package com.pfchoice.core.dao.impl;
 
+import ml.rugal.sshcommon.hibernate.Finder;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
+
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
@@ -110,4 +113,23 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return ICDMeasure.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#findByCode(java.lang.String)
+	 */
+	@Override
+	public ICDMeasure findByCode(final String code) {
+		return findUniqueByProperty("code", code);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.ICDMeasureDao#findByCodes(java.lang.String[])
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ICDMeasure> findByCodes(final String[] icdCodes) {
+		Finder finder =  Finder.create("from ICDMeasure icd where  REPLACE(icd.code, '.','')  in (:code)");
+		finder.setParamList("code", icdCodes) ;
+		
+	   return find(finder);
+	}
 }

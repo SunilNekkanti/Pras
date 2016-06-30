@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.google.gson.annotations.Expose;
+import com.pfchoice.core.entity.converter.ICDMeasureListConverter;
 
 /**
  *
@@ -167,9 +169,13 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@Column(name = "file_id")
 	private Integer fileId;
 
-	
 	@OneToMany(mappedBy = "mbrClaim", fetch = FetchType.LAZY)
 	private List<MembershipClaimDetails> mbrClaimDetailsList;
+	
+	@Expose
+	@Column(name = "diagnoses", insertable=false,updatable=false)
+	@Convert(converter = ICDMeasureListConverter.class)
+	private List<ICDMeasure> icdCodesList;
 
 	/**
 	 * 
@@ -693,6 +699,21 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	 */
 	public void setBillType(BillType billType) {
 		this.billType = billType;
+	}
+	
+
+	/**
+	 * @return the icdCodesList
+	 */
+	public List<ICDMeasure> getIcdCodesList() {
+		return icdCodesList;
+	}
+
+	/**
+	 * @param icdCodesList the icdCodesList to set
+	 */
+	public void setIcdCodesList(List<ICDMeasure> icdCodesList) {
+		this.icdCodesList = icdCodesList;
 	}
 
 	@Override
