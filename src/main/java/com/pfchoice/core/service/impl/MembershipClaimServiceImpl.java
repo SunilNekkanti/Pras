@@ -104,6 +104,7 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * @see com.pfchoice.core.service.MembershipClaimService#isDataExists()
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public Boolean isDataExists(final String tableName) {
 		return membershipClaimDao.isDataExists(tableName);
 	}
