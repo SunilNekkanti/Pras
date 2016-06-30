@@ -12,6 +12,8 @@ case when textbox65 = 'PCP Term' then textbox74 end pcpenddate,
  textbox81 phone, MemberCounty , textbox185 firstname, REPLACE(upper(SUBSTRING(textbox238, 1, LOCATE(SUBSTRING_INDEX(textbox238, ' ', -3),textbox238)-2)), 'TEMPLE', '') address1, REPLACE(upper(SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -3), ' ', 1)), 'TERRACE', 'TEMPLE TERRACE') city, SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -2), ' ', 1) state, 
  SUBSTRING(  SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -1), ' ', -1), 1,5) zipcode from csv2table_bh_roster;
 
+ alter table temp_bh_membership add key MCDMCR(MCDMCR);
+
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
  select lastname,firstname ,lg.gender_id,lc.code,DATE_FORMAT(str_to_Date(dob,'%c/%e/%Y %H:%i'),'%Y-%c-%e'),
  case when trim(a.status)='Current Membership' then 2
@@ -31,7 +33,9 @@ insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_Cou
 
  update membership m
  join temp_bh_membership tm on tm.mcdmcr =m.Mbr_MedicaidNo
- set m.mbr_status= tm.status;
+ set m.mbr_status=  case when trim(tm.status)='Current Membership' then 2
+      when trim(tm.status)='New Membership' then 1
+      when trim(tm.status)='Termed Membership' then 3 end ;
  
 update membership_insurance mi
  join membership m on mi.mbr_id= m.mbr_id
@@ -154,16 +158,6 @@ left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.pr
 where    mam.activity_month is null 
 group by mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth; 
 
-insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
-select 
-mi.mbr_id,mi.ins_id,mp.prvdr_id,:activityMonth  activityMonth, :fileId fileId,
-now() created_date,now() updated_date,'mohan' created_by,'mohan' updated_by  
-from  membership  m  
-join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId
-join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
-left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month = :activityMonth
-where mam.mbr_id is null  and mi.active_ind='Y' and mp.active_ind='Y' and m.mbr_status in (1,2);
-
 insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 
 select m.Mbr_Id ,now() created_date,now()updated_date, 'sarath','sarath' from membership m
 left outer join reference_contact rc on rc.mbr_id =m.mbr_id
@@ -192,5 +186,3 @@ join lu_state e on e.shot_name =  a.state and  e.code=d.statecode
 left outer join contact cnt on cnt.ref_cnt_id = c.ref_cnt_id
 where cnt.ref_cnt_id is null
 group by b.Mbr_id; 
-
-drop table if exists temp_bh_membership  ;

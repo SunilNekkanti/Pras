@@ -626,7 +626,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER)){
 			loadDataQuery.append(PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT));
 		}
-
+		
+		
 		return getSession().createSQLQuery(loadDataQuery.toString())
 				.setInteger("insId", insId)
 				.setInteger("activityMonth", activityMonth)
