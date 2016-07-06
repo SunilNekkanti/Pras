@@ -54,6 +54,7 @@ $(document).ready(function() {
     		  	$('#hedisRule').find('option').remove();
 				
 				var $selectHedisRule = $('#extFilterHedisRule');
+				var $selectHedisRule1 = $('#extFilterHedisRule1');
 				var insSelectValue1 = $("#insu option:selected").val();
 				//var hedisSelectValue1 = $("#").val();
 		 		 if( $("#insu option:selected").val() == null){
@@ -65,12 +66,16 @@ $(document).ready(function() {
 		    		  {
 		    			  //clear the current content of the select
 						     var s = $('<select id=\"hedisRule\" style=\"width:150px;\" multiple=\"multiple\">');
+						     var t = $('<select id=\"hedisRule1\" style=\"width:150px;\" multiple=\"multiple\">');
 						     //iterate over the data and append a select option
 						     $.each(data.data, function(key, val){
-						    	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
+						    	 s.append('<option value="'+val.id+'" >' + val.shortDescription +'</option>');
+						    	 t.append('<option value="'+val.id+'" >' + val.description +'</option>');
 						     });
 						     s.append('</select>');
+						     t.append('</select>');
 						     $selectHedisRule.html(s);
+						     $selectHedisRule1.html(t);
 						     $('#hedisRule').multiselect({numberDisplayed: 0, 
 						    	 buttonWidth: '150px',
 						    	 includeSelectAllOption: true,
@@ -114,7 +119,9 @@ $(document).ready(function() {
 	     		$.each( hedisRuleList, function(m, value ){
 	     				$('#membershipTable').find('tr').each(function(){
 	     					if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
-	     					{	$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>'); }
+	     					{	
+	     					    var desc = $("#hedisRule1 option:eq("+m+")").text();
+	     						$(this).find('th').eq(-1).after('<th> <center title="'+desc+'">'+value.text+'</center></th>'); }
 	     				});
 	     		});
 					
@@ -122,7 +129,7 @@ $(document).ready(function() {
 	     		$.each( hedisRuleList, function( i, value ){
 	     				if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
 	     				{
-		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.shortDescription","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
 		      							    	full.mbrHedisMeasureList.forEach(function( item ) {
 		      							    		if(item.activeInd == 'N' ){
@@ -470,6 +477,11 @@ $(document).ready(function() {
 					<div class="col-sm-3">
 						<label class="control-label col-sm-5">Hedis Measures</label>
 						<div class="col-sm-7" id="extFilterHedisRule"></div>
+					</div>
+					
+					<div class="col-sm-3" style="display:none">
+						<label class="control-label col-sm-5">Hedis Measures</label>
+						<div class="col-sm-7" id="extFilterHedisRule1"></div>
 					</div>
 					<div class="col-sm-3">
 						<button type="button" id="hedisGenerate"

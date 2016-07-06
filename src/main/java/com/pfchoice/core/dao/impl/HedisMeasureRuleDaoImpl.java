@@ -150,6 +150,7 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 				crit.addOrder(Order.asc(sort));
 			}
 		}
+		
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
@@ -217,9 +218,11 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 		cr.add(Restrictions.eq("activeInd", 'Y'));
 		cr.add(Restrictions.eq("ins.activeInd", 'Y'));
 		cr.add(Restrictions.eq("ins.id", insId));
+		cr.addOrder(Order.asc("shortDescription"));
 
 		cr.setProjection(Projections.distinct(Projections.projectionList()
-				.add(Projections.property("description"), "description").add(Projections.property("id"), "id")))
+				.add(Projections.property("shortDescription"), "shortDescription")
+				.add(Projections.property("id"), "id")))
 				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
 
 		return cr.list();

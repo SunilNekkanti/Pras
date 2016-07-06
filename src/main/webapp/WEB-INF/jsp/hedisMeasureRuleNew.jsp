@@ -228,6 +228,15 @@ $.ajax( {
 					<springForm:errors path="description" cssClass="error text-danger" />
 				</div>
 			</div>
+			
+			<div class="form-group required">
+					<label class="control-label col-sm-2" for="shortDescription">Short Description</label>
+					<div class="col-sm-6">
+						<springForm:input path="shortDescription" class="form-control"
+							id="shortDescription" placeholder="shortDescription" />
+						<springForm:errors path="shortDescription" cssClass="error text-danger" />
+					</div>
+			</div>
 
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="insurance">Insurance</label>

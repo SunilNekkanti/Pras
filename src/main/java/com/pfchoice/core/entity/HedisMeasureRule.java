@@ -47,6 +47,10 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "description")
 	private String description;
+	
+	@Expose
+	@Column(name = "short_description")
+	private String shortDescription;
 
 	@Expose
 	@OneToOne(fetch = FetchType.EAGER)
@@ -183,6 +187,20 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	/**
+	 * @return the shortDescription
+	 */
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	/**
+	 * @param shortDescription the shortDescription to set
+	 */
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 
 	/**

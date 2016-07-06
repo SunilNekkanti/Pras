@@ -77,6 +77,8 @@
   var sortCol = paramMap.iSortCol_0;
   var sortDir = paramMap.sSortDir_0;
   var sortName = paramMap['mDataProp_' + sortCol];
+  
+  
 
   //create new json structure for parameters for REST request
   var restParams = new Array();
@@ -112,7 +114,6 @@ $.ajax( {
 								  	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
 								  	     "sAjaxDataProp" : 'data.list',
 								  	     "aoColumns": [
-								                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ],"sClass":"center"  },
 								                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "20%" , "sDefaultContent": "" ,
 								                        	 "render": function ( data, type, full, meta ) {
 								                                 return '<a href="${context}/hedisMeasureRule/'+full.id+'">'+data+'</a>';
@@ -214,7 +215,6 @@ $.ajax( {
 
 					<thead>
 						<tr>
-							<th scope="col">Action</th>
 							<th scope="col">Description</th>
 							<th scope="col">Hedis Code</th>
 							<th scope="col">Problem</th>
