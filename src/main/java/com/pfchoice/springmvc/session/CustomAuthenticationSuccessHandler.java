@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.TileDefinitions;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	/*
 	 * (non-Javadoc)
@@ -32,6 +33,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			Authentication authentication) throws IOException, ServletException {
 
 		HttpSession session = httpServletRequest.getSession();
+		String redirectUrl= null;
+		 if (session != null) {
+			  redirectUrl = (String) session.getAttribute("LAST_PAGE");
+	     } 
 		User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		session.setAttribute(SystemDefaultProperties.ID, authUser.getUsername());
 		if (authentication.getAuthorities() != null) {
@@ -57,6 +62,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		// since we have created our custom success handler, its up to us to
 		// where
 		// we will redirect the user after successfully login
-		httpServletResponse.sendRedirect(TileDefinitions.HOME.toString());
+		if(redirectUrl != null) {
+            	httpServletResponse.sendRedirect(redirectUrl);
+        }else{
+        	httpServletResponse.sendRedirect(TileDefinitions.HOME.toString());
+        }
+		
 	}
 }

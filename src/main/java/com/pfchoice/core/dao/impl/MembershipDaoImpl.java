@@ -184,7 +184,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		Criteria crit = createCriteria().createAlias("mbrActivityMonthList", "mbrActivityMonth")
 						.createAlias("mbrActivityMonth.prvdr", "prvdr")
-						.createAlias("mbrActivityMonth.insId", "insId");
+						.createAlias("mbrActivityMonth.ins", "insId");
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
 

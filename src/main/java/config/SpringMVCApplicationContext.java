@@ -1,21 +1,18 @@
 package config;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentResolver;
 
-import com.pfchoice.core.entity.converter.ICDMeasureListConverter;
 import com.pfchoice.core.entity.formatter.*;
+import com.pfchoice.springmvc.interceptor.LastPageInterceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.support.ConversionServiceFactoryBean;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -84,6 +81,9 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private InsuranceFormatter insuranceFormatter;
+
+	@Autowired
+	private LastPageInterceptor lastPageInterceptor;
 
 	@Autowired
 	private MembershipFormatter membershipFormatter;
@@ -204,6 +204,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// This is a very important interceptor for authentication usage
 		// registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**");
+		registry.addInterceptor(lastPageInterceptor);
 	}
 
 	/**
