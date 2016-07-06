@@ -233,7 +233,7 @@ $.ajax( {
 					<label class="control-label col-sm-2" for="shortDescription">Short Description</label>
 					<div class="col-sm-6">
 						<springForm:input path="shortDescription" class="form-control"
-							id="shortDescription" placeholder="shortDescription" />
+							id="shortDescription" placeholder="shortDescription" maxlength="20" />
 						<springForm:errors path="shortDescription" cssClass="error text-danger" />
 					</div>
 			</div>

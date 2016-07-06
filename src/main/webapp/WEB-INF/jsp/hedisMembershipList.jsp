@@ -12,7 +12,7 @@ $(document).ready(function() {
 			$(".clrRed").text("");
 			callHedisGenerate();
 		});
-	 		
+		 var hedisDescription = new Array;	
     	 var $selectIns = $('#extFilterIns');
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
@@ -66,16 +66,13 @@ $(document).ready(function() {
 		    		  {
 		    			  //clear the current content of the select
 						     var s = $('<select id=\"hedisRule\" style=\"width:150px;\" multiple=\"multiple\">');
-						     var t = $('<select id=\"hedisRule1\" style=\"width:150px;\" multiple=\"multiple\">');
 						     //iterate over the data and append a select option
 						     $.each(data.data, function(key, val){
 						    	 s.append('<option value="'+val.id+'" >' + val.shortDescription +'</option>');
-						    	 t.append('<option value="'+val.id+'" >' + val.description +'</option>');
+						    	 hedisDescription.push(val.description);
 						     });
 						     s.append('</select>');
-						     t.append('</select>');
 						     $selectHedisRule.html(s);
-						     $selectHedisRule1.html(t);
 						     $('#hedisRule').multiselect({numberDisplayed: 0, 
 						    	 buttonWidth: '150px',
 						    	 includeSelectAllOption: true,
@@ -120,8 +117,7 @@ $(document).ready(function() {
 	     				$('#membershipTable').find('tr').each(function(){
 	     					if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
 	     					{	
-	     					    var desc = $("#hedisRule1 option:eq("+m+")").text();
-	     						$(this).find('th').eq(-1).after('<th> <center title="'+desc+'">'+value.text+'</center></th>'); }
+	     						$(this).find('th').eq(-1).after('<th> <center title="'+hedisDescription[m]+'">'+value.text+'</center></th>'); }
 	     				});
 	     		});
 					
@@ -477,11 +473,6 @@ $(document).ready(function() {
 					<div class="col-sm-3">
 						<label class="control-label col-sm-5">Hedis Measures</label>
 						<div class="col-sm-7" id="extFilterHedisRule"></div>
-					</div>
-					
-					<div class="col-sm-3" style="display:none">
-						<label class="control-label col-sm-5">Hedis Measures</label>
-						<div class="col-sm-7" id="extFilterHedisRule1"></div>
 					</div>
 					<div class="col-sm-3">
 						<button type="button" id="hedisGenerate"

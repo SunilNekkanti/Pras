@@ -114,11 +114,12 @@ $.ajax( {
 								  	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
 								  	     "sAjaxDataProp" : 'data.list',
 								  	     "aoColumns": [
-								                         { "mDataProp": "description", "bSearchable" : true, "sWidth" : "20%" , "sDefaultContent": "" ,
+								                         { "mDataProp": "shortDescription", "bSearchable" : true, "sWidth" : "20%" , "sDefaultContent": "" ,
 								                        	 "render": function ( data, type, full, meta ) {
 								                                 return '<a href="${context}/hedisMeasureRule/'+full.id+'">'+data+'</a>';
 								                		      }
 								                         },
+								                         { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center"},
 								                         { "mDataProp": "hedisMeasure.code","bSearchable" : true, "bSortable" : true,"sWidth" : "10%" , "asSorting" : [ "asc" ],"sClass":"center",
 								                        	 "render": function  ( data, type, full, meta )  {
 						                                          			return '<span data-toggle="tooltip" title="'+full.hedisMeasure.description+'">'+data+'</span>';  
@@ -215,6 +216,7 @@ $.ajax( {
 
 					<thead>
 						<tr>
+							<th scope="col">Short Description</th>
 							<th scope="col">Description</th>
 							<th scope="col">Hedis Code</th>
 							<th scope="col">Problem</th>

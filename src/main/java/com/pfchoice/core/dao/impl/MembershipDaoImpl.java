@@ -138,22 +138,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.add(or);
 		crit.add(and);
 
-		if (sort != null && !"".equals(sort)) {
-			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
-				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
-					crit.addOrder(Order.desc("prvdr.name"));
-				} else {
-					crit.addOrder(Order.desc(sort));
-				}
-			} else {
-				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
-					crit.addOrder(Order.asc("prvdr.name"));
-				} else {
-					crit.addOrder(Order.asc(sort));
-				}
-			}
-		}
-
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
@@ -161,6 +145,21 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			return findByCriteria(crit, pageNo, pageSize);
 		}else{
 			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds))	;
+			if (sort != null && !"".equals(sort)) {
+				if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
+						criteria.addOrder(Order.desc("prvdr.name"));
+					} else {
+						criteria.addOrder(Order.desc(sort));
+					}
+				} else {
+					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
+						crit.addOrder(Order.asc("prvdr.name"));
+					} else {
+						criteria.addOrder(Order.asc(sort));
+					}
+				}
+			}
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
