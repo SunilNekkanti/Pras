@@ -3,7 +3,8 @@ create temporary table temp_bh_membership
 select  PcpName , textbox44 pcpaddress1 , 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
-SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, textbox165 lastname,
+SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, 
+REPLACE(textbox165, ',','') lastname,
 convert(textbox214,unsigned) mcdmcr, textbox2 sex , textbox9 dob,   textbox64 memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
      else '12/31/2099' end  memeffenddate,
@@ -94,12 +95,12 @@ set  mp.eff_end_date = a.eff_end_date
 where mp.active_ind='Y';
 
 insert into membership_provider (mbr_id,prvdr_id,file_id,eff_start_date,eff_end_date,created_date,updated_date,created_by,updated_by)
-select a.mbr_id,a.prvdr_id,1 file_id,a.eff_start_date,a.eff_end_date,now() created_date, now() updated_date, 'sarath' created_by,'sarath' updated_by
+select a.mbr_id,a.prvdr_id,:fileId file_id,a.eff_start_date,a.eff_end_date,now() created_date, now() updated_date, 'sarath' created_by,'sarath' updated_by
 from 
 (
 select
  m.mbr_id, 
- p.prvdr_id,
+ p.prvdr_id, 
   DATE_FORMAT(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date,
  DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date 
  

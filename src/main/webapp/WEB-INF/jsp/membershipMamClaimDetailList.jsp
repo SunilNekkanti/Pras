@@ -145,7 +145,8 @@
 								"bSearchable" : true,
 								"bSortable" : true,
 								"sClass" : "center",
-								"sWidth" : "10%"
+								"sWidth" : "10%",
+								"sDefaultContent" : ""
 							});
 							columns
 									.push({
@@ -315,8 +316,10 @@
 								"sWidth" : "10%",
 								"sDefaultContent" : "",
 								"render" : function(data, type, full,meta) {
-									
-									return "<span title='"+full.cpt.shortDescription+"'>"+data+"</span>";
+									if(full.cpt != null)
+										return "<span title='"+full.cpt.shortDescription+"'>"+data+"</span>";
+									else
+										return "";
 								}
 							});
 							columns.push({
