@@ -389,7 +389,11 @@ $(document).ready(function() {
  	     "sAjaxDataProp" : 'data',
  	     "aoColumns": [
                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
-                        { "mDataProp": "hedisMeasureRule.description","bSearchable" : true, "bSortable" : true,"sWidth" : "45%"},
+                        { "mDataProp": "hedisMeasureRule.shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "45%",
+                        	"render": function (data, type, full, meta) {
+                        		return '<span data-toggle="tooltip" title="'+full.hedisMeasureRule.description+'">'+data+'</span>';
+                        	}
+                        },
                         { "mDataProp": "dos","bSearchable" : true, "bSortable" : true,"sWidth" : "45%"}
                        
                     ],
@@ -398,7 +402,7 @@ $(document).ready(function() {
 									   "render": function ( data, type, full, meta ) {
 								       return '<input type="checkbox" class="chkRule" name="rule_group[]"   id="'+data+'" value="'+data+'"/>';
 								}},
-								{ "sName": "hedisMeasureRule.description", "aTargets": [1]},
+								{ "sName": "hedisMeasureRule.shortDescription", "aTargets": [1]},
 								{ "sName": "dos", "aTargets": [ 2 ],
 									"render": function ( data, type, full, meta ) {
 									       return '<input type="text" class="'+full.id+'" name="dos[]" readonly /><span class="clrRed" name ="dosError[]"></span>';
