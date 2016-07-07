@@ -633,10 +633,10 @@
 						</div>
 					</div>	
 					<div class="form-group fileUpload">
-						<div class="col-sm-5">
-							<label for="filesUpload">Membership
+						<div class="col-sm-6">
+							<label for="filesUpload" class="fileName">Membership
 							Claim File</label>
-							<span class="btn btn-danger btn-file btn-sm"> Browse <input
+							<span class="btn btn-danger btn-file btn-sm">  <input
 								type="file" accept=".xls,.xlsx,.csv" class="file"
 								name="fileUpload">
 							</span>
@@ -830,7 +830,11 @@
 }
 </style>
 <script>
+$(document.body).on('change',"#fileType",function (e) {
+	$(".fileName").text($("#fileType option:selected").text());
+});
 		jQuery(document).ready(
+				
 				function($) {
 					$('input:radio[name=processClaim]').filter('[value="0"]')
 							.attr('checked', true);

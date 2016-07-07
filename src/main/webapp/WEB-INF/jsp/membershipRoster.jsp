@@ -31,7 +31,8 @@
 					</div>	
 					<div class="form-group fileType col-sm-3">
 						
-							<label for="fileType" class="col-offset-12">File Type</label>
+							<label for="fileType" class="col-offset-12 text-center">File Type</label>
+							<br />
 							 <select id="fileType" name="fileType" class="form-control">
 							 <option value="">Select One</option>
 						     <c:forEach items="${fileTypeList}" var="fileType">
@@ -47,9 +48,9 @@
 					</div>	
 					<div class="form-group fileUpload col-sm-3">
 						
-							<label for="filesUpload" class="col-offset-2">Membership
+							<label for="filesUpload" class="col-offset-2 fileName">Membership
 							Claim File</label>
-							<span class="btn btn-danger btn-file btn-sm"> Browse <input
+							<span class="btn btn-danger btn-file btn-sm">  <input
 								type="file" accept=".xls,.xlsx,.csv" class="file"
 								name="fileUpload">
 							</span>
@@ -164,6 +165,9 @@
 			});
 		
 		$(".datepicker").datepicker({maxDate: '0',dateFormat: 'yymm' });
+		$(document.body).on('change',"#fileType",function (e) {
+			$(".fileName").text($("#fileType option:selected").text());
+		});
 	</script>
 	<style>
 		#fileType{

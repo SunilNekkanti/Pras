@@ -118,6 +118,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 					.add(Restrictions.sqlRestriction("CAST({alias}.effective_Year AS CHAR) like ?", "%" + sSearch + "%",
 							StringType.INSTANCE))
 					.add(Restrictions.ilike("description", sSearch, MatchMode.ANYWHERE))
+					.add(Restrictions.ilike("shortDescription", sSearch, MatchMode.ANYWHERE))
+					.add(Restrictions.ilike("frequencyType.description", sSearch, MatchMode.ANYWHERE))
 					.add(Restrictions.ilike("genderId.description", sSearch, MatchMode.ANYWHERE))
 					.add(Restrictions.sqlRestriction("CAST({alias}.lower_age_limit AS CHAR) like ?",
 							"%" + sSearch + "%", StringType.INSTANCE))

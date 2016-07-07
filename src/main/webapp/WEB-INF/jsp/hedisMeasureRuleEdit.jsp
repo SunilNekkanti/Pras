@@ -598,6 +598,19 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 		$("#description").closest( "div" ).removeClass( "has-error" );
 	}	
 	
+	var shortDescription = $("#shortDescription").val().length;
+	if (shortDescription < 3) {
+		$("#shortDescription").closest( "div" ).addClass( "has-error" );
+		$('#shortDescription').closest( "div" ).find('span').remove();
+		$( "#shortDescription" ).after("<span  class='text-danger'>Short Description atleast 3 characters</span>" );
+		error_count++;
+	}
+	else
+	{
+		$('#shortDescription').closest( "div" ).find('span').remove();
+		$("#shortDescription").closest( "div" ).removeClass( "has-error" );
+	}	
+	
 	var effectiveYear = $("#effectiveYear").val();
 		if (!effectiveYear) {
 			$("#effectiveYear").closest( "div" ).addClass( "has-error" );
@@ -642,7 +655,13 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 	});
 	
 	$('#insurance').change(function(){
-		$('input:radio[name=problemFlag]').filter('[value="N"]').attr('checked', true);
+		 $('input:radio[name=problemFlag]').each(function(index, value){
+			 $('input:radio[name=problemFlag]').removeAttr("checked");
+			 if($(this).val() == "N")
+				 {
+			 		$('input:radio[name=problemFlag]:eq('+index+')').prop('checked', true);
+				 }
+		  });
 		$(".pbmList").hide();
 	});
 	

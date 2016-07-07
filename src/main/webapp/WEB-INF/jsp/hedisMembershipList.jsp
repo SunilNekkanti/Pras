@@ -91,7 +91,7 @@ $(document).ready(function() {
 				columns = new Array();
 	     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center","sWidth" : "3%",
 	     						"render": function (data, type, full, meta) {
-		      								return '<a href="javascript:void(0)" id="'+data+'" onclick="myFunction('+data+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
+		      								return '<a href="javascript:void(0)" id="'+data+'" onclick="mbrHedisFollowup('+data+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
 		        						  }
 	     					});
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
@@ -334,7 +334,7 @@ $(document).ready(function() {
      		});	
  } );
 
- function myFunction(id,lastName,firstName) 
+ function mbrHedisFollowup(id,lastName,firstName) 
 {
 	   if ( $.fn.DataTable.isDataTable('#mbrHedisMeasureTable') ) {
 				$('#mbrHedisMeasureTable').DataTable().destroy();
@@ -361,7 +361,12 @@ $(document).ready(function() {
 		 
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
-		  restParams.push({"name" : "hedisRuleId", "value" :  $("#hedisRule").val() });
+		  
+		  var ruleArray1 = new Array;
+		   $("#hedisRule option:selected").each  ( function() {
+		    	ruleArray1.push ( $(this).val() );
+		    });
+		   restParams.push({"name" : "hedisRuleIds", "value" :  ruleArray1 });
 		
 		   $.ajax( {
              dataType: 'json',

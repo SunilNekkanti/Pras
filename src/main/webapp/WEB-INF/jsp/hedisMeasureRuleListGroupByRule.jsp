@@ -11,6 +11,10 @@
 
   $(document).ready(function() {
 	  
+	  $('#hedisMeasureRuleTable tbody').on('click', 'tr', function () {
+	    	window.location = $(location).attr('protocol')+"//"+$(location).attr('host')+$(this).find('a').attr('href');
+	    } );
+	  
 	  //Setting Eff Year dropdown values
 	  var $selectEY = $('#extFilterEY');
 	  var date = new Date();
@@ -55,9 +59,7 @@
 		   if ( $.fn.DataTable.isDataTable('#hedisMeasureRuleTable') ) {
 					$('#hedisMeasureRuleTable').DataTable().destroy();
 		   }
-
 			$('#hedisMeasureRuleTable tbody').empty();
-		   
 			GetHedisMeasureRulesByInsAndEffYear (eySelectValue,insSelectValue);
 	}  
  	 
@@ -101,6 +103,7 @@ $.ajax( {
                res.iTotalDisplayRecords = res.data.totalCount;
           		fnCallback(res);
           		$('[data-toggle="tooltip"]').tooltip();
+          		$("#hedisMeasureRuleTable tbody tr").css('cursor', 'pointer');
            },
            error : function (e) {
            }

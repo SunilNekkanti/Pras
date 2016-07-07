@@ -6,6 +6,7 @@ import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -500,21 +501,22 @@ public class MembershipController {
 	@RequestMapping(value = { "/admin/membership/{id}/hedisMeasureList",
 			"/user/membership/{id}/hedisMeasureList" }, method = RequestMethod.GET)
 	public Message displayMembershipHedisMeasureListPage(@PathVariable Integer id, Model model,
-			@RequestParam(required = false) Integer hedisRuleId) {
+			@RequestParam(required = true) List<Integer> hedisRuleIds) {
 
 		Membership dbMembership = membershipService.findById(id);
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
-		if (hedisRuleId != null && hedisRuleId != ALL) {
-			mbrHedisMeasureList = mbrHedisMeasureList.stream()
+		List<MembershipHedisMeasure> mbrHedisMeasureListAll = new ArrayList<>();
+			
+		for(Integer hedisRuleId: hedisRuleIds){
+			List<MembershipHedisMeasure> mbrHedisMeasureList1 = mbrHedisMeasureList.stream()
 					.filter(mbrHedisMeasure -> mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
 							&& mbrHedisMeasure.getDos() == null)
 					.collect(Collectors.toList());
-		} else {
-			mbrHedisMeasureList = mbrHedisMeasureList.stream()
-					.filter(mbrHedisMeasure -> mbrHedisMeasure.getDos() == null).collect(Collectors.toList());
+			mbrHedisMeasureListAll.addAll(mbrHedisMeasureList1);
 		}
+		
 		return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST,
-				JsonConverter.getJsonObject(mbrHedisMeasureList));
+				JsonConverter.getJsonObject(mbrHedisMeasureListAll));
 	}
 
 	/**

@@ -720,7 +720,7 @@
 						<label class="control-label col-sm-2" for="filesUpload">Membership
 							Hospitalization File</label>
 						<div class="col-sm-5">
-							<span class="btn btn-danger btn-file btn-sm"> Browse <input
+							<span class="btn btn-danger btn-file btn-sm">  <input
 								type="file" accept=".xls,.xlsx,.csv" class="file"
 								name="fileUpload">
 							</span>
