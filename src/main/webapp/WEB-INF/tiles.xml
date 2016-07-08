@@ -688,6 +688,15 @@
 	</definition>
 	<!-- membershipProblemList -->
 
+
+<!-- problemMembershipList -->
+	<definition name="problemMembershipList" extends="base.definition">
+		<put-attribute name="title" value="Problem Membership  Report" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/problemMembershipList.jsp" />
+	</definition>
+	<!-- problemMembershipList -->
+	
 	<!-- Hospital Section -->
 
 	<definition name="hospitalList" extends="base.definition">

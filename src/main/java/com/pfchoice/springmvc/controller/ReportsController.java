@@ -632,9 +632,9 @@ public class ReportsController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/reports/problem", "/user/reports/problem" })
-	public String viewMembershipProblemList() {
+	public String viewProblemMembershipList() {
 
-		return TileDefinitions.MEMBERSHIPPROBLEMLIST.toString();
+		return TileDefinitions.PROBLEMMEMBERSHIPLIST.toString();
 	}
 
 	/**
@@ -652,7 +652,7 @@ public class ReportsController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/reports/problemMembership/list",
 			"/user/reports/problemMembership/list" }, method = RequestMethod.GET)
-	public Message viewMembershipProblemList(@RequestParam(required = false) Integer pageNo,
+	public Message viewProblemMembershipList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
 			@RequestParam(required = true) Integer sSearchProblemRule,

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+import com.pfchoice.springmvc.controller.service.DBConnection;
 import com.pfchoice.springmvc.service.ApplicationMailer;
 
 @Configuration
@@ -75,6 +76,16 @@ public class MailConfig {
 		config.put("mail.smtp.starttls.enable", starttls);
 
 		return config;
+	}
+	
+	/**
+	 * @return
+	 */
+	@Bean
+	public DBConnection dBConnection() {
+		DBConnection dBConnection = new DBConnection();
+		System.out.println("===============================dBConnection is "+dBConnection.toString());
+		return  dBConnection;
 	}
 
 }
