@@ -53,6 +53,7 @@ import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.MembershipInsurance;
+import com.pfchoice.core.entity.MembershipProblem;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
 import com.pfchoice.core.service.CountyService;
@@ -462,6 +463,9 @@ public class MembershipController {
 
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
+		
+		List<MembershipProblem> mbrProblemList = dbMembership.getMbrProblemList();
+		model.addAttribute("mbrProblemList", mbrProblemList);
 
 		List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 		model.addAttribute("membershipDetailsList", listBean);
@@ -472,7 +476,6 @@ public class MembershipController {
 		logger.info("Returning membershipProviderList.jsp page");
 
 		return TileDefinitions.MEMBERSHIPCOMPLETEDETAILS.toString();
-
 	}
 
 	/**

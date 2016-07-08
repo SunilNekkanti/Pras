@@ -35,14 +35,9 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<div class="panel-group">
-			<div class="panel panel-success">
-				<div class="panel-heading">Problem</div>
-				<div class="panel-body">
-					<div class="col-sm-12"></div>
-				</div>
-			</div>
-		</div>
+		<jsp:include page="/WEB-INF/jsp/membershipProblemList.jsp">
+			<jsp:param name="mbrProblemList" value="${mbrProblemList}" />
+		</jsp:include>
 	</div>
 </div>
 
