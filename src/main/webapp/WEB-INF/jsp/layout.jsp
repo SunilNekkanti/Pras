@@ -44,7 +44,17 @@
 	src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
 <script type="text/javascript"
 	src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-
+	
+	<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
+<script>
+		$(document).ready(function() {
+			 
+			 $('.rowClick tbody').on('click', 'tr', function () {
+				    	window.location = $(location).attr('protocol')+"//"+$(location).attr('host')+$(this).find('a').attr('href');
+				    } );
+		});
+ </script>				 
 <style>
 .center {
 	text-align: center;

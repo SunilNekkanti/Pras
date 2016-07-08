@@ -10,11 +10,6 @@
 <script>
 
   $(document).ready(function() {
-	  
-	  $('#hedisMeasureRuleTable tbody').on('click', 'tr', function () {
-	    	window.location = $(location).attr('protocol')+"//"+$(location).attr('host')+$(this).find('a').attr('href');
-	    } );
-	  
 	  //Setting Eff Year dropdown values
 	  var $selectEY = $('#extFilterEY');
 	  var date = new Date();
@@ -103,7 +98,7 @@ $.ajax( {
                res.iTotalDisplayRecords = res.data.totalCount;
           		fnCallback(res);
           		$('[data-toggle="tooltip"]').tooltip();
-          		$("#hedisMeasureRuleTable tbody tr").css('cursor', 'pointer');
+          		$(".rowClick tbody tr").css('cursor', 'pointer');
            },
            error : function (e) {
            }
@@ -215,7 +210,7 @@ $.ajax( {
 					</div>
 				</div>
 				<table id="hedisMeasureRuleTable"
-					class="display table-responsive  table table-striped table-hover">
+					class="display table-responsive  table table-striped table-hover rowClick">
 
 					<thead>
 						<tr>

@@ -5,11 +5,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			Membership Profile <span class="clrRed">${Message}</span>
+			<a
+				class="btn btn-danger pull-right btn-xs white-text"
+				href="${context}/membershipList"> <span
+				class="glyphicon glyphicon-plus-sign "></span>Membership List
+			</a>
 		</div>
 		<div class="panel-body" id="tablediv">
 			<springForm:form method="POST" id="membership"

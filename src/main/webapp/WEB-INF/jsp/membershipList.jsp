@@ -16,9 +16,8 @@
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
-
-
      $(document).ready(function() {
+    	 
     	 
     	 $("#mbrGenerate").click(function(event){
     		 if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
@@ -115,6 +114,7 @@
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
+             		$(".rowClick tbody tr").css('cursor', 'pointer');
               },
               error : function (e) {
               }
@@ -195,7 +195,7 @@
 						</div>
 					</div>
 					<table id="membershipTable"
-						class="table table-striped table-hover table-responsive">
+						class="table table-striped table-hover table-responsive rowClick">
 
 						<thead>
 							<tr>

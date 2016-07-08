@@ -1,7 +1,14 @@
 package com.pfchoice.springmvc.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +22,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.service.MembershipService;
+import com.pfchoice.springmvc.controller.service.DBConnection;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -35,7 +46,11 @@ public class MembershipListController {
 
 	@Autowired
 	private MembershipService membershipService;
+	
+	@Autowired
+	private DBConnection dBConnection;
 
+	
 	/**
 	 * @return
 	 */
@@ -43,6 +58,26 @@ public class MembershipListController {
 	public String handleRequest() {
 		LOG.info("returning membershipList.jsp");
 		return TileDefinitions.MEMBERSHIPLIST.toString();
+	}
+	
+	/**
+	 * @return
+	 * @throws JRException 
+	 */
+	@RequestMapping(value = { "/admin/reports/membershipList", "/user/reports/membershipList" })
+	public void handleRequest1(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = true) String reportFormat) throws JRException, NamingException, SQLException, IOException  {
+		LOG.info("returning membershipList.jsp");
+		
+		String fileName= "membershipList";
+		JasperReport jp = PrasUtil.getCompiledFile(fileName,request);
+		
+		switch (reportFormat) {
+		case "PDF": case "pdf": PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());  break;
+		case "XLS": case "XLSX": PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());  break;
+		case "CSV": case "csv": PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());  break;
+		default : PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());  break;
+		}
 	}
 
 	/**
@@ -71,4 +106,6 @@ public class MembershipListController {
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
+	
+	 
 }

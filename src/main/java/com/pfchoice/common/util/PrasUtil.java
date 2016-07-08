@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -23,14 +25,30 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.annotation.Resource;
+import javax.naming.NamingException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pfchoice.core.dao.impl.MembershipHospitalizationDaoImpl;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  * @author sarath
@@ -40,6 +58,11 @@ import com.pfchoice.core.dao.impl.MembershipHospitalizationDaoImpl;
 public class PrasUtil {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MembershipHospitalizationDaoImpl.class);
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	private Connection connection;
 
 	/**
 	 * 
@@ -143,4 +166,29 @@ public class PrasUtil {
 		long heapsize = Runtime.getRuntime().totalMemory();
 		System.out.println("heapsize is :: " + heapsize);
 	}
+	
+	public static JasperReport getCompiledFile(String fileName, HttpServletRequest request) throws JRException {
+	    java.io.File reportFile = new java.io.File   (  request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jasper"));
+	    // If compiled file is not found, then compile XML template
+	    if (!reportFile.exists()) {
+	               JasperCompileManager.compileReportToFile(request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jrxml"),request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jasper"));
+	        }
+	        JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+	       return jasperReport;
+    } 
+	
+	@SuppressWarnings({ "rawtypes", "unchecked"})
+	public static void generateReportPDF (HttpServletResponse resp, Map parameters, JasperReport jasperReport, Connection conn)throws JRException, NamingException, SQLException, IOException {
+	        byte[] bytes = null;
+	        bytes = JasperRunManager.runReportToPdf(jasperReport,parameters,conn);
+	        resp.reset();
+	        resp.resetBuffer();
+	        resp.setContentType("application/pdf");
+	        resp.setContentLength(bytes.length);
+	        ServletOutputStream ouputStream = resp.getOutputStream();
+	        ouputStream.write(bytes, 0, bytes.length);
+	        ouputStream.flush();
+	        ouputStream.close();
+	 } 
+	
 }

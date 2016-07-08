@@ -639,6 +639,7 @@
 											res.iTotalRecords = res.data.totalCount;
 											res.iTotalDisplayRecords = res.data.totalCount;
 											fnCallback(res);
+											$(".rowClick tbody tr").css('cursor', 'pointer');
 											var index1 = 0;
 											var row = 0;
 											var mbrClaimFieldCheck = [];
@@ -809,7 +810,7 @@
 						</div>
 					</div>
 					<table id="membershipClaimTable"
-						class="table table-striped table-hover table-responsive">
+						class="table table-striped table-hover table-responsive rowClick">
 
 						<thead>
 							<tr>

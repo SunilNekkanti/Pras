@@ -13,6 +13,7 @@
 <script>
 
     $(document).ready(function() {
+    	
     	var datatable2RestInsurance = function(sSource, aoData, fnCallback) {
     		//extract name/value pairs into a simpler map for use later
 	  var paramMap = {};
@@ -49,6 +50,7 @@
                  res.iTotalRecords = res.data.totalCount;
                  res.iTotalDisplayRecords = res.data.totalCount;
             		fnCallback(res);
+            		$(".rowClick tbody tr").css('cursor', 'pointer');
              },
              error : function (e) {
              }
@@ -93,7 +95,7 @@
 		</div>
 		<div class="panel-body">
 			<table id="insuranceTable"
-				class="table table-striped table-hover table-responsive">
+				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
 						<th scope="col">Action</th>

@@ -99,6 +99,7 @@ $.ajax( {
                res.iTotalRecords = res.data.totalCount;
                res.iTotalDisplayRecords = res.data.totalCount;
           		fnCallback(res);
+          		$(".rowClick tbody tr").css('cursor', 'pointer');
           		$('[data-toggle="tooltip"]').tooltip();
            },
            error : function (e) {
@@ -174,7 +175,7 @@ $.ajax( {
 					</div>
 				</div>
 				<table id="problemTable"
-					class="display table-responsive  table table-striped table-hover">
+					class="display table-responsive  table table-striped table-hover rowClick">
 
 					<thead>
 						<tr>

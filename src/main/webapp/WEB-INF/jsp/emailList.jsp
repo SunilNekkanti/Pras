@@ -47,6 +47,7 @@
 	                    res.iTotalRecords = res.data.totalCount;
 	                    res.iTotalDisplayRecords = res.data.totalCount;
 	               		fnCallback(res);
+	               		$(".rowClick tbody tr").css('cursor', 'pointer');
 	                },
 	                error : function (e) {
 	                }
@@ -97,7 +98,7 @@
 		</div>
 		<div class="panel-body" id="tablediv">
 			<table id="hedisMeasureTable"
-				class="display table-responsive  table table-striped table-hover">
+				class="display table-responsive  table table-striped table-hover rowClick">
 				<thead>
 					<tr>
 						<th scope="col">Action</th>

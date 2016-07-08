@@ -11,7 +11,7 @@
 <script>
   $(document).ready(function() {
         	
-        	var datatable2Rest = function(sSource, aoData, fnCallback) {
+		   	var datatable2Rest = function(sSource, aoData, fnCallback) {
         		//extract name/value pairs into a simpler map for use later
   			  var paramMap = {};
   			  for ( var i = 0; i < aoData.length; i++) {
@@ -47,6 +47,7 @@
 	                    res.iTotalRecords = res.data.totalCount;
 	                    res.iTotalDisplayRecords = res.data.totalCount;
 	               		fnCallback(res);
+	               		$(".rowClick tbody tr").css('cursor', 'pointer');
 	                },
 	                error : function (e) {
 	                }
@@ -95,7 +96,7 @@
 		</div>
 		<div class="panel-body" id="tablediv">
 			<table id="hedisMeasureTable"
-				class="display table-responsive  table table-striped table-hover">
+				class="display table-responsive  table table-striped table-hover rowClick">
 				<thead>
 					<tr>
 						<th scope="col">Action</th>

@@ -10,7 +10,7 @@
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
         $(document).ready(function() {
-        	
+        	       	 
         	var datatable2Rest = function(sSource, aoData, fnCallback) {
         		//extract name/value pairs into a simpler map for use later
   			  var paramMap = {};
@@ -47,13 +47,14 @@
 	                    res.iTotalRecords = res.data.totalCount;
 	                    res.iTotalDisplayRecords = res.data.totalCount;
 	               		fnCallback(res);
+	               		$(".rowClick tbody tr").css('cursor', 'pointer');
 	                },
 	                error : function (e) {
 	                }
 	            } );
         	}
         	
-        	$('#myTable').dataTable({
+        	$('#cptMeasureListTable').dataTable({
         	     "sAjaxSource" : getContextPath()+'/cpt/cptMeasureLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
@@ -96,8 +97,8 @@
 		<div class="panel-body" id="tablediv">
 			<div class="table-responsive">
 
-				<table id="myTable"
-					class="display table-responsive  table table-striped table-hover">
+				<table id="cptMeasureListTable"
+					class="display table-responsive  table table-striped table-hover rowClick">
 					<thead>
 						<tr>
 							<th scope="col">Action</th>
