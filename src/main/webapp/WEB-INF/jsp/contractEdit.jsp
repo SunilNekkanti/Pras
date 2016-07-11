@@ -161,7 +161,23 @@
 							</div>
 						</c:when>
 					</c:choose>
+					<c:choose>
+						<c:when test="${insuranceRequired}">
+							<div class="col-sm-3">
+								<div class="form-group required">
+									<label class="control-label required col-sm-5" for="pcpPrvdrNBR">PCP Prvdr NBR</label>
+									<div class="col-sm-7">
+										<springForm:input path="pcpPrvdrNBR" class="form-control" id="pcpPrvdrNBR"
+												placeholder="pcpPrvdrNBR" />
+											<span class="pcpPrvdrNBR col-sm-12"></span>
+											<springForm:errors path="pcpPrvdrNBR" cssClass="error text-danger" />
+									</div>
+								</div>
+						</div>
+					</c:when>
+							</c:choose>	
 				</div>
+				
 
 
 				<div id="filecontent"></div>

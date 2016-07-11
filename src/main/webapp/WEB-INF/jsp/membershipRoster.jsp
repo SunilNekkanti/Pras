@@ -32,7 +32,6 @@
 					<div class="form-group fileType col-sm-3">
 						
 							<label for="fileType" class="col-offset-12 text-center">File Type</label>
-							<br />
 							 <select id="fileType" name="fileType" class="form-control">
 							 <option value="">Select One</option>
 						     <c:forEach items="${fileTypeList}" var="fileType">

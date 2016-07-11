@@ -23,6 +23,11 @@
 							<th scope="col">Action</th>
 							<th scope="col">Contract NBR</th>
 							<c:choose>
+								<c:when test="${insuranceRequired}">
+									<th scope="col">PCP Provider NBR</th>
+								</c:when>
+							</c:choose>
+							<c:choose>
 								<c:when test="${pmpmRequired}">
 									<th scope="col">PMPM</th>
 								</c:when>
@@ -81,6 +86,11 @@
 										</c:otherwise>
 									</c:choose></td>
 								<td>${cntct.contractNBR}</td>
+								<c:choose>
+									<c:when test="${insuranceRequired}">
+										<td>${cntct.pcpPrvdrNBR}</td>
+									</c:when>
+								</c:choose>
 								<c:choose>
 									<c:when test="${pmpmRequired}">
 										<td>${cntct.pmpm}</td>

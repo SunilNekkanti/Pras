@@ -289,6 +289,11 @@
 
 	function addContract(pmpmRequired) {
 		if (pmpmRequired) {
+			if(!$("#pcpPrvdrNBR").val()){
+				alert("Enter PCP Provider Number");
+				$("#pcpPrvdrNBR").focus();
+				return false;
+			}	
 			var url = getContextPath()
 					+ 'provider/${id}/prvdrInsContract/save.do?add';
 			ajaxCallWithFileUpload(url, pmpmRequired,
@@ -311,6 +316,11 @@
 
 	function modifyContract(pmpmRequired) {
 		if (pmpmRequired) {
+			if(!$("#pcpPrvdrNBR").val()){
+				alert("Enter PCP Provider Number");
+				$("#pcpPrvdrNBR").focus();
+				return false;
+			}
 			var url = getContextPath()
 					+ 'provider/${id}/prvdrInsContract/save.do?update';
 			ajaxCallWithFileUpload(url, pmpmRequired,
