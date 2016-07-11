@@ -14,15 +14,15 @@ cover, created_date, updated_date, created_by, updated_by, active_ind, file_id,
  )
  
  SELECT distinct mc.mbr_claim_id, csv2BhClaim.ClaimLine, null clm_line_adj_seq_nbr, 
- cast(csv2BhClaim.MOS as date) ,
- date_format(cast(csv2BhClaim.MOP as date) ,'%Y%m'),
+ cast(concat(csv2BhClaim.MOS,'-01') as date) ,
+ date_format(cast(concat(csv2BhClaim.MOS,'-01') as date) ,'%Y%m'),
  cast(csv2BhClaim.ClaimStartDate as date), 
  cast(csv2BhClaim.ClaimEndDate as date),
  cast(csv2BhClaim.PaidDate as date),
  csv2BhClaim.RevCode, cpt.cpt_id, NULL cpt_code_modifier1, null cpt_code_modifier2, csv2BhClaim.ClaimDetailStatus, 
  roomType.id, null risk_recon_cos_des, null amount_paid, csv2BhClaim.AllowAmt, null co_insurance, 
  csv2BhClaim.Copay, null deductible, null cob_paid_amount, null processing_status, null pharmacy_name, 
- NULLIF(csv2BhClaim.Quantity,''),  csv2BhClaim.NPOS, csv2BhClaim.RiskId, DATE_FORMAT(str_to_date(csv2BhClaim.RunnDate, '%c/%e/%Y %H:%i'),'%Y-%c-%e'), csv2BhClaim.NDC,
+ NULLIF(csv2BhClaim.Quantity,''),  csv2BhClaim.NPOS, csv2BhClaim.RiskId, cast(csv2BhClaim.RunnDate as date), csv2BhClaim.NDC,
  csv2BhClaim.PHARMACY, csv2BhClaim.Claims, csv2BhClaim.Psychare, csv2BhClaim.Simple_County, csv2BhClaim.Triangles,  
 csv2BhClaim.Cover, now() created_date, now() updated_date, 'sarath' created_by ,'sarath' updated_by,'Y', :fileId,
   csv2BhClaim.Mony, csv2BhClaim.DrugLabelName, null drug_version
