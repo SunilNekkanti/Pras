@@ -82,12 +82,7 @@
 													+ '/provider/list',
 											"sAjaxDataProp" : 'data.list',
 											"aoColumns" : [
-													{
-														"mDataProp" : "id",
-														"bSearchable" : false,
-														"bVisible" : false,
-														"asSorting" : [ "asc" ]
-													},
+													
 													{
 														"mDataProp" : "name",
 														"bSearchable" : true,
@@ -103,7 +98,7 @@
 													{
 														"mDataProp" : "refContracts[].ins.name",
 														"bSearchable" : true,
-														"bSortable" : true,
+														"bSortable" : false,
 														"sWidth" : "33%",
 														"asSorting" : [ 3,
 																"asc" ]
@@ -115,7 +110,7 @@
 													},
 													{
 														"sName" : "name",
-														"aTargets" : [ 1 ],
+														"aTargets" : [ 0 ],
 														"render" : function(
 																data, type,
 																full, meta) {
@@ -126,11 +121,11 @@
 													},
 													{
 														"sName" : "code",
-														"aTargets" : [ 2 ]
+														"aTargets" : [1 ]
 													},
 													{
 														"sName" : "refContracts[].ins.name",
-														"aTargets" : [ 3 ],
+														"aTargets" : [ 2 ],
 														"render" : function(
 																data, type,
 																full, meta) {
@@ -173,7 +168,7 @@
 				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
-						<th scope="col">Action</th>
+						
 						<th scope="col">Name</th>
 						<th scope="col">NPI</th>
 						<th scope="col">Insurances</th>

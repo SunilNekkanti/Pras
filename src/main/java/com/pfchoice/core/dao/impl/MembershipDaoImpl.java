@@ -96,6 +96,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
 				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
 				.createAlias("status", "mbrStatus")
+				.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 		Disjunction or = Restrictions.disjunction();
@@ -106,8 +107,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("genderId.description", "%" + sSearch + "%"))
-					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0]))).add(Restrictions
-							.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0])))
+					.add(Restrictions.ilike("mbrStatus.description", "%" + sSearch + "%"))
+					.add(Restrictions.ilike("countyCode.description", "%" + sSearch + "%"))
+					.add(Restrictions.sqlRestriction("CAST(DATE_FORMAT(mbr_dob, '%m/%d/%Y') AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
 		}
 		if (sSearchIns != null) {
 

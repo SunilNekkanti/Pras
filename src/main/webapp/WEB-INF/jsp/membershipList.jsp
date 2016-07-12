@@ -145,7 +145,8 @@
                   		   		   	   "render": function (data) {
                   		   		        		var date = new Date(data);
                   		   	        			var month = date.getMonth() + 1;
-                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+                  		   	        			var d = date.getDate();
+                  		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
                   		   		   	 }},
                   		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
                   		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
