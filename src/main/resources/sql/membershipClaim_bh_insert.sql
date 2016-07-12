@@ -16,7 +16,7 @@ null market_lvl2, null market_lvl3, null market_lvl4, null market_lvl5, null mar
 null market_lvl7, null market_lvl8, null tin,'ICD10', null proc_type_cd,
 now(), now(), 'sarath', 'sarath', 'Y', :fileId 
   FROM csv2Table_BH_Claim csv2BhClaim
- JOIN membership m on m.Mbr_MedicaidNo  =  csv2BhClaim.MedicaidId  
+ JOIN membership m on m.Mbr_MedicaidNo  =  convert(csv2BhClaim.MedicaidId, unsigned)  
  JOIN membership_insurance mi on mi.mbr_id  =  m.mbr_id
   JOIN membership_provider mp on mp.mbr_id  =  mi.mbr_id  
  JOIN reference_contract rc on  rc.prvdr_id= mp.prvdr_id and rc.insurance_id=mi.ins_id 
@@ -25,7 +25,7 @@ LEFT OUTER JOIN lu_facility_type lft on lft.code = csv2BhClaim.FacilityCode
 LEFT OUTER JOIN lu_bill_type lbt on lbt.description = csv2BhClaim.BillClassCode 
 LEFT OUTER JOIN membership_claims mc on mc.mbr_id =  mi.mbr_id
 
-WHERE  mc.mbr_id is null 
+WHERE  mc.claim_id_number is null 
 
 group by ClaimId, mi.mbr_id
 -- and csv2BhClaim.ClaimStartDate >= '2015-10-01'
