@@ -59,6 +59,19 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.pfchoice.core.service.PlanTypeService#getPage(int, int
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return planTypeDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.pfchoice.core.service.PlanTypeService#save(com.pfchoice.core.entity.
 	 * PlanType)

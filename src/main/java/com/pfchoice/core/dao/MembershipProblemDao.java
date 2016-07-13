@@ -57,7 +57,7 @@ public interface MembershipProblemDao {
 	 * @return
 	 */
 	MembershipProblem updateByUpdater(Updater<MembershipProblem> updater);
-	
+
 	/**
 	 * @return
 	 */

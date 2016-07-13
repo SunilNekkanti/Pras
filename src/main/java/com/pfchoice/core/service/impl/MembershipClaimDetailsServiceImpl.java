@@ -102,16 +102,20 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 	public Pagination getMbrClaimDetailsPage(final int mbrHosId) {
 		return membershipClaimDetailsDao.getMbrClaimDetailsPage(mbrHosId);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#getPage(int, int, java.lang.String, int, int, java.lang.String, java.lang.String, java.util.Date, java.util.Date, int)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipClaimDetailsService#getPage(int,
+	 * int, java.lang.String, int, int, java.lang.String, java.lang.String,
+	 * java.util.Date, java.util.Date, int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Pagination getMbrClaimDetailsByActivityMonth(final int pageNo, final int pageSize, final String sSearch,
-			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir, final List<Integer> monthPicker,
-			final int processClaim) {
-		return membershipClaimDetailsDao.getMbrClaimDetailsByActivityMonth(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort,
-				sortdir, monthPicker, processClaim);
+			final int sSearchIns, final int sSearchPrvdr, final String sort, final String sortdir,
+			final List<Integer> monthPicker, final int processClaim) {
+		return membershipClaimDetailsDao.getMbrClaimDetailsByActivityMonth(pageNo, pageSize, sSearch, sSearchIns,
+				sSearchPrvdr, sort, sortdir, monthPicker, processClaim);
 	}
 }

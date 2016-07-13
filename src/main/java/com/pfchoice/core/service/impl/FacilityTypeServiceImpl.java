@@ -55,7 +55,7 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return facilityTypeDao.getPage(pageNo, pageSize);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -106,13 +106,13 @@ public class FacilityTypeServiceImpl implements FacilityTypeService {
 	public Integer loadData(final Integer fileId, final String tableName) {
 		return facilityTypeDao.loadData(fileId, tableName);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.pfchoice.core.service.FacilityTypeService#isNameUnique(java.lang.Integer,
-	 * java.lang.String)
+	 * com.pfchoice.core.service.FacilityTypeService#isNameUnique(java.lang.
+	 * Integer, java.lang.String)
 	 */
 	@Override
 	public boolean isDescriptionUnique(Integer id, String facilityDescription) {

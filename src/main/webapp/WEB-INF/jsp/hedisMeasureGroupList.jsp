@@ -60,17 +60,15 @@
         	     "sAjaxSource" : '${context}/hedisMeasureGroup/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-                               { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"},
                                { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
                            ],
                   "aoColumnDefs": [ 
-                           		    { "sName": "code", "aTargets": [ 0 ] },
-                           		    { "sName": "description", "aTargets": [ 1 ],
+                           		    { "sName": "description", "aTargets": [ 0 ],
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="${context}/hedisMeasureGroup/'+full.id+'">'+data+'</a>';
                                     }},
-                                    { "sName": "description", "aTargets": [ 2 ]}
+                                    { "sName": "description", "aTargets": [ 1 ]}
                                  
                   ],          
         	     "bLengthChange": false,
@@ -88,10 +86,10 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			File Type List <span class="clrRed">${Message}</span> <a
+			Hedis Measure Group List <span class="clrRed">${Message}</span> <a
 				class="btn btn-danger pull-right btn-xs white-text"
 				href="${context}/hedisMeasureGroup/new"> <span
-				class="glyphicon glyphicon-plus-sign "></span>New File Type
+				class="glyphicon glyphicon-plus-sign "></span>New Hedis Measure Group
 			</a>
 		</div>
 		<div class="panel-body">
@@ -99,14 +97,10 @@
 				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
-						<th scope="col">Action</th>
 						<th scope="col">Code</th>
 						<th scope="col">Description</th>
-
-
 					</tr>
 				</thead>
-
 				<tbody>
 
 				</tbody>

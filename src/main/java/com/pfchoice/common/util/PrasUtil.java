@@ -58,10 +58,10 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class PrasUtil {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MembershipHospitalizationDaoImpl.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	private Connection connection;
 
 	/**
@@ -166,29 +166,33 @@ public class PrasUtil {
 		long heapsize = Runtime.getRuntime().totalMemory();
 		System.out.println("heapsize is :: " + heapsize);
 	}
-	
+
 	public static JasperReport getCompiledFile(String fileName, HttpServletRequest request) throws JRException {
-	    java.io.File reportFile = new java.io.File   (  request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jasper"));
-	    // If compiled file is not found, then compile XML template
-	    if (!reportFile.exists()) {
-	               JasperCompileManager.compileReportToFile(request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jrxml"),request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jasper"));
-	        }
-	        JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
-	       return jasperReport;
-    } 
-	
-	@SuppressWarnings({ "rawtypes", "unchecked"})
-	public static void generateReportPDF (HttpServletResponse resp, Map parameters, JasperReport jasperReport, Connection conn)throws JRException, NamingException, SQLException, IOException {
-	        byte[] bytes = null;
-	        bytes = JasperRunManager.runReportToPdf(jasperReport,parameters,conn);
-	        resp.reset();
-	        resp.resetBuffer();
-	        resp.setContentType("application/pdf");
-	        resp.setContentLength(bytes.length);
-	        ServletOutputStream ouputStream = resp.getOutputStream();
-	        ouputStream.write(bytes, 0, bytes.length);
-	        ouputStream.flush();
-	        ouputStream.close();
-	 } 
-	
+		java.io.File reportFile = new java.io.File(
+				request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jasper"));
+		// If compiled file is not found, then compile XML template
+		if (!reportFile.exists()) {
+			JasperCompileManager.compileReportToFile(
+					request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jrxml"),
+					request.getSession().getServletContext().getRealPath("/jasper/" + fileName + ".jasper"));
+		}
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+		return jasperReport;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void generateReportPDF(HttpServletResponse resp, Map parameters, JasperReport jasperReport,
+			Connection conn) throws JRException, NamingException, SQLException, IOException {
+		byte[] bytes = null;
+		bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, conn);
+		resp.reset();
+		resp.resetBuffer();
+		resp.setContentType("application/pdf");
+		resp.setContentLength(bytes.length);
+		ServletOutputStream ouputStream = resp.getOutputStream();
+		ouputStream.write(bytes, 0, bytes.length);
+		ouputStream.flush();
+		ouputStream.close();
+	}
+
 }

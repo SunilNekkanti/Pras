@@ -174,7 +174,7 @@ public class PlanTypeController {
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
-		Pagination pagination = planTypeService.getPage(pageNo, pageSize);
+		Pagination pagination = planTypeService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.PLAN_TYPE_LIST, JsonConverter.getJsonObject(pagination));
 	}

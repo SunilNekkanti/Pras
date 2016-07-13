@@ -36,7 +36,7 @@ public class FacilityTypeDaoImpl extends HibernateBaseDao<FacilityType, Integer>
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -50,7 +50,7 @@ public class FacilityTypeDaoImpl extends HibernateBaseDao<FacilityType, Integer>
 
 		if (sSearch != null && !"".equals(sSearch)) {
 			or.add(Restrictions.ilike("description", "%" + sSearch + "%"))
-			.add(Restrictions.ilike("shortName", "%" + sSearch + "%"));
+					.add(Restrictions.ilike("shortName", "%" + sSearch + "%"));
 		}
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
@@ -121,18 +121,18 @@ public class FacilityTypeDaoImpl extends HibernateBaseDao<FacilityType, Integer>
 	 */
 	@Override
 	public Integer loadData(final Integer fileId, String tableName) {
-		
+
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery)
 				// .setInteger("fileId", fileId)
 				.executeUpdate();
 	}
-	
+
 	/**
 	 * @param name
 	 * @return

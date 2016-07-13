@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,6 @@ import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.BillType;
 import com.pfchoice.core.service.BillTypeService;
 
-
-
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
@@ -38,21 +35,19 @@ public class BillTypeController {
 	@Autowired
 	private BillTypeService billTypeService;
 
-	
-/*
-	@Autowired
-	@Qualifier("BillTypeValidator")
-	private Validator validator;
-
-	/**
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("BillTypeValidator") private Validator validator;
+	 * 
+	 * /**
+	 * 
 	 * @param binder
 	 *
-	@InitBinder("billType")
-	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
-	}
-	
-	*/
+	 * @InitBinder("billType") public void initBinder(WebDataBinder binder) {
+	 * binder.setValidator(validator); }
+	 * 
+	 */
 
 	/**
 	 * @return
@@ -61,7 +56,7 @@ public class BillTypeController {
 	public BillType createBillTypeModel() {
 		return new BillType();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -90,7 +85,6 @@ public class BillTypeController {
 		return Message.successMessage(CommonMessageContent.BILLTYPE_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
-	
 	/**
 	 * @param model
 	 * @return
@@ -161,7 +155,7 @@ public class BillTypeController {
 			"/user/billType/{id}/details" }, method = RequestMethod.GET)
 	public String viewProviderPage(@PathVariable Integer id, Model model) {
 
-		BillType dbBillType =billTypeService.findById(id);
+		BillType dbBillType = billTypeService.findById(id);
 		logger.info("Returning billType.getId()" + dbBillType.getId());
 
 		model.addAttribute("billType", dbBillType);
@@ -189,8 +183,8 @@ public class BillTypeController {
 		}
 
 		if (!billTypeService.isDescriptionUnique(billType.getId(), billType.getDescription())) {
-			FieldError insError = new FieldError("description", "description", billType.getDescription(), false, null, null,
-					billType.getDescription() + " already exist");
+			FieldError insError = new FieldError("description", "description", billType.getDescription(), false, null,
+					null, billType.getDescription() + " already exist");
 			bindingResult.addError(insError);
 			return TileDefinitions.BILLTYPEEDIT.toString();
 		}

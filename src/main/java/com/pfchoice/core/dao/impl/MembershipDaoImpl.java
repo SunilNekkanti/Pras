@@ -42,7 +42,7 @@ import com.pfchoice.core.entity.Membership;
  */
 @Repository
 public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> implements MembershipDao {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(MembershipDaoImpl.class);
 
 	/*
@@ -94,8 +94,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			final String sortdir) {
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
-				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-				.createAlias("status", "mbrStatus")
+				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "mbrStatus")
 				.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
@@ -110,7 +109,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0])))
 					.add(Restrictions.ilike("mbrStatus.description", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("countyCode.description", "%" + sSearch + "%"))
-					.add(Restrictions.sqlRestriction("CAST(DATE_FORMAT(mbr_dob, '%m/%d/%Y') AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+					.add(Restrictions.sqlRestriction("CAST(DATE_FORMAT(mbr_dob, '%m/%d/%Y') AS CHAR) like ?",
+							"%" + sSearch + "%", StringType.INSTANCE));
 		}
 		if (sSearchIns != null) {
 
@@ -123,7 +123,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
 			and.add(Restrictions.eq("ins.id", sSearchIns));
 		}
-       
+
 		if (sSearchHedisRule != null && sSearchHedisRule != 0) {
 			crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 			and.add(Restrictions.in("mbrHedisMeasureRule.hedisMeasureRule.id", ruleIds));
@@ -144,10 +144,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
-		if(totalCount == 0) {
+		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
-		}else{
-			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds))	;
+		} else {
+			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
 			if (sort != null && !"".equals(sort)) {
 				if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
@@ -167,11 +167,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			pagination.setTotalCount(totalCount);
 			return pagination;
 		}
-		
 
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -181,22 +179,20 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Pagination getMembershipActivityMonthPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
-			final Integer sSearchPrvdr, final Integer sSearchYear, final List<Integer> ruleIds, final String sort,
-			final String sortdir) {
+	public Pagination getMembershipActivityMonthPage(final int pageNo, final int pageSize, final String sSearch,
+			final Integer sSearchIns, final Integer sSearchPrvdr, final Integer sSearchYear,
+			final List<Integer> ruleIds, final String sort, final String sortdir) {
 
 		Criteria crit = createCriteria().createAlias("mbrActivityMonthList", "mbrActivityMonth")
-						.createAlias("mbrActivityMonth.prvdr", "prvdr")
-						.createAlias("mbrActivityMonth.ins", "insId");
+				.createAlias("mbrActivityMonth.prvdr", "prvdr").createAlias("mbrActivityMonth.ins", "insId");
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
 
 		if (sSearch != null && !"".equals(sSearch)) {
 			or.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
-					.add(Restrictions
-					.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+					.add(Restrictions.ilike("lastName", "%" + sSearch + "%")).add(Restrictions
+							.sqlRestriction("CAST(mbr_dob AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
 		}
 		if (sSearchIns != null) {
 
@@ -211,9 +207,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		if (sSearchYear != null && sSearchYear != ALL && sSearchYear != 0) {
 			and.add(Restrictions.sqlRestriction("CAST(activity_month AS CHAR) like ?", "%" + sSearchYear + "%",
 					StringType.INSTANCE));
-			
+
 		} else if (sSearchYear == ALL) {
-			
+
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
@@ -221,7 +217,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		and.add(Restrictions.eq("insId.activeInd", new Character('Y')));
 		crit.add(or);
 		crit.add(and);
-		
+
 		if (sort != null && !"".equals(sort)) {
 			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
 				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
@@ -241,22 +237,19 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
-		if(totalCount == 0) {
+		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
-		}else{
-			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds))	;
+		} else {
+			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
 			criteria.addOrder(Order.asc("firstName"));
 			criteria.addOrder(Order.asc("id"));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
 		}
-		
 
 	}
-	
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -266,13 +259,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Pagination getMembershipProblemPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
-			final Integer sSearchPrvdr, final Integer sSearchPbmRule, final List<Integer> ruleIds, final String sort,
-			final String sortdir) {
+	public Pagination getMembershipProblemPage(final int pageNo, final int pageSize, final String sSearch,
+			final Integer sSearchIns, final Integer sSearchPrvdr, final Integer sSearchPbmRule,
+			final List<Integer> ruleIds, final String sort, final String sortdir) {
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
-				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-				.createAlias("status", "mbrStatus")
+				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "mbrStatus")
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 		crit.createAlias("mbrProblemList", "mbrProblemList");
@@ -284,12 +276,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			or.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
-					.add(Restrictions
-							.sqlRestriction("CAST(DATE_FORMAT(mbr_dob, '%m/%d/%Y') AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE))
-					.add(Restrictions
-							.sqlRestriction("CAST(DATE_FORMAT(start_date, '%m/%d/%Y') AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE))
-					.add(Restrictions
-					.sqlRestriction("CAST(DATE_FORMAT(resolved_date, '%m/%d/%Y') AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
+					.add(Restrictions.sqlRestriction("CAST(DATE_FORMAT(mbr_dob, '%m/%d/%Y') AS CHAR) like ?",
+							"%" + sSearch + "%", StringType.INSTANCE))
+					.add(Restrictions.sqlRestriction("CAST(DATE_FORMAT(start_date, '%m/%d/%Y') AS CHAR) like ?",
+							"%" + sSearch + "%", StringType.INSTANCE))
+					.add(Restrictions.sqlRestriction("CAST(DATE_FORMAT(resolved_date, '%m/%d/%Y') AS CHAR) like ?",
+							"%" + sSearch + "%", StringType.INSTANCE));
 		}
 		if (sSearchIns != null) {
 
@@ -304,20 +296,20 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		if (sSearchPbmRule != null && sSearchPbmRule != ALL && sSearchPbmRule != 0) {
-			
+
 			and.add(Restrictions.eq("mbrProblemList.pbm.id", sSearchPbmRule));
 			and.add(Restrictions.eq("mbrProblemList.activeInd", new Character('Y')));
-			
+
 		} else if (sSearchPbmRule == ALL) {
-			
+
 			and.add(Restrictions.in("mbrProblemList.pbm.id", ruleIds));
 			and.add(Restrictions.eq("mbrProblemList.activeInd", new Character('Y')));
-			
+
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
 		and.add(Restrictions.ne("mbrStatus.description", "Terminated"));
-		
+
 		crit.add(or);
 		crit.add(and);
 
@@ -341,19 +333,16 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		List<Integer> MbrIds = (List<Integer>) crit.list();
 		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
 
-				   
-		if(totalCount == 0) {
+		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
-		}else{
+		} else {
 			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
 		}
-		
 
 	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -445,7 +434,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -471,7 +460,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		Disjunction or = Restrictions.disjunction();
 		Conjunction and = Restrictions.conjunction();
-		
+
 		if (sSearch != null && !"".equals(sSearch)) {
 			or.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
@@ -495,10 +484,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
-		
-		if (processClaim== FILTER_BY_PROCESSING_DATE)
-			and.add(Restrictions.between("mbrClaim.updatedDate",
-					new java.sql.Date(processingFrom.getTime()), new java.sql.Date(processingTo.getTime() + 86400000)));
+
+		if (processClaim == FILTER_BY_PROCESSING_DATE)
+			and.add(Restrictions.between("mbrClaim.updatedDate", new java.sql.Date(processingFrom.getTime()),
+					new java.sql.Date(processingTo.getTime() + 86400000)));
 		if (processClaim == FILTER_BY_HOSPOTALIZATION_DATE) {
 			and.add(Restrictions.sqlRestriction(" ? between claim_start_date and claim_end_date",
 					new java.sql.Date(processingFrom.getTime()), DateType.INSTANCE));
@@ -575,7 +564,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 		return entity;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -585,9 +574,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	public Integer loadDataCSV2Table(String fileName, String tableName) {
 
 		String loadDataQuery = null;
-		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
+		if (tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
-		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
+		else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
@@ -601,12 +590,12 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	@Override
 	public Boolean isDataExists(String tableName) {
 		boolean returnvalue = false;
-		StringBuilder sql = new StringBuilder(); 
-		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
-			  sql.append("SELECT count(*) FROM csv2Table_BH_Roster");
-		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
-			  sql.append("SELECT count(*) FROM csv2Table_AMG_Roster");
-		
+		StringBuilder sql = new StringBuilder();
+		if (tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
+			sql.append("SELECT count(*) FROM csv2Table_BH_Roster");
+		else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
+			sql.append("SELECT count(*) FROM csv2Table_AMG_Roster");
+
 		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql.toString()).uniqueResult()).intValue();
 		if (rowCount > 0) {
 			returnvalue = true;
@@ -623,20 +612,17 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	 * @see com.pfchoice.core.dao.MembershipDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer insId, final Integer fileId, final Integer activityMonth, final String tableName) {
-		StringBuilder loadDataQuery = new StringBuilder(); 
-		if(tableName.equals(FILE_TYPE_BH_MBR_ROSTER)){
+	public Integer loadData(final Integer insId, final Integer fileId, final Integer activityMonth,
+			final String tableName) {
+		StringBuilder loadDataQuery = new StringBuilder();
+		if (tableName.equals(FILE_TYPE_BH_MBR_ROSTER)) {
 			loadDataQuery.append(PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT));
-		}			
-		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER)){
+		} else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER)) {
 			loadDataQuery.append(PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT));
 		}
-		
-		
-		return getSession().createSQLQuery(loadDataQuery.toString())
-				.setInteger("insId", insId)
-				.setInteger("activityMonth", activityMonth)
-				.setInteger("fileId", fileId).executeUpdate();
+
+		return getSession().createSQLQuery(loadDataQuery.toString()).setInteger("insId", insId)
+				.setInteger("activityMonth", activityMonth).setInteger("fileId", fileId).executeUpdate();
 	}
 
 	/*
@@ -649,20 +635,19 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		Session session = getSession();
 		int rowsAffected = 0;
 		String table = null;
-		
-		if(tableName.equals( FILE_TYPE_BH_MBR_ROSTER))
-			table = "csv2Table_BH_Roster" ;
-		else if(tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
-			table = "csv2Table_AMG_Roster" ;
+
+		if (tableName.equals(FILE_TYPE_BH_MBR_ROSTER))
+			table = "csv2Table_BH_Roster";
+		else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
+			table = "csv2Table_AMG_Roster";
 
 		try {
-			rowsAffected = session.createSQLQuery("TRUNCATE TABLE "+table).executeUpdate();
+			rowsAffected = session.createSQLQuery("TRUNCATE TABLE " + table).executeUpdate();
 		} catch (Exception e) {
 			LOG.warn("exception " + e.getCause());
 		}
 		return rowsAffected;
 	}
-	
 
 	/*
 	 * (non-Javadoc)

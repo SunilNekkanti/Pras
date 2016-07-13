@@ -50,7 +50,7 @@ public interface MembershipProblemService {
 	 * @return
 	 */
 	MembershipProblem update(MembershipProblem bean);
-	
+
 	/**
 	 * @return
 	 */

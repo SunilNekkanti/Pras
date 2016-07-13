@@ -113,23 +113,27 @@ public class ICDMeasureDaoImpl extends HibernateBaseDao<ICDMeasure, Integer> imp
 		return ICDMeasure.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ICDMeasureDao#findByCode(java.lang.String)
 	 */
 	@Override
 	public ICDMeasure findByCode(final String code) {
 		return findUniqueByProperty("code", code);
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.ICDMeasureDao#findByCodes(java.lang.String[])
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ICDMeasure> findByCodes(final String[] icdCodes) {
-		Finder finder =  Finder.create("from ICDMeasure icd where  REPLACE(icd.code, '.','')  in (:code)");
-		finder.setParamList("code", icdCodes) ;
-		
-	   return find(finder);
+		Finder finder = Finder.create("from ICDMeasure icd where  REPLACE(icd.code, '.','')  in (:code)");
+		finder.setParamList("code", icdCodes);
+
+		return find(finder);
 	}
 }

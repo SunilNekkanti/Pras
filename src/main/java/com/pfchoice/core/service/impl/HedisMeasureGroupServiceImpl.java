@@ -61,6 +61,19 @@ public class HedisMeasureGroupServiceImpl implements HedisMeasureGroupService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.pfchoice.core.service.HedisMeasureGroupService#getPage(int, int
+	 * java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return hedisMeasureGroupDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.pfchoice.core.service.HedisMeasureGroupService#save(com.pfchoice.core
 	 * .entity.HedisMeasureGroup)

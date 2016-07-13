@@ -87,7 +87,7 @@ public class MembershipController {
 
 	@Autowired
 	private MembershipService membershipService;
-	
+
 	@Autowired
 	private FileService fileService;
 
@@ -105,7 +105,7 @@ public class MembershipController {
 
 	@Autowired
 	private HedisMeasureService hedisMeasureService;
-	
+
 	@Autowired
 	private FileTypeService fileTypeService;
 
@@ -463,7 +463,7 @@ public class MembershipController {
 
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
-		
+
 		List<MembershipProblem> mbrProblemList = dbMembership.getMbrProblemList();
 		model.addAttribute("mbrProblemList", mbrProblemList);
 
@@ -509,15 +509,15 @@ public class MembershipController {
 		Membership dbMembership = membershipService.findById(id);
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		List<MembershipHedisMeasure> mbrHedisMeasureListAll = new ArrayList<>();
-			
-		for(Integer hedisRuleId: hedisRuleIds){
+
+		for (Integer hedisRuleId : hedisRuleIds) {
 			List<MembershipHedisMeasure> mbrHedisMeasureList1 = mbrHedisMeasureList.stream()
 					.filter(mbrHedisMeasure -> mbrHedisMeasure.getHedisMeasureRule().getId() == hedisRuleId
 							&& mbrHedisMeasure.getDos() == null)
 					.collect(Collectors.toList());
 			mbrHedisMeasureListAll.addAll(mbrHedisMeasureList1);
 		}
-		
+
 		return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST,
 				JsonConverter.getJsonObject(mbrHedisMeasureListAll));
 	}
@@ -589,7 +589,7 @@ public class MembershipController {
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<Insurance>) page.getList();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -600,8 +600,7 @@ public class MembershipController {
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<FileType>) page.getList();
 	}
-	
-	
+
 	/**
 	 * @return
 	 */
@@ -609,22 +608,21 @@ public class MembershipController {
 	public String membershipRoster() {
 		return TileDefinitions.MEMBERSHIPROSTER.toString();
 	}
-	
-	
+
 	/**
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/membership/membershipRoster/fileProcessing.do",
 			"/user/membership/membershipRoster/fileProcessing.do" })
 	public String mbrRosterFileProcessing(Model model, @ModelAttribute("username") String username,
-			@RequestParam(required = true, value="insId") Integer insId,
-			@RequestParam(required = true, value="fileTypeId") Integer fileTypeId,
-			@RequestParam(required = false, value="activityMonth") Integer activityMonth,
+			@RequestParam(required = true, value = "insId") Integer insId,
+			@RequestParam(required = true, value = "fileTypeId") Integer fileTypeId,
+			@RequestParam(required = false, value = "activityMonth") Integer activityMonth,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
-		
-			logger.info("started file processsing for"+ activityMonth);
-			 
+
+		logger.info("started file processsing for" + activityMonth);
+
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
@@ -649,27 +647,27 @@ public class MembershipController {
 		}
 		logger.info("before file processing");
 		String mbrRoster = null;
-		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()+"&insId="+insId+"&fileTypeId="+fileTypeId+"&activityMonth="+activityMonth;
+		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName() + "&insId="
+				+ insId + "&fileTypeId=" + fileTypeId + "&activityMonth=" + activityMonth;
 		return mbrRoster;
 	}
-	
-	
+
 	/**
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membership/membershipRoster/list", "/user/membership/membershipRoster/list" })
 	public Message viewmembershipRosterList(@ModelAttribute("username") String username,
-			@RequestParam(required = true, value="insId") Integer insId,
-			@RequestParam(required = true, value="fileTypeId") Integer fileTypeId,
-			@RequestParam(required = true, value="activityMonth") Integer activityMonth,
+			@RequestParam(required = true, value = "insId") Integer insId,
+			@RequestParam(required = true, value = "fileTypeId") Integer fileTypeId,
+			@RequestParam(required = true, value = "activityMonth") Integer activityMonth,
 			@RequestParam(value = "fileName", required = true) String fileName) {
 
 		FileType fileType = fileTypeService.findById(fileTypeId);
 		String mbrRoster = fileType.getDescription();
 		Boolean dataExists = membershipService.isDataExists(mbrRoster);
 		if (dataExists) {
-			logger.info("Previous file processing is incomplete " );
+			logger.info("Previous file processing is incomplete ");
 			return Message.failMessage("Previous file processing is incomplete");
 		} else {
 			Integer fileId = 0;
@@ -699,19 +697,18 @@ public class MembershipController {
 				return Message.failMessage("ZERO records to process");
 			}
 
-			logger.info("processing  membershipRoster data" +new Date());
-		
+			logger.info("processing  membershipRoster data" + new Date());
+
 			Integer membershipLoadedData = membershipService.loadData(insId, fileId, activityMonth, mbrRoster);
 			logger.info("membershipLoadedData " + membershipLoadedData);
 			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
 			logger.info("membershipUnloadedData " + membershipUnloadedData);
-			
-			logger.info("processed  membership roster data" +new Date());
+
+			logger.info("processed  membership roster data" + new Date());
 
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, membershipLoadedData);
 		}
 	}
-	
 
 	/**
 	 * @param pageNo
@@ -731,10 +728,11 @@ public class MembershipController {
 			@RequestParam(required = true) List<Integer> ruleIds, @RequestParam(required = false) String sort,
 			@RequestParam(required = false) String sortdir) {
 
-		Pagination pagination = membershipService.getMembershipActivityMonthPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
-				sSearchActivityYear, ruleIds, sort, sortdir);;
-		return Message.successMessage(CommonMessageContent.MEMBERSHIP_ACTIVITY_LIST, JsonConverter.getJsonObject(pagination));
+		Pagination pagination = membershipService.getMembershipActivityMonthPage(pageNo, pageSize, sSearch, sSearchIns,
+				sSearchPrvdr, sSearchActivityYear, ruleIds, sort, sortdir);
+		;
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_ACTIVITY_LIST,
+				JsonConverter.getJsonObject(pagination));
 	}
-	
 
 }

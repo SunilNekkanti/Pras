@@ -60,7 +60,7 @@ public interface MembershipClaimDetailsDao {
 	 * @return
 	 */
 	Pagination getMbrClaimDetailsPage(Integer mbrHosId);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -74,6 +74,6 @@ public interface MembershipClaimDetailsDao {
 	 * @param processClaim
 	 * @return
 	 */
-	Pagination getMbrClaimDetailsByActivityMonth(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
-			String sort, String sortdir, List<Integer> monthPicker,  Integer processClaim);
+	Pagination getMbrClaimDetailsByActivityMonth(int pageNo, int pageSize, String sSearch, Integer sSearchIns,
+			Integer sSearchPrvdr, String sort, String sortdir, List<Integer> monthPicker, Integer processClaim);
 }

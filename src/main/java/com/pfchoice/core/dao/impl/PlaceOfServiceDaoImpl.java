@@ -109,7 +109,9 @@ public class PlaceOfServiceDaoImpl extends HibernateBaseDao<PlaceOfService, Inte
 		return PlaceOfService.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.PlaceOfServiceDao#findByCode(java.lang.String)
 	 */
 	@Override

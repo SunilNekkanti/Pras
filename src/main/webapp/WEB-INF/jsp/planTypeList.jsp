@@ -60,17 +60,15 @@
         	     "sAjaxSource" : '${context}/planType/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-                               { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "code","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"},
                                { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
                            ],
                   "aoColumnDefs": [ 
-                           		    { "sName": "id", "aTargets": [ 0 ] },
-                           		    { "sName": "code", "aTargets": [ 1 ],
+                           		    { "sName": "code", "aTargets": [ 0 ],
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="${context}/planType/'+full.id+'">'+data+'</a>';
                                     }},
-                                    { "sName": "description", "aTargets": [ 2 ] }
+                                    { "sName": "description", "aTargets": [ 1 ] }
                   ],          
         	     "bLengthChange": false,
         	     "sPaginationType": "full_numbers",
@@ -98,7 +96,6 @@
 				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
-						<th scope="col">Action</th>
 						<th scope="col">Code</th>
 						<th scope="col">Description</th>
 

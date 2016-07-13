@@ -77,15 +77,15 @@ public class MailConfig {
 
 		return config;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	@Bean
 	public DBConnection dBConnection() {
 		DBConnection dBConnection = new DBConnection();
-		System.out.println("===============================dBConnection is "+dBConnection.toString());
-		return  dBConnection;
+		System.out.println("===============================dBConnection is " + dBConnection.toString());
+		return dBConnection;
 	}
 
 }

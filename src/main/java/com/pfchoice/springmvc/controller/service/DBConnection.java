@@ -14,14 +14,14 @@ public class DBConnection {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	 @Resource
-	 public void setSessionFactory(final SessionFactory sessionFactory) {
-	        this.sessionFactory = sessionFactory;
-	 }
-	    
-	 public Connection getConnection() {
-	        final Session session = this.sessionFactory.getCurrentSession();
-	        SessionImpl sessionImpl = (SessionImpl) session;
-	        return   sessionImpl.connection();
-	 }
+	@Resource
+	public void setSessionFactory(final SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public Connection getConnection() {
+		final Session session = this.sessionFactory.getCurrentSession();
+		SessionImpl sessionImpl = (SessionImpl) session;
+		return sessionImpl.connection();
+	}
 }

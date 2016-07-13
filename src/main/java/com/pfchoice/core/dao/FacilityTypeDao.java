@@ -32,7 +32,7 @@ public interface FacilityTypeDao {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * 
 	 * @param pageNo
@@ -63,7 +63,7 @@ public interface FacilityTypeDao {
 	 * @return
 	 */
 	Integer loadData(Integer fileId, String tableName);
-	
+
 	/**
 	 * @paramfacilityTypeName
 	 * @return

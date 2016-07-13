@@ -47,7 +47,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "description")
 	private String description;
-	
+
 	@Expose
 	@Column(name = "short_description")
 	private String shortDescription;
@@ -56,7 +56,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
 	private Insurance insId;
-	
+
 	@Expose
 	@Column(name = "problem_flag")
 	private Character problemFlag;
@@ -188,7 +188,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * @return the shortDescription
 	 */
@@ -197,7 +197,8 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param shortDescription the shortDescription to set
+	 * @param shortDescription
+	 *            the shortDescription to set
 	 */
 	public void setShortDescription(String shortDescription) {
 		this.shortDescription = shortDescription;
@@ -217,7 +218,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	public void setInsId(Insurance insId) {
 		this.insId = insId;
 	}
-	
+
 	/**
 	 * @return the problemFlag
 	 */
@@ -226,7 +227,8 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param problemFlag the problemFlag to set
+	 * @param problemFlag
+	 *            the problemFlag to set
 	 */
 	public void setProblemFlag(Character problemFlag) {
 		this.problemFlag = problemFlag;

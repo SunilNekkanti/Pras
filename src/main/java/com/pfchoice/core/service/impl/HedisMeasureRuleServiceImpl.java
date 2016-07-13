@@ -99,7 +99,7 @@ public class HedisMeasureRuleServiceImpl implements HedisMeasureRuleService {
 		Updater<HedisMeasureRule> updater = new Updater<>(bean, Updater.UpdateMode.MAX);
 		updater.exclude("createdBy");
 		updater.exclude("createdDate");
-		
+
 		return hedisMeasureRuleDao.updateByUpdater(updater);
 	}
 

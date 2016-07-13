@@ -21,16 +21,24 @@ public class MembershipActivityMonthServiceImpl implements MembershipActivityMon
 	@Autowired
 	private MembershipActivityMonthDao membershipActivityMonthDao;
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipActivityMonthService#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipActivityMonthService#deleteById(java.
+	 * lang.Integer)
 	 */
 	@Override
 	public MembershipActivityMonth deleteById(final Integer id) {
 		return membershipActivityMonthDao.deleteById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipActivityMonthService#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipActivityMonthService#findById(java.
+	 * lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -38,8 +46,12 @@ public class MembershipActivityMonthServiceImpl implements MembershipActivityMon
 		return membershipActivityMonthDao.findById(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipActivityMonthService#getPage(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.MembershipActivityMonthService#getPage(int,
+	 * int)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -47,16 +59,22 @@ public class MembershipActivityMonthServiceImpl implements MembershipActivityMon
 		return membershipActivityMonthDao.getPage(pageNo, pageSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipActivityMonthService#save(com.pfchoice.core.entity.MembershipActivityMonth)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipActivityMonthService#save(com.
+	 * pfchoice.core.entity.MembershipActivityMonth)
 	 */
 	@Override
 	public MembershipActivityMonth save(final MembershipActivityMonth bean) {
 		return membershipActivityMonthDao.save(bean);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MembershipActivityMonthService#update(com.pfchoice.core.entity.MembershipActivityMonth)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.service.MembershipActivityMonthService#update(com.
+	 * pfchoice.core.entity.MembershipActivityMonth)
 	 */
 	@Override
 	public MembershipActivityMonth update(final MembershipActivityMonth bean) {

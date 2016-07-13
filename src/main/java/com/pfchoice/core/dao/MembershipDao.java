@@ -54,7 +54,7 @@ public interface MembershipDao {
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
 			Integer sSearchHedisCode, final List<Integer> ruleIds, String sort, String sortdir);
-	
+
 	/**
 	 * 
 	 * @param pageNo
@@ -68,8 +68,8 @@ public interface MembershipDao {
 	 * @param sortdir
 	 * @return
 	 */
-	Pagination getMembershipActivityMonthPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns, Integer sSearchPrvdr,
-			Integer sSearchYear, final List<Integer> ruleIds, String sort, String sortdir);
+	Pagination getMembershipActivityMonthPage(int pageNo, int pageSize, String sSearch, Integer sSearchIns,
+			Integer sSearchPrvdr, Integer sSearchYear, final List<Integer> ruleIds, String sort, String sortdir);
 
 	/**
 	 * 
@@ -132,7 +132,7 @@ public interface MembershipDao {
 	 * @return
 	 */
 	Membership updateByUpdater(Updater<Membership> updater);
-	
+
 	/**
 	 * @return
 	 */
@@ -141,7 +141,7 @@ public interface MembershipDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer insId, Integer fileId,  Integer activityMonth, String tablename);
+	Integer loadData(Integer insId, Integer fileId, Integer activityMonth, String tablename);
 
 	/**
 	 * @return

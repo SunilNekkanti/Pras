@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Hospital;
 import com.pfchoice.core.service.HospitalService;
 
-
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
@@ -37,21 +35,19 @@ public class HospitalController {
 	@Autowired
 	private HospitalService hospitalService;
 
-	
-/*
-	@Autowired
-	@Qualifier("HospitalValidator")
-	private Validator validator;
-
-	/**
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("HospitalValidator") private Validator validator;
+	 * 
+	 * /**
+	 * 
 	 * @param binder
 	 *
-	@InitBinder("hospital")
-	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
-	}
-	
-	*/
+	 * @InitBinder("hospital") public void initBinder(WebDataBinder binder) {
+	 * binder.setValidator(validator); }
+	 * 
+	 */
 
 	/**
 	 * @return
@@ -60,7 +56,7 @@ public class HospitalController {
 	public Hospital createHospitalModel() {
 		return new Hospital();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -89,7 +85,6 @@ public class HospitalController {
 		return Message.successMessage(CommonMessageContent.HOSPITAL_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
-	
 	/**
 	 * @param model
 	 * @return

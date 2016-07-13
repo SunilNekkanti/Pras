@@ -99,16 +99,19 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 	protected Class<MembershipProblem> getEntityClass() {
 		return MembershipProblem.class;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipProblemDao#loadData(java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProblemDao#loadData(java.lang.Integer)
 	 */
 	@Override
 	public Integer loadData(final Integer fileId, final String tableName) {
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();

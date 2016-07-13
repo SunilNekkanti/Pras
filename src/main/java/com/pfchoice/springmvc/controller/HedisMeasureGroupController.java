@@ -176,7 +176,7 @@ public class HedisMeasureGroupController {
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
-		Pagination pagination = hedisMeasureGroupService.getPage(pageNo, pageSize);
+		Pagination pagination = hedisMeasureGroupService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.HEDIS_MEASURE_GROUP_LIST,
 				JsonConverter.getJsonObject(pagination));

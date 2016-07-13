@@ -59,14 +59,14 @@ public interface ICDMeasureDao {
 	 * @return
 	 */
 	ICDMeasure updateByUpdater(Updater<ICDMeasure> updater);
-	
+
 	/**
 	 * 
 	 * @param code
 	 * @return
 	 */
 	ICDMeasure findByCode(String code);
-	
+
 	/**
 	 * 
 	 * @param code

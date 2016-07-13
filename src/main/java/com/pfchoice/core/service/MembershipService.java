@@ -49,7 +49,7 @@ public interface MembershipService {
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchHedisCode,
 			final List<Integer> ruleIds, String sort, String sortdir);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -62,8 +62,8 @@ public interface MembershipService {
 	 * @param sortdir
 	 * @return
 	 */
-	Pagination getMembershipActivityMonthPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, int sSearchYear,
-			final List<Integer> ruleIds, String sort, String sortdir);
+	Pagination getMembershipActivityMonthPage(int pageNo, int pageSize, String sSearch, int sSearchIns,
+			int sSearchPrvdr, int sSearchYear, final List<Integer> ruleIds, String sort, String sortdir);
 
 	/**
 	 * @param pageNo
@@ -123,7 +123,7 @@ public interface MembershipService {
 	 * @return
 	 */
 	Membership update(Membership bean);
-	
+
 	/**
 	 * @return
 	 */

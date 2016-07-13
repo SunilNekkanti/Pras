@@ -42,7 +42,7 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
 	private Membership mbr;
-	
+
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
@@ -76,7 +76,6 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	@Column(name = "bill_type")
 	private String billTypec;
 
-	
 	@Expose
 	@Column(name = "dischargestatus")
 	private String dischargeStatus;
@@ -171,9 +170,9 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 
 	@OneToMany(mappedBy = "mbrClaim", fetch = FetchType.LAZY)
 	private List<MembershipClaimDetails> mbrClaimDetailsList;
-	
+
 	@Expose
-	@Column(name = "diagnoses", insertable=false,updatable=false)
+	@Column(name = "diagnoses", insertable = false, updatable = false)
 	@Convert(converter = ICDMeasureListConverter.class)
 	private List<ICDMeasure> icdCodesList;
 
@@ -700,7 +699,6 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	public void setBillType(BillType billType) {
 		this.billType = billType;
 	}
-	
 
 	/**
 	 * @return the icdCodesList
@@ -710,7 +708,8 @@ public class MembershipClaim extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @param icdCodesList the icdCodesList to set
+	 * @param icdCodesList
+	 *            the icdCodesList to set
 	 */
 	public void setIcdCodesList(List<ICDMeasure> icdCodesList) {
 		this.icdCodesList = icdCodesList;

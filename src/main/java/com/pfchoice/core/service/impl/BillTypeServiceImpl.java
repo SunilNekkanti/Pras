@@ -25,8 +25,7 @@ public class BillTypeServiceImpl implements BillTypeService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.pfchoice.core.service.BillType#deleteById(java.lang.Integer)
+	 * @see com.pfchoice.core.service.BillType#deleteById(java.lang.Integer)
 	 */
 	@Override
 	public BillType deleteById(final Integer id) {
@@ -36,8 +35,7 @@ public class BillTypeServiceImpl implements BillTypeService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.pfchoice.core.service.BillType#findById(java.lang.Integer)
+	 * @see com.pfchoice.core.service.BillType#findById(java.lang.Integer)
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -55,7 +53,7 @@ public class BillTypeServiceImpl implements BillTypeService {
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		return billTypeDao.getPage(pageNo, pageSize);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -68,7 +66,6 @@ public class BillTypeServiceImpl implements BillTypeService {
 			final String sortdir) {
 		return billTypeDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -97,7 +94,6 @@ public class BillTypeServiceImpl implements BillTypeService {
 		return billTypeDao.updateByUpdater(updater);
 	}
 
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -122,7 +118,7 @@ public class BillTypeServiceImpl implements BillTypeService {
 		BillType billType = billTypeDao.findByDescription(billTypeDescription);
 		return billType;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 

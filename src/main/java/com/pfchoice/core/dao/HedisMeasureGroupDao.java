@@ -35,6 +35,17 @@ public interface HedisMeasureGroupDao {
 
 	/**
 	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+
+	/**
+	 * 
 	 * @param bean
 	 * @return
 	 */

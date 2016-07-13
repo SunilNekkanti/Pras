@@ -14,10 +14,12 @@ import com.pfchoice.core.entity.MembershipActivityMonth;
  * @author Sarath
  */
 @Repository
-public class MembershipActivityMonthDaoImpl extends HibernateBaseDao<MembershipActivityMonth, Integer> implements MembershipActivityMonthDao {
+public class MembershipActivityMonthDaoImpl extends HibernateBaseDao<MembershipActivityMonth, Integer>
+		implements MembershipActivityMonthDao {
 
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pfchoice.core.dao.MembershipActivityMonthDao#getPage(int, int)
 	 */
 	@Override
@@ -28,18 +30,23 @@ public class MembershipActivityMonthDaoImpl extends HibernateBaseDao<MembershipA
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipActivityMonthDao#findById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pfchoice.core.dao.MembershipActivityMonthDao#findById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public MembershipActivityMonth findById(final Integer id) {
 		return get(id);
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipActivityMonthDao#save(com.pfchoice.core.entity.MembershipActivityMonth)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipActivityMonthDao#save(com.pfchoice.core.
+	 * entity.MembershipActivityMonth)
 	 */
 	@Override
 	public MembershipActivityMonth save(final MembershipActivityMonth bean) {
@@ -47,9 +54,12 @@ public class MembershipActivityMonthDaoImpl extends HibernateBaseDao<MembershipA
 		return bean;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MembershipActivityMonthDao#deleteById(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipActivityMonthDao#deleteById(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public MembershipActivityMonth deleteById(final Integer id) {

@@ -174,7 +174,7 @@ public class FileTypeController {
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
-		Pagination pagination = fileTypeService.getPage(pageNo, pageSize);
+		Pagination pagination = fileTypeService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.FILE_TYPE_LIST, JsonConverter.getJsonObject(pagination));
 	}

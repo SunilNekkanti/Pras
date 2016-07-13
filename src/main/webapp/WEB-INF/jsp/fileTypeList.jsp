@@ -60,12 +60,10 @@
         	     "sAjaxSource" : '${context}/fileType/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-                               { "mDataProp": "code", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
                            ],
                   "aoColumnDefs": [ 
-                           		    { "sName": "code", "aTargets": [ 0 ] },
-                           		    { "sName": "description", "aTargets": [ 1 ],
+                           		    { "sName": "description", "aTargets": [ 0 ],
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="${context}/fileType/'+full.code+'">'+data+'</a>';
                                     }}
@@ -97,15 +95,10 @@
 				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
-						<th scope="col">Action</th>
 						<th scope="col">Description</th>
-
-
 					</tr>
 				</thead>
-
 				<tbody>
-
 				</tbody>
 			</table>
 

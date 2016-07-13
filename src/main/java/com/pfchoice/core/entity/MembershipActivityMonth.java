@@ -38,7 +38,6 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	@Column(name = "activity_month")
 	private Integer activityMonth;
 
-	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "mbr_id", nullable = false, referencedColumnName = "mbr_id")
 	private Membership mbr;
@@ -47,12 +46,12 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prvdr_id", nullable = false, referencedColumnName = "prvdr_id")
 	private Provider prvdr;
-	
+
 	@Expose
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ins_id", nullable = false, referencedColumnName = "insurance_id")
 	private Insurance ins;
-	
+
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "file_id", nullable = false, referencedColumnName = "file_id")
@@ -95,7 +94,8 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	}
 
 	/**
-	 * @param activityMonth the activityMonth to set
+	 * @param activityMonth
+	 *            the activityMonth to set
 	 */
 	public void setActivityMonth(Integer activityMonth) {
 		this.activityMonth = activityMonth;
@@ -109,7 +109,8 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	}
 
 	/**
-	 * @param mbr the mbr to set
+	 * @param mbr
+	 *            the mbr to set
 	 */
 	public void setMbr(Membership mbr) {
 		this.mbr = mbr;
@@ -123,7 +124,8 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	}
 
 	/**
-	 * @param prvdr the prvdr to set
+	 * @param prvdr
+	 *            the prvdr to set
 	 */
 	public void setPrvdr(Provider prvdr) {
 		this.prvdr = prvdr;
@@ -137,7 +139,8 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	}
 
 	/**
-	 * @param insId the insId to set
+	 * @param insId
+	 *            the insId to set
 	 */
 	public void setIns(Insurance ins) {
 		this.ins = ins;
@@ -151,7 +154,8 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	}
 
 	/**
-	 * @param file the file to set
+	 * @param file
+	 *            the file to set
 	 */
 	public void setFile(File file) {
 		this.file = file;

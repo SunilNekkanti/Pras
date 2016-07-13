@@ -60,18 +60,16 @@
         	     "sAjaxSource" : '${context}/frequencyType/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-                               { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
                                { "mDataProp": "shortName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
                              
                            ],
                   "aoColumnDefs": [ 
-                           		    { "sName": "id", "aTargets": [ 0 ] },
-                           		    { "sName": "description", "aTargets": [ 1 ],
+                           		    { "sName": "description", "aTargets": [ 0 ],
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="${context}/frequencyType/'+full.id+'">'+data+'</a>';
                                     }},
-                                    { "sName": "shortName", "aTargets": [ 2 ] }
+                                    { "sName": "shortName", "aTargets": [ 1 ] }
                                  
                   ],          
         	     "bLengthChange": false,
@@ -100,7 +98,6 @@
 				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
-						<th scope="col">Action</th>
 						<th scope="col">Description</th>
 						<th scope="col">Name</th>
 					</tr>

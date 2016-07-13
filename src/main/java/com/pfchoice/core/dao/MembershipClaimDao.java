@@ -41,7 +41,7 @@ public interface MembershipClaimDao {
 	 * @return
 	 */
 	MembershipClaim save(MembershipClaim bean);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize

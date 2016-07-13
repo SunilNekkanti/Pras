@@ -98,10 +98,14 @@ public class ICDMeasureServiceImpl implements ICDMeasureService {
 		return icdMeasureDao.updateByUpdater(updater);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.ICDMeasureService#findByCodes(java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.service.ICDMeasureService#findByCodes(java.lang.String[
+	 * ])
 	 */
-	public List<ICDMeasure> findByCodes(final String[] icdCodes){
+	public List<ICDMeasure> findByCodes(final String[] icdCodes) {
 		return icdMeasureDao.findByCodes(icdCodes);
 	}
 }

@@ -28,7 +28,7 @@ public interface BillTypeService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -38,7 +38,6 @@ public interface BillTypeService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
-	
 
 	/**
 	 * @param bean
@@ -64,7 +63,7 @@ public interface BillTypeService {
 	 * @return
 	 */
 	boolean isDescriptionUnique(Integer id, String billTypeDescription);
-	
+
 	/**
 	 * @param fileId
 	 * @return

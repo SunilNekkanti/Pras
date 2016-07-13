@@ -31,15 +31,15 @@ public interface SystemDefaultProperties {
 	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "C:\\Softwares\\";
 
 	String QUERY_TYPE_INSERT = "_insert";
-	
+
 	String QUERY_TYPE_BH_INSERT = "_bh_insert";
 
 	String QUERY_TYPE_LOAD = "_load";
-	
+
 	String QUERY_TYPE_BH_LOAD = "_bh_load";
 
 	String QUERY_TYPE_UPDATE = "_update";
-	
+
 	String QUERY_TYPE_BH_UPDATE = "_bh_update";
 
 	String SQL_QUERY_EXTN = ".sql";
@@ -55,7 +55,7 @@ public interface SystemDefaultProperties {
 	String FILE_TYPE_AMG_MBR_CLAIM = "AMG Membership Claim";
 
 	String FILE_TYPE_BH_MBR_CLAIM = "BH Membership Claim";
-	
+
 	String FILE_TYPE_AMG_MBR_ROSTER = "AMG Membership Roster";
 
 	String FILE_TYPE_BH_MBR_ROSTER = "BH Membership Roster";
@@ -69,9 +69,9 @@ public interface SystemDefaultProperties {
 	int CLAIM = 0;
 
 	int HOSPITALIZATION = 1;
-	
+
 	int ACCEPTABLE_CLAIM = 1;
-	
+
 	int UNACCEPTABLE_CLAIM = 2;
 
 }

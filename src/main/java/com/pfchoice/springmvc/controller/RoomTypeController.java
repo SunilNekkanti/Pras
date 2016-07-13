@@ -174,7 +174,7 @@ public class RoomTypeController {
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
-		Pagination pagination = roomTypeService.getPage(pageNo, pageSize);
+		Pagination pagination = roomTypeService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.FILE_TYPE_LIST, JsonConverter.getJsonObject(pagination));
 	}

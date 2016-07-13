@@ -296,7 +296,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		formatterRegistry.addFormatter(roleFormatter);
 		formatterRegistry.addFormatter(stateFormatter);
 		formatterRegistry.addFormatter(zipCodeFormatter);
-		}
+	}
 
 	/**
 	 * @return
@@ -309,5 +309,5 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 		multipartResolver.setDefaultEncoding("utf-8");
 		return multipartResolver;
 	}
-	
+
 }

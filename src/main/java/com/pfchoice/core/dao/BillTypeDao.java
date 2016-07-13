@@ -57,17 +57,17 @@ public interface BillTypeDao {
 	 * @return
 	 */
 	BillType updateByUpdater(Updater<BillType> updater);
-	
+
 	/**
 	 * @param billtypeName
 	 * @return
 	 */
 	BillType findByDescription(String billTypeDescription);
-	
+
 	/**
 	 * @param fileId
 	 * @return
 	 */
-	Integer loadData(Integer fileId , String tableName);
+	Integer loadData(Integer fileId, String tableName);
 
 }

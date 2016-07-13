@@ -67,7 +67,7 @@ public interface MembershipClaimService {
 	 * @return
 	 */
 	Integer updateData(Integer fileId, String tableName);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize

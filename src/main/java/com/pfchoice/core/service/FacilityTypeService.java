@@ -28,7 +28,7 @@ public interface FacilityTypeService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-	
+
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -38,7 +38,6 @@ public interface FacilityTypeService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
-
 
 	/**
 	 * @param bean
@@ -57,7 +56,7 @@ public interface FacilityTypeService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId, String tableName);
-	
+
 	/**
 	 * @param Description
 	 * @return

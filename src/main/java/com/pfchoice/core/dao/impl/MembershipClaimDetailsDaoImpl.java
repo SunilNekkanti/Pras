@@ -192,23 +192,18 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
-			Criteria criteria = createCriteria()
-					.createAlias("mbrClaim", "mbrClaim")
-					.createAlias("mbrClaim.mbr", "mbr")
-					.createAlias("cpt", "cpt", JoinType.LEFT_OUTER_JOIN)
-					.createAlias("mbrClaim.prvdr", "prvdr")
+			Criteria criteria = createCriteria().createAlias("mbrClaim", "mbrClaim").createAlias("mbrClaim.mbr", "mbr")
+					.createAlias("cpt", "cpt", JoinType.LEFT_OUTER_JOIN).createAlias("mbrClaim.prvdr", "prvdr")
 					.createAlias("mbrClaim.ins", "ins")
 					.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
-			
+
 			criteria.add(Restrictions.in("id", MbrClaimDetailIds));
-			
-			criteria.addOrder(Order.asc("mbr.lastName"))
-					.addOrder(Order.asc("mbr.firstName"))
-					.addOrder(Order.asc("mbrClaim.claimNumber"))
-					.addOrder(Order.asc("claimLineseqNbr"));
-			
+
+			criteria.addOrder(Order.asc("mbr.lastName")).addOrder(Order.asc("mbr.firstName"))
+					.addOrder(Order.asc("mbrClaim.claimNumber")).addOrder(Order.asc("claimLineseqNbr"));
+
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 

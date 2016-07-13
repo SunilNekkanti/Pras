@@ -1,6 +1,5 @@
 package com.pfchoice.core.dao.impl;
 
-
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -37,7 +36,7 @@ public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> impleme
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -51,7 +50,7 @@ public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> impleme
 
 		if (sSearch != null && !"".equals(sSearch)) {
 			or.add(Restrictions.ilike("description", "%" + sSearch + "%"))
-			.add(Restrictions.ilike("shortName", "%" + sSearch + "%"));
+					.add(Restrictions.ilike("shortName", "%" + sSearch + "%"));
 		}
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
@@ -115,7 +114,6 @@ public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> impleme
 		return BillType.class;
 	}
 
-	
 	/**
 	 * @param name
 	 * @return
@@ -124,7 +122,7 @@ public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> impleme
 	public BillType findByDescription(String billTypeDescription) {
 		return findUniqueByProperty("description", billTypeDescription);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -132,11 +130,11 @@ public class BillTypeDaoImpl extends HibernateBaseDao<BillType, Integer> impleme
 	 */
 	@Override
 	public Integer loadData(final Integer fileId, String tableName) {
-		
+
 		String loadDataQuery = null;
-		if(tableName == FILE_TYPE_BH_MBR_CLAIM)
+		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if(tableName == FILE_TYPE_AMG_MBR_CLAIM)
+		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery)

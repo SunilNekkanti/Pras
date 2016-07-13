@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.FacilityType;
 import com.pfchoice.core.service.FacilityTypeService;
 
-
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
@@ -37,21 +35,19 @@ public class FacilityTypeController {
 	@Autowired
 	private FacilityTypeService facilityTypeService;
 
-	
-/*
-	@Autowired
-	@Qualifier("FacilityTypeValidator")
-	private Validator validator;
-
-	/**
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("FacilityTypeValidator") private Validator validator;
+	 * 
+	 * /**
+	 * 
 	 * @param binder
 	 *
-	@InitBinder("facilityType")
-	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(validator);
-	}
-	
-	*/
+	 * @InitBinder("facilityType") public void initBinder(WebDataBinder binder)
+	 * { binder.setValidator(validator); }
+	 * 
+	 */
 
 	/**
 	 * @return
@@ -60,7 +56,7 @@ public class FacilityTypeController {
 	public FacilityType createFacilityTypeModel() {
 		return new FacilityType();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -89,7 +85,6 @@ public class FacilityTypeController {
 		return Message.successMessage(CommonMessageContent.FACILITYTYPE_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
-	
 	/**
 	 * @param model
 	 * @return
@@ -136,8 +131,8 @@ public class FacilityTypeController {
 		}
 
 		if (facilityTypeService.findByDescription(facilityType.getDescription()) != null) {
-			FieldError facilityError = new FieldError("description", "description", facilityType.getDescription(), false, null, null,
-					facilityType.getDescription() + " already exist");
+			FieldError facilityError = new FieldError("description", "description", facilityType.getDescription(),
+					false, null, null, facilityType.getDescription() + " already exist");
 			bindingResult.addError(facilityError);
 			return TileDefinitions.FACILITYTYPENEW.toString();
 		}
@@ -177,8 +172,9 @@ public class FacilityTypeController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/admin/facilityType/{id}/save.do", }, method = RequestMethod.POST, params = { "update" })
-	public String updateFacilityTypeAction(@PathVariable Integer id, @ModelAttribute @Validated FacilityType facilityType,
-			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+	public String updateFacilityTypeAction(@PathVariable Integer id,
+			@ModelAttribute @Validated FacilityType facilityType, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
 		facilityType.setActiveInd('Y');
 		logger.info("facility type id is" + id);
 		if (bindingResult.hasErrors()) {
@@ -188,8 +184,8 @@ public class FacilityTypeController {
 		}
 
 		if (facilityTypeService.findByDescription(facilityType.getDescription()) != null) {
-			FieldError facilityError = new FieldError("description", "description", facilityType.getDescription(), false, null, null,
-					facilityType.getDescription() + " already exist");
+			FieldError facilityError = new FieldError("description", "description", facilityType.getDescription(),
+					false, null, null, facilityType.getDescription() + " already exist");
 			bindingResult.addError(facilityError);
 			return TileDefinitions.FACILITYTYPEEDIT.toString();
 		}
