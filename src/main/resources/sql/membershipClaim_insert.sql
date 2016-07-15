@@ -21,5 +21,5 @@ csv2AmgClaim.TIN,csv2AmgClaim.DX_TYPE_CD,csv2AmgClaim.PROC_TYPE_CD,
  JOIN reference_contract rc on  rc.prvdr_id= mp.prvdr_id and rc.insurance_id=mi.ins_id
  JOIN contract c on c.ref_contract_Id = rc.ref_contract_Id and c.PCP_PROVIDER_NBR = csv2AmgClaim.PCP_PROVIDER_NBR
 LEFT OUTER JOIN lu_facility_type lft on lft.description = csv2AmgClaim.FACILITY_TYPE_DESC
-LEFT OUTER JOIN membership_claims mc on mc.mbr_id =  mi.mbr_id
+LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2AmgClaim.CLAIMNUMBER
 WHERE  mc.claim_id_number is null
