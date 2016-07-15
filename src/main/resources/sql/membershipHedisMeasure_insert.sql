@@ -19,8 +19,10 @@ now() created_date, now() updated_date,'sarath' created_by ,'sarath' updated_by,
 
  FROM  hedis_measure_rule     hmr
  join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
- join membership m on mi.mbr_id =m.mbr_id  and  datediff( current_date(),m.mbr_dob)/365.25 between hmr.lower_age_limit and hmr.upper_age_limit 
- and case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end
+ join membership m on mi.mbr_id =m.mbr_id  and 
+    case when hmr.lower_age_limit is not null then datediff( current_date(),m.mbr_dob)/365.25 >=  hmr.lower_age_limit else 1= 1 end and
+        case when hmr.upper_age_limit is not null then datediff( current_date(),m.mbr_dob)/365.25 < hmr.upper_age_limit else 1=1 end and
+        case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end
  join membership_provider mprvdr  on  mi.mbr_id=mprvdr.mbr_id
  join hedis_cpt_measure hcptm on hcptm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id  
   JOIN cpt_measure  cpt on    hcptm.cpt_id =cpt.cpt_id  
