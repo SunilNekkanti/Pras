@@ -93,7 +93,6 @@ public class XLSX2CSV {
 			currentCol = -1;
 		}
 
-		@SuppressWarnings("unused")
 		public void endRow(int rowNum) {
 			// Ensure the minimum number of columns
 			for (int i = currentCol; i < minColumns; i++) {
@@ -130,11 +129,11 @@ public class XLSX2CSV {
 				output.append(formattedValue);
 			} catch (NumberFormatException e) {
 				try{
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
-					LocalDate localdate  = LocalDate.parse(formattedValue, formatter);
+					LocalDate localdate  = parseDateString(formattedValue);
 					if(localdate.isAfter(LocalDate.now())){
 						localdate = localdate.plusYears(-100);
 					}
+					
 					DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 					String formattedDate  =   localdate.format(format); 
 					    output.append('"');
@@ -145,7 +144,22 @@ public class XLSX2CSV {
 					output.append(formattedValue);
 					output.append('"');
 				}
+				
 			}
+			
+		}
+		
+		LocalDate parseDateString(String dateString){
+			String[] dateFormats = {"M/d/yy", "M/dd/yy", "MM/d/yy","MM/dd/yy"};
+			for( String dateFormat : dateFormats ){
+				try{
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+					return LocalDate.parse(dateString, formatter);
+				}catch (Exception e){
+				}
+			}
+			return null;
+			
 		}
 
 		@Override
