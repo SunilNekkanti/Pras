@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 
 import java.io.FileNotFoundException;

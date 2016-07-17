@@ -1,6 +1,5 @@
 package com.pfchoice.core.entity.converter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pfchoice.core.dao.ICDMeasureDao;
-import com.pfchoice.core.entity.ICDMeasure;
 
 @SuppressWarnings("rawtypes")
 @Component

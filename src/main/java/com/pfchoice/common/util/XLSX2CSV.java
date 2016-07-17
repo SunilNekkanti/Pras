@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -63,6 +65,7 @@ import org.xml.sax.XMLReader;
  * {@link SheetContentsHandler} and no SAX code needed of your own!
  */
 public class XLSX2CSV {
+	
 	/**
 	 * Uses the XSSF Event SAX helpers to do most of the work of parsing the
 	 * Sheet XML, and outputs the contents as a (basic) CSV.
@@ -90,6 +93,7 @@ public class XLSX2CSV {
 			currentCol = -1;
 		}
 
+		@SuppressWarnings("unused")
 		public void endRow(int rowNum) {
 			// Ensure the minimum number of columns
 			for (int i = currentCol; i < minColumns; i++) {
@@ -125,9 +129,22 @@ public class XLSX2CSV {
 				Double.parseDouble(formattedValue);
 				output.append(formattedValue);
 			} catch (NumberFormatException e) {
-				output.append('"');
-				output.append(formattedValue);
-				output.append('"');
+				try{
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+					LocalDate localdate  = LocalDate.parse(formattedValue, formatter);
+					if(localdate.isAfter(LocalDate.now())){
+						localdate = localdate.plusYears(-100);
+					}
+					DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+					String formattedDate  =   localdate.format(format); 
+					    output.append('"');
+						output.append(formattedDate);
+						output.append('"');
+				}catch (Exception ex) {
+					output.append('"');
+					output.append(formattedValue);
+					output.append('"');
+				}
 			}
 		}
 
@@ -142,6 +159,7 @@ public class XLSX2CSV {
 			output.append('\n');
 
 		}
+		
 	}
 
 	///////////////////////////////////////

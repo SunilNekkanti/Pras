@@ -25,18 +25,13 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.annotation.Resource;
 import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.internal.SessionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,11 +53,6 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class PrasUtil {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MembershipHospitalizationDaoImpl.class);
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	private Connection connection;
 
 	/**
 	 * 

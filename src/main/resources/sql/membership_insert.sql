@@ -2,7 +2,9 @@ drop table if exists temp_membership ;
 create temporary table temp_membership  as
 select  substring_index(c2m.Membername,',',1) as lastname,substring_index(c2m.Membername,',',-1) as firstname,
 lg.gender_id sex, lc.code county,
- DATE_FORMAT(str_to_date(dob , '%c/%e/%Y %H:%i'),'%Y-%c-%e') dob,
+ case when dob like '%/%/% %:%' then DATE_FORMAT(str_to_date(dob , '%c/%e/%Y %H:%i'),'%Y-%c-%e')
+       when dob like '%/%/%' then DATE_FORMAT(str_to_date(dob , '%c/%e/%Y'),'%Y-%c-%e')
+       end     dob,
 case when c2m.status = 'ENR' then 1
      when c2m.status = 'DIS' then 3
      else  2 
@@ -10,10 +12,10 @@ case when c2m.status = 'ENR' then 1
 convert(c2m.MCDMCR,unsigned) MCDMCR,
 :fileId fileId,
 :insId ins_id,
-cast( str_to_date(MEMBEREFFDT, '%m/%d/%y') as date) MEMBEREFFDT,
-case when cast(str_to_date( MEMBERTERMDT, '%m/%d/%y')  as date) = cast( str_to_date('1999-12-31', '%Y-%m-%d') as date) then
+cast( str_to_date(MEMBEREFFDT, '%m/%d/%Y') as date) MEMBEREFFDT,
+case when cast(str_to_date( MEMBERTERMDT, '%m/%d/%Y')  as date) = cast( str_to_date('1999-12-31', '%Y-%m-%d') as date) then
      cast(str_to_date('2099-12-31', '%Y-%m-%d')as date)
-    else cast(str_to_date( MEMBERTERMDT, '%m/%d/%y')  as date) end MEMBERTERMDT,
+    else cast(str_to_date( MEMBERTERMDT, '%m/%d/%Y')  as date) end MEMBERTERMDT,
 DATE_FORMAT(str_to_date(( PROVEFFDT) , '%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_start_date,
 case when  PROVTERMDT is null or PROVTERMDT = '' then null	  
      else  DATE_FORMAT(str_to_date(PROVTERMDT, '%c/%e/%Y %H:%i'),'%Y-%c-%e')
