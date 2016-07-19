@@ -296,7 +296,10 @@ $.ajax( {
 							class="cptOrIcd" value="1" />ICD
 					</label> <label class="radio-inline"> <springForm:radiobutton
 							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
-							class="cptOrIcd" value="2" />Medication
+							class="cptOrIcd" value="2" />CPT and ICD
+					</label><label class="radio-inline"> <springForm:radiobutton
+							path="cptOrIcd" id="cptOrIcd" placeholder="cptOrIcd"
+							class="cptOrIcd" value="3" />Medication
 					</label>
 					<springForm:errors path="cptOrIcd" cssClass="error text-danger" />
 				</div>

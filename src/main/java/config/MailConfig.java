@@ -84,7 +84,6 @@ public class MailConfig {
 	@Bean
 	public DBConnection dBConnection() {
 		DBConnection dBConnection = new DBConnection();
-		System.out.println("===============================dBConnection is " + dBConnection.toString());
 		return dBConnection;
 	}
 
