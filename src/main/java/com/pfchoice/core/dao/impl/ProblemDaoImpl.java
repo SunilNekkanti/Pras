@@ -46,7 +46,7 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 
 		Criteria crit = createCriteria();
 		crit.createAlias("insId", "insId");
-
+		
 		if (sSearch != null && !"".equals(sSearch)) {
 			Disjunction or = Restrictions.disjunction();
 			or.add(Restrictions.ilike("description", sSearch, MatchMode.ANYWHERE));
@@ -69,6 +69,9 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 			} else {
 				crit.addOrder(Order.asc(sort));
 			}
+		}
+		else{
+			crit.addOrder(Order.asc("description"));
 		}
 		return findByCriteria(crit, pageNo, pageSize);
 	}

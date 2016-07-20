@@ -43,7 +43,7 @@
 										function(data) {
 
 											//clear the current content of the select
-											var s = $('<select id=\"insu\" style=\"width:150px;\">');
+											var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
 											//iterate over the data and append a select option
 											$
 													.each(
@@ -73,7 +73,7 @@
 											function(data) {
 
 												//clear the current content of the select
-												var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+												var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
 												//iterate over the data and append a select option
 												$
 														.each(
@@ -613,7 +613,7 @@
 					<div class="form-group insId">
 						<div class="col-sm-5">
 							<label for="insurance">Insurance</label>
-							 <select id="insId" name="insId">
+							 <select id="insId" name="insId" class="btn btn-default">
 							 	<option value="">Select One</option>
 						     <c:forEach items="${insList}" var="ins">
 						        <option value="${ins.id}">${ins.name}</option>
@@ -624,7 +624,7 @@
 					<div class="form-group fileType">
 						<div class="col-sm-5">
 							<label for="fileType">File Type</label>
-							 <select id="fileType" name="fileType">
+							 <select id="fileType" name="fileType" class="btn btn-default">
 							 <option value="">Select One</option>
 						     <c:forEach items="${fileTypeList}" var="fileType">
 						        <option value="${fileType.code}">${fileType.description}</option>

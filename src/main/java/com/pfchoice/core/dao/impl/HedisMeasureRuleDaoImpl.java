@@ -224,7 +224,8 @@ public class HedisMeasureRuleDaoImpl extends HibernateBaseDao<HedisMeasureRule, 
 
 		cr.setProjection(Projections
 				.distinct(Projections.projectionList().add(Projections.property("shortDescription"), "shortDescription")
-						.add(Projections.property("description"), "description").add(Projections.property("id"), "id")))
+						.add(Projections.property("description"), "description").add(Projections.property("id"), "id")
+						)).addOrder(Order.asc("shortDescription"))
 				.setResultTransformer(Transformers.aliasToBean(getEntityClass()));
 
 		return cr.list();

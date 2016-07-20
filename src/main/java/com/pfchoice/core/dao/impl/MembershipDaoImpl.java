@@ -264,7 +264,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			final List<Integer> ruleIds, final String sort, final String sortdir) {
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
-				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "mbrStatus")
+				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
+				.createAlias("status", "mbrStatus")
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 		crit.createAlias("mbrProblemList", "mbrProblemList");

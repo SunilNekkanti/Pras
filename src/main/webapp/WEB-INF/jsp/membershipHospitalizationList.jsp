@@ -23,7 +23,7 @@
 										function(data) {
 
 											//clear the current content of the select
-											var s = $('<select id=\"insu\" style=\"width:150px;\">');
+											var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
 											//iterate over the data and append a select option
 											$
 													.each(
@@ -53,7 +53,7 @@
 											function(data) {
 
 												//clear the current content of the select
-												var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+												var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
 												//iterate over the data and append a select option
 												$
 														.each(

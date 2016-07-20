@@ -95,8 +95,8 @@ $(document).ready(function() {
 		        						  }
 	     					});
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 				     			"render": function (data, type, full, meta) {
 				     				var date = new Date(data);
@@ -509,8 +509,8 @@ $(document).ready(function() {
 						<tr>
 							<th scope="col" role="row">Notes</th>
 							<th scope="col" role="row">Provider</th>
-							<th scope="col" role="row">First Name</th>
 							<th scope="col" role="row">Last Name</th>
+							<th scope="col" role="row">First Name</th>
 							<th scope="col" role="row">Birthday</th>
 							<th scope="col" role="row">Sex</th>
 							<th scope="col" role="row">Due Date</th>

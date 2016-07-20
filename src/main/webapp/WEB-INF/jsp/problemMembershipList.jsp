@@ -3,7 +3,12 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
+	<c:set var="contextHome"
+	value="${pageContext.request.contextPath}" />
+<link rel="stylesheet" href="${contextHome}/resources/css/bootstrap-multiselect.css" type="text/css">
+<script type="text/javascript" src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
 <script>
 $(document).ready(function() {
 		
@@ -16,7 +21,7 @@ $(document).ready(function() {
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
-			     var s = $('<select id=\"insu\" style=\"width:150px;\">');
+			     var s = $('<select id=\"insu\"  class=\"btn btn-default\" style=\"width:150px;\">');
 			     //iterate over the data and append a select option
 			     $.each(data.data.list, function(key, val){
 			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -37,7 +42,7 @@ $(document).ready(function() {
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
- 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+ 				     var s = $('<select id=\"prvdr\"  class=\"btn btn-default\" style=\"width:150px;\">');
  				     //iterate over the data and append a select option
  				     $.each(data.data.list, function(key, val){
  				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -80,15 +85,18 @@ $(document).ready(function() {
 		 		  data: restParams
 		 	})
 		 	 .done(function( data ) {
-		 		 var s = $('<select id=\"problemRule\" style=\"width:150px;\">');
+		 		 var s = $('<select id=\"problemRule\"  class=\"btn btn-default\" multiple style=\"width:150px;\">');
 				 //iterate over the data and append a select option
 				 $.each(data.data.list, function(key, val){
 				   	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
 				 });
-				 s.append('<option value="9999">All</option>');
 				 s.append('</select>');
 				 $selectProblemRule.html(s);	
 				 $("#problemGenerate").show();
+				 $('#problemRule').multiselect({numberDisplayed: 0, 
+					 buttonWidth: '150px',
+					 includeSelectAllOption: true,
+					 });
 		 	});
 		    	 
     	  }
@@ -138,18 +146,16 @@ $(document).ready(function() {
 	     		var problemRuleList = document.getElementById('problemRule').options;
 	     		
 	     		$.each( problemRuleList, function(m, value ){
-	     			if(m < problemRuleList.length-1){
 	     				$('#membershipTable').find('tr').each(function(){
-	     					if(value.text == $("#problemRule option:selected").text() || $("#problemRule option:selected").text() == "All")
-	             				$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>');
+	     					if($("#problemRule option:selected").text().indexOf(value.text) >= 0)
+	     					{	
+	     						$(this).find('th').eq(-1).after('<th> <center>'+value.text+'</center></th>'); 
+	     					}
 	     				});
-	     			}
 	     		});
-					
-				
+	     		
 	     		$.each( problemRuleList, function( i, value ){
-	     			if(i < problemRuleList.length-1){
-	     				if(value.text == $("#problemRule option:selected").text() || $("#problemRule option:selected").text() == "All")
+		     			if($("#problemRule option:selected").text().indexOf(value.text) >= 0)
 	     				{
 		     				columns.push({ "mDataProp": "mbrProblemList[ ].pbm.description","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
@@ -167,7 +173,6 @@ $(document).ready(function() {
 		      								}
 		      						  });	
 	     				}	
-	      			}
 	      		});
 	     		callDatableWithChangedDropDown();
     	  }
@@ -178,7 +183,7 @@ $(document).ready(function() {
     		   var problemRuleSelectValue= $("#problemRule option:selected").val();
     		   
     		   var ruleArray = new Array;
-    		    $("#problemRule option").each  ( function() {
+    		    $("#problemRule option:selected").each  ( function() {
     		    	ruleArray.push ( $(this).val() );
     		    });
 

@@ -21,7 +21,7 @@ $(document).ready(function() {
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
-			     var s = $('<select id=\"insu\" style=\"width:150px;\">');
+			     var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
 			     //iterate over the data and append a select option
 			     $.each(data.data.list, function(key, val){
 			    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -39,7 +39,7 @@ $(document).ready(function() {
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
- 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+ 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
  				     //iterate over the data and append a select option
  				     $.each(data.data.list, function(key, val){
  				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -56,9 +56,8 @@ $(document).ready(function() {
     	  var callmembershipActivityMonthGenerate = function(){
 				columns = new Array();
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-	     		
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		var myTable = $("#membershipActivityMonth");
 	     		var thead = myTable.find("thead");  
 	     		
@@ -237,8 +236,7 @@ $(document).ready(function() {
 					<div class="col-sm-3">
 						<label class="control-label col-sm-5">Year</label>
 						<div class="col-sm-7">
-								<select name="yearpicker" id="yearpicker">
-											
+								<select name="yearpicker" id="yearpicker" class="btn btn-default">
 								</select>
 						</div>
 					</div>
@@ -253,8 +251,8 @@ $(document).ready(function() {
 					<thead>
 						<tr>
 							<th scope="col" role="row">Provider</th>
-							<th scope="col" role="row">First Name</th>
 							<th scope="col" role="row">Last Name</th>
+							<th scope="col" role="row">First Name</th>
 						</tr>
 					</thead>
 

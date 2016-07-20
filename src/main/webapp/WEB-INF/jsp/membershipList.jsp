@@ -48,7 +48,7 @@
 	   	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
 				    
 				     //clear the current content of the select
-				     var s = $('<select id=\"insu\" style=\"width:150px;\">');
+				     var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
 				     //iterate over the data and append a select option
 				     $.each(data.data.list, function(key, val){
 				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -66,7 +66,7 @@
 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
 				    
 				     //clear the current content of the select
-				     var s = $('<select id=\"prvdr\" style=\"width:150px;\">');
+				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
 				     //iterate over the data and append a select option
 				     $.each(data.data.list, function(key, val){
 				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
@@ -126,37 +126,36 @@
         	     "sAjaxSource" : getContextPath()+'/membership/list',
         	     "sAjaxDataProp" : 'data.list',
                  "aoColumns": [
-                               { "mDataProp": "id", 	"bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
+							   { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
                                { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                               { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
                                { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
                                { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
                                { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
                                { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
                              ],
                   "aoColumnDefs": [ 
-                  		   		    { "sName": "id", "aTargets": [ 0 ] },
-                  		   		    { "sName": "firstName", "aTargets": [ 1 ],
+                  		   		    { "sName": "lastName", "aTargets": [ 0 ],
                   		               "render": function ( data, type, full, meta ) {
                		                   return '<a href="${context}/membership/'+full.id+'/complete">'+data+'</a>';
              		                 }},
-                  		   		    { "sName": "lastName", "aTargets": [ 2 ] },
-                  		   		    { "sName": "dob", "aTargets": [ 3 ] ,
+                  		   		    { "sName": "firstName", "aTargets": [ 1 ] },
+                  		   		    { "sName": "dob", "aTargets": [ 2 ] ,
                   		   		   	   "render": function (data) {
                   		   		        		var date = new Date(data);
                   		   	        			var month = date.getMonth() + 1;
                   		   	        			var d = date.getDate();
                   		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
                   		   		   	 }},
-                  		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
-                  		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
-                  		   		    { "sName": "status.id", "aTargets": [ 6 ] }
+                  		   		    { "sName": "genderId.id", "aTargets": [ 3 ] },
+                  		   		    { "sName": "countyCode.code", "aTargets": [ 4 ] },
+                  		   		    { "sName": "status.id", "aTargets": [ 5 ] }
                   ],          
         	     "bLengthChange": false,
         	     "iDisplayLength": 13,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
+        	     "aaSorting":[[0,"asc"],[1,"asc"]],
         	     "fnServerParams": function ( aoData ) {
                      aoData.push(
                          {"name": "sSearchIns", "value": insId},
@@ -164,6 +163,7 @@
                      );
                   },    
         	     "fnServerData" : datatable2RestMembership
+        	     
         	});
      	}
      	
@@ -200,9 +200,8 @@
 
 						<thead>
 							<tr>
-								<th scope="col">Action</th>
-								<th scope="col">First Name</th>
 								<th scope="col">Last Name</th>
+								<th scope="col">First Name</th>
 								<th scope="col">Date Of Birth</th>
 								<th scope="col">Gender</th>
 								<th scope="col">County</th>

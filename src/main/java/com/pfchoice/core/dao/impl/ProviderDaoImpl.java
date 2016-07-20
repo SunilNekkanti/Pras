@@ -116,6 +116,7 @@ public class ProviderDaoImpl extends HibernateBaseDao<Provider, Integer> impleme
 		crit.add(Restrictions.eq("activeInd", new Character('Y')));
 		crit.add(Restrictions.eq("refContract.activeInd", new Character('Y')));
 		crit.add(Restrictions.eq("ins.id", id));
+		crit.addOrder(Order.asc("name"));
 
 		return findByCriteria(crit, 0, 200);
 	}
