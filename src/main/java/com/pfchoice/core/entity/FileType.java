@@ -34,6 +34,17 @@ public class FileType extends RecordDetails implements Serializable {
 	@Size(min = 5, max = 150, message = "The description must be between {min} and {max} characters long")
 	@Column(name = "description")
 	private String description;
+	
+	@Expose
+	@Size(min = 5, max = 100, message = "The table name must be between {min} and {max} characters long")
+	@Column(name = "tables_name")
+	private String tablesName;
+	
+	@Expose
+	@Size(min = 2, max = 25, message = "The sql_name_substring must be between {min} and {max} characters long")
+	@Column(name = "sql_name_substring")
+	private String sqlNameSubstring;
+	
 
 	/**
 	 * 
@@ -80,6 +91,34 @@ public class FileType extends RecordDetails implements Serializable {
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTablesName() {
+		return tablesName;
+	}
+
+	/**
+	 * @param tablesName
+	 */
+	public void setTablesName(String tablesName) {
+		this.tablesName = tablesName;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getSqlNameSubstring() {
+		return sqlNameSubstring;
+	}
+
+	/**
+	 * @param sqlNameSubstring
+	 */
+	public void setSqlNameSubstring(String sqlNameSubstring) {
+		this.sqlNameSubstring = sqlNameSubstring;
 	}
 
 	@Override

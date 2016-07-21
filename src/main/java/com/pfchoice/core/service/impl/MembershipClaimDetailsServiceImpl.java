@@ -88,8 +88,8 @@ public class MembershipClaimDetailsServiceImpl implements MembershipClaimDetails
 	}
 
 	@Override
-	public Integer loadData(final Integer fileId, final String tableName) {
-		return membershipClaimDetailsDao.loadData(fileId, tableName);
+	public Integer loadData(final Integer fileId, final Integer insId) {
+		return membershipClaimDetailsDao.loadData(fileId, insId);
 	}
 
 	/*

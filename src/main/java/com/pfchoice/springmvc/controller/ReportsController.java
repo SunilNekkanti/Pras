@@ -601,9 +601,9 @@ public class ReportsController {
 				billTypeLoadedData = billTypeService.loadData(fileId, mbrClaim);
 			}
 			LOG.info("billTypeLoadedData " + billTypeLoadedData + new Date());
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, mbrClaim);
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, insId);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, mbrClaim);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, mbrClaim);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());

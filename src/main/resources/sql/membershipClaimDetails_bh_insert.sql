@@ -28,7 +28,9 @@ csv2BhClaim.Cover, now() created_date, now() updated_date, 'sarath' created_by ,
   csv2BhClaim.Mony, csv2BhClaim.DrugLabelName, null drug_version
   
   FROM csv2Table_BH_Claim csv2BhClaim
-  JOIN membership_claims mc on  mc.claim_id_number= csv2BhClaim.ClaimId  
+  JOIN membership m on m.Mbr_MedicaidNo  =  convert(csv2BhClaim.MedicaidId, unsigned)  
+ JOIN membership_insurance mi on mi.mbr_id  =  m.mbr_id and mi.ins_id=:insId
+  JOIN membership_claims mc on  mc.claim_id_number= csv2BhClaim.ClaimId   and  mi.mbr_id =mc.mbr_id and  mi.ins_id=mc.ins_id
   LEFT OUTER JOIN cpt_measure  cpt on cpt.code =  NULLIF(csv2BhClaim.ServCode,'')
   LEFT OUTER JOIN lu_place_of_service roomType on ucase(roomtype.name) = ucase(trim(POS))
   LEFT OUTER JOIN membership_claim_details mcd on mcd.mbr_claim_id =  mc.mbr_claim_id

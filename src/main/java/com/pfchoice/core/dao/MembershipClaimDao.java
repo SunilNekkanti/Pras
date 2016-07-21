@@ -73,7 +73,7 @@ public interface MembershipClaimDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, String tablename);
+	Integer loadData(Integer fileId, Integer insId);
 
 	/**
 	 * @return

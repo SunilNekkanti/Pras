@@ -16,10 +16,11 @@ csv2AmgClaim.MARKET_LVL5,csv2AmgClaim.MARKET_LVL6,csv2AmgClaim.MARKET_LVL7,csv2A
 csv2AmgClaim.TIN,csv2AmgClaim.DX_TYPE_CD,csv2AmgClaim.PROC_TYPE_CD,
   now(),now(),'sarath','sarath','Y', :fileId 
   FROM csv2Table_Amg_Claim csv2AmgClaim
- JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  csv2AmgClaim.SRC_SYS_MEMBER_NBR 
- JOIN membership_provider mp on mp.mbr_id  =  mi.mbr_id 
+ JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned)
+ JOIN membership_provider mp on mp.mbr_id  =  mi.mbr_id  and mi.ins_id=:insId
  JOIN reference_contract rc on  rc.prvdr_id= mp.prvdr_id and rc.insurance_id=mi.ins_id
  JOIN contract c on c.ref_contract_Id = rc.ref_contract_Id and c.PCP_PROVIDER_NBR = csv2AmgClaim.PCP_PROVIDER_NBR
 LEFT OUTER JOIN lu_facility_type lft on lft.description = csv2AmgClaim.FACILITY_TYPE_DESC
-LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2AmgClaim.CLAIMNUMBER
+LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2AmgClaim.CLAIMNUMBER and mc.mbr_id=mi.mbr_id and mc.ins_id=mi.ins_id
 WHERE  mc.claim_id_number is null
+GROUP BY CLAIMNUMBER,mi.mbr_id
