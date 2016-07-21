@@ -189,7 +189,7 @@
 									.val();
 							var processFromValue = $("#processfrom").val();
 							var processToValue = $("#processto").val();
-
+							var fileTypeSelectValue = $("#fileType option:selected")  
 							if ($.fn.DataTable
 									.isDataTable('#membershipClaimTable')) {
 								$('#membershipClaimTable')
@@ -916,7 +916,7 @@ $(document.body).on('change',"#fileType",function (e) {
 				var validExtensions = /(\.csv|\.xls|\.xlsx)$/i;
 				if (validExtensions.test(fileName)) {
 					var url = getContextPath()
-							+ 'reports/claim/fileProcessing.do?claimOrHospital=0';
+							+ 'reports/claim/fileProcessing.do?claimOrHospital=0&fileTypeCode='+$('#fileType').val();
 					var selector = 'mbrClaim';
 					if (window.FormData !== undefined) // for HTML5 browsers
 					{

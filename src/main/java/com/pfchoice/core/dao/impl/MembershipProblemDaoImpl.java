@@ -3,11 +3,6 @@ package com.pfchoice.core.dao.impl;
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -107,12 +102,8 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 	 * com.pfchoice.core.dao.MembershipProblemDao#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final String tableName) {
-		String loadDataQuery = null;
-		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+	public Integer loadData(final Integer fileId, final String insuranceCode) {
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}

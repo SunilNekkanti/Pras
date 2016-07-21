@@ -1,8 +1,6 @@
 package com.pfchoice.core.dao.impl;
 
 import static com.pfchoice.common.SystemDefaultProperties.ALL;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.ACCEPTABLE_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.UNACCEPTABLE_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;

@@ -4,7 +4,6 @@ import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
@@ -207,13 +206,9 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadDataCSV2Table(String fileName, String tableName) {
-
-		String loadDataQuery = null;
-		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
-		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
+	public Integer loadDataCSV2Table(String fileName, String insuranceCode) {
+System.out.println( getEntityClass()+ insuranceCode + QUERY_TYPE_LOAD);
+		String	loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode + QUERY_TYPE_LOAD);
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
 	}
@@ -226,11 +221,7 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	@Override
 	public Boolean isDataExists(String tableName) {
 		boolean returnvalue = false;
-		String sql = "null";
-		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
-			sql = "SELECT count(*) FROM csv2Table_BH_Claim";
-		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
-			sql = "SELECT count(*) FROM csv2Table_AMG_Claim";
+		String sql = " SELECT count(*) FROM "+tableName;
 
 		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql).uniqueResult()).intValue();
 		if (rowCount > 0) {
@@ -267,15 +258,8 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	public Integer unloadCSV2Table(String tableName) {
 		Session session = getSession();
 		int rowsAffected = 0;
-		String table = null;
-
-		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
-			table = "csv2Table_BH_Claim";
-		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
-			table = "csv2Table_AMG_Claim";
-
 		try {
-			rowsAffected = session.createSQLQuery("TRUNCATE TABLE " + table).executeUpdate();
+			rowsAffected = session.createSQLQuery("TRUNCATE TABLE " + tableName).executeUpdate();
 		} catch (Exception e) {
 			LOG.warn("exception " + e.getCause());
 		}

@@ -41,9 +41,9 @@ public class FileType extends RecordDetails implements Serializable {
 	private String tablesName;
 	
 	@Expose
-	@Size(min = 2, max = 25, message = "The sql_name_substring must be between {min} and {max} characters long")
-	@Column(name = "sql_name_substring")
-	private String sqlNameSubstring;
+	@Size(min = 2, max = 5, message = "The insurance_code must be between {min} and {max} characters long")
+	@Column(name = "insurance_code")
+	private String insuranceCode;
 	
 
 	/**
@@ -107,18 +107,13 @@ public class FileType extends RecordDetails implements Serializable {
 		this.tablesName = tablesName;
 	}
 
-	/**
-	 * @return
-	 */
-	public String getSqlNameSubstring() {
-		return sqlNameSubstring;
+
+	public String getInsuranceCode() {
+		return insuranceCode;
 	}
 
-	/**
-	 * @param sqlNameSubstring
-	 */
-	public void setSqlNameSubstring(String sqlNameSubstring) {
-		this.sqlNameSubstring = sqlNameSubstring;
+	public void setInsuranceCode(String insuranceCode) {
+		this.insuranceCode = insuranceCode;
 	}
 
 	@Override

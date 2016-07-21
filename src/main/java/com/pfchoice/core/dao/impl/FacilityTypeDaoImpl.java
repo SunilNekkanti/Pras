@@ -1,9 +1,6 @@
 package com.pfchoice.core.dao.impl;
 
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -120,13 +117,9 @@ public class FacilityTypeDaoImpl extends HibernateBaseDao<FacilityType, Integer>
 	 * @see com.pfchoice.core.dao.FacilityTypeDao#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, String tableName) {
+	public Integer loadData(final Integer fileId, String insuranceCode) {
 
-		String loadDataQuery = null;
-		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(),insuranceCode+ QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery)
 				// .setInteger("fileId", fileId)
