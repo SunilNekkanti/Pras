@@ -1,5 +1,6 @@
-
 package com.pfchoice.core.dao.impl;
+
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;

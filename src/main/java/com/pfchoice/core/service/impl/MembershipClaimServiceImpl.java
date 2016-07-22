@@ -116,8 +116,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId,final Integer insId) {
-		return membershipClaimDao.loadData(fileId, insId);
+	public Integer loadData(final Integer fileId,final Integer insId, final String insuranceCode) {
+		return membershipClaimDao.loadData(fileId, insId, insuranceCode);
 	}
 
 	/*

@@ -600,7 +600,7 @@ public class ReportsController {
 				billTypeLoadedData = billTypeService.loadData(fileId, insuranceCode);
 			}
 			LOG.info("billTypeLoadedData " + billTypeLoadedData + new Date());
-			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, insId);
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, insId, insuranceCode);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());

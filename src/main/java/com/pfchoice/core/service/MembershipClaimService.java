@@ -46,7 +46,7 @@ public interface MembershipClaimService {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId);
+	Integer loadData(Integer fileId, Integer insId, String insuranceCode);
 
 	/**
 	 * @return

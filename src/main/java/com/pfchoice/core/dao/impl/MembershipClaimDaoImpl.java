@@ -5,12 +5,8 @@ import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM;
-import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_HOSPOTALIZATION_DATE;
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_PROCESSING_DATE;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_UPDATE;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -207,7 +203,6 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 */
 	@Override
 	public Integer loadDataCSV2Table(String fileName, String insuranceCode) {
-System.out.println( getEntityClass()+ insuranceCode + QUERY_TYPE_LOAD);
 		String	loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode + QUERY_TYPE_LOAD);
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
@@ -239,12 +234,8 @@ System.out.println( getEntityClass()+ insuranceCode + QUERY_TYPE_LOAD);
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId) {
-		String loadDataQuery = null;
-		if (insId == 1)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
-		else if (insId == 2)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode) {
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId).executeUpdate();
 	}
@@ -255,7 +246,7 @@ System.out.println( getEntityClass()+ insuranceCode + QUERY_TYPE_LOAD);
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#unloadCSV2Table()
 	 */
 	@Override
-	public Integer unloadCSV2Table(String tableName) {
+	public Integer unloadCSV2Table(final String tableName) {
 		Session session = getSession();
 		int rowsAffected = 0;
 		try {
@@ -267,12 +258,8 @@ System.out.println( getEntityClass()+ insuranceCode + QUERY_TYPE_LOAD);
 	}
 
 	@Override
-	public Integer updateData(final Integer fileId, final String tableName) {
-		String loadDataQuery = null;
-		if (tableName == FILE_TYPE_BH_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_UPDATE);
-		else if (tableName == FILE_TYPE_AMG_MBR_CLAIM)
-			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_UPDATE);
+	public Integer updateData(final Integer fileId, final String insuranceCode) {
+		String loadDataQuery =  PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_UPDATE);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
