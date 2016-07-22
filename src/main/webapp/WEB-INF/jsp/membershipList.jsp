@@ -128,8 +128,9 @@
                  "aoColumns": [
 							   { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
                                { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
-                               { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  },
-                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%" },
+                               { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
+                               { "mDataProp": "id","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
+                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
                                { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
                                { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
                              ],
@@ -146,9 +147,29 @@
                   		   	        			var d = date.getDate();
                   		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
                   		   		   	 }},
-                  		   		    { "sName": "genderId.id", "aTargets": [ 3 ] },
-                  		   		    { "sName": "countyCode.code", "aTargets": [ 4 ] },
-                  		   		    { "sName": "status.id", "aTargets": [ 5 ] }
+                  		   			{ "sName": "id", "aTargets": [ 3 ] ,
+                    		   		   	   "render": function (data, type, full, meta) {
+                    		   		   	 var bDate = new Date(full.dob);
+	                    		   		 var today = new Date();
+	                    		   		 var calculateYear = today.getFullYear();
+	                    		   	     var calculateMonth = today.getMonth();
+	                    		   	     var calculateDay = today.getDate();
+	                    		   	     var birthYear = bDate.getFullYear();
+	                    		   	     var birthMonth = bDate.getMonth();
+	                    		   	     var birthDay = bDate.getDate();
+										 var age = calculateYear - birthYear;
+	                    		   	     var ageMonth = calculateMonth - birthMonth;
+	                    		   	     var ageDay = calculateDay - birthDay;
+	
+	                    		   	    if (ageMonth < 0 || (ageMonth == 0 && ageDay < 0)) {
+	                    		   	        age = parseInt(age) - 1;
+	                    		   	    }
+	                    		   	    return age;
+                    		   		       
+                    		   		   	 }},
+                  		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
+                  		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
+                  		   		    { "sName": "status.id", "aTargets": [ 6 ] }
                   ],          
         	     "bLengthChange": false,
         	     "iDisplayLength": 13,
@@ -203,6 +224,7 @@
 								<th scope="col">Last Name</th>
 								<th scope="col">First Name</th>
 								<th scope="col">Date Of Birth</th>
+								<th scope="col">Age</th>
 								<th scope="col">Gender</th>
 								<th scope="col">County</th>
 								<th scope="col">Status</th>

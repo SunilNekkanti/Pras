@@ -105,6 +105,26 @@ $(document).ready(function() {
       		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
 							}
 	     		});
+	     		columns.push({ "mDataProp": "id","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
+			     			"render": function (data, type, full, meta) {
+			     				 var bDate = new Date(full.dob);
+                		   		 var today = new Date();
+                		   		 var calculateYear = today.getFullYear();
+                		   	     var calculateMonth = today.getMonth();
+                		   	     var calculateDay = today.getDate();
+                		   	     var birthYear = bDate.getFullYear();
+                		   	     var birthMonth = bDate.getMonth();
+                		   	     var birthDay = bDate.getDate();
+								 var age = calculateYear - birthYear;
+                		   	     var ageMonth = calculateMonth - birthMonth;
+                		   	     var ageDay = calculateDay - birthDay;
+
+                		   	    if (ageMonth < 0 || (ageMonth == 0 && ageDay < 0)) {
+                		   	        age = parseInt(age) - 1;
+                		   	    }
+                		   	    return age;
+						}
+				});
 	     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
 	     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 				     			"render": function (data, type, full, meta) {
@@ -512,6 +532,7 @@ $(document).ready(function() {
 							<th scope="col" role="row">Last Name</th>
 							<th scope="col" role="row">First Name</th>
 							<th scope="col" role="row">Birthday</th>
+							<th scope="col" role="row">Age</th>
 							<th scope="col" role="row">Sex</th>
 							<th scope="col" role="row">Due Date</th>
 
