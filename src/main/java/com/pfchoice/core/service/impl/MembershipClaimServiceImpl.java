@@ -94,8 +94,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * .entity.MembershipClaim)
 	 */
 	@Override
-	public Integer loadDataCSV2Table(final String fileName, final String tableName) {
-		return membershipClaimDao.loadDataCSV2Table(fileName, tableName);
+	public Integer loadDataCSV2Table(final String fileName, final String insuranceCode, final String tableNames) {
+		return membershipClaimDao.loadDataCSV2Table(fileName, insuranceCode, tableNames);
 	}
 
 	/*

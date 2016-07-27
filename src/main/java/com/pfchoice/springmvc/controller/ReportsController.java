@@ -585,7 +585,7 @@ public class ReportsController {
 			}
 			LOG.info("Loading  membershipClaim data" + new Date());
 			String insuranceCode  = fileType.getInsuranceCode();
-			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName, insuranceCode);
+			Integer loadedData = mbrClaimService.loadDataCSV2Table(fileName, insuranceCode, tableName);
 
 			if (loadedData < 1) {
 				return Message.failMessage("ZERO records to process");
@@ -606,8 +606,10 @@ public class ReportsController {
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insuranceCode);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
+			Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable();
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
+			System.out.println("tableName is "+tableName);
 			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(tableName);
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData + new Date());
 

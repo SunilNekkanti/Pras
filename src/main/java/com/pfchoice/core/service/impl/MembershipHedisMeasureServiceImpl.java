@@ -122,4 +122,12 @@ public class MembershipHedisMeasureServiceImpl implements MembershipHedisMeasure
 	public Integer loadData(final Integer fileId, final Integer insId, final String tableName) {
 		return membershipHedisMeasureDao.loadData(fileId, insId, tableName);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipHedisMeasureService#unloadTable()
+	 */
+	@Override
+	public Integer unloadTable() {
+		return membershipHedisMeasureDao.unloadTable();
+	}
 }

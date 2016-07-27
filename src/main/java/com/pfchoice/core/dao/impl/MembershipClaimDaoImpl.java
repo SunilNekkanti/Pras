@@ -12,6 +12,7 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import java.math.BigInteger;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -202,10 +203,20 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadDataCSV2Table(String fileName, String insuranceCode) {
-		String	loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode + QUERY_TYPE_LOAD);
-		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
-				.executeUpdate();
+	public Integer loadDataCSV2Table(String fileName, String insuranceCode, String tableNames) {
+		System.out.println("tableNames is "+tableNames);
+		int retValue =0;
+		String[] tokens = tableNames.split(",", -1);
+		for(String tableName :tokens){
+			String	loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode + QUERY_TYPE_LOAD);
+			Object[] objArray = {tableName, "','","'\"'","'\r\n'" };
+			MessageFormat mf = new MessageFormat(loadDataQuery);
+			String sqlQuery = mf.format(objArray);
+			System.out.println("sqlQuery is "+sqlQuery);
+			retValue =  getSession().createSQLQuery(sqlQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
+					.executeUpdate();
+		}
+		return retValue;
 	}
 
 	/*
@@ -214,18 +225,20 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Boolean isDataExists(String tableName) {
+	public Boolean isDataExists(String tableNames) {
 		boolean returnvalue = false;
-		String sql = " SELECT count(*) FROM "+tableName;
-
-		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql).uniqueResult()).intValue();
-		if (rowCount > 0) {
-			returnvalue = true;
-		} else {
-			returnvalue = false;
+		String[] tokens = tableNames.split(",", -1);
+		for(String tableName :tokens){
+			String sql = " SELECT count(*) FROM "+tableName;
+		
+			int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql).uniqueResult()).intValue();
+			if (rowCount > 0) {
+				returnvalue = returnvalue||true;
+			} else {
+				returnvalue = returnvalue||false;
+			}
 		}
-
-		return returnvalue;
+			return returnvalue;
 	}
 
 	/*
@@ -246,13 +259,17 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#unloadCSV2Table()
 	 */
 	@Override
-	public Integer unloadCSV2Table(final String tableName) {
+	public Integer unloadCSV2Table(final String tableNames) {
+		
+		String[] tokens = tableNames.split(",", -1);
 		Session session = getSession();
 		int rowsAffected = 0;
-		try {
-			rowsAffected = session.createSQLQuery("TRUNCATE TABLE " + tableName).executeUpdate();
-		} catch (Exception e) {
-			LOG.warn("exception " + e.getCause());
+		for(String tableName :tokens){
+			try {
+				rowsAffected = session.createSQLQuery("TRUNCATE TABLE " + tableName).executeUpdate();
+			} catch (Exception e) {
+				LOG.warn("exception " + e.getCause());
+			}
 		}
 		return rowsAffected;
 	}

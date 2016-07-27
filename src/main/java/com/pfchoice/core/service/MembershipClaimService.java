@@ -56,7 +56,7 @@ public interface MembershipClaimService {
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table(String fileName, String tableName);
+	Integer loadDataCSV2Table(String fileName, String insuranceCode, String tableNames);
 
 	/**
 	 * @return

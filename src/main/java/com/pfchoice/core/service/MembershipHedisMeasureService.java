@@ -69,5 +69,10 @@ public interface MembershipHedisMeasureService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId, Integer insId, String tableName);
+	
+	/**
+	 * @return
+	 */
+	Integer unloadTable();
 
 }
