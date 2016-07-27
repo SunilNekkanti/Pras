@@ -12,8 +12,8 @@ pharmacy, membership_claims, psychare, simple_county, triangles,
 cover, created_date, updated_date, created_by, updated_by, active_ind, file_id,
  mony, drug_label_name, drug_version
  )
- 
- SELECT distinct mc.mbr_claim_id, csv2BhClaim.ClaimLine, null clm_line_adj_seq_nbr, 
+ SELECT distinct 
+ mc.mbr_claim_id, csv2BhClaim.ClaimLine, null clm_line_adj_seq_nbr, 
  cast(concat(csv2BhClaim.MOS,'-01') as date) ,
  date_format(cast(concat(csv2BhClaim.MOS,'-01') as date) ,'%Y%m'),
  cast(csv2BhClaim.ClaimStartDate as date), 
@@ -28,16 +28,14 @@ csv2BhClaim.Cover, now() created_date, now() updated_date, 'sarath' created_by ,
   csv2BhClaim.Mony, csv2BhClaim.DrugLabelName, null drug_version
   
   FROM csv2Table_BH_Claim csv2BhClaim
-  JOIN membership m on m.Mbr_MedicaidNo  =  convert(csv2BhClaim.MedicaidId, unsigned)  
- JOIN membership_insurance mi on mi.mbr_id  =  m.mbr_id and mi.ins_id=:insId
-  JOIN membership_claims mc on  mc.claim_id_number= csv2BhClaim.ClaimId   and  mi.mbr_id =mc.mbr_id and  mi.ins_id=mc.ins_id
+  JOIN membership m on m.Mbr_MedicaidNo  =  csv2BhClaim.MedicaidId
+  JOIN membership_claims mc on  mc.claim_id_number= csv2BhClaim.ClaimId   and  m.mbr_id =mc.mbr_id and  mc.ins_id=:insId
   LEFT OUTER JOIN cpt_measure  cpt on cpt.code =  NULLIF(csv2BhClaim.ServCode,'')
   LEFT OUTER JOIN lu_place_of_service roomType on ucase(roomtype.name) = ucase(trim(POS))
   LEFT OUTER JOIN membership_claim_details mcd on mcd.mbr_claim_id =  mc.mbr_claim_id
-  WHERE mcd.mbr_claim_id is null ;
+  WHERE mcd.mbr_claim_id is null;
   
-  
-  
+ 
   insert into membership_claim_details 
   (mbr_claim_id, claim_line_seq_nbr, clm_line_adj_seq_nbr,
  activity_date, activity_month,
@@ -63,7 +61,7 @@ cast(str_to_date(csv2BhClaim.activity_date ,'%m/%d/%Y') as date),
  csv2BhClaim.Copay,  csv2BhClaim.deductible,csv2BhClaim.cobamt , null processing_status, null pharmacy_name, 
  NULLIF(csv2BhClaim.Qty,''), null  , csv2BhClaim.Risk, null runndate, null,
  null, csv2BhClaim.billed, csv2BhClaim.fromfile, csv2BhClaim.memcounty, null,  
-null , now() created_date, now() updated_date, 'sarath' created_by ,'sarath' updated_by,'Y', 1,
+null , now() created_date, now() updated_date, 'sarath' created_by ,'sarath' updated_by,'Y', :fileId,
  null mony, csv2BhClaim.drg, null drug_version
   
   FROM csv2Table_BH_Claim1 csv2BhClaim

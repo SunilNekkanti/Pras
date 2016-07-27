@@ -6,7 +6,7 @@ SELECT  mc.mbr_id, p.pbm_id, min(mcd.claim_start_date) start_date, null resolved
  now() created_date, now() updated_date,'sarath' created_by ,'sarath' updated_by,'Y', :fileId
  FROM membership_claims mc 
  JOIN membership_claim_details mcd ON mc.mbr_claim_id = mcd.mbr_claim_id
-JOIN membership_insurance mi ON mi.mbr_id  =  mc.mbr_id  AND mi.ins_id=1
+JOIN membership_insurance mi ON mi.mbr_id  =  mc.mbr_id  AND mi.ins_id=:insId
 JOIN problems p ON mi.ins_id=p.ins_id
 JOIN problems_icd  pbmicd ON p.pbm_id = pbmicd.pbm_id
 JOIN icd_measure  icd ON icd.icd_id = pbmicd.icd_id AND  REPLACE(Diagnoses, ".","") LIKE CONCAT('%', REPLACE(code, ".",""),'%')

@@ -604,7 +604,7 @@ public class ReportsController {
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insuranceCode);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
 			Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable();
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
