@@ -609,7 +609,6 @@ public class ReportsController {
 			Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable();
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
-			System.out.println("tableName is "+tableName);
 			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(tableName);
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData + new Date());
 

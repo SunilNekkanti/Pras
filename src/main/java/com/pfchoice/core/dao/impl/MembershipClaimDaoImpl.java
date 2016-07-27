@@ -204,7 +204,6 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 */
 	@Override
 	public Integer loadDataCSV2Table(String fileName, String insuranceCode, String tableNames) {
-		System.out.println("tableNames is "+tableNames);
 		int retValue =0;
 		String[] tokens = tableNames.split(",", -1);
 		for(String tableName :tokens){
@@ -212,7 +211,6 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 			Object[] objArray = {tableName, "','","'\"'","'\r\n'" };
 			MessageFormat mf = new MessageFormat(loadDataQuery);
 			String sqlQuery = mf.format(objArray);
-			System.out.println("sqlQuery is "+sqlQuery);
 			retValue =  getSession().createSQLQuery(sqlQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 					.executeUpdate();
 		}
