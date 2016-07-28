@@ -304,8 +304,8 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(157286400); // 10 MB=10485760
-		multipartResolver.setMaxInMemorySize(157286400); // 1MB
+		multipartResolver.setMaxUploadSize(209715200); // 10 MB=10485760
+		multipartResolver.setMaxInMemorySize(209715200); // 1MB
 		multipartResolver.setDefaultEncoding("utf-8");
 		return multipartResolver;
 	}
