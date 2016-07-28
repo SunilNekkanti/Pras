@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -296,16 +297,23 @@ public class ReportsController {
 			String newfileName = fileName.substring(0, fileName.indexOf("."));
 
 			try {
+				String ext = FilenameUtils.getExtension(fileName);
+				
 				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName),
 						fileUpload.getBytes());
 
 				sourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName);
-				newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + newfileName + ".csv");
 				sourceFile.createNewFile();
-				newSourceFile.createNewFile();
-				XlstoCSV.xls(sourceFile, newSourceFile);
-				if (sourceFile.exists()) {
-					sourceFile.delete();
+				if(!"csv".equals(ext)){
+					newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + newfileName + ".csv");
+					newSourceFile.createNewFile();
+					XlstoCSV.xls(sourceFile, newSourceFile);
+					if (sourceFile.exists()) {
+						sourceFile.delete();
+					}
+				}	
+				else{
+					newSourceFile = sourceFile;
 				}
 
 			} catch (IOException e) {
@@ -607,6 +615,7 @@ public class ReportsController {
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
 			Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable();
+			LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
 			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(tableName);
