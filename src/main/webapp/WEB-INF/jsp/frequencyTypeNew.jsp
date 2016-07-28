@@ -41,6 +41,16 @@
 						<springForm:errors path="shortName" cssClass="error text-danger" />
 					</div>
 				</div>
+				
+				<div class="form-group required col-sm-12">
+					<label class="control-label  col-sm-2" for="numberOfDays">Number of days</label>
+					<div class="col-sm-6">
+						<springForm:input path="numberOfDays" class="form-control"
+							id="numberOfDays" placeholder="numberOfDays" maxlength="50" />
+							<span id="numberOfDaysError" class="text-danger"></span>
+						<springForm:errors path="numberOfDays" cssClass="error text-danger" />
+					</div>
+				</div>
 
 				<div class="col-sm-offset-2 col-sm-6">
 					<c:choose>
@@ -64,4 +74,17 @@
 		</div>
 	</div>
 </div>
+<script>
+		$(document).ready(function(){
+			$( "#frequencyType" ).submit(function( event ) {
+				 $("#numberOfDaysError").text("");
+				  if(!$.isNumeric($("#numberOfDays").val()) && $("#numberOfDays").val()){
+					  $("#numberOfDaysError").text("Enter integer value")
+					  event.preventDefault();
+				  }
+				 	 
+				});
+			$.isNumeric
+		});
 
+</script>

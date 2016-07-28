@@ -61,7 +61,8 @@
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "10%"},
-                               { "mDataProp": "shortName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"}
+                               { "mDataProp": "shortName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
+                               { "mDataProp": "numberOfDays","bSearchable" : true, "bSortable" : true,"sWidth" : "20%", "sDefaultContent": "" }
                              
                            ],
                   "aoColumnDefs": [ 
@@ -69,7 +70,8 @@
                              		   "render": function ( data, type, full, meta ) {
                                               return '<a href="${context}/frequencyType/'+full.id+'">'+data+'</a>';
                                     }},
-                                    { "sName": "shortName", "aTargets": [ 1 ] }
+                                    { "sName": "shortName", "aTargets": [ 1 ] },
+                                    { "sName": "numberOfDays", "aTargets": [ 2 ] }
                                  
                   ],          
         	     "bLengthChange": false,
@@ -100,6 +102,7 @@
 					<tr>
 						<th scope="col">Description</th>
 						<th scope="col">Name</th>
+						<th scope="col">Number of days</th>
 					</tr>
 				</thead>
 				<tbody>

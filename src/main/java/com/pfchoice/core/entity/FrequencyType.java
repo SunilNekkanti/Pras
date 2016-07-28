@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.google.gson.annotations.Expose;
 
@@ -30,12 +32,20 @@ public class FrequencyType extends RecordDetails implements Serializable {
 	private Integer id;
 
 	@Expose
+	@NotNull
+	@Size(min = 3, max = 150, message = "The description must be between {min} and {max} characters long")
 	@Column(name = "description")
 	private String description;
 
 	@Expose
+	@NotNull
+	@Size(min = 3, max = 50, message = "The Short must be between {min} and {max} characters long")
 	@Column(name = "shortName")
 	private String shortName;
+	
+	@Expose
+	@Column(name = "noOfDays")
+	private Integer numberOfDays;
 
 	/**
 	 * 
@@ -95,6 +105,20 @@ public class FrequencyType extends RecordDetails implements Serializable {
 	 */
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+	
+	/**
+	 * @return the numberOfDays
+	 */
+	public Integer getNumberOfDays() {
+		return numberOfDays;
+	}
+
+	/**
+	 * @param numberOfDays the numberOfDays to set
+	 */
+	public void setNumberOfDays(Integer numberOfDays) {
+		this.numberOfDays = numberOfDays;
 	}
 
 	@Override

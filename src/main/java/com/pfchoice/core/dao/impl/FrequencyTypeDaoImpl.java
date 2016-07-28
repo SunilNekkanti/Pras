@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.core.dao.FrequencyTypeDao;
@@ -45,7 +46,9 @@ public class FrequencyTypeDaoImpl extends HibernateBaseDao<FrequencyType, Intege
 			Disjunction or = Restrictions.disjunction();
 
 			or.add(Restrictions.ilike("shortName", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("description", "%" + sSearch + "%"));
+					.add(Restrictions.ilike("description", "%" + sSearch + "%"))
+					.add(Restrictions
+							.sqlRestriction("CAST(noOfDays AS CHAR) like ?", "%" + sSearch + "%", StringType.INSTANCE));
 			crit.add(or);
 		}
 		crit.add(Restrictions.eq("activeInd", 'Y'));
