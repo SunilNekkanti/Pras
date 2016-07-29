@@ -16,7 +16,7 @@ null market_lvl2, null market_lvl3, null market_lvl4, null market_lvl5, null mar
 null market_lvl7, null market_lvl8, null tin,'ICD10', null proc_type_cd,
 now(), now(), 'sarath', 'sarath', 'Y', :fileId,csv2BhClaim.ProvId
   FROM csv2Table_BH_Claim csv2BhClaim
- JOIN membership m on m.Mbr_MedicaidNo  =  convert(csv2BhClaim.MedicaidId, unsigned)   
+ JOIN membership m on m.Mbr_MedicaidNo  =  csv2BhClaim.MedicaidId   
  LEFT OUTER JOIN contract c on trim(c.PCP_PROVIDER_NBR) = trim(csv2BhClaim.ProvId)
  LEFT OUTER JOIN provider prvdr on trim(prvdr.code)  =  trim(csv2BhClaim.ProvId)
  LEFT OUTER JOIN reference_contract rc on  rc.insurance_id=:insId and  (rc.prvdr_id= prvdr.prvdr_id or  c.ref_contract_Id = rc.ref_contract_Id)      

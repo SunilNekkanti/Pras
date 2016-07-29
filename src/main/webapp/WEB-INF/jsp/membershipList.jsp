@@ -129,7 +129,7 @@
 							   { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
                                { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
                                { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
-                               { "mDataProp": "id","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
+                               { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
                                { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
                                { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
                                { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
@@ -147,7 +147,7 @@
                   		   	        			var d = date.getDate();
                   		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
                   		   		   	 }},
-                  		   			{ "sName": "id", "aTargets": [ 3 ] ,
+                  		   			{ "sName": "dob", "aTargets": [ 3 ] ,"asSorting": [ "desc"],
                     		   		   	   "render": function (data, type, full, meta) {
                     		   		   	 var bDate = new Date(full.dob);
 	                    		   		 var today = new Date();

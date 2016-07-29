@@ -108,7 +108,8 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 				crit.addOrder(Order.asc(sort));
 			}
 		}
-
+		crit.addOrder(Order.asc("mbr.lastName"));
+		crit.addOrder(Order.asc("mbr.firstName"));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 

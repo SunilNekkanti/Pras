@@ -89,12 +89,12 @@ $(document).ready(function() {
     			  }
 
 				columns = new Array();
-	     		columns.push({ "mDataProp": "id", 	"bSearchable" : false,  "asSorting" : [ "asc" ] ,"sClass": "center","sWidth" : "3%",
+	     		columns.push({ "mDataProp": "lastName", 	"bSearchable" : false,  "sClass": "center","sWidth" : "3%",
 	     						"render": function (data, type, full, meta) {
-		      								return '<a href="javascript:void(0)" id="'+data+'" onclick="mbrHedisFollowup('+data+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
+		      								return '<a href="javascript:void(0)" id="'+full.id+'" onclick="mbrHedisFollowup('+full.id+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
 		        						  }
 	     					});
-	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "20%"});
 	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
@@ -105,7 +105,7 @@ $(document).ready(function() {
       		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
 							}
 	     		});
-	     		columns.push({ "mDataProp": "id","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
+	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 			     			"render": function (data, type, full, meta) {
 			     				 var bDate = new Date(full.dob);
                 		   		 var today = new Date();
@@ -288,7 +288,7 @@ $(document).ready(function() {
   	         "bDestroy" : true,	
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.list',
-              "aoColumns":  aoColumns,      
+             "aoColumns":  aoColumns,      
      	     "bLengthChange": false,
      	     "iDisplayLength": 12,
      	     "sPaginationType": "full_numbers",
@@ -389,10 +389,11 @@ $(document).ready(function() {
 		   var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
 		 
 		   // extract sort information
+		  
 		   var sortCol = paramMap.iSortCol_0;
 		   var sortDir = paramMap.sSortDir_0;
 		   var sortName = paramMap['mDataProp_' + sortCol];
-		 
+		   alert ('sortCol'+sortCol);
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
 		  
@@ -422,7 +423,7 @@ $(document).ready(function() {
  	     "sAjaxSource" : getContextPath()+'membership/'+id+'/hedisMeasureList',
  	     "sAjaxDataProp" : 'data',
  	     "aoColumns": [
-                        { "mDataProp": "id", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
+                        { "mDataProp": "id", "bSearchable" : false, "bVisible" : true ,"bSortable": false },
                         { "mDataProp": "hedisMeasureRule.shortDescription","bSearchable" : true, "bSortable" : true,"sWidth" : "45%",
                         	"render": function (data, type, full, meta) {
                         		return '<span data-toggle="tooltip" title="'+full.hedisMeasureRule.description+'">'+data+'</span>';
