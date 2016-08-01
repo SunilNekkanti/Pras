@@ -1,20 +1,18 @@
 package com.pfchoice.core.dao.impl;
 
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UNLOAD;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.hibernate.type.StringType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.common.util.PrasUtil;
@@ -29,7 +27,6 @@ import com.pfchoice.core.entity.MembershipHedisMeasure;
 public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHedisMeasure, Integer>
 		implements MembershipHedisMeasureDao {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MembershipHedisMeasureDaoImpl.class);
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -194,15 +191,11 @@ public class MembershipHedisMeasureDaoImpl extends HibernateBaseDao<MembershipHe
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.MembershipHedisMeasureDao#unloadTable()
 	 */
-	public Integer unloadTable() {
-		
-		Session session = getSession();
-		int rowsAffected = 0;
-			try {
-				rowsAffected = session.createSQLQuery(" SET FOREIGN_KEY_CHECKS=0; TRUNCATE TABLE Membership_Hedis_Measure; SET FOREIGN_KEY_CHECKS=1; " ).executeUpdate();
-			} catch (Exception e) {
-				LOG.warn("exception " + e.getCause());
-			}
-		return rowsAffected;
+	@Override
+	public Integer unloadTable(final Integer insId, final String insuranceCode) {
+		String loadDataQuery  = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_UNLOAD);
+
+		return getSession().createSQLQuery(loadDataQuery).setInteger("insId", insId)
+				.executeUpdate();
 	}
 }

@@ -82,5 +82,5 @@ public interface MembershipHedisMeasureDao {
 	/**
 	 * @return
 	 */
-	Integer unloadTable();
+	Integer unloadTable(Integer insId, String insuranceCode);
 }

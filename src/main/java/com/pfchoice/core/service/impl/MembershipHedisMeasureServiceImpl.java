@@ -127,7 +127,7 @@ public class MembershipHedisMeasureServiceImpl implements MembershipHedisMeasure
 	 * @see com.pfchoice.core.service.MembershipHedisMeasureService#unloadTable()
 	 */
 	@Override
-	public Integer unloadTable() {
-		return membershipHedisMeasureDao.unloadTable();
+	public Integer unloadTable(final  Integer insId, final String insuranceCode) {
+		return membershipHedisMeasureDao.unloadTable(insId, insuranceCode);
 	}
 }

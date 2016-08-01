@@ -73,6 +73,6 @@ public interface MembershipHedisMeasureService {
 	/**
 	 * @return
 	 */
-	Integer unloadTable();
+	Integer unloadTable(Integer insId, String insuranceCode);
 
 }
