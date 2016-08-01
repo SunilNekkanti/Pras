@@ -150,21 +150,6 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		crit.add(or);
 		crit.add(and);
 
-		if (sort != null && !"".equals(sort)) {
-			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
-				if ("prvdr.name".equals(sort)) {
-					crit.addOrder(Order.desc("prvdr.name"));
-				} else {
-					crit.addOrder(Order.desc(sort));
-				}
-			} else {
-				if ("prvdr.name".equals(sort)) {
-					crit.addOrder(Order.asc("prvdr.name"));
-				} else {
-					crit.addOrder(Order.asc(sort));
-				}
-			}
-		}
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrClaimIds = (List<Integer>) crit.list();
 		int totalCount = (MbrClaimIds.isEmpty()) ? 0 : MbrClaimIds.size();
@@ -178,7 +163,24 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 					.createAlias("facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("billType", "billType", JoinType.LEFT_OUTER_JOIN)
 					.add(Restrictions.in("id", MbrClaimIds));
+					if (sort != null && !"".equals(sort)) {
+						if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+							if ("prvdr.name".equals(sort)) {
+								criteria.addOrder(Order.desc("prvdr.name"));
+							} else {
+								criteria.addOrder(Order.desc(sort));
+							}
+						} else {
+							if ("prvdr.name".equals(sort)) {
+								criteria.addOrder(Order.asc("prvdr.name"));
+							} else {
+								criteria.addOrder(Order.asc(sort));
+							}
+						}
+					}
 			criteria.addOrder(Order.asc("mbr.lastName"));
+			criteria.addOrder(Order.asc("mbr.firstName"));
+			criteria.addOrder(Order.asc("claimNumber"));
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);

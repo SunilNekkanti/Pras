@@ -111,7 +111,7 @@
 							columns = new Array();
 							columns
 									.push({
-										"mDataProp" : "id",
+										"mDataProp" : "mbrClaim.mbr.lastName",
 										"bSearchable" : true,
 										"bSortable" : true,
 										"sClass" : "center",

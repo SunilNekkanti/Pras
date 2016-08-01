@@ -95,8 +95,8 @@ $(document).ready(function() {
 		        						  }
 	     					});
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "20%"});
-	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "15%"  });
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "15%"  });
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 				     			"render": function (data, type, full, meta) {
 				     				var date = new Date(data);
@@ -105,7 +105,7 @@ $(document).ready(function() {
       		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
 							}
 	     		});
-	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
+	     		columns.push({ "mDataProp": "id","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 			     			"render": function (data, type, full, meta) {
 			     				 var bDate = new Date(full.dob);
                 		   		 var today = new Date();
@@ -157,23 +157,34 @@ $(document).ready(function() {
 					
 				
 	     		$.each( hedisRuleList, function( i, value ){
+	     				
 	     				if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
 	     				{
 		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.shortDescription","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
+		      							    	var params = {};
 		      							    	full.mbrHedisMeasureList.forEach(function( item ) {
 		      							    		if(item.activeInd == 'N' ){
+		      							    			params[item.hedisMeasureRule.shortDescription] = item.hedisMeasureRule.shortDescription;
 		      							    			data = data.replace(item.hedisMeasureRule.description,'');
 		      							    		}
 		      							    	});
 				      									   var returnType ='';
-				      										if(data.indexOf(value.text) >= 0)
-				      											return 'X';
+				      										if(data.indexOf(value.text) >= 0){
+				      											if(value.text in params)
+				      												return '<label class="text-danger">X</label>';
+				      											else 
+				      												return 'X';
+				      										}	
 				      										else
 			      											return '';
+				      										
+				      										
 				      								  
 		      								}
 		      						  });	
+		     				
+		     				
 	      			}
 	      		});
 	     		callDatableWithChangedDropDown();
@@ -393,7 +404,6 @@ $(document).ready(function() {
 		   var sortCol = paramMap.iSortCol_0;
 		   var sortDir = paramMap.sSortDir_0;
 		   var sortName = paramMap['mDataProp_' + sortCol];
-		   alert ('sortCol'+sortCol);
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
 		  

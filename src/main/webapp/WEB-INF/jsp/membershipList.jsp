@@ -129,8 +129,8 @@
 							   { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
                                { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},
                                { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
-                               { "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
-                               { "mDataProp": "genderId.description","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
+                               { "mDataProp": "id","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
+                               { "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
                                { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
                                { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
                              ],
@@ -147,7 +147,7 @@
                   		   	        			var d = date.getDate();
                   		   	       				 return (month > 9 ? month : "0" + month) + "/" + (d > 9 ? d : "0" + d) + "/" + date.getFullYear();
                   		   		   	 }},
-                  		   			{ "sName": "dob", "aTargets": [ 3 ] ,"asSorting": [ "desc"],
+                  		   			{ "sName": "id", "aTargets": [ 3 ] ,
                     		   		   	   "render": function (data, type, full, meta) {
                     		   		   	 var bDate = new Date(full.dob);
 	                    		   		 var today = new Date();
@@ -167,7 +167,7 @@
 	                    		   	    return age;
                     		   		       
                     		   		   	 }},
-                  		   		    { "sName": "genderId.id", "aTargets": [ 4 ] },
+                  		   		    { "sName": "genderId.code", "aTargets": [ 4 ] },
                   		   		    { "sName": "countyCode.code", "aTargets": [ 5 ] },
                   		   		    { "sName": "status.id", "aTargets": [ 6 ] }
                   ],          
@@ -225,7 +225,7 @@
 								<th scope="col">First Name</th>
 								<th scope="col">Date Of Birth</th>
 								<th scope="col">Age</th>
-								<th scope="col">Gender</th>
+								<th scope="col">Sex</th>
 								<th scope="col">County</th>
 								<th scope="col">Status</th>
 							</tr>

@@ -107,7 +107,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			or.add(Restrictions.ilike("prvdr.name", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("firstName", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("lastName", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("genderId.description", "%" + sSearch + "%"))
 					.add(Restrictions.like("genderId.code", new Character(sSearch.toCharArray()[0])))
 					.add(Restrictions.ilike("mbrStatus.description", "%" + sSearch + "%"))
 					.add(Restrictions.ilike("countyCode.description", "%" + sSearch + "%"))
@@ -144,32 +143,41 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.add(and);
 
 		crit.setProjection(Projections.distinct(Projections.property("id")));
-		List<Integer> MbrIds = (List<Integer>) crit.list();
-		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
+		List<Integer> mbrIds = (List<Integer>) crit.list();
+		int totalCount = mbrIds.isEmpty() ? 0 : mbrIds.size();
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
-			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
+			Criteria criteria = createCriteria().add(Restrictions.in("id", mbrIds));
 			criteria.createAlias("genderId", "genderId")
-					.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-					.createAlias("status", "status")
+					.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "status")
 					.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrProvider.prvdr", "prvdr")
 					.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
-	
-			if (sort != null && !"".equals(sort)) {
-				if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
-					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
-						criteria.addOrder(Order.desc("prvdr.name"));
-					} else {
-						criteria.addOrder(Order.desc(sort));
-					}
-				} else {
-					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
-						criteria.addOrder(Order.asc("prvdr.name"));
-					} else {
-						criteria.addOrder(Order.asc(sort));
-					}
+
+			if (sort != null && !"".equals(sort) && sortdir != null &&  "desc".equals(sortdir)) {
+				switch (sort) {
+				case "id":
+					criteria.addOrder(Order.asc("dob"));
+					break;
+				case "mbrProviderList.0.prvdr.name":
+					criteria.addOrder(Order.desc("prvdr.name"));
+					break;
+				default:
+					criteria.addOrder(Order.desc(sort));
+					break;
+				}
+			} else if (sort != null) {
+				switch (sort) {
+				case "id":
+					criteria.addOrder(Order.desc("dob"));
+					break;
+				case "mbrProviderList.0.prvdr.name":
+					criteria.addOrder(Order.asc("prvdr.name"));
+					break;
+				default:
+					criteria.addOrder(Order.asc(sort));
+					break;
 				}
 			}
 			criteria.addOrder(Order.asc("lastName"));
@@ -219,8 +227,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			and.add(Restrictions.sqlRestriction("CAST(activity_month AS CHAR) like ?", "%" + sSearchYear + "%",
 					StringType.INSTANCE));
 
-		} else if (sSearchYear == ALL) {
-
 		}
 
 		and.add(Restrictions.eq("activeInd", new Character('Y')));
@@ -229,31 +235,44 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.add(or);
 		crit.add(and);
 
-		if (sort != null && !"".equals(sort)) {
-			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
-				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
-					crit.addOrder(Order.desc("prvdr.name"));
-				} else {
-					crit.addOrder(Order.desc(sort));
-				}
-			} else {
-				if ("mbrProviderList.0.prvdr.name".equals(sort)) {
-					crit.addOrder(Order.asc("prvdr.name"));
-				} else {
-					crit.addOrder(Order.asc(sort));
-				}
-			}
-		}
-
 		crit.setProjection(Projections.distinct(Projections.property("id")));
-		List<Integer> MbrIds = (List<Integer>) crit.list();
-		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
+		List<Integer> mbrIds = (List<Integer>) crit.list();
+		int totalCount = (mbrIds.isEmpty()) ? 0 : mbrIds.size();
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
-			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
+			Criteria criteria = createCriteria().createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
+					.createAlias("mbrProvider.prvdr", "prvdr");
+			criteria.add(Restrictions.in("id", mbrIds));
+
+			if (sort != null && !"".equals(sort) && sortdir != null && "desc".equals(sortdir)) {
+				switch (sort) {
+				case "id":
+					criteria.addOrder(Order.asc("dob"));
+					break;
+				case "mbrProviderList.0.prvdr.name":
+					criteria.addOrder(Order.desc("prvdr.name"));
+					break;
+				default:
+					criteria.addOrder(Order.desc(sort));
+					break;
+				}
+			} else if (sort != null){
+				switch (sort) {
+				case "id":
+					criteria.addOrder(Order.desc("dob"));
+					break;
+				case "mbrProviderList.0.prvdr.name":
+					criteria.addOrder(Order.asc("prvdr.name"));
+					break;
+				default:
+					criteria.addOrder(Order.asc(sort));
+					break;
+				}
+			}
+			criteria.addOrder(Order.asc("lastName"));
 			criteria.addOrder(Order.asc("firstName"));
-			criteria.addOrder(Order.asc("id"));
+
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
@@ -275,8 +294,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			final List<Integer> ruleIds, final String sort, final String sortdir) {
 
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
-				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
-				.createAlias("status", "mbrStatus")
+				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "mbrStatus")
 				.createAlias("mbrProvider.prvdr", "prvdr");
 		crit.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 		crit.createAlias("mbrProblemList", "mbrProblemList");
@@ -342,13 +360,13 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		}
 
 		crit.setProjection(Projections.distinct(Projections.property("id")));
-		List<Integer> MbrIds = (List<Integer>) crit.list();
-		int totalCount = (MbrIds.isEmpty()) ? 0 : MbrIds.size();
+		List<Integer> mbrIds = (List<Integer>) crit.list();
+		int totalCount = mbrIds.isEmpty() ? 0 : mbrIds.size();
 
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
-			Criteria criteria = createCriteria().add(Restrictions.in("id", MbrIds));
+			Criteria criteria = createCriteria().add(Restrictions.in("id", mbrIds));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			return pagination;
@@ -398,9 +416,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		if (sSearchIns != null) {
 
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
-		}
-		if (sSearchPrvdr == ALL) {
-
 		}
 
 		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
@@ -484,9 +499,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 			and.add(Restrictions.eq("mbrInsurance.insId.id", sSearchIns));
 		}
-		if (sSearchPrvdr == ALL) {
-
-		}
 
 		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
 			crit.createAlias("prvdr.refContracts", "refContract");
@@ -526,14 +538,14 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			}
 		}
 		crit.setProjection(Projections.distinct(Projections.property("mbrClaim.id")));
-		List<Integer> MbrClaimIds = (List<Integer>) crit.list();
-		int totalCount = (MbrClaimIds.isEmpty()) ? 0 : MbrClaimIds.size();
+		List<Integer> mbrClaimIds = (List<Integer>) crit.list();
+		int totalCount = mbrClaimIds.isEmpty() ? 0 : mbrClaimIds.size();
 
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
 			Criteria criteria = createCriteria().createAlias("mbrClaimList", "mbrClaim", JoinType.INNER_JOIN)
-					.add(Restrictions.in("mbrClaim.id", MbrClaimIds));
+					.add(Restrictions.in("mbrClaim.id", mbrClaimIds));
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
@@ -608,7 +620,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			sql.append("SELECT count(*) FROM csv2Table_AMG_Roster");
 
-		int rowCount = (int) ((BigInteger) getSession().createSQLQuery(sql.toString()).uniqueResult()).intValue();
+		int rowCount = ((BigInteger) getSession().createSQLQuery(sql.toString()).uniqueResult()).intValue();
 		if (rowCount > 0) {
 			returnvalue = true;
 		} else {

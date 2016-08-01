@@ -101,7 +101,7 @@
 							columns = new Array();
 							
 							columns.push({
-								"mDataProp" : "id",
+								"mDataProp" : "mbr.lastName",
 								"bSearchable" : false,
 								"asSorting" : [ "asc" ],
 								"sClass" : "center",
@@ -109,9 +109,9 @@
 								"render" : function(data, type, full,
 										meta) {
 									return '<a href="javascript:void(0)" id="'
-											+ data
+											+ full.id
 											+ '" onclick="mbrClaimIdDetails('
-											+ data
+											+ full.id
 											+ ',\''
 											+ full.mbr.lastName
 											+ '\',\''
@@ -120,7 +120,7 @@
 								}
 							});
 							columns.push({
-								"mDataProp" : "mbr.firstName",
+								"mDataProp" : "mbr.lastName",
 								"bSearchable" : true,
 								"bSortable" : true,
 								"sClass" : "center",
@@ -135,7 +135,7 @@
 							});
 							columns.push({	"mDataProp" : "claimNumber", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });							
 							columns.push({  "mDataProp" : "prvdr.name",	"bSearchable" : true,	"bSortable" : true,	"sClass" : "center",	"sWidth" : "10%", "sDefaultContent": ""  });
-							columns.push({	"mDataProp" : "claimType", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
+							columns.push({	"mDataProp" : "claimType", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": ""   });
 							columns.push({	"mDataProp" : "facilityType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "diagnosis",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
 							columns.push({	"mDataProp" : "tin", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });

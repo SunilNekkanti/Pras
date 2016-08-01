@@ -169,21 +169,6 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 
 		crit.add(or);
 
-		if (sort != null && !"".equals(sort)) {
-			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
-				if ("mbrClaimprvdr.name".equals(sort)) {
-					crit.addOrder(Order.desc("mbrClaimprvdr.name"));
-				} else {
-					crit.addOrder(Order.desc(sort));
-				}
-			} else {
-				if ("mbrClaimprvdr.name".equals(sort)) {
-					crit.addOrder(Order.asc("mbrClaimprvdr.name"));
-				} else {
-					crit.addOrder(Order.asc(sort));
-				}
-			}
-		}
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		List<Integer> MbrClaimDetailIds = (List<Integer>) crit.list();
 		int totalCount = (MbrClaimDetailIds.isEmpty()) ? 0 : MbrClaimDetailIds.size();
@@ -191,14 +176,37 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
-			Criteria criteria = createCriteria().createAlias("mbrClaim", "mbrClaim").createAlias("mbrClaim.mbr", "mbr")
-					.createAlias("cpt", "cpt", JoinType.LEFT_OUTER_JOIN).createAlias("mbrClaim.prvdr", "prvdr")
+			Criteria criteria = createCriteria().createAlias("mbrClaim", "mbrClaim")
+					.createAlias("mbrClaim.mbr", "mbr")
+					.createAlias("cpt", "cpt", JoinType.LEFT_OUTER_JOIN)
+					.createAlias("mbrClaim.prvdr", "prvdr")
 					.createAlias("mbrClaim.ins", "ins")
 					.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
 
 			criteria.add(Restrictions.in("id", MbrClaimDetailIds));
+			if (sort != null && !"".equals(sort)) {
+				if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+					if ("mbrClaim.mbr.lastName".equals(sort)) {
+						criteria.addOrder(Order.desc("mbr.lastname"));
+					}
+					else if ("mbrClaim.prvdr.name".equals(sort)) {
+						criteria.addOrder(Order.desc("prvdr.name"));
+					} else {
+						criteria.addOrder(Order.desc(sort));
+					}
+				} else {
+					if ("mbrClaim.mbr.lastName".equals(sort)) {
+						criteria.addOrder(Order.asc("mbr.lastName"));
+					}
+					else if ("mbrClaim.prvdr.name".equals(sort)) {
+						criteria.addOrder(Order.asc("prvdr.name"));
+					} else {
+						criteria.addOrder(Order.asc(sort));
+					}
+				}
+			}
 
 			criteria.addOrder(Order.asc("mbr.lastName")).addOrder(Order.asc("mbr.firstName"))
 					.addOrder(Order.asc("mbrClaim.claimNumber")).addOrder(Order.asc("claimLineseqNbr"));
