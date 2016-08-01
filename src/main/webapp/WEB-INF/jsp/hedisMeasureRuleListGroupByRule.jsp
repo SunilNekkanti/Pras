@@ -79,7 +79,6 @@
  	  
  	 var callDatableWithChangedDropDown = function(){
  		var insSelectValue=getCookie("insu");
- 		alert(" Selected Insurance id  "+insSelectValue);
 		   var eySelectValue= $("#ey option:selected").val();
 		   if ( $.fn.DataTable.isDataTable('#hedisMeasureRuleTable') ) {
 					$('#hedisMeasureRuleTable').DataTable().destroy();
