@@ -6,8 +6,8 @@ MemEnrollId,Diagnoses,product_label,product_lvl1,product_lvl2,product_lvl3,produ
 market_lvl1,market_lvl2,market_lvl3,market_lvl4,market_lvl5,market_lvl6,market_lvl7,market_lvl8,
 tin,dx_type_cd,proc_type_cd,created_date,updated_date,created_by,updated_by,active_ind,file_id
 )
-SELECT DISTINCT
-CLAIMNUMBER,mi.mbr_id,mp.prvdr_id,mi.ins_id, CLAIMTYPE,lft.code,null,
+SELECT 
+CLAIMNUMBER,mi.mbr_id,rc.prvdr_id,mi.ins_id, CLAIMTYPE,lft.code,null,
 null,csv2AmgClaim.BILLTYPE,csv2AmgClaim.DISCHARGESTATUS,null,
 CONCAT_WS(',',NULLIF(DIAGNOSIS1,'') , NULLIF(DIAGNOSIS2,'') , NULLIF(DIAGNOSIS3,''), NULLIF(DIAGNOSIS4,'') ,NULLIF(DIAGNOSIS5,'') , NULLIF(DIAGNOSIS6,'') , NULLIF(DIAGNOSIS7,'') ,NULLIF(DIAGNOSIS8,'')) diagnoses,
 csv2AmgClaim.PRODUCT_LABEL,csv2AmgClaim.PRODUCT_LVL1,csv2AmgClaim.PRODUCT_LVL2,csv2AmgClaim.PRODUCT_LVL3,csv2AmgClaim.PRODUCT_LVL4,csv2AmgClaim.PRODUCT_LVL5,
@@ -16,11 +16,10 @@ csv2AmgClaim.MARKET_LVL5,csv2AmgClaim.MARKET_LVL6,csv2AmgClaim.MARKET_LVL7,csv2A
 csv2AmgClaim.TIN,csv2AmgClaim.DX_TYPE_CD,csv2AmgClaim.PROC_TYPE_CD,
   now(),now(),'sarath','sarath','Y', :fileId 
   FROM csv2Table_Amg_Claim csv2AmgClaim
- JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned)
- JOIN membership_provider mp on mp.mbr_id  =  mi.mbr_id  and mi.ins_id=:insId
- JOIN reference_contract rc on  rc.prvdr_id= mp.prvdr_id and rc.insurance_id=mi.ins_id
- JOIN contract c on c.ref_contract_Id = rc.ref_contract_Id and c.PCP_PROVIDER_NBR = csv2AmgClaim.PCP_PROVIDER_NBR
+ JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+ LEFT OUTER JOIN contract c on c.PCP_PROVIDER_NBR like concat ('%', csv2AmgClaim.PCP_PROVIDER_NBR ,'%')
+ LEFT OUTER JOIN reference_contract rc on  c.ref_contract_Id = rc.ref_contract_Id  
 LEFT OUTER JOIN lu_facility_type lft on lft.description = csv2AmgClaim.FACILITY_TYPE_DESC
-LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2AmgClaim.CLAIMNUMBER and mc.mbr_id=mi.mbr_id and mc.ins_id=mi.ins_id
+LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2AmgClaim.CLAIMNUMBER and mc.mbr_id=mi.mbr_id and mc.ins_id=:insId
 WHERE  mc.claim_id_number is null
 GROUP BY CLAIMNUMBER,mi.mbr_id
