@@ -339,6 +339,9 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			return findByCriteria(crit, pageNo, pageSize);
 		} else {
 			Criteria criteria = createCriteria().add(Restrictions.in("id", mbrIds));
+			criteria.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN)
+					.createAlias("mbrProvider.prvdr", "prvdr");
+	
 			if (sort != null && !"".equals(sort) && sortdir != null &&  "desc".equals(sortdir)) {
 					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
 						criteria.addOrder(Order.desc("prvdr.name"));
