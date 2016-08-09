@@ -18,7 +18,6 @@ limitations under the License.
 ==================================================================== */
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +40,8 @@ import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
 import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;
 import org.apache.poi.xssf.extractor.XSSFEventBasedExcelExtractor;
 import org.apache.poi.xssf.model.StylesTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -66,6 +67,7 @@ import org.xml.sax.XMLReader;
  */
 public class XLSX2CSV {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(XLSX2CSV.class);
 	/**
 	 * Uses the XSSF Event SAX helpers to do most of the work of parsing the
 	 * Sheet XML, and outputs the contents as a (basic) CSV.
@@ -83,7 +85,8 @@ public class XLSX2CSV {
 				output.append('\n');
 			}
 		}
-
+		
+		@Override
 		public void startRow(int rowNum) {
 			// If there were gaps, output the missing rows
 			outputMissingRows(rowNum - currentRow - 1);
@@ -92,7 +95,8 @@ public class XLSX2CSV {
 			currentRow = rowNum;
 			currentCol = -1;
 		}
-
+		
+		@SuppressWarnings("unused")
 		public void endRow(int rowNum) {
 			// Ensure the minimum number of columns
 			for (int i = currentCol; i < minColumns; i++) {
@@ -151,14 +155,16 @@ public class XLSX2CSV {
 		
 		LocalDate parseDateString(String dateString){
 			String[] dateFormats = {"M/d/yy", "M/dd/yy", "MM/d/yy","MM/dd/yy"};
+			LocalDate localDate = null;
 			for( String dateFormat : dateFormats ){
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 				try{
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
-					return LocalDate.parse(dateString, formatter);
+					localDate = LocalDate.parse(dateString, formatter);
 				}catch (Exception e){
+					LOG.warn(e.getCause().getMessage());
 				}
 			}
-			return null;
+			return localDate;
 			
 		}
 
@@ -201,9 +207,9 @@ public class XLSX2CSV {
 	 * @param minColumns
 	 *            The minimum number of columns to output, or -1 for no minimum
 	 */
-	public XLSX2CSV(File inputFile, File outputFile) throws InvalidFormatException, FileNotFoundException, IOException {
+	public XLSX2CSV(File inputFile, File outputFile) throws InvalidFormatException, IOException {
 		if (!inputFile.exists()) {
-			System.err.println("Not found or not a file: " + inputFile.getPath());
+			LOG.warn("Not found or not a file: " + inputFile.getPath());
 			return;
 		}
 		OPCPackage p = OPCPackage.open(inputFile.getPath(), PackageAccess.READ);
@@ -231,7 +237,7 @@ public class XLSX2CSV {
 			ContentHandler handler = new XSSFSheetXMLHandler(styles, strings, sheetHandler, formatter, false);
 			sheetParser.setContentHandler(handler);
 			sheetParser.parse(sheetSource);
-		} catch (ParserConfigurationException e) {
+		} catch (IOException| ParserConfigurationException| SAXException e) {
 			throw new RuntimeException("SAX parser appears to be broken - " + e.getMessage());
 		}
 	}
@@ -261,4 +267,22 @@ public class XLSX2CSV {
 
 	}
 
+	public static void xls(File inputFile, File outputFile)
+			throws InvalidFormatException,  IOException {
+		// For storing data into CSV files
+
+		if (!inputFile.exists()) {
+			LOG.error("Not found or not a file: " + inputFile.getPath());
+			return;
+		}
+
+		// The package open is instantaneous, as it should be.
+		XLSX2CSV xlsx2csv = new XLSX2CSV(inputFile, outputFile);
+		try {
+			xlsx2csv.process();
+		} catch (OpenXML4JException | ParserConfigurationException | SAXException e) {
+			LOG.warn(e.getCause().getMessage());
+		}
+
+	}
 }

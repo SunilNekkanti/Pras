@@ -123,12 +123,7 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		if (sSearchIns != null) {
 			and.add(Restrictions.eq("ins.id", sSearchIns));
 		}
-		if (sSearchPrvdr == ALL) {
-
-		}
-
 		if (sSearchPrvdr != null && sSearchPrvdr != ALL) {
-
 			crit.createAlias("prvdr.refContracts", "refContract");
 			crit.createAlias("refContract.ins", "inss");
 			and.add(Restrictions.eq("prvdr.id", sSearchPrvdr));
@@ -163,20 +158,18 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 					.createAlias("facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("billType", "billType", JoinType.LEFT_OUTER_JOIN)
 					.add(Restrictions.in("id", MbrClaimIds));
-					if (sort != null && !"".equals(sort)) {
-						if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+					if (sort != null && sortdir != null  && "desc".equals(sortdir)) {
 							if ("prvdr.name".equals(sort)) {
 								criteria.addOrder(Order.desc("prvdr.name"));
 							} else {
 								criteria.addOrder(Order.desc(sort));
 							}
-						} else {
+					} else if(sort != null) {
 							if ("prvdr.name".equals(sort)) {
 								criteria.addOrder(Order.asc("prvdr.name"));
 							} else {
 								criteria.addOrder(Order.asc(sort));
 							}
-						}
 					}
 			criteria.addOrder(Order.asc("mbr.lastName"));
 			criteria.addOrder(Order.asc("mbr.firstName"));

@@ -37,8 +37,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.pfchoice.core.dao.impl.MembershipHospitalizationDaoImpl;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -52,7 +50,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
  */
 public class PrasUtil {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MembershipHospitalizationDaoImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PrasUtil.class);
 
 	/**
 	 * 

@@ -113,6 +113,7 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 	 * com.pfchoice.core.dao.MembershipClaimDetailsDao#getMbrClaimDetailsPage(
 	 * java.lang.Integer)
 	 */
+	@Override
 	public Pagination getMbrClaimDetailsPage(final Integer mbrClaimId) {
 
 		Criteria crit = createCriteria().createAlias("mbrClaim", "mbrClaim");
@@ -186,8 +187,7 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
 
 			criteria.add(Restrictions.in("id", MbrClaimDetailIds));
-			if (sort != null && !"".equals(sort)) {
-				if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+			if (sort != null && sortdir != null && "desc".equals(sortdir)) {
 					if ("mbrClaim.mbr.lastName".equals(sort)) {
 						criteria.addOrder(Order.desc("mbr.lastname"));
 					}
@@ -196,7 +196,7 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 					} else {
 						criteria.addOrder(Order.desc(sort));
 					}
-				} else {
+			} else if (sort != null) {
 					if ("mbrClaim.mbr.lastName".equals(sort)) {
 						criteria.addOrder(Order.asc("mbr.lastName"));
 					}
@@ -205,7 +205,6 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 					} else {
 						criteria.addOrder(Order.asc(sort));
 					}
-				}
 			}
 
 			criteria.addOrder(Order.asc("mbr.lastName")).addOrder(Order.asc("mbr.firstName"))

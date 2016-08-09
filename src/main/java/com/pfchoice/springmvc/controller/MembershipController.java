@@ -2,7 +2,6 @@ package com.pfchoice.springmvc.controller;
 
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ import com.pfchoice.common.Message;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
-import com.pfchoice.common.util.XlstoCSV;
+import com.pfchoice.common.util.XLSX2CSV;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
 import com.pfchoice.core.entity.File;
@@ -618,14 +617,16 @@ public class MembershipController {
 			@RequestParam(required = true, value = "fileTypeId") Integer fileTypeId,
 			@RequestParam(required = false, value = "activityMonth") Integer activityMonth,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
-			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
+			HttpServletRequest request) throws InvalidFormatException {
 
 		logger.info("started file processsing for" + activityMonth);
-
-		java.io.File sourceFile, newSourceFile = null;
+		java.io.File sourceFile = null;
+		java.io.File newSourceFile = null;
+		String mbrRoster = null;
+		
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
-			String newfileName = fileName.substring(0, fileName.indexOf("."));
+			String newfileName = fileName.substring(0, fileName.indexOf('.'));
 
 			try {
 				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName),
@@ -635,17 +636,18 @@ public class MembershipController {
 				newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + newfileName + ".csv");
 				sourceFile.createNewFile();
 				newSourceFile.createNewFile();
-				XlstoCSV.xls(sourceFile, newSourceFile);
+				XLSX2CSV.xls(sourceFile, newSourceFile);
 				if (sourceFile.exists()) {
 					sourceFile.delete();
 				}
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.info( e.getCause().getMessage());
 			}
 		}
 		logger.info("before file processing");
-		String mbrRoster = null;
+		
+		if(newSourceFile != null)
 		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName() + "&insId="
 				+ insId + "&fileTypeId=" + fileTypeId + "&activityMonth=" + activityMonth;
 		return mbrRoster;
@@ -684,7 +686,7 @@ public class MembershipController {
 					logger.info("fileId is empty");
 
 			} catch (Exception e) {
-				logger.info(e.getCause().getMessage());
+				logger.warn(e.getCause().getMessage());
 				logger.info("Similar file already processed in past");
 				return Message.failMessage("similar file already processed in past");
 			}

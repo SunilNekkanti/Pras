@@ -8,7 +8,6 @@ import static com.pfchoice.common.SystemDefaultProperties.FOLLOWUP_TYPE_CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,7 +42,7 @@ import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
-import com.pfchoice.common.util.XlstoCSV;
+import com.pfchoice.common.util.XLSX2CSV;
 import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FollowupType;
@@ -213,7 +212,6 @@ public class ReportsController {
 
 		FollowupType followupType = followupTypeService.findByCode(FOLLOWUP_TYPE_HEDIS);
 		mbrHedisFollowup.setFollowupType(followupType);
-		// mbrHedisFollowup.setDateOfContact(new Date());
 		mbrHedisFollowup.setCreatedBy(username);
 		mbrHedisFollowup.setUpdatedBy(username);
 		mbrHedisFollowupService.save(mbrHedisFollowup);
@@ -293,12 +291,12 @@ public class ReportsController {
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
 			@RequestParam(required = false, value = "fileTypeCode") Integer fileTypeCode,
-			HttpServletRequest request) throws InvalidFormatException, FileNotFoundException, IOException {
+			HttpServletRequest request) throws InvalidFormatException{
 		LOG.info("started file processsing");
 		java.io.File sourceFile, newSourceFile = null;
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
-			String newfileName = fileName.substring(0, fileName.indexOf("."));
+			String newfileName = fileName.substring(0, fileName.indexOf('.'));
 
 			try {
 				String ext = FilenameUtils.getExtension(fileName);
@@ -311,7 +309,7 @@ public class ReportsController {
 				if(!"csv".equals(ext)){
 					newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + newfileName + ".csv");
 					newSourceFile.createNewFile();
-					XlstoCSV.xls(sourceFile, newSourceFile);
+					XLSX2CSV.xls(sourceFile, newSourceFile);
 					if (sourceFile.exists()) {
 						sourceFile.delete();
 					}
@@ -321,9 +319,11 @@ public class ReportsController {
 				}
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOG.warn(e.getCause().getMessage());
 			}
 		}
+		if(newSourceFile == null)
+			return null;
 		LOG.info("before file processing");
 		String forwardToClaimOrHospital = null;
 
@@ -558,7 +558,7 @@ public class ReportsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/admin/membershipClaim/list", "/user/membershipClaim/list" })
-	public Message viewmembershipClaimList(@ModelAttribute("username") String username,
+	public Message viewMembershipClaimList(@ModelAttribute("username") String username,
 			@RequestParam(required = true, value = "insId") Integer insId,
 			@RequestParam(value = "fileName", required = true) String fileName,
 			@RequestParam(value = "fileTypeCode", required = true) Integer fileTypeCode) {
@@ -566,10 +566,10 @@ public class ReportsController {
 		LOG.info("verifying fileTypecode");
 		FileType fileType = fileTypeService.findById(fileTypeCode) ;
 		
-		if(fileType.getTablesName() == null || fileType.getTablesName().equals(""))
+		if(fileType.getTablesName() == null || "".equals(fileType.getTablesName()) )
 			return Message.failMessage("File Type configuration is inproper");
 		
-		String tableName  = fileType.getTablesName();
+		String tableName = fileType.getTablesName();
 		Boolean dataExists = mbrClaimService.isDataExists(tableName);
 		LOG.info("verifying if processing table contains previous data or not ");
 		if (dataExists) {

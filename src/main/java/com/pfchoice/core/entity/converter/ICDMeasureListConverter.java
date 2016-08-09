@@ -32,9 +32,9 @@ public class ICDMeasureListConverter implements AttributeConverter<List, String>
 	}
 
 	@Override
-	public List convertToEntityAttribute(String diagnosis) {
-		diagnosis = diagnosis.replace(" ", "");
-		String[] icdCodes = diagnosis.split(SEPARATOR);
+	public List convertToEntityAttribute(final String diagnosis) {
+		String diagnoses = diagnosis.replace(" ", "");
+		String[] icdCodes = diagnoses.split(SEPARATOR);
 
 		return icdMeasureDao.findByCodes(icdCodes);
 	}

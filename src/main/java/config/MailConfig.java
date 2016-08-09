@@ -83,8 +83,7 @@ public class MailConfig {
 	 */
 	@Bean
 	public DBConnection dBConnection() {
-		DBConnection dBConnection = new DBConnection();
-		return dBConnection;
+		return new DBConnection();
 	}
 
 }

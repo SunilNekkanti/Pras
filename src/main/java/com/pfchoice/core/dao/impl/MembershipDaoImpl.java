@@ -523,7 +523,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			Criteria criteria = createCriteria().createAlias("mbrClaimList", "mbrClaim", JoinType.INNER_JOIN)
 					.add(Restrictions.in("mbrClaim.id", mbrClaimIds));
 			
-			if (sort != null && !"".equals(sort) && sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+			if (sort != null && sortdir != null && "desc".equals(sortdir)) {
 					if ("mbrProviderList.0.prvdr.name".equals(sort)) {
 						criteria.addOrder(Order.desc("prvdr.name"));
 					} else {
