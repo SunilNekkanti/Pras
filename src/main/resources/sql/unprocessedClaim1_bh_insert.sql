@@ -15,17 +15,17 @@ INSERT INTO unprocessed_bh_claims
  select  
   :fileId,'Membership Not belong to us',
     NULL Uniuqe, 
-  case when activity_date <> '' then STRING_TO_DATE(activity_date) else NULL end activity_date, 
+  STRING_TO_DATE(activity_date) activity_date, 
   NULL MOP, NULL MOS2, NULL MOP2, ClaimNum, claimline, QNXTMemberID, MemberName, PlanID,
   NULL Location, NULL FacilityCode, NULL FacilityType, NULL BillClassCode, NULL BillClasification, NULL FrequencyCode, NULL Frequency, POS, 
-  case when ServiceStart <> '' then STRING_TO_DATE(ServiceStart) else NULL end ServiceStart, 
-  case when ServiceEnd <> '' then STRING_TO_DATE(ServiceEnd) else NULL end ServiceEnd,
-  case when csv2BhClaim1.paiddate <> '' then STRING_TO_DATE(csv2BhClaim1.paiddate) else NULL end paiddate,
-  case when Admit <> '' then STRING_TO_DATE(Admit) else NULL end Admit,
-  case when Discharge <> '' then  STRING_TO_DATE(Discharge) else NULL end Discharge,
+  STRING_TO_DATE(ServiceStart) ServiceStart, 
+   STRING_TO_DATE(ServiceEnd) ServiceEnd,
+  STRING_TO_DATE(csv2BhClaim1.paiddate)  paiddate,
+  STRING_TO_DATE(Admit)  Admit,
+   STRING_TO_DATE(Discharge) Discharge,
  admithour, revcode, servcode, NULL ServCodeDesc, ParStatus, Paid, PCPID,
  PCPName, NULL ProvSpecialty, NULL Mony, drg, 
- case when memdob <> '' then  STRING_TO_DATE(memdob) else NULL end memdob, 
+  STRING_TO_DATE(memdob) memdob, 
  NULL MemAge, PCPName, NULL MemPCPSpecialty, MedicaidNumber, EnrollID, 
  NULL PCPAffiliationId, NULL ProvAffiliationId, NULL GroupID, NULL GroupName, diag1 , diag2,  diag3, diag4, prindiag, Diag1_ICDVersion,
  Diag2_ICDVersion, Diag3_ICDVersion, Diag4_ICDVersion, product,  product_label, NULL AllowAmt, Copay,  deductible,  cobamt,  contractpaid, 
@@ -34,5 +34,5 @@ INSERT INTO unprocessed_bh_claims
  ServProvSpecialty, ServProvSpecialtyDesc,  patientstatus,  IPA,  SubIPA,  HICN,  formtype,  ReferralID,  BillType,  ClaimType, 
  claim_cat, now(), now(), 'sarath', 'sarath', csv2table_bh_claim_id
 from csv2table_bh_claim1 csv2BhClaim1
- left join membership m  on csv2BhClaim1.MedicaidNumber = m.mbr_medicaidNO
-  where m.mbr_id is NULL;
+ left join (select mbr_medicaidNO from membership) m  on csv2BhClaim1.MedicaidNumber = m.mbr_medicaidNO
+  where m.mbr_medicaidNO is NULL;

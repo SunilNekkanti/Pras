@@ -44,7 +44,6 @@ public class UnprocessedClaimDaoImpl extends HibernateBaseDao<UnprocessedClaim, 
 			int count = 0;
 				loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), i+insuranceCode + QUERY_TYPE_COUNT);
 				count =  (int) ((BigInteger) getSession().createSQLQuery(loadDataQuery).uniqueResult()).intValue();
-				System.out.println("count "+count);
 				if(count > 0){
 					loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), i+insuranceCode + QUERY_TYPE_INSERT);
 					retValue = getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();

@@ -17,25 +17,25 @@ INSERT INTO unprocessed_bh_claims
   Uniuqe, 
   case when MOS <> '' then cast(concat(MOS,'-01') as date) else NULL end MOS, 
   case when MOS <> '' then cast(concat(MOP,'-01') as date) else NULL end MOP, 
-  case when MOS2 <> '' then STRING_TO_DATE(MOS2) else NULL end MOS2, 
-  case when MOP2 <> '' then STRING_TO_DATE(MOP2) else NULL end MOP2, 
+  STRING_TO_DATE(MOS2)  MOS2, 
+   STRING_TO_DATE(MOP2)  MOP2, 
   ClaimId, ClaimLine, MemQnxtId, MemFullName, PlanId,
   Location, FacilityCode, FacilityType, BillClassCode, BillClasification, FrequencyCode, Frequency, POS, 
-  case when ClaimStartDate <> '' then STRING_TO_DATE(ClaimStartDate) else NULL end ClaimStartDate, 
-  case when ClaimEndDate <> '' then STRING_TO_DATE(ClaimEndDate) else NULL end ClaimEndDate,
-  case when PaidDate <> '' then STRING_TO_DATE(PaidDate) else NULL end PaidDate,
+  STRING_TO_DATE(ClaimStartDate) ClaimStartDate, 
+   STRING_TO_DATE(ClaimEndDate)  ClaimEndDate,
+   STRING_TO_DATE(PaidDate)  PaidDate,
   NULL Admit, NULL Discharge, NULL admithour, RevCode, ServCode, ServCodeDesc, ClaimDetailStatus, AmountPaid, ProvId, 
   ProvFullName, ProvSpecialty, Mony, DrugLabelName, 
-  case when MemDOB <> '' then STRING_TO_DATE(MemDOB) else NULL end MemDOB, 
+   STRING_TO_DATE(MemDOB)  MemDOB, 
   MemAge, MemPCPFullName, MemPCPSpecialty, MedicaidId, MemEnrollId,
   PCPAffiliationId, ProvAffiliationId, GroupID, GroupName, csv2BhClaim.Diagnoses, NULL diag2, NULL diag3, NULL diag4, NULL prindiag, NULL Diag1_ICDVersion,
   NULL Diag2_ICDVersion, NULL Diag3_ICDVersion, NULL Diag4_ICDVersion, NULL product, NULL product_label, AllowAmt, Copay, NULL deductible, NULL cobamt, NULL contractpaid,
   NULL ineligibleamt, PharmacyName, Quantity, NPOS, RiskId, 
-  case when RunnDate <> '' then STRING_TO_DATE(RunnDate) else NULL end RunnDate, 
+  STRING_TO_DATE(RunnDate)RunnDate, 
   NDC, PHARMACY, Claims, Psychare, Simple_County,
   NULL CountyCode, Triangles, Cover, NULL `Mod`, NULL Gender, NULL ProgramID, NULL ContractID, NULL ServProvName, NULL ServProvID,
   NULL ServProvSpecialty, NULL ServProvSpecialtyDesc, NULL patientstatus, NULL IPA, NULL SubIPA, NULL HICN, NULL formtype, NULL ReferralID,NULL BillType, NULL ClaimType,
   NULL claim_cat, now(), now(), 'sarath', 'sarath', csv2table_bh_claim_id
 from csv2table_bh_claim csv2BhClaim
- left join membership m  on csv2BhClaim.medicaidId = m.mbr_medicaidNO
- where m.mbr_id is null;
+ left join (select mbr_medicaidNO from  membership) m  on csv2BhClaim.medicaidId = m.mbr_medicaidNO
+ where m.mbr_medicaidNO is null;

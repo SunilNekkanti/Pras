@@ -5,7 +5,7 @@ SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, 
 REPLACE(textbox165, ',','') lastname,
-convert(textbox214,unsigned) mcdmcr, textbox2 sex , cast(str_to_Date(textbox9,'%c/%e/%Y')as date)   dob,   textbox64 memeffstartdate ,
+textbox214 mcdmcr, textbox2 sex , cast(str_to_Date(textbox9,'%c/%e/%Y')as date)   dob,   textbox64 memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
      else '12/31/2099' end  memeffenddate,
 case when textbox65 = 'PCP EFF' then textbox74 else textbox64 end  pcpstartdate,

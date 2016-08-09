@@ -9,7 +9,7 @@ case when c2m.status = 'ENR' then 1
      when c2m.status = 'DIS' then 3
      else  2 
 	end as status,
-convert(c2m.MCDMCR,unsigned) MCDMCR,
+c2m.MCDMCR MCDMCR,
 :fileId fileId,
 :insId ins_id,
 cast( str_to_date(MEMBEREFFDT, '%m/%d/%Y') as date) MEMBEREFFDT,
