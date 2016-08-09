@@ -29,7 +29,10 @@
     		 callMembershipDataTable(insSelectValue, prvdrSelectValue);
     	 });
     	 
+    	 
     	 $(document.body).on('change',"#insu",function (e) {
+    		setSelectedValue('insu', "", $("#insu option:selected").val());
+	    	setSelectedValue('prvdr', "", "");
      		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
  					$('#membershipTable').DataTable().destroy();
  	   		}
@@ -38,6 +41,7 @@
    		});
      	
      	$(document.body).on('change',"#prvdr",function (e) {
+     		setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
      		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
  					$('#membershipTable').DataTable().destroy();
  	   		}
@@ -61,10 +65,16 @@
 			 });
 		 
 		     var providerDropdown = function(){
-   		     var insSelectValue= $("#insu option:selected").val();
-			 var $selectPrvdr = $('#extFilterPrvdr');
+		    	var insSelectValue;
+				if(getCookie("insu"))
+					insSelectValue = getCookie("insu");
+				else{
+					insSelectValue= $("#insu option:selected").val();
+					setSelectedValue('insu', "",insSelectValue);
+				}
+			  var $selectPrvdr = $('#extFilterPrvdr');
 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
-				    
+					$('select[id="insu"]').val(insSelectValue);
 				     //clear the current content of the select
 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
 				     //iterate over the data and append a select option
@@ -74,7 +84,17 @@
 				     s.append('<option value="9999">All</option>');
 				     s.append('</select>');
 				     $selectPrvdr.html(s);
-			 });
+			 }).success(function() {
+				 var prvdrSelectValue;
+ 				 if(getCookie("prvdr"))
+ 					 prvdrSelectValue = getCookie("prvdr");
+ 				 else{
+ 					prvdrSelectValue= $("#prvdr option:selected").val();
+ 					setSelectedValue('prvdr', "",prvdrSelectValue);
+ 				 }	
+ 				 
+ 				$('select[id="prvdr"]').val(prvdrSelectValue);
+			});
    	  }
 		 
      	var datatable2RestMembership = function(sSource, aoData, fnCallback) {
@@ -218,7 +238,6 @@
 					</div>
 					<table id="membershipTable"
 						class="table table-striped table-hover table-responsive rowClick">
-
 						<thead>
 							<tr>
 								<th scope="col">Last Name</th>
@@ -230,19 +249,12 @@
 								<th scope="col">Status</th>
 							</tr>
 						</thead>
-
 						<tbody>
-
 						</tbody>
-
 					</table>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
-
-
 </body>
 </html>

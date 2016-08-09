@@ -14,6 +14,19 @@
 						$("#claimGenerate")
 								.click(
 										function(event) {
+											var error = new Array();
+											if(!$("#yearPicker").val()){
+												error[0] = "Select Year";
+											}	
+											if(!$("#monthPicker").val()){
+												error[1] = "Select month";
+											}
+											if(error)
+											{
+												$(".clrRed").text(error.toString());
+												return false;
+											}
+											
 											callClaimGenerate();
 											var index = 0;
 											$('#membershipClaimTable tr')
@@ -74,8 +87,14 @@
 								});
 
 						var providerDropdown = function() {
-							var insSelectValue = $("#insu option:selected")
-									.val();
+							 var insSelectValue;
+								if(getCookie("insu"))
+									insSelectValue = getCookie("insu");
+								else{
+									insSelectValue= $("#insu option:selected").val();
+									setSelectedValue('insu', "",insSelectValue);
+								}
+								$('select[id="insu"]').val(insSelectValue);
 							var $selectPrvdr = $('#extFilterPrvdr');
 							$
 									.getJSON(
@@ -102,7 +121,15 @@
 												s.append('</select>');
 												$selectPrvdr.html(s);
 											}).success(function() {
-
+												 var prvdrSelectValue;
+								 				 if(getCookie("prvdr"))
+								 					 prvdrSelectValue = getCookie("prvdr");
+								 				 else{
+								 					prvdrSelectValue= $("#prvdr option:selected").val();
+								 					setSelectedValue('prvdr', "",prvdrSelectValue);
+								 				 }	
+								 				 
+								 				$('select[id="prvdr"]').val(prvdrSelectValue);
 									});
 						}
 
@@ -521,6 +548,8 @@
 										'change',
 										"#insu",
 										function(e) {
+											setSelectedValue('insu', "", $("#insu option:selected").val());
+								    		setSelectedValue('prvdr', "", "");
 											if ($.fn.DataTable
 													.isDataTable('#membershipClaimTable')) {
 												$('#membershipClaimTable')
@@ -536,6 +565,7 @@
 										'change',
 										"#prvdr",
 										function(e) {
+											setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
 											if ($.fn.DataTable
 													.isDataTable('#membershipClaimTable')) {
 												$('#membershipClaimTable')

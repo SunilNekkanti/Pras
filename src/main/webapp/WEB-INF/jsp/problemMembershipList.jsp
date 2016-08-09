@@ -14,6 +14,10 @@ $(document).ready(function() {
 		
 		$("#problemGenerate").click(function(event)
 		{
+			if(!$("#problemRule").val()){
+				$(".clrRed").text("Select problem measure");
+				return false;
+			}
 			callProblemGenerate();
 		});
 	 		
@@ -37,7 +41,14 @@ $(document).ready(function() {
 		 
 		 var providerDropdown = function(){
 			 $("#problemGenerate").hide();
-    		  var insSelectValue= $("#insu option:selected").val();
+			 var insSelectValue;
+			if(getCookie("insu"))
+				insSelectValue = getCookie("insu");
+			else{
+				insSelectValue= $("#insu option:selected").val();
+				setSelectedValue('insu', "",insSelectValue);
+			}
+				
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
@@ -50,7 +61,19 @@ $(document).ready(function() {
  				     s.append('<option value="9999">All</option>');
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
+ 			 }).success(function() { 
+ 				 var prvdrSelectValue;
+ 				 if(getCookie("prvdr"))
+ 					 prvdrSelectValue = getCookie("prvdr");
+ 				 else{
+ 					prvdrSelectValue= $("#prvdr option:selected").val();
+ 					setSelectedValue('prvdr', "",prvdrSelectValue);
+ 				 }	
+ 				 
+ 				$('select[id="prvdr"]').val(prvdrSelectValue);
+ 				 
  			 });
+  		    
     	  }
     	  
     	  var columns ;
@@ -66,13 +89,16 @@ $(document).ready(function() {
     		  	
 				
 			var $selectProblemRule = $('#extFilterProblemRule');
-			var insSelectValue1 = $("#insu option:selected").val();
-			//var problemSelectValue1 = $("#").val();
-		 	 if( $("#insu option:selected").val() == null){
-		    	 insSelectValue1 = 1;
-		     }
-		 	
-		     var insSelectValue= $("#insu option:selected").val();
+			
+			if(getCookie("insu"))
+				insSelectValue = getCookie("insu");
+			else{
+				insSelectValue= $("#insu option:selected").val();
+				setSelectedValue('insu', "",insSelectValue);
+			}
+		     
+			$('select[id="insu"]').val(insSelectValue);
+			
 		 	 var $selectPrvdr = $('#extFilterPrvdr');
 		 	 var restParams = new Array();
 		 	 restParams.push({"name" : "pageSize", "value" : 12});
@@ -104,6 +130,7 @@ $(document).ready(function() {
     	  var callProblemGenerate = function(){
 
 				columns = new Array();
+				columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable" : true,"sClass": "center","bVisible" : false, "sWidth" : "1%"});
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "15%"});
 	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "8%"  });
 	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "7%"  });
@@ -201,7 +228,9 @@ $(document).ready(function() {
     		   var insSelectValue= $("#insu option:selected").val();
     		   var prvdrSelectValue= $("#prvdr option:selected").val();
     		   var problemRuleSelectValue= $("#problemRule option:selected").val();
-    		   
+    		   setSelectedValue('prvdr', "", prvdrSelectValue);
+    		   setSelectedValue('insu', "", insSelectValue);
+    		  
     		   var ruleArray = new Array;
     		    $("#problemRule option:selected").each  ( function() {
     		    	ruleArray.push ( $(this).val() );
@@ -216,12 +245,15 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
+    		setSelectedValue('insu', "", $("#insu option:selected").val());
+    		setSelectedValue('prvdr', "", "");
     		problemRuleDropdown(true);
     		providerDropdown();
     		
   		});
     	
     	$(document.body).on('change',"#prvdr",function (e) {
+    		setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
     		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
 					$('#membershipTable').DataTable().destroy();
 	   		}
@@ -356,6 +388,7 @@ $(document).ready(function() {
 
 					<thead>
 						<tr>
+							<th scope="col" role="row">Sno</th>
 							<th scope="col" role="row">Provider</th>
 							<th scope="col" role="row">Last Name</th>
 							<th scope="col" role="row">First Name</th>

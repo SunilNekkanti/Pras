@@ -106,6 +106,28 @@ footer {
 
 <body>
 	<script>
+	
+	function setSelectedValue(dropdownId, cookieValue, defaultValue){
+	    var element = document.getElementById(dropdownId);
+	    if(cookieValue) // If cookie has value
+	        element.value = cookieValue;
+	    else    // set default value
+	        element.value = defaultValue;
+	    var loc = window.location.pathname;
+	    document.cookie = dropdownId+"=" + element.value+"; path="+loc;
+	 }
+	 function getCookie(cookieValue) {
+		    var textValue = cookieValue + "=";
+		    var ca = document.cookie.split(';');
+		    for (var i = 0; i < ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0) == ' ') c = c.substring(1);
+		        if (c.indexOf(textValue) == 0) {
+		            return c.substring(textValue.length, c.length);
+		        }
+		    }
+		    return "";
+		}
 jQuery( document ).ready(function( $ ) {
 	$(".datepicker").datepicker({
         dateFormat: 'mm/dd/yy',

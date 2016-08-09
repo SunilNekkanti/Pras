@@ -210,7 +210,7 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		String[] tokens = tableNames.split(",", -1);
 		for(String tableName :tokens){
 			String	loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode + QUERY_TYPE_LOAD);
-			Object[] objArray = {tableName, "','","'\"'","'\r\n'" };
+			Object[] objArray = {tableName, "','","'\"'","'\r\n'"};
 			MessageFormat mf = new MessageFormat(loadDataQuery);
 			String sqlQuery = mf.format(objArray);
 			retValue =  getSession().createSQLQuery(sqlQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)

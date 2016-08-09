@@ -43,6 +43,8 @@ public interface SystemDefaultProperties {
 	String QUERY_TYPE_BH_UPDATE = "_bh_update";
 	
 	String QUERY_TYPE_UNLOAD = "_unload";
+	
+	String QUERY_TYPE_COUNT = "_count";
 
 	String SQL_QUERY_EXTN = ".sql";
 

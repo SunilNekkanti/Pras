@@ -2,8 +2,8 @@ drop table if exists temp_membership ;
 create temporary table temp_membership  as
 select  substring_index(c2m.Membername,',',1) as lastname,substring_index(c2m.Membername,',',-1) as firstname,
 lg.gender_id sex, lc.code county,
- case when dob like '%/%/% %:%' then DATE_FORMAT(str_to_date(dob , '%c/%e/%Y %H:%i'),'%Y-%c-%e')
-       when dob like '%/%/%' then DATE_FORMAT(str_to_date(dob , '%c/%e/%Y'),'%Y-%c-%e')
+ case when dob like '%/%/% %:%' then cast(str_to_date(dob , '%c/%e/%Y %H:%i') as date)
+       when dob like '%/%/%' then cast(str_to_date(dob , '%c/%e/%Y') as date)
        end     dob,
 case when c2m.status = 'ENR' then 1
      when c2m.status = 'DIS' then 3
@@ -55,7 +55,8 @@ alter table temp_membership add key SBSB_ID(SBSB_ID);
  where m.mbr_id=a.mbr_id;
 
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
-select lastname,firstname, sex,county, tm.dob ,
+select lastname,firstname, sex,county, 
+case when tm.dob    > current_date   then  DATE_SUB( tm.dob ,INTERVAL 100 YEAR)   else  tm.dob  end  dob ,
 tm.status,tm.MCDMCR, tm.fileId ,tm.created_date,tm.updated_date,tm.created_by,tm.updated_by   from  temp_membership tm
 LEFT join  membership_insurance mi on  mi.SRC_SYS_MBR_NBR=tm.SBSB_ID
 LEFT OUTER JOIN membership m on m.mbr_id = mi.mbr_id

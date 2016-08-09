@@ -30,7 +30,15 @@ $(document).ready(function() {
 		 });
 		 
 		 var providerDropdown = function(){
-    		  var insSelectValue= $("#insu option:selected").val();
+			 var insSelectValue;
+			 if(getCookie("insu"))
+					insSelectValue = getCookie("insu");
+				else{
+					insSelectValue= $("#insu option:selected").val();
+					setSelectedValue('insu', "",insSelectValue);
+				}
+			     
+				$('select[id="insu"]').val(insSelectValue);
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				     //clear the current content of the select
@@ -43,6 +51,15 @@ $(document).ready(function() {
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
  			 }).success(function() { 
+ 				var prvdrSelectValue;
+				 if(getCookie("prvdr"))
+					 prvdrSelectValue = getCookie("prvdr");
+				 else{
+					prvdrSelectValue= $("#prvdr option:selected").val();
+					setSelectedValue('prvdr', "",prvdrSelectValue);
+				 }	
+				 
+				$('select[id="prvdr"]').val(prvdrSelectValue);
  				 hedisRuleDropdown(true);
  	    	 });
     	  }
@@ -209,6 +226,8 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
+    		setSelectedValue('insu', "", $("#insu option:selected").val());
+    		setSelectedValue('prvdr', "", "");
     		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
 					$('#membershipTable').DataTable().destroy();
 	   		}
@@ -217,6 +236,7 @@ $(document).ready(function() {
   		});
     	
     	$(document.body).on('change',"#prvdr",function (e) {
+    		setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
     		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
 					$('#membershipTable').DataTable().destroy();
 	   		}

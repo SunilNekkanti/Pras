@@ -66,6 +66,7 @@ import com.pfchoice.core.service.MembershipHospitalizationDetailsService;
 import com.pfchoice.core.service.MembershipHospitalizationService;
 import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipService;
+import com.pfchoice.core.service.UnprocessedClaimService;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
@@ -96,9 +97,15 @@ public class ReportsController {
 
 	@Autowired
 	private FileTypeService fileTypeService;
+	
+	@Autowired
+	private FollowupTypeService followupTypeService;
 
 	@Autowired
 	private HospitalService hospitalService;
+
+	@Autowired
+	private InsuranceService insuranceService;
 
 	@Autowired
 	private MembershipProblemService mbrProblemService;
@@ -125,10 +132,7 @@ public class ReportsController {
 	private MembershipHospitalizationDetailsService mbrHospitalizationDetailsService;
 
 	@Autowired
-	private FollowupTypeService followupTypeService;
-
-	@Autowired
-	private InsuranceService insuranceService;
+	private UnprocessedClaimService unprocessedClaimService;
 
 	/**
 	 * @param binder
@@ -618,6 +622,8 @@ public class ReportsController {
 			LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
+			Integer unprocessedClaimLoadedData = unprocessedClaimService.loadDataCSV2Table( fileId,  insuranceCode,  tableName);
+			LOG.info("unprocessedClaimLoadedData " + unprocessedClaimLoadedData + new Date());
 			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(tableName);
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData + new Date());
 

@@ -40,33 +40,13 @@
 	    
 	 }).success(function() {  
 		 var insSelectValue= $("#insu option:selected").val();
+		 var eySelectValue= $("#ey option:selected").val();
 		 setSelectedValue('insu', getCookie("insu"), insSelectValue);
+		 setSelectedValue('ey', getCookie("ey"), eySelectValue);
 		 callDatableWithChangedDropDown();	
 	 
 	 });
 	 
-	 function setSelectedValue(dropdownId, cookieValue, defaultValue){
-		    var element = document.getElementById(dropdownId);
-		    if(cookieValue) // If cookie has value
-		        element.value = cookieValue;
-		    else    // set default value
-		        element.value = defaultValue;
-		    
-		    document.cookie = "insu=" + element.value;
-	 }
-	 function getCookie(cookieValue) {
-		    var textValue = cookieValue + "=";
-		    var ca = document.cookie.split(';');
-		    for (var i = 0; i < ca.length; i++) {
-		        var c = ca[i];
-		        while (c.charAt(0) == ' ') c = c.substring(1);
-		        if (c.indexOf(textValue) == 0) {
-		            return c.substring(textValue.length, c.length);
-		        }
-		    }
-		    return "";
-		}
-					 
 	 $(document.body).on('change',"#insu",function (e) {
 		 var insSelectValue= $("#insu option:selected").val();
 		 setSelectedValue('insu', "", insSelectValue);
@@ -74,6 +54,8 @@
  		});
  	
  	  $(document.body).on('change',"#ey",function (e) {
+ 		 var eySelectValue= $("#ey option:selected").val();
+		 setSelectedValue('ey', "", eySelectValue);
  		 callDatableWithChangedDropDown();
  		});
  	  

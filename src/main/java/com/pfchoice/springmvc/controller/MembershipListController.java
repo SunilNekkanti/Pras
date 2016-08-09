@@ -65,28 +65,30 @@ public class MembershipListController {
 	 */
 	@RequestMapping(value = { "/admin/reports/membershipList", "/user/reports/membershipList" })
 	public void handleRequest1(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = true) Integer insId,
 			@RequestParam(required = true) String reportFormat)
 			throws JRException, NamingException, SQLException, IOException {
 		LOG.info("returning membershipList.jsp");
 
-		String fileName = "membershipList";
+		String fileName = "MbrCount4MbrStatusVsPrvdr";
 		JasperReport jp = PrasUtil.getCompiledFile(fileName, request);
-
+		HashMap<String, Object> rptParams =  new HashMap<>();
+		rptParams.put("insId",insId);
 		switch (reportFormat) {
 		case "PDF":
 		case "pdf":
-			PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());
+			PrasUtil.generateReportPDF(response,rptParams , jp, dBConnection.getConnection());
 			break;
 		case "XLS":
 		case "XLSX":
-			PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());
+			PrasUtil.generateReportPDF(response, rptParams, jp, dBConnection.getConnection());
 			break;
 		case "CSV":
 		case "csv":
-			PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());
+			PrasUtil.generateReportPDF(response, rptParams, jp, dBConnection.getConnection());
 			break;
 		default:
-			PrasUtil.generateReportPDF(response, new HashMap<String, Object>(), jp, dBConnection.getConnection());
+			PrasUtil.generateReportPDF(response, rptParams, jp, dBConnection.getConnection());
 			break;
 		}
 	}

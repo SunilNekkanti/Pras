@@ -5,7 +5,7 @@ SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, 
 REPLACE(textbox165, ',','') lastname,
-convert(textbox214,unsigned) mcdmcr, textbox2 sex , textbox9 dob,   textbox64 memeffstartdate ,
+convert(textbox214,unsigned) mcdmcr, textbox2 sex , cast(str_to_Date(textbox9,'%c/%e/%Y')as date)   dob,   textbox64 memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
      else '12/31/2099' end  memeffenddate,
 case when textbox65 = 'PCP EFF' then textbox74 else textbox64 end  pcpstartdate,
@@ -16,7 +16,8 @@ case when textbox65 = 'PCP Term' then textbox74 end pcpenddate,
  alter table temp_bh_membership add key MCDMCR(MCDMCR);
 
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
- select lastname,firstname ,lg.gender_id,lc.code,DATE_FORMAT(str_to_Date(dob,'%c/%e/%Y %H:%i'),'%Y-%c-%e'),
+ select lastname,firstname ,lg.gender_id,lc.code,
+cast(  case when a.dob    > current_date   then  DATE_SUB( a.dob ,INTERVAL 100 YEAR)   else  a.dob  end  as date)  dob ,
  case when trim(a.status)='Current Membership' then 2
       when trim(a.status)='New Membership' then 1
       when trim(a.status)='Termed Membership' then 3 end status,

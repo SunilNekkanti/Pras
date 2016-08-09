@@ -15,6 +15,15 @@ $(document).ready(function() {
 		{
 		    $('#yearpicker').append($('<option />').val(i).html(i));
 		}	
+		if(getCookie("yearpicker"))
+			yearSelectValue = getCookie("yearpicker");
+		else
+		{	
+			setSelectedValue('yearpicker', "", $("#yearpicker option:selected").val());
+			yearSelectValue= $("#yearpicker option:selected").val();
+		}
+	     
+		$('select[id="yearpicker"]').val(yearSelectValue);
 		
 		var result = ["JAN", "FEB", "MAR","APR","MAY", "JUN", "JUL","AUG","SEP","OCT", "NOV", "DEC"];
     	 var $selectIns = $('#extFilterIns');
@@ -34,7 +43,15 @@ $(document).ready(function() {
 		 });
 		 
 		 var providerDropdown = function(){
-    		  var insSelectValue= $("#insu option:selected").val();
+			 var insSelectValue;
+			 if(getCookie("insu"))
+					insSelectValue = getCookie("insu");
+				else{
+					insSelectValue= $("#insu option:selected").val();
+					setSelectedValue('insu', "",insSelectValue);
+				}
+			     
+				$('select[id="insu"]').val(insSelectValue);
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
@@ -48,13 +65,22 @@ $(document).ready(function() {
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
  			 }).success(function() { 
- 				// hedisRuleDropdown(true);
+ 				 var prvdrSelectValue;
+ 				 if(getCookie("prvdr"))
+ 					 prvdrSelectValue = getCookie("prvdr");
+ 				 else{
+ 					prvdrSelectValue= $("#prvdr option:selected").val();
+ 					setSelectedValue('prvdr', "",prvdrSelectValue);
+ 				 }	
+ 				 
+ 				$('select[id="prvdr"]').val(prvdrSelectValue);
  	    	 });
     	  }
     	  
     	  var columns ;
     	  var callmembershipActivityMonthGenerate = function(){
 				columns = new Array();
+				columns.push({ "mDataProp": "lastName","bSearchable" : false, "bSortable" : true,"bVisible" : false, "sClass": "center","sWidth" : "10%"});
 	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
 	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
@@ -113,6 +139,9 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
+    		setSelectedValue('insu', "", $("#insu option:selected").val());
+    		setSelectedValue('prvdr', "", "");
+    		
     		if ( $.fn.DataTable.isDataTable('#membershipActivityMonth') ) {
 					$('#membershipActivityMonth').DataTable().destroy();
 	   		}
@@ -121,6 +150,15 @@ $(document).ready(function() {
   		});
     	
     	$(document.body).on('change',"#prvdr",function (e) {
+    		setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
+    		if ( $.fn.DataTable.isDataTable('#membershipActivityMonth') ) {
+					$('#membershipActivityMonth').DataTable().destroy();
+	   		}
+    		$('#membershipActivityMonth tbody').empty();
+  		});
+    	
+    	$(document.body).on('change',"#yearpicker",function (e) {
+    		setSelectedValue('yearpicker', "", $("#yearpicker option:selected").val());
     		if ( $.fn.DataTable.isDataTable('#membershipActivityMonth') ) {
 					$('#membershipActivityMonth').DataTable().destroy();
 	   		}
@@ -250,6 +288,7 @@ $(document).ready(function() {
 
 					<thead>
 						<tr>
+							<th scope="col" role="row">Sno</th>
 							<th scope="col" role="row">Provider</th>
 							<th scope="col" role="row">Last Name</th>
 							<th scope="col" role="row">First Name</th>
