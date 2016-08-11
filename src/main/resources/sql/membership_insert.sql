@@ -1,6 +1,6 @@
 drop table if exists temp_membership ;
 create temporary table temp_membership  as
-select  substring_index(c2m.Membername,',',1) as lastname,substring_index(c2m.Membername,',',-1) as firstname,
+select  trim(substring_index(c2m.Membername,',',1)) as lastname,trim(substring_index(c2m.Membername,',',-1)) as firstname,
 lg.gender_id sex, lc.code county,
  case when dob like '%/%/% %:%' then cast(str_to_date(dob , '%c/%e/%Y %H:%i') as date)
        when dob like '%/%/%' then cast(str_to_date(dob , '%c/%e/%Y') as date)
@@ -27,6 +27,8 @@ address1,
 address2,
 city,
 zip,
+groupp,
+class,
 PRODUCT,
 PLAN,
 state,
@@ -70,6 +72,8 @@ mi.effective_strt_dt =  tm.MEMBEREFFDT ,
 effecctive_end_dt= tm.MEMBERTERMDT ,
 mi.product = tm.PRODUCT,
 mi.product_label= tm.PRODUCT,
+mi.groupp = tm.groupp,
+mi.class= tm.class,
 mi.planID = tm.PLAN
 where mi.SRC_SYS_MBR_NBR is not null;
 
@@ -81,7 +85,7 @@ DATE_FORMAT(NOW() ,'%m%y')  activityMonth;
 insert into membership_insurance 
 (
 ins_id,mbr_id,New_Medicare_Bene_Medicaid_Flag,activitydate,activityMonth,effective_strt_dt,effecctive_end_dt,
-product,product_label,planID,SRC_SYS_MBR_NBR,risk_flag,file_id,created_date,updated_date,created_by,updated_by)
+product,product_label,planID,SRC_SYS_MBR_NBR,groupp,class,risk_flag,file_id,created_date,updated_date,created_by,updated_by)
 select 
 tm.ins_id,
 m.mbr_id,
@@ -94,6 +98,8 @@ tm.PRODUCT,
 tm.PRODUCT,
 tm.PLAN,
 tm.SBSB_ID,
+tm.groupp,
+tm.class,
 'N' risk_flag,
  tm.fileId,
 now() created_date,

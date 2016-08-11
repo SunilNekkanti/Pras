@@ -134,7 +134,7 @@ footer {
 		    return "";
 		}
 	 
-	 function getArrayCache(dropDown)
+	 function getDropDownCache(dropDown)
 	 {
 		 var value = getCookie(dropDown);
 		 if(value){
@@ -142,7 +142,10 @@ footer {
 		 var cacheValue = $.parseJSON(value);
 			$.each(cacheValue, function (i,v)
 			{
-				cacheList.push(parseInt(v)); 
+				 if($.isNumeric(v))
+					cacheList.push(parseInt(v)); 
+				 else
+					cacheList.push(v);
 			});
 		  	return cacheList
 		 }
@@ -151,22 +154,29 @@ footer {
 	 }
 	 function dropDownCache(dropDown){
 	  		 var arrayList = new Array;
-		   	  $('.'+dropDown+ ' '+'input[type=checkbox]').each(function () {
-		   			 if(this.checked){
-		   				 arrayList.push($(this).val()); 
-		   			 }
-		   	 });
+	  		 arrayList = selectedList(dropDown);
 		   	 $('#'+dropDown).multiselect('select', arrayList);
 				
 			 $('#'+dropDown).multiselect({numberDisplayed: 0, 
 		    	 buttonWidth: '150px',
 		    	 includeSelectAllOption: true,
 		    	 templates: {
-					 ul: '<ul class="multiselect-container dropdown-menu '+problemRule+'"></ul>'
+					 ul: '<ul class="multiselect-container dropdown-menu '+dropDown+'"></ul>'
 				 },
 		    });
 			 
 	}
+	 function selectedList(dropDown)
+	 {
+		 var selectedList = new Array;
+	   	  $('.'+dropDown+ ' '+'input[type=checkbox]').each(function () {
+	   			 if(this.checked){
+	   				selectedList.push($(this).val()); 
+	   			 }
+	   	 });
+	   	  
+	   	  return selectedList;
+	 }
 jQuery( document ).ready(function( $ ) {
 	$(".datepicker").datepicker({
         dateFormat: 'mm/dd/yy',

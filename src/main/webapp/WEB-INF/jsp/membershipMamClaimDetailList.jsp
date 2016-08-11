@@ -14,8 +14,9 @@
 						$("#claimGenerate")
 								.click(
 										function(event) {
+											$(".clrRed").text("");
+											var i = 0;
 											var error = new Array();
-											var i=0;
 											if(!$("#yearPicker").val()){
 												error[i++] = "Select Year";
 											}	
@@ -134,7 +135,6 @@
 									});
 						}
 
-						var columns;
 						var callClaimGenerate = function() {
 							columns = new Array();
 							columns
@@ -577,19 +577,22 @@
 										});
 
 						$(document.body)
-								.on(
-										'change',
-										"#hedisRule",
-										function(e) {
-											if ($.fn.DataTable
-													.isDataTable('#membershipClaimTable')) {
-												$('#membershipClaimTable')
-														.DataTable().destroy();
-											}
-											$('#membershipClaimTable tbody')
-													.empty();
+						.on(
+								'change',
+								"#mbrClaimField",
+								function(e) {
+									if ($.fn.DataTable
+											.isDataTable('#membershipClaimTable')) {
+										$(
+												'#membershipClaimTable')
+												.DataTable().destroy();
+									}
+									$(
+											'#membershipClaimTable tbody')
+											.empty();
+									dropDownCache('mbrClaimField'); 
 
-										});
+								});
 
 						var datatable2RestMembership = function(sSource,
 								aoData, fnCallback) {
@@ -615,6 +618,19 @@
 							var monthPicker = paramMap.monthPicker;
 							var yearPicker = paramMap.yearPicker;
 							var processClaim = paramMap.processClaim;
+							
+							 var  selectedItem = new Array;
+							 selectedItem = selectedList('mbrClaimField');
+							 setSelectedValue('mbrClaimField', "",selectedItem);
+							 dropDownCache('mbrClaimField');
+							 
+							 selectedItem = selectedList('monthPicker');
+							 setSelectedValue('monthPicker', "",selectedItem);
+							 dropDownCache('monthPicker');
+							 
+							 selectedItem = selectedList('yearPicker');
+							 setSelectedValue('yearPicker', "",selectedItem);
+							 dropDownCache('yearPicker');
 
 							//create new json structure for parameters for REST request
 							var restParams = new Array();
@@ -658,7 +674,8 @@
 								"name" : "processClaim",
 								"value" : processClaim
 							});
-
+							
+							
 							$
 									.ajax({
 										dataType : 'json',
@@ -845,8 +862,7 @@
 
 						<thead>
 							<tr>
-								<th scope="col" data-value="Member Name" role="row">Member
-									Name</th>
+								<th scope="col" data-value="Member Name" role="row">Member Name</th>
 								<th scope="col" role="row">claim Id Number</th>
 								<th scope="col" role="row">Provider Name</th>
 								<th scope="col" role="row">Claim Type</th>
@@ -904,45 +920,71 @@
 </div>
 <script>
 	var options = [];
-
-	$('#membershipClaimTable tr th').each(
-			function(index) {
-				var mbrclaimcheck = "";
-				var mbrclaimselect = "";
-				if (index < 8) {
-					mbrclaimcheck = "selected";
+	var mbrClaimCol = new Array;
+	var yearList = new Array;
+	var monthList = new Array;
+	mbrClaimCol = getDropDownCache("mbrClaimField");
+	$('#membershipClaimTable tr th').each(function(index)
+	 {
+				var mbrclaimcheck ="";
+				var mbrclaimselect ="";
+				if(index < 8 && mbrClaimCol.length <  1){
+					mbrclaimcheck ="selected";
 				}
-				$("#mbrClaimField").append(
-						'<option value="' + $(this).html() + '"'
-								+ mbrclaimcheck + '>' + $(this).html()
-								+ '</option>');
-			});
+				else if(mbrClaimCol.length > 0 && jQuery.inArray($(this).html(), mbrClaimCol) != -1)
+				{
+					mbrclaimcheck ="selected";
+				}
+					$("#mbrClaimField").append('<option value="'+$(this).html()+'"' +mbrclaimcheck+'>' + $(this).html() +'</option>');
+	});
+	var  yearList = getDropDownCache("yearPicker");
+	var yearSelected;
 	for (i = new Date().getFullYear(); i > new Date().getFullYear() - 3; i--) {
-		$('#yearPicker').append($('<option />').val(i).html(i));
+			yearSelected = "";
+		if(jQuery.inArray(i, yearList) != -1){yearSelected = "Selected";}
+			$("#yearPicker").append('<option value="'+i+'" '+ yearSelected +' >' +i +'</option>');
 	}
 	var result = [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG",
 			"SEP", "OCT", "NOV", "DEC" ];
 	var month = "";
+	var  monthList = getDropDownCache("monthPicker");
+	var  montSelected;
 	$.each(result, function(index, value) {
 		if (index < 9)
 			month = "0" + (index + 1);
 		else
 			month = index + 1;
-		$('#monthPicker').append($('<option />').val(month).html(value));
+		monthSelected = "";
+		  if(jQuery.inArray(parseInt(month), monthList) != -1){monthSelected = "Selected";}
+		//	$("#monthPicker").append('<option value="'+i+'" '+ monthSelected +' >' +i +'</option>');
+			$("#monthPicker").append('<option value="'+month+'" '+ monthSelected +'>' +value +'</option>');
+		//$('#monthPicker').append($('<option />').val(month).html(value));
 	});
 	$('#mbrClaimField').multiselect({
 		numberDisplayed : 0,
+		 templates: {
+			 ul: '<ul class="multiselect-container dropdown-menu mbrClaimField"></ul>'
+		 },
 		buttonWidth : '150px',
 		includeSelectAllOption : true,
+		 onChange: function(option, checked) {
+			
+		 }
 	});
 	$('#yearPicker').multiselect({
 		numberDisplayed : 0,
 		buttonWidth : '150px',
 		includeSelectAllOption : true,
+		 templates: {
+			 ul: '<ul class="multiselect-container dropdown-menu yearPicker"></ul>'
+		 },
 	});
 	$('#monthPicker').multiselect({
 		numberDisplayed : 0,
 		buttonWidth : '150px',
 		includeSelectAllOption : true,
+		 templates: {
+			 ul: '<ul class="multiselect-container dropdown-menu monthPicker"></ul>'
+		 },
 	});
 </script>

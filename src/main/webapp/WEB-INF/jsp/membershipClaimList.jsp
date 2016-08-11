@@ -254,7 +254,7 @@
 						$(document.body)
 								.on(
 										'change',
-										"#hedisRule",
+										"#mbrClaimField",
 										function(e) {
 											if ($.fn.DataTable
 													.isDataTable('#membershipClaimTable')) {
@@ -265,6 +265,7 @@
 											$(
 													'#membershipClaimTable tbody')
 													.empty();
+											dropDownCache('mbrClaimField'); 
 
 										});
 
@@ -335,6 +336,11 @@
 								"name" : "processClaim",
 								"value" : processClaim
 							});
+							 
+							 var  selectedItem = new Array;
+							 selectedItem = selectedList('mbrClaimField');
+							 setSelectedValue('mbrClaimField', "",selectedItem);
+							 dropDownCache('mbrClaimField');
 
 							$
 									.ajax({
@@ -1005,12 +1011,17 @@ $(document.body).on('change',"#fileType",function (e) {
 </div>
 <script>
 var options = [];
-
+var mbrClaimCol = new Array;
+mbrClaimCol = getDropDownCache("mbrClaimField");
 $('#membershipClaimTable tr th').each(function(index)
  {
 			var mbrclaimcheck ="";
 			var mbrclaimselect ="";
-			if(index < 8){
+			if(index < 8 && mbrClaimCol.length <  1){
+				mbrclaimcheck ="selected";
+			}
+			else if(mbrClaimCol.length > 0 && jQuery.inArray($(this).html(), mbrClaimCol) != -1)
+			{
 				mbrclaimcheck ="selected";
 			}
 				$("#mbrClaimField").append('<option value="'+$(this).html()+'"' +mbrclaimcheck+'>' + $(this).html() +'</option>');
@@ -1018,6 +1029,9 @@ $('#membershipClaimTable tr th').each(function(index)
 $('#mbrClaimField').multiselect({numberDisplayed: 0, 
 	 buttonWidth: '150px',
 	 includeSelectAllOption: true,
+	 templates: {
+		 ul: '<ul class="multiselect-container dropdown-menu mbrClaimField"></ul>'
+	 },
 	 });
 
 </script>

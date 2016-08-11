@@ -42,8 +42,14 @@
 								});
 
 						var providerDropdown = function() {
-							var insSelectValue = $("#insu option:selected")
-									.val();
+							 var insSelectValue;
+								if(getCookie("insu"))
+									insSelectValue = getCookie("insu");
+								else{
+									insSelectValue= $("#insu option:selected").val();
+									setSelectedValue('insu', "",insSelectValue);
+								}
+								$('select[id="insu"]').val(insSelectValue);
 							var $selectPrvdr = $('#extFilterPrvdr');
 							$
 									.getJSON(
@@ -70,7 +76,15 @@
 												s.append('</select>');
 												$selectPrvdr.html(s);
 											}).success(function() {
-
+												 var prvdrSelectValue;
+								 				 if(getCookie("prvdr"))
+								 					 prvdrSelectValue = getCookie("prvdr");
+								 				 else{
+								 					prvdrSelectValue= $("#prvdr option:selected").val();
+								 					setSelectedValue('prvdr', "",prvdrSelectValue);
+								 				 }	
+								 				 
+								 				$('select[id="prvdr"]').val(prvdrSelectValue);
 									});
 						}
 
@@ -239,6 +253,8 @@
 											$(
 													'#membershipHospitalizationTable tbody')
 													.empty();
+											setSelectedValue('insu', "", $("#insu option:selected").val());
+								    		setSelectedValue('prvdr', "", "");
 											providerDropdown();
 										});
 
@@ -247,6 +263,7 @@
 										'change',
 										"#prvdr",
 										function(e) {
+											setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
 											if ($.fn.DataTable
 													.isDataTable('#membershipHospitalizationTable')) {
 												$(

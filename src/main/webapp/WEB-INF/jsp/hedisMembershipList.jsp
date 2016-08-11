@@ -79,13 +79,21 @@ $(document).ready(function() {
 		     	 }
 		 		
 		    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list?insId='+insSelectValue1, function(data){
+		    		 
+		    		  var hedisRuleList = new Array;
 		    		  if(hedisDropDownSet)
 		    		  {
+		    			  var hedisRuleCacheList = getDropDownCache('hedisRule');
+		    			 
 		    			  //clear the current content of the select
 						     var s = $('<select id=\"hedisRule\" style=\"width:150px;\" multiple=\"multiple\">');
 						     //iterate over the data and append a select option
 						     $.each(data.data, function(key, val){
-						    	 s.append('<option value="'+val.id+'" >' + val.shortDescription +'</option>');
+						    	 hedisRuleSelected = "";
+						    	 if(jQuery.inArray(val.id, hedisRuleCacheList) != -1){
+						    		 hedisRuleSelected ="selected";
+									}
+						    	 s.append('<option value='+val.id+' '+ hedisRuleSelected+ '>' + val.shortDescription +'</option>');
 						    	 hedisDescription.push(val.description);
 						     });
 						     s.append('</select>');
@@ -93,8 +101,12 @@ $(document).ready(function() {
 						     $('#hedisRule').multiselect({numberDisplayed: 0, 
 						    	 buttonWidth: '150px',
 						    	 includeSelectAllOption: true,
-						    	 });
+						    	 templates: {
+									 ul: '<ul class="multiselect-container dropdown-menu hedisRule"></ul>'
+								 },
+						    });
 		    		  }
+		    		  	dropDownCache("hedisRule")
 				 });
     	  }
     	  
@@ -174,7 +186,6 @@ $(document).ready(function() {
 					
 				
 	     		$.each( hedisRuleList, function( i, value ){
-	     				
 	     				if($("#hedisRule option:selected").text().indexOf(value.text) >= 0)
 	     				{
 		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.shortDescription","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
@@ -195,13 +206,8 @@ $(document).ready(function() {
 				      										}	
 				      										else
 			      											return '';
-				      										
-				      										
-				      								  
 		      								}
 		      						  });	
-		     				
-		     				
 	      			}
 	      		});
 	     		callDatableWithChangedDropDown();
@@ -217,7 +223,6 @@ $(document).ready(function() {
     		    	ruleArray.push ( $(this).val() );
     		    });
 
-    		    
     		   if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
   						$('#membershipTable').DataTable().destroy();
 			   }
@@ -247,7 +252,6 @@ $(document).ready(function() {
   		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
 			$('#membershipTable').DataTable().destroy();
 			}
-  			$('#membershipTable tbody').empty();
   			hedisRuleDropdown(false);
    		});
      	
@@ -273,7 +277,8 @@ $(document).ready(function() {
 		   var sSearchPrvdr = paramMap.sSearchPrvdr;
 		   var sSearchHedisRule = paramMap.sSearchHedisRule;
 		   var ruleIds = paramMap.ruleIds;
-		   
+		   setSelectedValue('hedisRule', "",ruleIds);
+		   dropDownCache('hedisRule');
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
 		   restParams.push({"name" : "pageSize", "value" : pageSize});

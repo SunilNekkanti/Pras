@@ -16,7 +16,7 @@ case when textbox65 = 'PCP Term' then textbox74 end pcpenddate,
  alter table temp_bh_membership add key MCDMCR(MCDMCR);
 
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
- select lastname,firstname ,lg.gender_id,lc.code,
+ select trim(lastname),trim(firstname) ,lg.gender_id,lc.code,
 cast(  case when a.dob    > current_date   then  DATE_SUB( a.dob ,INTERVAL 100 YEAR)   else  a.dob  end  as date)  dob ,
  case when trim(a.status)='Current Membership' then 2
       when trim(a.status)='New Membership' then 1

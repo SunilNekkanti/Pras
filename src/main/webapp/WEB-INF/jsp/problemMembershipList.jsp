@@ -111,7 +111,7 @@ $(document).ready(function() {
 		 		  data: restParams
 		 	})
 		 	 .done(function( data ) {
-		 		 var problemRuleCacheList = getArrayCache('problemRule');
+		 		 var problemRuleCacheList = getDropDownCache('problemRule');
 		 		
 		 		 var s = $('<select id=\"problemRule\"  class=\"btn btn-default\" multiple style=\"width:150px;\">');
 				 //iterate over the data and append a select option
@@ -279,10 +279,6 @@ $(document).ready(function() {
   			
    		});
   	  
-  	 
-   	  
-		
-     	
   	  var datatable2RestMembership = function(sSource, aoData, fnCallback) {
      		
      		//extract name/value pairs into a simpler map for use later
