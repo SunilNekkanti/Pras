@@ -111,10 +111,17 @@ $(document).ready(function() {
 		 		  data: restParams
 		 	})
 		 	 .done(function( data ) {
+		 		 var problemRuleCacheList = getArrayCache('problemRule');
+		 		
 		 		 var s = $('<select id=\"problemRule\"  class=\"btn btn-default\" multiple style=\"width:150px;\">');
 				 //iterate over the data and append a select option
 				 $.each(data.data.list, function(key, val){
-				   	 s.append('<option value="'+val.id+'" >' + val.description +'</option>');
+					 var problemRuleSelected = "";
+			    	 if(jQuery.inArray(val.id, problemRuleCacheList) != -1){
+			    		 	problemRuleSelected ="selected";
+						}
+			    	 
+				   	 s.append('<option value="'+val.id+'" '+problemRuleSelected+' >' + val.description +'</option>');
 				 });
 				 s.append('</select>');
 				 $selectProblemRule.html(s);	
@@ -122,6 +129,9 @@ $(document).ready(function() {
 				 $('#problemRule').multiselect({numberDisplayed: 0, 
 					 buttonWidth: '150px',
 					 includeSelectAllOption: true,
+					 templates: {
+						 ul: '<ul class="multiselect-container dropdown-menu problemRule"></ul>'
+					 },
 					 });
 		 	});
 		    	 
@@ -265,8 +275,13 @@ $(document).ready(function() {
 			$('#membershipTable').DataTable().destroy();
 			}
   			$('#membershipTable tbody').empty();
+  			dropDownCache('problemRule'); 
   			
    		});
+  	  
+  	 
+   	  
+		
      	
   	  var datatable2RestMembership = function(sSource, aoData, fnCallback) {
      		
@@ -291,6 +306,8 @@ $(document).ready(function() {
 		   var sSearchProblemRule = paramMap.sSearchProblemRule;
 		   var ruleIds = paramMap.ruleIds;
 		   
+		   setSelectedValue('problemRule', "",ruleIds);
+		   dropDownCache('problemRule');
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
 		   restParams.push({"name" : "pageSize", "value" : pageSize});

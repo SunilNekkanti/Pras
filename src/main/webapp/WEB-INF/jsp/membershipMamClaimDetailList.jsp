@@ -15,13 +15,14 @@
 								.click(
 										function(event) {
 											var error = new Array();
+											var i=0;
 											if(!$("#yearPicker").val()){
-												error[0] = "Select Year";
+												error[i++] = "Select Year";
 											}	
 											if(!$("#monthPicker").val()){
-												error[1] = "Select month";
+												error[i++] = "Select month";
 											}
-											if(error)
+											if(error.length > 0)
 											{
 												$(".clrRed").text(error.toString());
 												return false;

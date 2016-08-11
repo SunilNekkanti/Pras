@@ -69,7 +69,7 @@
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 .row.content {
-	height: 775px;
+	height: 850px;
 }
 
 /* Set gray background color and 100% height */
@@ -114,7 +114,12 @@ footer {
 	    else    // set default value
 	        element.value = defaultValue;
 	    var loc = window.location.pathname;
-	    document.cookie = dropdownId+"=" + element.value+"; path="+loc;
+	    if($.isArray(defaultValue))
+	    {
+	    	document.cookie = dropdownId+"=" + JSON.stringify(defaultValue)+"; path="+loc;
+	    }
+	    else
+	    	document.cookie = dropdownId+"=" + element.value+"; path="+loc;
 	 }
 	 function getCookie(cookieValue) {
 		    var textValue = cookieValue + "=";
@@ -128,6 +133,40 @@ footer {
 		    }
 		    return "";
 		}
+	 
+	 function getArrayCache(dropDown)
+	 {
+		 var value = getCookie(dropDown);
+		 if(value){
+			 var cacheList = new Array;
+		 var cacheValue = $.parseJSON(value);
+			$.each(cacheValue, function (i,v)
+			{
+				cacheList.push(parseInt(v)); 
+			});
+		  	return cacheList
+		 }
+		 return "";
+		
+	 }
+	 function dropDownCache(dropDown){
+	  		 var arrayList = new Array;
+		   	  $('.'+dropDown+ ' '+'input[type=checkbox]').each(function () {
+		   			 if(this.checked){
+		   				 arrayList.push($(this).val()); 
+		   			 }
+		   	 });
+		   	 $('#'+dropDown).multiselect('select', arrayList);
+				
+			 $('#'+dropDown).multiselect({numberDisplayed: 0, 
+		    	 buttonWidth: '150px',
+		    	 includeSelectAllOption: true,
+		    	 templates: {
+					 ul: '<ul class="multiselect-container dropdown-menu '+problemRule+'"></ul>'
+				 },
+		    });
+			 
+	}
 jQuery( document ).ready(function( $ ) {
 	$(".datepicker").datepicker({
         dateFormat: 'mm/dd/yy',
