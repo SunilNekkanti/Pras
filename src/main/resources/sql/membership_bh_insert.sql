@@ -5,9 +5,9 @@ SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, 
 REPLACE(textbox165, ',','') lastname,
-textbox214 mcdmcr, textbox2 sex , cast(str_to_Date(textbox9,'%c/%e/%Y')as date)   dob,   textbox64 memeffstartdate ,
+textbox214 mcdmcr, textbox2 sex , STRING_TODATE(textbox9)   dob,   textbox64 memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
-     else '12/31/2099' end  memeffenddate,
+     else null end  memeffenddate,
 case when textbox65 = 'PCP EFF' then textbox74 else textbox64 end  pcpstartdate,
 case when textbox65 = 'PCP Term' then textbox74 end pcpenddate, 
  textbox81 phone, MemberCounty , textbox185 firstname, REPLACE(upper(SUBSTRING(textbox238, 1, LOCATE(SUBSTRING_INDEX(textbox238, ' ', -3),textbox238)-2)), 'TEMPLE', '') address1, REPLACE(upper(SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -3), ' ', 1)), 'TERRACE', 'TEMPLE TERRACE') city, SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -2), ' ', 1) state, 
@@ -43,7 +43,7 @@ update membership_insurance mi
  join membership m on mi.mbr_id= m.mbr_id
 join temp_bh_membership  b on  b.mcdmcr =m.Mbr_MedicaidNo
 set  mi.New_Medicare_Bene_Medicaid_Flag = case when b.Status ='New Membership' then 'Y' else 'N' end ,
- mi.effecctive_end_dt =  cast( str_to_date(b.memeffenddate, '%c/%e/%Y') as date) 
+ mi.effecctive_end_dt =  STRING_TO_DATE(b.memeffenddate) 
 where m.Mbr_MedicaidNo is not null;
 
 
@@ -57,8 +57,8 @@ a.mbr_id,
 case when a.Mbr_Status =1 then 'Y' else 'N' end as new_benefits,
 CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) activitydate,
 DATE_FORMAT(NOW() ,'%m%y')  activityMonth,
-cast( str_to_date(b.memeffstartdate, '%c/%e/%Y') as date) effective_strt_dt,
-  cast( str_to_date(b.memeffenddate, '%c/%e/%Y') as date)
+STRING_TO_DATE(b.memeffstartdate) effective_strt_dt,
+STRING_TO_DATE(b.memeffenddate)
         effective_end_dt,
 null PRODUCT,
 null PRODUCT,
@@ -83,14 +83,14 @@ update  membership_provider mp
 join (
 	 select
  p.prvdr_id,
- m.mbr_id    ,  date_format(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date
-    ,   DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date    
+ m.mbr_id    ,  STRING_TO_DATE(b.pcpstartdate) eff_start_date
+    ,   STRING_TO_DATE(b.pcpenddate) eff_end_date    
   from  membership m  
   join temp_bh_membership b on b.mcdmcr =m.mbr_medicaidNo
   join provider p on ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', 1),'.','')),'%') 
          and  ucase(p.name) LIKE CONCAT('%',TRIM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(ucase(PcpName), ',', 2), ',', -1),'.','')),'%')   
 where 	  b.pcpenddate is not null and  b.pcpenddate != '' 
-group by m.mbr_id,p.prvdr_id,DATE_FORMAT(str_to_date(( b.pcpstartdate) , '%c/%e/%Y %H:%i'),'%Y-%c-%e') 
+group by m.mbr_id,p.prvdr_id,STRING_TO_DATE( b.pcpstartdate) 
 ) a on mp.mbr_id = a.mbr_id and mp.prvdr_id= a.prvdr_id and mp.eff_start_date =a.eff_start_date
 set  mp.eff_end_date = a.eff_end_date 
 where mp.active_ind='Y';
@@ -102,8 +102,8 @@ from
 select
  m.mbr_id, 
  p.prvdr_id, 
-  DATE_FORMAT(str_to_date(b.pcpstartdate,'%c/%e/%Y %H:%i'), '%Y-%c-%e') eff_start_date,
- DATE_FORMAT(str_to_date(b.pcpenddate,'%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_end_date 
+  STRING_TO_DATE(b.pcpstartdate) eff_start_date,
+STRING_TO_DATE(b.pcpenddate) eff_end_date 
  
   from   temp_bh_membership b  
   join  membership m on m.mbr_medicaidNo=b.mcdmcr 

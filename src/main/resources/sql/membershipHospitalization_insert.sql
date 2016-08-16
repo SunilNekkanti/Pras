@@ -7,8 +7,8 @@ created_date,updated_date,created_by,updated_by,active_ind
 
 SELECT
   h.hos_id,  mi.mbr_id, mp.prvdr_id, mi.ins_id, csv2mh.report,csv2mh.plan_desc, csv2mh.authnum,
-  DATE_FORMAT(str_to_date(csv2mh.admit_date , '%c/%e/%Y %H:%i'),'%Y-%c-%e'), csv2mh.prior_admits,
-  DATE_FORMAT(str_to_date(csv2mh.exp_dc_dt , '%c/%e/%Y %H:%i'),'%Y-%c-%e'), 
+   STRING_TO_DATE(csv2mh.admit_date), csv2mh.prior_admits,
+   STRING_TO_DATE(csv2mh.exp_dc_dt), 
   :fileId, now(),now(),'sarath','sarath','Y'
  FROM csv2AmgHospitalization csv2mh
  JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  csv2mh.MEMBER_ID

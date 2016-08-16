@@ -43,7 +43,7 @@ null,csv2bhClaim.BILLTYPE,csv2bhClaim.patientstatus,null,
  replace(CONCAT_WS(',',NULLIF(diag1,'') , NULLIF(diag2,'') , NULLIF(diag3,''), NULLIF(diag4,'') ) ,'.','') diagnoses,
 csv2bhClaim.PRODUCT_LABEL,csv2bhClaim.PRODUCT,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null, 
-case when cast(str_to_date(csv2BhClaim.ServiceStart ,'%m/%d/%Y')as date) >= '2015-10-01' then 'ICD10' else null end ,null,
+case when STRING_TO_DATE(csv2BhClaim.ServiceStart) >= '2015-10-01' then 'ICD10' else null end ,null,
   now(),now(),'sarath','sarath','Y', :fileId ,csv2bhClaim.PCPID
   FROM csv2Table_bh_Claim1 csv2bhClaim
  JOIN membership  m on m.Mbr_MedicaidNo  =  csv2bhClaim.MedicaidNumber
@@ -53,7 +53,6 @@ case when cast(str_to_date(csv2BhClaim.ServiceStart ,'%m/%d/%Y')as date) >= '201
  LEFT OUTER JOIN membership_provider mp on mp.mbr_id  =  m.mbr_id  and rc.prvdr_id= mp.prvdr_id
 LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2bhClaim.ClaimNum and mc.mbr_id=m.mbr_id 
   WHERE  mc.claim_id_number is null    
-  -- and cast(str_to_date(csv2BhClaim.ServiceStart ,'%m/%d/%Y')as date) >= '2015-10-01'
 GROUP BY ClaimNum,m.mbr_id;
 
 

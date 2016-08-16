@@ -82,6 +82,14 @@ public class MembershipInsurance extends RecordDetails implements Serializable {
 	private String planId;
 
 	@Expose
+	@Column(name = "groupp")
+	private String group;
+
+	@Expose
+	@Column(name = "class")
+	private String clazz;
+	
+	@Expose
 	@Column(name = "SRC_SYS_MBR_NBR")
 	private Long srcSysMbrNbr;
 
@@ -270,6 +278,42 @@ public class MembershipInsurance extends RecordDetails implements Serializable {
 	 */
 	public void setPlanId(final String planId) {
 		this.planId = planId;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getGroup() {
+		return group;
+	}
+
+	/**
+	 * @param group
+	 */
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getClazz() {
+		return clazz;
+	}
+
+	/**
+	 * @param clazz
+	 */
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
+	}
+
+	public Integer getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
 	}
 
 	/**

@@ -2,9 +2,7 @@ drop table if exists temp_membership ;
 create temporary table temp_membership  as
 select  trim(substring_index(c2m.Membername,',',1)) as lastname,trim(substring_index(c2m.Membername,',',-1)) as firstname,
 lg.gender_id sex, lc.code county,
- case when dob like '%/%/% %:%' then cast(str_to_date(dob , '%c/%e/%Y %H:%i') as date)
-       when dob like '%/%/%' then cast(str_to_date(dob , '%c/%e/%Y') as date)
-       end     dob,
+STRING_TO_DATE(dob ) dob,
 case when c2m.status = 'ENR' then 1
      when c2m.status = 'DIS' then 3
      else  2 
@@ -12,14 +10,11 @@ case when c2m.status = 'ENR' then 1
 c2m.MCDMCR MCDMCR,
 :fileId fileId,
 :insId ins_id,
-cast( str_to_date(MEMBEREFFDT, '%m/%d/%Y') as date) MEMBEREFFDT,
-case when cast(str_to_date( MEMBERTERMDT, '%m/%d/%Y')  as date) = cast( str_to_date('1999-12-31', '%Y-%m-%d') as date) then
-     cast(str_to_date('2099-12-31', '%Y-%m-%d')as date)
-    else cast(str_to_date( MEMBERTERMDT, '%m/%d/%Y')  as date) end MEMBERTERMDT,
-DATE_FORMAT(str_to_date(( PROVEFFDT) , '%c/%e/%Y %H:%i'),'%Y-%c-%e') eff_start_date,
-case when  PROVTERMDT is null or PROVTERMDT = '' then null	  
-     else  DATE_FORMAT(str_to_date(PROVTERMDT, '%c/%e/%Y %H:%i'),'%Y-%c-%e')
-     end eff_end_date,
+STRING_TO_DATE(MEMBEREFFDT) MEMBEREFFDT,
+case when STRING_TO_DATE( MEMBERTERMDT) = STRING_TO_DATE('1999-12-31') then   null
+    else STRING_TO_DATE( MEMBERTERMDT) end MEMBERTERMDT,
+STRING_TO_DATE( PROVEFFDT)  eff_start_date,
+STRING_TO_DATE(PROVTERMDT ) eff_end_date,
 convert( PRPRNPI,unsigned) PRPRNPI ,
 convert(SBSB_ID, unsigned) SBSB_ID,
 phone,
@@ -79,10 +74,10 @@ where mi.SRC_SYS_MBR_NBR is not null;
 
 drop table if exists temp_cur_activity_month;
 create table temp_cur_activity_month as
-select CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) activitydate,
+select STRING_TO_DATE(DATE_FORMAT(NOW() ,'%Y-%m-01')) activitydate,
 DATE_FORMAT(NOW() ,'%m%y')  activityMonth;
 
-insert into membership_insurance 
+insert  into membership_insurance 
 (
 ins_id,mbr_id,New_Medicare_Bene_Medicaid_Flag,activitydate,activityMonth,effective_strt_dt,effecctive_end_dt,
 product,product_label,planID,SRC_SYS_MBR_NBR,groupp,class,risk_flag,file_id,created_date,updated_date,created_by,updated_by)
@@ -107,9 +102,9 @@ now() updated_date,
 'sarath' created_by,
 'sarath' updated_by
  from temp_membership tm  
-  join membership   m on   m.mbr_medicaidNo  = tm.MCDMCR
+ join membership_insurance mi on mi.SRC_SYS_MBR_NBR = tm.SBSB_ID
   join temp_cur_activity_month tcam 
-  left outer join membership_insurance mi on mi.mbr_id=m.mbr_id and  mi.SRC_SYS_MBR_NBR = tm.SBSB_ID
+  left outer join membership m on mi.mbr_id=m.mbr_id 
   where   mi.mbr_id is  null 
  group by m.mbr_id,tm.MEMBEREFFDT,tm.MEMBERTERMDT, tm.PRODUCT,tm.PLAN;
  
@@ -186,7 +181,8 @@ now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by
 from  membership  m  
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id= :insId
 join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
-join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    and ams.activitymonth <= DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') 
+join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    
+								and ams.activitymonth <= case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end
 								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')       
                                   and ams.activitymonth <= case when mp.eff_end_date is not null and mp.eff_end_date  then DATE_FORMAT(mp.eff_end_date, '%Y%m') else  :activityMonth end
   left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth

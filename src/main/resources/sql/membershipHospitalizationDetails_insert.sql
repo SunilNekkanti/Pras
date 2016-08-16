@@ -5,7 +5,7 @@ file_id,created_date,updated_date,created_by,updated_by,active_ind
 )
 SELECT
  mh.mbr_hos_id, ap.att_phy_id, csv2mh.room_type, csv2mh.adm_dx,  
- DATE_FORMAT(str_to_date(csv2mh.exp_dc_dt , '%c/%e/%Y %H:%i'),'%Y-%c-%e'),  csv2mh.auth_days, 
+  STRING_TO_DATE(csv2mh.exp_dc_dt),  csv2mh.auth_days, 
  csv2mh.cm_pri_user,  csv2mh.disease_cohort,  csv2mh.comorbidities,
   :fileId, now(),now(),'sarath','sarath','Y'
 FROM csv2AmgHospitalization csv2mh

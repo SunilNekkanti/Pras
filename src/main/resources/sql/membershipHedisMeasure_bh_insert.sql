@@ -2,7 +2,7 @@
  drop table if exists hedisMeasureByCPT;
   
  create temporary table hedisMeasureByCPT as
-SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate
+SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dosecount1,    max(agelimit )
  FROM 
  (
  SELECT   
@@ -15,14 +15,29 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate
  hcptm.cpt_id ruleCPT_ID, 
  cpt.code,
  hmr.cpt_or_icd ,
- mprvdr.prvdr_id prvdrid
+ mprvdr.prvdr_id prvdrid,
+ m.Mbr_DOB,
+ SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1), "-", 1) dosecount1, 
+SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) agelimit 
 
  FROM  hedis_measure_rule     hmr
  join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
+ LEFT JOIN
+(
+    SELECT 1 + units.i + tens.i * 10 AS aNum, units.i + tens.i * 10 AS aSubscript
+    FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) units
+    CROSS JOIN (SELECT 0 AS i  ) tens
+) sub0  ON (1 + LENGTH(hmr.dosage_details) - LENGTH(REPLACE(hmr.dosage_details, ',', ''))) >= sub0.aNum
  join membership m on mi.mbr_id =m.mbr_id  and 
     case when hmr.lower_age_limit is not null then datediff( current_date(),m.mbr_dob)/365.25 >=  hmr.lower_age_limit else 1= 1 end and
         case when hmr.upper_age_limit is not null then datediff( current_date(),m.mbr_dob)/365.25 < hmr.upper_age_limit else 1=1 end and
-        case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end
+        case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end and
+        case when SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) is not null 
+         then  
+			case when hmr.date_part = 'year' then TIMESTAMPDIFF(year, m.mbr_dob,current_date()) >= SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) 
+            when hmr.date_part = 'month' then TIMESTAMPDIFF(month, m.mbr_dob,current_date()) >= SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) 
+            end
+         else 1=1 end  
  join membership_provider mprvdr  on  mi.mbr_id=mprvdr.mbr_id
  join hedis_cpt_measure hcptm on hcptm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id  
   JOIN cpt_measure  cpt on    hcptm.cpt_id =cpt.cpt_id  
@@ -32,18 +47,18 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate
   LEFT OUTER JOIN cpt_measure  mbrClaimCPT on mbrClaimCPT.cpt_id = mcd.cpt_code  and mbrClaimCPT.cpt_id=cpt.cpt_id 
     LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mi.mbr_id  and  mcd.claim_start_date >= mp.start_date
       where  hmr.effective_year= 2016 and
-        case when  hmr.problem_flag = 'Y' then   hmr.problem_id is not null and mp.pbm_id is not null else 1=1 end  and
+        case when  hmr.problem_flag = 'Y' then   hmr.problem_id is not null and mp.pbm_id is not null and mp.resolved_date is null else 1=1 end  and
          hmr.cpt_or_icd in (0,2)      and 
   hmr.active_ind='Y'   and mprvdr.active_ind='Y' and mi.active_ind='Y'  
-  group by mi.mbr_id, hmr.hedis_msr_rule_id
-having      count( mbrClaimCPT.cpt_id) 	     < dosecount
-) a ;
+  group by mi.mbr_id, hmr.hedis_msr_rule_id, dosecount1
+having      count( mbrClaimCPT.cpt_id) 	     < case when dosecount1 is not null then dosecount1  else  dosecount  end 
+) a group by  mbr_id, hedis_msr_rule_id having  case when dosecount1 is not null then min(dosecount1) else 1=1 end;
 
 alter table hedisMeasureByCPT add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id);
 
 
   create temporary table hedisMeasureByICD  as  
-SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate
+SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dosecount1,    max(agelimit )
  FROM 
  (
  SELECT   
@@ -55,14 +70,29 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate
  hicdm.icd_id ruleICD_ID,
 MbrClaimICD.icd_id  claimICD_ID,
  hmr.cpt_or_icd ,
- mprvdr.prvdr_id prvdrid
+ mprvdr.prvdr_id prvdrid,
+ m.Mbr_DOB,
+ SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1), "-", 1) dosecount1, 
+SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) agelimit 
 
  FROM  hedis_measure_rule     hmr
  join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
+ LEFT JOIN
+(
+    SELECT 1 + units.i + tens.i * 10 AS aNum, units.i + tens.i * 10 AS aSubscript
+    FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) units
+    CROSS JOIN (SELECT 0 AS i  ) tens
+) sub0  ON (1 + LENGTH(hmr.dosage_details) - LENGTH(REPLACE(hmr.dosage_details, ',', ''))) >= sub0.aNum
  join membership m on mi.mbr_id =m.mbr_id  and 
     case when hmr.lower_age_limit is not null then datediff( current_date(),m.mbr_dob)/365.25 >=  hmr.lower_age_limit else 1= 1 end and
         case when hmr.upper_age_limit is not null then datediff( current_date(),m.mbr_dob)/365.25 < hmr.upper_age_limit else 1=1 end and
-  case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end
+  case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end and
+        case when SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) is not null 
+         then  
+			case when hmr.date_part = 'year' then TIMESTAMPDIFF(year, m.mbr_dob,current_date()) >= SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) 
+            when hmr.date_part = 'month' then TIMESTAMPDIFF(month, m.mbr_dob,current_date()) >= SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(hmr.dosage_details, ',', sub0.aNum), ',', -1),  "-", -1) 
+            end
+         else 1=1 end  
  join membership_provider mprvdr  on  mi.mbr_id=mprvdr.mbr_id
   join hedis_icd_measure hicdm on   hicdm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id 
   JOIN icd_measure  icd  on  icd.icd_id   = hicdm.icd_id  
@@ -72,11 +102,11 @@ MbrClaimICD.icd_id  claimICD_ID,
     LEFT outer join  icd_measure MbrClaimICD on  REPLACE(mc.Diagnoses, ".","") LIKE CONCAT('%', REPLACE(icd.code, ".",""),'%')   and icd.icd_id =MbrClaimICD.icd_id
   LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mi.mbr_id  and  mcd.claim_start_date >= mp.start_date
   where hmr.effective_year= 2016 and
-        case when  hmr.problem_flag = 'Y' then   hmr.problem_id is not null and mp.pbm_id is not null else 1=1 end  and
+        case when  hmr.problem_flag = 'Y' then   hmr.problem_id is not null and mp.pbm_id is not null and mp.resolved_date is null else 1=1 end  and
         hmr.cpt_or_icd in(1,2)   and hmr.active_ind='Y'   and mprvdr.active_ind='Y' and mi.active_ind='Y'  
-  group by mi.mbr_id, hmr.hedis_msr_rule_id
-having       count( MbrClaimICD.icd_id)     < dosecount
-) a ;
+  group by mi.mbr_id, hmr.hedis_msr_rule_id, dosecount1
+having       count( MbrClaimICD.icd_id)     < case when dosecount1 is not null then dosecount1  else  dosecount  end 
+) a group by  mbr_id, hedis_msr_rule_id having  case when dosecount1 is not null then min(dosecount1) else 1=1 end ;
 
 alter table hedisMeasureByICD add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id);
 

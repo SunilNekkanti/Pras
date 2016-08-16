@@ -121,7 +121,26 @@ public class PrasUtil {
 
 		return effYearList;
 	}
+	
+	
+	/**
+	 * @return
+	 */
+	public static Map<String, String> getDatePartList() {
 
+		Map<String, String> datePartList = new HashMap<>();
+		datePartList.put("", "Select");
+		datePartList.put("month", "Month");
+		datePartList.put("Year", "Year");
+
+		return datePartList;
+	}
+
+	/**
+	 * @param entityClass
+	 * @param queryType
+	 * @return
+	 */
 	public static <T> String getInsertQuery(final Class<T> entityClass, final String queryType) {
 		String insertQuery = null;
 		String entityClassName = entityClass.getSimpleName();

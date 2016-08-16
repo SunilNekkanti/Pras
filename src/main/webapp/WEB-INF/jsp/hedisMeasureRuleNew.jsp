@@ -394,6 +394,27 @@ $.ajax( {
 					<springForm:errors path="doseCount" cssClass="error text-danger" />
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label class="control-label  col-sm-2" for="distribution">Dosage Details</label>
+				<div class="col-sm-6">
+					<springForm:input path="dosageDetails" class="form-control"
+						id="distribution" placeholder="dosageDetails" />
+					<springForm:errors path="dosageDetails" cssClass="error text-danger" />
+				</div>
+			</div>
+			
+			<div class="form-group required">
+				<label class="control-label col-sm-2" for="effYear">Date Part</label>
+				<div class="col-sm-6">
+					<springForm:select path="datePart" class="form-control"
+						id="distributionType">
+						<springForm:options items="${datePartList}" />
+					</springForm:select>
+					<springForm:errors path="datePart"
+						cssClass="error text-danger" />
+				</div>
+			</div>
 
 			<div class="form-group">
 				<label class="control-label  col-sm-2" for="ageEffectiveFrom">Age

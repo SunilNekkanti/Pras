@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -196,6 +197,11 @@ public class HedisMeasureRuleController {
 	@ModelAttribute("effYearList")
 	public SortedSet<Integer> populateEffectiveYearList() {
 		return PrasUtil.getHedisEffectiveYearList();
+	}
+	
+	@ModelAttribute("datePartList")
+	public Map<String, String> populateDatePartList() {
+		return PrasUtil.getDatePartList();
 	}
 
 	/**

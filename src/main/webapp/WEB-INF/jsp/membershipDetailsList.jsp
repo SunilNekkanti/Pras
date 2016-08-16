@@ -50,10 +50,9 @@
 							<th scope="col">Activity Month</th>
 							<th scope="col">Effective Start Date</th>
 							<th scope="col">Effective End Date</th>
-
-
 							<th scope="col">Plan Id</th>
-
+							<th scope="col">Group</th>
+							<th scope="col">Class</th>
 							<th scope="col">Risk</th>
 						</tr>
 					</thead>
@@ -75,10 +74,9 @@
 										pattern="MM-dd-yyyy" /></td>
 								<td><fmt:formatDate value="${mbrDetails.effEndDate}"
 										pattern="MM-dd-yyyy" /></td>
-
-
 								<td>${mbrDetails.planId}</td>
-
+								<td>${mbrDetails.group}</td>
+								<td>${mbrDetails.clazz}</td>
 								<td>${mbrDetails.riskFlag}</td>
 							</tr>
 						</c:forEach>

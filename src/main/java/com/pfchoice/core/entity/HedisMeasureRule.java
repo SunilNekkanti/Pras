@@ -124,6 +124,14 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "effective_year")
 	private Integer effectiveYear;
+	
+	@Expose
+	@Column(name = "dosage_details")
+	private String dosageDetails;
+	
+	@Expose
+	@Column(name = "date_part")
+	private String datePart;
 
 	@Expose
 	@Transient
@@ -442,6 +450,34 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	 */
 	public void setHedisMeasureCode(String hedisMeasureCode) {
 		this.hedisMeasureCode = hedisMeasureCode;
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getDosageDetails() {
+		return dosageDetails;
+	}
+
+	/**
+	 * @param dosageDetails
+	 */
+	public void setDosageDetails(String dosageDetails) {
+		this.dosageDetails = dosageDetails;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDatePart() {
+		return datePart;
+	}
+
+	/**
+	 * @param datePart
+	 */
+	public void setDatePart(String datePart) {
+		this.datePart = datePart;
 	}
 
 	/**
