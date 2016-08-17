@@ -75,6 +75,7 @@
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
+        	     "iDisplayLength": 15,
         	     "fnServerData" : datatable2RestUser
         	});
 

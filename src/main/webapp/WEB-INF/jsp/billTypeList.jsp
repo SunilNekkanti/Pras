@@ -73,7 +73,7 @@
                                  { "sName": "shortName", "aTargets": [ 2 ] },
                             ],          
     	     "bLengthChange": false,
-    	     "iDisplayLength": 12,
+    	     "iDisplayLength": 15,
     	     "sPaginationType": "full_numbers",
     	     "bProcessing": true,
     	     "bServerSide" : true,

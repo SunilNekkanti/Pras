@@ -74,6 +74,7 @@
                            		    { "sName": "description", "aTargets": [ 3 ] }
                   ],          
         	     "bLengthChange": false,
+        	     "iDisplayLength": 15,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,

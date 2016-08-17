@@ -192,7 +192,7 @@
                   		   		    { "sName": "status.id", "aTargets": [ 6 ] }
                   ],          
         	     "bLengthChange": false,
-        	     "iDisplayLength": 13,
+        	     "iDisplayLength": 15,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
