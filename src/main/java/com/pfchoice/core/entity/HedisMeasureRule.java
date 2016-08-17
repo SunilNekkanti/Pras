@@ -96,10 +96,51 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@Expose
 	@Column(nullable = true, name = "upper_age_limit")
 	private BigDecimal upperAgeLimit;
-
+	
 	@Expose
 	@Column(name = "dose_count")
 	private Integer doseCount;
+
+	@Expose
+	@Column(name = "dose_1")
+	private Integer dose1;
+	
+	@Expose
+	@Column(name = "dose_2")
+	private Integer dose2;
+	
+	@Expose
+	@Column(name = "dose_3")
+	private Integer dose3;
+	
+	@Expose
+	@Column(name = "dose_4")
+	private Integer dose4;
+	
+	@Expose
+	@Column(name = "dose_5")
+	private Integer dose5;
+	
+	@Expose
+	@Column(name = "datepart_1")
+	private String datepart1;
+	
+	@Expose
+	@Column(name = "datepart_2")
+	private String datepart2;
+	
+	@Expose
+	@Column(name = "datepart_3")
+	private String datepart3;
+	
+	@Expose
+	@Column(name = "datepart_4")
+	private String datepart4;
+	
+	@Expose
+	@Column(name = "datepart_5")
+	private String datepart5;
+	
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
@@ -124,14 +165,6 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "effective_year")
 	private Integer effectiveYear;
-	
-	@Expose
-	@Column(name = "dosage_details")
-	private String dosageDetails;
-	
-	@Expose
-	@Column(name = "date_part")
-	private String datePart;
 
 	@Expose
 	@Transient
@@ -378,6 +411,146 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	}
 
 	/**
+	 * @return the dose1
+	 */
+	public Integer getDose1() {
+		return dose1;
+	}
+
+	/**
+	 * @param dose1 the dose1 to set
+	 */
+	public void setDose1(Integer dose1) {
+		this.dose1 = dose1;
+	}
+
+	/**
+	 * @return the dose2
+	 */
+	public Integer getDose2() {
+		return dose2;
+	}
+
+	/**
+	 * @param dose2 the dose2 to set
+	 */
+	public void setDose2(Integer dose2) {
+		this.dose2 = dose2;
+	}
+
+	/**
+	 * @return the dose3
+	 */
+	public Integer getDose3() {
+		return dose3;
+	}
+
+	/**
+	 * @param dose3 the dose3 to set
+	 */
+	public void setDose3(Integer dose3) {
+		this.dose3 = dose3;
+	}
+
+	/**
+	 * @return the dose4
+	 */
+	public Integer getDose4() {
+		return dose4;
+	}
+
+	/**
+	 * @param dose4 the dose4 to set
+	 */
+	public void setDose4(Integer dose4) {
+		this.dose4 = dose4;
+	}
+
+	/**
+	 * @return the dose5
+	 */
+	public Integer getDose5() {
+		return dose5;
+	}
+
+	/**
+	 * @param dose5 the dose5 to set
+	 */
+	public void setDose5(Integer dose5) {
+		this.dose5 = dose5;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDatepart1() {
+		return datepart1;
+	}
+
+	/**
+	 * @param datepart1
+	 */
+	public void setDatepart1(String datepart1) {
+		this.datepart1 = datepart1;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDatepart2() {
+		return datepart2;
+	}
+
+	/**
+	 * @param datepart2
+	 */
+	public void setDatepart2(String datepart2) {
+		this.datepart2 = datepart2;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDatepart3() {
+		return datepart3;
+	}
+
+	/**
+	 * @param datepart3
+	 */
+	public void setDatepart3(String datepart3) {
+		this.datepart3 = datepart3;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDatepart4() {
+		return datepart4;
+	}
+
+	/**
+	 * @param datepart4
+	 */
+	public void setDatepart4(String datepart4) {
+		this.datepart4 = datepart4;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDatepart5() {
+		return datepart5;
+	}
+
+	/**
+	 * @param datepart5
+	 */
+	public void setDatepart5(String datepart5) {
+		this.datepart5 = datepart5;
+	}
+
+	/**
 	 * @return the frequencyType
 	 */
 	public FrequencyType getFrequencyType() {
@@ -452,34 +625,7 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 		this.hedisMeasureCode = hedisMeasureCode;
 	}
 	
-	/**
-	 * @return
-	 */
-	public String getDosageDetails() {
-		return dosageDetails;
-	}
-
-	/**
-	 * @param dosageDetails
-	 */
-	public void setDosageDetails(String dosageDetails) {
-		this.dosageDetails = dosageDetails;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getDatePart() {
-		return datePart;
-	}
-
-	/**
-	 * @param datePart
-	 */
-	public void setDatePart(String datePart) {
-		this.datePart = datePart;
-	}
-
+	
 	/**
 	 * @return the cptMeasureCode
 	 */

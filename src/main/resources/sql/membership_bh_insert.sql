@@ -5,9 +5,9 @@ SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, 
 REPLACE(textbox165, ',','') lastname,
-textbox214 mcdmcr, textbox2 sex , STRING_TODATE(textbox9)   dob,   textbox64 memeffstartdate ,
+textbox214 mcdmcr, textbox2 sex , STRING_TO_DATE(textbox9)   dob,   textbox64 memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
-     else null end  memeffenddate,
+     else '12/31/2099' end  memeffenddate,
 case when textbox65 = 'PCP EFF' then textbox74 else textbox64 end  pcpstartdate,
 case when textbox65 = 'PCP Term' then textbox74 end pcpenddate, 
  textbox81 phone, MemberCounty , textbox185 firstname, REPLACE(upper(SUBSTRING(textbox238, 1, LOCATE(SUBSTRING_INDEX(textbox238, ' ', -3),textbox238)-2)), 'TEMPLE', '') address1, REPLACE(upper(SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -3), ' ', 1)), 'TERRACE', 'TEMPLE TERRACE') city, SUBSTRING_INDEX(SUBSTRING_INDEX(textbox238, ' ', -2), ' ', 1) state, 
@@ -58,8 +58,7 @@ case when a.Mbr_Status =1 then 'Y' else 'N' end as new_benefits,
 CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) activitydate,
 DATE_FORMAT(NOW() ,'%m%y')  activityMonth,
 STRING_TO_DATE(b.memeffstartdate) effective_strt_dt,
-STRING_TO_DATE(b.memeffenddate)
-        effective_end_dt,
+STRING_TO_DATE(b.memeffenddate)   effective_end_dt,
 null PRODUCT,
 null PRODUCT,
 null PLAN,
@@ -77,7 +76,8 @@ now() updated_date,
  group by a.mbr_id, effective_strt_dt, PRODUCT, PLAN;
 
 
-update  membership_insurance set active_ind='N' where effecctive_end_dt < cast(now() as date);
+update  membership_insurance set active_ind='N' where effecctive_end_dt <= cast(now() as date);
+update  membership_insurance set active_ind='Y', effecctive_end_dt = null where effecctive_end_dt > cast(now() as date);
 
 update  membership_provider mp 
 join (
@@ -154,8 +154,10 @@ now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by
 from  membership  m  
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId
 join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
-join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    and ams.activitymonth <= DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') 
-								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')      and ams.activitymonth <= case when mp.eff_end_date is not null then DATE_FORMAT(mp.eff_end_date, '%Y%m')  else  :activityMonth end
+join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')   
+								 and ams.activitymonth <= case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end
+								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')      
+								 and ams.activitymonth <= case when mp.eff_end_date is not null then DATE_FORMAT(mp.eff_end_date, '%Y%m')  else  :activityMonth end
 left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
 where    mam.activity_month is null 
 group by mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth; 

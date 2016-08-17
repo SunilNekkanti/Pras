@@ -396,33 +396,33 @@ $.ajax( {
 				<label class="control-label  col-sm-2" for="doseCount">Dose
 					Count</label>
 				<div class="col-sm-6">
-					<springForm:input path="doseCount" class="form-control"
+					<springForm:input path="doseCount" class="form-control number"
 						id="doseCount" placeholder="doseCount" />
 					<springForm:errors path="doseCount" cssClass="error text-danger" />
 				</div>
 			</div>
-
-			<div class="form-group">
-				<label class="control-label  col-sm-2" for="distribution">Dosage Details</label>
-				<div class="col-sm-6">
-					<springForm:input path="dosageDetails" class="form-control"
-						id="distribution" placeholder="distribution" />
-					<springForm:errors path="dosageDetails" cssClass="error text-danger" />
-				</div>
-			</div>
 			
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="effYear">Date Part
-					</label>
-				<div class="col-sm-6">
-					<springForm:select path="datePart" class="form-control"
-						id="distributionType">
-						<springForm:options items="${datePartList}" />
-					</springForm:select>
-					<springForm:errors path="datePart"
-						cssClass="error text-danger" />
-				</div>
-			</div>
+			
+			 <c:forEach var="i" begin="1" end="5">
+  						<div class="form-group dose required" id="doseblock${i}">
+								<label class="control-label  col-sm-2" for="dose${i}">dose ${i}</label>
+								<div class="col-sm-3">
+									<springForm:input path="dose${i}" class="form-control number1"
+										id="dose${i}"  placeholder="dose${i}" />
+									<springForm:errors path="dose${i}" cssClass="error text-danger" />
+								</div>
+								<div class="col-sm-3">
+									<springForm:select path="datepart${i}"  class="form-control"
+									id="dosePeriod${i}" name="datepart${i}" >
+											<springForm:options items="${datePartList}" />
+									</springForm:select>
+									<springForm:errors path="datepart${i}"
+											cssClass="error text-danger" />
+								</div>
+						</div>
+			</c:forEach>
+
+		
 			
 			<div class="form-group">
 				<label class="control-label  col-sm-2" for="ageEffectiveFrom">Age
@@ -676,6 +676,41 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 			$("#cptCodes").closest( "div" ).removeClass( "has-error" );
 		}
 		
+		var doseCount = $('#doseCount').val();
+		if(doseCount)
+		{
+			for(var i = 1; i <=doseCount;i++ )
+    		{
+    			if(!$("#dose"+i).val()){
+    				$("#dose"+i).closest("div" ).addClass( "has-error" );
+    				$("#dose"+i).closest(".text-danger" ).find('span').remove();
+    				$("#dose"+i).after("<span  class='text-danger'>Enter the dose</span>" );
+    				error_count++;
+    			}
+    			else
+    			{
+    				$("#dose"+i).closest( "div" ).find('dose'+i).remove();
+    				$("#dose"+i).closest( "div" ).removeClass( "has-error" );
+    			}
+    			if(!$("#dosePeriod"+i).val()){
+    				$("#dosePeriod"+i).closest("div" ).addClass( "has-error" );
+    				$("#dosePeriod"+i).closest(".text-danger" ).find('span').remove();
+    				$("#dosePeriod"+i).after("<span  class='text-danger'>Select dose period.</span>" );
+    				error_count++;
+    			}
+    			else
+    			{
+    				$("#dosePeriod"+i).closest( "div" ).find('dosePeriod'+i).remove();
+    				$("#dosePeriod"+i).closest( "div" ).removeClass( "has-error" );
+    			}
+    		}
+			for(var i = ++doseCount; i <= $('.dose').length;i++ )
+    		{
+				$("#dosePeriod"+i).val('');
+				$("#dose"+i).val('');
+    		}
+		}	
+		
 	    if(error_count >0){ event.preventDefault();}
 	});
 	
@@ -741,4 +776,31 @@ $( "#hedisMeasureRule" ).submit(function( event ) {
 			} 	
 		 });		
 });
+	
+	$(document).ready(function() {
+		$(".dose").css({"display": "none"});
+		var doseCount = $('#doseCount').val();
+		for(var i = 1; i <=doseCount;i++ )
+		{
+			$("#doseblock"+i).css({"display": "block"});
+		}
+	    $(".number").keyup(function (e) {
+	    	var doseCount = $('#doseCount').val();
+	    	if (isNaN(doseCount) || doseCount > $('.dose').length )
+	        {
+	    		$('#doseCount').val('');
+	        }
+	    	else
+	    	{
+	    		for(var i = 1; i <=doseCount;i++ )
+	    		{
+	    			$("#doseblock"+i).css({"display": "block"});
+	    		}
+	    		for(var i = ++doseCount; i <= $('.dose').length;i++ )
+	    		{
+	    			$("#doseblock"+i).css({"display": "none"});
+	    		}
+	    	}	
+	    });
+	});
 </script>

@@ -184,7 +184,7 @@ join  membership_provider mp  on  mp.mbr_id = mi.mbr_id
 join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    
 								and ams.activitymonth <= case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end
 								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')       
-                                  and ams.activitymonth <= case when mp.eff_end_date is not null and mp.eff_end_date  then DATE_FORMAT(mp.eff_end_date, '%Y%m') else  :activityMonth end
+                                  and ams.activitymonth <= case when mp.eff_end_date is not null  then DATE_FORMAT(mp.eff_end_date, '%Y%m') else  :activityMonth end
   left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
   where    mam.activity_month is null
 group by mi.mbr_id,mi.ins_id,mp.prvdr_id,ams.activityMonth; 
