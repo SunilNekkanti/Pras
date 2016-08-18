@@ -142,7 +142,7 @@
 										"mDataProp" : "mbrClaim.mbr.lastName",
 										"bSearchable" : true,
 										"bSortable" : true,
-										"sClass" : "center",
+										"sClass" : "center widthM",
 										"sWidth" : "10%",
 										"render" : function(data, type, full,
 												meta) {
@@ -164,7 +164,7 @@
 								"mDataProp" : "mbrClaim.prvdr.name",
 								"bSearchable" : true,
 								"bSortable" : true,
-								"sClass" : "center",
+								"sClass" : "center widthM",
 								"sWidth" : "10%",
 								"sDefaultContent" : ""
 							});
@@ -181,7 +181,7 @@
 										"mDataProp" : "mbrClaim.facilityType.description",
 										"bSearchable" : true,
 										"bSortable" : true,
-										"sClass" : "center",
+										"sClass" : "center widthM",
 										"sWidth" : "10%",
 										"sDefaultContent" : ""
 									});
@@ -701,6 +701,16 @@
 																	mbrClaimFieldCheck[row++] = index;
 																}
 															});
+											
+											if($( window ).width() > 900){
+												 var width;
+												 width = mbrClaimFieldCheck.length * 120;
+												 if(width > 1200){
+													 width = width + "px";
+													 $('#membershipClaimTable').width(width);
+												 }	 
+											} 
+											
 											$('table#membershipClaimTable tr')
 													.each(
 															function(trindex) {
@@ -726,9 +736,6 @@
 																					}
 																				});
 															});
-											$('#membershipClaimTable').width(
-													'100%');
-
 										},
 										error : function(e) {
 										}

@@ -141,9 +141,9 @@ $(document).ready(function() {
 
 				columns = new Array();
 				columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable" : true,"sClass": "center","bVisible" : false, "sWidth" : "1%"});
-	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "15%"});
-	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "8%"  });
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "7%"  });
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center widthM","sWidth" : "15%"});
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "8%"  });
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "7%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 	     			"render": function (data) {
 	   		   		    if(data == null) return null;
@@ -302,6 +302,18 @@ $(document).ready(function() {
 		   var sSearchProblemRule = paramMap.sSearchProblemRule;
 		   var ruleIds = paramMap.ruleIds;
 		   
+		   if($( window ).width() > 900){
+				 var width;
+				 width = ($("#membershipTable th").length) * 120;
+				 if(width > 1200){
+					 width = width + "px";
+					 $('#membershipClaimTable').width(width);
+				 }	
+				 
+			} 
+		   
+		   
+		   
 		   setSelectedValue('problemRule', "",ruleIds);
 		   dropDownCache('problemRule');
 		   //create new json structure for parameters for REST request
@@ -326,8 +338,7 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
-             		if($('#problemRule').val() == 9999)
-             		$('#membershipTable').width(3000);
+             		
             },
               error : function (e) {
               }

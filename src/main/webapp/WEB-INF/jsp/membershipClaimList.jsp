@@ -137,7 +137,7 @@
 								"mDataProp" : "mbr.lastName",
 								"bSearchable" : true,
 								"bSortable" : true,
-								"sClass" : "center",
+								"sClass" : "center widthM",
 								"sWidth" : "10%",
 								"render" : function(data, type, full,
 										meta) {
@@ -148,9 +148,9 @@
 								}
 							});
 							columns.push({	"mDataProp" : "claimNumber", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });							
-							columns.push({  "mDataProp" : "prvdr.name",	"bSearchable" : true,	"bSortable" : true,	"sClass" : "center",	"sWidth" : "10%", "sDefaultContent": ""  });
+							columns.push({  "mDataProp" : "prvdr.name",	"bSearchable" : true,	"bSortable" : true,	"sClass" : "center widthM",	"sWidth" : "10%", "sDefaultContent": ""  });
 							columns.push({	"mDataProp" : "claimType", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": ""   });
-							columns.push({	"mDataProp" : "facilityType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
+							columns.push({	"mDataProp" : "facilityType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center widthM", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "diagnosis",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
 							columns.push({	"mDataProp" : "tin", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "billType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
@@ -336,6 +336,7 @@
 								"name" : "processClaim",
 								"value" : processClaim
 							});
+							
 							 
 							 var  selectedItem = new Array;
 							 selectedItem = selectedList('mbrClaimField');
@@ -360,6 +361,14 @@
 													mbrClaimFieldCheck[row++] = index;
 												}
 											});
+											if($( window ).width() > 900){
+												 var width;
+												 width = mbrClaimFieldCheck.length * 120;
+												 if(width > 1200){
+													 width = width + "px";
+													 $('#membershipClaimTable').width(width);
+												 }	 
+											} 
 								           $('table#membershipClaimTable tr').each(function(trindex){
 								        	  
 								        	   $('table#membershipClaimTable tr:eq('+trindex+') td').each(function(tdindex){
@@ -372,7 +381,6 @@
 							        		       }
 								        	   });
 								           }); 
-												$('#membershipClaimTable').width('100%'); 
 											
 										},
 										error : function(e) {

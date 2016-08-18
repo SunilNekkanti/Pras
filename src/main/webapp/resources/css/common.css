@@ -171,3 +171,14 @@ table#cptListTable, table#icdListTable {
 .membershipClaimReport .btn-default:hover , .membershipHedisReport .btn-default:hover,
 #extFilterProblemRule .btn-default:hover  
 { background-color:#fff;}
+
+@media only screen and (min-width: 768px)
+ {
+ 	.widthS{width:150px;}
+	.widthM{width:250px;}
+	#membershipTable, #membershipClaimTable, #membershipTable, #membershipActivityMonth, #membershipHospitalizationTable{min-width:1200px;}
+}	
+@media only screen and (max-width: 768px)
+ {
+	 #membershipTable, #membershipClaimTable, #membershipTable, #membershipActivityMonth, #membershipHospitalizationTable{width:100% !important;}
+}	

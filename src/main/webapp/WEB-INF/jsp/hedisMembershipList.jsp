@@ -123,9 +123,9 @@ $(document).ready(function() {
 		      								return '<a href="javascript:void(0)" id="'+full.id+'" onclick="mbrHedisFollowup('+full.id+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
 		        						  }
 	     					});
-	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "20%"});
-	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center widthM","sWidth" : "10%"});
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 				     			"render": function (data, type, full, meta) {
 				     				var date = new Date(data);
@@ -290,7 +290,12 @@ $(document).ready(function() {
 		   restParams.push({"name" : "sSearchPrvdr" , "value" : sSearchPrvdr  });
 		   restParams.push({"name" : "sSearchHedisRule" , "value" : sSearchHedisRule  });
 		   restParams.push({"name" : "ruleIds" , "value" : ruleIds  });
-		   
+		   var width;
+		   width = $('#membershipTable th').length * 100;
+		   if(parseInt(width) > 1200){
+			   width = width + "px";
+			   $('#membershipTable').width(width);
+		   }	   
 		 $.ajax( {
               dataType: 'json',
               contentType: "application/json;charset=UTF-8",
@@ -301,8 +306,7 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.totalCount;
                   res.iTotalDisplayRecords = res.data.totalCount;
              		fnCallback(res);
-             		if($('#hedisRule').val() == 9999)
-             		$('#membershipTable').width(3000);
+             		
             },
               error : function (e) {
               }
@@ -326,7 +330,7 @@ $(document).ready(function() {
      	     "sAjaxDataProp" : 'data.list',
              "aoColumns":  aoColumns,      
      	     "bLengthChange": false,
-     	     "iDisplayLength": 12,
+     	     "iDisplayLength": 15,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,

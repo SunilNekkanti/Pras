@@ -155,6 +155,11 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.createAlias("mbrProvider.prvdr", "prvdr")
 					.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 
+			criteria.add(Restrictions.eq("activeInd", new Character('Y')));
+			criteria.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
+			criteria.add(Restrictions.eq("mbrProvider.activeInd", new Character('Y')));
+			criteria.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
+			
 			if (sort != null && !"".equals(sort) && sortdir != null &&  "desc".equals(sortdir)) {
 				switch (sort) {
 				case "id":

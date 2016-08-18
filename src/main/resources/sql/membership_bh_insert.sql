@@ -5,7 +5,7 @@ SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ',', 1), ',', -1) pcpcity,
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -2), ' ', 1) pcpstate, 
 SUBSTRING_INDEX(SUBSTRING_INDEX(Pay2Mail, ' ', -1), ' ', -1) pcpzipcode, textbox192 status , textbox65 pcpstatus, 
 REPLACE(textbox165, ',','') lastname,
-textbox214 mcdmcr, textbox2 sex , STRING_TO_DATE(textbox9)   dob,   textbox64 memeffstartdate ,
+textbox214 mcdmcr, textbox2 sex , STRING_TO_DATE(textbox9)   dob,   STRING_TO_DATE(textbox64) memeffstartdate ,
 case when textbox192 = 'Termed Membership' then  textbox74 
      else '12/31/2099' end  memeffenddate,
 case when textbox65 = 'PCP EFF' then textbox74 else textbox64 end  pcpstartdate,
@@ -41,10 +41,10 @@ cast(  case when a.dob    > current_date   then  DATE_SUB( a.dob ,INTERVAL 100 Y
  
 update membership_insurance mi
  join membership m on mi.mbr_id= m.mbr_id
-join temp_bh_membership  b on  b.mcdmcr =m.Mbr_MedicaidNo
+join temp_bh_membership  b on  b.mcdmcr =m.Mbr_MedicaidNo and  mi.effective_strt_dt =b.memeffstartdate
 set  mi.New_Medicare_Bene_Medicaid_Flag = case when b.Status ='New Membership' then 'Y' else 'N' end ,
  mi.effecctive_end_dt =  STRING_TO_DATE(b.memeffenddate) 
-where m.Mbr_MedicaidNo is not null;
+where m.Mbr_MedicaidNo is not null and mi.effective_strt_dt is not null;
 
 
 insert into membership_insurance 
@@ -71,8 +71,8 @@ now() updated_date,
 'sarath' updated_by
   from temp_bh_membership  b  
   join membership   a on   a.mbr_medicaidNo=b.MCDMCR  
-  left outer join membership_insurance mi on mi.mbr_id=a.mbr_id  
-  where   mi.mbr_id is  null 
+  left outer join membership_insurance mi on mi.mbr_id=a.mbr_id  and mi.effective_strt_dt =b.memeffstartdate
+  where     case when mi.mbr_id is not  null then mi.effective_strt_dt is null else mi.mbr_id is  null end
  group by a.mbr_id, effective_strt_dt, PRODUCT, PLAN;
 
 

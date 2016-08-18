@@ -11,7 +11,7 @@ c2m.MCDMCR MCDMCR,
 :fileId fileId,
 :insId ins_id,
 STRING_TO_DATE(MEMBEREFFDT) MEMBEREFFDT,
-case when STRING_TO_DATE( MEMBERTERMDT) = STRING_TO_DATE('1999-12-31') then   null
+case when STRING_TO_DATE( MEMBERTERMDT) = STRING_TO_DATE('1999-12-31') then   STRING_TO_DATE('12/31/2099')
     else STRING_TO_DATE( MEMBERTERMDT) end MEMBERTERMDT,
 STRING_TO_DATE( PROVEFFDT)  eff_start_date,
 STRING_TO_DATE(PROVTERMDT ) eff_end_date,
@@ -61,21 +61,20 @@ where m.Mbr_id is null
  group by tm.SBSB_ID  having max(MEMBEREFFDT)  ;
 
 update membership_insurance mi
-join temp_membership  tm on  tm.SBSB_ID=mi.SRC_SYS_MBR_NBR
+join temp_membership  tm on  tm.SBSB_ID=mi.SRC_SYS_MBR_NBR and mi.effective_strt_dt =tm.MEMBEREFFDT
 set  mi.New_Medicare_Bene_Medicaid_Flag = case when tm.Status =1 then 'Y' else 'N' end ,
-mi.effective_strt_dt =  tm.MEMBEREFFDT ,
 effecctive_end_dt= tm.MEMBERTERMDT ,
 mi.product = tm.PRODUCT,
 mi.product_label= tm.PRODUCT,
 mi.groupp = tm.groupp,
 mi.class= tm.class,
 mi.planID = tm.PLAN
-where mi.SRC_SYS_MBR_NBR is not null;
+where mi.SRC_SYS_MBR_NBR is not null and mi.effective_strt_dt is not null;
 
 drop table if exists temp_cur_activity_month;
 create table temp_cur_activity_month as
 select STRING_TO_DATE(DATE_FORMAT(NOW() ,'%Y-%m-01')) activitydate,
-DATE_FORMAT(NOW() ,'%m%y')  activityMonth;
+DATE_FORMAT(NOW() ,'%Y%m')  activityMonth;
 
 insert  into membership_insurance 
 (
@@ -102,13 +101,17 @@ now() updated_date,
 'sarath' created_by,
 'sarath' updated_by
  from temp_membership tm  
- join membership_insurance mi on mi.SRC_SYS_MBR_NBR = tm.SBSB_ID
+  join membership m on tm.MCDMCR=m.Mbr_MedicaidNo 
   join temp_cur_activity_month tcam 
-  left outer join membership m on mi.mbr_id=m.mbr_id 
-  where   mi.mbr_id is  null 
- group by m.mbr_id,tm.MEMBEREFFDT,tm.MEMBERTERMDT, tm.PRODUCT,tm.PLAN;
+  left join membership_insurance mi on mi.SRC_SYS_MBR_NBR =  tm.SBSB_ID 
+  							and effective_strt_dt = tm.MEMBEREFFDT  
+  							and mi.mbr_id=m.mbr_id
+  where   case when mi.mbr_id is not  null then effective_strt_dt is null else mi.mbr_id is   null end
+  group by tm.SBSB_ID,tm.MEMBEREFFDT, tm.PRODUCT,tm.PLAN;
+ 
  
  update  membership_insurance set active_ind='N' where effecctive_end_dt <= cast(now() as date);
+  update  membership_insurance set active_ind='Y', effecctive_end_dt =null  where effecctive_end_dt > cast(now() as date);
 
 update  membership_provider mp 
 join (
@@ -136,8 +139,7 @@ tm.eff_end_date,
  from temp_membership tm
  join  provider   d  on  CONVERT( d.code , unsigned ) =tm.PRPRNPI 
  join membership_insurance mi on mi.SRC_SYS_MBR_NBR = tm.SBSB_ID 
- join  membership   m on  m.mbr_id=mi.mbr_id 
- left outer join membership_provider mp on mp.prvdr_id= d.prvdr_id and mp.mbr_id=m.mbr_id 
+ left outer join membership_provider mp on mp.prvdr_id= d.prvdr_id and mp.mbr_id=mi.mbr_id 
  where case when mp.mbr_id is not null then mp.prvdr_id is null  else mp.mbr_id is  null  end 
 group by tm.MCDMCR,tm.PRPRNPI,tm.eff_start_date; 
 

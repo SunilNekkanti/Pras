@@ -81,9 +81,9 @@ $(document).ready(function() {
     	  var callmembershipActivityMonthGenerate = function(){
 				columns = new Array();
 				columns.push({ "mDataProp": "lastName","bSearchable" : false, "bSortable" : true,"bVisible" : false, "sClass": "center","sWidth" : "10%"});
-	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center","sWidth" : "10%"});
-	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center widthM","sWidth" : "10%"});
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
 	     		var myTable = $("#membershipActivityMonth");
 	     		var thead = myTable.find("thead");  
 	     		
@@ -200,6 +200,15 @@ $(document).ready(function() {
 		   restParams.push({"name" : "sSearchActivityYear" , "value" : sSearchActivityYear  });
 		   restParams.push({"name" : "ruleIds" , "value" : ruleIds  });
 		   
+		   if($( window ).width() > 900){
+				 var width;
+				 width = $('#membershipActivityMonth th').length * 120;
+				 if(width > 1200){
+					 width = width + "px";
+					 $('#membershipActivityMonth').width(width);
+				 }	 
+			} 
+		   
 		 $.ajax( {
               dataType: 'json',
               contentType: "application/json;charset=UTF-8",
@@ -234,7 +243,7 @@ $(document).ready(function() {
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns":  aoColumns,      
      	     "bLengthChange": false,
-     	     "iDisplayLength": 12,
+     	     "iDisplayLength": 15,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,

@@ -372,7 +372,6 @@
 											res.iTotalRecords = res.data.totalCount;
 											res.iTotalDisplayRecords = res.data.totalCount;
 											fnCallback(res);
-											/*	$('#membershipHospitalizationTable').width(1000); */
 										},
 										error : function(e) {
 										}
@@ -615,6 +614,15 @@
 			//create new json structure for parameters for REST request
 			var restParams = new Array();
 			restParams.push({});
+			
+			  if($( window ).width() > 900){
+					 var width;
+					 width = $('#membershipHospitalizationTable th').length * 120;
+					 if(width > 1200){
+						 width = width + "px";
+						 $('#membershipHospitalizationTable').width(width);
+					 }	 
+				} 
 
 			$.ajax({
 				dataType : 'json',
@@ -882,11 +890,6 @@
 </div>
 
 
-<style>
-#mbrHospitalizationTable {
-	width: 100% !important;
-}
-</style>
 <script>
 		jQuery(document).ready(
 				function($) {
