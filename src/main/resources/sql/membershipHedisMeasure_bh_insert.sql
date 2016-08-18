@@ -32,12 +32,6 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dosecount
 
  FROM  hedis_measure_rule     hmr
  join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
- LEFT JOIN
-(
-    SELECT 1 + units.i + tens.i * 10 AS aNum, units.i + tens.i * 10 AS aSubscript
-    FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) units
-    CROSS JOIN (SELECT 0 AS i  ) tens
-) sub0  ON (1 + LENGTH(hmr.dosage_details) - LENGTH(REPLACE(hmr.dosage_details, ',', ''))) >= sub0.aNum
  join membership m on mi.mbr_id =m.mbr_id  and 
     case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(year,m.mbr_dob,current_date()) >=  hmr.lower_age_limit else 1= 1 end and
         case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( year,m.mbr_dob,current_date()) < hmr.upper_age_limit else 1=1 end and
@@ -125,13 +119,7 @@ MbrClaimICD.icd_id  claimICD_ID,
 
  FROM  hedis_measure_rule     hmr
  join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
- LEFT JOIN
-(
-    SELECT 1 + units.i + tens.i * 10 AS aNum, units.i + tens.i * 10 AS aSubscript
-    FROM (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) units
-    CROSS JOIN (SELECT 0 AS i  ) tens
-) sub0  ON (1 + LENGTH(hmr.dosage_details) - LENGTH(REPLACE(hmr.dosage_details, ',', ''))) >= sub0.aNum
- join membership m on mi.mbr_id =m.mbr_id  and 
+  join membership m on mi.mbr_id =m.mbr_id  and 
     case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(year,m.mbr_dob,current_date()) >=  hmr.lower_age_limit else 1= 1 end and
         case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( year,m.mbr_dob,current_date()) < hmr.upper_age_limit else 1=1 end and
   case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end and

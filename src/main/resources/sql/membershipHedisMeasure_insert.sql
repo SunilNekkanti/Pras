@@ -31,7 +31,6 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dose_count
 
  FROM  hedis_measure_rule     hmr
  join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
-
  join membership m on mi.mbr_id =m.mbr_id  and 
     case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(year,m.mbr_dob,current_date()) >=  hmr.lower_age_limit else 1= 1 end and
         case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( year,m.mbr_dob,current_date()) < hmr.upper_age_limit else 1=1 end and
