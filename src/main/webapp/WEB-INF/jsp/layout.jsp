@@ -15,6 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript" src="${context}/resources/js/cookie.js"></script>	
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <link
@@ -107,76 +108,85 @@ footer {
 <body>
 	<script>
 	
-	function setSelectedValue(dropdownId, cookieValue, defaultValue){
-	    var element = document.getElementById(dropdownId);
-	    if(cookieValue) // If cookie has value
-	        element.value = cookieValue;
-	    else    // set default value
-	        element.value = defaultValue;
-	    var loc = window.location.pathname;
-	    if($.isArray(defaultValue))
-	    {
-	    	document.cookie = dropdownId+"=" + JSON.stringify(defaultValue)+"; path="+loc;
-	    }
-	    else
-	    	document.cookie = dropdownId+"=" + element.value+"; path="+loc;
-	 }
-	 function getCookie(cookieValue) {
-		    var textValue = cookieValue + "=";
-		    var ca = document.cookie.split(';');
-		    for (var i = 0; i < ca.length; i++) {
-		        var c = ca[i];
-		        while (c.charAt(0) == ' ') c = c.substring(1);
-		        if (c.indexOf(textValue) == 0) {
-		            return c.substring(textValue.length, c.length);
-		        }
+	
+	 function detectIE() {
+		    var ua = window.navigator.userAgent;
+
+		    var msie = ua.indexOf('MSIE ');
+		    if (msie > 0) {
+		        // IE 10 or older => return version number
+		        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
 		    }
-		    return "";
+
+		    var trident = ua.indexOf('Trident/');
+		    if (trident > 0) {
+		        // IE 11 => return version number
+		        var rv = ua.indexOf('rv:');
+		        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+		    }
+
+		    var edge = ua.indexOf('Edge/');
+		    if (edge > 0) {
+		       // Edge (IE 12+) => return version number
+		       return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+		    }
+
+		    // other browser
+		    return false;
 		}
-	 
-	 function getDropDownCache(dropDown)
-	 {
-		 var value = getCookie(dropDown);
-		 if(value){
-			 var cacheList = new Array;
-		 var cacheValue = $.parseJSON(value);
-			$.each(cacheValue, function (i,v)
-			{
-				 if($.isNumeric(v))
-					cacheList.push(parseInt(v)); 
-				 else
-					cacheList.push(v);
-			});
-		  	return cacheList
-		 }
-		 return "";
 		
-	 }
-	 function dropDownCache(dropDown){
-	  		 var arrayList = new Array;
-	  		 arrayList = selectedList(dropDown);
-		   	 $('#'+dropDown).multiselect('select', arrayList);
-				
-			 $('#'+dropDown).multiselect({numberDisplayed: 0, 
-		    	 buttonWidth: '150px',
-		    	 includeSelectAllOption: true,
-		    	 templates: {
-					 ul: '<ul class="multiselect-container dropdown-menu '+dropDown+'"></ul>'
-				 },
-		    });
-			 
-	}
-	 function selectedList(dropDown)
-	 {
-		 var selectedList = new Array;
-	   	  $('.'+dropDown+ ' '+'input[type=checkbox]').each(function () {
-	   			 if(this.checked){
-	   				selectedList.push($(this).val()); 
-	   			 }
-	   	 });
-	   	  
-	   	  return selectedList;
-	 }
+		var ie = detectIE();
+		var cookiePath;
+		if(ie)
+			cookiePath = "";
+		else
+		{	cookiePath = window.location.pathname;
+			cookiePath = "";
+		}
+		 
+		 function getDropDownCache(dropDown)
+		 {
+			 var value = Cookies.get(dropDown);
+			 if(value){
+				 var cacheList = new Array;
+			 var cacheValue = $.parseJSON(value);
+				$.each(cacheValue, function (i,v)
+				{
+					 if($.isNumeric(v))
+						cacheList.push(parseInt(v)); 
+					 else
+						cacheList.push(v);
+				});
+			  	return cacheList
+			 }
+			 return "";
+			
+		 }
+		 function dropDownCache(dropDown){
+		  		 var arrayList = new Array;
+		  		 arrayList = selectedList(dropDown);
+			   	 $('#'+dropDown).multiselect('select', arrayList);
+					
+				 $('#'+dropDown).multiselect({numberDisplayed: 0, 
+			    	 buttonWidth: '150px',
+			    	 includeSelectAllOption: true,
+			    	 templates: {
+						 ul: '<ul class="multiselect-container dropdown-menu '+dropDown+'"></ul>'
+					 },
+			    });
+				 
+		}
+		 function selectedList(dropDown)
+		 {
+			 var selectedList = new Array;
+		   	  $('.'+dropDown+ ' '+'input[type=checkbox]').each(function () {
+		   			 if(this.checked){
+		   				selectedList.push($(this).val()); 
+		   			 }
+		   	 });
+		   	  
+		   	  return selectedList;
+		 }
 jQuery( document ).ready(function( $ ) {
 	$(".datepicker").datepicker({
         dateFormat: 'mm/dd/yy',

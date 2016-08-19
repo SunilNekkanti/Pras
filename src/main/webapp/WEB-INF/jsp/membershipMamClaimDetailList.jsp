@@ -89,12 +89,12 @@
 								});
 
 						var providerDropdown = function() {
-							 var insSelectValue;
-								if(getCookie("insu"))
-									insSelectValue = getCookie("insu");
+							 var insSelectValue = Cookies.get('insu');
+							 if(insSelectValue != undefined)
+									insSelectValue = insSelectValue;
 								else{
 									insSelectValue= $("#insu option:selected").val();
-									setSelectedValue('insu', "",insSelectValue);
+									Cookies.set('insu', insSelectValue, {path: cookiePath});
 								}
 								$('select[id="insu"]').val(insSelectValue);
 							var $selectPrvdr = $('#extFilterPrvdr');
@@ -123,15 +123,14 @@
 												s.append('</select>');
 												$selectPrvdr.html(s);
 											}).success(function() {
-												 var prvdrSelectValue;
-								 				 if(getCookie("prvdr"))
-								 					 prvdrSelectValue = getCookie("prvdr");
-								 				 else{
-								 					prvdrSelectValue= $("#prvdr option:selected").val();
-								 					setSelectedValue('prvdr', "",prvdrSelectValue);
-								 				 }	
-								 				 
-								 				$('select[id="prvdr"]').val(prvdrSelectValue);
+												var prvdrSelectValue = Cookies.get('prvdr');
+								 				 if(prvdrSelectValue != undefined) 
+													 prvdrSelectValue = prvdrSelectValue;
+												 else{
+													prvdrSelectValue= $("#prvdr option:selected").val();
+													Cookies.set('prvdr', prvdrSelectValue, {path:cookiePath});
+												 }	
+												$('select[id="prvdr"]').val(prvdrSelectValue);
 									});
 						}
 
@@ -549,8 +548,8 @@
 										'change',
 										"#insu",
 										function(e) {
-											setSelectedValue('insu', "", $("#insu option:selected").val());
-								    		setSelectedValue('prvdr', "", "");
+											Cookies.set('insu', $("#insu option:selected").val(), {path:cookiePath});
+								    		Cookies.remove('prvdr');
 											if ($.fn.DataTable
 													.isDataTable('#membershipClaimTable')) {
 												$('#membershipClaimTable')
@@ -566,7 +565,7 @@
 										'change',
 										"#prvdr",
 										function(e) {
-											setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
+											Cookies.set('prvdr', $("#prvdr option:selected").val(), {path:cookiePath});
 											if ($.fn.DataTable
 													.isDataTable('#membershipClaimTable')) {
 												$('#membershipClaimTable')
@@ -621,15 +620,15 @@
 							
 							 var  selectedItem = new Array;
 							 selectedItem = selectedList('mbrClaimField');
-							 setSelectedValue('mbrClaimField', "",selectedItem);
+							 Cookies.set('mbrClaimField', selectedItem, {path:cookiePath});
 							 dropDownCache('mbrClaimField');
 							 
 							 selectedItem = selectedList('monthPicker');
-							 setSelectedValue('monthPicker', "",selectedItem);
+							 Cookies.set('monthPicker', selectedItem, {path:cookiePath});
 							 dropDownCache('monthPicker');
 							 
 							 selectedItem = selectedList('yearPicker');
-							 setSelectedValue('yearPicker', "",selectedItem);
+							 Cookies.set('yearPicker', selectedItem, {path:cookiePath});
 							 dropDownCache('yearPicker');
 
 							//create new json structure for parameters for REST request

@@ -15,12 +15,13 @@ $(document).ready(function() {
 		{
 		    $('#yearpicker').append($('<option />').val(i).html(i));
 		}	
-		if(getCookie("yearpicker"))
-			yearSelectValue = getCookie("yearpicker");
+		yearSelectValue = Cookies.get('yearpicker');
+		if(yearSelectValue != undefined)
+			yearSelectValue = yearSelectValue;
 		else
 		{	
-			setSelectedValue('yearpicker', "", $("#yearpicker option:selected").val());
 			yearSelectValue= $("#yearpicker option:selected").val();
+			Cookies.set('yearpicker', yearSelectValue,{path: cookiePath });
 		}
 	     
 		$('select[id="yearpicker"]').val(yearSelectValue);
@@ -43,15 +44,16 @@ $(document).ready(function() {
 		 });
 		 
 		 var providerDropdown = function(){
-			 var insSelectValue;
-			 if(getCookie("insu"))
-					insSelectValue = getCookie("insu");
+			 var insSelectValue = Cookies.get('insu');
+				
+			 if(insSelectValue != undefined)
+					insSelectValue = insSelectValue;
 				else{
 					insSelectValue= $("#insu option:selected").val();
-					setSelectedValue('insu', "",insSelectValue);
+					Cookies.set('insu', insSelectValue,{path: cookiePath });
 				}
 			     
-				$('select[id="insu"]').val(insSelectValue);
+				$('select[id="insu"]').val(insSelectValue)
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
@@ -65,15 +67,14 @@ $(document).ready(function() {
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
  			 }).success(function() { 
- 				 var prvdrSelectValue;
- 				 if(getCookie("prvdr"))
- 					 prvdrSelectValue = getCookie("prvdr");
- 				 else{
- 					prvdrSelectValue= $("#prvdr option:selected").val();
- 					setSelectedValue('prvdr', "",prvdrSelectValue);
- 				 }	
- 				 
- 				$('select[id="prvdr"]').val(prvdrSelectValue);
+ 				var prvdrSelectValue = Cookies.get('prvdr');
+				 if(prvdrSelectValue != undefined) 
+					 prvdrSelectValue = prvdrSelectValue;
+				 else{
+					prvdrSelectValue= $("#prvdr option:selected").val();
+					Cookies.set('prvdr', prvdrSelectValue,{path: cookiePath });
+				 }	
+				$('select[id="prvdr"]').val(prvdrSelectValue);
  	    	 });
     	  }
     	  
@@ -139,8 +140,8 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
-    		setSelectedValue('insu', "", $("#insu option:selected").val());
-    		setSelectedValue('prvdr', "", "");
+    		Cookies.set('insu', $("#insu option:selected").val(),{path: cookiePath });
+    		Cookies.remove('prvdr');
     		
     		if ( $.fn.DataTable.isDataTable('#membershipActivityMonth') ) {
 					$('#membershipActivityMonth').DataTable().destroy();
@@ -150,7 +151,7 @@ $(document).ready(function() {
   		});
     	
     	$(document.body).on('change',"#prvdr",function (e) {
-    		setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
+    		Cookies.set('prvdr', $("#prvdr option:selected").val(),{path: cookiePath });
     		if ( $.fn.DataTable.isDataTable('#membershipActivityMonth') ) {
 					$('#membershipActivityMonth').DataTable().destroy();
 	   		}
@@ -158,7 +159,7 @@ $(document).ready(function() {
   		});
     	
     	$(document.body).on('change',"#yearpicker",function (e) {
-    		setSelectedValue('yearpicker', "", $("#yearpicker option:selected").val());
+    		Cookies.set('yearpicker',  $("#yearpicker option:selected").val(),{path: cookiePath });
     		if ( $.fn.DataTable.isDataTable('#membershipActivityMonth') ) {
 					$('#membershipActivityMonth').DataTable().destroy();
 	   		}

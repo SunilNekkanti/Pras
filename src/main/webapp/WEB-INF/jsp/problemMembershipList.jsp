@@ -41,13 +41,14 @@ $(document).ready(function() {
 		 
 		 var providerDropdown = function(){
 			 $("#problemGenerate").hide();
-			 var insSelectValue;
-			if(getCookie("insu"))
-				insSelectValue = getCookie("insu");
-			else{
-				insSelectValue= $("#insu option:selected").val();
-				setSelectedValue('insu', "",insSelectValue);
-			}
+			 $("#problemGenerate").hide();
+			 var insSelectValue = Cookies.get('insu');
+			 if(insSelectValue != undefined)
+					insSelectValue = insSelectValue;
+				else{
+					insSelectValue= $("#insu option:selected").val();
+					Cookies.set('insu', insSelectValue, {path: cookiePath});
+				}
 				
  			 var $selectPrvdr = $('#extFilterPrvdr');
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
@@ -62,15 +63,14 @@ $(document).ready(function() {
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
  			 }).success(function() { 
- 				 var prvdrSelectValue;
- 				 if(getCookie("prvdr"))
- 					 prvdrSelectValue = getCookie("prvdr");
- 				 else{
- 					prvdrSelectValue= $("#prvdr option:selected").val();
- 					setSelectedValue('prvdr', "",prvdrSelectValue);
- 				 }	
- 				 
- 				$('select[id="prvdr"]').val(prvdrSelectValue);
+ 				var prvdrSelectValue = Cookies.get('prvdr');
+				 if(prvdrSelectValue != undefined) 
+					 prvdrSelectValue = prvdrSelectValue;
+				 else{
+					prvdrSelectValue= $("#prvdr option:selected").val();
+					Cookies.set('prvdr', prvdrSelectValue, {path:cookiePath});
+				 }	
+				$('select[id="prvdr"]').val(prvdrSelectValue);
  				 
  			 });
   		    
@@ -89,12 +89,12 @@ $(document).ready(function() {
     		  	
 				
 			var $selectProblemRule = $('#extFilterProblemRule');
-			
-			if(getCookie("insu"))
-				insSelectValue = getCookie("insu");
+			 var insSelectValue = Cookies.get('insu');
+			 if(insSelectValue != undefined)
+					insSelectValue = insSelectValue;
 			else{
-				insSelectValue= $("#insu option:selected").val();
-				setSelectedValue('insu', "",insSelectValue);
+					insSelectValue= $("#insu option:selected").val();
+					Cookies.set('insu', insSelectValue, {path: cookiePath});
 			}
 		     
 			$('select[id="insu"]').val(insSelectValue);
@@ -238,8 +238,8 @@ $(document).ready(function() {
     		   var insSelectValue= $("#insu option:selected").val();
     		   var prvdrSelectValue= $("#prvdr option:selected").val();
     		   var problemRuleSelectValue= $("#problemRule option:selected").val();
-    		   setSelectedValue('prvdr', "", prvdrSelectValue);
-    		   setSelectedValue('insu', "", insSelectValue);
+    		   Cookies.set('prvdr', prvdrSelectValue, {path:cookiePath});
+    		   Cookies.set('insu', insSelectValue, {path: cookiePath});
     		  
     		   var ruleArray = new Array;
     		    $("#problemRule option:selected").each  ( function() {
@@ -255,15 +255,15 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
-    		setSelectedValue('insu', "", $("#insu option:selected").val());
-    		setSelectedValue('prvdr', "", "");
+    		 Cookies.remove('prvdr')
+  		     Cookies.set('insu', $("#insu option:selected").val(), {path: cookiePath});
     		problemRuleDropdown(true);
     		providerDropdown();
     		
   		});
     	
     	$(document.body).on('change',"#prvdr",function (e) {
-    		setSelectedValue('prvdr', "", $("#prvdr option:selected").val());
+    		Cookies.set('prvdr', $("#prvdr option:selected").val(), {path:cookiePath});
     		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
 					$('#membershipTable').DataTable().destroy();
 	   		}
@@ -314,7 +314,6 @@ $(document).ready(function() {
 		   
 		   
 		   
-		   setSelectedValue('problemRule', "",ruleIds);
 		   dropDownCache('problemRule');
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
@@ -328,6 +327,7 @@ $(document).ready(function() {
 		   restParams.push({"name" : "sSearchProblemRule" , "value" : sSearchProblemRule  });
 		   restParams.push({"name" : "ruleIds" , "value" : ruleIds  });
 		   
+		   Cookies.set('problemRule', ruleIds, {path:cookiePath});
 		 $.ajax( {
               dataType: 'json',
               contentType: "application/json;charset=UTF-8",

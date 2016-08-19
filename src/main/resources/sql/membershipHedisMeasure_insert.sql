@@ -2,7 +2,7 @@
  drop table if exists hedisMeasureByCPT;
   
  create temporary table hedisMeasureByCPT as
-SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dose_count   
+SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate ,  cpt_or_icd
  FROM 
  (
  SELECT   
@@ -86,11 +86,11 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dose_count
 having      count( mbrClaimCPT.cpt_id) 	     < case when dose_count is not null then dose_count  else  1  end  
 ) a ;
 
-alter table hedisMeasureByCPT add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id);
+alter table hedisMeasureByCPT add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id), add key cpt_or_icd(cpt_or_icd);
 
 
   create temporary table hedisMeasureByICD  as  
-SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  a.Mbr_DOB,  dosecount
+SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  cpt_or_icd
  FROM 
  (
  SELECT   
@@ -174,7 +174,15 @@ hmr.dose_count,
 having       count( MbrClaimICD.icd_id)     <   case when dose_count  is not null then dose_count   else  1  end
 ) a ;
 
-alter table hedisMeasureByICD add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id);
+alter table hedisMeasureByICD add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id), add key cpt_or_icd(cpt_or_icd);
+
+drop table if exists hedisMeasureByCPT1;
+create temporary table hedisMeasureByCPT1 as select * from hedisMeasureByCPT where cpt_or_icd =2;
+ 
+
+drop table if exists hedisMeasureByICD1;
+create temporary table hedisMeasureByICD1 as select * from hedisMeasureByICD  where cpt_or_icd =2;
+
 
 INSERT INTO membership_hedis_measure (
 mbr_id,hedis_msr_rule_id,due_date,date_of_service,follow_up_ind,created_date,updated_date,created_by,updated_by,active_ind,file_id
@@ -183,9 +191,13 @@ select
  a.mbr_id,  a.hedis_msr_rule_id ,   a.duedate
 , null date_of_service, 'Y' follow_up_ind, now() created_date,now() updated_date,'sarath' created_by, 'sarath' updated_by, 'Y'active_ind, :fileId file_id
  from 
- (select * from hedisMeasureByCPT 
+ (select * from hedisMeasureByCPT  where cpt_or_icd =0
  union 
- select * from hedisMeasureByICD) a 
+ select * from hedisMeasureByICD  where cpt_or_icd =1
+ union
+ (select a.* from hedisMeasureByCPT1  a 
+    inner join   hedisMeasureByICD1 b using (mbr_id,hedis_msr_rule_id) )
+ ) a 
  left outer join membership_hedis_measure mhm  on a.mbr_id=mhm.mbr_id and a.hedis_msr_rule_id=mhm.hedis_msr_rule_id
  where   case when mhm.mbr_id is not null then  mhm.hedis_msr_rule_id is null else  mhm.mbr_id is  null end;
 

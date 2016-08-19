@@ -39,28 +39,42 @@
 	     $selectIns.html(s);
 	    
 	 }).success(function() {  
-		 var insSelectValue= $("#insu option:selected").val();
-		 var eySelectValue= $("#ey option:selected").val();
-		 setSelectedValue('insu', getCookie("insu"), insSelectValue);
-		 setSelectedValue('ey', getCookie("ey"), eySelectValue);
+		 var eySelectValue=  Cookies.get('ey');
+		 var insSelectValue = Cookies.get('insu');
+		 if(insSelectValue != undefined)
+				insSelectValue = insSelectValue;
+			else{
+				insSelectValue= $("#insu option:selected").val();
+				Cookies.set('insu', insSelectValue,{path: cookiePath });
+			}
+			$('select[id="insu"]').val(insSelectValue);
+			
+			 if(eySelectValue != undefined)
+				 eySelectValue = eySelectValue;
+				else{
+					eySelectValue=  $("#ey option:selected").val();
+					Cookies.set('ey', eySelectValue,{path: cookiePath });
+				}
+				$('select[id="insu"]').val(insSelectValue);
+				$('select[id="ey"]').val(eySelectValue);
 		 callDatableWithChangedDropDown();	
 	 
 	 });
 	 
 	 $(document.body).on('change',"#insu",function (e) {
 		 var insSelectValue= $("#insu option:selected").val();
-		 setSelectedValue('insu', "", insSelectValue);
+		 Cookies.set('insu', insSelectValue,{path: cookiePath });
 		 callDatableWithChangedDropDown();
  		});
  	
  	  $(document.body).on('change',"#ey",function (e) {
  		 var eySelectValue= $("#ey option:selected").val();
-		 setSelectedValue('ey', "", eySelectValue);
+  		Cookies.set('ey', eySelectValue,{path: cookiePath });
  		 callDatableWithChangedDropDown();
  		});
  	  
  	 var callDatableWithChangedDropDown = function(){
- 		var insSelectValue=getCookie("insu");
+ 		 var insSelectValue= $("#insu option:selected").val();
 		   var eySelectValue= $("#ey option:selected").val();
 		   if ( $.fn.DataTable.isDataTable('#hedisMeasureRuleTable') ) {
 					$('#hedisMeasureRuleTable').DataTable().destroy();
