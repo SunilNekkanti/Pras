@@ -113,6 +113,23 @@ now() updated_date,
  update  membership_insurance set active_ind='N' where effecctive_end_dt <= cast(now() as date);
   update  membership_insurance set active_ind='Y', effecctive_end_dt =null  where effecctive_end_dt > cast(now() as date);
 
+  update membership_insurance  mi
+join 
+(select  
+ 
+(select min( effective_strt_dt) from membership_insurance where mbr_id=  mi.mbr_id  and active_ind='Y' and mi.effecctive_end_dt is null  group  by mbr_id) stdate,
+ ((select max( effective_strt_dt) from membership_insurance where mbr_id=  mi.mbr_id  and active_ind='Y' and mi.effecctive_end_dt is null group  by mbr_id) - INTERVAL 1 DAY )enddate,
+mbr_id,
+effective_strt_dt,
+effecctive_end_dt
+   from membership_insurance mi where active_ind='Y' and mi.effecctive_end_dt is null and mbr_id in 
+(select   mbr_id from membership_insurance where   active_ind='Y' group by mbr_id  having count(ins_id)>1)
+order by mbr_id,effective_strt_dt
+)a   on mi.mbr_id =a.mbr_id
+       and mi.effective_strt_dt = stdate
+       set mi.effecctive_end_dt =a.enddate,  active_ind='N'
+       where  mi.effecctive_end_dt is null;
+       
 update  membership_provider mp 
 join (
  select mp.mbr_id,mp.prvdr_id, tm.eff_start_date,
@@ -183,10 +200,11 @@ now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by
 from  membership  m  
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id= :insId
 join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
-join  activity_month_span ams on ams.activitymonth  >= DATE_FORMAT(mi.effective_strt_dt, '%Y%m')    
-								and ams.activitymonth <= case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end
-								 and  ams.activitymonth >=  DATE_FORMAT(mp.eff_start_date, '%Y%m')       
-                                  and ams.activitymonth <= case when mp.eff_end_date is not null  then DATE_FORMAT(mp.eff_end_date, '%Y%m') else  :activityMonth end
+join  reference_contract rc on rc.prvdr_id =mp.prvdr_id and rc.insurance_id = :insId
+join contract c on c.ref_contract_id=rc.ref_contract_id
+join  activity_month_span ams on  ams.activitymonth  between   DATE_FORMAT(mi.effective_strt_dt, '%Y%m') 		and  case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end
+								 and  ams.activitymonth between  DATE_FORMAT(c.start_date, '%Y%m')   and  case when c.end_date is not null  then DATE_FORMAT(c.end_date, '%Y%m') else  :activityMonth end
+                                 and  ams.activitymonth between  DATE_FORMAT(mp.eff_start_date, '%Y%m')   and  case when mp.eff_end_date is not null  then DATE_FORMAT(mp.eff_end_date, '%Y%m') else  :activityMonth end
   left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
   where    mam.activity_month is null
 group by mi.mbr_id,mi.ins_id,mp.prvdr_id,ams.activityMonth; 

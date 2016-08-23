@@ -194,7 +194,7 @@ $.ajax( {
 								                         },
 								                     ],
 								  	     "bLengthChange": false,
-								  	     "iDisplayLength": 10,
+								  	     "iDisplayLength": 5,
 								  	     "sPaginationType": "full_numbers",
 								  	     "bProcessing": true,
 								  	     "bServerSide" : true,
