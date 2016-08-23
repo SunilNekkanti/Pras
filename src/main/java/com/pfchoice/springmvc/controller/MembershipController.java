@@ -50,6 +50,7 @@ import com.pfchoice.core.entity.HedisMeasure;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
+import com.pfchoice.core.entity.MembershipHospitalization;
 import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProblem;
 import com.pfchoice.core.entity.MembershipProvider;
@@ -464,6 +465,9 @@ public class MembershipController {
 
 		List<MembershipProblem> mbrProblemList = dbMembership.getMbrProblemList();
 		model.addAttribute("mbrProblemList", mbrProblemList);
+		
+		List<MembershipHospitalization> mbrHospitalizationList = dbMembership.getMbrHospitalizationList();
+		model.addAttribute("mbrHospitalizationList", mbrHospitalizationList);
 
 		List<MembershipInsurance> listBean = membershipInsuranceService.findAllByMbrId(id);
 		model.addAttribute("membershipDetailsList", listBean);

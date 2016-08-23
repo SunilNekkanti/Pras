@@ -10,36 +10,37 @@
 
 <div id="content">
 	<ul id="tabs" class="nav nav-pills" data-tabs="tabs">
-		<li class="active"><a href="#active" data-toggle="tab">Active</a></li>
-		<li><a href="#problemHistory" data-toggle="tab">Past
-				History</a></li>
+		<li class="active"><a href="#hospitalizationActive" data-toggle="tab">Active</a></li>
+		<li><a href="#hospitalizationHistory" data-toggle="tab">Past History</a></li>
 	</ul>
 	<div class="row">
 		<div class="col-sm-12">
 			<div id="my-tab-content fade active in" class="tab-content">
-				<div class="tab-pane active" id="active">
+				<div class="tab-pane active" id="hospitalizationActive">
 					<div class="panel-group">
 						<div class="panel panel-success">
-							<div class="panel-heading">Membership Problem List</div>
+							<div class="panel-heading">Membership Hospitalization List</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12">
 									<table id="tab" class="table table-striped table-hover">
 										<thead>
 											<tr>
-												<th scope="col">Description</th>
-												<th scope="col">Diagnose Date</th>
-												<th scope="col">Resolved Date</th>
+												<th scope="col">Hospital</th>
+												<th scope="col">Admit Date</th>
+												<th scope="col">Exp Discharge Date</th>
+												<th scope="col">Prior Admits</th>
 											</tr>
 										</thead>
 										<tbody id="contentprovider">
 
-											<c:forEach items="${mbrProblemList}" var="mbrProblem">
+											<c:forEach items="${mbrHospitalizationList}" var="mbrHospitalization">
 												<c:choose>
-													<c:when test="${empty mbrProblem.resolvedDate}">
+													<c:when test="${empty mbrHospitalization.expDisDate}">
 														<tr>
-															<td>${mbrProblem.pbm.description}</td>
-															<td>${mbrProblem.startDate}</td>
-															<td>${mbrProblem.resolvedDate}</td>
+															<td>${mbrHospitalization.hospital.name}</td>
+															<td>${mbrHospitalization.admitDate}</td>
+															<td>${mbrHospitalization.expDisDate}</td>
+															<td>${mbrHospitalization.priorAdmits}</td>
 														</tr>
 													</c:when>
 												</c:choose>
@@ -52,29 +53,31 @@
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane" id="problemHistory">
+				<div class="tab-pane" id="hospitalizationHistory">
 					<div class="panel-group">
 						<div class="panel panel-success">
-							<div class="panel-heading">Membership Problem List</div>
+							<div class="panel-heading">Membership Hospitalization List</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12">
 									<table id="tab" class="table table-striped table-hover">
 										<thead>
 											<tr>
-												<th scope="col">Description</th>
-												<th scope="col">Diagnosis Date</th>
-												<th scope="col">Resolved Date</th>
+												<th scope="col">Hospital</th>
+												<th scope="col">Admit Date</th>
+												<th scope="col">Exp Discharge Date</th>
+												<th scope="col">Prior Admits</th>
 											</tr>
 										</thead>
 										<tbody id="contentprovider">
 
-											<c:forEach items="${mbrProblemList}" var="mbrProblem">
+											<c:forEach items="${mbrHospitalizationList}" var="mbrHospitalization">
 												<c:choose>
-													<c:when test="${not empty mbrProblem.resolvedDate}">
+													<c:when test="${not empty mbrHospitalization.expDisDate}">
 														<tr>
-															<td>${mbrProblem.pbm.description}</td>
-															<td>${mbrProblem.startDate}</td>
-															<td>${mbrProblem.resolvedDate}</td>
+															<td>${mbrHospitalization.hospital.name}</td>
+															<td>${mbrHospitalization.admitDate}</td>
+															<td>${mbrHospitalization.expDisDate}</td>
+															<td>${mbrHospitalization.priorAdmits}</td>
 														</tr>
 													</c:when>
 												</c:choose>

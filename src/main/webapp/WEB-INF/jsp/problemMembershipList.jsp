@@ -255,7 +255,7 @@ $(document).ready(function() {
     	}  
     	     
     	$(document.body).on('change',"#insu",function (e) {
-    		 Cookies.remove('prvdr')
+    		 Cookies.remove('prvdr',{path: cookiePath });
   		     Cookies.set('insu', $("#insu option:selected").val(), {path: cookiePath});
     		problemRuleDropdown(true);
     		providerDropdown();

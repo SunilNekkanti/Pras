@@ -32,7 +32,7 @@
     	 
     	 $(document.body).on('change',"#insu",function (e) {
     		 Cookies.set('insu', $("#insu option:selected").val(), {path: cookiePath});
-      		Cookies.remove('prvdr');
+      		Cookies.remove('prvdr', { path: cookiePath }); 
      		if ( $.fn.DataTable.isDataTable('#membershipTable') ) {
  					$('#membershipTable').DataTable().destroy();
  	   		}

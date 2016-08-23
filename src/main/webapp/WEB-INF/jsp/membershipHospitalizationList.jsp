@@ -253,7 +253,7 @@
 													'#membershipHospitalizationTable tbody')
 													.empty();
 											Cookies.set('insu', $("#insu option:selected").val(), {path:cookiePath});
-								    		Cookies.remove('prvdr');
+								    		Cookies.remove('prvdr',{path: cookiePath });
 											providerDropdown();
 										});
 
