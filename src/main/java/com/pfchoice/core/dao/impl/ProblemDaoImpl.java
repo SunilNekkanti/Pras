@@ -73,7 +73,8 @@ public class ProblemDaoImpl extends HibernateBaseDao<Problem, Integer> implement
 		else{
 			crit.addOrder(Order.asc("description"));
 		}
-		return findByCriteria(crit, pageNo, pageSize);
+		
+		 return findByCriteria(crit, pageNo, pageSize);
 	}
 
 	/*

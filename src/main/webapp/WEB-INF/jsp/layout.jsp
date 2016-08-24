@@ -210,7 +210,11 @@ jQuery( document ).ready(function( $ ) {
 	
 	
 	 $('body').on('keydown',".datepickerfrom, .datepickerto, .datepicker, .datepicker1, .datepicker3, .processfrom, .processto", function(event){
-		 event.preventDefault();
+		 if(event.keyCode == 8 || event.keyCode == 46) {
+		        $(this).val('');
+		   }
+		 else
+		 	event.preventDefault();
     });
 
 		

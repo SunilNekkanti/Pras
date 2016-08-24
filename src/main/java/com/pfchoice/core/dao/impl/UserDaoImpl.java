@@ -115,6 +115,6 @@ public class UserDaoImpl extends HibernateBaseDao<User, Integer> implements User
 	 */
 	@Override
 	public User findByUserName(String userName) {
-		return findUniqueByProperty("name", userName);
+		return findUniqueByProperty("username", userName);
 	}
 }

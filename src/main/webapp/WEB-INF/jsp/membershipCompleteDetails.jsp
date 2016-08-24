@@ -34,11 +34,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-sm-12">
-		<jsp:include page="/WEB-INF/jsp/membershipProblemList.jsp">
-			<jsp:param name="mbrProblemList" value="${mbrProblemList}" />
-		</jsp:include>
-	</div>
+	<div class="col-sm-12" id="membershipProblemList"></div>
 </div>
 
 <div class="row">
@@ -368,7 +364,113 @@
 	    		}
 	     });
 	}
+	membershipProblemList();
 	
+	function membershipProblemList(){
+		var source = getContextPath()+'membershipProblemList/${id}';
+		$.ajax({
+			url : source,
+		    success: function(data, textStatus, jqXHR)
+		    {
+		       $('#membershipProblemList').html(data);
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		  	  alert("Error MembershipProblem List");
+		    }
+		});
+		$(".membershipProblemList").show();
+		$('#membershipProblemDetails').html('');
+		
+	}	
+	
+	function newMembershipProblem() {
+			var source = getContextPath() + 'membershipProblem/${id}/new';
+			$.ajax({
+				url : source,
+				success : function(data, textStatus, jqXHR) {
+					$(".membershipProblemList").hide();
+					$('#membershipProblemDetails').html(data);
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert("Error in membership Problem");
+				}
+			});
+		
+		}
+	
+	
+	function addMembershipProblem() {
+		var url = getContextPath() + 'membershipProblem/${id}/save.do?add';
+		$("#mbr").val('${id}')
+		var dataList = $("#membershipProblem").serialize();
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : dataList,
+			success : function(data) {
+				membershipProblemList();
+				$('#membershipProblemDetails').html('');
+				$(".clrRed").text(" Problem added");
+			},
+			error : function(data) {
+				alert('Error in membership problelm' + data);
+			}
+		});
+		return false;
+	}
+	
+	function membershipProblemDetails(mbrPbmId) {
+		var source = getContextPath() + 'membershipProblem/'+mbrPbmId;
+		$.ajax({
+			url : source,
+			success : function(data, textStatus, jqXHR) {
+				$(".membershipProblemList").hide();
+				$('#membershipProblemDetails').html(data);
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("Error in membership Problem");
+			}
+		});
+	}
+	
+	function modifyMembershipProblem() {
+		var url = getContextPath() + 'membershipProblem/${id}/save.do?update';
+		$("#mbr").val('${id}')
+		var dataList = $("#membershipProblem").serialize();
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : dataList,
+			success : function(data) {
+				membershipProblemList();
+				$(".clrRed").text(" Problem updated");
+			},
+			error : function(data) {
+				alert('Error in membership problelm' + data);
+			}
+		});
+		return false;
+	}
+	
+	function deleteMembershipProblem() {
+		var url = getContextPath() + 'membershipProblem/${id}/save.do?delete';
+		$("#mbr").val('${id}')
+		var dataList = $("#membershipProblem").serialize();
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : dataList,
+			success : function(data) {
+				membershipProblemList();
+				$(".clrRed").text(" Problem deleted");
+			},
+			error : function(data) {
+				alert('Error in membership problelm' + data);
+			}
+		});
+		return false;
+	}
 	
 	
 </script>

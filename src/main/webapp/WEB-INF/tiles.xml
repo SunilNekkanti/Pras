@@ -796,6 +796,24 @@
 		</definition>
 	<!--  MEMBERSHIP MAM CLAIM DETAILS -->
 	
+	<!--  MEMBERSHIP PROBLEM -->
+	<definition name="membershipProblemNew" extends="baseNoHeader.definition">
+			<put-attribute name="title" value="Membership Problem" />
+			<put-attribute name="body"
+				value="/WEB-INF/jsp/membershipProblemNew.jsp" />
+		</definition>
+		<definition name="membershipProblemEdit" extends="baseNoHeader.definition">
+			<put-attribute name="title" value="New Membership Problem" />
+			<put-attribute name="body"
+				value="/WEB-INF/jsp/membershipProblemEdit.jsp" />
+		</definition>
+	<definition name="membershipProblemList" extends="baseNoHeader.definition">
+			<put-attribute name="title" value="Membership Problem List" />
+			<put-attribute name="body"
+				value="/WEB-INF/jsp/membershipProblemList.jsp" />
+	</definition>	
+	<!--  MEMBERSHIP PROBLEM -->
+	
 	
 	<definition name="hedisMeasureGroupEdit" extends="base.definition">
   		<put-attribute name="title" value="Hedis Measure Group" />

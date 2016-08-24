@@ -55,6 +55,8 @@ import com.pfchoice.core.entity.MembershipInsurance;
 import com.pfchoice.core.entity.MembershipProblem;
 import com.pfchoice.core.entity.MembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
+import com.pfchoice.core.entity.Problem;
+import com.pfchoice.core.entity.User;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.EthinicityService;
 import com.pfchoice.core.service.FileService;
@@ -63,9 +65,12 @@ import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.MembershipInsuranceService;
+import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipProviderService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
+import com.pfchoice.core.service.ProblemService;
+import com.pfchoice.core.service.UserService;
 
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -91,7 +96,16 @@ public class MembershipController {
 	private FileService fileService;
 
 	@Autowired
+	private FileTypeService fileTypeService;
+	
+	@Autowired
 	private MembershipInsuranceService membershipInsuranceService;
+
+	@Autowired
+	private ProblemService problemService;
+
+	@Autowired
+	private MembershipProblemService membershipproblemService;
 
 	@Autowired
 	private InsuranceService insuranceService;
@@ -106,7 +120,7 @@ public class MembershipController {
 	private HedisMeasureService hedisMeasureService;
 
 	@Autowired
-	private FileTypeService fileTypeService;
+	private UserService userService;
 
 	@Autowired
 	@Qualifier("membershipValidator")
@@ -463,9 +477,6 @@ public class MembershipController {
 		List<MembershipHedisMeasure> mbrHedisMeasureList = dbMembership.getMbrHedisMeasureList();
 		model.addAttribute("mbrHedisMeasureList", mbrHedisMeasureList);
 
-		List<MembershipProblem> mbrProblemList = dbMembership.getMbrProblemList();
-		model.addAttribute("mbrProblemList", mbrProblemList);
-		
 		List<MembershipHospitalization> mbrHospitalizationList = dbMembership.getMbrHospitalizationList();
 		model.addAttribute("mbrHospitalizationList", mbrHospitalizationList);
 
@@ -522,6 +533,17 @@ public class MembershipController {
 
 		return Message.successMessage(CommonMessageContent.HEDIS_RULE_LIST,
 				JsonConverter.getJsonObject(mbrHedisMeasureListAll));
+	}
+
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Problem> populateProblemList(final Integer insId, final Integer effYear) {
+		Pagination page = problemService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.LARGE_LIST_SIZE, null, null,
+				null, insId , effYear )  ;
+		return (List<Problem>) page.getList();
 	}
 
 	/**
@@ -627,7 +649,7 @@ public class MembershipController {
 		java.io.File sourceFile = null;
 		java.io.File newSourceFile = null;
 		String mbrRoster = null;
-		
+
 		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
 			String fileName = fileUpload.getOriginalFilename();
 			String newfileName = fileName.substring(0, fileName.indexOf('.'));
@@ -646,14 +668,14 @@ public class MembershipController {
 				}
 
 			} catch (IOException e) {
-				logger.info( e.getCause().getMessage());
+				logger.info(e.getCause().getMessage());
 			}
 		}
 		logger.info("before file processing");
-		
-		if(newSourceFile != null)
-		mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName() + "&insId="
-				+ insId + "&fileTypeId=" + fileTypeId + "&activityMonth=" + activityMonth;
+
+		if (newSourceFile != null)
+			mbrRoster = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()
+					+ "&insId=" + insId + "&fileTypeId=" + fileTypeId + "&activityMonth=" + activityMonth;
 		return mbrRoster;
 	}
 
@@ -740,4 +762,101 @@ public class MembershipController {
 				JsonConverter.getJsonObject(pagination));
 	}
 
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/membershipProblemList/{mbrId}", "/user/membershipProblemList/{mbrId}" })
+	public String membershipProblemList(@PathVariable Integer mbrId, Model model) {
+		
+		Membership dbMembership = membershipService.findById(mbrId);
+		List<MembershipProblem> mbrProblemList = dbMembership.getMbrProblemList();
+		model.addAttribute("mbrProblemList", mbrProblemList);
+		logger.info("Returning membershipProblemList.jsp page");
+		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+	}
+
+	@RequestMapping(value = { "/admin/membershipProblem/{mbrId}/new",
+			"/user/membershipProblem/{mbrId}/new" }, method = RequestMethod.GET)
+	public String addMembershipProblemPage(@PathVariable Integer mbrId, Model model,
+			@ModelAttribute("username") String username) {
+
+		MembershipInsurance mbrInsurance = membershipInsuranceService.findByMbrId(mbrId);
+		final Integer insId = mbrInsurance.getInsId().getId();
+		 
+		User user =  userService.findByUserName(username);
+		final Integer effYear = user.getEffectiveYear();
+		List<Problem> pbmList = populateProblemList(insId,effYear );
+		MembershipProblem membershipProblem = createMembershipProblelmModel();
+		model.addAttribute("membershipProblem", membershipProblem);
+		model.addAttribute("problemList", pbmList);
+		return TileDefinitions.MEMBRESHIPPROBLEMENEW.toString();
+	}
+
+	@RequestMapping(value = { "/admin/membershipProblem/{mbrPbmId}",
+			"/user/membershipProblem/{mbrPbmId}" }, method = RequestMethod.GET)
+	public String viewMembershipProblemPage(@PathVariable Integer mbrPbmId, Model model,
+			@ModelAttribute("username") String username) {
+
+		MembershipProblem membershipProblem = membershipproblemService.findById(mbrPbmId);
+		model.addAttribute("membershipProblem", membershipProblem);
+		
+		final Integer mbrId = membershipProblem.getMbr().getId();
+		MembershipInsurance mbrInsurance = membershipInsuranceService.findByMbrId(mbrId);
+		final Integer insId = mbrInsurance.getInsId().getId();
+		 
+		User user =  userService.findByUserName(username);
+		final Integer effYear = user.getEffectiveYear();
+		List<Problem> pbmList = populateProblemList(insId,effYear );
+		
+		
+		model.addAttribute("problemList", pbmList);
+		return TileDefinitions.MEMBRESHIPPROBLEMEDIT.toString();
+	}
+
+	@RequestMapping(value = "/admin/membershipProblem/{mbrId}/save.do", method = RequestMethod.POST, params = { "add" })
+	public String newMembershipProblemAction(@PathVariable Integer mbrId,
+			@Validated MembershipProblem membershipProblem, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+		logger.info("membership id is" + mbrId);
+		membershipProblem.setCreatedBy(username);
+		membershipProblem.setUpdatedBy(username);
+		membershipproblemService.save(membershipProblem);
+		logger.info("Returning membership problem add page");
+		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+	}
+
+	@RequestMapping(value = "/admin/membershipProblem/{mbrId}/save.do", method = RequestMethod.POST, params = {
+			"update" })
+	public String modifyMembershipProblemAction(@PathVariable Integer mbrId,
+			@Validated MembershipProblem membershipProblem, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+		logger.info("membership id is" + mbrId);
+		membershipProblem.setCreatedBy(username);
+		membershipProblem.setUpdatedBy(username);
+		membershipProblem.setActiveInd('Y');
+		membershipproblemService.update(membershipProblem);
+		logger.info("Returning membership problem update page");
+		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+	}
+
+	@RequestMapping(value = "/admin/membershipProblem/{mbrId}/save.do", method = RequestMethod.POST, params = {
+			"delete" })
+	public String deleteMembershipProblemAction(@PathVariable Integer mbrId,
+			@Validated MembershipProblem membershipProblem, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username) {
+		logger.info("membership id is" + mbrId);
+		membershipProblem.setCreatedBy(username);
+		membershipProblem.setUpdatedBy(username);
+		membershipProblem.setActiveInd('N');
+		membershipproblemService.update(membershipProblem);
+		logger.info("Returning membership problem delete page");
+		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+	}
+
+	@ModelAttribute("membershipProblem")
+	public MembershipProblem createMembershipProblelmModel() {
+		return new MembershipProblem();
+	}
 }
