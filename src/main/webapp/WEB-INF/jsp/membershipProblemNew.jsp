@@ -31,12 +31,12 @@
 							<label class="control-label col-sm-2"
 								for="shortDescription required">Diagnose Date</label>
 							<div class="col-sm-6">
-							<springForm:hidden path="mbr" class="form-control datepicker"
+							<springForm:hidden path="mbr" class="form-control"
 									maxlength="255" id="mbr" placeholder="mbr"/>
-							<springForm:hidden path="fileId" class="form-control datepicker"
+							<springForm:hidden path="fileId" class="form-control datepicker1"
 									maxlength="255" id="fileId" placeholder="fileId" value="1"/>
 								
-								<springForm:input path="startDate" class="form-control datepicker"
+								<springForm:input path="startDate" class="form-control datepickerfrom"
 									maxlength="255" id="startDate" placeholder="startDate" />
 								<springForm:errors path="startDate" cssClass="error text-danger" />
 							</div>
@@ -46,7 +46,7 @@
 							<label class="control-label col-sm-2"
 								for="shortDescription required">Resolved Date</label>
 							<div class="col-sm-6">
-								<springForm:input path="resolvedDate" class="form-control datepicker"
+								<springForm:input path="resolvedDate" class="form-control datepickerto"
 									maxlength="255" id="resolvedDate" placeholder="resolvedDate" />
 								<springForm:errors path="resolvedDate"
 									cssClass="error text-danger" />

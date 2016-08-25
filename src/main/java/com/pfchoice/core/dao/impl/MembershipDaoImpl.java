@@ -128,7 +128,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		if (sSearchHedisRule != null && sSearchHedisRule != 0) {
 			crit.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 			and.add(Restrictions.in("mbrHedisMeasureRule.hedisMeasureRule.id", ruleIds));
-			and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd", new Character('Y')));
+		//	and.add(Restrictions.eq("mbrHedisMeasureRule.activeInd", new Character('Y')));
 			if (sSearch != null && !"".equals(sSearch)) {
 				or.add(Restrictions.sqlRestriction("CAST(due_date AS CHAR) like ?", "%" + sSearch + "%",
 						StringType.INSTANCE));

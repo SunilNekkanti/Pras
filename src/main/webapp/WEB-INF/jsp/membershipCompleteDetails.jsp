@@ -366,21 +366,23 @@
 	}
 	membershipProblemList();
 	
-	function membershipProblemList(){
+	function membershipProblemList(message){
 		var source = getContextPath()+'membershipProblemList/${id}';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
 		    {
 		       $('#membershipProblemList').html(data);
+		       $(".membershipProblemList").show();
+				$(".membershipProblemList .clrRed").text(message);
+				$('#membershipProblemDetails').html('');
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
 		  	  alert("Error MembershipProblem List");
 		    }
 		});
-		$(".membershipProblemList").show();
-		$('#membershipProblemDetails').html('');
+		
 		
 	}	
 	
@@ -409,9 +411,11 @@
 			url : url,
 			data : dataList,
 			success : function(data) {
-				membershipProblemList();
-				$('#membershipProblemDetails').html('');
-				$(".clrRed").text(" Problem added");
+				$('#membershipProblemDetails').html(data);
+				if($('#membershipProblemDetails .error').length < 1)
+				{
+					membershipProblemList(" Problem added ");
+				}	
 			},
 			error : function(data) {
 				alert('Error in membership problelm' + data);
@@ -443,8 +447,11 @@
 			url : url,
 			data : dataList,
 			success : function(data) {
-				membershipProblemList();
-				$(".clrRed").text(" Problem updated");
+				$('#membershipProblemDetails').html(data);
+				if($('#membershipProblemDetails .error').length < 1)
+				{
+					membershipProblemList(" Problem updated ");
+				}	
 			},
 			error : function(data) {
 				alert('Error in membership problelm' + data);
@@ -462,8 +469,11 @@
 			url : url,
 			data : dataList,
 			success : function(data) {
-				membershipProblemList();
-				$(".clrRed").text(" Problem deleted");
+				$('#membershipProblemDetails').html(data);
+				if($('#membershipProblemDetails .error').length < 1)
+				{
+					membershipProblemList(" Problem deleted ");
+				}	
 			},
 			error : function(data) {
 				alert('Error in membership problelm' + data);
@@ -471,8 +481,6 @@
 		});
 		return false;
 	}
-	
-	
 </script>
 
 

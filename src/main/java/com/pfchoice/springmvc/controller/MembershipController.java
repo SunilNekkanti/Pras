@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -105,7 +106,7 @@ public class MembershipController {
 	private ProblemService problemService;
 
 	@Autowired
-	private MembershipProblemService membershipproblemService;
+	private MembershipProblemService membershipProblemService;
 
 	@Autowired
 	private InsuranceService insuranceService;
@@ -772,6 +773,7 @@ public class MembershipController {
 		
 		Membership dbMembership = membershipService.findById(mbrId);
 		List<MembershipProblem> mbrProblemList = dbMembership.getMbrProblemList();
+		
 		model.addAttribute("mbrProblemList", mbrProblemList);
 		logger.info("Returning membershipProblemList.jsp page");
 		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
@@ -791,7 +793,7 @@ public class MembershipController {
 		MembershipProblem membershipProblem = createMembershipProblelmModel();
 		model.addAttribute("membershipProblem", membershipProblem);
 		model.addAttribute("problemList", pbmList);
-		return TileDefinitions.MEMBRESHIPPROBLEMENEW.toString();
+		return TileDefinitions.MEMBRESHIPPROBLEMNEW.toString();
 	}
 
 	@RequestMapping(value = { "/admin/membershipProblem/{mbrPbmId}",
@@ -799,7 +801,7 @@ public class MembershipController {
 	public String viewMembershipProblemPage(@PathVariable Integer mbrPbmId, Model model,
 			@ModelAttribute("username") String username) {
 
-		MembershipProblem membershipProblem = membershipproblemService.findById(mbrPbmId);
+		MembershipProblem membershipProblem = membershipProblemService.findById(mbrPbmId);
 		model.addAttribute("membershipProblem", membershipProblem);
 		
 		final Integer mbrId = membershipProblem.getMbr().getId();
@@ -819,12 +821,30 @@ public class MembershipController {
 	public String newMembershipProblemAction(@PathVariable Integer mbrId,
 			@Validated MembershipProblem membershipProblem, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-		logger.info("membership id is" + mbrId);
+		
+		 final Integer mbrProblemIdCount = membershipProblemService.findByMbrIdAndPbmId(membershipProblem.getMbr(), membershipProblem.getPbm(), 0);
+		 if(mbrProblemIdCount > 0){
+			FieldError pbmError = new FieldError("pbm", "pbm", "Similar active problem already exists");
+			bindingResult.addError(pbmError);
+		}
+		 
+		if (bindingResult.hasErrors()) {
+			MembershipInsurance mbrInsurance = membershipInsuranceService.findByMbrId(mbrId);
+			final Integer insId = mbrInsurance.getInsId().getId();
+			 
+			User user =  userService.findByUserName(username);
+			final Integer effYear = user.getEffectiveYear();
+			List<Problem> pbmList = populateProblemList(insId,effYear );
+			model.addAttribute("problemList", pbmList);
+			logger.info("Returning membership problem new page");
+			return TileDefinitions.MEMBRESHIPPROBLEMNEW.toString();
+		}
 		membershipProblem.setCreatedBy(username);
 		membershipProblem.setUpdatedBy(username);
-		membershipproblemService.save(membershipProblem);
+		membershipProblemService.save(membershipProblem);
 		logger.info("Returning membership problem add page");
 		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+			
 	}
 
 	@RequestMapping(value = "/admin/membershipProblem/{mbrId}/save.do", method = RequestMethod.POST, params = {
@@ -832,13 +852,35 @@ public class MembershipController {
 	public String modifyMembershipProblemAction(@PathVariable Integer mbrId,
 			@Validated MembershipProblem membershipProblem, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-		logger.info("membership id is" + mbrId);
-		membershipProblem.setCreatedBy(username);
-		membershipProblem.setUpdatedBy(username);
-		membershipProblem.setActiveInd('Y');
-		membershipproblemService.update(membershipProblem);
-		logger.info("Returning membership problem update page");
-		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+		
+		 final Integer mbrProblemIdCount = membershipProblemService.findByMbrIdAndPbmId(membershipProblem.getMbr(), membershipProblem.getPbm(), membershipProblem.getId());
+		 
+		 if(mbrProblemIdCount > 0){
+			FieldError pbmError = new FieldError("pbm", "pbm", "Similar active problem already exists");
+			bindingResult.addError(pbmError);
+		 }
+		 
+		if (bindingResult.hasErrors()) {
+			MembershipInsurance mbrInsurance = membershipInsuranceService.findByMbrId(mbrId);
+			final Integer insId = mbrInsurance.getInsId().getId();
+			 
+			User user =  userService.findByUserName(username);
+			final Integer effYear = user.getEffectiveYear();
+			List<Problem> pbmList = populateProblemList(insId,effYear );
+			model.addAttribute("problemList", pbmList);
+			membershipProblem.setActiveInd('Y');
+			logger.info("Returning membership problem edit page");
+			return TileDefinitions.MEMBRESHIPPROBLEMEDIT.toString();
+		}
+		else
+		{
+			membershipProblem.setCreatedBy(username);
+			membershipProblem.setUpdatedBy(username);
+			membershipProblem.setActiveInd('Y');
+			membershipProblemService.update(membershipProblem);
+			logger.info("Returning membership problem update page");
+			return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+		}	
 	}
 
 	@RequestMapping(value = "/admin/membershipProblem/{mbrId}/save.do", method = RequestMethod.POST, params = {
@@ -846,13 +888,35 @@ public class MembershipController {
 	public String deleteMembershipProblemAction(@PathVariable Integer mbrId,
 			@Validated MembershipProblem membershipProblem, BindingResult bindingResult, Model model,
 			@ModelAttribute("username") String username) {
-		logger.info("membership id is" + mbrId);
-		membershipProblem.setCreatedBy(username);
-		membershipProblem.setUpdatedBy(username);
-		membershipProblem.setActiveInd('N');
-		membershipproblemService.update(membershipProblem);
-		logger.info("Returning membership problem delete page");
-		return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+		
+		 final Integer mbrProblemIdCount = membershipProblemService.findByMbrIdAndPbmId(membershipProblem.getMbr(), membershipProblem.getPbm(), membershipProblem.getId());
+		 
+		 if(mbrProblemIdCount > 0){
+			FieldError pbmError = new FieldError("pbm", "pbm", "Similar active problem already exists");
+			bindingResult.addError(pbmError);
+		}
+		 
+		if (bindingResult.hasErrors()) {
+			MembershipInsurance mbrInsurance = membershipInsuranceService.findByMbrId(mbrId);
+			final Integer insId = mbrInsurance.getInsId().getId();
+			 
+			User user =  userService.findByUserName(username);
+			final Integer effYear = user.getEffectiveYear();
+			List<Problem> pbmList = populateProblemList(insId,effYear );
+			membershipProblem.setActiveInd('Y');
+			model.addAttribute("problemList", pbmList);
+			logger.info("Returning membership problem edit page");
+			return TileDefinitions.MEMBRESHIPPROBLEMEDIT.toString();
+		}
+		else
+		{
+			membershipProblem.setCreatedBy(username);
+			membershipProblem.setUpdatedBy(username);
+			membershipProblem.setActiveInd('N');
+			membershipProblemService.update(membershipProblem);
+			logger.info("Returning membership problem delete page");
+			return TileDefinitions.MEMBRESHIPPROBLEMLIST.toString();
+		}	
 	}
 
 	@ModelAttribute("membershipProblem")

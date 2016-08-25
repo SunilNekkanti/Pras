@@ -1,6 +1,8 @@
 package com.pfchoice.core.dao;
 
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipProblem;
+import com.pfchoice.core.entity.Problem;
 
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
@@ -63,4 +65,11 @@ public interface MembershipProblemDao {
 	 */
 	Integer loadData(Integer fileId, Integer insId, String tableName);
 
+	/**
+	 * @param mbrId
+	 * @param pbmId
+	 * @param id
+	 * @return
+	 */
+	Integer findByMbrIdAndPbmId(Membership mbr,  Problem pbm,  Integer id) ;
 }

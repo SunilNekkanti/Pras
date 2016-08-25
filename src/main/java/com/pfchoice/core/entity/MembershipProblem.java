@@ -15,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.gson.annotations.Expose;
 
@@ -41,17 +44,21 @@ public class MembershipProblem extends RecordDetails implements Serializable {
 
 	@Expose
 	@OneToOne(fetch = FetchType.EAGER)
+	@NotNull(message = "Select Problem")
 	@JoinColumn(name = "pbm_id", nullable = false, referencedColumnName = "pbm_id")
 	private Problem pbm;
 
 	@Expose
-	@Column(name = "start_date")
+	@NotNull(message = "Diagnose date must not be null")
+	@Column(name = "start_date", nullable = false)
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date startDate;
 
 	@Expose
-	@Column(name = "resolved_date")
+	@Column(name = "resolved_date", nullable = true)
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date resolvedDate;
 
 	@Expose

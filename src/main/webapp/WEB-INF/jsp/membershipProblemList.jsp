@@ -42,7 +42,7 @@
 
 											<c:forEach items="${mbrProblemList}" var="mbrProblem">
 												<c:choose>
-													<c:when test="${empty mbrProblem.resolvedDate}">
+													<c:when test="${empty mbrProblem.resolvedDate && mbrProblem.activeInd == 89}">
 														<tr>
 															<td><a href="javascript:void(0)" onclick="return membershipProblemDetails(${mbrProblem.id});">${mbrProblem.pbm.description}</a></td>
 															<td>${mbrProblem.startDate}</td>
@@ -76,7 +76,7 @@
 
 											<c:forEach items="${mbrProblemList}" var="mbrProblem">
 												<c:choose>
-													<c:when test="${not empty mbrProblem.resolvedDate}">
+													<c:when test="${not empty mbrProblem.resolvedDate && mbrProblem.activeInd == 89}">
 														<tr>
 															<td><a href="javascript:void(0)" onclick="return membershipProblemDetails(${mbrProblem.id});">${mbrProblem.pbm.description}</a></td>
 															<td>${mbrProblem.startDate}</td>

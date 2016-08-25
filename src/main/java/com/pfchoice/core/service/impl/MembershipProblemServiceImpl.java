@@ -3,12 +3,15 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pfchoice.core.dao.MembershipProblemDao;
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipProblem;
+import com.pfchoice.core.entity.Problem;
 import com.pfchoice.core.service.MembershipProblemService;
 
 /**
@@ -107,5 +110,10 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 	@Override
 	public Integer loadData(final Integer fileId, final Integer insId, final String tableName) {
 		return mbrProblemDao.loadData(fileId, insId, tableName);
+	}
+	
+	@Override
+	public Integer findByMbrIdAndPbmId(final Membership mbrId, final Problem pbmId, final Integer id) {
+		return mbrProblemDao.findByMbrIdAndPbmId(mbrId, pbmId, id);
 	}
 }

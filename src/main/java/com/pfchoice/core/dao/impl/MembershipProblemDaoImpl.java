@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipProblemDao;
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipProblem;
+import com.pfchoice.core.entity.Problem;
 
 /**
  *
@@ -43,7 +45,7 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
 			final String sortdir) {
 		Criteria crit = createCriteria();
-
+		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}
@@ -109,5 +111,25 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId)
 				.setInteger("insId", insId).executeUpdate();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pfchoice.core.dao.MembershipProblemDao#findById(java.lang.Integer)
+	 */
+	@Override
+	public Integer findByMbrIdAndPbmId(final Membership mbrId, final Problem pbmId, final Integer id) {
+		Criteria crit = createCriteria();
+		crit.add(Restrictions.eq("mbr", mbrId))
+			.add(Restrictions.eq("pbm", pbmId))
+			.add(Restrictions.isNull("resolvedDate"))
+			.add(Restrictions.eq("activeInd", 'Y'));
+		if(id != 0)
+		{
+			crit.add(Restrictions.neOrIsNotNull("id", id));
+		}
+		return crit.list().size();
 	}
 }

@@ -39,7 +39,7 @@
 									maxlength="255" id="id" placeholder="id" />		
 										<fmt:formatDate value="${membershipProblem.startDate}" var="dateString"
 										pattern="MM/dd/yyyy" />
-								<springForm:input path="startDate" class="form-control datepicker"
+								<springForm:input path="startDate" class="form-control datepickerfrom"
 									maxlength="255" id="startDate" placeholder="startDate"  value="${dateString}" />
 								<springForm:errors path="startDate" cssClass="error text-danger" />
 							</div>
@@ -51,7 +51,7 @@
 							<div class="col-sm-6">
 							<fmt:formatDate value="${membershipProblem.resolvedDate}" var="dateString"
 										pattern="MM/dd/yyyy" />
-								<springForm:input path="resolvedDate" class="form-control datepicker"
+								<springForm:input path="resolvedDate" class="form-control datepickerto"
 									maxlength="255" id="resolvedDate" placeholder="resolvedDate" value="${dateString}"/>
 								<springForm:errors path="resolvedDate"
 									cssClass="error text-danger" />

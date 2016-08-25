@@ -1,6 +1,9 @@
 package com.pfchoice.core.service;
 
+
+import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.MembershipProblem;
+import com.pfchoice.core.entity.Problem;
 
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -55,5 +58,14 @@ public interface MembershipProblemService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId, Integer insId, String tableName);
+	
+	
+	/**
+	 * @param mbrId
+	 * @param pbmId
+	 * @param id
+	 * @return
+	 */
+	Integer findByMbrIdAndPbmId(Membership mbrId, Problem pbmId, Integer id);
 
 }
