@@ -64,4 +64,12 @@ public interface FileTypeDao {
 	 * @return
 	 */
 	FileType findByCode(String code);
+	
+	
+	
+	/**
+	 * @param integer
+	 * @return
+	 */
+	Pagination findByInsId(Integer insId, Integer pageNo, Integer pageSize);
 }

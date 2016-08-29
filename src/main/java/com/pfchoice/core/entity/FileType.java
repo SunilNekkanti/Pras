@@ -5,9 +5,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,6 +37,11 @@ public class FileType extends RecordDetails implements Serializable {
 	@Size(min = 5, max = 150, message = "The description must be between {min} and {max} characters long")
 	@Column(name = "description")
 	private String description;
+	
+	@Expose
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
+	private Insurance ins;
 	
 	@Expose
 	@Size(min = 5, max = 100, message = "The table name must be between {min} and {max} characters long")
@@ -91,6 +99,14 @@ public class FileType extends RecordDetails implements Serializable {
 	 */
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	public Insurance getIns() {
+		return ins;
+	}
+
+	public void setIns(Insurance ins) {
+		this.ins = ins;
 	}
 
 	/**

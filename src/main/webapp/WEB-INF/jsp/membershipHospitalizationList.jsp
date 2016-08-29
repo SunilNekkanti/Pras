@@ -731,37 +731,6 @@
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			Membership Hospitalization File Upload <span
-				class="clrRed mbrHosUpload"></span>
-		</div>
-		<div class="panel-body">
-			<span class="updateError"></span>
-			<springForm:form method="POST" id="mbrHospitalization"
-				commandName="mbrHospitalization" action="fileProcessing.do"
-				class="form-horizontal" role="form" enctype="multipart/form-data">
-				<div class="col-sm-12">
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="filesUpload">Membership
-							Hospitalization File</label>
-						<div class="col-sm-5">
-							<span class="btn btn-danger btn-file btn-sm">  <input
-								type="file" accept=".xls,.xlsx,.csv" class="file"
-								name="fileUpload">
-							</span>
-							<button type="button" class="btn btn-success btn-sm "
-								id="updateButton" name="update"
-								onclick="return fileUploadAndProcessing()">Upload</button>
-						</div>
-					</div>
-				</div>
-			</springForm:form>
-		</div>
-	</div>
-</div>
-
-<div class="panel-group">
-	<div class="panel panel-success">
-		<div class="panel-heading">
 			Hospitalization Report <span class="clrRed"> </span>
 		</div>
 		<div class="panel-body">
@@ -951,50 +920,4 @@
 
 					});
 				});
-
-		function fileUploadAndProcessing() {
-			$(".mbrHosUpload").html('');
-			var fileName = $('input[type=file]').val();
-			if (!fileName) {
-				$(".mbrHosUpload").html(
-						" Choose a file and click upload button");
-			} else {
-				var validExtensions = /(\.csv|\.xls|\.xlsx)$/i;
-				if (validExtensions.test(fileName)) {
-					var url = getContextPath()
-							+ 'reports/hospitalization/fileProcessing.do?claimOrHospital=1';
-					var selector = 'mbrHospitalization';
-					if (window.FormData !== undefined) // for HTML5 browsers
-					{
-						var formData = new FormData($('#mbrHospitalization')[0]);
-						formData.append('fileUpload',
-								$('input[type=file]')[0].files[0]);
-						$
-								.ajax({
-									url : url,
-									type : 'POST',
-									mimeType : "multipart/form-data",
-									data : formData,
-									async : false,
-									success : function(data) {
-										var msg = $.parseJSON(data);
-										if (msg['message'] == 'Membership Hospitalization Followup List') {
-											msg['message'] = msg['data']
-													+ " Records added successfully";
-										}
-										$(".mbrHosUpload").html(msg['message']);
-									},
-									cache : false,
-									contentType : false,
-									processData : false
-								});
-					} else {
-						alert('fileupload error');
-					}
-				} else {
-					$(".mbrHosUpload").html(
-							" Only csv, xls, xlsx files are allowed ");
-				}
-			}
-		}
 	</script>

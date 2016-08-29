@@ -119,4 +119,14 @@ public class FileTypeDaoImpl extends HibernateBaseDao<FileType, Integer> impleme
 	public FileType findByCode(final String code) {
 		return findUniqueByProperty("description", code);
 	}
+	
+	@Override
+	public Pagination findByInsId(final Integer insId, final Integer pageNo, final Integer pageSize) {
+		Criteria crit = createCriteria();
+		crit.createAlias("ins", "ins");
+		crit.add(Restrictions.eq("activeInd", new Character('Y')));
+		crit.add(Restrictions.eq("ins.id", insId));
+		crit.addOrder(Order.asc("description"));
+		  return findByCriteria(crit, pageNo, pageSize);
+	}
 }

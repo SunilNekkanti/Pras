@@ -107,4 +107,18 @@ public class FileTypeServiceImpl implements FileTypeService {
 		return fileTypeDao.findByCode(code);
 	}
 
+	/**
+	 * @param insId
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination findByInsId(final Integer insId,final Integer pageNo, final Integer pageSize) {
+		return fileTypeDao.findByInsId(insId, pageNo, pageSize);
+	}
+
+	
+	
 }

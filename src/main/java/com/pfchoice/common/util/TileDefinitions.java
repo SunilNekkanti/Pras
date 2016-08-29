@@ -141,7 +141,8 @@ public enum TileDefinitions {
 																																																																																																																																																																																																																																																																									"membershipMamClaimDetailList"),MEMBRESHIPPROBLEMNEW(
 																																																																																																																																																																																																																																																																											"membershipProblemNew"),MEMBRESHIPPROBLEMLIST(
 																																																																																																																																																																																																																																																																													"membershipProblemList"),MEMBRESHIPPROBLEMEDIT(
-																																																																																																																																																																																																																																																																															"membershipProblemEdit");
+																																																																																																																																																																																																																																																																															"membershipProblemEdit"),FILEUPLOAD(
+																																																																																																																																																																																																																																																																																	"fileUpload");
 
 	private final String text;
 

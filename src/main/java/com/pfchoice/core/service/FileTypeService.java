@@ -57,4 +57,12 @@ public interface FileTypeService {
 	 */
 	FileType findByCode(String code);
 
+	
+	/**
+	 * @param insId
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	Pagination  findByInsId(Integer insId, Integer pageNo, Integer pageSize);
 }

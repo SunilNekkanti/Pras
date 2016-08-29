@@ -457,6 +457,7 @@ public class MembershipController {
 	@RequestMapping(value = { "/admin/membership/{id}/complete",
 			"/user/membership/{id}/complete" }, method = RequestMethod.GET)
 	public String completeMembershipProviderDetailsPage(@PathVariable Integer id, Model model) {
+		
 		Membership dbMembership = membershipService.findById(id);
 		model.addAttribute("membership", dbMembership);
 		List<MembershipInsurance> dbMembershipInsuranceList = membershipInsuranceService.findAllByMbrId(id);
@@ -621,7 +622,7 @@ public class MembershipController {
 	@SuppressWarnings("unchecked")
 	@ModelAttribute("fileTypeList")
 	public List<FileType> populateFileTypeList() {
-		Pagination page = fileTypeService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+		Pagination page = fileTypeService.getPage( SystemDefaultProperties.DEFAULT_PAGE_NO,
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<FileType>) page.getList();
 	}
@@ -641,7 +642,7 @@ public class MembershipController {
 			"/user/membership/membershipRoster/fileProcessing.do" })
 	public String mbrRosterFileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = true, value = "insId") Integer insId,
-			@RequestParam(required = true, value = "fileTypeId") Integer fileTypeId,
+			@RequestParam(required = true, value = "fileType") Integer fileTypeId,
 			@RequestParam(required = false, value = "activityMonth") Integer activityMonth,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			HttpServletRequest request) throws InvalidFormatException {

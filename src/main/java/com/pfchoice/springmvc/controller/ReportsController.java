@@ -290,7 +290,7 @@ public class ReportsController {
 			@RequestParam(required = false, value = "insId") Integer insId,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
-			@RequestParam(required = false, value = "fileTypeCode") Integer fileTypeCode,
+			@RequestParam(required = false, value = "fileType") Integer fileTypeCode,
 			HttpServletRequest request) throws InvalidFormatException{
 		LOG.info("started file processsing");
 		java.io.File sourceFile, newSourceFile = null;
@@ -713,4 +713,14 @@ public class ReportsController {
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<FileType>) page.getList();
 	}
+	
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/fileUpload", "/user/reports/fileUpload" })
+	public String viewFileUpload() {
+
+		return TileDefinitions.FILEUPLOAD.toString();
+	}
+
 }

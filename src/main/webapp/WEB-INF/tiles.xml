@@ -814,6 +814,13 @@
 	</definition>	
 	<!--  MEMBERSHIP PROBLEM -->
 	
+	<!--  File Upload -->
+		<definition name="fileUpload" extends="base.definition">
+			<put-attribute name="title" value="File Upload" />
+			<put-attribute name="body"
+				value="/WEB-INF/jsp/fileUpload.jsp" />
+		</definition>	
+	<!--  File Upload -->
 	
 	<definition name="hedisMeasureGroupEdit" extends="base.definition">
   		<put-attribute name="title" value="Hedis Measure Group" />

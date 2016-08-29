@@ -182,3 +182,5 @@ table#cptListTable, table#icdListTable {
  {
 	 #membershipTable, #membershipClaimTable, #membershipTable, #membershipActivityMonth, #membershipHospitalizationTable{width:100% !important;}
 }	
+
+.visibleH{visibility : hidden !important;}

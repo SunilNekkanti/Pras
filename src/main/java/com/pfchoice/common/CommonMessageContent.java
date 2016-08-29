@@ -93,5 +93,7 @@ public interface CommonMessageContent {
 	String MEMBERSHIP_ACTIVITY_LIST = "Membership Activity Month List";
 
 	String MEMBERSHIP_MAM_CLAIM_DETAIL_LIST = "Membership MAM Claim Detail List";
+	
+	String FILE_TYPE_UPLOAD = "File Upload List";
 
 }

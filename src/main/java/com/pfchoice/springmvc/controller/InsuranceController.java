@@ -20,13 +20,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.Message;
 import com.pfchoice.common.SystemDefaultProperties;
+import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.PlanType;
+import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.PlanTypeService;
 
@@ -37,6 +43,9 @@ import ml.rugal.sshcommon.page.Pagination;
 public class InsuranceController {
 
 	private static final Logger logger = LoggerFactory.getLogger(InsuranceController.class);
+
+	@Autowired
+	private FileTypeService fileTypeService;
 
 	@Autowired
 	private InsuranceService insuranceService;
@@ -219,4 +228,19 @@ public class InsuranceController {
 		return PrasUtil.getActiveIndMap();
 	}
 
+
+	/**
+	  * @param insId
+	  * @return
+	  */
+	 @ResponseBody
+	 @RequestMapping(value = { "/admin/insurance/fileTypeList",
+	   "/user/insurance/fileTypeList" }, method = RequestMethod.GET)
+	 public Message viewFileTypeList(@RequestParam(required = true) Integer insId) {
+
+	  Pagination pagination = fileTypeService.findByInsId(insId,SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.SMALL_LIST_SIZE);
+	  logger.info("returning fileTypeList for insId" + insId);
+	  return Message.successMessage(CommonMessageContent.FILE_TYPE_LIST, JsonConverter.getJsonObject(pagination));
+	 }	
 }

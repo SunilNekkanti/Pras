@@ -1,5 +1,8 @@
 package com.pfchoice.springmvc.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pfchoice.common.CommonMessageContent;
+import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.FileType;
@@ -177,6 +181,21 @@ public class FileTypeController {
 		Pagination pagination = fileTypeService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 
 		return Message.successMessage(CommonMessageContent.FILE_TYPE_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = { "/admin/systemPropeties",
+			"/user/systemPropeties" }, method = RequestMethod.GET)
+	public Message systemProperties() {
+
+		Map<String, String> m1 = new HashMap<String, String>(); 
+		m1.put("FILE_TYPE_AMG_MBR_CLAIM",SystemDefaultProperties.FILE_TYPE_AMG_MBR_CLAIM);
+		m1.put("FILE_TYPE_BH_MBR_CLAIM",SystemDefaultProperties.FILE_TYPE_BH_MBR_CLAIM);
+		m1.put("FILE_TYPE_AMG_MBR_ROSTER",SystemDefaultProperties.FILE_TYPE_AMG_MBR_ROSTER);
+		m1.put("FILE_TYPE_BH_MBR_ROSTER",SystemDefaultProperties.FILE_TYPE_BH_MBR_ROSTER);
+		m1.put("FILE_TYPE_AMG_MBR_HOSPITALIZATION",SystemDefaultProperties.FILE_TYPE_AMG_MBR_HOSPITALIZATION);
+		return Message.successMessage(CommonMessageContent.FILE_TYPE_UPLOAD,
+				JsonConverter.getJsonObject(m1));
 	}
 
 }
