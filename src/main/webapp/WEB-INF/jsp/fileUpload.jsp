@@ -25,13 +25,16 @@
 				<div class="col-sm-12">
 					<div class="form-group insId col-sm-2">
 						
-							<label for="insurance">Insurance</label> <select id="insId"
+							<label for="insurance">Insurance</label> 
+						<div class="col-sm-12">	
+							<select id="insId"
 								name="insId" class="btn btn-default">
 								<option value="">Select One</option>
 								<c:forEach items="${insList}" var="ins">
 									<option value="${ins.id}">${ins.name}</option>
 								</c:forEach>
 							</select>
+						</div>	
 						
 					</div>
 					<div class="form-group fileType col-sm-3">
@@ -46,8 +49,11 @@
 					</div>
 					<div class="form-group activityMonth col-sm-2">
 							<label for="activityMonth" class="text-center">Activity
-								Month</label> <input type="text" name="activityMonth" id="activityMonth"
+								Month</label> 
+							<div class="col-sm-12">
+								<input type="text" name="activityMonth" id="activityMonth"
 								class="activityMonth form-control datepicker input-sm" />
+							</div>
 					</div>
 					<div class="form-group fileUpload col-sm-3">
 							<label for="filesUpload" class="fileName">Membership
@@ -70,7 +76,8 @@
 <script>
 $(document.body).on('change',"#fileType",function (e) {
 	$(".fileName").text($("#fileType option:selected").text());
-	var data = systemProperties(false);
+	var activeMonthInd = $("#fileType option:selected").attr('class');
+	activeMonthIndType(activeMonthInd);
 });
 
 function fileUploadAndProcessing() {
@@ -96,15 +103,46 @@ function fileUploadAndProcessing() {
 	else {
 		var validExtensions = /(\.csv|\.xls|\.xlsx)$/i;
 		if (validExtensions.test(fileName)) {
-				var url = getContextPath()
-						+ 'reports/claim/fileProcessing.do?claimOrHospital=0&fileTypeCode='+$('#fileType').val();
+				
 				var selector = 'mbrClaim';
 				if (window.FormData !== undefined) // for HTML5 browsers
 				{
-					
-					var data = systemProperties(true);
-						
-					} else {
+					var activeMonthInd = $("#fileType option:selected").attr('class');
+					if(activeMonthInd == "Y" && !$('#activityMonth').val())
+					{
+							$(".mbrFileUpload").html(
+							" Choose activity month");
+							return false;
+					}
+					var fileTypeText = $("#fileType option:selected").text();
+					var formData = new FormData($('#mbrClaim')[0]);
+					var ajaxUrl = getContextPath()
+					+ 'reports/claim/fileProcessing.do';
+					formData.append('fileUpload',$('input[type=file]')[0].files[0]);
+					if(fileTypeText.indexOf("claim"))
+						formData.append('claimOrHospital',0);
+					else if(fileTypeText.indexOf("hospitalization"))
+						formData.append('claimOrHospital',1);
+					$.ajax({
+						url : ajaxUrl,
+						type : 'POST',
+						mimeType : "multipart/form-data",
+						data : formData,
+						async : false,
+						success : function(data) {
+							var msg = $.parseJSON(data);
+							if (msg['data'] != undefined) {
+								msg['message'] = msg['data'];
+									//	+ " Records added successfully";
+							}
+							$(".mbrFileUpload").html(msg['message']);
+						},
+						cache : false,
+						contentType : false,
+						processData : false
+					});
+							
+				} else {
 						alert('fileupload error');
 					}
 				} 
@@ -140,7 +178,7 @@ function fileUploadAndProcessing() {
 														function(key,
 																val) {
 															s
-																	.append('<option value="'+val.code+'">'
+																	.append('<option value="'+val.code+'" class="'+val.activityMonthInd+'">'
 																			+ val.description
 																			+ '</option>');
 														});
@@ -160,91 +198,14 @@ function fileUploadAndProcessing() {
 				
 		$(".datepicker").datepicker({maxDate: '0',dateFormat: 'yymm' });
 		
-		function systemProperties(ajaxCall)
+		function activeMonthIndType(activeMonthInd)
 		{
+			if(activeMonthInd == "Y")
+					$(".activityMonth").show();
+			else{
+					$(".activityMonth").val('');		
+					$(".activityMonth").hide();
+				}
 			$(".fileUpload").show();
-			var fileType =  $("#fileType").val();
-	    	var fileTypeText =  $("#fileType option:selected").text();
-			if(fileType)
-			{
-					var source = getContextPath()+'systemPropeties';
-					$.ajax({
-						url : source,
-					    success: function(data, textStatus, jqXHR)
-					    {
-					    	 fileType =  $("#fileType").val();
-					    	 fileTypeText =  $("#fileType option:selected").text();
-					    	if(data){
-								if(fileTypeText ==  data.data.FILE_TYPE_AMG_MBR_ROSTER || fileTypeText  ==  data.data.FILE_TYPE_BH_MBR_ROSTER){
-									 $(".activityMonth").show();
-								}	 
-								 else
-								 { 
-									 $(".activityMonth").hide();
-									 $("#activityMonth").val('');
-								 }
-							}	
-					    	if(ajaxCall){
-					    		var ajaxUrl;
-						    	 fileType =  $("#fileType").val();
-						    	 fileTypeText =  $("#fileType option:selected").text();
-						    	
-						       
-						    	if(fileTypeText == data.data.FILE_TYPE_AMG_MBR_CLAIM || fileTypeText == data.data.FILE_TYPE_BH_MBR_CLAIM  || fileTypeText == data.data.FILE_TYPE_AMG_MBR_HOSPITALIZATION){
-									if(fileTypeText == FILE_TYPE_AMG_MBR_HOSPITALIZATION)
-										formData.append('claimOrHospital',1);
-									else
-										formData.append('claimOrHospital',0);
-									ajaxUrl = getContextPath()
-									+ 'reports/claim/fileProcessing.do';
-								}
-						       
-								if(fileTypeText ==  data.data.FILE_TYPE_AMG_MBR_ROSTER || fileTypeText  ==  data.data.FILE_TYPE_BH_MBR_ROSTER){
-									ajaxUrl = getContextPath()
-									+ 'membership/membershipRoster/fileProcessing.do';
-									if(!$('#activityMonth').val()){
-										$(".mbrFileUpload").html(
-										" Choose activity month");
-										return false;
-									}	
-								}
-								
-								if(ajaxUrl){
-									var formData = new FormData($('#mbrClaim')[0]);
-									formData.append('fileUpload',$('input[type=file]')[0].files[0]);
-									$.ajax({
-										url : ajaxUrl,
-										type : 'POST',
-										mimeType : "multipart/form-data",
-										data : formData,
-										async : false,
-										success : function(data) {
-											var msg = $.parseJSON(data);
-											if (msg['message']) {
-												msg['message'] = msg['data'];
-													//	+ " Records added successfully";
-											}
-											$(".mbrFileUpload").html(msg['message']);
-										},
-										cache : false,
-										contentType : false,
-										processData : false
-									});
-								}	
-								alert(ajaxCall);
-								return false;
-					    	}
-					    	return data;
-					    },
-					    error: function (jqXHR, textStatus, errorThrown)
-					    {
-					  	  alert("Error");
-					    }
-					});	
-			}
-			 else{
-				    $(".fileUpload").hide();
-				    $(".activityMonth").hide();
-			   }
 		}
 </script>

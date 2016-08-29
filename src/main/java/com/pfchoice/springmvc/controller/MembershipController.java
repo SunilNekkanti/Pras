@@ -44,7 +44,6 @@ import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.common.util.XLSX2CSV;
 import com.pfchoice.core.entity.County;
 import com.pfchoice.core.entity.Ethinicity;
-import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.Gender;
 import com.pfchoice.core.entity.HedisMeasure;
@@ -60,7 +59,6 @@ import com.pfchoice.core.entity.Problem;
 import com.pfchoice.core.entity.User;
 import com.pfchoice.core.service.CountyService;
 import com.pfchoice.core.service.EthinicityService;
-import com.pfchoice.core.service.FileService;
 import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.GenderService;
 import com.pfchoice.core.service.HedisMeasureService;
@@ -93,8 +91,6 @@ public class MembershipController {
 	@Autowired
 	private MembershipService membershipService;
 
-	@Autowired
-	private FileService fileService;
 
 	@Autowired
 	private FileTypeService fileTypeService;
@@ -681,64 +677,7 @@ public class MembershipController {
 		return mbrRoster;
 	}
 
-	/**
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = { "/admin/membership/membershipRoster/list", "/user/membership/membershipRoster/list" })
-	public Message viewmembershipRosterList(@ModelAttribute("username") String username,
-			@RequestParam(required = true, value = "insId") Integer insId,
-			@RequestParam(required = true, value = "fileTypeId") Integer fileTypeId,
-			@RequestParam(required = true, value = "activityMonth") Integer activityMonth,
-			@RequestParam(value = "fileName", required = true) String fileName) {
-
-		FileType fileType = fileTypeService.findById(fileTypeId);
-		String mbrRoster = fileType.getDescription();
-		Boolean dataExists = membershipService.isDataExists(mbrRoster);
-		if (dataExists) {
-			logger.info("Previous file processing is incomplete ");
-			return Message.failMessage("Previous file processing is incomplete");
-		} else {
-			Integer fileId = 0;
-			try {
-				File fileRecord = new File();
-				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
-				fileRecord.setCreatedBy(username);
-				fileRecord.setUpdatedBy(username);
-				File newFile = fileService.save(fileRecord);
-
-				if (newFile != null)
-					fileId = newFile.getId();
-				else
-					logger.info("fileId is empty");
-
-			} catch (Exception e) {
-				logger.warn(e.getCause().getMessage());
-				logger.info("Similar file already processed in past");
-				return Message.failMessage("similar file already processed in past");
-			}
-
-			logger.info("Loading  membershipRoster data");
-			Integer loadedData = membershipService.loadDataCSV2Table(fileName, mbrRoster);
-
-			if (loadedData < 1) {
-				return Message.failMessage("ZERO records to process");
-			}
-
-			logger.info("processing  membershipRoster data" + new Date());
-
-			Integer membershipLoadedData = membershipService.loadData(insId, fileId, activityMonth, mbrRoster);
-			logger.info("membershipLoadedData " + membershipLoadedData);
-			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
-			logger.info("membershipUnloadedData " + membershipUnloadedData);
-
-			logger.info("processed  membership roster data" + new Date());
-
-			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, membershipLoadedData);
-		}
-	}
-
+	
 	/**
 	 * @param pageNo
 	 * @param pageSize

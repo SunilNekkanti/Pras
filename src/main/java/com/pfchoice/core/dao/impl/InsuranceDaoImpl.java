@@ -29,6 +29,7 @@ public class InsuranceDaoImpl extends HibernateBaseDao<Insurance, Integer> imple
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
+		crit.addOrder(Order.asc("name"));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 

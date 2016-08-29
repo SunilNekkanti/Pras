@@ -551,7 +551,7 @@ $(document).ready(function () {
 								</ul></li>
 							<li><a href="${context}/${userpath}/userList">User
 									Accounts</a></li>
-							<li><a href="${context}/${userpath}/membership/membershipRoster">Membership Roster Upload</a></li>
+							<li><a href="${context}/${userpath}/fileUpload">File Uploader</a></li>
 						</ul></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"

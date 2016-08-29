@@ -1,6 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -24,7 +25,9 @@ import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.FileType;
+import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.service.FileTypeService;
+import com.pfchoice.core.service.InsuranceService;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
@@ -37,6 +40,9 @@ public class FileTypeController {
 
 	@Autowired
 	private FileTypeService fileTypeService;
+	
+	@Autowired
+	private InsuranceService insuranceService;
 
 	/**
 	 * @return
@@ -197,5 +203,25 @@ public class FileTypeController {
 		return Message.successMessage(CommonMessageContent.FILE_TYPE_UPLOAD,
 				JsonConverter.getJsonObject(m1));
 	}
+	
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/fileUpload", "/user/fileUpload" })
+	public String viewFileUpload() {
+		return TileDefinitions.FILEUPLOAD.toString();
+	}
+	
+	/**
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("insList")
+	public List<Insurance> populateInsuranceList() {
+		Pagination page = insuranceService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<Insurance>) page.getList();
+	}
+
 
 }

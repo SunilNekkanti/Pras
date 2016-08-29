@@ -291,6 +291,7 @@ public class ReportsController {
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
 			@RequestParam(required = false, value = "fileType") Integer fileTypeCode,
+			@RequestParam(required = false, value = "activityMonth") Integer activityMonth,
 			HttpServletRequest request) throws InvalidFormatException{
 		LOG.info("started file processsing");
 		java.io.File sourceFile, newSourceFile = null;
@@ -326,20 +327,86 @@ public class ReportsController {
 			return null;
 		LOG.info("before file processing");
 		String forwardToClaimOrHospital = null;
-
-		if (claimOrHospital == HOSPITALIZATION) {
-			LOG.info("forwarding to hospitalization");
-			forwardToClaimOrHospital = "forward:/admin/membershipHospitalization/list?fileName="
-					+ newSourceFile.getName();
-		} else if (claimOrHospital == CLAIM) {
-			LOG.info("forwarding to claims");
-
-			forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName()
-					+ "&insId=" + insId+"&fileTypeCode="+fileTypeCode;
+		
+		if(activityMonth != null)
+		{
+			forwardToClaimOrHospital = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()
+			+ "&insId=" + insId + "&fileTypeId=" + fileTypeCode + "&activityMonth=" + activityMonth;
 		}
-
+		else{	
+			if (claimOrHospital == HOSPITALIZATION) {
+				LOG.info("forwarding to hospitalization");
+				forwardToClaimOrHospital = "forward:/admin/membershipHospitalization/list?fileName="
+						+ newSourceFile.getName();
+			} else if (claimOrHospital == CLAIM) {
+				LOG.info("forwarding to claims");
+	
+				forwardToClaimOrHospital = "forward:/admin/membershipClaim/list?fileName=" + newSourceFile.getName()
+						+ "&insId=" + insId+"&fileTypeCode="+fileTypeCode;
+			}
+		}
 		return forwardToClaimOrHospital;
 	}
+	
+	/**
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membership/membershipRoster/list", "/user/membership/membershipRoster/list" })
+	public Message viewmembershipRosterList(@ModelAttribute("username") String username,
+			@RequestParam(required = true, value = "insId") Integer insId,
+			@RequestParam(required = true, value = "fileTypeId") Integer fileTypeId,
+			@RequestParam(required = true, value = "activityMonth") Integer activityMonth,
+			@RequestParam(value = "fileName", required = true) String fileName) {
+
+		FileType fileType = fileTypeService.findById(fileTypeId);
+		String mbrRoster = fileType.getDescription();
+		Boolean dataExists = membershipService.isDataExists(mbrRoster);
+		if (dataExists) {
+			LOG.info("Previous file processing is incomplete ");
+			return Message.failMessage("Previous file processing is incomplete");
+		} else {
+			Integer fileId = 0;
+			try {
+				File fileRecord = new File();
+				fileRecord.setFileName(fileName);
+				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setCreatedBy(username);
+				fileRecord.setUpdatedBy(username);
+				File newFile = fileService.save(fileRecord);
+
+				if (newFile != null)
+					fileId = newFile.getId();
+				else
+					LOG.info("fileId is empty");
+
+			} catch (Exception e) {
+				LOG.warn(e.getCause().getMessage());
+				LOG.info("Similar file already processed in past");
+				return Message.failMessage("similar file already processed in past");
+			}
+
+			LOG.info("Loading  membershipRoster data");
+			Integer loadedData = membershipService.loadDataCSV2Table(fileName, mbrRoster);
+
+			if (loadedData < 1) {
+				return Message.failMessage("ZERO records to process");
+			}
+
+			LOG.info("processing  membershipRoster data" + new Date());
+
+			Integer membershipLoadedData = membershipService.loadData(insId, fileId, activityMonth, mbrRoster);
+			LOG.info("membershipLoadedData " + membershipLoadedData);
+			Integer membershipUnloadedData = membershipService.unloadCSV2Table(mbrRoster);
+			LOG.info("membershipUnloadedData " + membershipUnloadedData);
+
+			LOG.info("processed  membership roster data" + new Date());
+
+			return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, membershipLoadedData);
+		}
+	}
+
+	
 
 	/**
 	 * @param pageNo
@@ -712,15 +779,6 @@ public class ReportsController {
 		Pagination page = fileTypeService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<FileType>) page.getList();
-	}
-	
-	/**
-	 * @return
-	 */
-	@RequestMapping(value = { "/admin/reports/fileUpload", "/user/reports/fileUpload" })
-	public String viewFileUpload() {
-
-		return TileDefinitions.FILEUPLOAD.toString();
 	}
 
 }

@@ -44,6 +44,10 @@ public class FileType extends RecordDetails implements Serializable {
 	private Insurance ins;
 	
 	@Expose
+	@Column(name = "activity_Month_ind")
+	private Character activityMonthInd;
+
+	@Expose
 	@Size(min = 5, max = 100, message = "The table name must be between {min} and {max} characters long")
 	@Column(name = "tables_name")
 	private String tablesName;
@@ -107,6 +111,14 @@ public class FileType extends RecordDetails implements Serializable {
 
 	public void setIns(Insurance ins) {
 		this.ins = ins;
+	}
+
+	public Character getActivityMonthInd() {
+		return activityMonthInd;
+	}
+
+	public void setActivityMonthInd(Character activityMonthInd) {
+		this.activityMonthInd = activityMonthInd;
 	}
 
 	/**
