@@ -284,8 +284,8 @@ $(document).ready(function() {
 					<div class="col-sm-3">
 						<label class="control-label col-sm-5">Year</label>
 						<div class="col-sm-7">
-								<select name="yearpicker" id="yearpicker" class="btn btn-default">
-								</select>
+							<select name="yearpicker" id="yearpicker" class="btn btn-default">
+							</select>
 						</div>
 					</div>
 					<div class="col-sm-3">

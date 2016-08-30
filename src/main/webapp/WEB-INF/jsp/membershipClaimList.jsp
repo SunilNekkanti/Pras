@@ -6,8 +6,7 @@
 	uri="http://www.springframework.org/tags/form"%>
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
-	<c:set var="contextHome"
-	value="${pageContext.request.contextPath}" />
+<c:set var="contextHome" value="${pageContext.request.contextPath}" />
 <script>
 	$(document)
 			.ready(
@@ -627,8 +626,11 @@
 		return false;
 	}
 </script>
-<link rel="stylesheet" href="${contextHome}/resources/css/bootstrap-multiselect.css" type="text/css">
-<script type="text/javascript" src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet"
+	href="${contextHome}/resources/css/bootstrap-multiselect.css"
+	type="text/css">
+<script type="text/javascript"
+	src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
 <div class="panel-group membershipClaimReport">
 	<div class="panel panel-success">
 		<div class="panel-heading">
@@ -645,16 +647,15 @@
 						<label class="control-label col-sm-5">Provider</label>
 						<div class="col-sm-7" id="extFilterPrvdr"></div>
 					</div>
-					
+
 					<div class="col-sm-4">
 						<label class="control-label col-sm-2">Fields</label>
 						<div class="col-sm-7" class="mbrClaimField">
-								<select id="mbrClaimField" class="btn btn-default" multiple></select>
+							<select id="mbrClaimField" class="btn btn-default" multiple></select>
 						</div>
 					</div>
-					
-					<br />
-					<br />
+
+					<br /> <br />
 					<div class="col-sm-offset-6 col-sm-6">
 						<div class="col-sm-12">
 							<label class="radio-inline col-sm-4"> <input type="radio"
@@ -683,7 +684,8 @@
 					<thead>
 						<tr>
 							<th scope="col" role="row">Details</th>
-							<th scope="col" data-value="Member Name" role="row">Member Name</th>
+							<th scope="col" data-value="Member Name" role="row">Member
+								Name</th>
 							<th scope="col" role="row">claim Id Number</th>
 							<th scope="col" role="row">Provider Name</th>
 							<th scope="col" role="row">Claim Type</th>
@@ -713,7 +715,7 @@
 							<th scope="col" role="row">Market Level8</th>
 							<th scope="col" role="row">DX Type Cd</th>
 							<th scope="col" role="row">Proc Type Cd</th>
-							
+
 
 						</tr>
 					</thead>
@@ -870,16 +872,14 @@ $(document.body).on('change',"#fileType",function (e) {
 					});
 				});
 	</script>
-	
-	<br/>
+
+<br />
 <div class="container">
-  <div class="row">
-       <div class="col-lg-12">
-     <div class="button-group">
-        
-  </div>
-</div>
-  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="button-group"></div>
+		</div>
+	</div>
 </div>
 <script>
 var options = [];

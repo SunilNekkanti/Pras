@@ -689,14 +689,14 @@
 	<!-- membershipProblemList -->
 
 
-<!-- problemMembershipList -->
+	<!-- problemMembershipList -->
 	<definition name="problemMembershipList" extends="base.definition">
 		<put-attribute name="title" value="Problem Membership  Report" />
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/problemMembershipList.jsp" />
 	</definition>
 	<!-- problemMembershipList -->
-	
+
 	<!-- Hospital Section -->
 
 	<definition name="hospitalList" extends="base.definition">
@@ -765,7 +765,7 @@
 
 	<definition name="facilityTypeNew" extends="base.definition">
 		<put-attribute name="title" value="Facility Type Profile" />
-			<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeNew.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeNew.jsp" />
 	</definition>
 
 	<definition name="facilityTypeEdit" extends="base.definition">
@@ -773,57 +773,56 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/facilityTypeEdit.jsp" />
 	</definition>
 	<!-- Att Physician Section -->
-	
-	<!--  MEMBERSHIP ROSTER -->
+
+	<!-- MEMBERSHIP ROSTER -->
 	<definition name="membershipRoster" extends="base.definition">
 		<put-attribute name="title" value="Member Claim List" />
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/membershipRoster.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/membershipRoster.jsp" />
 	</definition>
-	<!--  MEMBERSHIP ROSTER -->
-		<definition name="membershipActivityMonth" extends="base.definition">
-			<put-attribute name="title" value="Membership Activity Month List" />
-			<put-attribute name="body"
-				value="/WEB-INF/jsp/membershipActivityMonthList.jsp" />
-		</definition>
-	<!--  MEMBERSHIP ACTIVITY MONTH -->
-	
-	<!--  MEMBERSHIP MAM CLAIM DETAILS -->
+	<!-- MEMBERSHIP ROSTER -->
+	<definition name="membershipActivityMonth" extends="base.definition">
+		<put-attribute name="title" value="Membership Activity Month List" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipActivityMonthList.jsp" />
+	</definition>
+	<!-- MEMBERSHIP ACTIVITY MONTH -->
+
+	<!-- MEMBERSHIP MAM CLAIM DETAILS -->
 	<definition name="membershipMamClaimDetailList" extends="base.definition">
-			<put-attribute name="title" value="Membership MAM Claim Detail List" />
-			<put-attribute name="body"
-				value="/WEB-INF/jsp/membershipMamClaimDetailList.jsp" />
-		</definition>
-	<!--  MEMBERSHIP MAM CLAIM DETAILS -->
-	
-	<!--  MEMBERSHIP PROBLEM -->
+		<put-attribute name="title" value="Membership MAM Claim Detail List" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipMamClaimDetailList.jsp" />
+	</definition>
+	<!-- MEMBERSHIP MAM CLAIM DETAILS -->
+
+	<!-- MEMBERSHIP PROBLEM -->
 	<definition name="membershipProblemNew" extends="baseNoHeader.definition">
-			<put-attribute name="title" value="Membership Problem" />
-			<put-attribute name="body"
-				value="/WEB-INF/jsp/membershipProblemNew.jsp" />
-		</definition>
-		<definition name="membershipProblemEdit" extends="baseNoHeader.definition">
-			<put-attribute name="title" value="New Membership Problem" />
-			<put-attribute name="body"
-				value="/WEB-INF/jsp/membershipProblemEdit.jsp" />
-		</definition>
+		<put-attribute name="title" value="Membership Problem" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipProblemNew.jsp" />
+	</definition>
+	<definition name="membershipProblemEdit" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="New Membership Problem" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipProblemEdit.jsp" />
+	</definition>
 	<definition name="membershipProblemList" extends="baseNoHeader.definition">
-			<put-attribute name="title" value="Membership Problem List" />
-			<put-attribute name="body"
-				value="/WEB-INF/jsp/membershipProblemList.jsp" />
-	</definition>	
-	<!--  MEMBERSHIP PROBLEM -->
-	
-	<!--  File Upload -->
-		<definition name="fileUpload" extends="base.definition">
-			<put-attribute name="title" value="File Upload" />
-			<put-attribute name="body"
-				value="/WEB-INF/jsp/fileUpload.jsp" />
-		</definition>	
-	<!--  File Upload -->
-	
+		<put-attribute name="title" value="Membership Problem List" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/membershipProblemList.jsp" />
+	</definition>
+	<!-- MEMBERSHIP PROBLEM -->
+
+	<!-- File Upload -->
+	<definition name="fileUpload" extends="base.definition">
+		<put-attribute name="title" value="File Upload" />
+		<put-attribute name="body" value="/WEB-INF/jsp/fileUpload.jsp" />
+	</definition>
+	<!-- File Upload -->
+
 	<definition name="hedisMeasureGroupEdit" extends="base.definition">
-  		<put-attribute name="title" value="Hedis Measure Group" />
-  		<put-attribute name="body"	value="/WEB-INF/jsp/hedisMeasureGroupEdit.jsp" />
- 	</definition>
+		<put-attribute name="title" value="Hedis Measure Group" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/hedisMeasureGroupEdit.jsp" />
+	</definition>
 </tiles-definitions>  

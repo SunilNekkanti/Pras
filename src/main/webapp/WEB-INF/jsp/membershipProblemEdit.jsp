@@ -18,8 +18,9 @@
 				<div class="panel-heading">
 					Membership Problem<span class="clrRed">${Message}</span> <a
 						class="btn btn-danger pull-right btn-xs white-text"
-						href="javascript:void(0)" onclick="return membershipProblemList();">
-						<span class="glyphicon glyphicon-plus-sign "></span>Problem List
+						href="javascript:void(0)"
+						onclick="return membershipProblemList();"> <span
+						class="glyphicon glyphicon-plus-sign "></span>Problem List
 					</a>
 				</div>
 				<div class="panel-body">
@@ -31,16 +32,17 @@
 							<label class="control-label col-sm-2"
 								for="shortDescription required">Diagnose Date</label>
 							<div class="col-sm-6">
-							<springForm:hidden path="mbr" class="form-control"
-									maxlength="255" id="mbr" placeholder="mbr"/>
-							<springForm:hidden path="fileId" class="form-control"
+								<springForm:hidden path="mbr" class="form-control"
+									maxlength="255" id="mbr" placeholder="mbr" />
+								<springForm:hidden path="fileId" class="form-control"
 									maxlength="255" id="fileId" placeholder="fileId" />
-							<springForm:hidden path="id" class="form-control"
-									maxlength="255" id="id" placeholder="id" />		
-										<fmt:formatDate value="${membershipProblem.startDate}" var="dateString"
-										pattern="MM/dd/yyyy" />
-								<springForm:input path="startDate" class="form-control datepickerfrom"
-									maxlength="255" id="startDate" placeholder="startDate"  value="${dateString}" />
+								<springForm:hidden path="id" class="form-control"
+									maxlength="255" id="id" placeholder="id" />
+								<fmt:formatDate value="${membershipProblem.startDate}"
+									var="dateString" pattern="MM/dd/yyyy" />
+								<springForm:input path="startDate"
+									class="form-control datepickerfrom" maxlength="255"
+									id="startDate" placeholder="startDate" value="${dateString}" />
 								<springForm:errors path="startDate" cssClass="error text-danger" />
 							</div>
 						</div>
@@ -49,10 +51,12 @@
 							<label class="control-label col-sm-2"
 								for="shortDescription required">Resolved Date</label>
 							<div class="col-sm-6">
-							<fmt:formatDate value="${membershipProblem.resolvedDate}" var="dateString"
-										pattern="MM/dd/yyyy" />
-								<springForm:input path="resolvedDate" class="form-control datepickerto"
-									maxlength="255" id="resolvedDate" placeholder="resolvedDate" value="${dateString}"/>
+								<fmt:formatDate value="${membershipProblem.resolvedDate}"
+									var="dateString" pattern="MM/dd/yyyy" />
+								<springForm:input path="resolvedDate"
+									class="form-control datepickerto" maxlength="255"
+									id="resolvedDate" placeholder="resolvedDate"
+									value="${dateString}" />
 								<springForm:errors path="resolvedDate"
 									cssClass="error text-danger" />
 							</div>
@@ -70,9 +74,12 @@
 							</div>
 						</div>
 						<div class="col-sm-offset-6 col-sm-4">
-									<button type="submit" class="btn btn-success btn-sm"
-										id="updateButton" name="update" onclick="return modifyMembershipProblem();">update</button>
-									<button type="submit" name ="delete" id="deleteButton" onclick="return deleteMembershipProblem();" class="btn btn-success btn-sm">Delete</button>
+							<button type="submit" class="btn btn-success btn-sm"
+								id="updateButton" name="update"
+								onclick="return modifyMembershipProblem();">update</button>
+							<button type="submit" name="delete" id="deleteButton"
+								onclick="return deleteMembershipProblem();"
+								class="btn btn-success btn-sm">Delete</button>
 						</div>
 					</springForm:form>
 				</div>

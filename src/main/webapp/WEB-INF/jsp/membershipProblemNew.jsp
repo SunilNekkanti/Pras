@@ -18,8 +18,9 @@
 				<div class="panel-heading">
 					Membership Problem<span class="clrRed">${Message}</span> <a
 						class="btn btn-danger pull-right btn-xs white-text"
-						href="javascript:void(0)" onclick="return membershipProblemList();">
-						<span class="glyphicon glyphicon-plus-sign "></span>Problem List
+						href="javascript:void(0)"
+						onclick="return membershipProblemList();"> <span
+						class="glyphicon glyphicon-plus-sign "></span>Problem List
 					</a>
 				</div>
 				<div class="panel-body">
@@ -31,13 +32,15 @@
 							<label class="control-label col-sm-2"
 								for="shortDescription required">Diagnose Date</label>
 							<div class="col-sm-6">
-							<springForm:hidden path="mbr" class="form-control"
-									maxlength="255" id="mbr" placeholder="mbr"/>
-							<springForm:hidden path="fileId" class="form-control datepicker1"
-									maxlength="255" id="fileId" placeholder="fileId" value="1"/>
-								
-								<springForm:input path="startDate" class="form-control datepickerfrom"
-									maxlength="255" id="startDate" placeholder="startDate" />
+								<springForm:hidden path="mbr" class="form-control"
+									maxlength="255" id="mbr" placeholder="mbr" />
+								<springForm:hidden path="fileId"
+									class="form-control datepicker1" maxlength="255" id="fileId"
+									placeholder="fileId" value="1" />
+
+								<springForm:input path="startDate"
+									class="form-control datepickerfrom" maxlength="255"
+									id="startDate" placeholder="startDate" />
 								<springForm:errors path="startDate" cssClass="error text-danger" />
 							</div>
 						</div>
@@ -46,8 +49,9 @@
 							<label class="control-label col-sm-2"
 								for="shortDescription required">Resolved Date</label>
 							<div class="col-sm-6">
-								<springForm:input path="resolvedDate" class="form-control datepickerto"
-									maxlength="255" id="resolvedDate" placeholder="resolvedDate" />
+								<springForm:input path="resolvedDate"
+									class="form-control datepickerto" maxlength="255"
+									id="resolvedDate" placeholder="resolvedDate" />
 								<springForm:errors path="resolvedDate"
 									cssClass="error text-danger" />
 							</div>
@@ -65,10 +69,11 @@
 							</div>
 						</div>
 						<div class="col-sm-offset-6 col-sm-4">
-									<button type="submit" class="btn btn-success btn-sm"
-										id="addButton" name="add" onclick="return addMembershipProblem();">Add</button>
-									<button type="submit" class="btn btn-success btn-sm"
-										id="resetButton">Reset</button>
+							<button type="submit" class="btn btn-success btn-sm"
+								id="addButton" name="add"
+								onclick="return addMembershipProblem();">Add</button>
+							<button type="submit" class="btn btn-success btn-sm"
+								id="resetButton">Reset</button>
 						</div>
 					</springForm:form>
 				</div>

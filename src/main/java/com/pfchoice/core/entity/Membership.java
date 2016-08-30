@@ -3,6 +3,7 @@ package com.pfchoice.core.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -108,6 +110,15 @@ public class Membership extends RecordDetails implements Serializable {
 	@Expose
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
 	private List<MembershipActivityMonth> mbrActivityMonthList;
+	
+	@Expose
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "reference_contact", joinColumns = {
+			@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id") }, inverseJoinColumns = {
+					@JoinColumn(name = "ref_cnt_Id", referencedColumnName = "ref_cnt_Id") })
+	private List<Contact> contactList;
+
+	
 
 	/**
 	 * 
@@ -376,6 +387,14 @@ public class Membership extends RecordDetails implements Serializable {
 	 */
 	public void setMbrClaimList(List<MembershipClaim> mbrClaimList) {
 		this.mbrClaimList = mbrClaimList;
+	}
+	
+	public List<Contact> getContactList() {
+		return contactList;
+	}
+
+	public void setContactList(List<Contact> contactList) {
+		this.contactList = contactList;
 	}
 
 	@Override

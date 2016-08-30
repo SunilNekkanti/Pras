@@ -21,12 +21,13 @@
 				<div class="tab-pane active" id="active">
 					<div class="panel-group">
 						<div class="panel panel-success">
-							<div class="panel-heading">Membership Problem List
-							 <span class="clrRed"></span> <a
-										class="btn btn-danger pull-right btn-xs white-text"
-										href="javascript:void(0)" onclick="return newMembershipProblem();"> <span
-										class="glyphicon glyphicon-plus-sign "></span>Add Problem
-									</a>
+							<div class="panel-heading">
+								Membership Problem List <span class="clrRed"></span> <a
+									class="btn btn-danger pull-right btn-xs white-text"
+									href="javascript:void(0)"
+									onclick="return newMembershipProblem();"> <span
+									class="glyphicon glyphicon-plus-sign "></span>Add Problem
+								</a>
 							</div>
 							<div class="panel-body" id="tablediv">
 								<div class="col-sm-12">
@@ -42,9 +43,11 @@
 
 											<c:forEach items="${mbrProblemList}" var="mbrProblem">
 												<c:choose>
-													<c:when test="${empty mbrProblem.resolvedDate && mbrProblem.activeInd == 89}">
+													<c:when
+														test="${empty mbrProblem.resolvedDate && mbrProblem.activeInd == 89}">
 														<tr>
-															<td><a href="javascript:void(0)" onclick="return membershipProblemDetails(${mbrProblem.id});">${mbrProblem.pbm.description}</a></td>
+															<td><a href="javascript:void(0)"
+																onclick="return membershipProblemDetails(${mbrProblem.id});">${mbrProblem.pbm.description}</a></td>
 															<td>${mbrProblem.startDate}</td>
 															<td>${mbrProblem.resolvedDate}</td>
 														</tr>
@@ -76,9 +79,11 @@
 
 											<c:forEach items="${mbrProblemList}" var="mbrProblem">
 												<c:choose>
-													<c:when test="${not empty mbrProblem.resolvedDate && mbrProblem.activeInd == 89}">
+													<c:when
+														test="${not empty mbrProblem.resolvedDate && mbrProblem.activeInd == 89}">
 														<tr>
-															<td><a href="javascript:void(0)" onclick="return membershipProblemDetails(${mbrProblem.id});">${mbrProblem.pbm.description}</a></td>
+															<td><a href="javascript:void(0)"
+																onclick="return membershipProblemDetails(${mbrProblem.id});">${mbrProblem.pbm.description}</a></td>
 															<td>${mbrProblem.startDate}</td>
 															<td>${mbrProblem.resolvedDate}</td>
 														</tr>

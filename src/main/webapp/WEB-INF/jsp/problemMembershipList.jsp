@@ -5,10 +5,12 @@
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
-	<c:set var="contextHome"
-	value="${pageContext.request.contextPath}" />
-<link rel="stylesheet" href="${contextHome}/resources/css/bootstrap-multiselect.css" type="text/css">
-<script type="text/javascript" src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
+<c:set var="contextHome" value="${pageContext.request.contextPath}" />
+<link rel="stylesheet"
+	href="${contextHome}/resources/css/bootstrap-multiselect.css"
+	type="text/css">
+<script type="text/javascript"
+	src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
 <script>
 $(document).ready(function() {
 		

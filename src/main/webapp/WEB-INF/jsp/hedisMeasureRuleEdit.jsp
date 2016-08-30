@@ -238,14 +238,17 @@ $.ajax( {
 			</div>
 
 			<div class="form-group required">
-					<label class="control-label col-sm-2" for="shortDescription">Short Description</label>
-					<div class="col-sm-6">
-						<springForm:input path="shortDescription" class="form-control"
-							id="shortDescription" placeholder="shortDescription" maxlength="20" />
-						<springForm:errors path="shortDescription" cssClass="error text-danger" />
-					</div>
+				<label class="control-label col-sm-2" for="shortDescription">Short
+					Description</label>
+				<div class="col-sm-6">
+					<springForm:input path="shortDescription" class="form-control"
+						id="shortDescription" placeholder="shortDescription"
+						maxlength="20" />
+					<springForm:errors path="shortDescription"
+						cssClass="error text-danger" />
+				</div>
 			</div>
-			
+
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="insurance">Insurance</label>
 				<div class="col-sm-6">
@@ -257,22 +260,20 @@ $.ajax( {
 					<springForm:errors path="insId" cssClass="error text-danger" />
 				</div>
 			</div>
-			
+
 			<div class="form-group required">
-				<label class="control-label   col-sm-2" for="problemFlag">Problem Flag</label>
+				<label class="control-label   col-sm-2" for="problemFlag">Problem
+					Flag</label>
 				<div class="col-sm-6">
 					<label class="radio-inline"> <springForm:radiobutton
-							path="problemFlag" id="problemFlag" 
-							class="problemFlag" value="Y" />Yes
-					</label> 
-					<label class="radio-inline"> <springForm:radiobutton
-							path="problemFlag" id="problemFlag" 
-							class="problemFlag" value="N" />N0
-					</label> 
+							path="problemFlag" id="problemFlag" class="problemFlag" value="Y" />Yes
+					</label> <label class="radio-inline"> <springForm:radiobutton
+							path="problemFlag" id="problemFlag" class="problemFlag" value="N" />N0
+					</label>
 					<springForm:errors path="problemFlag" cssClass="error text-danger" />
 				</div>
 			</div>
-			
+
 			<div class="form-group pbmList">
 				<label class="control-label col-sm-2" for="Problem">Problem</label>
 				<div class="col-sm-6">
@@ -305,7 +306,7 @@ $.ajax( {
 				</div>
 			</div>
 
-			
+
 
 			<div class="form-group required">
 				<label class="control-label col-sm-2" for="cpt">CPT Code</label>
@@ -401,29 +402,30 @@ $.ajax( {
 					<springForm:errors path="doseCount" cssClass="error text-danger" />
 				</div>
 			</div>
-			
-			
-			 <c:forEach var="i" begin="1" end="5">
-  						<div class="form-group dose required" id="doseblock${i}">
-								<label class="control-label  col-sm-2" for="dose${i}">dose ${i}</label>
-								<div class="col-sm-3">
-									<springForm:input path="dose${i}" class="form-control number1"
-										id="dose${i}"  placeholder="dose${i}" />
-									<springForm:errors path="dose${i}" cssClass="error text-danger" />
-								</div>
-								<div class="col-sm-3">
-									<springForm:select path="datepart${i}"  class="form-control"
-									id="dosePeriod${i}" name="datepart${i}" >
-											<springForm:options items="${datePartList}" />
-									</springForm:select>
-									<springForm:errors path="datepart${i}"
-											cssClass="error text-danger" />
-								</div>
-						</div>
+
+
+			<c:forEach var="i" begin="1" end="5">
+				<div class="form-group dose required" id="doseblock${i}">
+					<label class="control-label  col-sm-2" for="dose${i}">dose
+						${i}</label>
+					<div class="col-sm-3">
+						<springForm:input path="dose${i}" class="form-control number1"
+							id="dose${i}" placeholder="dose${i}" />
+						<springForm:errors path="dose${i}" cssClass="error text-danger" />
+					</div>
+					<div class="col-sm-3">
+						<springForm:select path="datepart${i}" class="form-control"
+							id="dosePeriod${i}" name="datepart${i}">
+							<springForm:options items="${datePartList}" />
+						</springForm:select>
+						<springForm:errors path="datepart${i}"
+							cssClass="error text-danger" />
+					</div>
+				</div>
 			</c:forEach>
 
-		
-			
+
+
 			<div class="form-group">
 				<label class="control-label  col-sm-2" for="ageEffectiveFrom">Age
 					Effective From</label>

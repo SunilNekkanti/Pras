@@ -39,22 +39,22 @@ public class FileType extends RecordDetails implements Serializable {
 	private String description;
 	
 	@Expose
+	@NotNull(message = "Select Insurance")
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ins_id", referencedColumnName = "Insurance_Id")
 	private Insurance ins;
 	
 	@Expose
-	@Column(name = "activity_Month_ind")
+	@NotNull(message = "Select Active month indicator")
+	@Column(name = "activity_Month_ind", nullable = true)
 	private Character activityMonthInd;
 
 	@Expose
-	@Size(min = 5, max = 100, message = "The table name must be between {min} and {max} characters long")
-	@Column(name = "tables_name")
+	@Column(name = "tables_name", nullable = true)
 	private String tablesName;
 	
 	@Expose
-	@Size(min = 2, max = 5, message = "The insurance_code must be between {min} and {max} characters long")
-	@Column(name = "insurance_code")
+	@Column(name = "insurance_code", nullable = true)
 	private String insuranceCode;
 	
 

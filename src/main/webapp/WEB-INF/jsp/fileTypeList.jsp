@@ -60,7 +60,9 @@
         	     "sAjaxSource" : '${context}/fileType/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-                               { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "50%"}
+                               { "mDataProp": "description","bSearchable" : true, "bSortable" : true,"sWidth" : "30%"},
+                               { "mDataProp": "ins.name","bSearchable" : true, "bSortable" : true,"sWidth" : "30%"},
+                               { "mDataProp": "activityMonthInd","bSearchable" : true, "bSortable" : true,"sWidth" : "30%"}
                            ],
                   "aoColumnDefs": [ 
                            		    { "sName": "description", "aTargets": [ 0 ],
@@ -97,6 +99,8 @@
 				<thead>
 					<tr>
 						<th scope="col">Description</th>
+						<th scope="col">Insurance</th>
+						<th scope="col">Active Month Ind</th>
 					</tr>
 				</thead>
 				<tbody>

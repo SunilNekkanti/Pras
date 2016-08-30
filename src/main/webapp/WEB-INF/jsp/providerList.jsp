@@ -168,7 +168,7 @@
 				class="table table-striped table-hover table-responsive rowClick">
 				<thead>
 					<tr>
-						
+
 						<th scope="col">Name</th>
 						<th scope="col">NPI</th>
 						<th scope="col">Insurances</th>

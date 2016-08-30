@@ -161,26 +161,42 @@ table#cptListTable, table#icdListTable {
 .table-responsive {
 	overflow-y: hidden;
 }
+
 .membershipHedisReport ul.dropdown-menu, .membershipClaimReport ul.dropdown-menu,
-#extFilterProblemRule ul.dropdown-menu{position:relative;}
-
-.membershipClaimReport .dropdown-menu>.active>a, .membershipHedisReport .dropdown-menu>.active>a, 
-#extFilterProblemRule .dropdown-menu>.active>a{
-    background-color: #fff !important;
+	#extFilterProblemRule ul.dropdown-menu {
+	position: relative;
 }
-.membershipClaimReport .btn-default:hover , .membershipHedisReport .btn-default:hover,
-#extFilterProblemRule .btn-default:hover  
-{ background-color:#fff;}
 
-@media only screen and (min-width: 768px)
- {
- 	.widthS{width:150px;}
-	.widthM{width:250px;}
-	#membershipTable, #membershipClaimTable, #membershipTable, #membershipActivityMonth, #membershipHospitalizationTable{min-width:1200px;}
-}	
-@media only screen and (max-width: 768px)
- {
-	 #membershipTable, #membershipClaimTable, #membershipTable, #membershipActivityMonth, #membershipHospitalizationTable{width:100% !important;}
-}	
+.membershipClaimReport .dropdown-menu>.active>a, .membershipHedisReport .dropdown-menu>.active>a,
+	#extFilterProblemRule .dropdown-menu>.active>a {
+	background-color: #fff !important;
+}
 
-.visibleH{visibility : hidden !important;}
+.membershipClaimReport .btn-default:hover, .membershipHedisReport .btn-default:hover,
+	#extFilterProblemRule .btn-default:hover {
+	background-color: #fff;
+}
+
+@media only screen and (min-width: 768px) {
+	.widthS {
+		width: 150px;
+	}
+	.widthM {
+		width: 250px;
+	}
+	#membershipTable, #membershipClaimTable, #membershipTable,
+		#membershipActivityMonth, #membershipHospitalizationTable {
+		min-width: 1200px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#membershipTable, #membershipClaimTable, #membershipTable,
+		#membershipActivityMonth, #membershipHospitalizationTable {
+		width: 100% !important;
+	}
+}
+
+.visibleH {
+	visibility: hidden !important;
+}

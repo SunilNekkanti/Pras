@@ -90,7 +90,8 @@
 			Hedis Measure Group List <span class="clrRed">${Message}</span> <a
 				class="btn btn-danger pull-right btn-xs white-text"
 				href="${context}/hedisMeasureGroup/new"> <span
-				class="glyphicon glyphicon-plus-sign "></span>New Hedis Measure Group
+				class="glyphicon glyphicon-plus-sign "></span>New Hedis Measure
+				Group
 			</a>
 		</div>
 		<div class="panel-body">

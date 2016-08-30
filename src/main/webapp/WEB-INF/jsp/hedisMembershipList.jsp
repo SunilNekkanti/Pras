@@ -153,6 +153,11 @@ $(document).ready(function() {
 						}
 				});
 	     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
+	     		columns.push({ "mDataProp": "medicaidNo","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
+	     		columns.push({ "mDataProp": "medicareNo","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
+	     		columns.push({ "mDataProp": "mbrInsuranceList[0].srcSysMbrNbr","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
+	     		columns.push({ "mDataProp": "contactList[0].homePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
+	     		columns.push({ "mDataProp": "contactList[0].mobilePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
 	     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 				     			"render": function (data, type, full, meta) {
 				     				var date = new Date(data);
@@ -572,6 +577,11 @@ $(document).ready(function() {
 							<th scope="col" role="row">Birthday</th>
 							<th scope="col" role="row">Age</th>
 							<th scope="col" role="row">Sex</th>
+							<th scope="col" role="row">Medicaid No</th>
+							<th scope="col" role="row">Medicare No</th>
+							<th scope="col" role="row">Sub ID</th>
+							<th scope="col" role="row">Land Phone</th>
+							<th scope="col" role="row">Mobile Phone</th>
 							<th scope="col" role="row">Due Date</th>
 
 						</tr>

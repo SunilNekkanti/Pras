@@ -31,6 +31,41 @@
 					</div>
 				</div>
 
+				<div class="form-group required col-sm-12">
+					<label class="control-label  col-sm-2" for="insurance">Insurance</label>
+					<div class="col-sm-6">
+						<springForm:select path="ins" class="form-control" id="ins">
+							<option value="">Select One</option>
+							<springForm:options items="${insList}" itemValue="id"
+								itemLabel="name" />
+						</springForm:select>
+						<springForm:errors path="ins" cssClass="error text-danger" />
+					</div>
+				</div>
+
+				<div class="form-group required col-sm-12">
+					<label class="control-label  col-sm-2" for="activityMonthInd">Activity
+						Month Ind</label>
+					<div class="col-sm-6">
+						<springForm:select path="activityMonthInd" class="form-control"
+							id="activityMonthInd">
+							<option value="">Select One</option>
+							<springForm:options items="${activeIndMap}" />
+						</springForm:select>
+						<springForm:errors path="activityMonthInd"
+							cssClass="error text-danger" />
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label class="control-label  col-sm-2" for="insuranceCode">insuranceCode</label>
+					<div class="col-sm-6">
+						<springForm:input path="insuranceCode" class="form-control"
+							id="insuranceCode" placeholder="insuranceCode" />
+						<springForm:errors path="insuranceCode"
+							cssClass="error text-danger" />
+					</div>
+				</div>
 
 
 

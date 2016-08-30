@@ -29,8 +29,7 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "ref_cnt_Id", nullable = false)
 	private Integer id;
-
-	@Expose
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
 	private Membership mbr;

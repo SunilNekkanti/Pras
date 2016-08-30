@@ -20,46 +20,46 @@
 				enctype="multipart/form-data">
 				<div class="col-sm-12">
 					<div class="form-group insId col-sm-2">
-						
-							<label for="insurance" class="col-offset-12">Insurance</label>
-							 <select id="insId" name="insId" class="form-control">
-							 	<option value="">Select One</option>
-						     <c:forEach items="${insList}" var="ins">
-						        <option value="${ins.id}">${ins.name}</option>
-						     </c:forEach>
-						    </select>
-					</div>	
+
+						<label for="insurance" class="col-offset-12">Insurance</label> <select
+							id="insId" name="insId" class="form-control">
+							<option value="">Select One</option>
+							<c:forEach items="${insList}" var="ins">
+								<option value="${ins.id}">${ins.name}</option>
+							</c:forEach>
+						</select>
+					</div>
 					<div class="form-group fileType col-sm-3">
-						
-							<label for="fileType" class="col-offset-12 text-center">File Type</label>
-							 <select id="fileType" name="fileType" class="form-control">
-							 <option value="">Select One</option>
-						     <c:forEach items="${fileTypeList}" var="fileType">
-						        <option value="${fileType.code}">${fileType.description}</option>
-						     </c:forEach>
-						    </select>
-					</div>	
-				    <div class="form-group activityMonth col-sm-3">
-						
-							<label for="activityMonth" class="col-offset-12 text-center">Activity Month</label>
-							<input type="text" id="activityMonth" class="activityMonth form-control datepicker" />
-						
-					</div>	
+
+						<label for="fileType" class="col-offset-12 text-center">File
+							Type</label> <select id="fileType" name="fileType" class="form-control">
+							<option value="">Select One</option>
+							<c:forEach items="${fileTypeList}" var="fileType">
+								<option value="${fileType.code}">${fileType.description}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="form-group activityMonth col-sm-3">
+
+						<label for="activityMonth" class="col-offset-12 text-center">Activity
+							Month</label> <input type="text" id="activityMonth"
+							class="activityMonth form-control datepicker" />
+
+					</div>
 					<div class="form-group fileUpload col-sm-3">
-						
-							<label for="filesUpload" class="col-offset-2 fileName">Membership
-							Claim File</label>
-							<span class="btn btn-danger btn-file btn-sm">  <input
-								type="file" accept=".xls,.xlsx,.csv" class="file"
-								name="fileUpload">
-							</span>
+
+						<label for="filesUpload" class="col-offset-2 fileName">Membership
+							Claim File</label> <span class="btn btn-danger btn-file btn-sm"> <input
+							type="file" accept=".xls,.xlsx,.csv" class="file"
+							name="fileUpload">
+						</span>
 					</div>
 				</div>
-				<div class="col-sm-12">	
-					<div class="form-group col-sm-offset-10">	
-						 <button type="button" class="btn btn-success btn-sm "
-								id="updateButton" name="update"
-								onclick="return fileUploadAndProcessing()">Upload</button>
+				<div class="col-sm-12">
+					<div class="form-group col-sm-offset-10">
+						<button type="button" class="btn btn-success btn-sm "
+							id="updateButton" name="update"
+							onclick="return fileUploadAndProcessing()">Upload</button>
 					</div>
 				</div>
 			</springForm:form>
@@ -168,8 +168,8 @@
 			$(".fileName").text($("#fileType option:selected").text());
 		});
 	</script>
-	<style>
-		#fileType{
-		width:220px !important;
+<style>
+#fileType {
+	width: 220px !important;
 }
-	</style>
+</style>

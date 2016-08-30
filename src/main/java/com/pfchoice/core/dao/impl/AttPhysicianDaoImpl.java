@@ -29,6 +29,7 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 	 */
 	@Override
 	public Pagination getPage(final int pageNo, final int pageSize) {
+		
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
@@ -72,6 +73,7 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 	 */
 	@Override
 	public AttPhysician findById(final Integer id) {
+		assert id !=null;
 		return get(id);
 	}
 
@@ -83,6 +85,7 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 	 */
 	@Override
 	public AttPhysician save(final AttPhysician bean) {
+		assert bean !=null;
 		getSession().save(bean);
 		return bean;
 	}
@@ -94,6 +97,7 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 	 */
 	@Override
 	public AttPhysician deleteById(final Integer id) {
+		assert id !=null;
 		AttPhysician entity = super.get(id);
 		if (entity != null) {
 			getSession().delete(entity);
@@ -118,6 +122,7 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 	 */
 	@Override
 	public Integer loadData(final Integer fileId) {
+		assert fileId !=null;
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
@@ -129,6 +134,7 @@ public class AttPhysicianDaoImpl extends HibernateBaseDao<AttPhysician, Integer>
 	 */
 	@Override
 	public AttPhysician findByCode(String code) {
+		assert code !=null || !"".equals(code) : "The physician code is empty";; 
 		return findUniqueByProperty("code", code);
 	}
 

@@ -10,8 +10,10 @@
 
 <div id="content">
 	<ul id="tabs" class="nav nav-pills" data-tabs="tabs">
-		<li class="active"><a href="#hospitalizationActive" data-toggle="tab">Active</a></li>
-		<li><a href="#hospitalizationHistory" data-toggle="tab">Past History</a></li>
+		<li class="active"><a href="#hospitalizationActive"
+			data-toggle="tab">Active</a></li>
+		<li><a href="#hospitalizationHistory" data-toggle="tab">Past
+				History</a></li>
 	</ul>
 	<div class="row">
 		<div class="col-sm-12">
@@ -33,7 +35,8 @@
 										</thead>
 										<tbody id="contentprovider">
 
-											<c:forEach items="${mbrHospitalizationList}" var="mbrHospitalization">
+											<c:forEach items="${mbrHospitalizationList}"
+												var="mbrHospitalization">
 												<c:choose>
 													<c:when test="${empty mbrHospitalization.expDisDate}">
 														<tr>
@@ -70,7 +73,8 @@
 										</thead>
 										<tbody id="contentprovider">
 
-											<c:forEach items="${mbrHospitalizationList}" var="mbrHospitalization">
+											<c:forEach items="${mbrHospitalizationList}"
+												var="mbrHospitalization">
 												<c:choose>
 													<c:when test="${not empty mbrHospitalization.expDisDate}">
 														<tr>

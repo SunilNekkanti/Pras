@@ -18,30 +18,33 @@
 			</a>
 		</div>
 		<div class="panel-body">
-			<springForm:form method="POST" commandName="facilityType" id="facilityType"
-				action="${context}/facilityType/${id}/save.do" class="form-horizontal" role="form">
+			<springForm:form method="POST" commandName="facilityType"
+				id="facilityType" action="${context}/facilityType/${id}/save.do"
+				class="form-horizontal" role="form">
 				<div class="form-group required">
 					<label class="control-label col-sm-2" for="description">Description</label>
 					<div class="col-sm-6">
 						<springForm:hidden path="id" />
-						<springForm:input path="description" class="form-control" id="description"
-							placeholder="Description" />
+						<springForm:input path="description" class="form-control"
+							id="description" placeholder="Description" />
 						<springForm:errors path="description" cssClass="error text-danger" />
 					</div>
 				</div>
 
 				<div class="form-group required">
-					<label class="control-label col-sm-2" for="shortName">Short Name</label>
+					<label class="control-label col-sm-2" for="shortName">Short
+						Name</label>
 					<div class="col-sm-6">
-						<springForm:input path="shortName" class="form-control" id="shortName"
-							placeholder="shortName" />
+						<springForm:input path="shortName" class="form-control"
+							id="shortName" placeholder="shortName" />
 						<springForm:errors path="shortName" cssClass="error text-danger" />
 					</div>
 				</div>
 
 				<div class="col-sm-offset-2 col-sm-4">
 					<c:choose>
-						<c:when test="${facilityType.id != null && facilityType.activeInd == 89}">
+						<c:when
+							test="${facilityType.id != null && facilityType.activeInd == 89}">
 							<button type="submit" class="btn btn-success btn-sm"
 								id="updateButton" name="update">Update</button>
 							<button type="submit" class="btn btn-success btn-sm"

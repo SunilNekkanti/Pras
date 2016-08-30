@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script type="text/javascript" src="${context}/resources/js/cookie.js"></script>	
+<script type="text/javascript" src="${context}/resources/js/cookie.js"></script>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <link
@@ -45,8 +45,8 @@
 	src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
 <script type="text/javascript"
 	src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-	
-	<c:set var="context"
+
+<c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
 		$(document).ready(function() {
@@ -55,7 +55,7 @@
 				    	window.location = $(location).attr('protocol')+"//"+$(location).attr('host')+$(this).find('a').attr('href');
 				    } );
 		});
- </script>				 
+ </script>
 <style>
 .center {
 	text-align: center;

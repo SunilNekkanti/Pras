@@ -41,14 +41,16 @@
 						<springForm:errors path="shortName" cssClass="error text-danger" />
 					</div>
 				</div>
-				
+
 				<div class="form-group required col-sm-12">
-					<label class="control-label  col-sm-2" for="numberOfDays">Number of days</label>
+					<label class="control-label  col-sm-2" for="numberOfDays">Number
+						of days</label>
 					<div class="col-sm-6">
 						<springForm:input path="numberOfDays" class="form-control"
 							id="numberOfDays" placeholder="numberOfDays" maxlength="50" />
-							<span id="numberOfDaysError" class="text-danger"></span>
-						<springForm:errors path="numberOfDays" cssClass="error text-danger" />
+						<span id="numberOfDaysError" class="text-danger"></span>
+						<springForm:errors path="numberOfDays"
+							cssClass="error text-danger" />
 					</div>
 				</div>
 

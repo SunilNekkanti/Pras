@@ -868,7 +868,8 @@
 
 						<thead>
 							<tr>
-								<th scope="col" data-value="Member Name" role="row">Member Name</th>
+								<th scope="col" data-value="Member Name" role="row">Member
+									Name</th>
 								<th scope="col" role="row">claim Id Number</th>
 								<th scope="col" role="row">Provider Name</th>
 								<th scope="col" role="row">Claim Type</th>

@@ -40,7 +40,8 @@
 <div class="row">
 	<div class="col-sm-12">
 		<jsp:include page="/WEB-INF/jsp/membershipHospitalizationRecord.jsp">
-			<jsp:param name="mbrHospitalizationList" value="${mbrHospitalizationList}" />
+			<jsp:param name="mbrHospitalizationList"
+				value="${mbrHospitalizationList}" />
 		</jsp:include>
 	</div>
 </div>
