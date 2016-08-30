@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.Insurance;
@@ -223,5 +224,11 @@ public class FileTypeController {
 		return (List<Insurance>) page.getList();
 	}
 
-
+	/**
+	 * @return
+	 */
+	@ModelAttribute("activeIndMap")
+	public Map<String, String> populateActiveIndList() {
+		return PrasUtil.getActiveIndMap();
+	}
 }

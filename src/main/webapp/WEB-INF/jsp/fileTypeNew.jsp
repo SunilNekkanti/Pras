@@ -49,7 +49,6 @@
 					<div class="col-sm-6">
 						<springForm:select path="activityMonthInd" class="form-control"
 							id="activityMonthInd">
-							<option value="">Select One</option>
 							<springForm:options items="${activeIndMap}" />
 						</springForm:select>
 						<springForm:errors path="activityMonthInd"
@@ -91,4 +90,9 @@
 		</div>
 	</div>
 </div>
+<script>
+$(document).ready(function() {
+	$('#activityMonthInd').val('N');
+});
+</script>
 

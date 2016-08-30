@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context1"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
 $(document).ready(function() {
 	
@@ -121,8 +123,22 @@ $(document).ready(function() {
 		      								return '<a href="javascript:void(0)" id="'+full.id+'" onclick="mbrHedisFollowup('+full.id+',\''+full.lastName+'\',\''+full.firstName+'\')"><span class="glyphicon glyphicon-pencil"></span></a>';
 		        						  }
 	     					});
-	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center widthM","sWidth" : "10%"});
-	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "mbrProviderList.0.prvdr.name","bSearchable" : true, "bSortable" : true,"sClass": "center widthM","sWidth" : "10%",
+	     			"render": function (data, type, full, meta) {
+	     				var prvdId;
+	     				for(var i = 0; i<full.mbrProviderList.length; i++)
+                        {
+	     					prvdId = full.mbrProviderList[i].prvdr.id;  
+                        }
+ 						
+						return '<a href="${context1}/provider/'+prvdId+'">'+data+'</a>';
+				  }
+	     		});
+	     		columns.push({ "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%" ,
+						"render": function (data, type, full, meta) {
+								return '<a href="${context1}/membership/'+full.id+'/complete">'+data+'</a>';
+						  }
+				});
 	     		columns.push({ "mDataProp": "firstName","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "dob","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%",
 				     			"render": function (data, type, full, meta) {
@@ -156,8 +172,27 @@ $(document).ready(function() {
 	     		columns.push({ "mDataProp": "medicaidNo","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
 	     		columns.push({ "mDataProp": "medicareNo","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
 	     		columns.push({ "mDataProp": "mbrInsuranceList[0].srcSysMbrNbr","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
-	     		columns.push({ "mDataProp": "contactList[0].homePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
-	     		columns.push({ "mDataProp": "contactList[0].mobilePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
+	     		columns.push({ "mDataProp": "contactList[].homePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+	     			
+                           "render": function  ( data, type, full, meta )  {
+	                                         var homePhoneList=[];
+	                                         for(var i = 0; i<full.contactList.length; i++)
+	                                         {
+	                                        	 homePhoneList[i] = full.contactList[i].homePhone;  
+	                                         }
+                      						return homePhoneList.join(', ');
+                    					}
+	     		});
+	     		columns.push({ "mDataProp": "contactList[].mobilePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
+	     			  "render": function  ( data, type, full, meta )  {
+                          var mobilePhoneList=[];
+                          for(var i = 0; i<full.contactList.length; i++)
+                          {
+                        	  mobilePhoneList[i] = full.contactList[i].mobilePhone;  
+                          }
+   						return mobilePhoneList.join(', ');
+ 					}
+	     		});
 	     		columns.push({ "mDataProp": "mbrHedisMeasureList.0.dueDate","bSearchable" : true, "bSortable": false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 				     			"render": function (data, type, full, meta) {
 				     				var date = new Date(data);
