@@ -23,9 +23,11 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.DateType;
 import org.hibernate.type.StringType;
 import org.slf4j.Logger;
@@ -35,6 +37,8 @@ import org.springframework.stereotype.Repository;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipDao;
 import com.pfchoice.core.entity.Membership;
+import com.pfchoice.core.entity.MembershipCountPerHedisRule;
+import com.pfchoice.core.entity.PFCPagination;
 
 /**
  *
@@ -94,7 +98,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final Integer sSearchIns,
 			final Integer sSearchPrvdr, final Integer sSearchHedisRule, final List<Integer> ruleIds, final String sort,
 			final String sortdir) {
-
+		assert sSearchIns !=null : "sSearchIns cannot be null";
+		assert sSearchPrvdr !=null : "sSearchPrvdr cannot be null";
+		assert ruleIds !=null : "ruleIds  cannot be null";
+		
 		Criteria crit = createCriteria().createAlias("genderId", "genderId")
 				.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "mbrStatus")
 				.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
@@ -191,8 +198,31 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			criteria.addOrder(Order.asc("lastName"));
 			criteria.addOrder(Order.asc("firstName"));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
+			
+			
+			Criteria criteria1 =  criteria;
+			
+			if (sSearchHedisRule != null && sSearchHedisRule != 0) {
+				criteria1.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
+				criteria1.createAlias("mbrHedisMeasureRule.hedisMeasureRule", "hedisMeasureRule");
+				criteria1.createAlias("mbrHedisMeasureRule.mbr", "mbr");
+				
+				criteria1.add(Restrictions.in("mbrHedisMeasureRule.hedisMeasureRule.id", ruleIds));
+				
+				ProjectionList projList = Projections.projectionList(); 
+		        projList.add(Projections.rowCount(),"count");
+		        projList.add(Projections.groupProperty("hedisMeasureRule.id").as("hedisRuleId"));
+		        projList.add(Projections.groupProperty("mbrHedisMeasureRule.activeInd").as("activeInd"));
+		        criteria1.setProjection(projList);
+		        criteria1.setResultTransformer(Transformers.aliasToBean(MembershipCountPerHedisRule.class));
+			}
+	        
 			pagination.setTotalCount(totalCount);
-			return pagination;
+			
+			PFCPagination  pfcPagination = new PFCPagination(pagination);
+			pfcPagination.setMbrCountPerHedisRuleList((List<MembershipCountPerHedisRule>)criteria1.list());
+			
+			return pfcPagination;
 		}
 
 	}

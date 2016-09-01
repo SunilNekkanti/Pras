@@ -174,7 +174,8 @@ public class ReportsController {
 			@RequestParam(required = true) Integer sSearchHedisRule,
 			@RequestParam(required = true) List<Integer> ruleIds, @RequestParam(required = false) String sort,
 			@RequestParam(required = false) String sortdir) {
-
+   
+		assert  pageNo != null  ;
 		Pagination pagination = membershipService.getPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
 				sSearchHedisRule, ruleIds, sort, sortdir);
 

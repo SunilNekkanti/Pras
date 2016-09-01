@@ -143,7 +143,7 @@
      	var callMembershipDataTable  = function (insId,prvdrId) {
      		$('#membershipTable').dataTable({
         	     "sAjaxSource" : getContextPath()+'/membership/list',
-        	     "sAjaxDataProp" : 'data.list',
+        	     "sAjaxDataProp" : 'data.pagination.list',
                  "aoColumns": [
 							   { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
                                { "mDataProp": "firstName","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},

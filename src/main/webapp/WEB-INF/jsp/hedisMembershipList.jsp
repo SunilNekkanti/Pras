@@ -7,7 +7,12 @@
 <c:set var="context1"
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
+
 $(document).ready(function() {
+	
+	  var completed = 0;
+	  var pending = 0;
+
 	
 		$("#hedisGenerate").click(function(event)
 		{
@@ -237,10 +242,14 @@ $(document).ready(function() {
 		      							    	});
 				      									   var returnType ='';
 				      										if(data.indexOf(value.text) >= 0){
-				      											if(value.text in params)
+				      											if(value.text in params){
+				      												completed++;
 				      												return '<label class="text-danger">X</label>';
-				      											else 
+				      											} else {
+				      												pending++;
 				      												return 'X';
+				      											}
+				      												
 				      										}	
 				      										else
 			      											return '';
@@ -365,7 +374,7 @@ $(document).ready(function() {
 		                   ],
   	         "bDestroy" : true,	
      	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
-     	     "sAjaxDataProp" : 'data.list',
+     	     "sAjaxDataProp" : 'data.pagination.list',
              "aoColumns":  aoColumns,      
      	     "bLengthChange": false,
      	     "iDisplayLength": 15,
@@ -380,7 +389,8 @@ $(document).ready(function() {
                     {"name": "ruleIds", "value": ruleArray }
                 );
              },        
-     	     "fnServerData" : datatable2RestMembership
+     	     "fnServerData" : datatable2RestMembership,
+     	    "fnFooterCallback": function ( nRow, aaData, iStart, iEnd, aiDisplay ) {}
      	});
   	        
      }
