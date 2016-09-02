@@ -234,9 +234,11 @@ $(document).ready(function() {
 		     				columns.push({ "mDataProp": "mbrHedisMeasureList[ ].hedisMeasureRule.shortDescription","bSearchable" : false, "bSortable" : false,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 		      							    "render": function (data, type, full, meta) {
 		      							    	var params = {};
+		      							    	var paramsDOS = {};
 		      							    	full.mbrHedisMeasureList.forEach(function( item ) {
 		      							    		if(item.activeInd == 'N' ){
 		      							    			params[item.hedisMeasureRule.shortDescription] = item.hedisMeasureRule.shortDescription;
+		      							    			paramsDOS[item.hedisMeasureRule.shortDescription] = item.dos;
 		      							    			data = data.replace(item.hedisMeasureRule.description,'');
 		      							    		}
 		      							    	});
@@ -244,7 +246,7 @@ $(document).ready(function() {
 				      										if(data.indexOf(value.text) >= 0){
 				      											if(value.text in params){
 				      												completed++;
-				      												return '<label class="text-danger">X</label>';
+				      												return '<label class="text-danger">'+paramsDOS[value.text]+' </label>';
 				      											} else {
 				      												pending++;
 				      												return 'X';
