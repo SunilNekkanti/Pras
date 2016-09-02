@@ -350,9 +350,29 @@ $(document).ready(function() {
               url: sSource,
               data: restParams,
               success: function(res) {
+            	  if(res.data.pagination === undefined){
+                	  var json_obj =  {
+                			  "status": "SUCCESS",
+                			  "message": "Membership List",
+                			  "data": {
+                			  "mbrCountPerHedisRuleList": [],
+                			  "pagination": {
+                				  	"list": [],
+                			  		"totalCount": 0,
+                			  		"pageSize": 15,
+                			  		"pageNo": 1
+                			  		},
+	                			  "totalCount": 0,
+	                			  "pageSize": 20,
+	                			  "pageNo": 1
+                			  	}
+                			  }
+                	  fnCallback(json_obj);
+                	  return false;
+                  }
                   res.iTotalRecords = res.data.pagination.totalCount;
                   res.iTotalDisplayRecords = res.data.pagination.totalCount;
-             		fnCallback(res);
+             	  fnCallback(res);
              		if(res.data.mbrCountPerHedisRuleList.length > 0){
 	             		var pending = new Array; var completed = new Array; 
 	             		var hedisShortDesc = new Array;
@@ -743,5 +763,3 @@ $(document).ready(function() {
 	    	});
 	});
   </script>
-
-  

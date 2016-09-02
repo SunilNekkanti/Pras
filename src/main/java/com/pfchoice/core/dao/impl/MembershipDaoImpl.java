@@ -26,12 +26,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.engine.spi.SessionImplementor;
-import org.hibernate.internal.CriteriaImpl;
-import org.hibernate.loader.criteria.CriteriaJoinWalker;
-import org.hibernate.loader.criteria.CriteriaQueryTranslator;
-import org.hibernate.persister.entity.OuterJoinLoadable;
 import org.hibernate.sql.JoinType;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.DateType;
@@ -205,7 +199,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			criteria.addOrder(Order.asc("firstName"));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
-			
 
 			Criteria criteria1 = createCriteria().add(Restrictions.in("id", mbrIds));
 			criteria1.createAlias("genderId", "genderId")
