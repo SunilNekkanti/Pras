@@ -42,13 +42,14 @@ alter table temp_membership add key SBSB_ID(SBSB_ID);
  update membership m
  join 
  (
- select tm.status,mi.mbr_id  from 
+ select tm.status,mi.mbr_id,MCDMCR  from 
  temp_membership tm
   join  membership_insurance mi on  tm.SBSB_ID=mi.SRC_SYS_MBR_NBR
   group by tm.MCDMCR
  having max(MEMBEREFFDT)
  ) a
- set m.mbr_status= a.status
+ set m.mbr_status= a.status,
+ m.Mbr_MedicaidNo = a.MCDMCR
  where m.mbr_id=a.mbr_id;
 
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)

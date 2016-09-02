@@ -19,6 +19,9 @@ public class MembershipCountPerHedisRule implements Serializable {
  
 	@Expose
 	private Character activeInd;
+	
+	@Expose
+	private String shortDescription;
 
 	public Long getCount() {
 		return count;
@@ -43,5 +46,21 @@ public class MembershipCountPerHedisRule implements Serializable {
 	public void setActiveInd(Character activeInd) {
 		this.activeInd = activeInd;
 	}
+
+	/**
+	 * @return the shortDescription
+	 */
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	/**
+	 * @param shortDescription the shortDescription to set
+	 */
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+	
+	
  
 }

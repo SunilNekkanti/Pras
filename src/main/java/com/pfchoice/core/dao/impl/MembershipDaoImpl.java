@@ -212,6 +212,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 				ProjectionList projList = Projections.projectionList(); 
 		        projList.add(Projections.rowCount(),"count");
 		        projList.add(Projections.groupProperty("hedisMeasureRule.id").as("hedisRuleId"));
+		        projList.add(Projections.groupProperty("hedisMeasureRule.shortDescription").as("shortDescription"));
 		        projList.add(Projections.groupProperty("mbrHedisMeasureRule.activeInd").as("activeInd"));
 		        criteria1.setProjection(projList);
 		        criteria1.setResultTransformer(Transformers.aliasToBean(MembershipCountPerHedisRule.class));

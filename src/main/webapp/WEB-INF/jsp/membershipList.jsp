@@ -130,8 +130,8 @@
               url: sSource,
               data: restParams,
               success: function(res) {
-                  res.iTotalRecords = res.data.totalCount;
-                  res.iTotalDisplayRecords = res.data.totalCount;
+                  res.iTotalRecords = res.data.pagination.totalCount;
+                  res.iTotalDisplayRecords = res.data.pagination.totalCount;
              		fnCallback(res);
              		$(".rowClick tbody tr").css('cursor', 'pointer');
               },
