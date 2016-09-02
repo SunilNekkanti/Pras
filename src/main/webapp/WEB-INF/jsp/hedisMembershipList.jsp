@@ -353,40 +353,41 @@ $(document).ready(function() {
                   res.iTotalRecords = res.data.pagination.totalCount;
                   res.iTotalDisplayRecords = res.data.pagination.totalCount;
              		fnCallback(res);
-             		
-             		var pending = new Array; var completed = new Array; 
-             		var hedisShortDesc = new Array;
-             		var activeInd, count, shortDescription,  hedisRuleId;
-	             	for (var length = 0; length <res.data.mbrCountPerHedisRuleList.length; length++){
-	             		 activeInd = res.data.mbrCountPerHedisRuleList[length].activeInd;
-	             		 shortDescription = res.data.mbrCountPerHedisRuleList[length].shortDescription;
-	             		 count = res.data.mbrCountPerHedisRuleList[length].count;
-	             		 hedisRuleId = res.data.mbrCountPerHedisRuleList[length].hedisRuleId;
-	             		hedisShortDesc[hedisRuleId] = shortDescription;
-	             		 if(activeInd == "N") completed[hedisRuleId] = count;
-	             		 else pending[hedisRuleId] = count; 
-	             		
-	             	}
-	             	var thText, indexPos;
-	             	var $row = $('<tr class="odd"></tr>');
-	             	for(var pos = 0; pos < $('#membershipTable thead th').length; pos++ )
-	             		{
-	             		
-	             			thText = $("#membershipTable th:eq("+pos+")").text();
-	             			indexPos = $.inArray($.trim(thText),hedisShortDesc);
-	             			if(completed[indexPos] === undefined) completed[indexPos] = 0;
-	             			if(pending[indexPos] === undefined) pending[indexPos] = 0;
-	             			if(indexPos != -1)	{
-	             				$row.append('<td class="center widthM">'+ completed[indexPos] + ' / ' +pending[indexPos] +'</td>');
-	             			}
-	             			else
-	             			{
-	             				$row.append('<td class="center widthM"></td>');
-	             			}	
-	             		}
-	             	
-             	$('#membershipTable tbody').append($row);
-             	
+             		if(res.data.mbrCountPerHedisRuleList.length > 0){
+	             		var pending = new Array; var completed = new Array; 
+	             		var hedisShortDesc = new Array;
+	             		var activeInd, count, shortDescription,  hedisRuleId;
+		             	for (var length = 0; length <res.data.mbrCountPerHedisRuleList.length; length++){
+		             		 activeInd = res.data.mbrCountPerHedisRuleList[length].activeInd;
+		             		 shortDescription = res.data.mbrCountPerHedisRuleList[length].shortDescription;
+		             		 count = res.data.mbrCountPerHedisRuleList[length].count;
+		             		 hedisRuleId = res.data.mbrCountPerHedisRuleList[length].hedisRuleId;
+		             		hedisShortDesc[hedisRuleId] = shortDescription;
+		             		 if(activeInd == "N") completed[hedisRuleId] = count;
+		             		 else pending[hedisRuleId] = count; 
+		             		
+		             	}
+		             	var thText, indexPos;
+		             	var $row = $('<tr class="odd"></tr>');
+		             	for(var pos = 0; pos < $('#membershipTable thead th').length; pos++ )
+		             		{
+		             		
+		             			thText = $("#membershipTable th:eq("+pos+")").text();
+		             			indexPos = $.inArray($.trim(thText),hedisShortDesc);
+		             			if(completed[indexPos] === undefined) completed[indexPos] = 0;
+		             			if(pending[indexPos] === undefined) pending[indexPos] = 0;
+		             			if(indexPos != -1)	{
+		             				$row.append('<td class="center widthM">'+ completed[indexPos] + '/' +(pending[indexPos]+completed[indexPos]) +'</td>');
+		             			}
+		             			else if($.trim(thText) == "Due Date"){
+		             				$row.append('<td class="center widthM"><strong>Completed/Total</strong></td>');
+		             			}
+		             			else{
+		             				$row.append('<td class="center widthM"></td>');
+		             			}
+		             		}
+	             			$('#membershipTable tbody').append($row);
+             		}
              		
             },
               error : function (e) {
