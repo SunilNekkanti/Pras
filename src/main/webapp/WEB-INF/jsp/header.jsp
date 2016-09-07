@@ -558,6 +558,8 @@ $(document).ready(function () {
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">Reports <span class="caret"></span></a>
 						<ul class="dropdown-menu">
+							<li><a href="${context}/${userpath}/reports/generateReport?insId=2&reportFormat=pdf">Dashboard</a></li>
+							<li><a href="${context}/${userpath}/reports/membershipList?insId=2&reportFormat=pdf">MembershipStatusCountPerProvider</a></li>
 							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
 							<li>

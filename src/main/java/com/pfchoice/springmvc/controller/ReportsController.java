@@ -9,12 +9,16 @@ import static com.pfchoice.common.SystemDefaultProperties.CLAIM;
 import static com.pfchoice.common.SystemDefaultProperties.HOSPITALIZATION;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -41,6 +45,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import com.pfchoice.common.CommonMessageContent;
 import com.pfchoice.common.SystemDefaultProperties;
 import com.pfchoice.common.util.JsonConverter;
+import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.common.util.XLSX2CSV;
 import com.pfchoice.core.entity.File;
@@ -66,9 +71,11 @@ import com.pfchoice.core.service.MembershipHospitalizationService;
 import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.UnprocessedClaimService;
+import com.pfchoice.springmvc.controller.service.DBConnection;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -132,6 +139,9 @@ public class ReportsController {
 
 	@Autowired
 	private UnprocessedClaimService unprocessedClaimService;
+
+	@Autowired
+	private DBConnection dBConnection;
 
 	/**
 	 * @param binder
@@ -748,6 +758,27 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
 
+	/**
+	 * @return
+	 * @throws JRException
+	 */
+	@RequestMapping(value = { "/admin/reports/generateReport", "/user/reports/generateReport" })
+	public void handleRequest1(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = true) Integer insId,
+			@RequestParam(required = true) String reportFormat)
+			throws JRException, NamingException, SQLException, IOException {
+		
+		LOG.info("returning report Generation.jsp");
+
+		HashMap<String, Object> rptParams =  new HashMap<>();
+		rptParams.put("insId",insId);
+		
+		String fileName = "AMGMonthlyStatisticsDashboard";
+		PrasUtil.generateReport(request,response,dBConnection,fileName, rptParams ,reportFormat);
+		
+	}
+
+	
 	/**
 	 * @param model
 	 * @return

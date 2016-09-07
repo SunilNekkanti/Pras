@@ -71,6 +71,7 @@ public class MembershipListController {
 		LOG.info("returning membershipList.jsp");
 
 		String fileName = "MbrCount4MbrStatusVsPrvdr";
+	//	String fileName = "AMGMonthlyStatisticsDashboard";
 		JasperReport jp = PrasUtil.getCompiledFile(fileName, request);
 		HashMap<String, Object> rptParams =  new HashMap<>();
 		rptParams.put("insId",insId);

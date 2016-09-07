@@ -7,6 +7,7 @@ import static com.pfchoice.common.SystemDefaultProperties.SQL_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.SQL_QUERY_EXTN;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +31,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Criteria;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.internal.CriteriaImpl;
+import org.hibernate.loader.criteria.CriteriaJoinWalker;
+import org.hibernate.loader.criteria.CriteriaQueryTranslator;
+import org.hibernate.persister.entity.OuterJoinLoadable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -37,11 +45,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.pfchoice.springmvc.controller.service.DBConnection;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 /**
  * @author sarath
@@ -202,4 +218,83 @@ public class PrasUtil {
 		ouputStream.close();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void generateReportXLSX(HttpServletResponse resp, Map parameters, JasperReport jasperReport,
+			Connection conn) throws JRException, NamingException, SQLException, IOException {
+		
+		
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+		
+        File outputFile = new File("c:\\softwares\\reportOutput.xlsx");
+        
+        JRXlsxExporter exporter = new JRXlsxExporter();
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputFile));
+        SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration(); 
+        configuration.setDetectCellType(true);//Set configuration as you like it!!
+        configuration.setCollapseRowSpan(false);
+        exporter.setConfiguration(configuration);
+        exporter.exportReport();
+        
+        byte[] bytes = new byte[(int) outputFile.length()];
+            //convert file into array of bytes
+        FileInputStream fileInputStream = new FileInputStream(outputFile);
+	    fileInputStream.read(bytes);
+	    fileInputStream.close();
+	    
+		resp.reset();
+		resp.resetBuffer();
+		resp.setContentType("application/vnd.ms-excel");
+	    resp.setHeader("Content-Disposition", "attachment; filename=" + "reportOutput.xlsx"); //This is downloaded as .xhtml
+	    resp.flushBuffer();
+	      
+		resp.setContentLength(bytes.length);
+		ServletOutputStream ouputStream = resp.getOutputStream();
+		ouputStream.write(bytes, 0, bytes.length);
+		ouputStream.flush();
+		ouputStream.close();
+	}
+	
+	public static void generateReport(HttpServletRequest request, HttpServletResponse response,
+			DBConnection dBConnection, final  String fileName, final HashMap<String, Object> rptParams,final String reportFormat ) throws JRException, NamingException, SQLException, IOException{
+		
+		JasperReport jp =  getCompiledFile(fileName, request);
+		switch (reportFormat) {
+		case "XLS":
+		case "XLSX":
+		case "xlsx":
+		case "xls":
+			generateReportXLSX(response, rptParams, jp, dBConnection.getConnection());
+			break;
+		case "CSV":
+		case "csv":
+			 generateReportPDF(response, rptParams, jp, dBConnection.getConnection());
+			break;
+		case "PDF":
+		case "pdf":
+		default:
+			 generateReportPDF(response, rptParams, jp, dBConnection.getConnection());
+			break;
+		}
+	}
+	
+	
+	public static String  printCriteriaQuery (Criteria  criteria ){
+		CriteriaImpl criteriaImpl = (CriteriaImpl)criteria;
+    	SessionImplementor session = criteriaImpl.getSession();
+    	SessionFactoryImplementor factory = session.getFactory();
+    	CriteriaQueryTranslator translator=new CriteriaQueryTranslator(factory,criteriaImpl,criteriaImpl.getEntityOrClassName(),CriteriaQueryTranslator.ROOT_SQL_ALIAS);
+    	String[] implementors = factory.getImplementors( criteriaImpl.getEntityOrClassName() );
+
+    	CriteriaJoinWalker walker = new CriteriaJoinWalker((OuterJoinLoadable)factory.getEntityPersister(implementors[0]), 
+    	                        translator,
+    	                        factory, 
+    	                        criteriaImpl, 
+    	                        criteriaImpl.getEntityOrClassName(), 
+    	                        session.getLoadQueryInfluencers()   );
+
+    	String sql=walker.getSQLString();
+		return sql;
+	}
+	
 }

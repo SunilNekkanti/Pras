@@ -150,6 +150,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.add(and);
 
 		crit.setProjection(Projections.distinct(Projections.property("id")));
+		
+		System.out.println("subquery is " +PrasUtil.printCriteriaQuery(crit));
 		List<Integer> mbrIds = (List<Integer>) crit.list();
 		int totalCount = mbrIds.isEmpty() ? 0 : mbrIds.size();
 		if (totalCount == 0) {
@@ -197,24 +199,28 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			}
 			criteria.addOrder(Order.asc("lastName"));
 			criteria.addOrder(Order.asc("firstName"));
+			
+			System.out.println("query is " +PrasUtil.printCriteriaQuery(criteria));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
-
-			Criteria criteria1 = createCriteria().add(Restrictions.in("id", mbrIds));
-			criteria1.createAlias("genderId", "genderId")
-					.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "status")
-					.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
-					.createAlias("mbrProvider.prvdr", "prvdr")
-					.createAlias("contactList", "contact")
-					.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
-
-			criteria1.add(Restrictions.eq("activeInd", new Character('Y')));
-			criteria1.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
-			criteria1.add(Restrictions.eq("mbrProvider.activeInd", new Character('Y')));
-			criteria1.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
-			criteria1.add(Restrictions.eq("contact.activeInd", new Character('Y')));
-			
+			PFCPagination  pfcPagination = new PFCPagination(pagination);
 			if (sSearchHedisRule != null && sSearchHedisRule != 0) {
+				Criteria criteria1 = createCriteria().add(Restrictions.in("id", mbrIds));
+				
+				criteria1.createAlias("genderId", "genderId")
+						.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "status")
+						.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
+						.createAlias("mbrProvider.prvdr", "prvdr")
+						.createAlias("contactList", "contact")
+						.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
+	
+				criteria1.add(Restrictions.eq("activeInd", new Character('Y')));
+				criteria1.add(Restrictions.eq("mbrInsurance.activeInd", new Character('Y')));
+				criteria1.add(Restrictions.eq("mbrProvider.activeInd", new Character('Y')));
+				criteria1.add(Restrictions.eq("prvdr.activeInd", new Character('Y')));
+				criteria1.add(Restrictions.eq("contact.activeInd", new Character('Y')));
+			
+			
 				criteria1.createAlias("mbrHedisMeasureList", "mbrHedisMeasureRule");
 				criteria1.createAlias("mbrHedisMeasureRule.hedisMeasureRule", "hedisMeasureRule");
 				criteria1.createAlias("mbrHedisMeasureRule.mbr", "mbr");
@@ -228,13 +234,10 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		        projList.add(Projections.groupProperty("mbrHedisMeasureRule.activeInd").as("activeInd"));
 		        criteria1.setProjection(projList);
 		        criteria1.setResultTransformer(Transformers.aliasToBean(MembershipCountPerHedisRule.class));
-		        
+		       
+		        List<MembershipCountPerHedisRule> countList = (List<MembershipCountPerHedisRule>)criteria1.list();
+				pfcPagination.setMbrCountPerHedisRuleList(countList);
 			}
-	        
-			List<MembershipCountPerHedisRule> countList = (List<MembershipCountPerHedisRule>)criteria1.list();
-			
-			PFCPagination  pfcPagination = new PFCPagination(pagination);
-			pfcPagination.setMbrCountPerHedisRuleList(countList);
 			
 			return pfcPagination;
 		}
