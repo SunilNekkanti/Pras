@@ -244,15 +244,16 @@ public class PrasUtil {
 	    
 		resp.reset();
 		resp.resetBuffer();
+		 
 		resp.setContentType("application/vnd.ms-excel");
 	    resp.setHeader("Content-Disposition", "attachment; filename=" + "reportOutput.xlsx"); //This is downloaded as .xhtml
-	    resp.flushBuffer();
 	      
 		resp.setContentLength(bytes.length);
 		ServletOutputStream ouputStream = resp.getOutputStream();
 		ouputStream.write(bytes, 0, bytes.length);
 		ouputStream.flush();
 		ouputStream.close();
+		resp.flushBuffer();
 	}
 	
 	public static void generateReport(HttpServletRequest request, HttpServletResponse response,
