@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2016-09-07T10:10:22 -->
+<!-- 2016-09-07T17:18:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AMGMonthlyStatisticsDashboard" pageWidth="775" pageHeight="599" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="735" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="e373b8b6-07c4-4e27-8057-12287d6c1f08">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
@@ -56,10 +56,12 @@
 			<![CDATA[select mam.mbr_id, p.name , cast(concat(mam.activity_month, '01') as date)
 from membership_activity_month mam
 JOIN 
-(select * from MEMBERSHIP_INSURANCE   where case  when ins_id =2 then class not like 'K%' else 1=1 end group by mbr_id) mi 
+(select * from MEMBERSHIP_INSURANCE  
+	where case  when ins_id =1 then  class  NOT LIKE 'K%' ELSE  1=1  end  group by mbr_id
+) mi 
 ON MI.MBR_ID=MAM.MBR_ID AND MI.INS_ID=MAM.INS_ID 
 join provider p on mam.prvdr_id=p.prvdr_id  and p.active_ind='Y'
-where    mam.ins_id =1   and  cast(concat(mam.activity_month, '01') as date) >='2016-1-1']]>
+where    mam.ins_id =2   and  cast(concat(mam.activity_month, '01') as date) >='2016-1-1']]>
 		</queryString>
 		<field name="mbr_id" class="java.lang.Integer"/>
 		<field name="name" class="java.lang.String"/>
@@ -69,7 +71,7 @@ where    mam.ins_id =1   and  cast(concat(mam.activity_month, '01') as date) >='
 		<![CDATA[select mam.mbr_id, p.name , cast(concat(mam.activity_month, '01') as date)
 from membership_activity_month mam
 join provider p on mam.prvdr_id=p.prvdr_id  and p.active_ind='Y'
-where    mam.ins_id =1]]>
+where    mam.ins_id =2]]>
 	</queryString>
 	<background>
 		<band splitType="Stretch"/>
