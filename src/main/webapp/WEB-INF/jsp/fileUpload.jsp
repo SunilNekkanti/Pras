@@ -123,6 +123,7 @@ function fileUploadAndProcessing() {
 						formData.append('claimOrHospital',0); 
 					else if(fileTypeText.indexOf("Hospitalization") != -1)
 						formData.append('claimOrHospital',1);  
+					formData.append('pharmacyClaim',1);
 					$.ajax({
 						url : ajaxUrl,
 						type : 'POST',

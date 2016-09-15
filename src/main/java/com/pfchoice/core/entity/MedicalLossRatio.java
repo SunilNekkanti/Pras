@@ -24,7 +24,7 @@ import com.google.gson.annotations.Expose;
  * @author sarath
  */
 @Entity
-@Table(name = "att_phy")
+@Table(name = "medical_loss_ratio")
 public class MedicalLossRatio extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -52,7 +52,7 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 	private Date reportGenDate;
 
 	@Expose
-	@Column(name = "activityMonth")
+	@Column(name = "activity_Month")
 	private Integer activityMonth;
 	
 	@Expose

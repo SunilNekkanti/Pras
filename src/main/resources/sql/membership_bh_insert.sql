@@ -165,12 +165,12 @@ order by m1;
 
 
 insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
-select  
+select  distinct
 mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth, :fileId fileId,
 now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by  
 from  membership  m  
-join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId and mi.active_ind='Y'
-join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  and mp.active_ind='Y'
+join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId 
+join  membership_provider mp  on  mp.mbr_id = mi.mbr_id  
 join  reference_contract rc on rc.prvdr_id =mp.prvdr_id and rc.insurance_id = :insId
 join contract c on c.ref_contract_id=rc.ref_contract_id
 join  activity_month_span ams on ams.activitymonth  between   DATE_FORMAT(mi.effective_strt_dt, '%Y%m') 		and  case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end

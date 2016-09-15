@@ -70,6 +70,7 @@ import com.pfchoice.core.service.MembershipHospitalizationDetailsService;
 import com.pfchoice.core.service.MembershipHospitalizationService;
 import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipService;
+import com.pfchoice.core.service.PharmacyService;
 import com.pfchoice.core.service.UnprocessedClaimService;
 import com.pfchoice.springmvc.controller.service.DBConnection;
 
@@ -142,6 +143,9 @@ public class ReportsController {
 
 	@Autowired
 	private DBConnection dBConnection;
+	
+	@Autowired
+	private PharmacyService pharmacyService;
 
 	/**
 	 * @param binder
@@ -303,6 +307,7 @@ public class ReportsController {
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
 			@RequestParam(required = false, value = "fileType") Integer fileTypeCode,
 			@RequestParam(required = false, value = "activityMonth") Integer activityMonth,
+			@RequestParam(required = false, value = "pharmacyClaim") Integer pharmacyClaim,
 			HttpServletRequest request) throws InvalidFormatException{
 		LOG.info("started file processsing");
 		java.io.File sourceFile, newSourceFile = null;
@@ -339,7 +344,11 @@ public class ReportsController {
 		LOG.info("before file processing");
 		String forwardToClaimOrHospital = null;
 		
-		if(activityMonth != null)
+		if(pharmacyClaim == 1){
+			forwardToClaimOrHospital = "forward:/admin/membership/membershipPharmacyClaim/list?fileName=" + newSourceFile.getName()
+			+ "&insId=" + insId + "&fileTypeCode=" + fileTypeCode + "&activityMonth=" + activityMonth;
+		}
+		else if(activityMonth != null)
 		{
 			forwardToClaimOrHospital = "forward:/admin/membership/membershipRoster/list?fileName=" + newSourceFile.getName()
 			+ "&insId=" + insId + "&fileTypeId=" + fileTypeCode + "&activityMonth=" + activityMonth;
@@ -447,7 +456,7 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.HOSPITALIZATION_FOLLOWUP_LIST,
 				JsonConverter.getJsonObject(pagination));
 	}
-
+	
 	/**
 	 * @return
 	 */
@@ -708,6 +717,90 @@ public class ReportsController {
 			LOG.info("processed  membershipClaim data");
 
 			LOG.info("returning membershipClaimList");
+			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
+		}
+	}
+	
+	/**
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/membership/membershipPharmacyClaim/list", "/user/membership/membershipPharmacyClaim/list" })
+	public Message viewMembershipPharmacyClaimList(@ModelAttribute("username") String username,
+			@RequestParam(required = true, value = "insId") Integer insId,
+			@RequestParam(value = "fileName", required = true) String fileName,
+			@RequestParam(value = "fileTypeCode", required = true) Integer fileTypeCode) {
+
+		LOG.info("verifying fileTypecode");
+		FileType fileType = fileTypeService.findById(fileTypeCode) ;
+		
+		if(fileType.getTablesName() == null || "".equals(fileType.getTablesName()) )
+			return Message.failMessage("File Type configuration is inproper");
+		
+		String tableName = fileType.getTablesName();
+		Boolean dataExists = pharmacyService.isDataExists(tableName);
+		LOG.info("verifying if processing table contains previous data or not ");
+		if (dataExists) {
+			return Message.failMessage("Previous file processing is incomplete");
+		} else {
+			Integer fileId = 0;
+			try {
+				File fileRecord = new File();
+				fileRecord.setFileName(fileName);
+				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setCreatedBy(username);
+				fileRecord.setUpdatedBy(username);
+				File newFile = fileService.save(fileRecord);
+				LOG.info("5");
+
+				if (newFile != null)
+					fileId = newFile.getId();
+				else
+					LOG.info("fileId is empty");
+
+			} catch (Exception e) {
+				LOG.info(e.getCause().getMessage());
+				LOG.info("Similar file already processed in past");
+				return Message.failMessage("similar file already processed in past");
+			}
+			LOG.info("Loading  membershipPharmacyClaim data" + new Date());
+			String insuranceCode  = (fileType.getInsuranceCode() == null)?"":fileType.getInsuranceCode();
+			Integer loadedData = pharmacyService.loadDataCSV2Table(fileName, insuranceCode, tableName);
+
+			Integer mbrClaimLoadedData = pharmacyService.loadData(fileId, insId, insuranceCode);
+			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
+			
+			if (loadedData < 1) {
+				return Message.failMessage("ZERO records to process");
+			}
+			/*
+			LOG.info("processing  membershipPharmacyClaim data" + new Date());
+			
+			Integer facilityTypeLoadedData = facilityTypeService.loadData(fileId, insuranceCode);
+			LOG.info("facilityTypeLoadedData " + facilityTypeLoadedData + new Date());
+			Integer billTypeLoadedData = 0;
+			if (insId == 1) {
+				billTypeLoadedData = billTypeService.loadData(fileId, insuranceCode);
+			}
+			LOG.info("billTypeLoadedData " + billTypeLoadedData + new Date());
+			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, insId, insuranceCode);
+			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId);
+			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode);
+			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
+			Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable(insId, insuranceCode);
+			LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
+			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
+			Integer unprocessedClaimLoadedData = unprocessedClaimService.loadDataCSV2Table( fileId,  insuranceCode,  tableName);
+			LOG.info("unprocessedClaimLoadedData " + unprocessedClaimLoadedData + new Date());
+			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(tableName);
+			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData + new Date());
+*/
+			LOG.info("Loading  membershipPharmacyClaim data");
+
+			//LOG.info("returning membershipClaimList");
 			return Message.successMessage(CommonMessageContent.MEMBERSHIP_CLAIMS_LIST, loadedData);
 		}
 	}

@@ -72,6 +72,8 @@ mi.class= tm.class,
 mi.planID = tm.PLAN
 where mi.SRC_SYS_MBR_NBR is not null and mi.effective_strt_dt is not null;
 
+
+
 drop table if exists temp_cur_activity_month;
 create table temp_cur_activity_month as
 select STRING_TO_DATE(DATE_FORMAT(NOW() ,'%Y-%m-01')) activitydate,
@@ -143,6 +145,15 @@ group by mp.mbr_id,mp.prvdr_id,tm.eff_start_date
 ) a on mp.mbr_id = a.mbr_id and mp.prvdr_id= a.prvdr_id and mp.eff_start_date =a.eff_start_date
 set  mp.eff_end_date = a.eff_end_date ;
  
+
+update  membership_provider mp 
+join (
+ select mi.mbr_id from membership_insurance mi 
+left join temp_membership tm  on  tm.SBSB_ID  =mi.SRC_SYS_MBR_NBR
+where tm.SBSB_ID  is null
+)missingRoster on  mp.mbr_id =missingRoster.mbr_id and mp.active_ind='Y'
+set  mp.eff_end_date = date_sub(date_format (concat(:activityMonth,'01') ,'%Y-%m-%d'), interval 1 day); 
+
 insert into membership_provider (mbr_id,prvdr_id,file_id,eff_start_date,eff_end_date,created_date,updated_date,created_by,updated_by) 
 select 
   mi.mbr_id, 
@@ -157,7 +168,7 @@ tm.eff_end_date,
  from temp_membership tm
  join  provider   d  on  CONVERT( d.code , unsigned ) =tm.PRPRNPI 
  join membership_insurance mi on mi.SRC_SYS_MBR_NBR = tm.SBSB_ID 
- left outer join membership_provider mp on mp.prvdr_id= d.prvdr_id and mp.mbr_id=mi.mbr_id 
+ left outer join membership_provider mp on mp.prvdr_id= d.prvdr_id and mp.mbr_id=mi.mbr_id and mp.active_ind='Y'
  where case when mp.mbr_id is not null then mp.prvdr_id is null  else mp.mbr_id is  null  end 
 group by tm.MCDMCR,tm.PRPRNPI,tm.eff_start_date; 
 
@@ -195,12 +206,12 @@ order by m1;
 alter table activity_month_span add key activitymonth(activitymonth);
 
 insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
-select  
+select  distinct
 mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth, :fileId fileId,
 now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by 
 from  membership  m  
-join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id= :insId  and mi.active_ind='Y'
-join  membership_provider mp  on  mp.mbr_id = mi.mbr_id   and mp.active_ind='Y'
+join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id= :insId  
+join  membership_provider mp  on  mp.mbr_id = mi.mbr_id   
 join  reference_contract rc on rc.prvdr_id =mp.prvdr_id and rc.insurance_id = :insId
 join contract c on c.ref_contract_id=rc.ref_contract_id
 join  activity_month_span ams on  ams.activitymonth  between   DATE_FORMAT(mi.effective_strt_dt, '%Y%m') 		and  case when mi.effecctive_end_dt is not null then  DATE_FORMAT(mi.effecctive_end_dt , '%Y%m') else :activityMonth end
@@ -215,6 +226,16 @@ select m.Mbr_Id, now() created_date, now() updated_date,'sarath','sarath'
 from membership m
 left outer join reference_contact rc on rc.mbr_id =m.mbr_id
 where rc.mbr_id is null ;
+
+update membership_activity_month mam
+ join (select  max(activity_month) activity_month ,mbr_id  from membership_activity_month where ins_id=:insId group by mbr_id) max_mam
+ on max_mam.activity_month =mam.activity_month and max_mam.mbr_id=mam.mbr_id
+join 
+(select  mi.mbr_id from  membership_insurance mi 
+left join temp_membership tm  on  mi.SRC_SYS_MBR_NBR=tm.SBSB_ID  
+where tm.SBSB_ID  is null and mi.ins_id=:insId 
+)missingRoster  on  max_mam.mbr_id=missingRoster.mbr_id  
+set roster_flag='Y';
 
 insert  into contact (ref_cnt_id,home_phone,mobile_phone,address1,address2,city,zipcode,statecode,file_id,created_Date,updated_date,created_by,updated_by)
 select
