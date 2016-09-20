@@ -1,0 +1,1 @@
+ call MLR_REPORT (:tableName)

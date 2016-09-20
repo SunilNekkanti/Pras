@@ -142,7 +142,8 @@ public enum TileDefinitions {
 																																																																																																																																																																																																																																																																											"membershipProblemNew"),MEMBRESHIPPROBLEMLIST(
 																																																																																																																																																																																																																																																																													"membershipProblemList"),MEMBRESHIPPROBLEMEDIT(
 																																																																																																																																																																																																																																																																															"membershipProblemEdit"),FILEUPLOAD(
-																																																																																																																																																																																																																																																																																	"fileUpload");
+																																																																																																																																																																																																																																																																																	"fileUpload"),MEDICALLOSSRATIOLIST(
+																																																																																																																																																																																																																																																																																			"medicalLossRatio");
 
 	private final String text;
 

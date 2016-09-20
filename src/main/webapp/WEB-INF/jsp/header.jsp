@@ -578,6 +578,9 @@ $(document).ready(function () {
 							<li><a
 								href="${context}/${userpath}/reports/membershipActivityMonthList">Activity
 									Month</a></li>
+									<li><a
+								href="${context}/${userpath}/reports/medicalLossRatioList">MLR
+									</a></li>
 						</ul></li>
 
 					<li><a href="#">Alerts <span class="badge"> 0</span></a></li>

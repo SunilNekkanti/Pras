@@ -119,11 +119,13 @@ function fileUploadAndProcessing() {
 					var ajaxUrl = getContextPath()
 					+ 'reports/claim/fileProcessing.do';
 					formData.append('fileUpload',$('input[type=file]')[0].files[0]);
-					if(fileTypeText.indexOf("Claim") != -1)
+					if(fileTypeText.indexOf("Pharmacy") != -1)
+						formData.append('pharmacyClaim',1);
+					else if(fileTypeText.indexOf("Claim") != -1)
 						formData.append('claimOrHospital',0); 
 					else if(fileTypeText.indexOf("Hospitalization") != -1)
 						formData.append('claimOrHospital',1);  
-					formData.append('pharmacyClaim',1);
+					
 					$.ajax({
 						url : ajaxUrl,
 						type : 'POST',

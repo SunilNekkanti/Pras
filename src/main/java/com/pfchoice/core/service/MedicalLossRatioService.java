@@ -27,16 +27,29 @@ public interface MedicalLossRatioService {
 	 * @return
 	 */
 	Pagination getPage(int pageNo, int pageSize);
-
+	
+	
 	/**
 	 * @param pageNo
 	 * @param pageSize
+	 * @param insId
 	 * @param sSearch
 	 * @param sort
 	 * @param sortdir
 	 * @return
 	 */
-	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getMlrReportDate(Integer pageNo, Integer pageSize, Integer insId, Integer prvdrId,  String sort, String sortdir);
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param insId
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	Pagination getPage(Integer pageNo, Integer pageSize, Integer insId, Integer prvdrId, String sSearch, String sort, String sortdir);
 
 	/**
 	 * @param bean
@@ -55,5 +68,11 @@ public interface MedicalLossRatioService {
 	 * @return
 	 */
 	Integer loadData(Integer fileId);
+	
+	/**
+	 * @param tableName
+	 * @return
+	 */
+	String reportQuery(String tableName);
 
 }

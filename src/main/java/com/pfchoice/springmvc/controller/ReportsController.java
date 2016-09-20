@@ -52,6 +52,7 @@ import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.MedicalLossRatio;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.AttPhysicianService;
@@ -62,6 +63,7 @@ import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.FollowupTypeService;
 import com.pfchoice.core.service.HospitalService;
 import com.pfchoice.core.service.InsuranceService;
+import com.pfchoice.core.service.MedicalLossRatioService;
 import com.pfchoice.core.service.MembershipClaimDetailsService;
 import com.pfchoice.core.service.MembershipClaimService;
 import com.pfchoice.core.service.MembershipFollowupService;
@@ -146,6 +148,9 @@ public class ReportsController {
 	
 	@Autowired
 	private PharmacyService pharmacyService;
+	
+	@Autowired
+	private MedicalLossRatioService mlrService;
 
 	/**
 	 * @param binder
@@ -344,7 +349,7 @@ public class ReportsController {
 		LOG.info("before file processing");
 		String forwardToClaimOrHospital = null;
 		
-		if(pharmacyClaim == 1){
+		if(pharmacyClaim != null && pharmacyClaim == 1){
 			forwardToClaimOrHospital = "forward:/admin/membership/membershipPharmacyClaim/list?fileName=" + newSourceFile.getName()
 			+ "&insId=" + insId + "&fileTypeCode=" + fileTypeCode + "&activityMonth=" + activityMonth;
 		}
@@ -705,8 +710,8 @@ public class ReportsController {
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
-			Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable(insId, insuranceCode);
-			LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
+		//	Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable(insId, insuranceCode);
+		//	LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
 			Integer unprocessedClaimLoadedData = unprocessedClaimService.loadDataCSV2Table( fileId,  insuranceCode,  tableName);
@@ -883,6 +888,67 @@ public class ReportsController {
 		LOG.info("Returning view.jsp page after create");
 		return TileDefinitions.MEMBERSHIPACTIVITYMONTHLIST.toString();
 	}
+	
+	
+	/**
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/reports/medicalLossRatioList",
+			"/user/reports/medicalLossRatioList" }, method = RequestMethod.GET)
+	public String viewMedicalLossReportList() {
+
+		LOG.info("Returning Medical Loss Report Listjsp page after create");
+		return TileDefinitions.MEDICALLOSSRATIOLIST.toString();
+	}
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/medicalLossRatio/list", "/user/medicalLossRatio/list" }, method = RequestMethod.GET)
+	public Message viewInsuranceList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = mlrService.getPage(pageNo, pageSize, insId, prvdrId, sSearch, sort, sortdir);
+		String resQuery = mlrService.reportQuery("x201609191540");
+		LOG.info("resQuery is "+resQuery);
+		
+		HashMap<String, Object> rptParams =  new HashMap<>();
+		rptParams.put("insId",insId);
+		
+		String fileName = "AMGMonthlyStatisticsDashboard";
+		LOG.info("returning insuranceList");
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/mlrReportDate/list", "/user/mlrReportDate/list" }, method = RequestMethod.GET)
+	public Message viewMLRReportDate(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = mlrService.getMlrReportDate(pageNo, pageSize, insId, prvdrId, sort, sortdir);
+		LOG.info("returning insuranceList");
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
 
 	/**
 	 * @return

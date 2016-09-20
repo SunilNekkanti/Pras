@@ -186,7 +186,7 @@ select
 (select min(strt_date)
 from 
  (
-select min(effective_strt_dt) strt_date from membership_insurance  mi where mi.ins_id = 2 
+select min(effective_strt_dt) strt_date from membership_insurance  mi where mi.ins_id = :insId 
 union 
 select min(eff_start_date) strt_date  from membership_provider 
 ) a)

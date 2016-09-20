@@ -825,4 +825,11 @@
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/hedisMeasureGroupEdit.jsp" />
 	</definition>
+	<!--  medical Loss Report -->
+	<definition name="medicalLossRatio" extends="base.definition">
+		<put-attribute name="title" value="Medical Loss Report" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/medicalLossRatioList.jsp" />
+	</definition>
+	
 </tiles-definitions>  

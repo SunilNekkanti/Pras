@@ -1,19 +1,28 @@
 package com.pfchoice.core.dao.impl;
 
+import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+
+import java.util.Iterator;
+import java.util.List;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MedicalLossRatioDao;
 import com.pfchoice.core.entity.MedicalLossRatio;
+import com.pfchoice.core.entity.MedicalLossRatioGenerateDate;
 
 /**
  *
@@ -21,6 +30,7 @@ import com.pfchoice.core.entity.MedicalLossRatio;
  */
 @Repository
 public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, Integer> implements MedicalLossRatioDao {
+
 
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#getPage(int, int)
@@ -37,17 +47,60 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+	public Pagination getPage(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId, final String sSearch, final String sort,
 			final String sortdir) {
+		
+		System.out.println(" pageNo "+pageNo+" pageSize "+pageSize+" insId "+insId+" prvdrId "+prvdrId );
+		
 		Disjunction or = Restrictions.disjunction();
 
-		if (sSearch != null && !"".equals(sSearch)) {
-			or.add(Restrictions.ilike("name", "%" + sSearch + "%"))
-					.add(Restrictions.ilike("code", "%" + sSearch + "%"));
-		}
-		Criteria crit = createCriteria();
+		
+		Criteria crit = createCriteria().createAlias("ins", "ins")
+				.createAlias("prvdr", "prvdr");
 		crit.add(Restrictions.eq("activeInd", 'Y'));
+		crit.add(Restrictions.eq("ins.id", insId));
+		crit.add(Restrictions.eq("prvdr.id", prvdrId));
 		crit.add(or);
+
+		if (sort != null && !"".equals(sort)) {
+			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
+				crit.addOrder(Order.desc(sort));
+			} else {
+				crit.addOrder(Order.asc(sort));
+			}
+		}
+
+		return findByCriteria(crit, pageNo, pageSize);
+
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#getMlrReportDate(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId, final String sort,
+			final String sortdir) {
+		
+		System.out.println(" pageNo "+pageNo+" pageSize "+pageSize+" insId "+insId+" prvdrId "+prvdrId );
+		
+
+		
+		Criteria crit = createCriteria().createAlias("ins", "ins")
+				.createAlias("prvdr", "prvdr");
+		crit.add(Restrictions.eq("activeInd", 'Y'));
+		crit.add(Restrictions.eq("ins.id", insId));
+		if(prvdrId != ALL)
+			crit.add(Restrictions.eq("prvdr.id", prvdrId));
+		
+		ProjectionList projList = Projections.projectionList(); 
+		projList.add(Projections.property("reportGenDate").as("reportDate"));
+		projList.add(Projections.property("ins.id").as("insId"));
+		projList.add(Projections.property("prvdr.id").as("prvdrId"));
+        projList.add(Projections.groupProperty("ins.id").as("insId"));
+        projList.add(Projections.groupProperty("prvdr.id").as("prvdrId"));
+        crit.setProjection(projList);
+        crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
 		if (sort != null && !"".equals(sort)) {
 			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
@@ -123,4 +176,32 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 		return findUniqueByProperty("code", code);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.Integer, java.lang.String)
+	 */
+	@SuppressWarnings({ "unchecked","rawtypes" })
+	@Override
+	public String reportQuery( final String tableName){
+		assert tableName !=null && !"".equals(tableName);
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
+
+		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName);
+		
+		List<String> list =  query.list();
+		if(list.size() ==0 ){
+			return null;
+		}
+		System.out.println("res query is "+list.get(0)); 
+		SQLQuery  query1 =     (SQLQuery) getSession().createSQLQuery(list.get(0));
+		List  list1 =  query1.list();
+			
+			for (Iterator it = list1.iterator(); it.hasNext();) {
+				Object[] row = (Object[]) it.next(); 
+				for (int i = 0; i < row.length; i++) { 
+					System.out.println(row[i]); 
+					}
+			}
+
+		return list.get(0);
+	}
 }

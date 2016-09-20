@@ -145,11 +145,11 @@
 											+ full.mbr.firstName + '</a>';
 								}
 							});
-							columns.push({	"mDataProp" : "claimNumber", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });							
+							columns.push({	"mDataProp" : "claimNumber", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" , "sDefaultContent": "" });							
 							columns.push({  "mDataProp" : "prvdr.name",	"bSearchable" : true,	"bSortable" : true,	"sClass" : "center widthM",	"sWidth" : "10%", "sDefaultContent": ""  });
 							columns.push({	"mDataProp" : "claimType", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": ""   });
 							columns.push({	"mDataProp" : "facilityType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center widthM", "sWidth" : "10%", "sDefaultContent": "" });
-							columns.push({	"mDataProp" : "diagnosis",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" });
+							columns.push({	"mDataProp" : "diagnosis",  "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%" , "sDefaultContent": ""});
 							columns.push({	"mDataProp" : "tin", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "billType.description", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });
 							columns.push({	"mDataProp" : "billTypec", "bSearchable" : true, "bSortable" : true, "sClass" : "center", "sWidth" : "10%", "sDefaultContent": "" });

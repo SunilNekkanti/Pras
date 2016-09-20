@@ -53,9 +53,20 @@ public class MedicalLossRatioServiceImpl implements MedicalLossRatioService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+	public Pagination getPage(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId, final String sSearch, final String sort,
 			final String sortdir) {
-		return medicalLossRatioDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+		return medicalLossRatioDao.getPage(pageNo, pageSize, insId, prvdrId, sSearch, sort, sortdir);
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MedicalLossRatioService#getMlrReportDate(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId,  final String sort,
+			final String sortdir) {
+		return medicalLossRatioDao.getMlrReportDate(pageNo, pageSize, insId, prvdrId,  sort, sortdir);
 	}
 
 	/* (non-Javadoc)
@@ -85,5 +96,11 @@ public class MedicalLossRatioServiceImpl implements MedicalLossRatioService {
 		return medicalLossRatioDao.loadData(fileId);
 	}
 
-
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MedicalLossRatioService#reportQuery(java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public String reportQuery(final String tableName){
+		return medicalLossRatioDao.reportQuery(tableName);
+	}
 }

@@ -106,7 +106,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 
 	@Expose
 	@Column(name = "allow_amt")
-	private double allowAmt;
+	private Double allowAmt;
 
 	@Expose
 	@Column(name = "co_insurance")
@@ -465,7 +465,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	/**
 	 * @return the allowAmt
 	 */
-	public double getAllowAmt() {
+	public Double getAllowAmt() {
 		return allowAmt;
 	}
 
@@ -473,7 +473,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	 * @param allowAmt
 	 *            the allowAmt to set
 	 */
-	public void setAllowAmt(double allowAmt) {
+	public void setAllowAmt(Double allowAmt) {
 		this.allowAmt = allowAmt;
 	}
 

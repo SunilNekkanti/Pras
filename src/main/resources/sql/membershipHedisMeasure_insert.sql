@@ -183,7 +183,19 @@ create temporary table hedisMeasureByCPT1 as select * from hedisMeasureByCPT whe
 drop table if exists hedisMeasureByICD1;
 create temporary table hedisMeasureByICD1 as select * from hedisMeasureByICD  where cpt_or_icd =2;
 
+update membership_hedis_measure mhm
+left join 
+(select * from hedisMeasureByCPT  where cpt_or_icd =0
+ union 
+ select * from hedisMeasureByICD  where cpt_or_icd =1
+ union
+ (select a.* from hedisMeasureByCPT1  a 
+    inner join   hedisMeasureByICD1 b using (mbr_id,hedis_msr_rule_id) )
+ ) a  on a.mbr_id=mhm.mbr_id and a.hedis_msr_rule_id=mhm.hedis_msr_rule_id 
+ set active_ind='N'
+ where  mhm.active_ind='Y' and case when a.mbr_id is not null then  a.hedis_msr_rule_id is null else  a.mbr_id is  null end;
 
+ 
 INSERT INTO membership_hedis_measure (
 mbr_id,hedis_msr_rule_id,due_date,date_of_service,follow_up_ind,created_date,updated_date,created_by,updated_by,active_ind,file_id
  ) 
@@ -198,6 +210,6 @@ select
  (select a.* from hedisMeasureByCPT1  a 
     inner join   hedisMeasureByICD1 b using (mbr_id,hedis_msr_rule_id) )
  ) a 
- left outer join membership_hedis_measure mhm  on a.mbr_id=mhm.mbr_id and a.hedis_msr_rule_id=mhm.hedis_msr_rule_id
+ left outer join membership_hedis_measure mhm  on a.mbr_id=mhm.mbr_id and a.hedis_msr_rule_id=mhm.hedis_msr_rule_id and active_ind='Y'
  where   case when mhm.mbr_id is not null then  mhm.hedis_msr_rule_id is null else  mhm.mbr_id is  null end;
 

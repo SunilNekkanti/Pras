@@ -5,7 +5,7 @@ created_date, updated_date, created_by, updated_by,active_ind
 )
 SELECT NULL, PHARMACYNAME, PHARMACYADDRLINE1,PHARMACYADDRLINE2,
 PHARMACYCITYNAME, PHARMACYSTATECODE, PHARMACYZIP, PHARMACYPHONENUMBER, PHARMACYNCPDPNUMBER,
-PHARMACYNPINUMBER, PHARMACYNUMBER, 2, now(),now(),'sarath','sarath','Y' 
+PHARMACYNPINUMBER, PHARMACYNUMBER, :fileId, now(),now(),'sarath','sarath','Y' 
 FROM 
 csv2table_amg_pharmacy csv2talbe_phar
 LEFT OUTER JOIN  pharmacy phar  on TRIM(csv2talbe_phar.PHARMACYNAME)  =  phar.name

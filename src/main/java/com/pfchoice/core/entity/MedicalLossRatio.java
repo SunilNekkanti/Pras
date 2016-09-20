@@ -39,7 +39,7 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 	@Expose
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ins_id", nullable = false, referencedColumnName = "insurance_id")
-	private Insurance insId;
+	private Insurance ins;
 
 	@Expose
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -110,12 +110,12 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 		this.id = id;
 	}
 
-	public Insurance getInsId() {
-		return insId;
+	public Insurance getIns() {
+		return ins;
 	}
 
-	public void setInsId(Insurance insId) {
-		this.insId = insId;
+	public void setIns(Insurance ins) {
+		this.ins = ins;
 	}
 
 	public Provider getPrvdr() {
