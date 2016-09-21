@@ -50,10 +50,7 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	public Pagination getPage(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId, final String sSearch, final String sort,
 			final String sortdir) {
 		
-		System.out.println(" pageNo "+pageNo+" pageSize "+pageSize+" insId "+insId+" prvdrId "+prvdrId );
-		
 		Disjunction or = Restrictions.disjunction();
-
 		
 		Criteria crit = createCriteria().createAlias("ins", "ins")
 				.createAlias("prvdr", "prvdr");
@@ -81,10 +78,6 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	@Override
 	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId, final String sort,
 			final String sortdir) {
-		
-		System.out.println(" pageNo "+pageNo+" pageSize "+pageSize+" insId "+insId+" prvdrId "+prvdrId );
-		
-
 		
 		Criteria crit = createCriteria().createAlias("ins", "ins")
 				.createAlias("prvdr", "prvdr");
@@ -186,22 +179,19 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName);
-		
-		List<String> list =  query.list();
+		List list =  query.list();
 		if(list.size() ==0 ){
 			return null;
 		}
-		System.out.println("res query is "+list.get(0)); 
-		SQLQuery  query1 =     (SQLQuery) getSession().createSQLQuery(list.get(0));
-		List  list1 =  query1.list();
-			
-			for (Iterator it = list1.iterator(); it.hasNext();) {
-				Object[] row = (Object[]) it.next(); 
-				for (int i = 0; i < row.length; i++) { 
-					System.out.println(row[i]); 
-					}
-			}
+		System.out.println(list.size());
+		for (Iterator it = list .iterator(); it.hasNext();) {
+			Object[] row = (Object[]) it.next(); 
+			for (int i = 0; i < row.length; i++) { 
+				System.out.print(" "+row[i]); 
+				}
+			System.out.println("");
+		}
 
-		return list.get(0);
+		return query.getQueryString();
 	}
 }

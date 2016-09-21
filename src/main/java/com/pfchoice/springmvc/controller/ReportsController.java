@@ -52,7 +52,6 @@ import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.Insurance;
-import com.pfchoice.core.entity.MedicalLossRatio;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.service.AttPhysicianService;
@@ -918,13 +917,12 @@ public class ReportsController {
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
 		Pagination pagination = mlrService.getPage(pageNo, pageSize, insId, prvdrId, sSearch, sort, sortdir);
-		String resQuery = mlrService.reportQuery("x201609191540");
+		String resQuery = mlrService.reportQuery("sarath20160921");
 		LOG.info("resQuery is "+resQuery);
 		
 		HashMap<String, Object> rptParams =  new HashMap<>();
 		rptParams.put("insId",insId);
 		
-		String fileName = "AMGMonthlyStatisticsDashboard";
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
 	}

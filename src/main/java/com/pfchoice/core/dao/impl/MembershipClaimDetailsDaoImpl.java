@@ -171,8 +171,9 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 		crit.add(or);
 
 		crit.setProjection(Projections.distinct(Projections.property("id")));
-		List<Integer> MbrClaimDetailIds = (List<Integer>) crit.list();
-		int totalCount = (MbrClaimDetailIds.isEmpty()) ? 0 : MbrClaimDetailIds.size();
+		List<Integer> mbrClaimDetailIds = (List<Integer>) crit.list();
+		
+		int totalCount = (mbrClaimDetailIds.isEmpty()) ? 0 : mbrClaimDetailIds.size();
 
 		if (totalCount == 0) {
 			return findByCriteria(crit, pageNo, pageSize);
@@ -180,14 +181,14 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 			Criteria criteria = createCriteria().createAlias("mbrClaim", "mbrClaim")
 					.createAlias("mbrClaim.mbr", "mbr")
 					.createAlias("cpt", "cpt", JoinType.LEFT_OUTER_JOIN)
-					.createAlias("mbrClaim.prvdr", "prvdr")
-					.createAlias("mbrClaim.ins", "ins")
+					.createAlias("mbrClaim.prvdr", "prvdr", JoinType.LEFT_OUTER_JOIN)
+					.createAlias("mbrClaim.ins", "ins", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.frequencyType", "frequency", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.facilityType", "facilityType", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrClaim.billType", "billType", JoinType.LEFT_OUTER_JOIN);
 
-			criteria.add(Restrictions.in("id", MbrClaimDetailIds));
-			if (sort != null && sortdir != null && "desc".equals(sortdir)) {
+			criteria.add(Restrictions.in("id", mbrClaimDetailIds));
+		/*	if (sort != null && sortdir != null && "desc".equals(sortdir)) {
 					if ("mbrClaim.mbr.lastName".equals(sort)) {
 						criteria.addOrder(Order.desc("mbr.lastname"));
 					}
@@ -209,7 +210,7 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 
 			criteria.addOrder(Order.asc("mbr.lastName")).addOrder(Order.asc("mbr.firstName"))
 					.addOrder(Order.asc("mbrClaim.claimNumber")).addOrder(Order.asc("claimLineseqNbr"));
-
+*/
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 
