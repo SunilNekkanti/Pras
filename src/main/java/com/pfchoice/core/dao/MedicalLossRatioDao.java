@@ -1,5 +1,7 @@
 package com.pfchoice.core.dao;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.MedicalLossRatio;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
@@ -7,6 +9,10 @@ import ml.rugal.sshcommon.page.Pagination;
 /**
  *
  * @author Sarath
+ */
+/**
+ * @author Ecomed PHP
+ *
  */
 public interface MedicalLossRatioDao {
 
@@ -83,10 +89,9 @@ public interface MedicalLossRatioDao {
 	 */
 	MedicalLossRatio findByCode(String code);
 	
-	/**
-	 * @param fileId
+	 /**
 	 * @param tableName
 	 * @return
 	 */
-	String reportQuery(String tableName);
+	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate);
 }

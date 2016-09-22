@@ -1,5 +1,7 @@
 package com.pfchoice.core.service;
 
+import java.util.List;
+
 import com.pfchoice.core.entity.MedicalLossRatio;
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -69,10 +71,11 @@ public interface MedicalLossRatioService {
 	 */
 	Integer loadData(Integer fileId);
 	
+	
 	/**
 	 * @param tableName
 	 * @return
 	 */
-	String reportQuery(String tableName);
+	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate);
 
 }

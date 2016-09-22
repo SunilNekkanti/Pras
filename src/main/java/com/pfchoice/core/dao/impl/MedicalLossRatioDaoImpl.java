@@ -3,7 +3,6 @@ package com.pfchoice.core.dao.impl;
 import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 
-import java.util.Iterator;
 import java.util.List;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
@@ -83,15 +82,17 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 				.createAlias("prvdr", "prvdr");
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		crit.add(Restrictions.eq("ins.id", insId));
-		if(prvdrId != ALL)
-			crit.add(Restrictions.eq("prvdr.id", prvdrId));
 		
 		ProjectionList projList = Projections.projectionList(); 
-		projList.add(Projections.property("reportGenDate").as("reportDate"));
 		projList.add(Projections.property("ins.id").as("insId"));
-		projList.add(Projections.property("prvdr.id").as("prvdrId"));
-        projList.add(Projections.groupProperty("ins.id").as("insId"));
-        projList.add(Projections.groupProperty("prvdr.id").as("prvdrId"));
+		projList.add(Projections.groupProperty("ins.id").as("insId"));
+        projList.add(Projections.groupProperty("reportGenDate").as("reportDate"));
+         
+		if(prvdrId != ALL) {
+			projList.add(Projections.property("prvdr.id").as("prvdrId"));
+			crit.add(Restrictions.eq("prvdr.id", prvdrId));
+		}
+           
         crit.setProjection(projList);
         crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
@@ -169,29 +170,20 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 		return findUniqueByProperty("code", code);
 	}
 
+	
 	/* (non-Javadoc)
-	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.Integer, java.lang.String)
+	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
-	@SuppressWarnings({ "unchecked","rawtypes" })
 	@Override
-	public String reportQuery( final String tableName){
+	@SuppressWarnings("unchecked")
+	public List<Object[]> reportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate){
 		assert tableName !=null && !"".equals(tableName);
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
-		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName);
-		List list =  query.list();
-		if(list.size() ==0 ){
-			return null;
-		}
-		System.out.println(list.size());
-		for (Iterator it = list .iterator(); it.hasNext();) {
-			Object[] row = (Object[]) it.next(); 
-			for (int i = 0; i < row.length; i++) { 
-				System.out.print(" "+row[i]); 
-				}
-			System.out.println("");
-		}
-
-		return query.getQueryString();
+		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName)
+				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repGenDate", repGenDate);
+		
+		List<Object[]> entities =  query.list();
+		return entities;
 	}
 }

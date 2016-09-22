@@ -147,12 +147,18 @@ set  mp.eff_end_date = a.eff_end_date ;
  
 
 update  membership_provider mp 
-join (
- select mi.mbr_id from membership_insurance mi 
-left join temp_membership tm  on  tm.SBSB_ID  =mi.SRC_SYS_MBR_NBR
-where tm.SBSB_ID  is null
-)missingRoster on  mp.mbr_id =missingRoster.mbr_id and mp.active_ind='Y'
-set  mp.eff_end_date = date_sub(date_format (concat(:activityMonth,'01') ,'%Y-%m-%d'), interval 1 day); 
+left join (
+ 	select tm.SBSB_ID,mp.mbr_id,mp.prvdr_id, tm.eff_start_date
+  		from  membership_provider mp 
+ 		join  membership_insurance mi on  mp.mbr_id = mi.mbr_id 
+ 		join temp_membership tm  on  tm.SBSB_ID  =mi.SRC_SYS_MBR_NBR
+ 		join provider  p  on tm.PRPRNPI  = CONVERT( p.code , unsigned ) and p.prvdr_id = mp.prvdr_id    
+		where 	  mp.active_ind='Y' and mi.active_ind='Y'
+		group by mp.mbr_id,mp.prvdr_id 
+) missingRoster  on mp.mbr_id = missingRoster.mbr_id and mp.prvdr_id=missingRoster.prvdr_id 
+set  mp.eff_end_date = case when missingRoster.eff_start_date is not null then missingRoster.eff_start_date else  date_sub(date_format (concat(:activityMonth,'01') ,'%Y-%m-%d'), interval 1 day) end
+where case when  missingRoster.SBSB_ID is not   null then missingRoster.prvdr_id  is null else missingRoster.SBSB_ID is   null end and mp.active_ind='Y';
+ 
 
 insert into membership_provider (mbr_id,prvdr_id,file_id,eff_start_date,eff_end_date,created_date,updated_date,created_by,updated_by) 
 select 

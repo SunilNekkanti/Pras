@@ -184,14 +184,14 @@ table#cptListTable, table#icdListTable {
 	.widthM {
 		width: 250px;
 	}
-	#membershipTable, #membershipClaimTable, #membershipTable,
+	#membershipTable, #membershipClaimTable, #membershipTable, #medicalLossRatio,
 		#membershipActivityMonth, #membershipHospitalizationTable {
 		min-width: 1200px;
 	}
 }
 
 @media only screen and (max-width: 768px) {
-	#membershipTable, #membershipClaimTable, #membershipTable,
+	#membershipTable, #membershipClaimTable, #membershipTable, #medicalLossRatio,
 		#membershipActivityMonth, #membershipHospitalizationTable {
 		width: 100% !important;
 	}

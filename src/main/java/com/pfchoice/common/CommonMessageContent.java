@@ -96,4 +96,5 @@ public interface CommonMessageContent {
 	
 	String FILE_TYPE_UPLOAD = "File Upload List";
 
+	String MEDICAL_LOSS_RATIO_REPORT_DATA = "Medical Loss Ratio report data";
 }

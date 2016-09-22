@@ -3,6 +3,8 @@ package com.pfchoice.core.service.impl;
 import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,11 +98,12 @@ public class MedicalLossRatioServiceImpl implements MedicalLossRatioService {
 		return medicalLossRatioDao.loadData(fileId);
 	}
 
+	
 	/* (non-Javadoc)
-	 * @see com.pfchoice.core.service.MedicalLossRatioService#reportQuery(java.lang.Integer, java.lang.String)
+	 * @see com.pfchoice.core.service.MedicalLossRatioService#reportQuery(java.lang.String)
 	 */
 	@Override
-	public String reportQuery(final String tableName){
-		return medicalLossRatioDao.reportQuery(tableName);
+	public List<Object[]> reportQuery(final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate){
+		return medicalLossRatioDao.reportQuery(tableName, insId, prvdrId, repGenDate);
 	}
 }

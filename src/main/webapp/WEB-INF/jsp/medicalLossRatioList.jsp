@@ -49,6 +49,7 @@ $(document).ready(function() {
  				     var s = $('<select id=\"mlrPrvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
  				     //iterate over the data and append a select option
  				     $.each(data.data.list, function(key, val){
+ 				    	 
  				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
  				     });
  				     s.append('<option value="9999">All</option>');
@@ -83,11 +84,17 @@ $(document).ready(function() {
 					     //iterate over the data and append a select option
 					     s.append('<option value="">select Report Geerate Date</option>');
 					     $.each(data.data.list, function(key, val){
-					    	 s.append('<option value="'+val.reportDate+'">' + val.reportDate +'</option>');
+					    	 var date = new Date(val.reportDate);
+					    	 var m = (date.getMonth() + 1);
+					    	 if(m < 10 ) { m = '0'+(date.getMonth() + 1);}
+					    	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
+					    	 s.append('<option value="'+date+'">' + val.reportDate +'</option>');
 					     });
-					     s.append('<option value="9999">All</option>');
+					     if(data.data.list.length > 1)
+					     	s.append('<option value="9999">All</option>');
 					     s.append('</select>');
 					     $selectReportDat.html(s);
+					  
 				 }).success(function() { 
 					var reportDateSelectValue = Cookies.get('mlrReportDate');
 				 if(reportDateSelectValue != undefined) 
@@ -128,18 +135,13 @@ $(document).ready(function() {
     		   var prvdrSelectValue= $("#mlrPrvdr option:selected").val();
     		   var reportDateSelectValue= $("#mlrReportDate option:selected").val();
     		   
-    		   var ruleArray = new Array;
-    		    $("#mlrReportDate option").each  ( function() {
-    		    	ruleArray.push ( $(this).val() );
-    		    });
-
     		    
     		   if ( $.fn.DataTable.isDataTable('#medicalLossRatio') ) {
   						$('#medicalLossRatio').DataTable().destroy();
 			   }
     		  
 				$('#medicalLossRatio tbody').empty();
-    		   GetMembershipByInsPrvdr(insSelectValue,prvdrSelectValue,reportDateSelectValue, ruleArray, columns);
+    		   GetMembershipByInsPrvdr(insSelectValue,prvdrSelectValue,reportDateSelectValue, columns);
     	}  
     	     
     	$(document.body).on('change',"#mlrInsu",function (e) {
@@ -159,9 +161,9 @@ $(document).ready(function() {
 					$('#medicalLossRatio').DataTable().destroy();
 	   		}
     		$('#medicalLossRatio tbody').empty();
+    		reportDateDropdown();
   		});
     	
-    
      	
   	  var datatable2RestMembership = function(sSource, aoData, fnCallback) {
      		
@@ -184,19 +186,17 @@ $(document).ready(function() {
 		   var sSearchIns = paramMap.sSearchIns;
 		   var sSearchPrvdr = paramMap.sSearchPrvdr;
 		   var sSearchGenerateDate = paramMap.sSearchGenerateDate;
-		   var ruleIds = paramMap.ruleIds;
 		   
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
 		   restParams.push({"name" : "pageSize", "value" : pageSize});
 		   restParams.push({"name" : "pageNo", "value" : pageNum });
-		   restParams.push({"name" : "sort", "value" : sortName });
+		   restParams.push({"name" : "sort", "value" : "reportGenDate" });
 		   restParams.push({"name" : "sortdir", "value" : sortDir });
 		   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
 		   restParams.push({"name" : "insId" , "value" : sSearchIns  });
 		   restParams.push({"name" : "prvdrId" , "value" : sSearchPrvdr  });
-		   restParams.push({"name" : "sSearchGenerateDate" , "value" : sSearchGenerateDate  });
-		   restParams.push({"name" : "ruleIds" , "value" : ruleIds  });
+		   restParams.push({"name" : "repGenDate" , "value" : sSearchGenerateDate  });
 		   
 		   if($( window ).width() > 900){
 				 var width;
@@ -214,9 +214,22 @@ $(document).ready(function() {
               url: sSource,
               data: restParams,
               success: function(res) {
-                  res.iTotalRecords = res.data.totalCount;
-                  res.iTotalDisplayRecords = res.data.totalCount;
-             		fnCallback(res);
+            	  jQuery.each(res.data, function( i, val ) {
+             		 if(i == 0){
+             			 jQuery.each(val, function( index, text ) {
+             			//	 if(index > 1)
+             					$("#medicalLossRatio thead tr").append('<th>'+text+'</th>');
+             					//$("#medicalLossRatio thead tr").append('<th scope="col" role="row" class="sorting_asc" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sno: activate to sort column descending">'+text+'</th>');
+             			 });
+             			
+             		 }
+             		  
+             		});
+             	     	  
+             	  //clear the current content of the select
+                   res.iTotalRecords = res.data.length-1;
+                   res.iTotalDisplayRecords = res.data.length-1;
+                   fnCallback(res);
              		
             },
               error : function (e) {
@@ -232,25 +245,41 @@ $(document).ready(function() {
 	        	 "buttons": [
 	        	             {
 	        	                 extend: 'excelHtml5',
-	        	                 title: 'Membership Activity Month Table Export'
+	        	                 title: 'Medical Loss Ratio Table Export'
 	        	             }
 	        	             
 		                   ],
   	         "bDestroy" : true,	
      	     "sAjaxSource" : getContextPath()+'/medicalLossRatio/list',
-     	     "sAjaxDataProp" : 'data.list',
-              "aoColumns":  aoColumns,      
+     	     "sAjaxDataProp" : 'data',
      	     "bLengthChange": false,
-     	     "iDisplayLength": 15,
+     	     "bPagination":false,
+     	     "iDisplayLength": 100,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
+     	     "initComplete": function(settings, json) {
+	    		 var totalRecord = $("#medicalLossRatio tbody tr").length -1;
+		    	     jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
+		    	    		 if(index == 0)
+		    	    			$("#medicalLossRatio tbody tr").eq(index).remove();
+		    	    });
+	     	 },
+	     	"fnDrawCallback": function() {
+	     	    var $paginate = this.siblings('.dataTables_paginate');
+
+	     	    if (this.api().data().length <= this.fnSettings()._iDisplayLength){
+	     	        $paginate.hide();
+	     	    }
+	     	    else{
+	     	        $paginate.show();
+	     	    }
+	     	},
      	     "fnServerParams": function ( aoData ) {
                 aoData.push(
                     {"name": "sSearchIns", "value": insId},
                     {"name": "sSearchPrvdr", "value": prvdrId },
-                    {"name": "sSearchGenerateDate", "value": generateDate },
-                    {"name": "ruleIds", "value": ruleArray }
+                    {"name": "sSearchGenerateDate", "value": generateDate }
                 );
              },        
      	     "fnServerData" : datatable2RestMembership
@@ -265,7 +294,7 @@ $(document).ready(function() {
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			Membership Activity Month List <span class="clrRed"> </span>
+			Medical Loss Ratio <span class="clrRed"> </span>
 		</div>
 		<div class="panel-body">
 			<div class="table-responsive">
@@ -289,16 +318,20 @@ $(document).ready(function() {
 				</div>
 				<table id="medicalLossRatio"
 					class="table table-striped table-hover table-responsive">
-
 					<thead>
 						<tr>
-							<th scope="col" role="row">reportGenDate</th>
-							<th scope="col" role="row">activityMonth</th>
-							<th scope="col" role="row">patients</th>
-							<th scope="col" role="row">fund</th>
-							<th scope="col" role="row">prof</th>
-							<th scope="col" role="row">inst</th>
-							<th scope="col" role="row">pharmacy</th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
 						</tr>
 					</thead>
 

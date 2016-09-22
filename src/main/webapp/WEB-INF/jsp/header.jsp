@@ -579,7 +579,7 @@ $(document).ready(function () {
 								href="${context}/${userpath}/reports/membershipActivityMonthList">Activity
 									Month</a></li>
 									<li><a
-								href="${context}/${userpath}/reports/medicalLossRatioList">MLR
+								href="${context}/${userpath}/reports/medicalLossRatioList">Medical Loss Ratio(MLR)
 									</a></li>
 						</ul></li>
 

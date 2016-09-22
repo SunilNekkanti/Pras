@@ -914,17 +914,15 @@ public class ReportsController {
 	public Message viewInsuranceList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
 			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) String repGenDate) {
 
-		Pagination pagination = mlrService.getPage(pageNo, pageSize, insId, prvdrId, sSearch, sort, sortdir);
-		String resQuery = mlrService.reportQuery("sarath20160921");
-		LOG.info("resQuery is "+resQuery);
+		// Pagination pagination = mlrService.getPage(pageNo, pageSize, insId, prvdrId, sSearch, sort, sortdir);
 		
-		HashMap<String, Object> rptParams =  new HashMap<>();
-		rptParams.put("insId",insId);
-		
+		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repGenDate);
+
 		LOG.info("returning insuranceList");
-		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
 	}
 	
 	
