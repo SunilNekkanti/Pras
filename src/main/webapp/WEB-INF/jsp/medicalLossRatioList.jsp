@@ -24,8 +24,9 @@ $(document).ready(function() {
 			callmedicalLossRatioGenerate();
 		});
 		
-		
-		
+		var rowHeader = $('#medicalLossRatio thead tr');
+		for(var col = 0; col<50; col++)
+			rowHeader.append('<th scope="col" role="row" class="hide"></th>');
 	
     	 var $selectIns = $('#extFilterIns');
     	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
@@ -101,6 +102,9 @@ $(document).ready(function() {
 					    	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
 					    	 s.append('<option value="'+date+'">' + val.reportDate +'</option>');
 					     });
+					     if(data.data.list.length > 1)
+					     	s.append('<option value="9999">All</option>');
+					     
 					     s.append('</select>');
 					     $selectReportDat.html(s);
 					     $('#mlrReportDate').multiselect({numberDisplayed: 0, 
@@ -234,7 +238,7 @@ $(document).ready(function() {
               data: restParams,
               success: function(res) {
             	  
-            	  var td = res.data.length;
+            	  var td = res.data[0].length;
             	  var th =  $("#medicalLossRatio thead tr th").length;
             	  $("#medicalLossRatio thead tr").html('');
             	  jQuery.each(res.data, function( i, val ) {
@@ -325,15 +329,32 @@ $(document).ready(function() {
      	    	 var thempty = new Array;
      	    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
      	    			if($(this).text() == ""){
+     	    				thempty.push(index);
      	    				$(this).addClass("hide");
      	    			} 
      	    	 });
 	    		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
 	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
-    	    		 		if($.inArray(tdindex, thempty) != -1) 
+    	    		 		if($.inArray(tdindex, thempty) != -1) {
+    	    		 			$(this).remove();
     	    		 			$(this).addClass("hide");
+    	    		 		}
+    	    		 			
 	    			 });	
+	    			 
+	    			 
     	    });
+	    		 if($( window ).width() > 900){
+    				 var width;
+    				 width = $('#medicalLossRatio tbody tr:eq(0) td').length * 120;
+    				 if(width > 1200){
+    					 width = width + "px";
+    					 $('#medicalLossRatio').width(width);
+    				 }
+    				 else{
+    					 $('#medicalLossRatio').width("100%");
+    				 }
+    			} 
              },
      	     "fnServerData" : datatable2RestMembership
      	});
@@ -389,23 +410,6 @@ $(document).ready(function() {
 					class="table table-striped table-hover table-responsive">
 					<thead>
 						<tr>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							<th scope="col" role="row" class="hide"></th>
-							
 							
 						</tr>
 					</thead>

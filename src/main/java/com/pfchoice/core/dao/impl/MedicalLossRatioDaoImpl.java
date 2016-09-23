@@ -95,14 +95,9 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
         crit.setProjection(projList);
         crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
-		if (sort != null && !"".equals(sort)) {
-			if (sortdir != null && !"".equals(sortdir) && "desc".equals(sortdir)) {
-				crit.addOrder(Order.desc(sort));
-			} else {
-				crit.addOrder(Order.asc(sort));
-			}
-		}
+		crit.addOrder(Order.desc("reportGenDate"));
 
+		System.out.println( "query is "+PrasUtil.printCriteriaQuery(crit));
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}
