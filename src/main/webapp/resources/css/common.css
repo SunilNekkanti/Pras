@@ -163,12 +163,12 @@ table#cptListTable, table#icdListTable {
 }
 
 .membershipHedisReport ul.dropdown-menu, .membershipClaimReport ul.dropdown-menu,
-	#extFilterProblemRule ul.dropdown-menu {
+	#extFilterProblemRule ul.dropdown-menu, #extFilterReportDate  ul.dropdown-menu {
 	position: relative;
 }
 
 .membershipClaimReport .dropdown-menu>.active>a, .membershipHedisReport .dropdown-menu>.active>a,
-	#extFilterProblemRule .dropdown-menu>.active>a {
+	#extFilterProblemRule .dropdown-menu>.active>a  #extFilterReportDate .dropdown-menu>.active>a {
 	background-color: #fff !important;
 }
 
@@ -199,4 +199,7 @@ table#cptListTable, table#icdListTable {
 
 .visibleH {
 	visibility: hidden !important;
+}
+
+
 }

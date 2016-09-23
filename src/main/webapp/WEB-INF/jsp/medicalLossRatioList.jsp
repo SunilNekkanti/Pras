@@ -100,10 +100,13 @@ $(document).ready(function() {
 					    	 var m = (date.getMonth() + 1);
 					    	 if(m < 10 ) { m = '0'+(date.getMonth() + 1);}
 					    	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
-					    	 s.append('<option value="'+date+'">' + val.reportDate +'</option>');
+					    	 if(key == 0) {
+					    		 s.append('<option value="'+date+'" Selected>' + val.reportDate +'</option>');
+					    	 }  else {
+					    		 s.append('<option value="'+date+'">' + val.reportDate +'</option>');
+					    	 }
+					    	 
 					     });
-					     if(data.data.list.length > 1)
-					     	s.append('<option value="9999">All</option>');
 					     
 					     s.append('</select>');
 					     $selectReportDat.html(s);
@@ -117,7 +120,9 @@ $(document).ready(function() {
 					     
 					     if(data.data.list.length < 1)
 					    	 	$("#medicalLossRatioGenerate").hide();
-					  
+					     else
+					    	 $("#medicalLossRatioGenerate").show();
+					     
 				 }).success(function() { 
 					reportDateSelectValue= $("#mlrReportDate option:selected").val();
 					$('select[id="mlrReportDate"]').val(reportDateSelectValue);
