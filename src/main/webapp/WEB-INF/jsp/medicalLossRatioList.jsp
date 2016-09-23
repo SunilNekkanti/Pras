@@ -3,12 +3,24 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
+<c:set var="contextHome" value="${pageContext.request.contextPath}" />
+<link rel="stylesheet"
+	href="${contextHome}/resources/css/bootstrap-multiselect.css"
+	type="text/css">
+<script type="text/javascript"
+	src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
 <script>
 $(document).ready(function() {
 	
 		$("#medicalLossRatioGenerate").click(function(event)
 		{
+			if($("#mlrReportDate").val() == null)
+				{
+				 alert(" Select Report Date");
+				  return false;
+				}
 			callmedicalLossRatioGenerate();
 		});
 		
@@ -80,9 +92,8 @@ $(document).ready(function() {
 					    
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFilterReportDate');
-					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\">');
+					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" multiple=\"multiple\">');
 					     //iterate over the data and append a select option
-					     s.append('<option value="">select Report Geerate Date</option>');
 					     $.each(data.data.list, function(key, val){
 					    	 var date = new Date(val.reportDate);
 					    	 var m = (date.getMonth() + 1);
@@ -90,20 +101,22 @@ $(document).ready(function() {
 					    	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
 					    	 s.append('<option value="'+date+'">' + val.reportDate +'</option>');
 					     });
-					     if(data.data.list.length > 1)
-					     	s.append('<option value="9999">All</option>');
 					     s.append('</select>');
 					     $selectReportDat.html(s);
+					     $('#mlrReportDate').multiselect({numberDisplayed: 0, 
+					    	 buttonWidth: '150px',
+					    	 includeSelectAllOption: true,
+					    	 templates: {
+								 ul: '<ul class="multiselect-container dropdown-menu mlrReportDate"></ul>'
+							 },
+					    });
+					     
+					     if(data.data.list.length < 1)
+					    	 	$("#medicalLossRatioGenerate").hide();
 					  
 				 }).success(function() { 
-					var reportDateSelectValue = Cookies.get('mlrReportDate');
-				 if(reportDateSelectValue != undefined) 
-					 reportDateSelectValue = reportDateSelectValue;
-				 else{
-					 reportDateSelectValue= $("#mlrReportDate option:selected").val();
-					Cookies.set('mlrReportDate', reportDateSelectValue,{path: cookiePath });
-				 }	
-				$('select[id="mlrReportDate"]').val(reportDateSelectValue);
+					reportDateSelectValue= $("#mlrReportDate option:selected").val();
+					$('select[id="mlrReportDate"]').val(reportDateSelectValue);
 		    	 });
 		 }
     	  
@@ -134,14 +147,18 @@ $(document).ready(function() {
     		   var insSelectValue= $("#mlrInsu option:selected").val();
     		   var prvdrSelectValue= $("#mlrPrvdr option:selected").val();
     		   var reportDateSelectValue= $("#mlrReportDate option:selected").val();
-    		   
-    		    
+    		   var categorySelectValue = $("#mlrCategory option:selected").val();
+    		   var ruleArray = new Array;
+    		   $("#mlrReportDate option:selected").each  ( function() {
+    		    	ruleArray.push ("'"+$(this).val()+"'" );
+    		    });
+    		   reportDateSelectValue = ruleArray.join(", ");
     		   if ( $.fn.DataTable.isDataTable('#medicalLossRatio') ) {
   						$('#medicalLossRatio').DataTable().destroy();
 			   }
     		  
 				$('#medicalLossRatio tbody').empty();
-    		   GetMembershipByInsPrvdr(insSelectValue,prvdrSelectValue,reportDateSelectValue, columns);
+    		   GetMembershipByInsPrvdr(insSelectValue,prvdrSelectValue,reportDateSelectValue, categorySelectValue, columns);
     	}  
     	     
     	$(document.body).on('change',"#mlrInsu",function (e) {
@@ -186,6 +203,7 @@ $(document).ready(function() {
 		   var sSearchIns = paramMap.sSearchIns;
 		   var sSearchPrvdr = paramMap.sSearchPrvdr;
 		   var sSearchGenerateDate = paramMap.sSearchGenerateDate;
+		   var sSearchCategory = paramMap.sSearchCategory;
 		   
 		   //create new json structure for parameters for REST request
 		   var restParams = new Array();
@@ -197,6 +215,7 @@ $(document).ready(function() {
 		   restParams.push({"name" : "insId" , "value" : sSearchIns  });
 		   restParams.push({"name" : "prvdrId" , "value" : sSearchPrvdr  });
 		   restParams.push({"name" : "repGenDate" , "value" : sSearchGenerateDate  });
+		   restParams.push({"name" : "category" , "value" : sSearchCategory  });
 		   
 		   if($( window ).width() > 900){
 				 var width;
@@ -214,17 +233,23 @@ $(document).ready(function() {
               url: sSource,
               data: restParams,
               success: function(res) {
+            	  
+            	  var td = res.data.length;
+            	  var th =  $("#medicalLossRatio thead tr th").length;
+            	  $("#medicalLossRatio thead tr").html('');
             	  jQuery.each(res.data, function( i, val ) {
              		 if(i == 0){
              			 jQuery.each(val, function( index, text ) {
-             			//	 if(index > 1)
-             					$("#medicalLossRatio thead tr").append('<th>'+text+'</th>');
-             					//$("#medicalLossRatio thead tr").append('<th scope="col" role="row" class="sorting_asc" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sno: activate to sort column descending">'+text+'</th>');
+             					$("#medicalLossRatio thead tr").append('<th scope="col" role="row" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" >'+text+'</th>');
              			 });
-             			
              		 }
-             		  
              		});
+            	  if(th > td)
+            		  {
+            		  	for(i = td; i < th; i++){
+            		  		$("#medicalLossRatio thead tr").append('<th scope="col" class="hide" role="row" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" ></th>');
+            		  	}
+            		  }
              	     	  
              	  //clear the current content of the select
                    res.iTotalRecords = res.data.length-1;
@@ -238,7 +263,7 @@ $(document).ready(function() {
      	}
      	
      	
-     	  GetMembershipByInsPrvdr = function (insId, prvdrId, generateDate,ruleArray, aoColumns) {
+     	  GetMembershipByInsPrvdr = function (insId, prvdrId, generateDate, category, aoColumns) {
       		
   	        var oTable = $('#medicalLossRatio').removeAttr( "width" ).dataTable({  
   	        	"sDom": 'Bfrtip',
@@ -261,27 +286,55 @@ $(document).ready(function() {
      	     "initComplete": function(settings, json) {
 	    		 var totalRecord = $("#medicalLossRatio tbody tr").length -1;
 		    	     jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
-		    	    		 if(index == 0)
-		    	    			$("#medicalLossRatio tbody tr").eq(index).remove();
+		    	    	
+		    	    		 if(index == 0){
+		    	    			 $("#medicalLossRatio tbody tr").eq(index).remove();
+		    	    		 }
+		    	    			
 		    	    });
 	     	 },
-	     	"fnDrawCallback": function() {
-	     	    var $paginate = this.siblings('.dataTables_paginate');
-
-	     	    if (this.api().data().length <= this.fnSettings()._iDisplayLength){
-	     	        $paginate.hide();
-	     	    }
-	     	    else{
-	     	        $paginate.show();
-	     	    }
-	     	},
+	     	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+	     	      // Bold the grade for all 'A' grade browsers
+	     	      if ( iDisplayIndex == 0 )
+	     	      {
+	     	    	  var d = '"'+aData+'"';
+	     	    	arr = d.split(',');
+	     	        $('td', nRow).hide();
+	     	      }
+	     	    },
+	     	
+	     	
      	     "fnServerParams": function ( aoData ) {
                 aoData.push(
                     {"name": "sSearchIns", "value": insId},
                     {"name": "sSearchPrvdr", "value": prvdrId },
-                    {"name": "sSearchGenerateDate", "value": generateDate }
+                    {"name": "sSearchGenerateDate", "value": generateDate },
+                    {"name": "sSearchCategory", "value": category }
                 );
              },        
+             "fnDrawCallback": function () {
+            	 var $paginate = this.siblings('.dataTables_paginate');
+
+ 	     	    if (this.api().data().length <= this.fnSettings()._iDisplayLength){
+ 	     	        $paginate.hide();
+ 	     	    }
+ 	     	    else{
+ 	     	        $paginate.show();
+ 	     	    }
+     	    	 var totalRecord = $("#medicalLossRatio thead tr th").length;
+     	    	 var thempty = new Array;
+     	    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
+     	    			if($(this).text() == ""){
+     	    				$(this).addClass("hide");
+     	    			} 
+     	    	 });
+	    		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
+	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
+    	    		 		if($.inArray(tdindex, thempty) != -1) 
+    	    		 			$(this).addClass("hide");
+	    			 });	
+    	    });
+             },
      	     "fnServerData" : datatable2RestMembership
      	});
   	        
@@ -307,15 +360,31 @@ $(document).ready(function() {
 						<label class="control-label col-sm-3">Provider</label>
 						<div class="col-sm-9" id="extFilterPrvdr"></div>
 					</div>
+					
 					<div class="col-sm-3">
 						<label class="control-label col-sm-3">Report Date</label>
 						<div class="col-sm-9" id="extFilterReportDate"></div>
 					</div>
+					
 					<div class="col-sm-3">
+						<label class="control-label col-sm-3">Category</label>
+						<div class="col-sm-9" id="extFiltercategory">
+							<select id="mlrCategory" style="width:150px;" class="btn btn-default">
+									<option value="9999">All</option>
+									<option value="Fund">Fund</option>
+									<option value="Inst">Inst</option>
+									<option value="Patients">Patients</option>
+									<option value="Pharmacy">Pharmacy</option>
+									<option value="Prof">Prof</option>
+							</select>
+						</div>
+					</div>
+				</div>
+					<div class="col-sm-12 text-right">
 						<button type="button" id="medicalLossRatioGenerate"
 							class="btn btn-success btn-sm btn-xs">Generate</button>
 					</div>
-				</div>
+				
 				<table id="medicalLossRatio"
 					class="table table-striped table-hover table-responsive">
 					<thead>
@@ -332,6 +401,12 @@ $(document).ready(function() {
 							<th scope="col" role="row" class="hide"></th>
 							<th scope="col" role="row" class="hide"></th>
 							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							<th scope="col" role="row" class="hide"></th>
+							
+							
 						</tr>
 					</thead>
 
@@ -341,8 +416,6 @@ $(document).ready(function() {
 
 				</table>
 			</div>
-
 		</div>
-
 	</div>
 </div>

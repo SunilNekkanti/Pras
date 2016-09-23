@@ -915,11 +915,11 @@ public class ReportsController {
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
 			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) String repGenDate) {
+			@RequestParam(required = false) String repGenDate, @RequestParam(required = false) String category) {
 
 		// Pagination pagination = mlrService.getPage(pageNo, pageSize, insId, prvdrId, sSearch, sort, sortdir);
 		
-		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repGenDate);
+		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repGenDate,category);
 
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));

@@ -103,7 +103,7 @@ public class MedicalLossRatioServiceImpl implements MedicalLossRatioService {
 	 * @see com.pfchoice.core.service.MedicalLossRatioService#reportQuery(java.lang.String)
 	 */
 	@Override
-	public List<Object[]> reportQuery(final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate){
-		return medicalLossRatioDao.reportQuery(tableName, insId, prvdrId, repGenDate);
+	public List<Object[]> reportQuery(final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category){
+		return medicalLossRatioDao.reportQuery(tableName, insId, prvdrId, repGenDate, category);
 	}
 }

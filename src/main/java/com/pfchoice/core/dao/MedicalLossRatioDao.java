@@ -93,5 +93,5 @@ public interface MedicalLossRatioDao {
 	 * @param tableName
 	 * @return
 	 */
-	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate);
+	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate, String category);
 }

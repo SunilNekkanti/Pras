@@ -1,1 +1,1 @@
- call MLR_REPORT (:tableName, :insId, :prvdrId, :repGenDate)
+ call MLR_REPORT (:tableName, :insId, :prvdrId, :repGenDate, :category)

@@ -92,7 +92,6 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 			projList.add(Projections.property("prvdr.id").as("prvdrId"));
 			crit.add(Restrictions.eq("prvdr.id", prvdrId));
 		}
-           
         crit.setProjection(projList);
         crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
@@ -175,14 +174,14 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<Object[]> reportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate){
+	public List<Object[]> reportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category){
 		assert tableName !=null && !"".equals(tableName);
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName)
-				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repGenDate", repGenDate);
-		
+				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repGenDate", repGenDate)
+				.setString("category", category);
+		@SuppressWarnings("unchecked")
 		List<Object[]> entities =  query.list();
 		return entities;
 	}
