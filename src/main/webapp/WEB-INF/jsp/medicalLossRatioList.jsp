@@ -333,13 +333,15 @@ $(document).ready(function() {
      	    	 var totalRecord = $("#medicalLossRatio thead tr th").length;
      	    	 var thempty = new Array;
      	    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
-     	    			if($(this).text() == ""){
+     	    		 if(index == 0) $(this).addClass("hide");
+     	    			if($(this).text() == "" || $(this).text() == "null" ){
      	    				thempty.push(index);
      	    				$(this).addClass("hide");
      	    			} 
      	    	 });
 	    		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
 	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
+	    				 if(tdindex == 0) $(this).remove();
     	    		 		if($.inArray(tdindex, thempty) != -1) {
     	    		 			$(this).remove();
     	    		 			$(this).addClass("hide");
@@ -352,7 +354,7 @@ $(document).ready(function() {
 	    		 if($( window ).width() > 900){
     				 var width;
     				 width = $('#medicalLossRatio tbody tr:eq(0) td').length * 120;
-    				 if(width > 1200){
+    				 if(width > 1500){
     					 width = width + "px";
     					 $('#medicalLossRatio').width(width);
     				 }
