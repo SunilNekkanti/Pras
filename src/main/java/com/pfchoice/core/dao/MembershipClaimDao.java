@@ -73,7 +73,7 @@ public interface MembershipClaimDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId, String insuranceCode);
+	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
 
 	/**
 	 * @return
@@ -90,4 +90,8 @@ public interface MembershipClaimDao {
 	 */
 	Integer updateData(Integer fileId, String tableName);
 
+	/**
+	 * @return
+	 */
+	Integer unloadTable();
 }

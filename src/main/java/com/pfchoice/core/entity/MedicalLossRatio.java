@@ -2,7 +2,6 @@ package com.pfchoice.core.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
@@ -47,9 +44,8 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 	private Provider prvdr;
 	
 	@Expose
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = true, name = "report_generation_date")
-	private Date reportGenDate;
+	@Column(nullable = true, name = "report_month")
+	private Integer reportMonth;
 
 	@Expose
 	@Column(name = "activity_Month")
@@ -126,12 +122,12 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 		this.prvdr = prvdr;
 	}
 
-	public Date getReportGenDate() {
-		return reportGenDate;
+	public Integer getReportMonth() {
+		return reportMonth;
 	}
 
-	public void setReportGenDate(Date reportGenDate) {
-		this.reportGenDate = reportGenDate;
+	public void setReportMonth(Integer reportMonth) {
+		this.reportMonth = reportMonth;
 	}
 
 	public Integer getActivityMonth() {

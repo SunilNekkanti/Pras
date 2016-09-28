@@ -125,6 +125,8 @@ function fileUploadAndProcessing() {
 						formData.append('claimOrHospital',0); 
 					else if(fileTypeText.indexOf("Hospitalization") != -1)
 						formData.append('claimOrHospital',1);  
+					else if(fileTypeText.indexOf("Cap") != -1)
+						formData.append('cap',1);  
 					
 					$.ajax({
 						url : ajaxUrl,

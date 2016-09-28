@@ -96,14 +96,14 @@ $(document).ready(function() {
 					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" multiple=\"multiple\">');
 					     //iterate over the data and append a select option
 					     $.each(data.data.list, function(key, val){
-					    	 var date = new Date(val.reportDate);
-					    	 var m = (date.getMonth() + 1);
-					    	 if(m < 10 ) { m = '0'+(date.getMonth() + 1);}
-					    	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
+					   // 	 var date = new Date(val.reportDate);
+					   // 	 var m = (date.getMonth() + 1);
+					   // 	 if(m < 10 ) { m = '0'+(date.getMonth() + 1);}
+					   // 	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
 					    	 if(key == 0) {
-					    		 s.append('<option value="'+date+'" Selected>' + val.reportDate +'</option>');
+					    		 s.append('<option value="'+val.reportMonth+'" Selected>' + val.reportMonth +'</option>');
 					    	 }  else {
-					    		 s.append('<option value="'+date+'">' + val.reportDate +'</option>');
+					    		 s.append('<option value="'+val.reportMonth+'">' + val.reportMonth +'</option>');
 					    	 }
 					    	 
 					     });
@@ -132,7 +132,7 @@ $(document).ready(function() {
     	  var columns ;
     	  var callmedicalLossRatioGenerate = function(){
 				columns = new Array();
-	     		columns.push({ "mDataProp": "reportGenDate","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
+	     		columns.push({ "mDataProp": "reportMonth","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "activityMonth","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "patients","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
 	     		columns.push({ "mDataProp": "fund","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
@@ -159,7 +159,7 @@ $(document).ready(function() {
     		   var categorySelectValue = $("#mlrCategory option:selected").val();
     		   var ruleArray = new Array;
     		   $("#mlrReportDate option:selected").each  ( function() {
-    		    	ruleArray.push ("'"+$(this).val()+"'" );
+    		    	ruleArray.push ( $(this).val()  );
     		    });
     		   reportDateSelectValue = ruleArray.join(", ");
     		   if ( $.fn.DataTable.isDataTable('#medicalLossRatio') ) {
@@ -218,12 +218,12 @@ $(document).ready(function() {
 		   var restParams = new Array();
 		   restParams.push({"name" : "pageSize", "value" : pageSize});
 		   restParams.push({"name" : "pageNo", "value" : pageNum });
-		   restParams.push({"name" : "sort", "value" : "reportGenDate" });
+		   restParams.push({"name" : "sort", "value" : "reportMonth" });
 		   restParams.push({"name" : "sortdir", "value" : sortDir });
 		   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
 		   restParams.push({"name" : "insId" , "value" : sSearchIns  });
 		   restParams.push({"name" : "prvdrId" , "value" : sSearchPrvdr  });
-		   restParams.push({"name" : "repGenDate" , "value" : sSearchGenerateDate  });
+		   restParams.push({"name" : "repMonth" , "value" : sSearchGenerateDate  });
 		   restParams.push({"name" : "category" , "value" : sSearchCategory  });
 		   
 		   if($( window ).width() > 900){
@@ -273,7 +273,6 @@ $(document).ready(function() {
      	
      	
      	  GetMembershipByInsPrvdr = function (insId, prvdrId, generateDate, category, aoColumns) {
-      		
   	        var oTable = $('#medicalLossRatio').removeAttr( "width" ).dataTable({  
   	        	"sDom": 'Bfrtip',
 	        	 "buttons": [

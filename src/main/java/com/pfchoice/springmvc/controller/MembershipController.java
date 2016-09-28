@@ -677,7 +677,60 @@ public class MembershipController {
 		return mbrRoster;
 	}
 
-	
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/membership/membershipCapReport", "/user/membership/membershipCapReport" })
+	public String membershipCapReport() {
+		return TileDefinitions.MEMBERSHIPCAPREPORT.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/membership/membershipCapReport/fileProcessing.do",
+			"/user/membership/membershipCapReport/fileProcessing.do" })
+	public String mbrCapReportFileProcessing(Model model, @ModelAttribute("username") String username,
+			@RequestParam(required = true, value = "insId") Integer insId,
+			@RequestParam(required = true, value = "fileType") Integer fileTypeId,
+			@RequestParam(required = false, value = "activityMonth") Integer activityMonth,
+			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
+			HttpServletRequest request) throws InvalidFormatException {
+
+		logger.info("started file processsing for" + activityMonth);
+		java.io.File sourceFile = null;
+		java.io.File newSourceFile = null;
+		String mbrRoster = null;
+
+		if (fileUpload != null && !"".equals(fileUpload.getOriginalFilename())) {
+			String fileName = fileUpload.getOriginalFilename();
+			String newfileName = fileName.substring(0, fileName.indexOf('.'));
+
+			try {
+				FileUtils.writeByteArrayToFile(new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName),
+						fileUpload.getBytes());
+
+				sourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + fileName);
+				newSourceFile = new java.io.File(FILES_UPLOAD_DIRECTORY_PATH + newfileName + ".csv");
+				sourceFile.createNewFile();
+				newSourceFile.createNewFile();
+				XLSX2CSV.xls(sourceFile, newSourceFile);
+				if (sourceFile.exists()) {
+					sourceFile.delete();
+				}
+
+			} catch (IOException e) {
+				logger.info(e.getCause().getMessage());
+			}
+		}
+		logger.info("before file processing");
+
+		if (newSourceFile != null)
+			mbrRoster = "forward:/admin/membership/membershipCapReport/list?fileName=" + newSourceFile.getName()
+					+ "&insId=" + insId + "&fileTypeId=" + fileTypeId + "&activityMonth=" + activityMonth;
+		return mbrRoster;
+	}
+
 	/**
 	 * @param pageNo
 	 * @param pageSize

@@ -1,25 +1,25 @@
 package com.pfchoice.core.service;
 
-import com.pfchoice.core.entity.Pharmacy;
+import com.pfchoice.core.entity.MembershipCapReport;
 import ml.rugal.sshcommon.page.Pagination;
 
 /**
  *
  * @author sarath
  */
-public interface PharmacyService {
+public interface MembershipCapReportService {
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	Pharmacy deleteById(Integer id);
+	MembershipCapReport deleteById(Integer id);
 
 	/**
 	 * @param id
 	 * @return
 	 */
-	Pharmacy findById(Integer id);
+	MembershipCapReport findById(Integer id);
 
 	/**
 	 * @param pageNo
@@ -42,51 +42,27 @@ public interface PharmacyService {
 	 * @param bean
 	 * @return
 	 */
-	Pharmacy save(Pharmacy bean);
+	MembershipCapReport save(MembershipCapReport bean);
 
 	/**
 	 * @param bean
 	 * @return
 	 */
-	Pharmacy update(Pharmacy bean);
+	MembershipCapReport update(MembershipCapReport bean);
 
 	/**
 	 * @param fileId
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
-
-	/**
-	 * @param code
-	 * @return
-	 */
-	Pharmacy findByCode(String code);
-
-	/**
-	 * @param id
-	 * @param code
-	 * @return
-	 */
-	boolean isCodeUnique(Integer id, String code);
-	
-	/**
-	 * @return
-	 */
-	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
+	Integer loadData(Integer insId, Integer fileId, Integer activityMonth, String tableName);
 
 	/**
 	 * @return
 	 */
-	Boolean isDataExists(String tableName);
-
-	/**
-	 * @return
-	 */
-	Integer loadDataCSV2Table(String fileName, String insuranceCode, String tableNames);
+	Integer loadDataCSV2Table(String fileName, String tableName);
 
 	/**
 	 * @return
 	 */
 	Integer unloadCSV2Table(String tableName);
-
 }

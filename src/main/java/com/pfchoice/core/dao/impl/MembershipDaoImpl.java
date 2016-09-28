@@ -10,6 +10,7 @@ import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_ROSTER;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_ROSTER;
+import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_CAP_REPORT; 
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -649,6 +650,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_LOAD);
 		else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_LOAD);
+		
 		return getSession().createSQLQuery(loadDataQuery).setString("file", FILES_UPLOAD_DIRECTORY_PATH + fileName)
 				.executeUpdate();
 	}
@@ -666,6 +668,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			sql.append("SELECT count(*) FROM csv2Table_BH_Roster");
 		else if (tableName.equals(FILE_TYPE_AMG_MBR_ROSTER))
 			sql.append("SELECT count(*) FROM csv2Table_AMG_Roster");
+		else if (tableName.equals(FILE_TYPE_AMG_CAP_REPORT))
+			sql.append("SELECT count(*) FROM csv2table_cap_report");
 
 		int rowCount = ((BigInteger) getSession().createSQLQuery(sql.toString()).uniqueResult()).intValue();
 		if (rowCount > 0) {

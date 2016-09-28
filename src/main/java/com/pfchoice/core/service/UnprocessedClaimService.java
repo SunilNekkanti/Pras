@@ -18,6 +18,6 @@ public interface UnprocessedClaimService {
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table(Integer fileId, String insuranceCode, String tableNames);
+	Integer loadDataCSV2Table(Integer fileId, String insuranceCode, String tableNames, Integer insId);
 
 }

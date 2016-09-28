@@ -240,10 +240,11 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode) {
+	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode, Integer reportMonth) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_INSERT);
 
-		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId).executeUpdate();
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId)
+				.setInteger("reportMonth",reportMonth).executeUpdate();
 	}
 
 	/*
@@ -274,4 +275,22 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
 	}
 
+	/**
+	 * @return
+	 */
+	@Override
+	public Integer unloadTable(){
+		Session session = getSession();
+		int rowsAffected = 0;
+		String tableNames = "membership_claims,membership_claim_details";
+		String[] tokens = tableNames.split(",", -1);
+		for(String tableName :tokens){
+			try {
+				rowsAffected = session.createSQLQuery("set foreign_key_checks=0;  TRUNCATE TABLE " + tableName +" ;set foreign_key_checks=1;").executeUpdate();
+			} catch (Exception e) {
+				LOG.warn("exception " + e.getCause());
+			}
+		}
+		return rowsAffected;
+	}
 }

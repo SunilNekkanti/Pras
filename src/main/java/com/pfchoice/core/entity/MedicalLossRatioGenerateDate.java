@@ -1,7 +1,6 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -22,7 +21,7 @@ public class MedicalLossRatioGenerateDate implements Serializable {
 	private Integer prvdrId;
 	
 	@Expose
-	private Date reportDate;
+	private Integer reportMonth;
 
 	public Long getCount() {
 		return count;
@@ -62,17 +61,17 @@ public class MedicalLossRatioGenerateDate implements Serializable {
 	}
 
 	/**
-	 * @return the reportDate
+	 * @return the reportMonth
 	 */
-	public Date getReportDate() {
-		return reportDate;
+	public Integer getReportMonth() {
+		return reportMonth;
 	}
 
 	/**
 	 * @param reportDate the reportDate to set
 	 */
-	public void setReportDate(Date reportDate) {
-		this.reportDate = reportDate;
+	public void setReportMonth(Integer reportMonth) {
+		this.reportMonth = reportMonth;
 	}
 
  

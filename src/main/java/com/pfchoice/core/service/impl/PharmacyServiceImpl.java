@@ -162,8 +162,8 @@ public class PharmacyServiceImpl implements PharmacyService {
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId,final Integer insId, final String insuranceCode) {
-		return pharmacyDao.loadData(fileId, insId, insuranceCode);
+	public Integer loadData(final Integer fileId,final Integer insId, final String insuranceCode, final Integer reportMonth) {
+		return pharmacyDao.loadData(fileId, insId, insuranceCode, reportMonth);
 	}
 
 	/*

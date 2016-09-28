@@ -35,8 +35,9 @@ public class UnprocessedClaimDaoImpl extends HibernateBaseDao<UnprocessedClaim, 
 		return UnprocessedClaim.class;
 	}
 	@Override
-	public Integer loadDataCSV2Table(final Integer fileId, final String insuranceCode,final String tableNames) {
+	public Integer loadDataCSV2Table(final Integer fileId, final String insuranceCode,final String tableNames, final Integer insId) {
 		int retValue =0;
+		System.out.println(" insId "+insId);
 		
 		String[] tokens = tableNames.split(",", -1);
 		String	loadDataQuery = "";
@@ -46,7 +47,7 @@ public class UnprocessedClaimDaoImpl extends HibernateBaseDao<UnprocessedClaim, 
 				count =  (int) ((BigInteger) getSession().createSQLQuery(loadDataQuery).uniqueResult()).intValue();
 				if(count > 0){
 					loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), i+insuranceCode + QUERY_TYPE_INSERT);
-					retValue = getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).executeUpdate();
+					retValue = getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId).executeUpdate();
 				}
 		}
 		

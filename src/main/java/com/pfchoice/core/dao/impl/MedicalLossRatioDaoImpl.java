@@ -86,7 +86,7 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 		ProjectionList projList = Projections.projectionList(); 
 		projList.add(Projections.property("ins.id").as("insId"));
 		projList.add(Projections.groupProperty("ins.id").as("insId"));
-        projList.add(Projections.groupProperty("reportGenDate").as("reportDate"));
+        projList.add(Projections.groupProperty("reportMonth").as("reportMonth"));
          
 		if(prvdrId != ALL) {
 			projList.add(Projections.property("prvdr.id").as("prvdrId"));
@@ -95,7 +95,7 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
         crit.setProjection(projList);
         crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
-		crit.addOrder(Order.desc("reportGenDate"));
+		crit.addOrder(Order.desc("reportMonth"));
 
 		System.out.println( "query is "+PrasUtil.printCriteriaQuery(crit));
 		return findByCriteria(crit, pageNo, pageSize);
@@ -174,7 +174,7 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName)
-				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repGenDate", repGenDate)
+				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repMonth", repGenDate)
 				.setString("category", category);
 		@SuppressWarnings("unchecked")
 		List<Object[]> entities =  query.list();

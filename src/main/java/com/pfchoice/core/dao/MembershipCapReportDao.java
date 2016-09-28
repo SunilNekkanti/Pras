@@ -1,27 +1,31 @@
-package com.pfchoice.core.service;
+package com.pfchoice.core.dao;
 
-import com.pfchoice.core.entity.Pharmacy;
+import com.pfchoice.core.entity.MembershipCapReport;
+import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
 /**
  *
- * @author sarath
+ * @author Sarath
  */
-public interface PharmacyService {
+public interface MembershipCapReportDao {
 
 	/**
+	 * 
 	 * @param id
 	 * @return
 	 */
-	Pharmacy deleteById(Integer id);
+	MembershipCapReport deleteById(Integer id);
 
 	/**
+	 * 
 	 * @param id
 	 * @return
 	 */
-	Pharmacy findById(Integer id);
+	MembershipCapReport findById(Integer id);
 
 	/**
+	 * 
 	 * @param pageNo
 	 * @param pageSize
 	 * @return
@@ -29,6 +33,7 @@ public interface PharmacyService {
 	Pagination getPage(int pageNo, int pageSize);
 
 	/**
+	 * 
 	 * @param pageNo
 	 * @param pageSize
 	 * @param sSearch
@@ -39,40 +44,29 @@ public interface PharmacyService {
 	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
 
 	/**
+	 * 
 	 * @param bean
 	 * @return
 	 */
-	Pharmacy save(Pharmacy bean);
+	MembershipCapReport save(MembershipCapReport bean);
 
 	/**
-	 * @param bean
+	 * 
+	 * @param updater
 	 * @return
 	 */
-	Pharmacy update(Pharmacy bean);
+	MembershipCapReport updateByUpdater(Updater<MembershipCapReport> updater);
 
 	/**
 	 * @param fileId
 	 * @return
 	 */
-	Integer loadData(Integer fileId);
+	Integer loadData(Integer insId, Integer fileId, Integer activityMonth, String tableName);
 
 	/**
-	 * @param code
 	 * @return
 	 */
-	Pharmacy findByCode(String code);
-
-	/**
-	 * @param id
-	 * @param code
-	 * @return
-	 */
-	boolean isCodeUnique(Integer id, String code);
-	
-	/**
-	 * @return
-	 */
-	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
+	Integer loadDataCSV2Table(String fileName, String tableName);
 
 	/**
 	 * @return
@@ -82,11 +76,5 @@ public interface PharmacyService {
 	/**
 	 * @return
 	 */
-	Integer loadDataCSV2Table(String fileName, String insuranceCode, String tableNames);
-
-	/**
-	 * @return
-	 */
 	Integer unloadCSV2Table(String tableName);
-
 }

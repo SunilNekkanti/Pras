@@ -46,7 +46,7 @@ public interface MembershipClaimService {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId, String insuranceCode);
+	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
 
 	/**
 	 * @return
@@ -83,5 +83,11 @@ public interface MembershipClaimService {
 	 */
 	Pagination getClaimPage(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, String sort,
 			String sortdir, Date processingFrom, Date processingTo, int processClaim);
+	
+	/**
+	 * @return
+	 */
+	Integer unloadTable();
+
 
 }

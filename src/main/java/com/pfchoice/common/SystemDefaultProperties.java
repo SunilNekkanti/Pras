@@ -61,6 +61,8 @@ public interface SystemDefaultProperties {
 	String FILE_TYPE_BH_MBR_CLAIM = "BH Membership Claim";
 
 	String FILE_TYPE_AMG_MBR_ROSTER = "AMG Membership Roster";
+	
+	String FILE_TYPE_AMG_CAP_REPORT = "AMG Cap Report";
 
 	String FILE_TYPE_BH_MBR_ROSTER = "BH Membership Roster";
 

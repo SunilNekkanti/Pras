@@ -77,7 +77,7 @@ public interface PharmacyDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId, String insuranceCode);
+	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
 
 	/**
 	 * @return

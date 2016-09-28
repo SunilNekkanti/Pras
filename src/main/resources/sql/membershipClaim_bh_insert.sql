@@ -1,6 +1,6 @@
 INSERT INTO membership_claims
 (
-claim_id_number, mbr_id, prvdr_id, ins_id, claim_type,
+claim_id_number, mbr_id, prvdr_id, ins_id, report_month,claim_type,
 facility_type_code, bill_type_code, frequency_type_code, bill_type,  dischargestatus, MemEnrollId,
 Diagnoses, product_label, product_lvl1, product_lvl2, product_lvl3, 
 product_lvl4, product_lvl5, product_lvl6, product_lvl7, market_lvl1,
@@ -8,7 +8,7 @@ market_lvl2, market_lvl3, market_lvl4, market_lvl5, market_lvl6,
 market_lvl7, market_lvl8, tin, dx_type_cd, proc_type_cd,
 created_date, updated_date, created_by, updated_by, active_ind, file_id,pcp_prov_Id
 )
-SELECT  ClaimId, m.mbr_id, mp.prvdr_id,:insId, NULL,
+SELECT  ClaimId, m.mbr_id, mp.prvdr_id,:insId, : reportMonth, NULL,
 NULLIF(lft.code,''), NULLIF(lbt.code,''), NULLIF(csv2BhClaim.FrequencyCode,''), csv2BhClaim.BillClassCode,  null dischargestatus, csv2BhClaim.MemEnrollId,
 replace(group_concat( distinct replace(csv2BhClaim.Diagnoses,'.','')),'|',','), null product_label, null product_lvl1, null product_lvl2, null market_lvl1, 
 null product_lvl4, null product_lvl5, null product_lvl6, null product_lvl7, null product_lvl1, 

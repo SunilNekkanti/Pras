@@ -116,8 +116,8 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId,final Integer insId, final String insuranceCode) {
-		return membershipClaimDao.loadData(fileId, insId, insuranceCode);
+	public Integer loadData(final Integer fileId,final Integer insId, final String insuranceCode,final Integer reportMonth) {
+		return membershipClaimDao.loadData(fileId, insId, insuranceCode, reportMonth);
 	}
 
 	/*
@@ -157,5 +157,13 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 			final Date processingTo, final int processClaim) {
 		return membershipClaimDao.getClaimPage(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr, sort, sortdir,
 				processingFrom, processingTo, processClaim);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.MembershipClaimService#unloadTable(java.lang.String)
+	 */
+	@Override
+	public Integer unloadTable(){
+		return membershipClaimDao.unloadTable();
 	}
 }

@@ -196,10 +196,11 @@ public class PharmacyDaoImpl extends HibernateBaseDao<Pharmacy, Integer> impleme
 	 * @see com.pfchoice.core.dao.PharmacyDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode) {
+	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode, final Integer reportMonth) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_INSERT);
 
-		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId).executeUpdate();
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId)
+				.setInteger("reportMonth",reportMonth).executeUpdate();
 	}
 
 	/*
