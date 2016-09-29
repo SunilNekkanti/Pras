@@ -171,7 +171,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 
 	@Expose
 	@Column(name = "membership_claims")
-	private String membershipClaims;
+	private Double membershipClaims;
 
 	@Expose
 	@Column(name = "psychare")
@@ -660,7 +660,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	/**
 	 * @return the membershipClaims
 	 */
-	public String getMembershipClaims() {
+	public Double getMembershipClaims() {
 		return membershipClaims;
 	}
 
@@ -668,7 +668,7 @@ public class MembershipClaimDetails extends RecordDetails implements Serializabl
 	 * @param membershipClaims
 	 *            the membershipClaims to set
 	 */
-	public void setMembershipClaims(String membershipClaims) {
+	public void setMembershipClaims(Double membershipClaims) {
 		this.membershipClaims = membershipClaims;
 	}
 

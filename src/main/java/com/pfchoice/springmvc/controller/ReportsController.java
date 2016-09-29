@@ -786,7 +786,7 @@ public class ReportsController {
 		//	LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
 			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
-			Integer unprocessedClaimLoadedData = unprocessedClaimService.loadDataCSV2Table( fileId,  insuranceCode,  tableName, insId);
+			Integer unprocessedClaimLoadedData = unprocessedClaimService.loadDataCSV2Table( fileId,  insuranceCode,  tableName, insId, reportMonth);
 			LOG.info("unprocessedClaimLoadedData " + unprocessedClaimLoadedData + new Date());
 			Integer mbrClaimUnloadedData = mbrClaimService.unloadCSV2Table(tableName);
 			LOG.info("membershipClaimUnloadedData " + mbrClaimUnloadedData + new Date());
@@ -989,16 +989,36 @@ public class ReportsController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/admin/medicalLossRatio/list", "/user/medicalLossRatio/list" }, method = RequestMethod.GET)
-	public Message viewInsuranceList(@RequestParam(required = false) Integer pageNo,
+	@RequestMapping(value = { "/admin/medicalLossRatio/list" }, method = RequestMethod.GET)
+	public Message viewAdminMLRList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
 			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
 
-System.out.println("before sp insId"+insId+"prvdrId"+prvdrId+"repMonth"+repMonth+"category"+category);		
-		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category);
-		System.out.println("after sp");	
+		
+		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y");
+		LOG.info("returning insuranceList");
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
+	}
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = {  "/user/medicalLossRatio/list" }, method = RequestMethod.GET)
+	public Message viewUserMLRList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
+
+		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category, "N");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
 	}

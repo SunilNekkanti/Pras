@@ -314,7 +314,7 @@
 		return false;
 	}
 
-	function modifyContract(pmpmRequired) {
+	function modifyContract(pmpmRequired, avgServiceFundRequired) {
 		if (pmpmRequired) {
 			if(!$("#pcpPrvdrNBR").val()){
 				alert("Enter PCP Provider Number");

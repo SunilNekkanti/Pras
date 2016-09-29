@@ -35,9 +35,8 @@ public class UnprocessedClaimServiceImpl implements UnprocessedClaimService {
 	 * @see com.pfchoice.core.service.MembershipClaimService#loadDataCSV2Table(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Integer loadDataCSV2Table(final Integer fileId, final String insuranceCode, final String tableNames, final Integer insId) {
-		System.out.println(" insId "+insId);
-		return unprocessedClaimDao.loadDataCSV2Table(fileId, insuranceCode, tableNames, insId);
+	public Integer loadDataCSV2Table(final Integer fileId, final String insuranceCode, final String tableNames, final Integer insId, final Integer  reportMonth) {
+		return unprocessedClaimDao.loadDataCSV2Table(fileId, insuranceCode, tableNames, insId, reportMonth);
 	}
 
 }

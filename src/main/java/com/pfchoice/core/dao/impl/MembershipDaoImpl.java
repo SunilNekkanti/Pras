@@ -152,7 +152,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 
 		crit.setProjection(Projections.distinct(Projections.property("id")));
 		
-		System.out.println("subquery is " +PrasUtil.printCriteriaQuery(crit));
 		List<Integer> mbrIds = (List<Integer>) crit.list();
 		int totalCount = mbrIds.isEmpty() ? 0 : mbrIds.size();
 		if (totalCount == 0) {
@@ -201,7 +200,6 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			criteria.addOrder(Order.asc("lastName"));
 			criteria.addOrder(Order.asc("firstName"));
 			
-			System.out.println("query is " +PrasUtil.printCriteriaQuery(criteria));
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			PFCPagination  pfcPagination = new PFCPagination(pagination);

@@ -248,7 +248,15 @@
 		});
 	}
 
-	function addContract(pmpmRequired) {
+	function addContract(pmpmRequired, avgServiceFundRequired) {
+		if(avgServiceFundRequired){
+			var avgServiceFund = $("#avgServiceFund").val();
+			if(!avgServiceFund){
+				$("#insuranceContractList .updateError").append(
+						"<div class='row col-sm-12'>Enter Avg Service Fund</div>");
+				return false;
+			}
+		}	
 		if (pmpmRequired) {
 			var url = getContextPath() + 'insurance/${id}/contract/save.do?add';
 			ajaxCallWithFileUpload(url, pmpmRequired, 'insuranceContractList');
@@ -257,7 +265,9 @@
 		return false;
 	}
 
-	function modifyContract(pmpmRequired) {
+	function modifyContract(pmpmRequired,avgServiceFundRequired) {
+		avgServiceFundRequired = avgServiceFundRequired || false;
+		pmpmRequired = pmpmRequired || false;
 		var mindates = [];
 		var maxdates = [];
 		var pmpmList = [];
@@ -266,6 +276,16 @@
 		var pmpm = $("#PMPM").val();
 		var startDate = $(".datepickerfrom").val();
 		var endDate = $(".datepickerto").val();
+		if(avgServiceFundRequired){
+			var avgServiceFund = $("#avgServiceFund").val();
+			if(!avgServiceFund){
+				$("#insuranceContractList .updateError").append(
+						"<div class='row col-sm-12'>Enter Avg Service Fund</div>");
+				return false;
+			}
+		}
+		
+		
 		var error = 0;
 		var source = getContextPath() + 'insurance/${id}/insuranceProviderContractJsonList';
 		$.ajax({
@@ -331,6 +351,7 @@
 						url : source,
 						success : function(data, textStatus, jqXHR) {
 							if (data.data.length > 0) {
+								
 								$("#insuranceContractList .clrRed")
 										.append(
 												"Cannot delete because of depending Third Party Agreements");

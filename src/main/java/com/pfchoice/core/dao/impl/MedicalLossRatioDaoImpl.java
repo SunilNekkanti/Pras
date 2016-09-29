@@ -97,7 +97,6 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 
 		crit.addOrder(Order.desc("reportMonth"));
 
-		System.out.println( "query is "+PrasUtil.printCriteriaQuery(crit));
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}
@@ -169,13 +168,13 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
 	@Override
-	public List<Object[]> reportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category){
+	public List<Object[]> reportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category, final String adminRole){
 		assert tableName !=null && !"".equals(tableName);
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName)
 				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repMonth", repGenDate)
-				.setString("category", category);
+				.setString("category", category).setString("adminRole", adminRole);
 		@SuppressWarnings("unchecked")
 		List<Object[]> entities =  query.list();
 		return entities;

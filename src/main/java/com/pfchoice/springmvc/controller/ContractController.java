@@ -112,6 +112,7 @@ public class ContractController {
 		model.addAttribute("contract", contract);
 		model.addAttribute("contractType", "Standard Contract");
 		model.addAttribute("pmpmRequired", false);
+		model.addAttribute("avgServiceFundRequired", false);
 
 		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
@@ -130,6 +131,7 @@ public class ContractController {
 		model.addAttribute("insuranceRequired", true);
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", false);
+		model.addAttribute("avgServiceFundRequired", false);
 		model.addAttribute("contractType", "Standard Contract");
 
 		logger.info("Returning contractEdit.jsp page");
@@ -148,6 +150,7 @@ public class ContractController {
 		model.addAttribute("contractList", listBean);
 		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", false);
+		model.addAttribute("avgServicFundRequired", false);
 		model.addAttribute("contractType", "Standard Contract");
 		return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 	}
@@ -164,6 +167,7 @@ public class ContractController {
 
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", false);
+		model.addAttribute("avgServiceFundRequired", false);
 		logger.info("Returning contractDisplay.jsp page");
 		return TileDefinitions.PROVIDERCONTRACTDISPLAY.toString();
 	}
@@ -186,6 +190,7 @@ public class ContractController {
 		}
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", false);
+		model.addAttribute("avgServiceFundRequired", false);
 		model.addAttribute("contractType", "Standard Contract");
 
 		logger.info("Returning contractEdit.jsp page");
@@ -238,6 +243,7 @@ public class ContractController {
 			model.addAttribute("contractList", listBean);
 			model.addAttribute("insuranceRequired", false);
 			model.addAttribute("pmpmRequired", false);
+			model.addAttribute("avgServiceFundRequired", false);
 			return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 		}
 	}
@@ -257,6 +263,7 @@ public class ContractController {
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 		logger.info("provider id is" + id);
 		model.addAttribute("contractType", "Standard Contract");
+		model.addAttribute("avgServiceFundRequired", false);
 		contract.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning contractEdit.jsp page");
@@ -304,6 +311,7 @@ public class ContractController {
 	public String deleteProviderContractAction(@PathVariable Integer id, Model model,
 			@ModelAttribute("username") String username) {
 		model.addAttribute("contractType", "Standard Contract");
+		model.addAttribute("avgServiceFundRequired", false);
 		Provider dbProvider = providerService.findById(id);
 		dbProvider.getRefContracts().forEach(refContract -> {
 			refContract.getContract().setActiveInd('N');
@@ -332,6 +340,7 @@ public class ContractController {
 		model.addAttribute("contractList", listBean);
 		model.addAttribute("insuranceRequired", false);
 		model.addAttribute("pmpmRequired", true);
+		model.addAttribute("avgServiceFundRequired", true);
 		model.addAttribute("contractType", "Contract");
 		logger.info("Returning insuranceContractList.jsp page");
 		return TileDefinitions.INSURANCECONTRACTLIST.toString();
@@ -352,6 +361,7 @@ public class ContractController {
 		logger.info("provider id is" + id);
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", true);
+		model.addAttribute("avgServiceFundRequired", true);
 		logger.info("Returning contractDisplay.jsp page");
 		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
 	}
@@ -371,6 +381,7 @@ public class ContractController {
 		Contract contract = createContractModel();
 		model.addAttribute("contract", contract);
 		model.addAttribute("pmpmRequired", true);
+		model.addAttribute("avgServiceFundRequired", true);
 		model.addAttribute("contractType", "Contract");
 		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 	}
@@ -390,8 +401,10 @@ public class ContractController {
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 		logger.info("insurance id is" + id);
 		model.addAttribute("contractType", "Contract");
+		model.addAttribute("avgServiceFundRequired", true);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pmpmRequired", true);
+			model.addAttribute("avgServiceFundRequired", true);
 			logger.info("Returning insuranceContractEdit.jsp page");
 			return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 		}
@@ -423,6 +436,7 @@ public class ContractController {
 		List<Contract> listBean = contractService.findAllContractsByRefId("insurance", id);
 		model.addAttribute("contractList", listBean);
 		model.addAttribute("insuranceRequired", false);
+		model.addAttribute("avgServiceFundRequired", true);
 		return TileDefinitions.INSURANCECONTRACTLIST.toString();
 	}
 
@@ -442,6 +456,7 @@ public class ContractController {
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
 		logger.info("insurance id is" + id);
 		model.addAttribute("contractType", "Contract");
+		model.addAttribute("avgServiceFundRequired", true);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning insuranceContractEdit.jsp page");
 			model.addAttribute("pmpmRequired", true);
@@ -491,6 +506,7 @@ public class ContractController {
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		logger.info("insurance id is" + id);
 		model.addAttribute("contractType", "Contract");
+		model.addAttribute("avgServiceFundRequired", true);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pmpmRequired", true);
 			model.addAttribute("contractType", "Contract");
@@ -534,6 +550,7 @@ public class ContractController {
 		if (dbContract == null) {
 			dbContract = createContractModel();
 		}
+		model.addAttribute("avgServiceFundRequired", true);
 		model.addAttribute("contract", dbContract);
 		model.addAttribute("pmpmRequired", true);
 
@@ -554,6 +571,7 @@ public class ContractController {
 		logger.info("contract Id is  " + cntId);
 		model.addAttribute("pmpmRequired", true);
 		model.addAttribute("contract", dbContract);
+		model.addAttribute("avgServiceFundRequired", true);
 		logger.info("Returning contractDisplay.jsp page");
 		return TileDefinitions.INSURANCECONTRACTEDIT.toString();
 	}
@@ -617,6 +635,7 @@ public class ContractController {
 		model.addAttribute("insuranceRequired", true);
 		model.addAttribute("contractType", "Third Party Agreement");
 		model.addAttribute("pmpmRequired", true);
+		model.addAttribute("avgServiceFundRequired", false);
 		return TileDefinitions.PROVIDERCONTRACTLIST.toString();
 	}
 
@@ -655,6 +674,7 @@ public class ContractController {
 		model.addAttribute("insuranceList", insList);
 		model.addAttribute("insuranceRequired", true);
 		model.addAttribute("pmpmRequired", true);
+		model.addAttribute("avgServiceFundRequired", false);
 
 		logger.info("Returning contractEdit.jsp page");
 		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
@@ -674,7 +694,7 @@ public class ContractController {
 	public String newInsuranceproviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
-
+		model.addAttribute("avgServiceFundRequired", false);
 		model.addAttribute("contractType", "Third Party Agreement");
 		if (bindingResult.hasErrors()) {
 			Set<Insurance> insList = getInsuranceList(id, true);
@@ -732,7 +752,7 @@ public class ContractController {
 	public String saveInsuranceProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload) {
-
+		model.addAttribute("avgServiceFundRequired", false);
 		model.addAttribute("contractType", "Third Party Agreement");
 		contract.setActiveInd('Y');
 
@@ -791,7 +811,7 @@ public class ContractController {
 			"delete" })
 	public String deleteInsuranceProviderContractAction(@PathVariable Integer id, @Validated Contract contract,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-
+		model.addAttribute("avgServiceFundRequired", false);
 		model.addAttribute("contractType", "Third Party Agreement");
 		if (bindingResult.hasErrors()) {
 			Set<Insurance> insList = getInsuranceList(id, false);

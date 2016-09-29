@@ -76,6 +76,6 @@ public interface MedicalLossRatioService {
 	 * @param tableName
 	 * @return
 	 */
-	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate, String category);
+	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate, String category, String adminRole);
 
 }

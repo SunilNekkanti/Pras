@@ -33,6 +33,11 @@
 								</c:when>
 							</c:choose>
 							<c:choose>
+								<c:when test="${avgServiceFundRequired}">
+									<th scope="col">Avg Service Fund</th>
+								</c:when>
+							</c:choose>
+							<c:choose>
 								<c:when test="${insuranceRequired}">
 									<th scope="col">Insurance</th>
 								</c:when>
@@ -96,6 +101,11 @@
 										<td>${cntct.pmpm}</td>
 									</c:when>
 								</c:choose>
+								<c:choose>
+								<c:when test="${avgServiceFundRequired}">
+									<td>${cntct.avgServiceFund}</td>
+								</c:when>
+							</c:choose>
 								<c:choose>
 									<c:when test="${insuranceRequired}">
 										<td>${cntct.referenceContract.ins.name}</td>

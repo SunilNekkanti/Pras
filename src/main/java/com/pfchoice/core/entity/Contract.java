@@ -44,6 +44,10 @@ public class Contract extends RecordDetails implements Serializable {
 	@Expose
 	@Column(name = "PMPM")
 	private Double pmpm;
+	
+	@Expose
+	@Column(nullable = true, name = "avg_service_fund")
+	private Double avgServiceFund;
 
 	@Expose
 	@Column(name = "start_date")
@@ -139,6 +143,20 @@ public class Contract extends RecordDetails implements Serializable {
 	 */
 	public void setPmpm(Double pmpm) {
 		this.pmpm = pmpm;
+	}
+	
+	/**
+	 * @return the avgServiceFund
+	 */
+	public Double getAvgServiceFund() {
+		return avgServiceFund;
+	}
+
+	/**
+	 * @param avgServiceFund the avgServiceFund to set
+	 */
+	public void setAvgServiceFund(Double avgServiceFund) {
+		this.avgServiceFund = avgServiceFund;
 	}
 
 	/**

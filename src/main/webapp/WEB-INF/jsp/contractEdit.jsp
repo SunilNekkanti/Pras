@@ -161,6 +161,23 @@
 							</div>
 						</c:when>
 					</c:choose>
+					
+					<c:choose>
+						<c:when test="${avgServiceFundRequired}">
+							<div class="col-sm-3">
+								<div class="form-group required">
+									<label class="control-label required col-sm-5" for="avgServiceFund">Avg Service Fund</label>
+									<div class="col-sm-7">
+										<springForm:input path="avgServiceFund" class="form-control" id="avgServiceFund"
+											placeholder="avgServiceFund" />
+										<span class="avgServiceFundText col-sm-12"></span>
+										<springForm:errors path="avgServiceFund" cssClass="error text-danger" />
+									</div>
+								</div>
+							</div>
+						</c:when>
+					</c:choose>
+					
 					<c:choose>
 						<c:when test="${insuranceRequired}">
 							<div class="col-sm-3">
@@ -188,7 +205,7 @@
 						<c:when test="${id != null && contract.activeInd == 89}">
 							<button type="button" class="btn btn-success btn-sm"
 								id="updateButton" name="update"
-								onclick="return modifyContract(${pmpmRequired});">Update</button>
+								onclick="return modifyContract(${pmpmRequired}, ${avgServiceFundRequired});">Update</button>
 							<button type="button" class="btn btn-success btn-sm"
 								id="deleteButton" name="delete"
 								onclick="return deleteContract(${pmpmRequired});">Delete</button>
@@ -196,7 +213,7 @@
 						<c:when test="${contract.id == null}">
 							<button type="button" class="btn btn-success btn-sm"
 								id="addButton" name="add"
-								onclick="return addContract(${pmpmRequired});">Add</button>
+								onclick="return addContract(${pmpmRequired}, ${avgServiceFundRequired});">Add</button>
 							<button type="button" class="btn btn-success btn-sm"
 								id="resetButton">Reset</button>
 						</c:when>

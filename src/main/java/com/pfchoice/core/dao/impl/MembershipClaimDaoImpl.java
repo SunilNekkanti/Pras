@@ -282,7 +282,7 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 	public Integer unloadTable(){
 		Session session = getSession();
 		int rowsAffected = 0;
-		String tableNames = "membership_claims,membership_claim_details";
+		String tableNames = "membership_claims,membership_claim_details,unprocessed_amg_claims,unprocessed_amg_pharmacy_claims";
 		String[] tokens = tableNames.split(",", -1);
 		for(String tableName :tokens){
 			try {
