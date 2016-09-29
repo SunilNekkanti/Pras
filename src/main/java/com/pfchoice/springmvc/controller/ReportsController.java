@@ -54,6 +54,7 @@ import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
+import com.pfchoice.core.entity.UnwantedClaim;
 import com.pfchoice.core.service.AttPhysicianService;
 import com.pfchoice.core.service.BillTypeService;
 import com.pfchoice.core.service.FacilityTypeService;
@@ -74,6 +75,7 @@ import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.PharmacyService;
 import com.pfchoice.core.service.UnprocessedClaimService;
+import com.pfchoice.core.service.UnwantedClaimService;
 import com.pfchoice.springmvc.controller.service.DBConnection;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -155,6 +157,9 @@ public class ReportsController {
 	@Autowired
 	private MedicalLossRatioService mlrService;
 
+	@Autowired
+	private UnwantedClaimService unwantedClaimService;
+	
 	/**
 	 * @param binder
 	 */
@@ -1066,4 +1071,24 @@ public class ReportsController {
 		return (List<FileType>) page.getList();
 	}
 
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = {   "/admin/unwantedClaims/list", "/user/unwantedClaims/list" }, method = RequestMethod.GET)
+	public Message viewUnwantedClaimsList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = true) Integer prvdrId, @RequestParam(required = false) Integer reportMonth,
+			@RequestParam(required = true) Integer activityMonth) {
+
+		List<UnwantedClaim> entities = unwantedClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth);
+		LOG.info("returning insuranceList");
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
+	}
 }
