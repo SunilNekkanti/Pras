@@ -15,7 +15,9 @@ public interface UnwantedClaimService {
 	 * @param prvdrId
 	 * @param reportMonth
 	 * @param activityMonth
+	 * @param isUnwanted
+	 * @return
 	 */
-	List<UnwantedClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth);
+	List<UnwantedClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted);
 
 }

@@ -17,6 +17,6 @@ public interface UnwantedClaimDao {
 	 * @param activityMonth
 	 * @return
 	 */
-	List<UnwantedClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth);
+	List<UnwantedClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted);
 	
 }

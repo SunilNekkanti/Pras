@@ -1,6 +1,7 @@
 package com.pfchoice.core.dao.impl;
 
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_FETCH;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_STOPLOSS;
 
 import java.util.List;
 
@@ -39,8 +40,13 @@ public class UnwantedClaimDaoImpl extends HibernateBaseDao<UnwantedClaim, Intege
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UnwantedClaim> getUnwantedClaims(final Integer insId, final Integer prvdrId, final Integer reportMonth, final Integer activityMonth){
-		String fetchDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_FETCH);
+	public List<UnwantedClaim> getUnwantedClaims(final Integer insId, final Integer prvdrId, final Integer reportMonth, final Integer activityMonth,final Boolean isUnwanted){
+		String fetchDataQuery;
+		if(isUnwanted) {
+			fetchDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_FETCH);
+		} else {
+			fetchDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_STOPLOSS);
+		}
 		
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(fetchDataQuery)
 				.setInteger("insId", insId)
@@ -49,6 +55,4 @@ public class UnwantedClaimDaoImpl extends HibernateBaseDao<UnwantedClaim, Intege
 				.setInteger("activityMonth", activityMonth);
 		return query.setResultTransformer(Transformers.aliasToBean(getEntityClass())).list();
 	}
-
-
 }

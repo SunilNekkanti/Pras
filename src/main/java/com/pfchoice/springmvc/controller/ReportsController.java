@@ -1087,8 +1087,28 @@ public class ReportsController {
 			@RequestParam(required = true) Integer prvdrId, @RequestParam(required = false) Integer reportMonth,
 			@RequestParam(required = true) Integer activityMonth) {
 
-		List<UnwantedClaim> entities = unwantedClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth);
-		LOG.info("returning insuranceList");
-		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
+		List<UnwantedClaim> entities = unwantedClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth, true);
+		LOG.info("returning UnwantedClaimsList");
+		return Message.successMessage(CommonMessageContent.MLR_UNWANTED_CLAIMS_LIST, JsonConverter.getJsonObject(entities));
+	}
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = {   "/admin/stoploss/list", "/user/stoploss/list" }, method = RequestMethod.GET)
+	public Message viewStopLossList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = true) Integer prvdrId, @RequestParam(required = false) Integer reportMonth,
+			@RequestParam(required = true) Integer activityMonth) {
+
+		List<UnwantedClaim> entities = unwantedClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth, false);
+		LOG.info("returning Stop Loss List");
+		return Message.successMessage(CommonMessageContent.MLR_STOP_LOSS, JsonConverter.getJsonObject(entities));
 	}
 }

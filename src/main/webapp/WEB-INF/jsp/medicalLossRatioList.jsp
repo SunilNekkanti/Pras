@@ -337,14 +337,45 @@ $(document).ready(function() {
      	    				thempty.push(index);
      	    				$(this).addClass("hide");
      	    			} 
+     	    			
      	    	 });
-	    		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
+     	    	 
+     	    	jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
+	    			 var unwanted = 0; var repMonth = ""; var activityMonth="";var stoploss = 0;
 	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
+	    				 if(tdindex == 3 && $(this).text() == "UNWANTED_CLAIMS")
+  	    				 {
+  	    					 	unwanted = 1;
+  	    				 }
+	    				 if(tdindex > 3 && unwanted == 1){
+	    					  activityMonth = $("#medicalLossRatio thead tr th:eq("+tdindex+")").text();
+	    					 repMonth = $("#medicalLossRatio tbody tr:eq("+index+") td:eq(2)").text();
+	    					 $(this).html("<a  href='javascript:void(0)' onclick='mlrUnwantedList("+activityMonth+","+repMonth+",true);'>"+$(this).text()+"</a>");
+	    				 }
+	    				 
+	    				 if(tdindex == 3 && $(this).text() == "STOP_LOSS")
+  	    				 {
+	    					 stoploss = 1;
+  	    				 }
+	    				 if(tdindex > 3 && stoploss == 1){
+	    					  activityMonth = $("#medicalLossRatio thead tr th:eq("+tdindex+")").text();
+	    					 repMonth = $("#medicalLossRatio tbody tr:eq("+index+") td:eq(2)").text();
+	    					 $(this).html("<a  href='javascript:void(0)' onclick='mlrUnwantedList("+activityMonth+","+repMonth+",false);'>"+$(this).text()+"</a>");
+	    				 }
+	    			 });	
+   	   			 });
+     	    	 
+	    		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
+	    			 var unwanted = 0; var repMonth = ""; var activityMonth="";
+	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
+	    				 
+	    				 
 	    				 if(tdindex == 0) $(this).remove();
     	    		 		if($.inArray(tdindex, thempty) != -1) {
     	    		 			$(this).remove();
     	    		 			$(this).addClass("hide");
     	    		 		}
+    	    		 	
     	    		 			
 	    			 });	
 	    			 
@@ -429,3 +460,78 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Unwanted Claims</h4>
+        </div>
+        <div class="modal-body">
+          	<table id="unwantedClaims" class="display table-responsive  table table-striped table-hover" style="width:100%;">
+          			<thead>
+          				<tr>
+	          				<th> Claim Type </th>
+	          				<th> Last Name </th>
+	          				<th> First Name </th>
+	          				<th> Gender </th>
+	          				<th> DOB </th>
+	          				<th> Amount </th>
+	          				
+	          			</tr>	
+          			</thead>
+          			<tbody>
+          				
+          			</tbody>
+          	
+          	</table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<script>
+
+	function mlrUnwantedList(activityMonth, reportMonth, isUnwanted){
+		     $("#unwantedClaims tbody").empty();
+				var url ;
+				if(isUnwanted){
+					url= getContextPath()+"/unwantedClaims/list";
+					$(".modal-title").html( "Unwanted Claim Details");
+				}else{
+					url= getContextPath()+"/stoploss/list";
+					$(".modal-title").html( "Stop Loss Details");
+				}
+				var insId = $("#mlrInsu").val();
+				var prvdrId = $("#mlrPrvdr").val();
+				var params = { "insId":insId, "prvdrId":prvdrId, "reportMonth" :reportMonth, "activityMonth":activityMonth };
+				var str = jQuery.param( params );
+				  $.getJSON(url+'?'+str, function(data){
+					 var sum = 0;
+					 $.each(data.data, function( index, value ) {
+						
+					 	$("#unwantedClaims tbody").append("<tr><td>"+value.claimType+"</td><td>"+value.lastName+"</td><td>"+value.firstName+"</td><td>"+value.gender+"</td><td>"+value.dob+"</td><td>"+value.unwantedClaims+"</td></tr>");
+					 		sum = sum + value.unwantedClaims;
+					 	});
+					 $("#myModal").modal('show');
+				 }).done(function() {
+					    console.log( "second success" );
+					  })
+					  .fail(function() {
+					    console.log( "error" );
+					  })
+					  .always(function() {
+					    console.log( "complete" );
+					  });
+				 
+				$("#myModal").modal('show');
+				modal-title
+			}
+</script>

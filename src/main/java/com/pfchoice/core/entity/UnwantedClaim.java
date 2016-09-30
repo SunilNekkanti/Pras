@@ -26,7 +26,7 @@ public class UnwantedClaim  extends RecordDetails implements Serializable {
 	private String lastName;
 
 	@Expose
-	private String gender;
+	private Character gender;
 	
 	@Expose
 	@Temporal(TemporalType.DATE)
@@ -61,11 +61,11 @@ public class UnwantedClaim  extends RecordDetails implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getGender() {
+	public Character getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Character gender) {
 		this.gender = gender;
 	}
 

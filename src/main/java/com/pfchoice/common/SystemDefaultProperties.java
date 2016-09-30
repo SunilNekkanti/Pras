@@ -32,6 +32,8 @@ public interface SystemDefaultProperties {
 
 	String QUERY_TYPE_FETCH = "_fetch";
 	
+	String QUERY_TYPE_STOPLOSS = "_stoploss";
+	
 	String QUERY_TYPE_INSERT = "_insert";
 
 	String QUERY_TYPE_BH_INSERT = "_bh_insert";

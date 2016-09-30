@@ -22,8 +22,8 @@ public class UnwantedClaimServiceImpl implements UnwantedClaimService {
 	private UnwantedClaimDao unwantedClaimDao;
 
 	
-	public List<UnwantedClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth){
+	public List<UnwantedClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted){
 		
-		return unwantedClaimDao.getUnwantedClaims(insId, prvdrId, reportMonth, activityMonth);
+		return unwantedClaimDao.getUnwantedClaims(insId, prvdrId, reportMonth, activityMonth,  isUnwanted);
 	}
 }
