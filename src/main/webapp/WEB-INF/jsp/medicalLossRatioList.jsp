@@ -11,6 +11,8 @@
 	type="text/css">
 <script type="text/javascript"
 	src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript"
+	src="http://cdn.datatables.net/plug-ins/1.10.12/api/average().js"></script>
 <script>
 $(document).ready(function() {
 	
@@ -96,10 +98,6 @@ $(document).ready(function() {
 					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" multiple=\"multiple\">');
 					     //iterate over the data and append a select option
 					     $.each(data.data.list, function(key, val){
-					   // 	 var date = new Date(val.reportDate);
-					   // 	 var m = (date.getMonth() + 1);
-					   // 	 if(m < 10 ) { m = '0'+(date.getMonth() + 1);}
-					   // 	 date =  date.getFullYear() + '-' + m + '-' + date.getDate();
 					    	 if(key == 0) {
 					    		 s.append('<option value="'+val.reportMonth+'" Selected>' + val.reportMonth +'</option>');
 					    	 }  else {
@@ -252,6 +250,7 @@ $(document).ready(function() {
              					$("#medicalLossRatio thead tr").append('<th scope="col" role="row" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" >'+text+'</th>');
              			 });
              		 }
+             		
              		});
             	  if(th > td)
             		  {
@@ -287,31 +286,21 @@ $(document).ready(function() {
      	     "sAjaxDataProp" : 'data',
      	     "bLengthChange": false,
      	     "bPagination":false,
-     	     "iDisplayLength": 100,
+     	     "iDisplayLength": 500,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
      	     "initComplete": function(settings, json) {
 	    		 var totalRecord = $("#medicalLossRatio tbody tr").length -1;
 		    	     jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
-		    	    	
 		    	    		 if(index == 0){
 		    	    			 $("#medicalLossRatio tbody tr").eq(index).remove();
 		    	    		 }
-		    	    			
 		    	    });
+		    	     
+		    	     
 	     	 },
-	     	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-	     	      // Bold the grade for all 'A' grade browsers
-	     	      if ( iDisplayIndex == 0 )
-	     	      {
-	     	    	  var d = '"'+aData+'"';
-	     	    	arr = d.split(',');
-	     	        $('td', nRow).hide();
-	     	      }
-	     	    },
-	     	
-	     	
+	     	 
      	     "fnServerParams": function ( aoData ) {
                 aoData.push(
                     {"name": "sSearchIns", "value": insId},
@@ -329,59 +318,174 @@ $(document).ready(function() {
  	     	    else{
  	     	        $paginate.show();
  	     	    }
-     	    	 var totalRecord = $("#medicalLossRatio thead tr th").length;
+ 	     	    
      	    	 var thempty = new Array;
+     	    	 var activeMonthList = new Array();
      	    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
-     	    		 if(index == 0) $(this).addClass("hide");
+     	    		activeMonthList[index] = $(this).text();
+     	    		 if(index == 0 || index == 1) $(this).addClass("hide");
      	    			if($(this).text() == "" || $(this).text() == "null" ){
      	    				thempty.push(index);
      	    				$(this).addClass("hide");
      	    			} 
-     	    			
      	    	 });
-     	    	 
+     	    	
+     	    	var unwantedCount = new Array();
+     	    	var unwanted = stoploss =  total = accumulatedTotal = 0; 
+     	    	var repMonth =  activityMonth = prvdrName = prvdrId = "";
+     	    	var mlrCategory = $("#mlrCategory"). val();
      	    	jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
-	    			 var unwanted = 0; var repMonth = ""; var activityMonth="";var stoploss = 0;
-	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
-	    				 if(tdindex == 3 && $(this).text() == "UNWANTED_CLAIMS")
-  	    				 {
-  	    					 	unwanted = 1;
-  	    				 }
-	    				 if(tdindex > 3 && unwanted == 1){
-	    					  activityMonth = $("#medicalLossRatio thead tr th:eq("+tdindex+")").text();
-	    					 repMonth = $("#medicalLossRatio tbody tr:eq("+index+") td:eq(2)").text();
-	    					 $(this).html("<a  href='javascript:void(0)' onclick='mlrUnwantedList("+activityMonth+","+repMonth+",true);'>"+$(this).text()+"</a>");
-	    				 }
-	    				 
-	    				 if(tdindex == 3 && $(this).text() == "STOP_LOSS")
-  	    				 {
-	    					 stoploss = 1;
-  	    				 }
-	    				 if(tdindex > 3 && stoploss == 1){
-	    					  activityMonth = $("#medicalLossRatio thead tr th:eq("+tdindex+")").text();
-	    					 repMonth = $("#medicalLossRatio tbody tr:eq("+index+") td:eq(2)").text();
-	    					 $(this).html("<a  href='javascript:void(0)' onclick='mlrUnwantedList("+activityMonth+","+repMonth+",false);'>"+$(this).text()+"</a>");
-	    				 }
+	    			
+     	    		 unwanted = stoploss = total = 0;  
+	    			 prvdrName = prvdrId = repMonth = activityMonth="";
+	    			 repMonth = $("#medicalLossRatio tbody tr:eq("+index+") td:eq(3)").text();
+    				 prvdrName = "'"+$("#medicalLossRatio tbody tr:eq("+index+") td:eq(2)").text()+"'";
+    				 prvdrId = "'"+$("#medicalLossRatio tbody tr:eq("+index+") td:eq(1)").text()+"'";
+	    			 	 
+    				 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
+	    			 		
+	    			 	 activityMonth = activeMonthList[tdindex];
+						if(mlrCategory == 9999){
+		    			 	 if(tdindex == 4 && $(this).text() == "UNWANTED_CLAIMS" && unwanted != 1)
+	  	    				 {
+	  	    					 	unwanted = 1;
+	  	    				 }
+		    				 else if(tdindex == 4 && $(this).text() == "STOP_LOSS" && stoploss != 1)
+	  	    				 {
+		    					 stoploss = 1;
+	  	    				 }
+		    				 else if (tdindex == 4 && $(this).text() == "TOTAL" && total != 1)
+		    				 {
+		    					  total = 1; 
+		    				 }
+		    				
+		    				   
+		    				 if(tdindex > 4 && unwanted == 1){
+		    					  if(activityMonth != "Total"){
+		    						  if(unwantedCount[activityMonth] !== undefined && $.trim($(this).text())){ 
+		    							  unwantedCount[activityMonth] =  parseFloat(unwantedCount[activityMonth]) + parseFloat($(this).text());
+		    						  }
+		    						  else if ($.trim($(this).text()) && unwantedCount[activityMonth] === undefined){
+		    							  unwantedCount[activityMonth] = parseFloat($(this).text());
+		    						 } 
+		    						  else if(unwantedCount[activityMonth] !== undefined && !$.trim($(this).text())){ 
+		    							  unwantedCount[activityMonth] =  unwantedCount[activityMonth];
+		    						  }
+		    						  else{
+		    							  unwantedCount[activityMonth] = 0;
+		    						  }
+		 	    					 $(this).html('<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',true,'+prvdrName+','+prvdrId+');">'+$(this).text()+'</a>');
+		 	    					
+		    					  }
+		    					  else
+		    						  $(this).html($(this).text());
+		    				 }
+		    				 
+		    				 else if(tdindex > 4 && stoploss == 1){
+		    					  if(activityMonth != "Total"){
+		    						  $(this).html('<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',false,'+prvdrName+','+prvdrId+');">'+$(this).text()+'</a>');
+		    					  }	 
+		    					  else
+		       						  $(this).html($(this).text());
+		    				 }
+		    				 
+		    				 else if(tdindex > 4 && total == 1){
+		    					  if(activityMonth != "Total"){
+		    						  if(unwantedCount[activityMonth] !== undefined && $.trim($(this).text())){ 
+		    							  unwantedCount[activityMonth] =  parseFloat(unwantedCount[activityMonth]) + parseFloat($(this).text());
+		    							 
+		    						  }
+		    						  else if ($.trim($(this).text()) && unwantedCount[activityMonth] === undefined){
+		    							  unwantedCount[activityMonth] = parseFloat($(this).text());
+		    						 } 
+		    						 else if(unwantedCount[activityMonth] !== undefined && !$.trim($(this).text())){ 
+		    							  unwantedCount[activityMonth] =  unwantedCount[activityMonth];
+		    						 }
+		    						 else{
+		    							  unwantedCount[activityMonth] = 0;
+		    						 }
+		    					  }	 
+		    				 }
+						}
+	    				else{
+	    					 
+		    					if(tdindex > 4 && index > 0)
+		    					{	
+		    						  if(unwantedCount[activityMonth] !== undefined && $.trim($(this).text())){ 
+		    							  unwantedCount[activityMonth] =  parseFloat(unwantedCount[activityMonth]) + parseFloat($(this).text());
+		    							 
+		    						  }
+		    						  else if ($.trim($(this).text()) && unwantedCount[activityMonth] === undefined){
+		    							  unwantedCount[activityMonth] = parseFloat($(this).text());
+		    						 } 
+		    						 else if(unwantedCount[activityMonth] !== undefined && !$.trim($(this).text())){ 
+		    							  unwantedCount[activityMonth] =  unwantedCount[activityMonth];
+		    						 }
+		    						 else{
+		    							  unwantedCount[activityMonth] = 0;
+		    						 }
+		    				  }
+	    				}		
 	    			 });	
    	   			 });
-     	    	 
+     	    	
+     	    	 $("#medicalLossRatio tbody").append("<tr></tr>");
+     	    	
+     	    	 if(mlrCategory == "MLR" || mlrCategory == "QMLR"){
+	     	    	var sum = 0,
+	      	        count = 0,
+	      	        all = $('#medicalLossRatio > tbody > tr');
+	      	    	th = $('#medicalLossRatio > thead > tr > th');	
+	      	    	th.each(function(thindex, thtext)
+	      	    	{
+	      	    		if(thindex > 4 && $(this).text() != "null"){
+	      	    			sum = 0; count = 0;
+	 	     	    		all.each(function( index, text) {
+	 	         	   			if(index > 0 && (all.length -1) != index && $('td:eq('+thindex+')', this).text() && $('td:eq('+thindex+')', this).text() > 0){
+	 	    		     	       	sum += +$('td:eq('+thindex+')', this).text();
+	 	    		     	       	count++;
+	 	         	   			}
+	 	         	   		});
+	 	     	    		$("#medicalLossRatio tbody tr:last").append('<td>'+(sum / count).toFixed(2)+'</td>');
+	 	     	    		
+	      	    		}	
+	      	    		else{
+	      	    			$("#medicalLossRatio tbody tr:last").append('<td></td>');
+	      	    		}	
+	      	    	});
+     	    	 }
+     	    	 else
+     	    	 {
+     	    		var num;
+        	    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
+        	    		if(unwantedCount[$(this).text()] !== undefined  && $(this).text() != "null"){
+        	    			num = unwantedCount[$(this).text()]
+        	    			num = Math.round(num * 1000) / 1000;
+        	    			accumulatedTotal = accumulatedTotal + num;
+        	    	 		$("#medicalLossRatio tbody tr:last").append('<td>'+num+'</td>');
+        	    		}		
+        	    		else if($(this).text() == "Total" && accumulatedTotal > 0){
+        	    			$("#medicalLossRatio tbody tr:last").append('<td>'+Math.round(accumulatedTotal * 1000) / 1000 +'</td>');
+        	    		}
+        	    		else{
+        	    			$("#medicalLossRatio tbody tr:last").append('<td></td>');
+        	    		}
+        	    	
+        	    	 }); 
+     	    		 
+     	    	 }	 
+	     	    	 
 	    		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
-	    			 var unwanted = 0; var repMonth = ""; var activityMonth="";
 	    			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
-	    				 
-	    				 
-	    				 if(tdindex == 0) $(this).remove();
+	    				 if(tdindex == 0 || tdindex == 1) $(this).remove();
     	    		 		if($.inArray(tdindex, thempty) != -1) {
     	    		 			$(this).remove();
     	    		 			$(this).addClass("hide");
     	    		 		}
-    	    		 	
-    	    		 			
 	    			 });	
-	    			 
-	    			 
-    	    });
-	    		 if($( window ).width() > 900){
+    	    	});
+	    		 
+	    		if($( window ).width() > 900){
     				 var width;
     				 width = $('#medicalLossRatio tbody tr:eq(0) td').length * 120;
     				 if(width > 1500){
@@ -433,7 +537,11 @@ $(document).ready(function() {
 									<option value="Inst">Inst</option>
 									<option value="Patients">Patients</option>
 									<option value="Pharmacy">Pharmacy</option>
-									<option value="Prof">Prof</option>
+									<option value="MLR">MLR</option>
+									<option value="QMLR">QMLR</option>
+									<option value="Total">Total</option>
+									<option value="UNWANTED_CLAIMS">Unwanted Claims</option>
+									<option value="STOP_LOSS">Stop Loss</option>
 							</select>
 						</div>
 					</div>
@@ -471,6 +579,8 @@ $(document).ready(function() {
           <h4 class="modal-title">Unwanted Claims</h4>
         </div>
         <div class="modal-body">
+        	<p class="text-primary info">Your request is processing... please wait</p>
+        	<i class="fa fa-spinner fa-spin info" style="font-size:24px"></i>
           	<table id="unwantedClaims" class="display table-responsive  table table-striped table-hover" style="width:100%;">
           			<thead>
           				<tr>
@@ -499,18 +609,20 @@ $(document).ready(function() {
   
 <script>
 
-	function mlrUnwantedList(activityMonth, reportMonth, isUnwanted){
+	function mlrUnwantedList(activityMonth, reportMonth, isUnwanted,prvdrName, prvdrId){
+		
+		 $("#myModal").modal('show');
+		 $(".info").show();
 		     $("#unwantedClaims tbody").empty();
 				var url ;
 				if(isUnwanted){
 					url= getContextPath()+"/unwantedClaims/list";
-					$(".modal-title").html( "Unwanted Claim Details");
+					$(".modal-title").html( "Unwanted Claim Details - "+prvdrName);
 				}else{
 					url= getContextPath()+"/stoploss/list";
-					$(".modal-title").html( "Stop Loss Details");
+					$(".modal-title").html( "Stop Loss Details - "+prvdrName);
 				}
 				var insId = $("#mlrInsu").val();
-				var prvdrId = $("#mlrPrvdr").val();
 				var params = { "insId":insId, "prvdrId":prvdrId, "reportMonth" :reportMonth, "activityMonth":activityMonth };
 				var str = jQuery.param( params );
 				  $.getJSON(url+'?'+str, function(data){
@@ -520,8 +632,16 @@ $(document).ready(function() {
 					 	$("#unwantedClaims tbody").append("<tr><td>"+value.claimType+"</td><td>"+value.lastName+"</td><td>"+value.firstName+"</td><td>"+value.gender+"</td><td>"+value.dob+"</td><td>"+value.unwantedClaims+"</td></tr>");
 					 		sum = sum + value.unwantedClaims;
 					 	});
+					 if(data.data.length > 0){
+						 $("#unwantedClaims tbody").append("<tr><td></td><td></td><td></td><td></td><td>Total</td><td>"+sum+"</td></tr>");
+					 }
+					 
+				 }).success(function() {
+					 $(".info").hide();
 					 $("#myModal").modal('show');
-				 }).done(function() {
+				  })
+				 
+				 .done(function() {
 					    console.log( "second success" );
 					  })
 					  .fail(function() {
@@ -530,8 +650,5 @@ $(document).ready(function() {
 					  .always(function() {
 					    console.log( "complete" );
 					  });
-				 
-				$("#myModal").modal('show');
-				modal-title
 			}
 </script>

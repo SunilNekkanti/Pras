@@ -15,10 +15,10 @@ alter table temp_membership_cap_report add key MEMBER_ID(MEMBER_ID);
  
 
 INSERT ignore into membership_cap_report 
-( CAP_PAY_DT, CAP_PERIOD, PAYEE_ID, PAYEE_NAME, ins_id, prvdr_id, mbr_id, eff_start_date, MBR_RISK_POP, CAP_KEY, RATE_TIER, REC_TYPE, FUND_RATE, FUND_AMT, MM, FUND_NAME, LOBD_ID, PRODUCT_DESC,
+( CAP_PAY_DT, CAP_PERIOD, PAYEE_ID, PAYEE_NAME, ins_id, prvdr_id, mbr_id,SRC_SYS_MEMBER_NBR, eff_start_date, MBR_RISK_POP, CAP_KEY, RATE_TIER, REC_TYPE, FUND_RATE, FUND_AMT, MM, FUND_NAME, LOBD_ID, PRODUCT_DESC,
 file_id, created_date, updated_date, created_by, updated_by )
  SELECT   CAP_PAY_DT ,  date_format(CAP_PERIOD,'%Y%m'), PAYEE_ID, PAYEE_NAME, tm.ins_id,
- rc.prvdr_id,  mi.mbr_id, 
+ rc.prvdr_id,  mi.mbr_id, MEMBER_ID,
 MEMBEREFFDT,  MBR_RISK_POP, CAP_KEY, RATE_TIER, REC_TYPE, FUND_RATE, FUND_AMT, MM, FUND_NAME, LOBD_ID, PRODUCT_DESC,
  tm.fileId ,tm.created_date,tm.updated_date,tm.created_by,tm.updated_by 
  from   temp_membership_cap_report tm
