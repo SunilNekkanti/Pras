@@ -211,9 +211,9 @@ where m1<=cast(now() as date)
 order by m1;
 alter table activity_month_span add key activitymonth(activitymonth);
 
-insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
+insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,is_roster,file_id,created_date,updated_date,created_by,updated_by)
 select  distinct
-mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth, :fileId fileId,
+mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth,'Y', :fileId fileId,
 now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by 
 from  membership  m  
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id= :insId  
@@ -227,11 +227,7 @@ join  activity_month_span ams on  ams.activitymonth  between   DATE_FORMAT(mi.ef
   where    mam.activity_month is null
 group by mi.mbr_id,mi.ins_id,mp.prvdr_id,ams.activityMonth; 
 
-insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 
-select m.Mbr_Id, now() created_date, now() updated_date,'sarath','sarath' 
-from membership m
-left outer join reference_contact rc on rc.mbr_id =m.mbr_id
-where rc.mbr_id is null ;
+
 
 update membership_activity_month mam
  join (select  max(activity_month) activity_month ,mbr_id  from membership_activity_month where ins_id=:insId group by mbr_id) max_mam
@@ -242,6 +238,13 @@ left join temp_membership tm  on  mi.SRC_SYS_MBR_NBR=tm.SBSB_ID
 where tm.SBSB_ID  is null and mi.ins_id=:insId 
 )missingRoster  on  max_mam.mbr_id=missingRoster.mbr_id  
 set roster_flag='Y';
+
+   
+insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 
+select m.Mbr_Id, now() created_date, now() updated_date,'sarath','sarath' 
+from membership m
+left outer join reference_contact rc on rc.mbr_id =m.mbr_id
+where rc.mbr_id is null ;
 
 insert  into contact (ref_cnt_id,home_phone,mobile_phone,address1,address2,city,zipcode,statecode,file_id,created_Date,updated_date,created_by,updated_by)
 select

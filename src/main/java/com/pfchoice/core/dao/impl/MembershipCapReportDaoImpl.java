@@ -176,7 +176,7 @@ public class MembershipCapReportDaoImpl extends HibernateBaseDao<MembershipCapRe
 		}
 
 		return getSession().createSQLQuery(loadDataQuery.toString()).setInteger("insId", insId)
-				.setInteger("fileId", fileId).executeUpdate();
+				.setInteger("activityMonth", activityMonth).setInteger("fileId", fileId).executeUpdate();
 	}
 
 	/*

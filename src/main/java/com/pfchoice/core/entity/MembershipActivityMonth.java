@@ -57,6 +57,14 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	@JoinColumn(name = "file_id", nullable = false, referencedColumnName = "file_id")
 	private File file;
 
+	@Expose
+	@Column(name = "is_roster")
+	private Character isRoster;
+	
+	@Expose
+	@Column(name = "is_cap")
+	private Character isCap;
+	
 	/**
 	 * 
 	 */
@@ -159,6 +167,34 @@ public class MembershipActivityMonth extends RecordDetails implements Serializab
 	 */
 	public void setFile(File file) {
 		this.file = file;
+	}
+
+	/**
+	 * @return
+	 */
+	public Character getIsRoster() {
+		return isRoster;
+	}
+
+	/**
+	 * @param isRoster
+	 */
+	public void setIsRoster(Character isRoster) {
+		this.isRoster = isRoster;
+	}
+
+	/**
+	 * @return
+	 */
+	public Character getIsCap() {
+		return isCap;
+	}
+
+	/**
+	 * @param isCap
+	 */
+	public void setIsCap(Character isCap) {
+		this.isCap = isCap;
 	}
 
 	@Override

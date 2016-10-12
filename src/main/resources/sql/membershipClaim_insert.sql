@@ -7,7 +7,7 @@ market_lvl1,market_lvl2,market_lvl3,market_lvl4,market_lvl5,market_lvl6,market_l
 tin,dx_type_cd,proc_type_cd,created_date,updated_date,created_by,updated_by,active_ind,file_id
 )
 SELECT 
-convert(CLAIMNUMBER,decimal(35,0)),mi.mbr_id,rc.prvdr_id,mi.ins_id, :reportMonth,CLAIMTYPE,lft.code,null,
+convert(CLAIMNUMBER,decimal(35,0)),mi.mbr_id,rc.prvdr_id,:insId, :reportMonth,CLAIMTYPE,lft.code,null,
 null,csv2AmgClaim.BILLTYPE,csv2AmgClaim.DISCHARGESTATUS,null,
 CONCAT_WS(',',NULLIF(DIAGNOSIS1,'') , NULLIF(DIAGNOSIS2,'') , NULLIF(DIAGNOSIS3,''), NULLIF(DIAGNOSIS4,'') ,NULLIF(DIAGNOSIS5,'') , NULLIF(DIAGNOSIS6,'') , NULLIF(DIAGNOSIS7,'') ,NULLIF(DIAGNOSIS8,'')) diagnoses,
 csv2AmgClaim.PRODUCT_LABEL,csv2AmgClaim.PRODUCT_LVL1,csv2AmgClaim.PRODUCT_LVL2,csv2AmgClaim.PRODUCT_LVL3,csv2AmgClaim.PRODUCT_LVL4,csv2AmgClaim.PRODUCT_LVL5,
@@ -16,7 +16,7 @@ csv2AmgClaim.MARKET_LVL5,csv2AmgClaim.MARKET_LVL6,csv2AmgClaim.MARKET_LVL7,csv2A
 csv2AmgClaim.TIN,csv2AmgClaim.DX_TYPE_CD,csv2AmgClaim.PROC_TYPE_CD,
   now(),now(),'sarath','sarath','Y', :fileId 
   FROM csv2Table_Amg_Claim csv2AmgClaim
- JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+ LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
  LEFT OUTER JOIN contract c on c.PCP_PROVIDER_NBR like concat ('%', csv2AmgClaim.PCP_PROVIDER_NBR ,'%')
  LEFT OUTER JOIN reference_contract rc on  c.ref_contract_Id = rc.ref_contract_Id  
 LEFT OUTER JOIN lu_facility_type lft on lft.description = csv2AmgClaim.FACILITY_TYPE_DESC
