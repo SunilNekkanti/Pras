@@ -96,7 +96,7 @@ where mi.mbr_id is null;
 INSERT IGNORE INTO medical_loss_ratio
   (ins_id, prvdr_id, report_month, activity_month, patients, fund, prof, inst, pharmacy, unwanted_claims,  stop_loss, file_id, created_date, updated_date, created_by, updated_by)
   SELECT  
-  mam.ins_id, mam.prvdr_id, max(mc.report_month) as report_month , mam.activity_month CAP_PERIOD,  count(distinct mam.mbr_id) patients, count(distinct mam.mbr_id) *150  fund,
+  mam.ins_id, mam.prvdr_id, max(mc.report_month) as report_month , mam.activity_month CAP_PERIOD,  count( distinct if(is_cap='Y',mam.mbr_id,null)  ) patients, count(distinct if(is_cap='Y', mam.mbr_id,null) ) *150  fund,
 round(sum(if (claim_type = 'PROF',membership_claims,null)) ,2) as 'PROF',
  round(sum(if (claim_type = 'INST',membership_claims,null)),2) as 'INST',
   round(sum(if (claim_type = 'PHAR',membership_claims,null)),2)   as 'PHAR' ,
