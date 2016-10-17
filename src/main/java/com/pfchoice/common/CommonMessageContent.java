@@ -101,4 +101,6 @@ public interface CommonMessageContent {
 	String MLR_UNWANTED_CLAIMS_LIST = "Unwated Claims Detailed data";
 	
 	String MLR_STOP_LOSS = "Stop Loss Detailed data";
+	
+	String RISKRECON_LIST = " Risk Categories List";
 }

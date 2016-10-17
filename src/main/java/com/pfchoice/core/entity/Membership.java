@@ -388,12 +388,32 @@ public class Membership extends RecordDetails implements Serializable {
 		this.mbrClaimList = mbrClaimList;
 	}
 	
+	/**
+	 * @return
+	 */
 	public List<Contact> getContactList() {
 		return contactList;
 	}
 
+	/**
+	 * @param contactList
+	 */
 	public void setContactList(List<Contact> contactList) {
 		this.contactList = contactList;
+	}
+
+	/**
+	 * @return
+	 */
+	public List<MembershipActivityMonth> getMbrActivityMonthList() {
+		return mbrActivityMonthList;
+	}
+
+	/**
+	 * @param mbrActivityMonthList
+	 */
+	public void setMbrActivityMonthList(List<MembershipActivityMonth> mbrActivityMonthList) {
+		this.mbrActivityMonthList = mbrActivityMonthList;
 	}
 
 	@Override

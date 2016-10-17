@@ -74,6 +74,7 @@ import com.pfchoice.core.service.MembershipHospitalizationService;
 import com.pfchoice.core.service.MembershipProblemService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.PharmacyService;
+import com.pfchoice.core.service.RiskReconService;
 import com.pfchoice.core.service.UnprocessedClaimService;
 import com.pfchoice.core.service.UnwantedClaimService;
 import com.pfchoice.springmvc.controller.service.DBConnection;
@@ -159,6 +160,9 @@ public class ReportsController {
 
 	@Autowired
 	private UnwantedClaimService unwantedClaimService;
+	
+	@Autowired
+	private RiskReconService riskReconService;
 	
 	/**
 	 * @param binder
@@ -1007,6 +1011,9 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
 	}
 	
+	
+	
+	
 	/**
 	 * @param pageNo
 	 * @param pageSize
@@ -1046,6 +1053,30 @@ public class ReportsController {
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));
 	}
+	
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/claimReport/list" }, method = RequestMethod.GET)
+	public Message viewAdminClaimReportList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category,
+			@RequestParam(required = false) String rosterCap){
+		
+		List<Object[]> entities = riskReconService.claimReportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y", rosterCap);
+		LOG.info("returning insuranceList");
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
+	}
+	
 	
 	
 

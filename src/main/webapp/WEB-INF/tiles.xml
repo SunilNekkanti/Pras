@@ -832,4 +832,12 @@
 			value="/WEB-INF/jsp/medicalLossRatioList.jsp" />
 	</definition>
 	
+	
+	<!--  claim Report -->
+	<definition name="claimReport" extends="base.definition">
+		<put-attribute name="title" value="Claim Report" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/claimReport.jsp" />
+	</definition>
+	
 </tiles-definitions>  
