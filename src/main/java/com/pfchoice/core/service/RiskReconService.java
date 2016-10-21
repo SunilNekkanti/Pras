@@ -38,7 +38,7 @@ public interface RiskReconService {
 	 * @param sortdir
 	 * @return
 	 */
-	Pagination getPage(int pageNo, int pageSize, String sSearch, String sort, String sortdir);
+	Pagination getPage(int pageNo, int pageSize,  List<Integer> claimType, String sSearch, String sort, String sortdir);
 
 	/**
 	 * @param bean
@@ -52,15 +52,26 @@ public interface RiskReconService {
 	 */
 	RiskRecon update(RiskRecon bean);
 	
+	
+	List<Object[]> claimReportQueryLevel2(Integer insId, String repGenDate, String activityMonth, String category, String roster, String cap);
+
 	/**
 	 * @param tableName
 	 * @param insId
 	 * @param prvdrId
-	 * @param repGenDate
+	 * @param mbrId
+	 * @param repMonth
+	 * @param activityMonth
+	 * @param claimType
 	 * @param category
-	 * @param adminRole
+	 * @param roster
+	 * @param cap
+	 * @param levelNo
 	 * @return
 	 */
-	List<Object[]> claimReportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate, String category, String adminRole, String rosterCap);
+
+	List<Object[]> claimReportQuery(String tableName, Integer insId, Integer prvdrId, Integer mbrId, String repGenDate,
+			Integer activityMonth, String claimType, String category, String roster, String cap, Integer levelNo);
+
 
 }

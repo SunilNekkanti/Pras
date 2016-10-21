@@ -66,9 +66,9 @@ public class RiskReconServiceImpl implements RiskReconService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+	public Pagination getPage(final int pageNo, final int pageSize,  final List<Integer> claimType, final String sSearch, final String sort,
 			final String sortdir) {
-		return riskReconDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+		return riskReconDao.getPage(pageNo, pageSize, claimType, sSearch, sort, sortdir);
 	}
 
 	/*
@@ -102,7 +102,16 @@ public class RiskReconServiceImpl implements RiskReconService {
 	 * @see com.pfchoice.core.service.RiskReconService#claimReportQuery(java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<Object[]> claimReportQuery(final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category, final String adminRole, final String rosterCap){
-		return riskReconDao.claimReportQuery(tableName, insId, prvdrId, repGenDate, category, adminRole, rosterCap);
+	public List<Object[]> claimReportQuery(final String tableName, final Integer insId, final Integer prvdrId, final Integer mbrId,
+			final String repGenDate,  final Integer activityMonth, final String claimType, 
+			final String category,  final String roster, final String cap, final Integer levelNo){
+		return riskReconDao.claimReportQuery(tableName, insId, prvdrId, mbrId, repGenDate, activityMonth,
+				claimType, category,  roster, cap, levelNo);
+	}
+	
+	@Override
+	public List<Object[]> claimReportQueryLevel2(final Integer insId,  final String repGenDate,  final String activityMonth,  
+			final String category,  final String roster, final String cap){
+		return riskReconDao.claimReportQueryLevel2(insId,  repGenDate, activityMonth,  category,  roster, cap);
 	}
 }

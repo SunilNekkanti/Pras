@@ -1,5 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +77,22 @@ public class RiskReconController {
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
 
-		Pagination pagination = riskReconService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+		Pagination pagination = riskReconService.getPage(pageNo, pageSize);
 		logger.info("returning riskReconList");
 		return Message.successMessage(CommonMessageContent.RISKRECON_LIST, JsonConverter.getJsonObject(pagination));
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = { "/admin/riskReconClaimType/list", "/user/riskReconClaimType/list" }, method = RequestMethod.GET)
+	public Message viewRiskReconClaimTypeList(@RequestParam(required = false) Integer pageNo ,
+			@RequestParam(required = true) List<Integer> claimType,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+
+		Pagination pagination = riskReconService.getPage(pageNo, pageSize, claimType, sSearch, sort,sortdir);
+		logger.info("returning riskReconList");
+		return Message.successMessage(CommonMessageContent.RISKRECON_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
 
 }

@@ -103,4 +103,6 @@ public interface CommonMessageContent {
 	String MLR_STOP_LOSS = "Stop Loss Detailed data";
 	
 	String RISKRECON_LIST = " Risk Categories List";
+	
+	String CLAIMTYPE_LIST = "Claim Type List";
 }

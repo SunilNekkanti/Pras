@@ -4,6 +4,7 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT_LEVEL2;
 
 import java.util.List;
 
@@ -43,9 +44,10 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 	 * java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+	public Pagination getPage(final int pageNo, final int pageSize, final List<Integer> claimType, final String sSearch, final String sort,
 			final String sortdir) {
 		Criteria crit = createCriteria();
+		crit.add(Restrictions.in("id", claimType));
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 
@@ -95,14 +97,39 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
 	@Override
-	public List<Object[]> claimReportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category, final String adminRole, final String rosterCap){
+	public List<Object[]> claimReportQuery( final String tableName, final Integer insId, final Integer prvdrId, final Integer mbrId,
+			final String repGenDate, final Integer activityMonth, final String claimType, 
+			final String category, final String roster, final String cap, final Integer levelNo){
 		assert tableName !=null && !"".equals(tableName);
+		
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery)
-				.setInteger("insId", insId).setString("repMonth", repGenDate)
-				.setString("category", category).setString("rosterCap", rosterCap);
+				.setInteger("insId", insId)			.setInteger("prvdrId", prvdrId)			
+				.setInteger("mbrId", mbrId)			.setString("tableName", tableName)
+				.setString("repMonth", repGenDate)	.setInteger("activityMonth", activityMonth)
+				.setString("category", category)	.setString("claimType", claimType)
+				.setString("roster", roster)		.setString("cap", cap)				
+				.setInteger("levelNo", levelNo);
+		
 		@SuppressWarnings("unchecked")
+		
+		List<Object[]> entities =  query.list();
+		return entities;
+	}
+	
+	
+	@Override
+	public List<Object[]> claimReportQueryLevel2(final Integer insId,  final String repGenDate, final String activityMonth,
+			final String category, final String roster, final String cap){
+		
+		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT_LEVEL2);
+
+		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery)
+				.setInteger("insId", insId)			.setString("repMonth", repGenDate)
+				.setString("category", category)	.setString("activityMonth", activityMonth);
+		@SuppressWarnings("unchecked")
+		
 		List<Object[]> entities =  query.list();
 		return entities;
 	}

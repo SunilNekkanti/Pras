@@ -83,5 +83,7 @@ public interface SystemDefaultProperties {
 	int ACCEPTABLE_CLAIM = 1;
 
 	int UNACCEPTABLE_CLAIM = 2;
+	
+	String QUERY_TYPE_INSERT_LEVEL2 = "_insert_level2";
 
 }

@@ -1,3 +1,20 @@
+ INSERT INTO membership ( Mbr_LastName,Mbr_FirstName,Mbr_GenderID, Mbr_DOB, Mbr_Status,Mbr_MedicaidNo,Mbr_MedicareNo,file_id,created_date,updated_date,created_by,updated_by	,active_ind )
+SELECT   MFNAME,MLNAME,lg.gender_id,STRING_TO_DATE(MBRDOB), 4,MEDICAIDNO,MEDICARENO,:fileId ,  now(),now(),'sarath','sarath','Y'  
+  FROM csv2Table_Amg_Claim csv2AmgClaim
+   join lu_gender lg on lg.code = csv2AmgClaim.MBRGENDER
+ LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+ where mi.SRC_SYS_MBR_NBR is null
+ group by csv2AmgClaim.SRC_SYS_MEMBER_NBR;
+ 
+  
+ INSERT INTO membership_insurance (ins_id,mbr_id,SRC_SYS_MBR_NBR,file_id,created_date,updated_date,created_by ,   updated_by ,   active_ind ) 
+ SELECT :insId, m.mbr_id, csv2AmgClaim.SRC_SYS_MEMBER_NBR , :fileId, now(),now(),'sarath','sarath','Y'   FROM csv2Table_Amg_Claim csv2AmgClaim
+ join membership m  on m.Mbr_MedicaidNo=csv2AmgClaim.MEDICAIDNO
+  LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+ where mi.SRC_SYS_MBR_NBR is null
+ group by csv2AmgClaim.SRC_SYS_MEMBER_NBR;
+ 
+
 INSERT INTO membership_claims
 (
 claim_id_number,mbr_id,prvdr_id,ins_id,report_month,claim_type,facility_type_code,bill_type_code,

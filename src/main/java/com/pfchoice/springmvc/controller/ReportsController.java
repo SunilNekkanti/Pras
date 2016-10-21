@@ -1047,7 +1047,10 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/mlrReportDate/list", "/user/mlrReportDate/list" }, method = RequestMethod.GET)
 	public Message viewMLRReportDate(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
+			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sort, 
+			@RequestParam(required = false) String sortdir, @RequestParam(required = false) String claimType,
+			@RequestParam(required = false) String category, @RequestParam(required = false) String generateDate,
+			@RequestParam(required = false) String roster, 	@RequestParam(required = false) String cap) {
 
 		Pagination pagination = mlrService.getMlrReportDate(pageNo, pageSize, insId, prvdrId, sort, sortdir);
 		LOG.info("returning insuranceList");
@@ -1063,16 +1066,45 @@ public class ReportsController {
 	 * @param sortdir
 	 * @return
 	 */
+	
 	@ResponseBody
 	@RequestMapping(value = { "/admin/claimReport/list" }, method = RequestMethod.GET)
 	public Message viewAdminClaimReportList(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category,
-			@RequestParam(required = false) String rosterCap){
+			@RequestParam(required = false) Integer pageSize,		@RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String sort, 			@RequestParam(required = false) String sortdir,
+			@RequestParam(required = true) Integer prvdrId, 		@RequestParam(required = true)  Integer insId,
+			@RequestParam(required = true) Integer activityMonth, 	@RequestParam(required = false) String repMonth,
+			@RequestParam(required = true) Integer mbrId, 			@RequestParam(required = false) String claimType,
+			@RequestParam(required = true) String category,			@RequestParam(required = true)  Integer levelNo,
+			@RequestParam(required = true) String roster, 			@RequestParam(required = false) String cap
+			){
 		
-		List<Object[]> entities = riskReconService.claimReportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y", rosterCap);
+		List<Object[]> entities = riskReconService.claimReportQuery("sarath20161021",
+				insId, prvdrId, mbrId, repMonth, activityMonth, claimType ,category, roster, cap, levelNo);
+		LOG.info("returning insuranceList");
+		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
+	}
+	
+	
+	
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @param sSearch
+	 * @param sort
+	 * @param sortdir
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/claimReportLevel2/list" }, method = RequestMethod.GET)
+	public Message viewAdminClaimReportLevel2(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
+			@RequestParam(required = false) String sSearch, @RequestParam(required = true) String category,
+			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
+			@RequestParam(required = true) String repMonth, @RequestParam(required = true) String activityMonth,
+			@RequestParam(required = false) String roster, @RequestParam(required = false) String cap){
+		
+		List<Object[]> entities = riskReconService.claimReportQueryLevel2(insId, repMonth, activityMonth, category, roster, cap);
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
 	}
