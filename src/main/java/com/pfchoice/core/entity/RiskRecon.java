@@ -38,6 +38,10 @@ public class RiskRecon extends RecordDetails implements Serializable {
 
 	@Column(name = "file_id", nullable = false)
 	private Integer fileId;
+	
+	
+	@Column(name = "claim_type", nullable = false)
+	private Integer claimType;
 
 	/**
 	 * 
@@ -99,6 +103,20 @@ public class RiskRecon extends RecordDetails implements Serializable {
 	 */
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
+	}
+	
+	/**
+	 * @return the claimType
+	 */
+	public Integer getClaimType() {
+		return claimType;
+	}
+
+	/**
+	 * @param claimType the claimType to set
+	 */
+	public void setClaimType(Integer claimType) {
+		this.claimType = claimType;
 	}
 
 	@Override

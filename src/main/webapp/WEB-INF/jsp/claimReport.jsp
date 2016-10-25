@@ -13,7 +13,11 @@
     rel="stylesheet" type="text/css" />
 <script src="${contextHome}/resources/js/bootstrap-multiselect.js"
     type="text/javascript"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css">
+
 	<script>
+	
 $('.selectAll').multiselect({numberDisplayed: 0, 
 	 buttonWidth: '150px',
 	 includeSelectAllOption: true
@@ -39,6 +43,7 @@ $(document).ready(function() {
 				 alert(" Select Report Date");
 				  return false;
 				}
+			
 			callClaimReportGenerate();
 			$( "#tabs" ).tabs({ active: 0});
 			$( "#tabLevel2" ).addClass("hide");
@@ -81,7 +86,7 @@ $(document).ready(function() {
 					    
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFilterReportDate');
-					     var s = $('<select id=\"clmReportDate\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
+					     var s = $('<select id=\"clmReportDate\" style=\"width:150px;\" class=\"btn btn-default selectAll content\" multiple=\"multiple\">');
 					     //iterate over the data and append a select option
 					     $.each(data.data.list, function(key, val){
 					    	 if(key == 0) {
@@ -114,7 +119,7 @@ $(document).ready(function() {
 	 	    	$.getJSON(getContextPath()+'/claimType/list?pageNo=0&pageSize=200', function(data){
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFiltercategory');
-					   var s = $('<select id=\"clmType\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
+					   var s = $('<select id=\"clmType\" style=\"width:150px;\" class=\"btn btn-default selectAll content\" multiple=\"multiple\">');
 					     //iterate over the data and append a select option
 					     $.each(data.data.list, function(key, val){
 					    	   		 s.append('<option value="'+val.id+'" Selected>' + val.name +'</option>');
@@ -132,36 +137,7 @@ $(document).ready(function() {
 					    	 $("#claimReportGenerate").show();
 					     
 				 }).success(function() { 
-					
-		    	 });
-	 	    	  
-	 	    	 $.getJSON(getContextPath()+'/riskRecon/list?pageNo=0&pageSize=200', function(data){
-					  //clear the current content of the select
-					   var $selectReportDat = $('#extFilterRiskRecon');
-					   var s = $('<select id=\"clmRiskRecon\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
-					     //iterate over the data and append a select option
-					     $.each(data.data.list, function(key, val){
-					    	 if(key == 0) {
-					    		 s.append('<option value="'+val.id+'" Selected>' + val.name +'</option>');
-					    	 }  else {
-					    		 s.append('<option value="'+val.id+'">' + val.name +'</option>');
-					    	 }
-					    	 
-					     });
-					     s.append('</select>');
-					     $selectReportDat.html(s);
-					    
-					     $('#clmRiskRecon').multiselect({numberDisplayed: 0, 
-					    	 buttonWidth: '150px',
-					    	 includeSelectAllOption: true
-					    });
-					    if(data.data.list.length < 1)
-					    	 	$("#claimReportGenerate").hide();
-					     else
-					    	 $("#claimReportGenerate").show();
-					     
-				 }).success(function() { 
-					 
+					 categoryDropDown();
 		    	 });
 	 	    	 
 		 }
@@ -185,6 +161,7 @@ $(document).ready(function() {
       		   categorySelectValue 		= dropDownSelectedValue("clmRiskRecon",false, true);
     		   
       		   datatableDelete("claimReport1");
+      		   $('#claimReport1 tbody').remove();
     		   GetClaimReport(insSelectValue,9999,reportDateSelectValue, claimTypeSelectValue, categorySelectValue, rosterSelectValue, capSelectValue,  columns);
     	}  
     	  
@@ -195,10 +172,54 @@ $(document).ready(function() {
     		datatableDelete("claimReport1");
   		});
     	
-    	
     	$(document.body).on('change',"#clmType",function (e) {
-    		 datatableDelete("claimReport1");
+    		if($("#clmType").val() == null)
+			{
+			  alert(" Select Claim Type");
+			  return false;
+			}
+    		categoryDropDown();
   		});
+    	
+    	
+    	var categoryDropDown = function(){
+    		var categoryList = new Array();
+    		$("#clmType option:selected").each(function() {
+    			categoryList.push ($(this).val());
+    				
+    			});
+	 	    	$.getJSON(getContextPath()+'/riskReconClaimType/list?pageNo=0&pageSize=200&claimType='+categoryList, function(data){
+	 	    		
+					     
+				 }).success(function(data, arrayList) { 
+					//clear the current content of the select
+					$("#extFilterRiskRecon").html('');
+					if(categoryList.length > 0){
+						   var $selectReportDat = $('#extFilterRiskRecon');
+						   var s = $('<select id=\"clmRiskRecon\" style=\"width:150px;\" class=\"btn btn-default selectAll  content \" multiple=\"multiple\">');
+						     $.each(data.data.list, function(key, val){
+						    	 if(key == 0) {
+						    		 s.append('<option value="'+val.id+'" Selected>' + val.name +'</option>');
+						    	 }  else {
+						    		 s.append('<option value="'+val.id+'">' + val.name +'</option>');
+						    	 }
+						     });
+						     s.append('</select>');
+						     $selectReportDat.html(s);
+						    
+						     $('#clmRiskRecon').multiselect({numberDisplayed: 0, 
+						    	 buttonWidth: '150px',
+						    	 includeSelectAllOption: true
+						    });
+						    if(data.data.list.length < 1)
+						    	 	$("#claimReportGenerate").hide();
+						     else
+						    	 $("#claimReportGenerate").show();
+						}
+					else
+					{	$("#claimReportGenerate").hide(); $("#extFilterRiskRecon").html(''); }
+			 });
+		}
     	
      	
   	  var datatable2ClaimReport = function(sSource, aoData, fnCallback) {
@@ -321,44 +342,75 @@ $(document).ready(function() {
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
-     	     "initComplete": function(settings, json) {
+     	   "initComplete": function(settings, json) {
      	    	if($("#claimReport1 tbody tr").length > 0){
-	     	    	$('#claimReport1 tbody tr:first').remove();
-	     	    	all = $('#claimReport1  tbody  tr');	
-	     			th = $('#claimReport1 > thead > tr > th');	
 	     			var val = ""; var count = 0;
 	     		    var riskRecon = "";
 	     		    var riskReconList = new Array();
 	     		    
-	     		    var riskReconId =""; var activityMonth =""; 
-	     			$("#claimReport1 tr").each(function (index, key) {
-	     				$(this).find('td').each(function(tdindex, tdvalue){
-	     					if(tdindex == 4)
-	     					{	riskRecon = $(this).text();  }
-	     			        if(tdindex > 4){
-	     			        	activityMonth = $('#claimReport1 tr th:eq('+tdindex+')').text();
-	     			        	$('#clmRiskRecon option').each(function() {
-	     			        	    if($(this).text() == riskRecon) {
-	     			        	    	riskReconId = $(this).val();
-	     			        	    	
-	     			        	    }
-	     			        	});
-	     			    	   $(this).html('<a href="javascript:void(0)"  onclick="return level2('+index+','+riskReconId+','+activityMonth+');">'+$(this).text()+'</a>');
-	     			        }
-	     			    })
-	     			});
+	     		   var riskReconId =""; var activityMonth =""; 
+	     		   $('#claimReport1 tbody ').html('');
+	     		   var colSum = new Array()
+	     		    $.each(json.data, function(index, key)
+	     		    {
+	     		    	if(index > 0){
+	     		    		 $('#claimReport1 tbody ').append("<tr></tr>");
+	     		    		$.each(json.data[index], function(tdindex, tdvalue){
+	     		    		  if(tdvalue == null) tdvalue = 0;
+		     		    		if(tdindex == 4)
+		     		    		{	riskRecon =tdvalue;   }
+		     		    		if(tdindex > 4){
+		     		    			activityMonth = json.data[0][tdindex];
+		     		    			$('#clmRiskRecon option').each(function() {
+		     			     		    if($(this).text() == riskRecon) {
+		     			     		  	   	riskReconId = $(this).val();
+		     			     			}
+		     			           	});
+		     		    			link = '<a href="javascript:void(0)"  onclick="return level2('+json.data[index][3]+','+riskReconId+','+activityMonth+');">'+tdvalue+'</a>';
+		     		    			 $('#claimReport1 tbody tr:last').append("<td>"+link+"</td>");
+		     		    			 if(typeof(colSum[tdindex])  === "undefined") {  colSum[tdindex] = 0;}
+		     		    			 	colSum[tdindex] = colSum[tdindex] +  parseFloat(tdvalue); 
+		     		    		}
+		     		    		else
+		     		    		{
+		     		    			 $('#claimReport1 tbody tr:last').append("<td>"+tdvalue+"</td>");
+		     		    		}	
+	     		    		});
+	     		    	}	
+	     		    });
+	     		   
+	     		  $.each(json.data, function(index, key)
+	  	     		    {
+	     			 		
+	  	     		    	if(index == 0){
+	  	     		    		$('#claimReport1 tbody').append("<tr></tr>");
+	  	     		    		$.each(json.data[index], function(tdindex, tdvalue){
+	  	     		    			if(tdindex > 4)
+	  	     		    				$('#claimReport1 tbody tr:last').append("<td>"+Math.round(colSum[tdindex]*100)/100+"</td>");
+	  	     		    			else
+	  	     		    				$('#claimReport1 tbody tr:last').append("<td></td>");
+	  	     		    		});
+	  	     		    	}
+	  	     		    });	
+	     		    
 	     			var colLen = json.data[0].length -1;
-	     			
 	     			$('#claimReport1  tbody  tr').find('td:gt('+colLen+')').remove();
 	     			$('#claimReport1  thead  tr').find('th:gt('+colLen+')').remove(); 
 	     			$('#claimReport1  tbody  tr').find('td:lt(3)').remove();
 	     			$('#claimReport1  thead  tr').find('th:lt(3)').remove();
 	     			
-	     	/*		var claimReport1  = $('#claimReport1').html();
+	     			var thead = $('#claimReport1 thead').html();
+	     			var tbody= $('#claimReport1 tbody').html();
+	     			var claimReport1  = $('#claimReport1').html();
+	     			
 	     			datatableDelete("claimReport1");
-	     			$('#claimReport1').html(claimReport1);
-	     			 datatableCreate("claimReport1", 'Claim Report');
-	     		*/	
+
+	     			$('#claimReport1').html('');
+	     			$('#claimReport1').append("<thead>"+thead+"<thead>");
+	     			$('#claimReport1').append("<tbody>"+tbody+"<tbody>");
+	     			
+	     			datatableCreate("claimReport1", 'Claim Report');
+	     		
      	    	}
      	    	else{
      	    		 	datatableDelete("claimReport1");
@@ -366,7 +418,7 @@ $(document).ready(function() {
      	    			$('#claimReport1').DataTable();
 					}
      		    	
-	     	 },
+	     	 } ,
 	     	
 	        "fnServerParams": function ( aoData ) {
                 aoData.push(
@@ -405,7 +457,7 @@ $(document).ready(function() {
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			Medical Loss Ratio <span class="clrRed"> </span>
+			Claims Report <span class="clrRed"> </span>
 		</div>
 		<div class="panel-body">
 			<div class="table-responsive">
@@ -469,11 +521,12 @@ $(document).ready(function() {
 					</div>
 					
 					<div id="demo" class="col-sm-12">
-						<div id="tabs">
+						<div id="tabs" class="claimReportTab">
 								<ul>
-									<li id="tabLevel1"><a href="#level1" onclick="return hideLevel('tabLevel2', 'tabLevel3',0);">Level 1</a></li>
-									<li id="tabLevel2" class="hide"><a href="#level2" onclick="return hideLevel('tabLevel3',false,1);">Level 2</a></li>
-									<li id="tabLevel3" class="hide"><a href="#level3" onclick="return hideLevel(false, false,2);">Level 3</a></li>
+									<li id="tabLevel1"><a href="#level1" onclick="return hideLevel('tabLevel2', 'tabLevel3', 'tabLevel4',0);">Level 1</a></li>
+									<li id="tabLevel2" class="hide"><a href="#level2" onclick="return hideLevel('tabLevel4','tabLevel3',false,1);">Level 2</a></li>
+									<li id="tabLevel3" class="hide"><a href="#level3" onclick="return hideLevel('tabLevel4',false, false,2);">Level 3</a></li>
+									<li id="tabLevel4" class="hide"><a href="#level4" onclick="return hideLevel(false,false, false,2);">Level 4</a></li>
 								</ul>
 				
 								
@@ -514,6 +567,19 @@ $(document).ready(function() {
 											<tbody></tbody>
 										</table>
 									</div>	
+									<div class="level4"  id="level4">   
+										<table id="claimReport4" class="table table-hover table-responsive">
+											<thead><tr>
+													<th>First Name</th><th>Last Name</th>
+													<th>Provider</th><th>Report Month</th>
+													<th>Activity Month</th><th>Risk Category</th>
+													<th>Claim Type</th><th> Is Cap</th>
+													<th>Is Roster</th><th>Claims</th><th></th><th></th><th></th>
+											
+											</tr></thead>
+											<tbody></tbody>
+										</table>
+									</div>	
 							</div>			
 							  	
 						</div>
@@ -530,24 +596,14 @@ $('#clmCap,  #clmRoster, #clmType').multiselect({numberDisplayed: 0,
 		 ul: '<ul class="multiselect-container dropdown-menu clmReportDate"></ul>'
 	 },
 });
-function level2(index, riskRecon, activityMonth){
-	
+function level2(reportMonth, riskRecon, activityMonth){
+	var table ="claimReport2";
 	$("#tabLevel2").removeClass();
 	$( "#tabs" ).tabs({ active: 1});
 	
 	
 	insSelectValue= $("#clmInsu option:selected").val();
 	datatableDelete("claimReport2");
-	var reportMonth = "";
-	th = $('#claimReport1 > thead > tr > th');
-	th.each(function(thindex, thtext)
-  	{
-		if(thindex == index-1)
-			{
-				 reportMonth = $('#claimReport1 tbody tr:nth-child('+index+') td:eq(0)').text();;
-			}
-	});
-	
 	 rosterSelectValue 		= dropDownSelectedValue("clmRoster",false, true);
 	 capSelectValue 		= dropDownSelectedValue("clmCap",false, true);
 	 claimTypeSelectValue 	= dropDownSelectedValue("clmType",true, false);
@@ -561,63 +617,66 @@ function level2(index, riskRecon, activityMonth){
 	var str = jQuery.param( params );
 	var url =  getContextPath()+'/claimReport/list?'+str;
 	
-	$("#claimReport2 thead tr").append("<th></th><th></th><th></th><th></th>");
-	
-	$('#claimReport2').dataTable( {
-        "ajax":url,
-        "iDisplayLength": 500,
-	    "sPaginationType": "full_numbers",
-	    "initComplete": function(settings, json) {
-	    	
-	    	$("#claimReport2 tr").each(function (index, key) {
-	    		prvdr_id = "";
- 				$(this).find('td').each(function(tdindex, tdvalue){
- 			        if(tdindex == 0){
- 			        	prvdr_id = $("#claimReport2").find("tr:eq("+index+")").find("td:eq(1)").text();
- 			        	$(this).html('<a href="javascript:void(0)"  onclick="return level3('+index+','+prvdr_id+');">'+$(this).text()+'</a>');
- 			        }
- 			    })
- 			    $(this).attr('onclick', 'return level3('+index+','+prvdr_id+')');
+	$.ajax({
+		  url: url,
+		  dataType: "json",
+		})
+		.success(function(json)
+		{
+			$("#"+table+" thead tr").append("<th></th><th></th><th></th><th></th>");
+			$("#"+table+" tbody").html('');
+	    	$.each(json.data, function (index, key) {
+	    		$('#'+table+' tbody ').append("<tr></tr>");
+	    		$.each(json.data[index], function (tdindex, tdvalue){
+	    			if(tdvalue == null) {  tdvalue ="";  }
+	    				$('#'+table+' tbody tr:last').append("<td>"+tdvalue+"</td>");
+	    		});
+	    		prvdr_id = json.data[index][1];
+	    		reportMonth = json.data[index][2];
+	    		activityMonth = json.data[index][3];
+	    		riskReconText = json.data[index][4];
+	    		
+	    		$('#'+table+' tbody tr:last').attr('onclick', 'return level3('+prvdr_id+', "'+riskReconText+'", '+reportMonth+', '+activityMonth+')');
  			});	
+
 	    	var colLen = json.data[0].length - 2;
  			
- 			$('#claimReport2  thead  tr').find('th:gt('+colLen+')').remove();
- 			$('#claimReport2  tbody  tr').find('td:eq(1)').remove();
- 			$('#claimReport2  tbody  tr').find('td:gt('+colLen+')').remove();
- 			$('#claimReport2').width('100%');
- 			aggregate("claimReport2",true);
- 			 $("#claimReport2 tr").css('cursor', 'pointer');
-     	 }
-    } );
+ 			$('#'+table+'  thead  tr').find('th:gt('+colLen+')').remove();
+ 			$('#'+table+'  tbody  tr').find('td:eq(1)').remove();
+ 			$('#'+table+'  tbody  tr').find('td:gt('+colLen+')').remove();
+ 			$('#'+table).width('100%');
+ 			aggregate(table, true);
+ 			datatableCreate(table, " Claim Report ");
+ 			$("#"+table+" tr").css('cursor', 'pointer');
+		})
+		.done(function() {
+		console.log( " Level 2 finished");
+		});
+	
 	
 }
 
-function hideLevel(level1, level2,index){
+function hideLevel(level1, level2, level3, index){
 	if(level1) {  $("#"+level1).addClass("hide");}
 	if(level2) { $("#"+level2).addClass("hide");}
+	if(level3) { $("#"+level3).addClass("hide");}
 	$( "#tabs" ).tabs({ active: index});
 	return false;
 }
 
-function level3(index, prvdr_id)
+function level3(prvdr_id, riskRecon, reportMonth, activityMonth)
 {
 	 $("#tabLevel3").removeClass();
 	 $( "#tabs" ).tabs({ active: 2});
-	 $("#claimReport3 thead tr").append("<th></th><th></th><th></th><th></th>");
-	
+	 var table = "claimReport3";
+	 datatableDelete(table);
 	   insSelectValue= $("#clmInsu option:selected").val();
-	   datatableDelete("claimReport3");
-	    riskRecon  		= $('#claimReport2 tbody tr:nth-child('+index+') td:eq(3)').text();
-	    
 	    $("#clmRiskRecon option").each(function (index, key){
 	    	if($(this).text() == riskRecon)
 	    		{
 	    				riskRecon = $(this).val();
 	    		}
 	    });
-	    
-		reportMonth 	= $('#claimReport2 tbody tr:nth-child('+index+') td:eq(1)').text();
-		activityMonth 	= $('#claimReport2 tbody tr:nth-child('+index+') td:eq(2)').text();
 		
 		 rosterSelectValue 		= dropDownSelectedValue("clmRoster",false, true);
 		 capSelectValue 		= dropDownSelectedValue("clmCap",false, true);
@@ -631,28 +690,115 @@ function level3(index, prvdr_id)
 		var str = jQuery.param( params );
 		var url =  getContextPath()+'/claimReport/list?'+str;
 		
-		$('#claimReport3').dataTable( {
-	        "ajax":url,
-	        "iDisplayLength": 500,
-		    "sPaginationType": "full_numbers",
-		    "initComplete": function(settings, json) {
-		    	var colLen = json.data[0].length - 3;
-		    	 $('#claimReport3  thead  tr').find('th:gt('+colLen+')').remove();
-		    	 $('#claimReport3  tbody  tr').find('td:eq(3)').remove();
-		    	 $('#claimReport3  tbody  tr').find('td:eq(3)').remove();
-		    	 $('#claimReport3  tbody  tr').find('td:gt('+colLen+')').remove();
-		    	 aggregate("claimReport3",true);
-		    	 $('#claimReport3').width('100%');
-		    }
-	    } );
-		
+	 	$.ajax({
+		  url: url,
+		  dataType: "json",
+		})
+		.success(function(json)
+		{
+			 $("#"+table+" thead tr").append("<th></th><th></th><th></th><th></th>");
+			 $("#"+table+" tbody").html('');
+		    	$.each(json.data, function (index, key) {
+		    		
+		    		$("#"+table+" tbody ").append("<tr></tr>");
+		    		$.each(json.data[index], function (tdindex, tdvalue){
+		    			if(tdvalue == null) {  tdvalue = "";  }
+		    				$("#"+table+" tbody tr:last").append("<td>"+tdvalue+"</td>");
+		    		});
+		    		mbr_id  =  json.data[index][4];
+		    		prvdr_id = json.data[index][3];
+		    		reportMonth = json.data[index][5];
+		    		activityMonth = json.data[index][6];
+		    		riskReconText = json.data[index][7];
+		    		$('#'+table+' tbody tr:last').attr('onclick', 'return level4('+prvdr_id+', "'+riskReconText+'", '+reportMonth+', '+activityMonth+', '+mbr_id+')');
+		    		
+	 			});	
+		    	
+			var colLen = json.data[0].length - 3;
+	    	 $('#'+table+'  thead  tr').find('th:gt('+colLen+')').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:eq(3)').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:eq(3)').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:gt('+colLen+')').remove();
+	    	 aggregate(table,true);
+	    	 datatableCreate(table, " Claim Report ");
+	    	 $('#'+table).width('100%');
+		})
+		.done(function() {
+			console.log( " Level 3 finished");
+		});
 }
+
+function level4(prvdr_id, riskRecon, reportMonth, activityMonth, mbr_id)
+{
+	 $("#tabLevel4").removeClass();
+	 $( "#tabs" ).tabs({ active: 3});
+	 var table = "claimReport4";
+		
+	   insSelectValue= $("#clmInsu option:selected").val();
+	    $("#clmRiskRecon option").each(function (index, key){
+	    	if($(this).text() == riskRecon)
+	    		{
+	    				riskRecon = $(this).val();
+	    		}
+	    });
+		
+		 rosterSelectValue 		= dropDownSelectedValue("clmRoster",false, true);
+		 capSelectValue 		= dropDownSelectedValue("clmCap",false, true);
+		 claimTypeSelectValue 	= dropDownSelectedValue("clmType",true, false);
+		   
+		var params = { "insId":insSelectValue, "prvdrId":prvdr_id, "mbrId":mbr_id, "repMonth":reportMonth, "activityMonth":activityMonth,
+				"category":riskRecon,  "claimType":claimTypeSelectValue,
+				"roster":"'"+rosterSelectValue+"'", "cap":"'"+capSelectValue+"'",'levelNo':4,
+				"pageSize":500, "pageNo":0};
+		
+		var str = jQuery.param( params );
+		var url =  getContextPath()+'/claimReport/list?'+str;
+		datatableDelete(table);
+	 	$.ajax({
+		  url: url,
+		  dataType: "json",
+		})
+		.success(function(json)
+		{
+			 $("#"+table+" thead tr").append("<th></th><th></th><th></th><th></th>");
+			 $("#"+table+" tbody").html('');
+		    	$.each(json.data, function (index, key) {
+		    		
+		    		$("#"+table+" tbody ").append("<tr></tr>");
+		    		$.each(json.data[index], function (tdindex, tdvalue){
+		    			if(tdvalue == null) {  tdvalue = "";  }
+		    				$("#"+table+" tbody tr:last").append("<td>"+tdvalue+"</td>");
+		    		});
+		    		mbr_id  =  json.data[index][4];
+		    		prvdr_id = json.data[index][3];
+		    		reportMonth = json.data[index][5];
+		    		activityMonth = json.data[index][6];
+		    		riskReconText = json.data[index][7];
+		    		$('#'+table+' tbody tr:last').attr('onclick', 'return level4('+prvdr_id+', "'+riskReconText+'", '+reportMonth+', '+activityMonth+', '+mbr_id+')');
+		    		
+	 			});	
+		    	
+			var colLen = json.data[0].length - 3;
+	    	 $('#'+table+'  thead  tr').find('th:gt('+colLen+')').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:eq(3)').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:eq(3)').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:gt('+colLen+')').remove();
+	    	 aggregate(table,true);
+	    	 datatableCreate(table, " Claim Report ");
+	    	 $('#'+table).width('100%');
+		})
+		.done(function() {
+			console.log( " Level 4 finished");
+		});
+}
+
 
 function aggregate(table, newRow)
 {
+	var total = 0;
 	if(newRow){
 		var tbody = $('#'+table+' tbody tr');
-		var total = 0;
+		 total = 0;
 		 $.each(tbody, function()
 		 {
 			 total = total +  parseFloat($(this).find('td:last').text()); 
@@ -667,18 +813,18 @@ function aggregate(table, newRow)
 	else{
 		var tbody = $('#'+table+' tbody tr');
 		var td = $('#'+table+' tbody tr td');
-		var total = 0;
+		
 		$.each(tbody, function(trindex, trvalue)
 		{
+			total = 0;
 			 $.each($("#"+table+" tbody tr:eq("+trindex+") td"), function(index, value)
 			 {
 				 if(index > 1)
 				 	{ total = total +  parseFloat($(this).text());   };
 			 });
 			 
-			 $("#"+table+" tbody tr:eq("+trindex+")").append("<td>"+total+"</td>");
+			 $("#"+table+" tbody tr:eq("+trindex+") td:last").text(total);
 		});		
-		$("#"+table+" thead tr:last").append("<th>Total</th>");
 	}
 }
 
@@ -703,11 +849,13 @@ function datatableDelete(table){
 		$('#'+table).DataTable().destroy();
 	}
     $('#'+table+' tbody').empty();
+  
 }
 
 function datatableCreate(table, caption)
 {
-	$('#'+table).DataTable( {
+	
+	  var oTable = $('#'+table).DataTable( {
 		dom: 'Bfrtip',
 		"buttons": [
    	             {
@@ -722,18 +870,26 @@ function datatableCreate(table, caption)
 						}
    	             
                   ],
-        "scrollX": true,
+                  fixedColumns:   {
+                      leftColumns: 2
+                  },
+        scrollY:        "450px",
+        scrollX:        true,
+        scrollCollapse: false,
+        paging:         false,
         "iDisplayLength": 500,
 	    "sPaginationType": "full_numbers",
+	    "order": [[ 1, "desc" ]],
 	    "initComplete": function(settings, json) {
-	    	 aggregate(table, false);
-	    	 $('#'+table).width('100%');
+	    
+	    $('#'+table).width('100%');
 	    }
     } );
 }
 
 $('#clmRoster, #clmCap').multiselect({numberDisplayed: 0, 
 	 buttonWidth: '150px',
+	 height :auto,
 	 includeSelectAllOption: true
 	 
 });

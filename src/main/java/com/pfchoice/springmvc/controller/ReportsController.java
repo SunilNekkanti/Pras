@@ -1078,7 +1078,7 @@ public class ReportsController {
 			@RequestParam(required = true) String category,			@RequestParam(required = true)  Integer levelNo,
 			@RequestParam(required = true) String roster, 			@RequestParam(required = false) String cap
 			){
-		
+		LOG.info("returning insuranceList");
 		List<Object[]> entities = riskReconService.claimReportQuery("sarath20161021",
 				insId, prvdrId, mbrId, repMonth, activityMonth, claimType ,category, roster, cap, levelNo);
 		LOG.info("returning insuranceList");

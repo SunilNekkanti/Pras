@@ -47,7 +47,8 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 	public Pagination getPage(final int pageNo, final int pageSize, final List<Integer> claimType, final String sSearch, final String sort,
 			final String sortdir) {
 		Criteria crit = createCriteria();
-		crit.add(Restrictions.in("id", claimType));
+		if(claimType.size() != 0)
+			crit.add(Restrictions.in("claimType", claimType));
 		crit.add(Restrictions.eq("activeInd", 'Y'));
 		return findByCriteria(crit, pageNo, pageSize);
 
@@ -96,6 +97,7 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
+	
 	@Override
 	public List<Object[]> claimReportQuery( final String tableName, final Integer insId, final Integer prvdrId, final Integer mbrId,
 			final String repGenDate, final Integer activityMonth, final String claimType, 
@@ -112,28 +114,16 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 				.setString("roster", roster)		.setString("cap", cap)				
 				.setInteger("levelNo", levelNo);
 		
+		System.out.println(" tableName"+tableName+"mbrId"+mbrId+
+				" insId "+insId+" prvdrId "+prvdrId+" repMonth  "+repGenDate+
+				" claimType "+claimType+" category "+category+" roster "+roster+" cap "+cap+"levelNo"+ levelNo);
+	
 		@SuppressWarnings("unchecked")
-		
 		List<Object[]> entities =  query.list();
 		return entities;
 	}
 	
 	
-	@Override
-	public List<Object[]> claimReportQueryLevel2(final Integer insId,  final String repGenDate, final String activityMonth,
-			final String category, final String roster, final String cap){
-		
-		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT_LEVEL2);
-
-		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery)
-				.setInteger("insId", insId)			.setString("repMonth", repGenDate)
-				.setString("category", category)	.setString("activityMonth", activityMonth);
-		@SuppressWarnings("unchecked")
-		
-		List<Object[]> entities =  query.list();
-		return entities;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

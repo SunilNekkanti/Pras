@@ -203,5 +203,6 @@ table#cptListTable, table#icdListTable {
 	visibility: hidden !important;
 }
 
+.ui-widget-header{ background-color : #dff0d8 !important; background-image:none !important;}
 
-}
+.panel-group  {height:750px !important;}

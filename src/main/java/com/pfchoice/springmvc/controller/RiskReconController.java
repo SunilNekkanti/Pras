@@ -85,10 +85,10 @@ public class RiskReconController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/riskReconClaimType/list", "/user/riskReconClaimType/list" }, method = RequestMethod.GET)
 	public Message viewRiskReconClaimTypeList(@RequestParam(required = false) Integer pageNo ,
-			@RequestParam(required = true) List<Integer> claimType,
+			@RequestParam(required = false) List<Integer> claimType,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir) {
-
+		
 		Pagination pagination = riskReconService.getPage(pageNo, pageSize, claimType, sSearch, sort,sortdir);
 		logger.info("returning riskReconList");
 		return Message.successMessage(CommonMessageContent.RISKRECON_LIST, JsonConverter.getJsonObject(pagination));
