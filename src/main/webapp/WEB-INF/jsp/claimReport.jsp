@@ -366,8 +366,8 @@ $(document).ready(function() {
 		     			     		  	   	riskReconId = $(this).val();
 		     			     			}
 		     			           	});
-		     		    			link = '<a href="javascript:void(0)"  onclick="return level2('+json.data[index][3]+','+riskReconId+','+activityMonth+');">'+tdvalue+'</a>';
-		     		    			 $('#claimReport1 tbody tr:last').append("<td>"+link+"</td>");
+		     		    			link = '<a href="javascript:void(0)"  onclick="return level2('+json.data[index][3].replace('-', '')+','+riskReconId+','+activityMonth.replace('-', '')+');">'+(Math.round(tdvalue*100)/100).formatMoney(2, '.', ',')+'</a>';
+		     		    			 $('#claimReport1 tbody tr:last').append("<td>$"+link+"</td>");
 		     		    			 if(typeof(colSum[tdindex])  === "undefined") {  colSum[tdindex] = 0;}
 		     		    			 	colSum[tdindex] = colSum[tdindex] +  parseFloat(tdvalue); 
 		     		    		}
@@ -386,7 +386,7 @@ $(document).ready(function() {
 	  	     		    		$('#claimReport1 tbody').append("<tr></tr>");
 	  	     		    		$.each(json.data[index], function(tdindex, tdvalue){
 	  	     		    			if(tdindex > 4)
-	  	     		    				$('#claimReport1 tbody tr:last').append("<td>"+Math.round(colSum[tdindex]*100)/100+"</td>");
+	  	     		    				$('#claimReport1 tbody tr:last').append("<td>$"+(Math.round(colSum[tdindex]*100)/100).formatMoney(2, '.', ',')+"</td>");
 	  	     		    			else
 	  	     		    				$('#claimReport1 tbody tr:last').append("<td></td>");
 	  	     		    		});
@@ -459,7 +459,7 @@ $(document).ready(function() {
 		<div class="panel-heading">
 			Claims Report <span class="clrRed"> </span>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body" style="max-height: 750;">
 			<div class="table-responsive">
 				<div class="col-sm-12">
 					<div class="col-sm-2 multiple">
@@ -495,7 +495,7 @@ $(document).ready(function() {
 							 <select id="clmRoster" style="width:150px;" class="btn btn-default selectAll"  multiple="multiple">
 								<option value="Y" selected>Yes</option>
 								<option value="N" selected>No</option>
-								<option value="NULL" selected>NULL</option>
+								<option value="NULL" selected>N/A</option>
 							</select>	
 							
 						</div>
@@ -507,7 +507,7 @@ $(document).ready(function() {
 							 <select id="clmCap" style="width:150px;" class="btn btn-default selectAll"  multiple="multiple">
 								<option value="Y" selected>Yes</option>
 								<option value="N" selected>No</option>
-								<option value="NULL" selected>NULL</option>
+								<option value="NULL" selected>N/A</option>
 							</select>	
 							
 						</div>
@@ -531,7 +531,7 @@ $(document).ready(function() {
 				
 								
 								  	<div class="level1" id="level1">   
-										<table id="claimReport1" class="table table-hover table-responsive">
+										<table id="claimReport1" class="table table-hover table-responsive ">
 											<thead><tr>
 												<th>Risk Category</th>
 												<th>201601</th>
@@ -548,7 +548,7 @@ $(document).ready(function() {
 										<table id="claimReport2" class="table table-hover table-responsive">
 												<thead><tr><th>Provider</th><th>Report Month</th>
 												<th>Activity Month</th><th>Risk Category</th><th>Claim Type</th>
-												<th>Is Cap</th><th>Is Roster</th><th>Claims</th>
+												<th>In Cap</th><th>In Roster</th><th>Claims</th>
 												<th></th><th></th>
 												</tr></thead>
 											<tbody></tbody>
@@ -560,8 +560,8 @@ $(document).ready(function() {
 													<th>First Name</th><th>Last Name</th>
 													<th>Provider</th><th>Report Month</th>
 													<th>Activity Month</th><th>Risk Category</th>
-													<th>Claim Type</th><th> Is Cap</th>
-													<th>Is Roster</th><th>Claims</th><th></th><th></th><th></th>
+													<th>Claim Type</th><th> In Cap</th>
+													<th>In Roster</th><th>Claims</th><th></th><th></th><th></th>
 											
 											</tr></thead>
 											<tbody></tbody>
@@ -573,8 +573,10 @@ $(document).ready(function() {
 													<th>First Name</th><th>Last Name</th>
 													<th>Provider</th><th>Report Month</th>
 													<th>Activity Month</th><th>Risk Category</th>
-													<th>Claim Type</th><th> Is Cap</th>
-													<th>Is Roster</th><th>Claims</th><th></th><th></th><th></th>
+													<th>Claim Type</th><th> In Cap</th>
+													<th>In Roster</th>
+													<th>Date Of Service</th>
+													<th>Claims</th><th></th><th></th><th></th>
 											
 											</tr></thead>
 											<tbody></tbody>
@@ -589,6 +591,18 @@ $(document).ready(function() {
 </div>	
   
  <script>
+ 
+ Number.prototype.formatMoney = function(c, d, t){
+	 var n = this, 
+	     c = isNaN(c = Math.abs(c)) ? 2 : c, 
+	     d = d == undefined ? "." : d, 
+	     t = t == undefined ? "," : t, 
+	     s = n < 0 ? "-" : "", 
+	     i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+	     j = (j = i.length) > 3 ? j % 3 : 0;
+	    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	  };
+	  
 $('#clmCap,  #clmRoster, #clmType').multiselect({numberDisplayed: 0, 
 	 buttonWidth: '150px',
 	 includeSelectAllOption: true,
@@ -629,6 +643,9 @@ function level2(reportMonth, riskRecon, activityMonth){
 	    		$('#'+table+' tbody ').append("<tr></tr>");
 	    		$.each(json.data[index], function (tdindex, tdvalue){
 	    			if(tdvalue == null) {  tdvalue ="";  }
+	    			if(json.data[index].length == tdindex+1)
+	    				$('#'+table+' tbody tr:last').append("<td>$"+(Math.round(tdvalue*100)/100).formatMoney(2, '.', ',')+"</td>");
+	    			else
 	    				$('#'+table+' tbody tr:last').append("<td>"+tdvalue+"</td>");
 	    		});
 	    		prvdr_id = json.data[index][1];
@@ -636,7 +653,7 @@ function level2(reportMonth, riskRecon, activityMonth){
 	    		activityMonth = json.data[index][3];
 	    		riskReconText = json.data[index][4];
 	    		
-	    		$('#'+table+' tbody tr:last').attr('onclick', 'return level3('+prvdr_id+', "'+riskReconText+'", '+reportMonth+', '+activityMonth+')');
+	    		$('#'+table+' tbody tr:last').attr('onclick', 'return level3('+prvdr_id+', "'+riskReconText+'", '+reportMonth.replace('-', '')+', '+activityMonth.replace('-', '')+')');
  			});	
 
 	    	var colLen = json.data[0].length - 2;
@@ -703,14 +720,17 @@ function level3(prvdr_id, riskRecon, reportMonth, activityMonth)
 		    		$("#"+table+" tbody ").append("<tr></tr>");
 		    		$.each(json.data[index], function (tdindex, tdvalue){
 		    			if(tdvalue == null) {  tdvalue = "";  }
-		    				$("#"+table+" tbody tr:last").append("<td>"+tdvalue+"</td>");
+		    			if(json.data[index].length == tdindex+1)
+		    				$('#'+table+' tbody tr:last').append("<td>$"+(Math.round(tdvalue*100)/100).formatMoney(2, '.', ',')+"</td>");
+		    			else
+		    				$('#'+table+' tbody tr:last').append("<td>"+tdvalue+"</td>");
 		    		});
 		    		mbr_id  =  json.data[index][4];
 		    		prvdr_id = json.data[index][3];
 		    		reportMonth = json.data[index][5];
 		    		activityMonth = json.data[index][6];
 		    		riskReconText = json.data[index][7];
-		    		$('#'+table+' tbody tr:last').attr('onclick', 'return level4('+prvdr_id+', "'+riskReconText+'", '+reportMonth+', '+activityMonth+', '+mbr_id+')');
+		    		$('#'+table+' tbody tr:last').attr('onclick', 'return level4('+prvdr_id+', "'+riskReconText+'", '+reportMonth.replace('-', '')+', '+activityMonth.replace('-', '')+', '+mbr_id+')');
 		    		
 	 			});	
 		    	
@@ -767,7 +787,10 @@ function level4(prvdr_id, riskRecon, reportMonth, activityMonth, mbr_id)
 		    		$("#"+table+" tbody ").append("<tr></tr>");
 		    		$.each(json.data[index], function (tdindex, tdvalue){
 		    			if(tdvalue == null) {  tdvalue = "";  }
-		    				$("#"+table+" tbody tr:last").append("<td>"+tdvalue+"</td>");
+		    			if(json.data[index].length == tdindex+1)
+		    				$('#'+table+' tbody tr:last').append("<td>$"+(Math.round(tdvalue*100)/100).formatMoney(2, '.', ',')+"</td>");
+		    			else
+		    				$('#'+table+' tbody tr:last').append("<td>"+tdvalue+"</td>");
 		    		});
 		    		mbr_id  =  json.data[index][4];
 		    		prvdr_id = json.data[index][3];
@@ -801,14 +824,17 @@ function aggregate(table, newRow)
 		 total = 0;
 		 $.each(tbody, function()
 		 {
-			 total = total +  parseFloat($(this).find('td:last').text()); 
+			 var myText = $(this).find('td:last').text();
+			 myText =  myText.replace('$','') ;
+			 myText = myText.replace(',','');
+			 total = total +  parseFloat(myText); 
 		 });
 		 $trLast =  $("#"+table+" tbody").find("tr:last");
 		 $trNew = $trLast.clone();
 		 $trLast.after($trNew);
 		 total =   Math.round(total* 100) / 100;
 		 $('#'+table+' tbody  tr:last').find('td').text("");
-		 $('#'+table+' tbody  tr:last').find('td:last').text(total);
+		 $('#'+table+' tbody  tr:last').find('td:last').text('$'+ (Math.round(total*100)/100).formatMoney(2, '.', ',') );
 	}
 	else{
 		var tbody = $('#'+table+' tbody tr');
@@ -889,7 +915,6 @@ function datatableCreate(table, caption)
 
 $('#clmRoster, #clmCap').multiselect({numberDisplayed: 0, 
 	 buttonWidth: '150px',
-	 height :auto,
 	 includeSelectAllOption: true
 	 
 });

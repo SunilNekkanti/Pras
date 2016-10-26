@@ -98,7 +98,7 @@ div.dataTables_wrapper:after {
 	clear: both;
 	visibility: hidden;
 	line-height: 0;
-	height: 0;
+	 height: 0;
 }
 
 html[xmlns] .dataTables_wrapper {
@@ -205,4 +205,3 @@ table#cptListTable, table#icdListTable {
 
 .ui-widget-header{ background-color : #dff0d8 !important; background-image:none !important;}
 
-.panel-group  {height:750px !important;}
