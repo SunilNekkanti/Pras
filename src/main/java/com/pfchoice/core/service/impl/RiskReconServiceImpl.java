@@ -108,10 +108,4 @@ public class RiskReconServiceImpl implements RiskReconService {
 		return riskReconDao.claimReportQuery(tableName, insId, prvdrId, mbrId, repGenDate, activityMonth,
 				claimType, category,  roster, cap, levelNo);
 	}
-	
-	@Override
-	public List<Object[]> claimReportQueryLevel2(final Integer insId,  final String repGenDate,  final String activityMonth,  
-			final String category,  final String roster, final String cap){
-		return riskReconDao.claimReportQueryLevel2(insId,  repGenDate, activityMonth,  category,  roster, cap);
-	}
 }

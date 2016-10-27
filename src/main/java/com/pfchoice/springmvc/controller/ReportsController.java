@@ -1085,33 +1085,6 @@ public class ReportsController {
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
 	}
 	
-	
-	
-	/**
-	 * @param pageNo
-	 * @param pageSize
-	 * @param sSearch
-	 * @param sort
-	 * @param sortdir
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = { "/admin/claimReportLevel2/list" }, method = RequestMethod.GET)
-	public Message viewAdminClaimReportLevel2(@RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) String sSearch, @RequestParam(required = true) String category,
-			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = true) String repMonth, @RequestParam(required = true) String activityMonth,
-			@RequestParam(required = false) String roster, @RequestParam(required = false) String cap){
-		
-		List<Object[]> entities = riskReconService.claimReportQueryLevel2(insId, repMonth, activityMonth, category, roster, cap);
-		LOG.info("returning insuranceList");
-		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
-	}
-	
-	
-	
-
 	/**
 	 * @return
 	 */

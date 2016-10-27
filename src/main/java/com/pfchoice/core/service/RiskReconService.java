@@ -53,8 +53,6 @@ public interface RiskReconService {
 	RiskRecon update(RiskRecon bean);
 	
 	
-	List<Object[]> claimReportQueryLevel2(Integer insId, String repGenDate, String activityMonth, String category, String roster, String cap);
-
 	/**
 	 * @param tableName
 	 * @param insId

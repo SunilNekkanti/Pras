@@ -4,7 +4,6 @@ import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
 
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
-import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT_LEVEL2;
 
 import java.util.List;
 
@@ -97,7 +96,6 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 	/* (non-Javadoc)
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
-	
 	@Override
 	public List<Object[]> claimReportQuery( final String tableName, final Integer insId, final Integer prvdrId, final Integer mbrId,
 			final String repGenDate, final Integer activityMonth, final String claimType, 

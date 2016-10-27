@@ -14,7 +14,22 @@
 <script type="text/javascript"
 	src="http://cdn.datatables.net/plug-ins/1.10.12/api/average().js"></script>
 <script>
+
+
 $(document).ready(function() {
+	
+	Number.prototype.format  = function(c, d, t){
+		 var n = this, 
+		     c = isNaN(c = Math.abs(c)) ? 2 : c, 
+		     d = d == undefined ? "." : d, 
+		     t = t == undefined ? "," : t, 
+		     s = n < 0 ? "-" : "", 
+		     i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+		     j = (j = i.length) > 3 ? j % 3 : 0;
+		    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+		  };
+		  
+		  
 		$("#tabs").tabs( {
 			"show": function(event, ui) {
 				var oTable = $('div.dataTables_scrollBody>table.display', ui.panel).dataTable();
@@ -31,7 +46,7 @@ $(document).ready(function() {
 				 alert(" Select Report Date");
 				  return false;
 				}
-			callmedicalLossRatioGenerate();
+			drawTable();
 			$( "#tabs" ).tabs({ active: 0});
 		});
 		
@@ -102,7 +117,7 @@ $(document).ready(function() {
 					    
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFilterReportDate');
-					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" multiple=\"multiple\">');
+					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" >');
 					     //iterate over the data and append a select option
 					     $.each(data.data.list, function(key, val){
 					    	 if(key == 0) {
@@ -115,13 +130,7 @@ $(document).ready(function() {
 					     
 					     s.append('</select>');
 					     $selectReportDat.html(s);
-					     $('#mlrReportDate').multiselect({numberDisplayed: 0, 
-					    	 buttonWidth: '150px',
-					    	 includeSelectAllOption: true,
-					    	 templates: {
-								 ul: '<ul class="multiselect-container dropdown-menu mlrReportDate"></ul>'
-							 },
-					    });
+					    
 					     
 					     if(data.data.list.length < 1)
 					    	 	$("#medicalLossRatioGenerate").hide();
@@ -134,51 +143,7 @@ $(document).ready(function() {
 		    	 });
 		 }
     	  
-    	  var columns ;
-    	  var callmedicalLossRatioGenerate = function(){
-    		  var rowHeader = $('#medicalLossRatio thead tr');
-    			for(var col = 0; col<50; col++)
-    				rowHeader.append('<th scope="col" role="row" class="hide"></th>');
-    			
-				columns = new Array();
-	     		columns.push({ "mDataProp": "reportMonth","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "activityMonth","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "patients","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "fund","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "prof","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "inst","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		columns.push({ "mDataProp": "pharmacy","bSearchable" : true, "bSortable": true,"sClass": "center widthS","sWidth" : "10%"  });
-	     		var myTable = $("#medicalLossRatio");
-	     		var thead = myTable.find("thead");  
-	     		
-	     		$("#medicalLossRatio th").each(function() {
-					if($(this).attr("role") == "row"){
-					}else{
-						$(this).remove();
-					}
-							
-       			}); 
-	     		callDatableWithChangedDropDown();
-    	  }
     	  
-    	  function callDatableWithChangedDropDown(){
-    		   var insSelectValue= $("#mlrInsu option:selected").val();
-    		   var prvdrSelectValue= $("#mlrPrvdr option:selected").val();
-    		   var reportDateSelectValue= $("#mlrReportDate option:selected").val();
-    		   var categorySelectValue = $("#mlrCategory option:selected").val();
-    		   var ruleArray = new Array;
-    		   $("#mlrReportDate option:selected").each  ( function() {
-    		    	ruleArray.push ( $(this).val()  );
-    		    });
-    		   reportDateSelectValue = ruleArray.join(", ");
-    		   if ( $.fn.DataTable.isDataTable('#medicalLossRatio') ) {
-  						$('#medicalLossRatio').DataTable().destroy();
-			   }
-    		  
-				$('#medicalLossRatio tbody').empty();
-    		   GetMembershipByInsPrvdr(insSelectValue,prvdrSelectValue,reportDateSelectValue, categorySelectValue, columns);
-    	}  
-    	     
     	$(document.body).on('change',"#mlrInsu",function (e) {
     		Cookies.set('mlrInsu', $("#mlrInsu option:selected").val(),{path: cookiePath });
     		Cookies.remove('mlrPrvdr',{path: cookiePath });
@@ -199,160 +164,7 @@ $(document).ready(function() {
     		
     		reportDateDropdown();
   		});
-    	
-     	
-  	  var datatable2RestMembership = function(sSource, aoData, fnCallback) {
-     		
-     		//extract name/value pairs into a simpler map for use later
-		  var paramMap = {};
-		  for ( var i = 0; i < aoData.length; i++) {
-		      paramMap[aoData[i].name] = aoData[i].value;
-		  }
-		 
-		   //page calculations
-		   var pageSize = paramMap.iDisplayLength;
-		   var start = paramMap.iDisplayStart;
-		   var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
-		 
-		   // extract sort information
-		   var sortCol = paramMap.iSortCol_0;
-		   var sortDir = paramMap.sSortDir_0;
-		   var sortName = paramMap['mDataProp_' + sortCol];
-		 
-		   var sSearchIns = paramMap.sSearchIns;
-		   var sSearchPrvdr = paramMap.sSearchPrvdr;
-		   var sSearchGenerateDate = paramMap.sSearchGenerateDate;
-		   var sSearchCategory = paramMap.sSearchCategory;
-		   
-		   //create new json structure for parameters for REST request
-		   var restParams = new Array();
-		   restParams.push({"name" : "pageSize", "value" : pageSize});
-		   restParams.push({"name" : "pageNo", "value" : pageNum });
-		   restParams.push({"name" : "sort", "value" : "reportMonth" });
-		   restParams.push({"name" : "sortdir", "value" : sortDir });
-		   restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
-		   restParams.push({"name" : "insId" , "value" : sSearchIns  });
-		   restParams.push({"name" : "prvdrId" , "value" : sSearchPrvdr  });
-		   restParams.push({"name" : "repMonth" , "value" : sSearchGenerateDate  });
-		   restParams.push({"name" : "category" , "value" : sSearchCategory  });
-		   
-		   if($( window ).width() > 900){
-				 var width;
-				 width = $('#medicalLossRatio th').length * 120;
-				 if(width > 1200){
-					 width = width + "px";
-					 $('#medicalLossRatio').width(width);
-				 }	 
-			} 
-		   
-		 $.ajax( {
-              dataType: 'json',
-              contentType: "application/json;charset=UTF-8",
-              type: 'GET',
-              url: sSource,
-              data: restParams,
-              success: function(res) {
-            	  
-            	  var td = res.data[0].length;
-            	  var th =  $("#medicalLossRatio thead tr th").length;
-            	  $("#medicalLossRatio thead tr").html('');
-            	  jQuery.each(res.data, function( i, val ) {
-             		 if(i == 0){
-             			 jQuery.each(val, function( index, text ) {
-             					$("#medicalLossRatio thead tr").append('<th scope="col" role="row" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" >'+text+'</th>');
-             			 });
-             		 }
-             		
-             		});
-            	  if(th > td)
-            		  {
-            		  	for(i = td; i < th; i++){
-            		  		$("#medicalLossRatio thead tr").append('<th scope="col" class="hide" role="row" tabindex="0" aria-controls="medicalLossRatio" rowspan="1" colspan="1" aria-sort="ascending" ></th>');
-            		  	}
-            		  }
-             	     	  
-             	  //clear the current content of the select
-                   res.iTotalRecords = res.data.length-1;
-                   res.iTotalDisplayRecords = res.data.length-1;
-                   fnCallback(res);
-             		
-            },
-              error : function (e) {
-              }
-          } );
-     	}
-     	
-     	
-     	  GetMembershipByInsPrvdr = function (insId, prvdrId, generateDate, category, aoColumns) {
-  	        var oTable = $('#medicalLossRatio').removeAttr( "width" ).dataTable({  
-  	        	"sDom": 'Bfrtip',
-	        	 "buttons": [
-	        	             {
-	        	                 extend: 'excelHtml5',
-	        	                
-	        	                 title: 'Medical Loss Ratio Table Excel Export',
-	        	                 exportOptions: {
-	        	                   
-	        	                 }
-	        	             },
-	        	             {
-								    extend: 'pdfHtml5',
-								    orientation: 'landscape',
-								    pageSize: 'LEGAL',
-								     title: 'Medical Loss Ratio Table PDF Export',
-								     mColumns: [2, 3, 4]
-								}
-	        	             
-		                   ],
-  	         "bDestroy" : true,	
-     	     "sAjaxSource" : getContextPath()+'/medicalLossRatio/list',
-     	     "sAjaxDataProp" : 'data',
-     	     "bLengthChange": false,
-     	     "bPagination":false,
-     	     "iDisplayLength": 500,
-     	     "sPaginationType": "full_numbers",
-     	     "bProcessing": true,
-     	     "bServerSide" : true,
-     	     "initComplete": function(settings, json) {
-		    	     reDraw();
-	     	 },
-	     	
-	        "fnServerParams": function ( aoData ) {
-                aoData.push(
-                    {"name": "sSearchIns", "value": insId},
-                    {"name": "sSearchPrvdr", "value": prvdrId },
-                    {"name": "sSearchGenerateDate", "value": generateDate },
-                    {"name": "sSearchCategory", "value": category }
-                );
-             },        
-             "fnDrawCallback": function () {
-            	 var $paginate = this.siblings('.dataTables_paginate');
-
- 	     	    if (this.api().data().length <= this.fnSettings()._iDisplayLength){
- 	     	        $paginate.hide();
- 	     	    }
- 	     	    else{
- 	     	        $paginate.show();
- 	     	    }
- 	     	    
-     	    	
-	    		 
-	    		if($( window ).width() > 900){
-    				 var width;
-    				 width = $('#medicalLossRatio tbody tr:eq(0) td').length * 120;
-    				 if(width > 1500){
-    					 width = width + "px";
-    					 $('#medicalLossRatio').width(width);
-    				 }
-    				 else{
-    					 $('#medicalLossRatio').width("100%");
-    				 }
-    			} 
-	    		
-             },
-     	     "fnServerData" : datatable2RestMembership
-     	});
-     }
+ 
  } );
  
 
@@ -405,8 +217,8 @@ $(document).ready(function() {
 				<div id="demo" class="col-sm-12">
 						<div id="tabs">
 								<ul>
-									<li><a href="#details">Detailed</a></li>
-									<li><a href="#summary" onclick="summary();">Summary</a></li>
+									<li id="detailedTab"><a href="#details">Detailed</a></li>
+									<li id="summaryTab" class="hide"><a href="#summary" onclick="summary();">Summary</a></li>
 								</ul>
 								<div id="details" class="col-sm-12 table-responsive">
 									<table id="medicalLossRatio" class="table table-hover table-responsive">
@@ -462,270 +274,215 @@ $(document).ready(function() {
   </div>
   
 <script>
+   
+   
 
-	function reDraw(){
+	  
+	function drawTable(){
+		//showModal('Detailed List');
+		$("#summaryTab").addClass('hide');
+		var table = "medicalLossRatio";
+		$("#"+table).html('');
+		reportMonth = $("#mlrReportDate option:selected").val();
+		category = $("#mlrCategory option:selected").val();
+		ins_id 	= $("#mlrInsu option:selected").val();
+		prvdr_id = $("#mlrPrvdr option:selected").val();
 		
-		
-		 var thempty = new Array;
-	    	 var activeMonthList = new Array();
-	    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
-	    		activeMonthList[index] = $(this).text();
-	    		 if(index == 0 || index == 1) $(this).addClass("hide");
-	    			if($(this).text() == "" || $(this).text() == "null" ){
-	    				thempty.push(index);
-	    				$(this).addClass("hide");
-	    			} 
-	    	 });
-	    	
-	    	var unwantedCount = new Array();
-	    	var unwanted = stoploss =  total = accumulatedTotal = 0; 
-	    	var repMonth =  activityMonth = prvdrName = prvdrId = "";
-	    	var mlrCategory = $("#mlrCategory"). val();
-	    	
-	    	jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
+		var params = { "insId":ins_id, "prvdrId":prvdr_id, "repMonth":reportMonth, "category":category,
+					  "pageSize":500, "pageNo":0};
+		var str = jQuery.param( params );
+		var url =  getContextPath()+'/medicalLossRatio/list?'+str;
+	 	$.ajax({
+		  url: url,
+		  dataType: "json",
+		})
+		.success(function(json)
+		{
+			 datatableDelete(table);
 			
-	    	 unwanted = stoploss = total = 0;  
-			 prvdrName = prvdrId = repMonth = activityMonth="";
-			 repMonth = $("#medicalLossRatio tbody tr:eq("+index+") td:eq(3)").text();
-			 prvdrName = "'"+$("#medicalLossRatio tbody tr:eq("+index+") td:eq(2)").text()+"'";
-			 prvdrId = "'"+$("#medicalLossRatio tbody tr:eq("+index+") td:eq(1)").text()+"'";
-			 	 
-			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
-			 		
-			 	 activityMonth = activeMonthList[tdindex];
-				if(mlrCategory == 9999){
-    			 	 
-					if(tdindex == 4 && $(this).text() == "UNWANTED_CLAIMS" && unwanted != 1)
-	    				 {
-	    					 	unwanted = 1;
-	    				 }
-    				 else if(tdindex == 4 && $(this).text() == "STOP_LOSS" && stoploss != 1)
-	    				 {
-    					 stoploss = 1;
-	    				 }
-    				 else if (tdindex == 4 && $(this).text() == "TOTAL" && total != 1)
-    				 {
-    					  total = 1; 
-    				 }
-    				
-    				   
-    				 if(tdindex > 4 && unwanted == 1){
-    					  if(activityMonth != "Total"){
-    						  if(unwantedCount[activityMonth] !== undefined && $.trim($(this).text())){ 
-    							  unwantedCount[activityMonth] =  parseFloat(unwantedCount[activityMonth]) + parseFloat($(this).text());
-    						  }
-    						  else if ($.trim($(this).text()) && unwantedCount[activityMonth] === undefined){
-    							  unwantedCount[activityMonth] = parseFloat($(this).text());
-    						 } 
-    						  else if(unwantedCount[activityMonth] !== undefined && !$.trim($(this).text())){ 
-    							  unwantedCount[activityMonth] =  unwantedCount[activityMonth];
-    						  }
-    						  else{
-    							  unwantedCount[activityMonth] = 0;
-    						  }
- 	    					 $(this).html('<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',true,'+prvdrName+','+prvdrId+');">'+$(this).text()+'</a>');
- 	    					
-    					  }
-    					  else
-    						  $(this).html($(this).text());
-    				 }
-    				 
-    				 else if(tdindex > 4 && stoploss == 1){
-    					  if(activityMonth != "Total"){
-    						  $(this).html('<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',false,'+prvdrName+','+prvdrId+');">'+$(this).text()+'</a>');
-    					  }	 
-    					  else
-       						  $(this).html($(this).text());
-    				 }
-    				 
-    				 else if(tdindex > 4 && total == 1){
-    					  if(activityMonth != "Total"){
-    						  if(unwantedCount[activityMonth] !== undefined && $.trim($(this).text())){ 
-    							  unwantedCount[activityMonth] =  parseFloat(unwantedCount[activityMonth]) + parseFloat($(this).text());
-    							 
-    						  }
-    						  else if ($.trim($(this).text()) && unwantedCount[activityMonth] === undefined){
-    							  unwantedCount[activityMonth] = parseFloat($(this).text());
-    						 } 
-    						 else if(unwantedCount[activityMonth] !== undefined && !$.trim($(this).text())){ 
-    							  unwantedCount[activityMonth] =  unwantedCount[activityMonth];
-    						 }
-    						 else{
-    							  unwantedCount[activityMonth] = 0;
-    						 }
-    					  }	 
-    				 }
+			$("#"+table).html('');
+			$("#"+table).append('<thead><tr></tr></thead>');
+			$("#"+table).append('<tbody></tbody>');
+			var mlrCategory = $("#mlrCategory"). val();
+			$.each(json.data, function (index, key) {
+				if(index != 0){ $("#"+table+" tbody ").append("<tr></tr>"); }
+				$.each(json.data[index], function (tdindex, tdvalue){
+					if(tdvalue == null) { tdvalue = 0; }
+					if(index == 0){
+						$("#"+table+" thead tr").append("<th>"+tdvalue+"</th>");
+					}
+					else {
+						if(tdindex > 4  && json.data[index][4] != "PATIENTS" ){
+							 
+							tdvalue = (Math.round(tdvalue *100)/100 ).formatMoney(2, '.', ',')
+						}
+							if(json.data[index][4] == "UNWANTED_CLAIMS" && tdindex > 4){
+								activityMonth = json.data[0][tdindex];
+								repMonth = json.data[index][3];
+								prvdrName = json.data[index][1];
+								prvdrId = json.data[index][0];
+								$link = '<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',true,'+prvdrName+','+prvdrId+');">'+tdvalue+'</a>'
+								$("#"+table+" tbody tr:last").append("<td>$"+$link+"</td>");
+							}
+							else if(json.data[index][4] == "STOP_LOSS" && tdindex > 4){
+								activityMonth = json.data[0][tdindex];
+								repMonth = json.data[index][3];
+								prvdrName = json.data[index][1];
+								prvdrId = json.data[index][0];
+								$link = '<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',true,'+prvdrName+','+prvdrId+');">'+tdvalue+'</a>'
+								$("#"+table+" tbody tr:last").append("<td>$"+$link+"</td>");
+							}
+							else if((json.data[index][4] == "MLR" || json.data[index][4] == "QMLR") && tdindex > 4){
+								activityMonth = json.data[0][tdindex];
+								repMonth = json.data[index][3];
+								prvdrName = json.data[index][1];
+								prvdrId = json.data[index][0];
+								$link = '<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',true,'+prvdrName+','+prvdrId+');">'+tdvalue+'</a>'
+								$("#"+table+" tbody tr:last").append("<td>"+$link+"%</td>");
+							}
+							
+							else if( tdindex <= 4  ||  json.data[index][4] == "PATIENTS" ) {
+									$("#"+table+" tbody tr:last").append("<td style='width:200px'>"+tdvalue+"</td>");
+							}else{
+								$("#"+table+" tbody tr:last").append("<td>$"+tdvalue+"</td>");
+							}
+						}
+				});	
+				
+			});
+			if(category == 9999) { $("#summaryTab").removeClass();}
+			
+				 $("#"+table+" tbody ").append("<tr></tr>");
+				 var sum;
+				 var column = json.data[0].length;
+				 var row = json.data.length;
+				for(var i = 0; i < column; i++)
+				{
+					if(i > 4 ){
+						sum = count = 0;
+						for( var y = 0; y < row-1; y++){
+							$value = json.data[y+1][i];
+							if($value == null) { $value = 0; }
+							if(category == "MLR" || category == "QMLR")
+							{	sum = sum +   parseFloat( $value); if( $value != 0) count++;  }
+							else if(category == 9999){
+								if(json.data[y+1][4] == "UNWANTED_CLAIMS" || json.data[y+1][4] == "TOTAL")
+								{	sum = sum +   parseFloat($value); }
+							}
+							else{
+								sum = sum +   parseFloat($value);
+							}	
+									
+						}
+						totalSum = sum ;
+						if(category == "MLR" || category == "QMLR") { totalSum =  totalSum / count }
+						$("#"+table+" tbody tr:last").append("<td>$"+(Math.round(totalSum *100)/100).formatMoney(2, '.', ',')+"</td>");
+					}
+					else
+						$("#"+table+" tbody tr:last").append("<td></td>");
 				}
-				else{
-					 
-    					if(tdindex > 4 && index > 0)
-    					{	
-    						  if(unwantedCount[activityMonth] !== undefined && $.trim($(this).text())){ 
-    							  unwantedCount[activityMonth] =  parseFloat(unwantedCount[activityMonth]) + parseFloat($(this).text());
-    						  }
-    						  else if ($.trim($(this).text()) && unwantedCount[activityMonth] === undefined){
-    							  unwantedCount[activityMonth] = parseFloat($(this).text());
-    						 } 
-    						 else if(unwantedCount[activityMonth] !== undefined && !$.trim($(this).text())){ 
-    							  unwantedCount[activityMonth] =  unwantedCount[activityMonth];
-    						 }
-    						 else{
-    							  unwantedCount[activityMonth] = 0;
-    						 }
-    				  }
-				}		
-			 });	
-  			 });
+					
+			
+			 $('#'+table+'  thead  tr').find('th:lt(2)').remove();
+	    	 $('#'+table+'  tbody  tr').find('td:lt(2)').remove();
+	    	 datatableCreate(table, " Detailed Report ");
+	    	 $('#'+table).width('100%');
 	    	
-	    	 $("#medicalLossRatio tbody").append("<tr></tr>");
+			// hideModal();
 	    	
-	    	 if(mlrCategory == "MLR" || mlrCategory == "QMLR"){
- 	    	var sum = 0,
-  	        count = 0,
-  	        all = $('#medicalLossRatio > tbody > tr');
-  	    	th = $('#medicalLossRatio > thead > tr > th');	
-  	    	th.each(function(thindex, thtext)
-  	    	{
-  	    		if(thindex > 4 && $(this).text() != "null"){
-  	    			sum = 0; count = 0;
-	     	    		all.each(function( index, text) {
-	         	   			if(index > 0 && (all.length -1) != index && $('td:eq('+thindex+')', this).text() && $('td:eq('+thindex+')', this).text() > 0){
-	    		     	       	sum += +$('td:eq('+thindex+')', this).text();
-	    		     	       	count++;
-	         	   			}
-	         	   		});
-	     	    		$("#medicalLossRatio tbody tr:last").append('<td>'+(sum / count).toFixed(2)+'</td>');
-	     	    		
-  	    		}	
-  	    		else{
-  	    			$("#medicalLossRatio tbody tr:last").append('<td></td>');
-  	    		}	
-  	    	});
-	    	 }
-	    	 else
-	    	 {
-	    			var num;
-		    	 jQuery.each($("#medicalLossRatio thead tr th"), function( index, text ) {
-		    		if(unwantedCount[$(this).text()] !== undefined  && $(this).text() != "null"){
-		    			num = unwantedCount[$(this).text()];
-		    			num = Math.round(num * 1000) / 1000;
-		    			accumulatedTotal = accumulatedTotal + num;
-		    	 		$("#medicalLossRatio tbody tr:last").append('<td>'+num+'</td>');
-		    		}		
-		    		else if($(this).text() == "Total" && accumulatedTotal > 0){
-		    			$("#medicalLossRatio tbody tr:last").append('<td>'+Math.round(accumulatedTotal * 1000) / 1000 +'</td>');
-		    		}
-		    		else{
-		    			$("#medicalLossRatio tbody tr:last").append('<td></td>');
-		    		}
-		    	
-		    	 }); 
-	     }	 
- 	    	 
-		 jQuery.each($("#medicalLossRatio tbody tr"), function( index, text ) {
-			 jQuery.each($("#medicalLossRatio tbody tr:eq("+index+") td"), function( tdindex, tdtext ) {
-				 if(tdindex == 0 || tdindex == 1) $(this).remove();
-    		 		if($.inArray(tdindex, thempty) != -1) {
-    		 			$(this).remove();
-    		 		}
-			 });	
-    	});
-		 
-		 $("#medicalLossRatio tbody tr:first").remove();
-		 tbody = $("#medicalLossRatio tbody").html();
-		 
-		 
-		if ( $.fn.DataTable.isDataTable('#medicalLossRatio') ) {
-			$('#medicalLossRatio').DataTable().destroy();
-		}
+		})
+		.done(function() {
+			console.log( "  Details finished");
+			hideModal();
+		});
+	}
+	
+	function datatableCreate(table, caption)
+	{
 		
-		all = $('#medicalLossRatio > tbody > tr');	
-		th = $('#medicalLossRatio > thead > tr > th')
-		
-		
-		
-		
-		th.each(function(thindex, thtext)
-		    	{
-					if($(this).attr("class") !== undefined)
-						$(this).remove();
-		    	});
-		
-		$("#medicalLossRatio thead").html( $('#medicalLossRatio thead').html());
-		$("#medicalLossRatio tbody").html( tbody);
-		
-		
-		 $('#medicalLossRatio').DataTable( {
-	 		    dom: 'Bfrtip',
-	 		   "iDisplayLength": 500,
-	 		   "scrollY": 500,
-	 	       "scrollX": true,
-	 	        buttons: [
-							{
+		  var oTable = $('#'+table).DataTable( {
+			dom: 'Bfrtip',
+			"buttons": [
+	   	             {
+	   	                 extend: 'excelHtml5',
+	   	                 title: caption+' Excel Export',
+	   	             },
+	   	             {
 							    extend: 'pdfHtml5',
 							    orientation: 'landscape',
 							    pageSize: 'LEGAL',
-							    title: 'Medical Loss Ratio Detailed PDF Export'
-							},
-							{
-								extend: 'excelHtml5',
-								title: 'Medical Loss Ratio Detailed Excel Export'
+							    title: caption+' PDF Export',
 							}
-					],	
-					 "order": [[ 0, "desc" ]]
-							
-	 		} );
-		
-		
+	   	             
+	                  ],
+	                  fixedColumns:   {
+	                      leftColumns: 2
+	                  },
+	        scrollY:        "450px",
+	        scrollX:        true,
+	        scrollCollapse: false,
+	        paging:         false,
+	        "iDisplayLength": 500,
+		    "sPaginationType": "full_numbers",
+		    "order": [[ 0, "desc" ]],
+		    "initComplete": function(settings, json) {
+		    
+		    $('#'+table).width('100%');
+		    }
+	    } );
 	}
+	
+	
+	function datatableDelete(table){
+		if ( $.fn.DataTable.isDataTable('#'+table) ) {
+			$('#'+table).DataTable().destroy();
+		}
+	    $('#'+table+' tbody').empty();
+	  
+	}
+
+	
 	
 	function summary()
 	{
+		$("#detailedTab").removeClass();
 		var summaryList = new Array();
-		var headerList = new Array();
-		var keyList = new Array();
 		var categoryList = new Array();
 		var reportList = new Array();
-		var monthList = new Array();
-		indexposition = 0;
+		table = "medicalLossRatioSummary";
 		
+		datatableDelete(table);
 		
-		
-		if ( $.fn.DataTable.isDataTable('#medicalLossRatio') ) {
-				$('#medicalLossRatioSummary').DataTable().destroy();
-   		}
-  
-	$('#medicalLossRatioSummary tbody').empty();
-
-		$("#medicalLossRatioSummary thead").html('');
-		$("#medicalLossRatioSummary tbody").html('');
-		$("#medicalLossRatioSummary thead").append($("#medicalLossRatio thead").html());
+		$("#"+table+" thead").html('');
+		$("#"+table+" thead").append("<tr></tr>");
+		$("#"+table+" tbody").html('');
 		
 		header =  $('#medicalLossRatio > thead > tr > th');
 		header.each(function(index, text){
-			
-				headerList[indexposition] = $(this).text();
-				indexposition++;
-			
+			$("#"+table+" thead tr").append("<th>"+$(this).text()+"</th>");
 		});
-		
-		 
+		$('#'+table+' > thead  tr:last th:eq(0)').remove();
 		 
 		all = $('#medicalLossRatio > tbody > tr');	
-		th = $('#medicalLossRatioSummary > thead > tr > th');	
-		
-		th = $('#medicalLossRatioSummary > thead > tr > th');	
+		th = $('#'+table+' > thead > tr > th');	
 		var val = ""; var count = 0;
 	   
-		th.each(function(thindex, thtext)
-	    	{
+		th.each(function(thindex, thtext) 	{
+			
+			if(thindex > 1){
 	    		sum = 0; count = 0; val = "";
 	    		headerText = $(this).text();
+	    		 
 		  	    		all.each(function( index, text) {
-		  	    			if(index < all.length-1){
+		  	    			if(index+1 < all.length ){
 		  	    				val = $('td:eq(2)', this).text() +""+$('td:eq(1)', this).text()+""+headerText;
-		  	    				
-		  	    				
+		  	    					
+		  	    				if(summaryList["'"+val+"'"]){
+		  	    					summaryList["'"+val+"'"] = parseFloat(summaryList["'"+val+"'"]) + parseFloat($('td:eq('+thindex+')', this).text().replace('$','').replace(',','').replace('%',''));
+		  	    				} else {
+		  	    					summaryList["'"+val+"'"] = parseFloat($('td:eq('+thindex+')', this).text().replace('$','').replace(',','').replace('%',''));
+		  	    				}
+	  	    						
 		  	    				if($.inArray($('td:eq(1)', this).text(), reportList) == -1)
 		  	    				{
 		  	    					reportList.push($('td:eq(1)', this).text());
@@ -735,74 +492,40 @@ $(document).ready(function() {
 		  	    				{
 		  	    					categoryList.push($('td:eq(2)', this).text());
 		  	    				}
-		  	    				if($.inArray(val, keyList) == -1)
-		  	    				{
-		  	    					keyList.push(val);
-		  	    				}
-		  	    				
-		  	    				if(thindex != 1){
-			  	    				if($('td:eq('+thindex+')', this).text()){
-			  	    					if(summaryList["'"+val+"'"])
-			  	    						summaryList["'"+val+"'"] = parseFloat(summaryList["'"+val+"'"]) + parseFloat($('td:eq('+thindex+')', this).text());
-			  	    					else
-			  	    						summaryList["'"+val+"'"] = parseFloat($('td:eq('+thindex+')', this).text());
-			  	    				}
-			  	    				else{
-			  	    					if(!summaryList["'"+val+"'"])
-			  	    						summaryList["'"+val+"'"] = 0;
-			  	    					
-			  	    						
-			  	    				}	
-		  	    				}
-		  	    				
 		  	    			}
 		      	   		});
+ 		  	    } //if-thindex
 	    		
 	    	});
 	    	
-	    	$("#medicalLossRatioSummary tbody tr:last").append('<td>'+val+'</td>');
+	    //	$("#"+table+" tbody tr:last").append('<td>'+val+'</td>');
 	    	$.each(reportList,function(reportIndex, reportVal){
-		    	$.each(categoryList,function(i, val)
-		    	{
-		    		$("#medicalLossRatioSummary tbody").append("<tr></tr>");
-		    		$("#medicalLossRatioSummary tbody tr:last").append('<td>'+reportVal+'</td><td>'+val+'</td>');
-		    		th.each(function(thindex, thtext)
-		    		{
+		    	$.each(categoryList,function(i, val){
+		    		$("#"+table+" tbody").append("<tr></tr>");
+		    		$("#"+table+" tbody tr:last").append('<td>'+reportVal+'</td><td>'+val+'</td>');
+		    		th.each(function(thindex, thtext){
+		    			if(thindex > 1 ){
 		    			headerText = $(this).text();
 		    			var value = val +""+reportVal+""+headerText;
+		    			console.log(value + "  "+summaryList["'"+value+"'"]);
 		    				if(!isNaN(summaryList["'"+value+"'"])){
-		    					$("#medicalLossRatioSummary tbody tr:last").append('<td>'+Math.round(summaryList["'"+value+"'"] * 1000) / 1000 +'</td>');
+		    					if(val != 'PATIENTS'){
+		    						$("#"+table+" tbody tr:last").append('<td>$'+Math.round((summaryList["'"+value+"'"] * 100) / 100).formatMoney(2,'.',',') +'</td>');
+		    					}else{
+		    						$("#"+table+" tbody tr:last").append('<td>'+  summaryList["'"+value+"'"]  +'</td>');
+		    					}
 		    				}
+		    			}
 		    		});
 		    		
 		    	});
 	    	});	
 	    	
-	    	 $("#medicalLossRatioSummary tbody").append("<tr></tr>");
-	    	 $("#medicalLossRatioSummary tbody tr:last").html($("#medicalLossRatio tbody tr:last").html());
-	    	 $('#medicalLossRatioSummary > thead > tr > th:eq(0)').remove();
-	    	 $('#medicalLossRatioSummary  tbody  tr:last td:eq(0)').remove();
+	    	 $("#"+table+" tbody").append("<tr></tr>");
+	    	 $("#"+table+" tbody tr:last").html($("#medicalLossRatio tbody tr:last").html());
+	    	 $('#'+table+' > tbody  tr:last td:eq(0)').remove();
 	    	 
-	    	 $('#medicalLossRatioSummary').dataTable( {
-	 		    dom: 'Bfrtip',
-	 		   "scrollY": 500,
-	 	        "scrollX": true,
-	 	        buttons: [
-							{
-							    extend: 'pdfHtml5',
-							    orientation: 'landscape',
-							    pageSize: 'LEGAL',
-							    title: 'Medical Loss Ratio Summary PDF Export'
-							},
-							{
-								extend: 'excelHtml5',
-								title: 'Medical Loss Ratio Summary Excel Export'
-							}
-	 	        ],
-	 	       "order": [[ 0, "desc" ]],
-	 	      "iDisplayLength": 500
-	 	      
-	 		} );
+	    	 datatableCreate(table, " Summary Report");
 	}
 	
 
@@ -826,11 +549,11 @@ $(document).ready(function() {
 					 var sum = 0;
 					 $.each(data.data, function( index, value ) {
 						
-					 	$("#unwantedClaims tbody").append("<tr><td>"+value.claimType+"</td><td>"+value.lastName+"</td><td>"+value.firstName+"</td><td>"+value.gender+"</td><td>"+value.dob+"</td><td>"+value.unwantedClaims+"</td></tr>");
+					 	$("#unwantedClaims tbody").append("<tr><td>"+value.claimType+"</td><td>"+value.lastName+"</td><td>"+value.firstName+"</td><td>"+value.gender+"</td><td>"+value.dob+"</td><td>$"+value.unwantedClaims.formatMoney(2, '.', ',')+"</td></tr>");
 					 		sum = sum + value.unwantedClaims;
 					 	});
 					 if(data.data.length > 0){
-						 $("#unwantedClaims tbody").append("<tr><td></td><td></td><td></td><td></td><td>Total</td><td>"+sum+"</td></tr>");
+						 $("#unwantedClaims tbody").append("<tr><td></td><td></td><td></td><td></td><td>Total</td><td>$"+sum.formatMoney(2, '.', ',')+"</td></tr>");
 					 }
 					 
 				 }).success(function() {
@@ -848,5 +571,16 @@ $(document).ready(function() {
 					    console.log( "complete" );
 					  });
 			}
+	
+	function showModal(title, table){
+		 $("#myModal").modal('show');
+			$(".modal-title").html(title);
+		if(!table) $("#unwantedClaims").hide();
+			
+	}
+	function hideModal(){
+		 $("#myModal").modal('hide');
+		 if(!table) $("#unwantedClaims").show();
+	}
 </script>
 

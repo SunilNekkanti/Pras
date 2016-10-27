@@ -52,16 +52,15 @@ public interface RiskReconDao {
 	 */
 	RiskRecon save(RiskRecon bean);
 
+
 	/**
 	 * 
 	 * @param updater
 	 * @return
 	 */
 	RiskRecon updateByUpdater(Updater<RiskRecon> updater);
-	
-	
-	List<Object[]> claimReportQueryLevel2(Integer insId, String repGenDate, String activityMonth, String category, String roster, String Cap);
 
+	
 	/**
 	 * @param tableName
 	 * @param insId
