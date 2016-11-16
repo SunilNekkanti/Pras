@@ -1,8 +1,10 @@
 package com.pfchoice.core.service;
 
 import java.util.Date;
+import java.util.List;
 
 import com.pfchoice.core.entity.MembershipClaim;
+import com.pfchoice.core.entity.UnwantedClaim;
 
 import ml.rugal.sshcommon.page.Pagination;
 
@@ -88,6 +90,16 @@ public interface MembershipClaimService {
 	 * @return
 	 */
 	Integer unloadTable();
+	
+	/**
+	 * @param insId
+	 * @param prvdrId
+	 * @param reportMonth
+	 * @param activityMonth
+	 * @param isUnwanted
+	 * @return
+	 */
+	List<MembershipClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted);
 
 
 }

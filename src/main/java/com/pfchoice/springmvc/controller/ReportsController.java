@@ -52,6 +52,7 @@ import com.pfchoice.core.entity.File;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FollowupType;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.MembershipClaim;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
 import com.pfchoice.core.entity.UnwantedClaim;
@@ -158,9 +159,6 @@ public class ReportsController {
 	@Autowired
 	private MedicalLossRatioService mlrService;
 
-	@Autowired
-	private UnwantedClaimService unwantedClaimService;
-	
 	@Autowired
 	private RiskReconService riskReconService;
 	
@@ -1123,7 +1121,8 @@ public class ReportsController {
 			@RequestParam(required = true) Integer prvdrId, @RequestParam(required = false) Integer reportMonth,
 			@RequestParam(required = true) Integer activityMonth) {
 
-		List<UnwantedClaim> entities = unwantedClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth, true);
+		List<MembershipClaim> entities = mbrClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth, true);
+		LOG.info("returning entities "+entities.size());
 		LOG.info("returning UnwantedClaimsList");
 		return Message.successMessage(CommonMessageContent.MLR_UNWANTED_CLAIMS_LIST, JsonConverter.getJsonObject(entities));
 	}
@@ -1143,7 +1142,7 @@ public class ReportsController {
 			@RequestParam(required = true) Integer prvdrId, @RequestParam(required = false) Integer reportMonth,
 			@RequestParam(required = true) Integer activityMonth) {
 
-		List<UnwantedClaim> entities = unwantedClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth, false);
+		List<MembershipClaim> entities = mbrClaimService.getUnwantedClaims( insId, prvdrId, reportMonth,activityMonth, false);
 		LOG.info("returning Stop Loss List");
 		return Message.successMessage(CommonMessageContent.MLR_STOP_LOSS, JsonConverter.getJsonObject(entities));
 	}

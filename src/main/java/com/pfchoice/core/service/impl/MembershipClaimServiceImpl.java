@@ -4,6 +4,7 @@ import ml.rugal.sshcommon.hibernate.Updater;
 import ml.rugal.sshcommon.page.Pagination;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -165,5 +166,10 @@ public class MembershipClaimServiceImpl implements MembershipClaimService {
 	@Override
 	public Integer unloadTable(){
 		return membershipClaimDao.unloadTable();
+	}
+	
+	public List<MembershipClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted){
+		
+		return membershipClaimDao.getUnwantedClaims(insId, prvdrId, reportMonth, activityMonth,  isUnwanted);
 	}
 }

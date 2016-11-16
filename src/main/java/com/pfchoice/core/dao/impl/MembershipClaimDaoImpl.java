@@ -4,9 +4,11 @@ import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY_PATH;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_STOPLOSS;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_UPDATE;
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_HOSPOTALIZATION_DATE;
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_PROCESSING_DATE;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_FETCH;
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -17,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
@@ -24,6 +27,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.DateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +36,7 @@ import org.springframework.stereotype.Repository;
 import com.pfchoice.common.util.PrasUtil;
 import com.pfchoice.core.dao.MembershipClaimDao;
 import com.pfchoice.core.entity.MembershipClaim;
+import com.pfchoice.core.entity.MembershipClaimsUnwanted;
 
 /**
  *
@@ -292,5 +297,30 @@ public class MembershipClaimDaoImpl extends HibernateBaseDao<MembershipClaim, In
 			}
 		}
 		return rowsAffected;
+	}
+	
+	/**
+	 * @param insId
+	 * @param prvdrId
+	 * @param reportMonth
+	 * @param activityMonth
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MembershipClaim> getUnwantedClaims(final Integer insId, final Integer prvdrId, final Integer reportMonth, final Integer activityMonth,final Boolean isUnwanted){
+		String fetchDataQuery;
+		if(isUnwanted) {
+			fetchDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_FETCH);
+		} else {
+			fetchDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_STOPLOSS);
+		}
+		
+		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(fetchDataQuery)
+				.setInteger("insId", insId)
+				.setInteger("prvdrId", prvdrId) 
+				.setInteger("reportMonth", reportMonth)
+				.setInteger("activityMonth", activityMonth);
+		return query.setResultTransformer(Transformers.aliasToBean(MembershipClaimsUnwanted.class)).list();
 	}
 }

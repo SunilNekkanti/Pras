@@ -1,6 +1,7 @@
 package com.pfchoice.core.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import com.pfchoice.core.entity.MembershipClaim;
 
@@ -94,4 +95,13 @@ public interface MembershipClaimDao {
 	 * @return
 	 */
 	Integer unloadTable();
+	
+	/**
+	 * @param insId
+	 * @param prvdrId
+	 * @param reportMonth
+	 * @param activityMonth
+	 * @return
+	 */
+	List<MembershipClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted);
 }

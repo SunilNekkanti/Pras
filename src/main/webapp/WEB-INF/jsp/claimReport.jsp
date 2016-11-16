@@ -14,6 +14,7 @@
 <script src="${contextHome}/resources/js/bootstrap-multiselect.js"
     type="text/javascript"></script>
 <script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
+<script src="http://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css">
 
 	<script>
@@ -548,7 +549,7 @@ $(document).ready(function() {
 										<table id="claimReport2" class="table table-hover table-responsive">
 												<thead><tr><th>Provider</th><th>Report Month</th>
 												<th>Activity Month</th><th>Risk Category</th><th>Claim Type</th>
-												<th>In Cap</th><th>In Roster</th><th>Claims</th>
+												<th>In Cap</th><th>In Roster</th><th>No Of Visits</th><th>Claims</th>
 												<th></th><th></th>
 												</tr></thead>
 											<tbody></tbody>
@@ -561,7 +562,7 @@ $(document).ready(function() {
 													<th>Provider</th><th>Report Month</th>
 													<th>Activity Month</th><th>Risk Category</th>
 													<th>Claim Type</th><th> In Cap</th>
-													<th>In Roster</th><th>Claims</th><th></th><th></th><th></th>
+													<th>In Roster</th><th>No Of Visits</th><th>Claims</th><th></th><th></th><th></th>
 											
 											</tr></thead>
 											<tbody></tbody>
@@ -575,7 +576,7 @@ $(document).ready(function() {
 													<th>Activity Month</th><th>Risk Category</th>
 													<th>Claim Type</th><th> In Cap</th>
 													<th>In Roster</th>
-													<th>Date Of Service</th>
+													<th>Date Of Service</th><th>No Of Visits</th>
 													<th>Claims</th><th></th><th></th><th></th>
 											
 											</tr></thead>
@@ -740,7 +741,7 @@ function level3(prvdr_id, riskRecon, reportMonth, activityMonth)
 	    	 $('#'+table+'  tbody  tr').find('td:eq(3)').remove();
 	    	 $('#'+table+'  tbody  tr').find('td:gt('+colLen+')').remove();
 	    	 aggregate(table,true);
-	    	 datatableCreate(table, " Claim Report ");
+	    	 datatableCreate(table, "Claim Report ");
 	    	 $('#'+table).width('100%');
 		})
 		.done(function() {
@@ -807,7 +808,7 @@ function level4(prvdr_id, riskRecon, reportMonth, activityMonth, mbr_id)
 	    	 $('#'+table+'  tbody  tr').find('td:eq(3)').remove();
 	    	 $('#'+table+'  tbody  tr').find('td:gt('+colLen+')').remove();
 	    	 aggregate(table,true);
-	    	 datatableCreate(table, " Claim Report ");
+	    	 datatableCreate(table, "Claim Report ");
 	    	 $('#'+table).width('100%');
 		})
 		.done(function() {
@@ -881,6 +882,8 @@ function datatableDelete(table){
 function datatableCreate(table, caption)
 {
 	
+	
+	
 	  var oTable = $('#'+table).DataTable( {
 		dom: 'Bfrtip',
 		"buttons": [
@@ -889,9 +892,9 @@ function datatableCreate(table, caption)
    	                 title: caption+' Excel Export',
    	             },
    	             {
-						    extend: 'pdfHtml5',
+						    extend: 'pdf',
 						    orientation: 'landscape',
-						    pageSize: 'LEGAL',
+						    pageSize: 'TABLOID',
 						    title: caption+' PDF Export',
 						}
    	             
