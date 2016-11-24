@@ -55,7 +55,6 @@ import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.MembershipClaim;
 import com.pfchoice.core.entity.MembershipFollowup;
 import com.pfchoice.core.entity.MembershipHedisMeasure;
-import com.pfchoice.core.entity.UnwantedClaim;
 import com.pfchoice.core.service.AttPhysicianService;
 import com.pfchoice.core.service.BillTypeService;
 import com.pfchoice.core.service.FacilityTypeService;
@@ -77,7 +76,6 @@ import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.PharmacyService;
 import com.pfchoice.core.service.RiskReconService;
 import com.pfchoice.core.service.UnprocessedClaimService;
-import com.pfchoice.core.service.UnwantedClaimService;
 import com.pfchoice.springmvc.controller.service.DBConnection;
 
 import ml.rugal.sshcommon.page.Pagination;

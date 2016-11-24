@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.pfchoice.core.entity.MembershipClaim;
-import com.pfchoice.core.entity.UnwantedClaim;
 
 import ml.rugal.sshcommon.page.Pagination;
 
