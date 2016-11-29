@@ -217,9 +217,12 @@ $(document).ready(function() {
 									<option value="Pharmacy">Pharmacy</option>
 									<option value="MLR">MLR</option>
 									<option value="QMLR">QMLR</option>
+									<option value="AvgMLR">AvgMLR</option>
+									<option value="AvgQMLR">AvgQMLR</option>
+									<option value="STOP_LOSS">Stop Loss</option>
 									<option value="Total">Total</option>
 									<option value="UNWANTED_CLAIMS">Unwanted Claims</option>
-									<option value="STOP_LOSS">Stop Loss</option>
+									
 							</select>
 						</div>
 					</div>
@@ -356,7 +359,7 @@ function dropDownSelectedValue(elementId, text, index){
 								$link = '<a  href="javascript:void(0)" onclick="mlrUnwantedList('+activityMonth+','+repMonth+',false,'+prvdrName+','+prvdrId+');">'+tdvalue+'</a>'
 								$("#"+table+" tbody tr:last").append("<td>$"+$link+"</td>");
 							}
-							else if((json.data[index][4] == "MLR" || json.data[index][4] == "QMLR") && tdindex > 4){
+							else if((json.data[index][4] == "MLR" || json.data[index][4] == "QMLR" || json.data[index][4] == "AvgQMLR" || json.data[index][4] == "AvgMLR") && tdindex > 4){
 																$("#"+table+" tbody tr:last").append("<td>"+tdvalue+"%</td>");
 							}
 							
@@ -407,7 +410,9 @@ function dropDownSelectedValue(elementId, text, index){
 	    	 datatableCreate(table, "Detailed Report");
 	    	 $('#'+table).width('100%');
 	    	
-			if(prvdr_id == 9999) { 	summary(json);	}
+	    	 prvdr_id 	= dropDownSelectedValue("mlrPrvdr",false, false);
+	    	 var n = prvdr_id.indexOf(",");
+			if(n > 1) { 	summary(json);	}
 	    	
 		})
 		.done(function() {
@@ -447,28 +452,28 @@ function dropDownSelectedValue(elementId, text, index){
 	    		sum = 0; count = 0; val = "";
 	    		headerText =thtext;
 	    		 
-		  	    		$.each(json.data, function( index, text) {
-		  	    			
-		  	    			if(index < json.data.length  && index > 0){ 
-		  	    				if(json.data[index][thindex] == null) { json.data[index][thindex] = 0; }
-		  	    				val = json.data[index][4]+""+ json.data[index][3]+""+headerText;	
-		  	    				if(summaryList["'"+val+"'"]){
-		  	    					summaryList["'"+val+"'"] = parseFloat(summaryList["'"+val+"'"]) + parseFloat(json.data[index][thindex]);
-		  	    				} else {
-		  	    					summaryList["'"+val+"'"] = parseFloat(json.data[index][thindex]);
-		  	    				}
-	  	    						
-		  	    				if($.inArray(json.data[index][3], reportList) == -1)
-		  	    				{
-		  	    					reportList.push(json.data[index][3]);
-		  	    				}
-		  	    				
-		  	    				if($.inArray( json.data[index][4], categoryList) == -1)
-		  	    				{
-		  	    					categoryList.push(json.data[index][4]);
-		  	    				}
-		  	    			}
-		      	   		});
+	    		$.each(json.data, function( index, text) {
+  	    			
+  	    			if(index < json.data.length  && index > 0){ 
+  	    				if(json.data[index][thindex] == null) { json.data[index][thindex] = 0; }
+  	    				val = json.data[index][4]+""+ json.data[index][3]+""+headerText;	
+  	    				if(summaryList["'"+val+"'"]){
+  	    					summaryList["'"+val+"'"] = parseFloat(summaryList["'"+val+"'"]) +   Math.round(parseFloat(json.data[index][thindex])*100)/100 ;
+  	    				} else {
+  	    					summaryList["'"+val+"'"] =  Math.round(parseFloat(json.data[index][thindex])*100)/100 ;
+  	    				}
+	    						
+  	    				if($.inArray(json.data[index][3], reportList) == -1)
+  	    				{
+  	    					reportList.push(json.data[index][3]);
+  	    				}
+  	    				
+  	    				if($.inArray( json.data[index][4], categoryList) == -1)
+  	    				{
+  	    					categoryList.push(json.data[index][4]);
+  	    				}
+  	    			}
+      	   			});
  		  	    } 
 	    		
 	    	});
@@ -484,8 +489,10 @@ function dropDownSelectedValue(elementId, text, index){
 		    			var value = val +""+reportVal+""+headerText;
 		    			console.log(value + "  "+summaryList["'"+value+"'"]);
 		    				if(!isNaN(summaryList["'"+value+"'"])){
-		    					if(val != 'PATIENTS'){
-		    						$("#"+table+" tbody tr:last").append('<td>$'+Math.round((summaryList["'"+value+"'"] * 100) / 100).formatMoney(2,'.',',') +'</td>');
+		    					if(val == 'AvgMLR' || val == 'AvgQMLR'||  val == 'MLR' || val == 'QMLR'){
+		    						$("#"+table+" tbody tr:last").append('<td>'+ summaryList["'"+value+"'"].formatMoney(2, '.', ',')   +'%</td>');
+		    					}else if(val != 'PATIENTS'){
+		    						$("#"+table+" tbody tr:last").append('<td>$'+ summaryList["'"+value+"'"].formatMoney(2, '.', ',')  +'</td>');
 		    					}else{
 		    						$("#"+table+" tbody tr:last").append('<td>'+  summaryList["'"+value+"'"]  +'</td>');
 		    					}
