@@ -364,7 +364,7 @@ function dropDownSelectedValue(elementId, text, index){
 							}
 							
 							else if( tdindex <= 4  ||  json.data[index][4] == "PATIENTS" ) {
-									$("#"+table+" tbody tr:last").append("<td style='width:350px'>"+tdvalue+"</td>");
+									$("#"+table+" tbody tr:last").append("<td style='width:650px'>"+tdvalue+"</td>");
 							}else{
 								$("#"+table+" tbody tr:last").append("<td>$"+tdvalue+"</td>");
 							}

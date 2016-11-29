@@ -112,7 +112,6 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 				.setString("roster", roster)		.setString("cap", cap)				
 				.setInteger("levelNo", levelNo);
 		
-		System.out.println(" prvdrId "+prvdrId);
 		@SuppressWarnings("unchecked")
 		List<Object[]> entities =  query.list();
 		return entities;

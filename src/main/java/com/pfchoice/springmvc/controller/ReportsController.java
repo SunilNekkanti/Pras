@@ -1001,7 +1001,6 @@ public class ReportsController {
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
 
-		System.out.println(" prvdr Id "+prvdrId.toString());
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
@@ -1026,8 +1025,6 @@ public class ReportsController {
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
 		
-		System.out.println(" prvdr Id "+prvdrId.toString());
-
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category, "N");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
