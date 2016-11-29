@@ -97,7 +97,7 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
 	@Override
-	public List<Object[]> claimReportQuery( final String tableName, final Integer insId, final Integer prvdrId, final Integer mbrId,
+	public List<Object[]> claimReportQuery( final String tableName, final Integer insId, final String prvdrId, final Integer mbrId,
 			final String repGenDate, final Integer activityMonth, final String claimType, 
 			final String category, final String roster, final String cap, final Integer levelNo){
 		assert tableName !=null && !"".equals(tableName);
@@ -105,17 +105,14 @@ public class RiskReconDaoImpl extends HibernateBaseDao<RiskRecon, Integer> imple
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery)
-				.setInteger("insId", insId)			.setInteger("prvdrId", prvdrId)			
+				.setInteger("insId", insId)			.setString("prvdrId", prvdrId)			
 				.setInteger("mbrId", mbrId)			.setString("tableName", tableName)
 				.setString("repMonth", repGenDate)	.setInteger("activityMonth", activityMonth)
 				.setString("category", category)	.setString("claimType", claimType)
 				.setString("roster", roster)		.setString("cap", cap)				
 				.setInteger("levelNo", levelNo);
 		
-		System.out.println(" tableName"+tableName+"mbrId"+mbrId+
-				" insId "+insId+" prvdrId "+prvdrId+" repMonth  "+repGenDate+"activityMonth"+ activityMonth+
-				" claimType "+claimType+" category "+category+" roster "+roster+" cap "+cap+"levelNo"+ levelNo);
-	
+		System.out.println(" prvdrId "+prvdrId);
 		@SuppressWarnings("unchecked")
 		List<Object[]> entities =  query.list();
 		return entities;

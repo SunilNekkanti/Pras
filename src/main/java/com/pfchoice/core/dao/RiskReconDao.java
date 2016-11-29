@@ -75,7 +75,7 @@ public interface RiskReconDao {
 	 * @param levelNo
 	 * @return
 	 */
-	List<Object[]> claimReportQuery(String tableName, Integer insId, Integer prvdrId, Integer mbrId, String repGenDate,
+	List<Object[]> claimReportQuery(String tableName, Integer insId, String prvdrId, Integer mbrId, String repGenDate,
 			Integer activityMonth, String claimType, String category, String roster, String cap, Integer levelNo);
 
 }

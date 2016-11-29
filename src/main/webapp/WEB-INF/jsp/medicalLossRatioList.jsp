@@ -311,7 +311,6 @@ function dropDownSelectedValue(elementId, text, index){
 		category = $("#mlrCategory option:selected").val();
 		ins_id 	= $("#mlrInsu option:selected").val();
 		prvdr_id 	= dropDownSelectedValue("mlrPrvdr",false, false);
-		alert('prvdr_id'+prvdr_id);
 		var params = { "insId":ins_id, "prvdrId":prvdr_id, "repMonth":reportMonth, "category":category,
 					  "pageSize":500, "pageNo":0};
 		

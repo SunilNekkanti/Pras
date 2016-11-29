@@ -1001,7 +1001,7 @@ public class ReportsController {
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
 
-		LOG.info("before mlr report");
+		System.out.println(" prvdr Id "+prvdrId.toString());
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
@@ -1025,6 +1025,8 @@ public class ReportsController {
 			@RequestParam(required = false) String prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
+		
+		System.out.println(" prvdr Id "+prvdrId.toString());
 
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category, "N");
 		LOG.info("returning insuranceList");
@@ -1068,7 +1070,7 @@ public class ReportsController {
 	public Message viewAdminClaimReportList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,		@RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, 			@RequestParam(required = false) String sortdir,
-			@RequestParam(required = true) Integer prvdrId, 		@RequestParam(required = true)  Integer insId,
+			@RequestParam(required = true) String prvdrId, 		@RequestParam(required = true)  Integer insId,
 			@RequestParam(required = true) Integer activityMonth, 	@RequestParam(required = false) String repMonth,
 			@RequestParam(required = true) Integer mbrId, 			@RequestParam(required = false) String claimType,
 			@RequestParam(required = true) String category,			@RequestParam(required = true)  Integer levelNo,

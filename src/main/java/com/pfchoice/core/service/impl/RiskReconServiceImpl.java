@@ -102,7 +102,7 @@ public class RiskReconServiceImpl implements RiskReconService {
 	 * @see com.pfchoice.core.service.RiskReconService#claimReportQuery(java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<Object[]> claimReportQuery(final String tableName, final Integer insId, final Integer prvdrId, final Integer mbrId,
+	public List<Object[]> claimReportQuery(final String tableName, final Integer insId, final String prvdrId, final Integer mbrId,
 			final String repGenDate,  final Integer activityMonth, final String claimType, 
 			final String category,  final String roster, final String cap, final Integer levelNo){
 		return riskReconDao.claimReportQuery(tableName, insId, prvdrId, mbrId, repGenDate, activityMonth,

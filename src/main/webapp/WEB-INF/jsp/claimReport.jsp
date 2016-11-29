@@ -66,8 +66,55 @@ $(document).ready(function() {
 			     $selectIns.html(s);
 			    
 		 }).success(function() { 
-			 reportDateDropdown();
+			 providerDropdown();
 		 });
+    	  
+    	  var providerDropdown = function(){
+ 			 var insSelectValue = Cookies.get('clmInsu');
+ 				
+ 			 if(insSelectValue != undefined)
+ 					insSelectValue = insSelectValue;
+ 				else{
+ 					insSelectValue= $("clmInsu option:selected").val();
+ 					Cookies.set('clmInsu', insSelectValue,{path: cookiePath });
+ 				}
+ 			     
+ 				$('select[id="clmInsu"]').val(insSelectValue);
+  			 var $selectPrvdr = $('#extFilterPrvdr');
+  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+  				    
+  				     //clear the current content of the select
+  				     var s = $('<select id=\"clmPrvdr\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
+  				     //iterate over the data and append a select option
+  				     
+  				     $.each(data.data.list, function(key, val){
+  				    	
+ 				    		 s.append('<option value="'+val.id+'" Selected>' + val.name +'</option>');
+ 				    	
+  				    	 
+  				     });
+  				     s.append('</select>');
+  				     $selectPrvdr.html(s);
+  			 }).success(function() { 
+  				//$('select[id="mlrPrvdr"]').val(prvdrSelectValue);
+ 				  $('#clmPrvdr').multiselect({numberDisplayed: 0, 
+ 				    	 buttonWidth: '150px',
+ 				    	 includeSelectAllOption: true
+ 				    });
+  				var prvdrSelectValue = Cookies.get('clmPrvdr');
+ 				 if(prvdrSelectValue != undefined) 
+ 				 {
+ 					 prvdrSelectValue = dropDownSelectedValue("clmPrvdr",false, false);
+ 				 }	 
+ 				 else{
+ 					prvdrSelectValue= $("#clmPrvdr option:selected").val();
+ 					Cookies.set('clmPrvdr', prvdrSelectValue,{path: cookiePath });
+ 				 }	
+ 				
+ 				reportDateDropdown();
+  	    	
+  			}); 
+     	  }
 		 
 		 
 		 var reportDateDropdown = function(){
@@ -79,7 +126,7 @@ $(document).ready(function() {
 					insSelectValue= $("#clmInsu option:selected").val();
 					Cookies.set('clmInsu', insSelectValue,{path: cookiePath });
 				}
-			 prvdrSelectValue= 9999;
+			 prvdrSelectValue 	= dropDownSelectedValue("clmPrvdr",false, false);
 			 var params = { insId:insSelectValue, prvdrId:prvdrSelectValue, pageNo:0, pageSize:200 };
 	 	    	var str = jQuery.param( params );
 	 	    
@@ -154,7 +201,7 @@ $(document).ready(function() {
     	  
     	  function callDatableWithChangedDropDown(){
     		   insSelectValue			= dropDownSelectedValue("clmInsu",false, true);
-      		   prvdrSelectValue			= 9999;
+    		   prvdrSelectValue 	    = dropDownSelectedValue("clmPrvdr",false, false);
       		   reportDateSelectValue 	= dropDownSelectedValue("clmReportDate",true, false);
       		   rosterSelectValue 		= dropDownSelectedValue("clmRoster",false, true);
       		   capSelectValue 			= dropDownSelectedValue("clmCap",false, true);
@@ -163,13 +210,14 @@ $(document).ready(function() {
     		   
       		   datatableDelete("claimReport1");
       		   $('#claimReport1 tbody').remove();
-    		   GetClaimReport(insSelectValue,9999,reportDateSelectValue, claimTypeSelectValue, categorySelectValue, rosterSelectValue, capSelectValue,  columns);
+    		   GetClaimReport(insSelectValue,prvdrSelectValue,reportDateSelectValue, claimTypeSelectValue, categorySelectValue, rosterSelectValue, capSelectValue,  columns);
     	}  
     	  
     	 
     	     
     	$(document.body).on('change',"#clmInsu",function (e) {
     		Cookies.set('clmInsu', $("#clmInsu option:selected").val(),{path: cookiePath });
+    		providerDropdown();
     		datatableDelete("claimReport1");
   		});
     	
@@ -461,13 +509,16 @@ $(document).ready(function() {
 			Claims Report <span class="clrRed"> </span>
 		</div>
 		<div class="panel-body" style="max-height: 750;">
+		
+				
 			<div class="table-responsive">
+				
 				<div class="col-sm-12">
 					<div class="col-sm-2 multiple">
 						<label class="control-label col-sm-12">Insurance</label>
 						<div class=" col-sm-12" id="extFilterIns"></div>
 					</div>
-					<div class="col-sm-2" style="display:none;">
+					<div class="col-sm-2 multiple">
 						<label class="control-label col-sm-12" >Provider</label>
 						<div class="col-sm-12" id="extFilterPrvdr"></div>
 					</div>
@@ -477,12 +528,12 @@ $(document).ready(function() {
 						<div class="col-sm-12" id="extFilterReportDate"></div>
 					</div>
 					
-					<div class="col-sm-2 ">
+					<div class="col-sm-2">
 						<label class="control-label col-sm-12">Claim Type</label>
 						<div class="col-sm-12 multiple" id="extFiltercategory">
 						</div>
 					</div>
-					
+				
 					<div class="col-sm-2 multiple">
 						<label class="control-label col-sm-12">Category</label>
 						<div class="col-sm-12" id="extFilterRiskRecon">
@@ -501,8 +552,9 @@ $(document).ready(function() {
 							
 						</div>
 					</div>
-					
-					<div class="col-sm-2">
+				</div>	
+				<div class="col-sm-12">		
+					<div class="col-sm-2 col-sm-offset-8">
 						<label class="control-label col-sm-12">Cap</label>
 						<div class="col-sm-12 multiple" id="extFilterCap">
 							 <select id="clmCap" style="width:150px;" class="btn btn-default selectAll"  multiple="multiple">
@@ -513,14 +565,12 @@ $(document).ready(function() {
 							
 						</div>
 					</div>
-					
-				</div>	
-				
-					<div class="col-sm-12 text-right">
+					<div class="col-sm-2">
+					<label class="control-label col-sm-12">Cap</label>
 						<button type="button" id="claimReportGenerate"
-							class="btn btn-success btn-sm btn-xs">Generate</button>
+							class="btn btn-success btn-sm btn-sm multiple">Generate</button>
 					</div>
-					
+				</div>	
 					<div id="demo" class="col-sm-12">
 						<div id="tabs" class="claimReportTab">
 								<ul>
@@ -622,9 +672,9 @@ function level2(reportMonth, riskRecon, activityMonth){
 	 rosterSelectValue 		= dropDownSelectedValue("clmRoster",false, true);
 	 capSelectValue 		= dropDownSelectedValue("clmCap",false, true);
 	 claimTypeSelectValue 	= dropDownSelectedValue("clmType",true, false);
+	prvdrSelectValue 	    = dropDownSelectedValue("clmPrvdr",false, false);
 	   
-	   
-	var params = { "insId":insSelectValue, "prvdrId":9999, "mbrId":0, "repMonth":reportMonth, "activityMonth":activityMonth,
+	var params = { "insId":insSelectValue, "prvdrId":prvdrSelectValue, "mbrId":0, "repMonth":reportMonth, "activityMonth":activityMonth,
 			"category":"'"+riskRecon+"'",  "claimType":claimTypeSelectValue,
 			"roster":"'"+rosterSelectValue+"'", "cap":"'"+capSelectValue+"'",'levelNo':2,
 			"pageSize":500, "pageNo":0};
