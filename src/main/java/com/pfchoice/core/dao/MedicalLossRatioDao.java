@@ -49,7 +49,7 @@ public interface MedicalLossRatioDao {
 	 * @param sortdir
 	 * @return
 	 */
-	Pagination getMlrReportDate(Integer pageNo, Integer pageSize, Integer insId, Integer prvdrId, String sort, String sortdir);
+	Pagination getMlrReportDate(Integer pageNo, Integer pageSize, Integer insId, List<Integer> prvdrId, String sort, String sortdir);
 
 	/**
 	 * 
@@ -93,5 +93,5 @@ public interface MedicalLossRatioDao {
 	 * @param tableName
 	 * @return
 	 */
-	List<Object[]> reportQuery(String tableName, Integer insId, Integer prvdrId, String repGenDate, String category, String adminRole);
+	List<Object[]> reportQuery(String tableName, Integer insId, String prvdrId, String repGenDate, String category, String adminRole);
 }

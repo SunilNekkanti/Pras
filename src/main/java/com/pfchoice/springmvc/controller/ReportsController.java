@@ -997,11 +997,11 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/medicalLossRatio/list" }, method = RequestMethod.GET)
 	public Message viewAdminMLRList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
 
-		
+		LOG.info("before mlr report");
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
@@ -1022,7 +1022,7 @@ public class ReportsController {
 	@RequestMapping(value = {  "/user/medicalLossRatio/list" }, method = RequestMethod.GET)
 	public Message viewUserMLRList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = false) String prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
 			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
 
@@ -1043,7 +1043,7 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/mlrReportDate/list", "/user/mlrReportDate/list" }, method = RequestMethod.GET)
 	public Message viewMLRReportDate(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) Integer prvdrId, @RequestParam(required = false) String sort, 
+			@RequestParam(required = false) List<Integer> prvdrId, @RequestParam(required = false) String sort, 
 			@RequestParam(required = false) String sortdir, @RequestParam(required = false) String claimType,
 			@RequestParam(required = false) String category, @RequestParam(required = false) String generateDate,
 			@RequestParam(required = false) String roster, 	@RequestParam(required = false) String cap) {

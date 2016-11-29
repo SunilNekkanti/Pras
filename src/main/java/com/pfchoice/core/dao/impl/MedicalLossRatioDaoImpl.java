@@ -1,6 +1,5 @@
 package com.pfchoice.core.dao.impl;
 
-import static com.pfchoice.common.SystemDefaultProperties.ALL;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 
 import java.util.List;
@@ -75,7 +74,7 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#getMlrReportDate(int, int, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId, final String sort,
+	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final List<Integer> prvdrId, final String sort,
 			final String sortdir) {
 		
 		Criteria crit = createCriteria().createAlias("ins", "ins")
@@ -88,10 +87,9 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 		projList.add(Projections.groupProperty("ins.id").as("insId"));
         projList.add(Projections.groupProperty("reportMonth").as("reportMonth"));
          
-		if(prvdrId != ALL) {
 			projList.add(Projections.property("prvdr.id").as("prvdrId"));
-			crit.add(Restrictions.eq("prvdr.id", prvdrId));
-		}
+			crit.add(Restrictions.in("prvdr.id", prvdrId));
+		
         crit.setProjection(projList);
         crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
@@ -168,12 +166,12 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
 	 * @see com.pfchoice.core.dao.MedicalLossRatioDao#reportQuery(java.lang.String)
 	 */
 	@Override
-	public List<Object[]> reportQuery( final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category, final String adminRole){
+	public List<Object[]> reportQuery( final String tableName, final Integer insId, final String prvdrId, final String repGenDate, final String category, final String adminRole){
 		assert tableName !=null && !"".equals(tableName);
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
 		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setString("tableName",tableName)
-				.setInteger("insId", insId) .setInteger("prvdrId", prvdrId) .setString("repMonth", repGenDate)
+				.setInteger("insId", insId) .setString("prvdrId", prvdrId) .setString("repMonth", repGenDate)
 				.setString("category", category).setString("adminRole", adminRole);
 		@SuppressWarnings("unchecked")
 		List<Object[]> entities =  query.list();

@@ -9,6 +9,8 @@
 <link rel="stylesheet"
 	href="${contextHome}/resources/css/bootstrap-multiselect.css"
 	type="text/css">
+<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css"
+    rel="stylesheet" type="text/css" />
 <script type="text/javascript"
 	src="${contextHome}/resources/js/bootstrap-multiselect.js"></script>
 <script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
@@ -16,7 +18,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css">
 <script>
 $(document).ready(function() {
-	
+	$('.selectAll').multiselect({numberDisplayed: 0, 
+		 buttonWidth: '150px',
+		 includeSelectAllOption: true
+		 
+	});
 	Number.prototype.format  = function(c, d, t){
 		 var n = this, 
 		     c = isNaN(c = Math.abs(c)) ? 2 : c, 
@@ -82,24 +88,33 @@ $(document).ready(function() {
  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
- 				     var s = $('<select id=\"mlrPrvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
+ 				     var s = $('<select id=\"mlrPrvdr\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
  				     //iterate over the data and append a select option
+ 				     
  				     $.each(data.data.list, function(key, val){
+ 				    	
+				    		 s.append('<option value="'+val.id+'" Selected>' + val.name +'</option>');
+				    	
  				    	 
- 				    	 s.append('<option value="'+val.id+'">' + val.name +'</option>');
  				     });
- 				     s.append('<option value="9999">All</option>');
  				     s.append('</select>');
  				     $selectPrvdr.html(s);
  			 }).success(function() { 
- 				var prvdrSelectValue = Cookies.get('mlrPrvdr');
+ 				//$('select[id="mlrPrvdr"]').val(prvdrSelectValue);
+				  $('#mlrPrvdr').multiselect({numberDisplayed: 0, 
+				    	 buttonWidth: '150px',
+				    	 includeSelectAllOption: true
+				    });
+ 				/*var prvdrSelectValue = Cookies.get('mlrPrvdr');
 				 if(prvdrSelectValue != undefined) 
+				 {
 					 prvdrSelectValue = prvdrSelectValue;
+				 }	 
 				 else{
 					prvdrSelectValue= $("#mlrPrvdr option:selected").val();
 					Cookies.set('mlrPrvdr', prvdrSelectValue,{path: cookiePath });
 				 }	
-				$('select[id="mlrPrvdr"]').val(prvdrSelectValue);
+				*/
 				reportDateDropdown();
  	    	
  			}); 
@@ -108,8 +123,8 @@ $(document).ready(function() {
 		 
 		 var reportDateDropdown = function(){
 			 insSelectValue= $("#mlrInsu option:selected").val();
-			 prvdrSelectValue= $("#mlrPrvdr option:selected").val();
-			 var params = { insId:insSelectValue, prvdrId:prvdrSelectValue, pageNo:0, pageSize:200 };
+			 prvdr_id 	= dropDownSelectedValue("mlrPrvdr",false, false);
+			 var params = { insId:insSelectValue, prvdrId:prvdr_id, pageNo:0, pageSize:200 };
 	 	    	var str = jQuery.param( params );
 	 	    
 	 	    	  $.getJSON(getContextPath()+'/mlrReportDate/list?'+str, function(data){
@@ -272,7 +287,21 @@ $(document).ready(function() {
   </div>
   
 <script>
-   
+function dropDownSelectedValue(elementId, text, index){
+	var arrayList = new Array();
+	$("#"+elementId+" option:selected").each(function() {
+		if(text)
+		{
+			if(index)
+				arrayList.push ("'"+ $(this).val()+"'");
+			else
+				arrayList.push ("'"+ $(this).text()+"'");
+		}	
+		else
+			arrayList.push ($(this).val());
+	    });
+	 return arrayList.join(", ")
+}
 	function drawTable(){
 		showModal("Medical Loss Ratio")
 		$("#summaryTab").addClass('hide');
@@ -281,10 +310,11 @@ $(document).ready(function() {
 		reportMonth = $("#mlrReportDate option:selected").val();
 		category = $("#mlrCategory option:selected").val();
 		ins_id 	= $("#mlrInsu option:selected").val();
-		prvdr_id = $("#mlrPrvdr option:selected").val();
-		
+		prvdr_id 	= dropDownSelectedValue("mlrPrvdr",false, false);
+		alert('prvdr_id'+prvdr_id);
 		var params = { "insId":ins_id, "prvdrId":prvdr_id, "repMonth":reportMonth, "category":category,
 					  "pageSize":500, "pageNo":0};
+		
 		var str = jQuery.param( params );
 		var url =  getContextPath()+'/medicalLossRatio/list?'+str;
 	 	$.ajax({

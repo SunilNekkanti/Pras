@@ -66,7 +66,7 @@ public class MedicalLossRatioServiceImpl implements MedicalLossRatioService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final Integer prvdrId,  final String sort,
+	public Pagination getMlrReportDate(final Integer pageNo, final Integer pageSize, final Integer insId, final List<Integer> prvdrId,  final String sort,
 			final String sortdir) {
 		return medicalLossRatioDao.getMlrReportDate(pageNo, pageSize, insId, prvdrId,  sort, sortdir);
 	}
@@ -103,7 +103,7 @@ public class MedicalLossRatioServiceImpl implements MedicalLossRatioService {
 	 * @see com.pfchoice.core.service.MedicalLossRatioService#reportQuery(java.lang.String)
 	 */
 	@Override
-	public List<Object[]> reportQuery(final String tableName, final Integer insId, final Integer prvdrId, final String repGenDate, final String category, final String adminRole){
+	public List<Object[]> reportQuery(final String tableName, final Integer insId, final String prvdrId, final String repGenDate, final String category, final String adminRole){
 		return medicalLossRatioDao.reportQuery(tableName, insId, prvdrId, repGenDate, category, adminRole);
 	}
 }
