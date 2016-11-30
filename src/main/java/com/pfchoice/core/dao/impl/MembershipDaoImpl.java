@@ -84,6 +84,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.addOrder(Order.asc("lastName"));
 		crit.addOrder(Order.asc("firstName"));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		 System.out.println("crit"+PrasUtil.printCriteriaQuery(crit));
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 
@@ -151,7 +152,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		crit.add(and);
 
 		crit.setProjection(Projections.distinct(Projections.property("id")));
-		
+		 System.out.println("crit "+PrasUtil.printCriteriaQuery(crit));
 		List<Integer> mbrIds = (List<Integer>) crit.list();
 		int totalCount = mbrIds.isEmpty() ? 0 : mbrIds.size();
 		if (totalCount == 0) {
@@ -200,6 +201,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 			criteria.addOrder(Order.asc("lastName"));
 			criteria.addOrder(Order.asc("firstName"));
 			
+			  System.out.println("criteria "+PrasUtil.printCriteriaQuery(criteria));
+			  
 			Pagination pagination = findByCriteria(criteria, pageNo, pageSize);
 			pagination.setTotalCount(totalCount);
 			PFCPagination  pfcPagination = new PFCPagination(pagination);
@@ -234,6 +237,7 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 		        criteria1.setProjection(projList);
 		        criteria1.setResultTransformer(Transformers.aliasToBean(MembershipCountPerHedisRule.class));
 		       
+		        System.out.println(PrasUtil.printCriteriaQuery(criteria1));
 		        List<MembershipCountPerHedisRule> countList = (List<MembershipCountPerHedisRule>)criteria1.list();
 				pfcPagination.setMbrCountPerHedisRuleList(countList);
 			}

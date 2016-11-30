@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.pfchoice.springmvc.session.CustomAuthenticationSuccessHandler;
 
@@ -80,7 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		auth.userDetailsService(authenticationService).passwordEncoder(encoder);
 		auth.userDetailsService(authenticationService);
 	}
 }

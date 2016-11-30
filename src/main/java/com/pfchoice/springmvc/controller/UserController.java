@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -85,6 +87,57 @@ public class UserController {
 	public SortedSet<Integer> populateEffectiveYearList() {
 		return PrasUtil.getEffectiveYearList();
 	}
+	
+	
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/profile", "/user/profile" }, method = RequestMethod.GET)
+	public String updateUserPage(Model model, @ModelAttribute("username") String username) {
+
+		User dbUser = userService.findByUserName(username);
+		logger.info("Returning user.getId()" + dbUser.getId());
+		model.addAttribute("id", dbUser.getId());
+		model.addAttribute("user", dbUser);
+		logger.info("Returning userEdit.jsp page");
+		return TileDefinitions.PROFILE.toString();
+	}
+	
+	
+	@RequestMapping(value = { "/admin/profile/save.do",
+	"/user/profile/save.do" }, method = RequestMethod.POST, params = { "update" })
+	public String updateUserProfile(@Validated User user1, BindingResult bindingResult,
+		Model model, @ModelAttribute("username") String username,
+		@RequestParam("password") String newPassword) {
+		User user = userService.findByUserName(username);
+		user.setActiveInd('Y');
+		user.setUpdatedBy(username);
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(newPassword);
+		user.setPassword(encodedPassword);
+		logger.info("user id is" + username);
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning userEdit.jsp page");
+			return TileDefinitions.PROFILE.toString();
+		}
+		
+		if (!userService.isUserUnique(user.getId(), user.getUsername())) {
+			FieldError userError = new FieldError("username", "username", user.getUsername(), false, null, null,
+					user.getUsername() + " already exist");
+			bindingResult.addError(userError);
+			return TileDefinitions.PROFILE.toString();
+		}
+		
+		if (null != user.getId()) {
+			logger.info("Returning userEditSuccess.jsp page after update");
+			user.setUpdatedBy(username);
+			model.addAttribute("Message", "Successfully changed your password. Please relogin with new password");
+			userService.update(user);
+		}
+		return "redirect:/logout?profile";
+	}
 
 	/**
 	 * @param model
@@ -138,6 +191,10 @@ public class UserController {
 			return TileDefinitions.USERNEW.toString();
 		}
 
+		String password = user.getPassword();
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(password);
+		user.setPassword(encodedPassword);
 		logger.info("Returning userSuccess.jsp page after create");
 		user.setCreatedBy(username);
 		user.setUpdatedBy(username);

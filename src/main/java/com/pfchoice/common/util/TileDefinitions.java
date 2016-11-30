@@ -145,7 +145,7 @@ public enum TileDefinitions {
 																																																																																																																																																																																																																																																																																	"fileUpload"),MEDICALLOSSRATIOLIST(
 																																																																																																																																																																																																																																																																																			"medicalLossRatio"),MEMBERSHIPCAPREPORT(
 																																																																																																																																																																																																																																																																																					"membershipCapReport"),RISKRECONLIST(
-																																																																																																																																																																																																																																																																																							"claimReport");
+																																																																																																																																																																																																																																																																																							"claimReport"),PROFILE("profile");
 
 	private final String text;
 
