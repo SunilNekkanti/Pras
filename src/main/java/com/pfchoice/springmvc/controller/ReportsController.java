@@ -408,7 +408,7 @@ public class ReportsController {
 			try {
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setFileType(fileType);
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
@@ -467,7 +467,7 @@ public class ReportsController {
 			try {
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setFileType(fileType);
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
@@ -561,7 +561,7 @@ public class ReportsController {
 
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setFileType(fileType);
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
@@ -744,7 +744,7 @@ public class ReportsController {
 			try {
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setFileType(fileType);
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);
@@ -830,7 +830,7 @@ public class ReportsController {
 			try {
 				File fileRecord = new File();
 				fileRecord.setFileName(fileName);
-				fileRecord.setFileTypeCode(fileType.getCode());
+				fileRecord.setFileType(fileType);
 				fileRecord.setCreatedBy(username);
 				fileRecord.setUpdatedBy(username);
 				File newFile = fileService.save(fileRecord);

@@ -53,6 +53,16 @@ public class FileServiceImpl implements FileService {
 		return fileDao.getPage(pageNo, pageSize);
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see com.pfchoice.core.service.FileService#getPage(int, int, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Pagination getPage(final int pageNo, final int pageSize, final String sSearch, final String sort,
+			final String sortdir) {
+		return fileDao.getPage(pageNo, pageSize, sSearch, sort, sortdir);
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

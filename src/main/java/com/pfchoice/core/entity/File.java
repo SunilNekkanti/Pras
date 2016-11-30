@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.google.gson.annotations.Expose;
 
@@ -32,8 +34,9 @@ public class File extends RecordDetails implements Serializable {
 	private String fileName;
 
 	@Expose
-	@Column(name = "file_type_code")
-	private Integer fileTypeCode;
+	@ManyToOne
+	@JoinColumn(name = "file_type_code", referencedColumnName = "code")
+	private FileType fileType;
 
 	/**
 	 * 
@@ -83,18 +86,17 @@ public class File extends RecordDetails implements Serializable {
 	}
 
 	/**
-	 * @return the fileTypeCode
+	 * @return
 	 */
-	public Integer getFileTypeCode() {
-		return fileTypeCode;
+	public FileType getFileType() {
+		return fileType;
 	}
 
 	/**
-	 * @param fileTypeCode
-	 *            the fileTypeCode to set
+	 * @param fileType
 	 */
-	public void setFileTypeCode(final Integer fileTypeCode) {
-		this.fileTypeCode = fileTypeCode;
+	public void setFileType(FileType fileType) {
+		this.fileType = fileType;
 	}
 
 	@Override

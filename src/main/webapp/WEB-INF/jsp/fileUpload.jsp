@@ -73,11 +73,103 @@
 		</div>
 	</div>
 </div>
+
+<div class="panel-group">
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			Uploaded File List <span class="clrRed mbrFileUpload"></span>
+		</div>
+		<div class="panel-body">
+				<table id="fileList"
+								class="table table-striped table-hover table-responsive">
+								<thead>
+									<tr>
+									    <th scope="col">id</th>
+									    <th scope="col">FileName</th>
+										<th scope="col">Description</th>
+										<th scope="col">Insurance</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+		</div>
+	</div>
+</div>		
 <script>
 $(document.body).on('change',"#fileType",function (e) {
 	$(".fileName").text($("#fileType option:selected").text());
 	var activeMonthInd = $("#fileType option:selected").attr('class');
 	activeMonthIndType(activeMonthInd);
+});
+
+var datatable2RestFileList = function(sSource, aoData, fnCallback) {
+	//extract name/value pairs into a simpler map for use later
+var paramMap = {};
+for ( var i = 0; i < aoData.length; i++) {
+  paramMap[aoData[i].name] = aoData[i].value;
+}
+
+//page calculations
+var pageSize = paramMap.iDisplayLength;
+var start = paramMap.iDisplayStart;
+var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
+
+// extract sort information
+var sortCol = paramMap.iSortCol_0;
+var sortDir = paramMap.sSortDir_0;
+var sortName = paramMap['mDataProp_' + sortCol];
+
+//create new json structure for parameters for REST request
+var restParams = new Array();
+restParams.push({"name" : "pageSize", "value" : pageSize});
+restParams.push({"name" : "pageNo", "value" : pageNum });
+restParams.push({"name" : "sort", "value" : sortName });
+restParams.push({"name" : "sortdir", "value" : sortDir });
+restParams.push({"name" : "sSearch" , "value" : paramMap.sSearch  });
+
+
+$.ajax( {
+     dataType: 'json',
+     contentType: "application/json;charset=UTF-8",
+     type: 'GET',
+     url: sSource,
+     data: restParams,
+     success: function(res) {
+         res.iTotalRecords = res.data.totalCount;
+         res.iTotalDisplayRecords = res.data.totalCount;
+    		fnCallback(res);
+    		$("fileList").width('100%');
+     },
+     error : function (e) {
+     }
+ } );
+}
+var $checkedCnt = 0;
+var fileList =	$('#fileList').DataTable({
+     "sAjaxSource" :  getContextPath()+'/file/list',
+     "sAjaxDataProp" : 'data.list',
+     "aoColumns": [
+                   { "mDataProp": "id","bSearchable" : true, "bSortable" : false},
+                   { "mDataProp": "fileName","bSearchable" : true, "bSortable" : true},
+                   { "mDataProp": "fileType.description","bSearchable" : true, "bSortable" : true},
+                   { "mDataProp": "fileType.ins.name","bSearchable" : true, "bSortable" : true}
+                  
+                  
+               ],
+               
+      "aoColumnDefs": [ 
+               		   
+                       {   "visible": false,	"aTargets": [ 0 ]  }
+                      
+            		  
+      ],          
+     "bLengthChange": false,
+     "iDisplayLength": 15,
+     "sPaginationType": "full_numbers",
+     "bProcessing": true,
+     "bServerSide" : true,
+     "fnServerData" : datatable2RestFileList,
 });
 
 function fileUploadAndProcessing() {
