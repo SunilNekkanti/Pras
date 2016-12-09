@@ -145,6 +145,9 @@ $.ajax( {
      }
  } );
 }
+
+
+
 var $checkedCnt = 0;
 var fileList =	$('#fileList').DataTable({
      "sAjaxSource" :  getContextPath()+'/file/list',
@@ -171,6 +174,10 @@ var fileList =	$('#fileList').DataTable({
      "bServerSide" : true,
      "fnServerData" : datatable2RestFileList,
 });
+
+setInterval( function () {
+	fileList.ajax.reload(); 
+}, 60000 );
 
 function fileUploadAndProcessing() {
 	$(".mbrFileUpload").html('');

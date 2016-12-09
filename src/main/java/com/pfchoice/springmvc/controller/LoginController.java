@@ -80,7 +80,7 @@ public class LoginController {
 		status.setComplete();
 		request.removeAttribute(SystemDefaultProperties.ID, WebRequest.SCOPE_SESSION);
 
-		return "redirect:/loginform";
+		return "redirect:/index";
 	}
 
 	/**

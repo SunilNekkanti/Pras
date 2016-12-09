@@ -126,4 +126,5 @@ where case when  mam.is_cap ='Y' then 1=1 else
 ( case when mam.mbr_id is  not  null then case when mam.prvdr_id is not null then mam.activity_month is null   else mam.prvdr_id is  null end else  mam.mbr_id is   null end 
  or mam.is_cap='N' )
 end
-group by mam.prvdr_id, mam.activity_month ;
+group by  mam.ins_id,report_month ,mam.prvdr_id, mam.activity_month 
+having  max(mc.report_month);
