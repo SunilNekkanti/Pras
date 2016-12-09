@@ -617,6 +617,7 @@ public class ContractController {
 		model.addAttribute("contract", contract);
 		model.addAttribute("insuranceRequired", true);
 		model.addAttribute("pmpmRequired", true);
+		model.addAttribute("avgServiceFundRequired", false);
 		model.addAttribute("contractType", "Third Party Agreement");
 		model.addAttribute("insuranceList", insList);
 		return TileDefinitions.PROVIDERCONTRACTEDIT.toString();
