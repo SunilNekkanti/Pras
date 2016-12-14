@@ -153,10 +153,10 @@ var fileList =	$('#fileList').DataTable({
      "sAjaxSource" :  getContextPath()+'/file/list',
      "sAjaxDataProp" : 'data.list',
      "aoColumns": [
-                   { "mDataProp": "id","bSearchable" : true, "bSortable" : false},
+                   { "mDataProp": "id","bSearchable" : true, "bSortable" : false },
                    { "mDataProp": "fileName","bSearchable" : true, "bSortable" : true},
                    { "mDataProp": "fileType.description","bSearchable" : true, "bSortable" : true},
-                   { "mDataProp": "fileType.ins.name","bSearchable" : true, "bSortable" : true}
+                   { "mDataProp": "fileType.ins.name","bSearchable" : true, "bSortable" : true, "sDefaultContent": "" }
                   
                   
                ],

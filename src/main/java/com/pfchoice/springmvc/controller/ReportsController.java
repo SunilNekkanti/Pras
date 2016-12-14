@@ -783,7 +783,7 @@ public class ReportsController {
 			
 			Integer mbrClaimLoadedData = mbrClaimService.loadData(fileId, insId, insuranceCode, reportMonth);
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
-			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId);
+			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId, reportMonth);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
 			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());

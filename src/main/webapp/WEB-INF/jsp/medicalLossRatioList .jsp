@@ -478,7 +478,6 @@ $(document).ready(function() {
 	
 
 	function mlrUnwantedList(activityMonth, reportMonth, isUnwanted,prvdrName, prvdrId){
-		
 		     $("#unwantedClaims tbody").empty();
 				var url ;
 				if(isUnwanted){

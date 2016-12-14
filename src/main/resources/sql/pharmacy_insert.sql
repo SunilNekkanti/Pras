@@ -24,7 +24,7 @@ INSERT INTO membership_claims
  )
 
 SELECT 
-CLAIMNUMBER,mi.mbr_id,rc.prvdr_id, phar.PCP_PROVIDER_NBR,:insId,:reportMonth,CLAIMTYPE,NULL location_id,
+CLAIMNUMBER,mi.mbr_id,rc.prvdr_id, phar.PCP_PROVIDER_NBR,:insId,:reportMonth reportMonth,CLAIMTYPE,NULL location_id,
 NULL facility_type_code,NULL bill_type_code, NULL frequency_type_code, NULL bill_type,NULL dischargestatus,
 NULL MemEnrollId,NULL Diagnoses,phar.PRODUCT_LABEL,phar.PRODUCT_LVL1,phar.PRODUCT_LVL2,phar.PRODUCT_LVL3,phar.PRODUCT_LVL4,phar.PRODUCT_LVL5,
 phar.PRODUCT_LVL6,phar.PRODUCT_LVL7,phar.MARKET_LVL1,phar.MARKET_LVL2,phar.MARKET_LVL3,phar.MARKET_LVL4,phar.MARKET_LVL5,phar.MARKET_LVL6,
@@ -34,9 +34,9 @@ FROM csv2table_amg_pharmacy phar
 LEFT OUTER JOIN membership_insurance mi  on mi.SRC_SYS_MBR_NBR =phar.SRC_SYS_MEMBER_NBR and mi.ins_id=:insId
 LEFT OUTER JOIN contract c on c.PCP_PROVIDER_NBR like concat ('%', trim(phar.PCP_PROVIDER_NBR) ,'%')
 LEFT OUTER JOIN reference_contract rc on  c.ref_contract_Id = rc.ref_contract_Id  
-LEFT JOIN membership_claims mc on mc.claim_id_number= phar.CLAIMNUMBER
+LEFT JOIN membership_claims mc on mc.claim_id_number= phar.CLAIMNUMBER and mc.report_month = :reportMonth
 where mc.claim_id_number is null
-group by  CLAIMNUMBER,phar.SRC_SYS_MEMBER_NBR;
+group by  reportMonth,CLAIMNUMBER,phar.SRC_SYS_MEMBER_NBR;
 
 
 
@@ -57,7 +57,7 @@ if(trim(phar.PRESNPINUMBER)='',null,phar.PRESNPINUMBER),phar.PRESCRIBINGPHYSICIA
 phar.THERAPEUTICCLASS	,phar.MEDICAREBINDICATOR	,phar.MEDDCOVEREDDRUGFLAG,null pharmacyid,AMOUNTPAID pharmacy,AMOUNTPAID  membership_claims,null psychare,null simple_county,null triangles,null cover,now() created_date,now()  updated_date, 
 'sarath' created_by, 'sarath' updated_by, 'Y'active_ind, :fileId file_id, null mony, null drug_label_name, null drug_version 
  from  csv2table_amg_pharmacy phar
- join membership_claims  mc on mc.claim_id_number= phar.CLAIMNUMBER
+ join membership_claims  mc on mc.claim_id_number= phar.CLAIMNUMBER and  mc.report_month = :reportMonth
  left outer join membership_claim_details mcd on mcd.mbr_claim_id =mc.mbr_claim_id  
  where mcd.mbr_claim_id is null;
  
@@ -95,20 +95,20 @@ where mi.mbr_id is null;
 
 INSERT IGNORE INTO medical_loss_ratio
   (ins_id, prvdr_id, report_month, activity_month, patients, fund, prof, inst, pharmacy, unwanted_claims,  stop_loss, file_id, created_date, updated_date, created_by, updated_by)
-  SELECT  
-  mam.ins_id, mam.prvdr_id, max(mc.report_month) as report_month , mam.activity_month CAP_PERIOD,  count( distinct if(is_cap='Y',mam.mbr_id,null)  ) patients, count(distinct if(is_cap='Y', mam.mbr_id,null) ) *150  fund,
+ SELECT  
+  mam.ins_id, mam.prvdr_id, mc.report_month as report_month , mam.activity_month CAP_PERIOD,  count( distinct if(is_cap='Y',mam.mbr_id,null)  ) patients, count(distinct if(is_cap='Y', mam.mbr_id,null) ) *150  fund,
 round(sum(if (claim_type = 'PROF',membership_claims,null)) ,2) as 'PROF',
  round(sum(if (claim_type = 'INST',membership_claims,null)),2) as 'INST',
   round(sum(if (claim_type = 'PHAR',membership_claims,null)),2)   as 'PHAR' ,
 round(uc.unwantedClaims ,2) unwantedClaims,
-  round(stoploss,2) stoploss,  :fileId ,  now(),  now(),  'sarath',  'sarath'    
+  round(stoploss,2) stoploss,  1 ,  now(),  now(),  'sarath',  'sarath'    
   FROM  membership_activity_month mam
-LEFT JOIN  membership_claims mc on  mam.ins_id=mc.ins_id and mc.prvdr_id=mam.prvdr_id and mam.mbr_id=mc.mbr_id
-LEFT JOIN  membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id and mcd.activity_month=mam.activity_month
+LEFT JOIN  membership_claims mc on  mam.ins_id=mc.ins_id and mc.prvdr_id=mam.prvdr_id and mam.mbr_id=mc.mbr_id and mc.ins_id = :insId and mc.report_month= :reportMonth
+LEFT JOIN  membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id and mcd.activity_month=mam.activity_month 
 LEFT JOIN  (SELECT mc.prvdr_id,mcd.activity_month  ,sum(mcd.membership_claims)  unwantedClaims  ,
 CASE WHEN    mam.is_cap ='Y' then 'wanted'  else  'unwanted' end type1 
-from membership_claims mc
-join membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id 
+from membership_claims mc 
+join membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id and  mc.report_month= :reportMonth
 left join membership_activity_month mam on mam.mbr_id=mc.mbr_id and mam.prvdr_id =mc.prvdr_id and mcd.activity_month =mam.activity_month
 where     
 case when  mam.is_cap ='Y' then 1=0 else
@@ -118,13 +118,12 @@ end
 group by mc.prvdr_id, mcd.activity_month ,type1)  uc on  uc.prvdr_id= mam.prvdr_id and  uc.activity_month =mam.activity_month 
 left join ( select prvdr_id ,activity_month , sum(stoploss) stoploss from   (   select mc.prvdr_id,mcd.activity_month,mc.mbr_id  , sum(if ( mc.claim_type = 'INST',membership_claims ,null) ) -30000 stoploss   
 from membership_claims mc
-join membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id 
+join membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id and mc.report_month= :reportMonth
 left join membership_activity_month mam on mam.mbr_id=mc.mbr_id and mam.prvdr_id =mc.prvdr_id and mcd.activity_month =mam.activity_month
 where    mam.is_cap ='Y'  
 group by mc.prvdr_id, mcd.activity_month, mc.mbr_id having sum(if ( mc.claim_type = 'INST',membership_claims ,null) ) -30000 > 0    )a group by prvdr_id ,activity_month ) slr on  slr.prvdr_id= mam.prvdr_id and  slr.activity_month =mam.activity_month
-where case when  mam.is_cap ='Y' then 1=1 else
+where  mc.report_month is not null and  mam.activity_month >0 and case when  mam.is_cap ='Y' then 1=1 else
 ( case when mam.mbr_id is  not  null then case when mam.prvdr_id is not null then mam.activity_month is null   else mam.prvdr_id is  null end else  mam.mbr_id is   null end 
  or mam.is_cap='N' )
 end
-group by  mam.ins_id,report_month ,mam.prvdr_id, mam.activity_month 
-having  max(mc.report_month);
+group by  mam.ins_id,report_month ,mam.prvdr_id, mam.activity_month ;

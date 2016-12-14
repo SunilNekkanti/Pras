@@ -95,14 +95,14 @@ public class MembershipClaimDetailsDaoImpl extends HibernateBaseDao<MembershipCl
 	 * @see com.pfchoice.core.dao.MembershipClaimDao#loadData()
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId) {
+	public Integer loadData(final Integer fileId, final Integer insId, final Integer reportMonth) {
 		String loadDataQuery = null;
 		if (insId == 1)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_BH_INSERT);
 		else if (insId == 2)
 			loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), QUERY_TYPE_INSERT);
 
-		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId)
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("insId", insId).setInteger("reportMonth", reportMonth)
 				.executeUpdate();
 	}
 

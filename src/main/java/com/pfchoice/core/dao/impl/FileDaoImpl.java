@@ -27,7 +27,8 @@ public class FileDaoImpl extends HibernateBaseDao<File, Integer> implements File
 	public Pagination getPage(final int pageNo, final int pageSize) {
 		Criteria crit = createCriteria();
 		crit.add(Restrictions.eq("activeInd", 'Y'));
-
+		crit.addOrder(Order.desc("createdDate"));
+		
 		return findByCriteria(crit, pageNo, pageSize);
 	}
 	

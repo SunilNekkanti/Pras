@@ -94,7 +94,6 @@ public class MedicalLossRatioDaoImpl extends HibernateBaseDao<MedicalLossRatio, 
         crit.setResultTransformer(Transformers.aliasToBean(MedicalLossRatioGenerateDate.class));
 
 		crit.addOrder(Order.desc("reportMonth"));
-
 		return findByCriteria(crit, pageNo, pageSize);
 
 	}

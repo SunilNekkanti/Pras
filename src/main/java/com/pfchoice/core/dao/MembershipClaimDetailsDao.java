@@ -49,11 +49,14 @@ public interface MembershipClaimDetailsDao {
 	 */
 	MembershipClaimDetails updateByUpdater(Updater<MembershipClaimDetails> updater);
 
+
 	/**
 	 * @param fileId
+	 * @param insId
+	 * @param reportMonth
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId);
+	Integer loadData(Integer fileId, Integer insId, Integer reportMonth);
 
 	/**
 	 * @param mbrHosId

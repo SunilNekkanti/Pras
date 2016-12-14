@@ -18,7 +18,7 @@ created_date,updated_date,created_by,updated_by,active_ind,file_id
  null runn_date, null ndc, null mony,csv2AmgClaim.DRG,csv2AmgClaim.DRG_VERSION, null pharmacy,round(NETAMT,3), null psychare, null simple_county, null triangles, 
  null cover,   now() created_date, now() updated_date,'sarath' created_by ,'sarath' updated_by,'Y', :fileId
   FROM csv2Table_Amg_Claim csv2AmgClaim 
-  JOIN membership_claims mc on  mc.claim_id_number= csv2AmgClaim.CLAIMNUMBER   and mc.ins_id=:insId
+  JOIN membership_claims mc on  mc.claim_id_number= csv2AmgClaim.CLAIMNUMBER   and mc.ins_id=:insId and mc.report_month = :reportMonth
   left outer join cpt_measure  cpt on cpt.code =  NULLIF(csv2AmgClaim.PROCEDURECODE,'')
   LEFT OUTER JOIN lu_place_of_service roomType on roomtype.code = PLACEOFSERVICE
 LEFT OUTER JOIN membership_claim_details mcd on mcd.mbr_claim_id =  mc.mbr_claim_id   
