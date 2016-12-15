@@ -74,7 +74,7 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate ,  cpt_or_icd
  join hedis_cpt_measure hcptm on hcptm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id  
   JOIN cpt_measure  cpt on    hcptm.cpt_id =cpt.cpt_id  
   left outer join lu_frequency_type lft on lft.code= hmr.frequency_type_code
- left OUTER join membership_claims mc on mc.mbr_id= mi.mbr_id and mc.ins_id=mi.ins_id  
+ left OUTER join membership_claims mc on mc.mbr_id= mi.mbr_id and mc.ins_id=mi.ins_id  and mc.report_month = :reportMonth
  left OUTER join membership_claim_details mcd on mcd.mbr_claim_id = mc.mbr_claim_id  and  case when lft.noOfDays is not null then datediff(current_date(), mcd.activity_date) <= lft.noOfDays else  datediff(current_date (), mcd.activity_date) <=365 end
   LEFT OUTER JOIN cpt_measure  mbrClaimCPT on mbrClaimCPT.cpt_id = mcd.cpt_code  and mbrClaimCPT.cpt_id=cpt.cpt_id 
     LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mi.mbr_id  and  mcd.claim_start_date >= mp.start_date
@@ -163,7 +163,7 @@ hmr.dose_count,
   join hedis_icd_measure hicdm on   hicdm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id 
   JOIN icd_measure  icd  on  icd.icd_id   = hicdm.icd_id  
     left outer join lu_frequency_type lft on lft.code= hmr.frequency_type_code
- left OUTER join membership_claims mc on mc.mbr_id= mi.mbr_id and mc.ins_id=mi.ins_id 
+ left OUTER join membership_claims mc on mc.mbr_id= mi.mbr_id and mc.ins_id=mi.ins_id   and mc.report_month = :reportMonth
  left OUTER join membership_claim_details mcd on mcd.mbr_claim_id = mc.mbr_claim_id and  case when lft.noOfDays is not null then datediff(current_date(), mcd.activity_date) <= lft.noOfDays else datediff(current_date(), mcd.activity_date) <=365 end
     LEFT outer join  icd_measure MbrClaimICD on  mc.Diagnoses LIKE CONCAT('%', REPLACE(icd.code, ".",""),'%')   and icd.icd_id =MbrClaimICD.icd_id
   LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mi.mbr_id  and  mcd.claim_start_date >= mp.start_date

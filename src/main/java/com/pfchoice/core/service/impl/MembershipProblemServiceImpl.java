@@ -108,8 +108,8 @@ public class MembershipProblemServiceImpl implements MembershipProblemService {
 	 * Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String tableName) {
-		return mbrProblemDao.loadData(fileId, insId, tableName);
+	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode, Integer reportMonth) {
+		return mbrProblemDao.loadData(fileId, insId, insuranceCode, reportMonth);
 	}
 	
 	@Override

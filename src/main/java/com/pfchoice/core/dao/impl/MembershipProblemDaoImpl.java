@@ -106,10 +106,10 @@ public class MembershipProblemDaoImpl extends HibernateBaseDao<MembershipProblem
 	 * com.pfchoice.core.dao.MembershipProblemDao#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode) {
+	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode,final Integer reportMonth) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_INSERT);
 
-		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId)
+		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("reportMonth", reportMonth)
 				.setInteger("insId", insId).executeUpdate();
 	}
 	

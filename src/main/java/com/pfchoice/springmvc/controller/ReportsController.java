@@ -785,11 +785,11 @@ public class ReportsController {
 			LOG.info("membershipClaimLoadedData " + mbrClaimLoadedData + new Date());
 			Integer mbrClaimDetailsLoadedData = mbrClaimDetailsService.loadData(fileId, insId, reportMonth);
 			LOG.info("membershipClaimDetailsLoadedData " + mbrClaimDetailsLoadedData + new Date());
-			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode);
+			Integer mbrProblemLoadedData = mbrProblemService.loadData(fileId, insId, insuranceCode, reportMonth);
 			LOG.info("mbrProblemLoadedData " + mbrProblemLoadedData + new Date());
 		//	Integer mbrHedisUnLoadedData = mbrHedisMeasureService.unloadTable(insId, insuranceCode);
 		//	LOG.info("mbrHedisUnLoadedData " + mbrHedisUnLoadedData + new Date());
-			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode);
+			Integer mbrHedisLoadedData = mbrHedisMeasureService.loadData(fileId, insId, insuranceCode, reportMonth);
 			LOG.info("mbrHedisLoadedData " + mbrHedisLoadedData + new Date());
 			Integer unprocessedClaimLoadedData = unprocessedClaimService.loadDataCSV2Table( fileId,  insuranceCode,  tableName, insId, reportMonth);
 			LOG.info("unprocessedClaimLoadedData " + unprocessedClaimLoadedData + new Date());

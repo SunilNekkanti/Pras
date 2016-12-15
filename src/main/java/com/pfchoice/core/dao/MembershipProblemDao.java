@@ -63,7 +63,7 @@ public interface MembershipProblemDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId, String tableName);
+	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
 
 	/**
 	 * @param mbrId

@@ -68,7 +68,7 @@ public interface MembershipHedisMeasureService {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId, String tableName);
+	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
 	
 	/**
 	 * @return
