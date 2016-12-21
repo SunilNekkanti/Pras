@@ -510,10 +510,7 @@ $(document).ready(function() {
 		</div>
 		<div class="panel-body" style="max-height: 750;">
 		
-				
-			<div class="table-responsive">
-				
-				<div class="col-sm-12">
+			<div class="col-sm-12">
 					<div class="col-sm-2 multiple">
 						<label class="control-label col-sm-12">Insurance</label>
 						<div class=" col-sm-12" id="extFilterIns"></div>
@@ -571,6 +568,9 @@ $(document).ready(function() {
 							class="btn btn-success btn-sm btn-sm multiple">Generate</button>
 					</div>
 				</div>	
+			<div class="table-responsive col-sm-12">
+				
+				
 					<div id="demo" class="col-sm-12">
 						<div id="tabs" class="claimReportTab">
 								<ul>

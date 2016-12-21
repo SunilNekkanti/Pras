@@ -205,3 +205,5 @@ table#cptListTable, table#icdListTable {
 
 .ui-widget-header{ background-color : #dff0d8 !important; background-image:none !important;}
 
+ul.multiselect-container.dropdown-menu a {background-color:#FFFFFF;}
+

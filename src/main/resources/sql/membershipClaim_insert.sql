@@ -1,5 +1,5 @@
  INSERT INTO membership ( Mbr_LastName,Mbr_FirstName,Mbr_GenderID, Mbr_DOB, Mbr_Status,Mbr_MedicaidNo,Mbr_MedicareNo,file_id,created_date,updated_date,created_by,updated_by	,active_ind )
-SELECT   MFNAME,MLNAME,lg.gender_id,STRING_TO_DATE(MBRDOB), 4,MEDICAIDNO,MEDICARENO,:fileId ,  now(),now(),'sarath','sarath','Y'  
+SELECT   MLNAME,MFNAME,lg.gender_id,STRING_TO_DATE(MBRDOB), 4,MEDICAIDNO,MEDICARENO,:fileId ,  now(),now(),'sarath','sarath','Y'  
   FROM csv2Table_Amg_Claim csv2AmgClaim
    join lu_gender lg on lg.code = csv2AmgClaim.MBRGENDER
  LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
@@ -40,6 +40,7 @@ LEFT OUTER JOIN lu_facility_type lft on lft.description = csv2AmgClaim.FACILITY_
 LEFT OUTER JOIN membership_claims mc on mc.claim_id_number =  csv2AmgClaim.CLAIMNUMBER and mc.mbr_id=mi.mbr_id and mc.ins_id=:insId and mc.report_month = :reportMonth
 WHERE  mc.claim_id_number is null
 GROUP BY convert(CLAIMNUMBER,decimal(35,0)),mi.mbr_id,CLAIMTYPE,reportMonth;
+
 
 
 

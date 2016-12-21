@@ -22,4 +22,15 @@ created_date,updated_date,created_by,updated_by,active_ind,file_id
   left outer join cpt_measure  cpt on cpt.code =  NULLIF(csv2AmgClaim.PROCEDURECODE,'')
   LEFT OUTER JOIN lu_place_of_service roomType on roomtype.code = PLACEOFSERVICE
 LEFT OUTER JOIN membership_claim_details mcd on mcd.mbr_claim_id =  mc.mbr_claim_id   
-where mcd.mbr_claim_id is null 
+where mcd.mbr_claim_id is null ;
+
+
+ insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,is_roster, is_cap,file_id,created_date,updated_date,created_by,updated_by)
+select  distinct
+mc.mbr_id,mc.ins_id,mc.prvdr_id,  mcd.activity_month activityMonth,'N', 'N',:fileId fileId,
+now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by 
+   FROM   membership_claims mc 
+  JOIN membership_claim_details mcd on  mc.mbr_claim_id = mcd.mbr_claim_id   and mc.ins_id=:insId and mc.report_month = :reportMonth
+  left outer join membership_activity_month mam on mam.mbr_id=mc.mbr_id and mam.prvdr_id =mc.prvdr_id and mam.ins_id= mc.ins_id  and mam.activity_month=mcd.activity_month
+  where   if( mam.mbr_id is not null , if(mam.prvdr_id is not null ,mam.activity_month is null,mam.prvdr_id is  null ),mam.mbr_id is   null)
+group by mc.mbr_id,mc.ins_id,mc.prvdr_id,mcd.activity_Month; 

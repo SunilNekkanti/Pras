@@ -13,6 +13,23 @@ WHERE   phar.pharmacy_id IS NULL
 group by PHARMACYNAME;
 
 
+ INSERT INTO membership ( Mbr_LastName,Mbr_FirstName,Mbr_GenderID, Mbr_DOB, Mbr_Status,Mbr_MedicaidNo,Mbr_MedicareNo,file_id,created_date,updated_date,created_by,updated_by	,active_ind )
+SELECT   MLNAME,MFNAME,lg.gender_id,STRING_TO_DATE(MBRDOB), 4,MEDICAIDNO,MEDICARENO,:fileId ,  now(),now(),'sarath','sarath','Y'  
+  FROM csv2table_amg_pharmacy csv2AmgClaim
+   join lu_gender lg on lg.code = csv2AmgClaim.MBRGENDER
+ LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+ where mi.SRC_SYS_MBR_NBR is null
+ group by csv2AmgClaim.SRC_SYS_MEMBER_NBR;
+
+
+ INSERT INTO membership_insurance (ins_id,mbr_id,SRC_SYS_MBR_NBR,file_id,created_date,updated_date,created_by ,   updated_by ,   active_ind ) 
+ SELECT :insId, m.mbr_id, csv2AmgClaim.SRC_SYS_MEMBER_NBR , :fileId, now(),now(),'sarath','sarath','Y'   FROM csv2table_amg_pharmacy  csv2AmgClaim
+ join membership m  on m.Mbr_MedicaidNo=csv2AmgClaim.MEDICAIDNO
+  LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+ where mi.SRC_SYS_MBR_NBR is null
+ group by csv2AmgClaim.SRC_SYS_MEMBER_NBR;
+ 
+
 
 INSERT INTO membership_claims
 ( claim_id_number, mbr_id, prvdr_id, pcp_prov_Id, ins_id, report_Month, claim_type,
@@ -61,6 +78,18 @@ phar.THERAPEUTICCLASS	,phar.MEDICAREBINDICATOR	,phar.MEDDCOVEREDDRUGFLAG,null ph
  left outer join membership_claim_details mcd on mcd.mbr_claim_id =mc.mbr_claim_id  
  where mcd.mbr_claim_id is null;
  
+ 
+  insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,is_roster, is_cap,file_id,created_date,updated_date,created_by,updated_by)
+select  distinct
+mc.mbr_id,mc.ins_id,mc.prvdr_id,  mcd.activity_month activityMonth,'N', 'N',:fileId fileId,
+now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by 
+   FROM   membership_claims mc 
+  JOIN membership_claim_details mcd on  mc.mbr_claim_id = mcd.mbr_claim_id   and mc.ins_id=:insId and mc.report_month = :reportMonth and mc.claim_type='PHAR'
+  left outer join membership_activity_month mam on mam.mbr_id=mc.mbr_id and mam.prvdr_id =mc.prvdr_id and mam.ins_id= mc.ins_id  and mam.activity_month=mcd.activity_month
+  where   if( mam.mbr_id is not null , if(mam.prvdr_id is not null ,mam.activity_month is null,mam.prvdr_id is  null ),mam.mbr_id is   null)
+group by mc.mbr_id,mc.ins_id,mc.prvdr_id,mcd.activity_Month; 
+
+
   insert into unprocessed_amg_pharmacy_claims
 (
 	unprocessed_amg_pharmacy_claim_id, report_month,file_id, remarks, prvdr_id, ins_id, IPA_CD, IPANAME, PCP_PROVIDER_NBR, PCPFIRSTNAME, PCPLASTNAME, SRC_SYS_MEMBER_NBR, 
@@ -96,7 +125,7 @@ where mi.mbr_id is null;
 INSERT IGNORE INTO medical_loss_ratio
   (ins_id, prvdr_id, report_month, activity_month, patients, fund, prof, inst, pharmacy, unwanted_claims,  stop_loss, file_id, created_date, updated_date, created_by, updated_by)
  SELECT  
-  mam.ins_id, mam.prvdr_id, mc.report_month as report_month , mam.activity_month CAP_PERIOD,  count( distinct if(is_cap='Y',mam.mbr_id,null)  ) patients, count(distinct if(is_cap='Y', mam.mbr_id,null) ) *150  fund,
+  mam.ins_id, mam.prvdr_id,  if(mc.report_month is null,:reportMonth,mc.report_month) as  report_month , mam.activity_month CAP_PERIOD,  count( distinct if(is_cap='Y',mam.mbr_id,null)  ) patients, count(distinct if(is_cap='Y', mam.mbr_id,null) ) *150  fund,
 round(sum(if (claim_type = 'PROF',membership_claims,null)) ,2) as 'PROF',
  round(sum(if (claim_type = 'INST',membership_claims,null)),2) as 'INST',
   round(sum(if (claim_type = 'PHAR',membership_claims,null)),2)   as 'PHAR' ,
@@ -122,8 +151,6 @@ join membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id and mc.rep
 left join membership_activity_month mam on mam.mbr_id=mc.mbr_id and mam.prvdr_id =mc.prvdr_id and mcd.activity_month =mam.activity_month
 where    mam.is_cap ='Y'  
 group by mc.prvdr_id, mcd.activity_month, mc.mbr_id having sum(if ( mc.claim_type = 'INST',membership_claims ,null) ) -30000 > 0    )a group by prvdr_id ,activity_month ) slr on  slr.prvdr_id= mam.prvdr_id and  slr.activity_month =mam.activity_month
-where  mc.report_month is not null and  mam.activity_month >0 and case when  mam.is_cap ='Y' then 1=1 else
-( case when mam.mbr_id is  not  null then case when mam.prvdr_id is not null then mam.activity_month is null   else mam.prvdr_id is  null end else  mam.mbr_id is   null end 
- or mam.is_cap='N' )
-end
-group by  mam.ins_id,report_month ,mam.prvdr_id, mam.activity_month ;
+where mam.activity_month >201512
+group by  mam.ins_id,  mam.prvdr_id, mam.activity_month 
+having  if(PROF is null ,0,PROF) +if(INST is null, 0 ,INST) + if(PHAR is null, 0,PHAR)>0 ;

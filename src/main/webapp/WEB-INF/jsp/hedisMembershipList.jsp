@@ -648,8 +648,8 @@ $(document).ready(function() {
 			Hedis Report <span class="clrRed"> </span>
 		</div>
 		<div class="panel-body">
-			<div class="table-responsive">
-				<div class="col-sm-12">
+		
+			<div class="col-sm-12">
 					<div class="col-sm-3">
 						<label class="control-label col-sm-4">Insurance</label>
 						<div class=" col-sm-8" id="extFilterIns"></div>
@@ -666,7 +666,10 @@ $(document).ready(function() {
 						<button type="button" id="hedisGenerate"
 							class="btn btn-success btn-sm btn-xs">Generate</button>
 					</div>
-				</div>
+		 </div>
+				
+			<div class="table-responsive col-sm-12">
+				
 				<table id="membershipTable"
 					class="table table-striped table-hover table-responsive">
 

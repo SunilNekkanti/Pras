@@ -41,7 +41,7 @@ import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
 
 @Controller
-@SessionAttributes({ "username", "userpath" })
+@SessionAttributes({ "username", "userpath", "roleId" , "userId" })
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
