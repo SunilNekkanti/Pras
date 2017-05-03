@@ -6,7 +6,7 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate ,  cpt_or_icd
  FROM 
  (
  SELECT   
- mi.mbr_id,  hmr.hedis_msr_rule_id ,   
+ mam.mbr_id,  hmr.hedis_msr_rule_id ,   
  DATE_ADD(m.mbr_dob, INTERVAL ceil(365.25 * ceil (datediff( current_date(),m.mbr_dob)/365.25))  DAY) duedate,
  null date_of_service,
  'Y' follow_up_ind,
@@ -15,7 +15,7 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate ,  cpt_or_icd
  hcptm.cpt_id ruleCPT_ID, 
  cpt.code,
  hmr.cpt_or_icd ,
- mprvdr.prvdr_id prvdrid,
+ mam.prvdr_id prvdrid,
  m.Mbr_DOB,
  hmr.dose_count,
  hmr.dose_1,
@@ -27,13 +27,17 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate ,  cpt_or_icd
   hmr.dose_4,
  hmr.datepart_4,
   hmr.dose_5,
- hmr.datepart_5
+ hmr.datepart_5,
+ hmr.dose_6,
+ hmr.datepart_6
 
  FROM  hedis_measure_rule     hmr
- join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
- join membership m on mi.mbr_id =m.mbr_id  and 
-    case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(year,m.mbr_dob,current_date()) >=  hmr.lower_age_limit else 1= 1 end and
-        case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( year,m.mbr_dob,current_date()) < hmr.upper_age_limit else 1=1 end and
+ join (select * from membership_activity_month  where  
+mbr_act_mnth_id in (select   max(mbr_act_mnth_id)    from  membership_activity_month mam    group by mbr_id )
+and  is_cap='Y') mam  on mam.ins_id = hmr.ins_id and hmr.ins_id= :insId
+ join membership m on mam.mbr_id =m.mbr_id  and 
+    case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(month,m.mbr_dob,current_date()) >=  hmr.lower_age_limit * 12 else 1= 1 end and
+        case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( month,m.mbr_dob,current_date()) < hmr.upper_age_limit * 12 else 1=1 end and
         case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end and
          case when  hmr.dose_count is not null 
          then  
@@ -66,23 +70,27 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate ,  cpt_or_icd
 					 when hmr.datepart_5 = 'month' then TIMESTAMPDIFF(month, m.mbr_dob,current_date()) >= dose_5 
 				end
              else 1=1 end
-            
+            OR 
+            case when dose_6 is not null then 
+				case when hmr.datepart_6 = 'year' then TIMESTAMPDIFF(year, m.mbr_dob,current_date()) >= dose_6 
+					 when hmr.datepart_6 = 'month' then TIMESTAMPDIFF(month, m.mbr_dob,current_date()) >= dose_6 
+				end
+             else 1=1 end
            )
            
          else 1=1 end  
- join membership_provider mprvdr  on  mi.mbr_id=mprvdr.mbr_id
  join hedis_cpt_measure hcptm on hcptm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id  
   JOIN cpt_measure  cpt on    hcptm.cpt_id =cpt.cpt_id  
   left outer join lu_frequency_type lft on lft.code= hmr.frequency_type_code
- left OUTER join membership_claims mc on mc.mbr_id= mi.mbr_id and mc.ins_id=mi.ins_id  and mc.report_month = :reportMonth
- left OUTER join membership_claim_details mcd on mcd.mbr_claim_id = mc.mbr_claim_id  and  case when lft.noOfDays is not null then datediff(current_date(), mcd.activity_date) <= lft.noOfDays else  datediff(current_date (), mcd.activity_date) <=365 end
+ left OUTER join membership_claims mc on mc.mbr_id= mam.mbr_id and mc.ins_id=mam.ins_id  and mc.report_month = :reportMonth
+ left OUTER join membership_claim_details mcd on mcd.mbr_claim_id = mc.mbr_claim_id  and  case when lft.noOfDays is not null then datediff(current_date(), mcd.activity_date) <= lft.noOfDays else  1=1 end
   LEFT OUTER JOIN cpt_measure  mbrClaimCPT on mbrClaimCPT.cpt_id = mcd.cpt_code  and mbrClaimCPT.cpt_id=cpt.cpt_id 
-    LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mi.mbr_id  and  mcd.claim_start_date >= mp.start_date
-      where  hmr.effective_year= 2016 and
+    LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mam.mbr_id  and  mcd.claim_start_date >= mp.start_date
+      where  hmr.effective_year= 2017 and
         case when  hmr.problem_flag = 'Y' then   hmr.problem_id is not null and mp.pbm_id is not null and mp.resolved_date is null else 1=1 end  and
          hmr.cpt_or_icd in (0,2)      and 
-  hmr.active_ind='Y'   and mprvdr.active_ind='Y' and mi.active_ind='Y'  
-  group by mi.mbr_id, hmr.hedis_msr_rule_id
+  hmr.active_ind='Y'   
+  group by mam.mbr_id, hmr.hedis_msr_rule_id
 having      count( mbrClaimCPT.cpt_id) 	     < case when dose_count is not null then dose_count  else  1  end  
 ) a ;
 
@@ -94,7 +102,7 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  cpt_or_icd
  FROM 
  (
  SELECT   
- mi.mbr_id,  hmr.hedis_msr_rule_id ,   
+ mam.mbr_id,  hmr.hedis_msr_rule_id ,   
  DATE_ADD(m.mbr_dob, INTERVAL ceil(365.25 * ceil (datediff( current_date(),m.mbr_dob)/365.25))  DAY) duedate,
  null date_of_service,
  'Y' follow_up_ind,
@@ -102,7 +110,7 @@ SELECT a.mbr_id,a.hedis_msr_rule_id, a.duedate,  cpt_or_icd
  hicdm.icd_id ruleICD_ID,
 MbrClaimICD.icd_id  claimICD_ID,
  hmr.cpt_or_icd ,
- mprvdr.prvdr_id prvdrid,
+ mam.prvdr_id prvdrid,
  m.Mbr_DOB,
 hmr.dose_count,
  hmr.dose_1,
@@ -114,15 +122,18 @@ hmr.dose_count,
   hmr.dose_4,
  hmr.datepart_4,
   hmr.dose_5,
- hmr.datepart_5
+ hmr.datepart_5,
+ hmr.dose_6,
+ hmr.datepart_6
 
 
  FROM  hedis_measure_rule     hmr
- join  membership_insurance mi  on mi.ins_id = hmr.ins_id and hmr.ins_id= :insId
- 
- join membership m on mi.mbr_id =m.mbr_id  and 
-    case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(year,m.mbr_dob,current_date()) >=  hmr.lower_age_limit else 1= 1 end and
-    case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( year,m.mbr_dob,current_date()) < hmr.upper_age_limit else 1=1 end and
+ join  (select * from membership_activity_month  where  
+mbr_act_mnth_id in (select   max(mbr_act_mnth_id)    from  membership_activity_month mam    group by mbr_id )
+and  is_cap='Y') mam  on mam.ins_id = hmr.ins_id and hmr.ins_id= :insId
+ join membership m on mam.mbr_id =m.mbr_id  and 
+    case when hmr.lower_age_limit is not null then TIMESTAMPDIFF(month,m.mbr_dob,current_date()) >=  hmr.lower_age_limit * 12 else 1= 1 end and
+    case when hmr.upper_age_limit is not null then TIMESTAMPDIFF( month,m.mbr_dob,current_date()) < hmr.upper_age_limit * 12 else 1=1 end and
     case when hmr.gender_id is not null and hmr.gender_id != 3 and  hmr.gender_id != 4 then hmr.gender_id = m.mbr_genderid else 1=1 end and
       case when  hmr.dose_count is not null 
          then  
@@ -155,22 +166,26 @@ hmr.dose_count,
 					 when hmr.datepart_5 = 'month' then TIMESTAMPDIFF(month, m.mbr_dob,current_date()) >= dose_5 
 				end
              else 1=1 end
-            
+            OR 
+            case when dose_6 is not null then 
+				case when hmr.datepart_6 = 'year' then TIMESTAMPDIFF(year, m.mbr_dob,current_date()) >= dose_6 
+					 when hmr.datepart_6 = 'month' then TIMESTAMPDIFF(month, m.mbr_dob,current_date()) >= dose_6 
+				end
+             else 1=1 end
            )
            
          else 1=1 end  
- join membership_provider mprvdr  on  mi.mbr_id=mprvdr.mbr_id
-  join hedis_icd_measure hicdm on   hicdm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id 
+ join hedis_icd_measure hicdm on   hicdm.hedis_msr_rule_Id =  hmr.hedis_msr_rule_Id 
   JOIN icd_measure  icd  on  icd.icd_id   = hicdm.icd_id  
     left outer join lu_frequency_type lft on lft.code= hmr.frequency_type_code
- left OUTER join membership_claims mc on mc.mbr_id= mi.mbr_id and mc.ins_id=mi.ins_id   and mc.report_month = :reportMonth
- left OUTER join membership_claim_details mcd on mcd.mbr_claim_id = mc.mbr_claim_id and  case when lft.noOfDays is not null then datediff(current_date(), mcd.activity_date) <= lft.noOfDays else datediff(current_date(), mcd.activity_date) <=365 end
-    LEFT outer join  icd_measure MbrClaimICD on  mc.Diagnoses LIKE CONCAT('%', REPLACE(icd.code, ".",""),'%')   and icd.icd_id =MbrClaimICD.icd_id
-  LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mi.mbr_id  and  mcd.claim_start_date >= mp.start_date
-  where hmr.effective_year= 2016 and
+ left OUTER join membership_claims mc on mc.mbr_id= mam.mbr_id and mc.ins_id=mam.ins_id   and mc.report_month = :reportMonth
+ left OUTER join membership_claim_details mcd on mcd.mbr_claim_id = mc.mbr_claim_id and  case when lft.noOfDays is not null then datediff(current_date(), mcd.activity_date) <= lft.noOfDays else 1=1 end
+    LEFT outer join  icd_measure MbrClaimICD on  icd.icd_id =MbrClaimICD.icd_id and INSTR(mc.Diagnoses, REPLACE(icd.code, ".",""))    
+  LEFT outer Join membership_problems mp on mp.pbm_id =hmr.problem_id and mp.mbr_id=mam.mbr_id  and  mcd.claim_start_date >= mp.start_date
+  where hmr.effective_year= 2017 and
         case when  hmr.problem_flag = 'Y' then   hmr.problem_id is not null and mp.pbm_id is not null and mp.resolved_date is null else 1=1 end  and
-        hmr.cpt_or_icd in(1,2)   and hmr.active_ind='Y'   and mprvdr.active_ind='Y' and mi.active_ind='Y'  
-  group by mi.mbr_id, hmr.hedis_msr_rule_id 
+        hmr.cpt_or_icd in(1,2)   and hmr.active_ind='Y'    
+  group by mam.mbr_id, hmr.hedis_msr_rule_id 
 having       count( MbrClaimICD.icd_id)     <   case when dose_count  is not null then dose_count   else  1  end
 ) a ;
 
@@ -178,10 +193,11 @@ alter table hedisMeasureByICD add key  mbr_id(mbr_id) , add key hedis_msr_rule_i
 
 drop table if exists hedisMeasureByCPT1;
 create temporary table hedisMeasureByCPT1 as select * from hedisMeasureByCPT where cpt_or_icd =2;
- 
+  alter table hedisMeasureByCPT1 add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id);
 
 drop table if exists hedisMeasureByICD1;
 create temporary table hedisMeasureByICD1 as select * from hedisMeasureByICD  where cpt_or_icd =2;
+alter table hedisMeasureByICD1 add key  mbr_id(mbr_id) , add key hedis_msr_rule_id(hedis_msr_rule_id);
 
 update membership_hedis_measure mhm
 left join 
@@ -192,7 +208,7 @@ left join
  (select a.* from hedisMeasureByCPT1  a 
     inner join   hedisMeasureByICD1 b using (mbr_id,hedis_msr_rule_id) )
  ) a  on a.mbr_id=mhm.mbr_id and a.hedis_msr_rule_id=mhm.hedis_msr_rule_id 
- set active_ind='N'
+ set active_ind='N', file_id =:fileId
  where  mhm.active_ind='Y' and case when a.mbr_id is not null then  a.hedis_msr_rule_id is null else  a.mbr_id is  null end;
 
  

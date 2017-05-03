@@ -78,7 +78,7 @@
 						$('#providerTable')
 								.dataTable(
 										{
-											"sAjaxSource" : getContextPath()
+											"sAjaxSource" : "${context}/"
 													+ '/provider/list',
 											"sAjaxDataProp" : 'data.list',
 											"aoColumns" : [
@@ -146,6 +146,7 @@
 													} ],
 											"bLengthChange" : false,
 											"iDisplayLength" : 15,
+											"bStateSave": true,
 											"sPaginationType" : "full_numbers",
 											"bProcessing" : true,
 											"bServerSide" : true,

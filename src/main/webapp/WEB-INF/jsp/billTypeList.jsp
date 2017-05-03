@@ -57,7 +57,7 @@
     	}
     	
     	var billTypeTable =	$('#billTypeTable').dataTable({
-    	     "sAjaxSource" :  getContextPath()+'/billType/list',
+    	     "sAjaxSource" :  "${context}/"+'/billType/list',
     	     "sAjaxDataProp" : 'data.list',
     	     "aoColumns": [
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },

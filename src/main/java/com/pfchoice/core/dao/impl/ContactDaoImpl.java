@@ -122,7 +122,10 @@ public class ContactDaoImpl extends HibernateBaseDao<Contact, Integer> implement
 		String refRestrictionString;
 		if ("membership".equals(refString)) {
 			refRestrictionString = "refContact.mbr.id";
-		} else if ("provider".equals(refString)) {
+		}else if ("leadMembership".equals(refString)) {
+			refRestrictionString = "refContact.leadMbr.id";
+		} 		
+		else if ("provider".equals(refString)) {
 			refRestrictionString = "refContact.prvdr.id";
 		} else {
 			refRestrictionString = "refContact.ins.id";

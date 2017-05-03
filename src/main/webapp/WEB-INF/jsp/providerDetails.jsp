@@ -69,7 +69,7 @@
 
 
 <script>
-	var source = getContextPath() + 'provider/${id}/contractList';
+	var source = "${context}/"+ 'provider/${id}/contractList';
 	$.ajax({
 		url : source,
 		success : function(data, textStatus, jqXHR) {
@@ -85,7 +85,7 @@
 		}
 	});
 
-	var source = getContextPath() + 'provider/${id}/contactList';
+	var source = "${context}/"+ 'provider/${id}/contactList';
 	$.ajax({
 		url : source,
 		success : function(data, textStatus, jqXHR) {
@@ -97,7 +97,7 @@
 	});
 
 	function providerDetails() {
-		var source = getContextPath() + 'provider/${id}/details';
+		var source = "${context}/"+ 'provider/${id}/details';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -109,7 +109,7 @@
 		});
 	}
 	function modifyProviderDetails() {
-		var url = getContextPath() + 'provider/${id}/save.do?update';
+		var url = "${context}/"+ 'provider/${id}/save.do?update';
 		var dataList = $("#provider").serialize();
 		$.ajax({
 			type : "POST",
@@ -125,7 +125,7 @@
 	}
 	function deleteProviderDetails() {
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-			var url = getContextPath() + 'provider/${id}/save.do?delete';
+			var url = "${context}/"+ 'provider/${id}/save.do?delete';
 			var dataList = $("#provider").serialize();
 			$.ajax({
 				type : "POST",
@@ -144,7 +144,7 @@
 		if (pmpmRequired) {
 			prvdrInscontract(providerId, contractId);
 		} else {
-			var source = getContextPath() + 'provider/' + providerId
+			var source = "${context}/"+ 'provider/' + providerId
 					+ '/contract/' + contractId;
 			$.ajax({
 				url : source,
@@ -161,7 +161,7 @@
 	}
 
 	function prvdrInscontract(providerId, contractId) {
-		var source = getContextPath() + 'provider/' + providerId
+		var source = "${context}/"+ 'provider/' + providerId
 				+ '/prvdrInsContract/' + contractId;
 		$.ajax({
 			url : source,
@@ -175,7 +175,7 @@
 		return false;
 	}
 	function contact(providerId, contactId) {
-		var source = getContextPath() + 'provider/' + providerId + '/contact/'
+		var source = "${context}/"+ 'provider/' + providerId + '/contact/'
 				+ contactId;
 		$.ajax({
 			url : source,
@@ -193,7 +193,7 @@
 		if (pmpmRequired) {
 			newPrvdrInsContract(pmpmRequired);
 		} else {
-			var source = getContextPath() + 'provider/${id}/contract/new';
+			var source = "${context}/"+ 'provider/${id}/contract/new';
 			$.ajax({
 				url : source,
 				success : function(data, textStatus, jqXHR) {
@@ -208,7 +208,7 @@
 	}
 
 	function newPrvdrInsContract(pmpmRequired) {
-		var source = getContextPath() + 'provider/${id}/prvdrInsContract/new';
+		var source = "${context}/"+ 'provider/${id}/prvdrInsContract/new';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -221,7 +221,7 @@
 	}
 
 	function newContact() {
-		var source = getContextPath() + 'provider/${id}/contact/new';
+		var source = "${context}/"+ 'provider/${id}/contact/new';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -237,7 +237,7 @@
 		if (pmpmRequired) {
 			prvdrInscontractList();
 		} else {
-			var source = getContextPath() + 'provider/${id}/contractList';
+			var source = "${context}/"+ 'provider/${id}/contractList';
 			$
 					.ajax({
 						url : source,
@@ -260,7 +260,7 @@
 	}
 
 	function prvdrInscontractList() {
-		var source = getContextPath() + 'provider/${id}/prvdrInsContractList';
+		var source = "${context}/"+ 'provider/${id}/prvdrInsContractList';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -275,7 +275,7 @@
 
 	function contactList() {
 
-		var source = getContextPath() + 'provider/${id}/contactList';
+		var source = "${context}/"+ 'provider/${id}/contactList';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -294,14 +294,14 @@
 				$("#pcpPrvdrNBR").focus();
 				return false;
 			}	
-			var url = getContextPath()
+			var url = "${context}/"
 					+ 'provider/${id}/prvdrInsContract/save.do?add';
 			ajaxCallWithFileUpload(url, pmpmRequired,
 					'providerInsuranceContractList')
 		} else {
-			var url = getContextPath() + 'provider/${id}/contract/save.do?add';
+			var url = "${context}/"+ 'provider/${id}/contract/save.do?add';
 			ajaxCallWithFileUpload(url, pmpmRequired, 'providerContractList');
-			var source = getContextPath() + 'provider/${id}/contractJsonList';
+			var source = "${context}/"+ 'provider/${id}/contractJsonList';
 			$.ajax({
 				url : source,
 				success : function(data, textStatus, jqXHR) {
@@ -321,12 +321,12 @@
 				$("#pcpPrvdrNBR").focus();
 				return false;
 			}
-			var url = getContextPath()
+			var url = "${context}/"
 					+ 'provider/${id}/prvdrInsContract/save.do?update';
 			ajaxCallWithFileUpload(url, pmpmRequired,
 					'providerInsuranceContractList')
 		} else {
-			var url = getContextPath()
+			var url = "${context}/"
 					+ 'provider/${id}/contract/save.do?update';
 			ajaxCallWithFileUpload(url, pmpmRequired, 'providerContractList')
 		}
@@ -338,7 +338,7 @@
 			deletePrvdrInsContract(pmpmRequired);
 		} else {
 			if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-				var url = getContextPath()
+				var url = "${context}/"
 						+ 'provider/${id}/contract/save.do?delete';
 				var dataList = $("#contract" + pmpmRequired).serialize();
 				$.ajax({
@@ -360,7 +360,7 @@
 
 	function deletePrvdrInsContract(pmpmRequired) {
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-			var url = getContextPath()
+			var url = "${context}/"
 					+ 'provider/${id}/prvdrInsContract/save.do?delete';
 			var dataList = $("#contract" + pmpmRequired).serialize();
 			$.ajax({
@@ -379,7 +379,7 @@
 	}
 
 	function addContact() {
-		var url = getContextPath() + 'provider/${id}/contact/save.do?add';
+		var url = "${context}/"+ 'provider/${id}/contact/save.do?add';
 		var dataList = $("#contact").serialize();
 		$.ajax({
 			type : "POST",
@@ -395,7 +395,7 @@
 	}
 
 	function modifyContact() {
-		var url = getContextPath() + 'provider/${id}/contact/save.do?update';
+		var url = "${context}/"+ 'provider/${id}/contact/save.do?update';
 		var dataList = $("#contact").serialize();
 		$.ajax({
 			type : "POST",
@@ -411,7 +411,7 @@
 	}
 	function deleteContact() {
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-			var url = getContextPath()
+			var url = "${context}/"
 					+ 'provider/${id}/contact/save.do?delete';
 			var dataList = $("#contact").serialize();
 			$.ajax({

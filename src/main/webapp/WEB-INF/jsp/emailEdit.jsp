@@ -59,7 +59,7 @@
         	}
         	
         	$('#prvdrContactListTable').dataTable({
-        	     "sAjaxSource" : getContextPath()+'/prvdrContact/list',
+        	     "sAjaxSource" : "${context}/"+'/prvdrContact/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
 								{ "mDataProp": "email", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
@@ -283,7 +283,7 @@ $(document).ready(function(){
 		var emailTemplateDesc = $( "#emailTemplate" ).val();
 		if(emailTemplateDesc)
 		{
-			var source = getContextPath() + 'emailTemplate/'+emailTemplateDesc+'/details';
+			var source = "${context}/"+ 'emailTemplate/'+emailTemplateDesc+'/details';
 			$.ajax({
 				url : source,
 				success : function(data, textStatus, jqXHR) {

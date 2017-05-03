@@ -18,7 +18,7 @@
 						var $selectIns = $('#extFilterIns');
 						$
 								.getJSON(
-										getContextPath()
+										"${context}/"
 												+ '/insurance/list?pageNo=0&pageSize=200',
 										function(data) {
 
@@ -53,7 +53,7 @@
 							var $selectPrvdr = $('#extFilterPrvdr');
 							$
 									.getJSON(
-											getContextPath()
+											"${context}/"
 													+ '/insurance/providerlist?insId='
 													+ insSelectValue,
 											function(data) {
@@ -393,7 +393,7 @@
 									        	             
 										                   ],
 												"bDestroy" : true,
-												"sAjaxSource" : getContextPath()
+												"sAjaxSource" : "${context}/"
 														+ '/reports/membershipHospitalization/list',
 												"sAjaxDataProp" : 'data.list',
 												"aoColumns" : aoColumns,
@@ -493,7 +493,7 @@
 													+ followup_details
 													+ "\",\"mbr\": {\"id\":"
 													+ mbr_id + "}}";
-											var source = getContextPath()
+											var source = "${context}/"
 													+ '/reports/membershipHospitalization/followup';
 
 											$
@@ -559,7 +559,7 @@
 		var mbr_id = id;
 		var followup_text = $("#followup_history");
 
-		var source = getContextPath() + 'reports/membershipHospitalization/'
+		var source = "${context}/"+ 'reports/membershipHospitalization/'
 				+ id + '/followupDetails';
 
 		$.ajax({
@@ -642,7 +642,7 @@
 		$('#mbrHospitalizationDetailsTable')
 				.dataTable(
 						{
-							"sAjaxSource" : getContextPath()
+							"sAjaxSource" : "${context}/"
 									+ 'reports/membershipHospitalizationDetails/'
 									+ id + '/list',
 							"sAjaxDataProp" : 'data.list',

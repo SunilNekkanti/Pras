@@ -12,7 +12,7 @@
      $(document).ready(function() {
     	
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"insu\">');
@@ -25,7 +25,7 @@
 		 });
     	  
     	 var $selectPrvdr = $('#extFilterPrvdr');
-    	  $.getJSON(getContextPath()+'/provider/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'/provider/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"prvdr\">');
@@ -39,7 +39,7 @@
 		 });
     	  
     	 var $selectHedisRule = $('#extFilterHedisRule');
-    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list', function(data){
+    	  $.getJSON("${context}/"+'/hedisMeasureRule/list', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"hedisRule\" >');
@@ -138,7 +138,7 @@
      		 
   	        var oTable = $('#membershipTable').dataTable({
   	         
-     	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list2',
+     	     "sAjaxSource" : "${context}/"+'/reports/hedisMembership/list2',
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns": columns,
                "aoColumnDefs": [ 
@@ -268,7 +268,7 @@
 		  var  mbr_hedis_msr_id = $("#mbr_hedis_msr_id").val();
 		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbrHedisMsrId\": "+mbr_hedis_msr_id+"}";
 		   
-		  var source = getContextPath()+'/reports/membershipHedis/followup';
+		  var source = "${context}/"+'/reports/membershipHedis/followup';
 		  
 		  $.ajax({
 			  dataType: 'json',

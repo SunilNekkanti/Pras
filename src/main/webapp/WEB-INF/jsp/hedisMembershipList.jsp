@@ -7,6 +7,7 @@
 <c:set var="context1"
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
+$language = {"processing": "<i class='fa fa-refresh fa-spin' style='font-size:80px;color:#3c763d'></i>"};
 
 $(document).ready(function() {
 	
@@ -21,7 +22,7 @@ $(document).ready(function() {
 		});
 		 var hedisDescription = new Array;	
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context1}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -46,7 +47,7 @@ $(document).ready(function() {
 				}
 				$('select[id="insu"]').val(insSelectValue);
  			 var $selectPrvdr = $('#extFilterPrvdr');
- 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+ 	    	  $.getJSON("${context1}/"+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				     //clear the current content of the select
  				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
  				     //iterate over the data and append a select option
@@ -83,7 +84,7 @@ $(document).ready(function() {
 		     		 insSelectValue1 = 1;
 		     	 }
 		 		
-		    	  $.getJSON(getContextPath()+'/hedisMeasureRule/list?insId='+insSelectValue1, function(data){
+		    	  $.getJSON("${context1}/"+'/hedisMeasureRule/list?insId='+insSelectValue1, function(data){
 		    		 
 		    		  var hedisRuleList = new Array;
 		    		  if(hedisDropDownSet)
@@ -176,7 +177,7 @@ $(document).ready(function() {
 	     		columns.push({ "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%" });
 	     		columns.push({ "mDataProp": "medicaidNo","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
 	     		columns.push({ "mDataProp": "medicareNo","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
-	     		columns.push({ "mDataProp": "mbrInsuranceList[0].srcSysMbrNbr","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
+	     		columns.push({ "mDataProp": "mbrInsuranceList.0.srcSysMbrNbr","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "" });
 	     		columns.push({ "mDataProp": "contactList[].homePhone","bSearchable" : true, "bSortable": true,"sClass": "center","sWidth" : "5%", "sDefaultContent": "",
 	     			
                            "render": function  ( data, type, full, meta )  {
@@ -246,7 +247,10 @@ $(document).ready(function() {
 				      										if(data.indexOf(value.text) >= 0){
 				      											if(value.text in params){
 				      												completed++;
+				      												if(typeof paramsDOS[value.text] != 'undefined')
 				      												return '<label class="text-danger">'+paramsDOS[value.text]+' </label>';
+				      												else
+				      													return 'X';
 				      											} else {
 				      												pending++;
 				      												return 'X';
@@ -361,11 +365,11 @@ $(document).ready(function() {
                 			  "pagination": {
                 				  	"list": [],
                 			  		"totalCount": 0,
-                			  		"pageSize": 15,
+                			  		"pageSize": 12,
                 			  		"pageNo": 1
                 			  		},
 	                			  "totalCount": 0,
-	                			  "pageSize": 20,
+	                			  "pageSize": 10,
 	                			  "pageNo": 1
                 			  	}
                 			  }
@@ -420,21 +424,31 @@ $(document).ready(function() {
      	
      	  GetMembershipByInsPrvdrHedisRule = function (insId, prvdrId, hedisRuleId,ruleArray, aoColumns) {
       		
-  	        var oTable = $('#membershipTable').removeAttr( "width" ).dataTable({  
-  	        	"sDom": 'Bfrtip',
+  	        var oTable = $('#membershipTable').removeAttr( "width" ).DataTable({  
+  	        	"language": $language,
+  	        	"sDom": 'lBfrtip',
 	        	 "buttons": [
 	        	             {
 	        	                 extend: 'excelHtml5',
 	        	                 title: 'Hedis Measure RuleTable Export'
-	        	             }
+	        	             },{
+	        	                 extend: 'pdfHtml5',
+	        	                 orientation: 'landscape',
+	        	                 pageSize: 'LEGAL',
+	        	                 exportOptions: {
+	        	                         columns: ':visible'
+	        	                  }
+	        	             },'colvis'
 	        	             
 		                   ],
   	         "bDestroy" : true,	
-     	     "sAjaxSource" : getContextPath()+'/reports/hedisMembership/list',
+     	     "sAjaxSource" : "${context1}/"+'/reports/hedisMembership/list',
      	     "sAjaxDataProp" : 'data.pagination.list',
              "aoColumns":  aoColumns,      
-     	     "bLengthChange": false,
-     	     "iDisplayLength": 15,
+     	     "bLengthChange": true,
+     	     "aLengthMenu": [[12, 24, 36, 100000], [12, 24, 36, "All"]],
+     	     "bStateSave": true,
+     	     "iDisplayLength": 12,
      	     "sPaginationType": "full_numbers",
      	     "bProcessing": true,
      	     "bServerSide" : true,
@@ -488,7 +502,7 @@ $(document).ready(function() {
      		  var  mbr_id = $("#mbr_id").val();
      		  
      		  var restParams1 ="{\"followupDetails\" :\""+ followup_details+"\",\"mbr\": {\"id\":"+mbr_id+"},\"mbrHedisMeasureIds\":"+JSON.stringify(rulesList)+"}";
-     		  var source = getContextPath()+'/reports/membershipHedis/followup';
+     		  var source = "${context1}/"+'/reports/membershipHedis/followup';
      		  
      		  $.ajax({
      			  dataType: 'json',
@@ -564,7 +578,7 @@ $(document).ready(function() {
  	}
  	
  	$('#mbrHedisMeasureTable').dataTable({
- 	     "sAjaxSource" : getContextPath()+'membership/'+id+'/hedisMeasureList',
+ 	     "sAjaxSource" : "${context1}/"+'membership/'+id+'/hedisMeasureList',
  	     "sAjaxDataProp" : 'data',
  	     "aoColumns": [
                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : true ,"bSortable": false },
@@ -594,6 +608,7 @@ $(document).ready(function() {
  	     "bFilter": false,
  	     "bProcessing": true,
  	     "bServerSide" : true,
+ 	     "bStateSave": true,
  	     "fnServerData" : datatable2MbrHedisMeasure
  	});
  	
@@ -613,7 +628,7 @@ $(document).ready(function() {
 		  var  mbr_id =id;
 		  var followup_text = $("#followup_history");
 		  
-		  var source = getContextPath()+'reports/membershipHedis/'+id+'/followupDetails';
+		  var source = "${context1}/"+'reports/membershipHedis/'+id+'/followupDetails';
 		  
 		  $.ajax({
 			  dataType: 'json',

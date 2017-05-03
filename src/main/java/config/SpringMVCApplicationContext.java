@@ -1,11 +1,19 @@
 package config;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import ml.rugal.sshcommon.springmvc.method.annotation.FormModelMethodArgumentResolver;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.pfchoice.core.entity.MembershipFollowup;
+import com.pfchoice.core.entity.deserializer.DateDeserializer;
 import com.pfchoice.core.entity.formatter.*;
+import com.pfchoice.core.entity.serializer.MembershipFollowupSerializer;
 import com.pfchoice.springmvc.interceptor.LastPageInterceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +117,14 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	@Autowired
 	private ZipCodeFormatter zipCodeFormatter;
 
+	@Autowired
+	private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
+
+	@PostConstruct
+	public void init() {
+	    requestMappingHandlerAdapter.setIgnoreDefaultModelOnRedirect(true);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -160,7 +176,7 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 
-		GsonHttpMessageConverter messageConverter = new GsonHttpMessageConverter();
+		GsonHttpMessageConverter messageConverter =  createGsonHttpMessageConverter(); //new GsonHttpMessageConverter();
 		List<MediaType> supportedMediaTypes = new ArrayList<>();
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
 		messageConverter.setSupportedMediaTypes(supportedMediaTypes);
@@ -304,10 +320,22 @@ public class SpringMVCApplicationContext extends WebMvcConfigurerAdapter {
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(314572800); // 10 MB=10485760
-		multipartResolver.setMaxInMemorySize(314572800); // 1MB
+		multipartResolver.setMaxUploadSize(624572800); // 10 MB=10485760
+		multipartResolver.setMaxInMemorySize(624572800); // 1MB
 		multipartResolver.setDefaultEncoding("utf-8");
 		return multipartResolver;
 	}
+	
+	private GsonHttpMessageConverter createGsonHttpMessageConverter() {
+	 	Gson gson = new GsonBuilder()
+				.registerTypeAdapter(MembershipFollowup.class, new MembershipFollowupSerializer())
+				.registerTypeAdapter(Date.class, new DateDeserializer()).create();  
+	 	
+        GsonHttpMessageConverter gsonConverter = new GsonHttpMessageConverter();
+        gsonConverter.setGson(gson);
+
+        return gsonConverter;
+    }
+
 
 }

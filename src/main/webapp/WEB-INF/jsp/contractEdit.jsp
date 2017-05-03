@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-<c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
@@ -251,7 +251,7 @@ $(document).ready(function(){
 	insId = $("#status").val();
 	if(insId)
 	{
-		var source = getContextPath()+'insurance/'+insId+'/contractJsonList';
+		var source = "${context}/"+'insurance/'+insId+'/contractJsonList';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -281,7 +281,7 @@ function insPmpm(id)
 {
 	if(id)
     {		
-		var source = getContextPath()+'insurance/'+id+'/contractJsonList';
+		var source = "${context}/"+'insurance/'+id+'/contractJsonList';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -329,7 +329,7 @@ function fileDownload(id)
 	var h = 500;
 	var left = (screen.width/2)-(w/2);
 	var top = (screen.height/2)-(h/2);
-	window.open (getContextPath()+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	window.open ("${context}/"+'contract/'+id+'/file', "title", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 }
 
 jQuery( document ).ready(function( $ ) {

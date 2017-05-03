@@ -154,7 +154,7 @@ public class XLSX2CSV {
 		}
 		
 		LocalDate parseDateString(String dateString){
-			String[] dateFormats = {"M/d/yy", "M/dd/yy", "MM/d/yy","MM/dd/yy"};
+			String[] dateFormats = {"M/d/yy", "M/dd/yy", "MM/d/yy","MM/dd/yy","MM/dd/yyyy","M/d/yyyy","M/dd/yyyy"};
 			LocalDate localDate = null;
 			for( String dateFormat : dateFormats ){
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);

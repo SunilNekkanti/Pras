@@ -53,13 +53,18 @@ alter table temp_membership add key SBSB_ID(SBSB_ID);
  where m.mbr_id=a.mbr_id;
 
 insert ignore into membership (  Mbr_LastName,Mbr_FirstName,Mbr_GenderID,Mbr_CountyCode,Mbr_DOB,Mbr_Status,Mbr_MedicaidNo,file_id,created_date,updated_date,created_by,updated_by)
+select * from (
 select lastname,firstname, sex,county, 
 case when tm.dob    > current_date   then  DATE_SUB( tm.dob ,INTERVAL 100 YEAR)   else  tm.dob  end  dob ,
 tm.status,tm.MCDMCR, tm.fileId ,tm.created_date,tm.updated_date,tm.created_by,tm.updated_by   from  temp_membership tm
 LEFT join  membership_insurance mi on  mi.SRC_SYS_MBR_NBR=tm.SBSB_ID
 LEFT OUTER JOIN membership m on m.mbr_id = mi.mbr_id
 where m.Mbr_id is null
- group by tm.SBSB_ID  having max(MEMBEREFFDT)  ;
+ group by tm.SBSB_ID  having max(MEMBEREFFDT) )a
+ ON DUPLICATE KEY UPDATE
+ Mbr_Status =a.status ,
+ Mbr_MedicaidNo =a.MCDMCR,
+ file_id=a.fileId;
 
 update membership_insurance mi
 join temp_membership  tm on  tm.SBSB_ID=mi.SRC_SYS_MBR_NBR and mi.effective_strt_dt =tm.MEMBEREFFDT
@@ -178,7 +183,7 @@ tm.eff_end_date,
  where case when mp.mbr_id is not null then mp.prvdr_id is null  else mp.mbr_id is  null  end 
 group by tm.MCDMCR,tm.PRPRNPI,tm.eff_start_date; 
 
-update  membership_provider set active_ind='N' where eff_end_date is not null;
+update  membership_provider set active_ind='N',file_id=:fileId where eff_end_date is not null;
 
 
 drop table if exists activity_month_span;

@@ -24,11 +24,21 @@ public interface SystemDefaultProperties {
 
 	String CREDENTIAL = "credential";
 
+  //  String SQL_DIRECTORY_PATH = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\Pras\\WEB-INF\\classes\\sql\\";
+
+  //  String FILES_UPLOAD_DIRECTORY_PATH = "C:\\ProgramData\\MySQL\\MySQL Server 5.7\\Uploads\\";
+	//	String SQL_DIRECTORY_PATH = "/tmp/sqlScripts/";
+
+	 //	String FILES_UPLOAD_DIRECTORY_PATH = "/tmp/fileUploads/";
+
+	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "/tmp/emailTemplates/";
+	
+    
 	String SQL_DIRECTORY_PATH = "c:\\softwares\\gitworkspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Pras\\WEB-INF\\classes\\sql\\";
 
 	String FILES_UPLOAD_DIRECTORY_PATH = "C:\\ProgramData\\MySQL\\MySQL Server 5.6\\Uploads\\";
 
-	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "C:\\Softwares\\";
+//	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "C:\\Softwares\\";
 
 	String QUERY_TYPE_FETCH = "_fetch";
 	

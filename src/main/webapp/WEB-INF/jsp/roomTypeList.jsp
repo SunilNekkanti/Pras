@@ -80,6 +80,7 @@
         	     "bProcessing": true,
         	     "bServerSide" : true,
         	     "iDisplayLength": 15,
+        	     "bStateSave": true,
         	     "fnServerData" : datatable2RestRoomType
         	});
 

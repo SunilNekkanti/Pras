@@ -55,7 +55,7 @@ $.ajax( {
   	}
   	
   	$('#icdMeasureListTable').dataTable({
-  	     "sAjaxSource" : getContextPath()+'/icd/icdMeasureLists',
+  	     "sAjaxSource" : "${context}/"+'/icd/icdMeasureLists',
   	     "sAjaxDataProp" : 'data.list',
   	     "aoColumns": [
                          { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
@@ -77,6 +77,7 @@ $.ajax( {
   	     "bProcessing": true,
   	     "bServerSide" : true,
   	     "iDisplayLength": 15,
+  	     "bStateSave": true,
   	     "fnServerData" : datatable2Rest
   	});
 

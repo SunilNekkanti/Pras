@@ -105,4 +105,6 @@ public interface CommonMessageContent {
 	String RISKRECON_LIST = " Risk Categories List";
 	
 	String CLAIMTYPE_LIST = "Claim Type List";
+	
+	String LEAD_MEMBERSHIP_LIST = "Lead Membership List";
 }

@@ -25,7 +25,7 @@ SELECT   MLNAME,MFNAME,lg.gender_id,STRING_TO_DATE(MBRDOB), 4,MEDICAIDNO,MEDICAR
  INSERT INTO membership_insurance (ins_id,mbr_id,SRC_SYS_MBR_NBR,file_id,created_date,updated_date,created_by ,   updated_by ,   active_ind ) 
  SELECT :insId, m.mbr_id, csv2AmgClaim.SRC_SYS_MEMBER_NBR , :fileId, now(),now(),'sarath','sarath','Y'   FROM csv2table_amg_pharmacy  csv2AmgClaim
  join membership m  on m.Mbr_MedicaidNo=csv2AmgClaim.MEDICAIDNO
-  LEFT OUTER JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
+  LEFT OUTER JOIN (select * from membership_insurance group by SRC_SYS_MBR_NBR) mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned) and mi.ins_Id=:insId
  where mi.SRC_SYS_MBR_NBR is null
  group by csv2AmgClaim.SRC_SYS_MEMBER_NBR;
  
@@ -48,10 +48,10 @@ phar.PRODUCT_LVL6,phar.PRODUCT_LVL7,phar.MARKET_LVL1,phar.MARKET_LVL2,phar.MARKE
 phar.MARKET_LVL7,phar.MARKET_LVL8,phar.RISK_RECON_COS_DESC,phar.TIN,NULL,NULL,NOW(),NOW(),'SARATH','SARATH','Y' , :fileId
 
 FROM csv2table_amg_pharmacy phar
-LEFT OUTER JOIN membership_insurance mi  on mi.SRC_SYS_MBR_NBR =phar.SRC_SYS_MEMBER_NBR and mi.ins_id=:insId
-LEFT OUTER JOIN contract c on c.PCP_PROVIDER_NBR like concat ('%', trim(phar.PCP_PROVIDER_NBR) ,'%')
+LEFT OUTER JOIN (select * from membership_insurance group by SRC_SYS_MBR_NBR) mi  on mi.SRC_SYS_MBR_NBR =phar.SRC_SYS_MEMBER_NBR and mi.ins_id=:insId
+LEFT OUTER JOIN contract c on INSTR(c.PCP_PROVIDER_NBR, trim(phar.PCP_PROVIDER_NBR))
 LEFT OUTER JOIN reference_contract rc on  c.ref_contract_Id = rc.ref_contract_Id  
-LEFT JOIN membership_claims mc on mc.claim_id_number= phar.CLAIMNUMBER and mc.report_month = :reportMonth
+LEFT JOIN membership_claims mc on mc.claim_id_number= phar.CLAIMNUMBER and mc.mbr_id =mi.mbr_id and mc.report_month = :reportMonth
 where mc.claim_id_number is null
 group by  reportMonth,CLAIMNUMBER,phar.SRC_SYS_MEMBER_NBR;
 
@@ -66,7 +66,7 @@ cpt_code_modifier1, cpt_code_modifier2, claim_status, location_id, risk_recon_co
 )
  
 select
-mc.mbr_claim_id,1 claim_line_seq_nbr,null clm_line_adj_seq_nbr,STRING_TO_DATE(ACTIVITYDATE) activity_date,ACTIVITYMONTH	 ,STRING_TO_DATE(ACTIVITYDATE) claim_start_date,STRING_TO_DATE(ACTIVITYDATE) claim_end_date,
+mc.mbr_claim_id,1 claim_line_seq_nbr,null clm_line_adj_seq_nbr,STRING_TO_DATE(phar.ACTIVITYDATE) activity_date,phar.ACTIVITYMONTH	 ,STRING_TO_DATE(phar.ACTIVITYDATE) claim_start_date,STRING_TO_DATE(phar.ACTIVITYDATE) claim_end_date,
 STRING_TO_DATE(DATEFILLED) ,null revenue_code,null cpt_code,null cpt_code_modifier1,null cpt_code_modifier2,TRANSACTIONSTATUS claim_status,null location_id,RISK_RECON_COS_DESC,AMOUNTPAID amount_paid,null  allow_amt,
 null  co_insurance,null COPAY, null deductible, null cob_paid_amount,  TRANSACTIONSTATUS processing_status,  PHARMACYNAME, METRICQUANTITY, null npos,null risk_id,null runn_date,
 NDCNUMBER,NDCDESCRIPTION, MAILORDERIND,	 NUMBEROFREFILLS, DAYSSUPPLY, INGREDIENTCOST, DISPENSINGFEE, SALESTAX,STRING_TO_DATE(CHECKMAILDATE),if(trim(phar.PRESDEANUMBER)='',null,phar.PRESDEANUMBER),
@@ -74,7 +74,8 @@ if(trim(phar.PRESNPINUMBER)='',null,phar.PRESNPINUMBER),phar.PRESCRIBINGPHYSICIA
 phar.THERAPEUTICCLASS	,phar.MEDICAREBINDICATOR	,phar.MEDDCOVEREDDRUGFLAG,null pharmacyid,AMOUNTPAID pharmacy,AMOUNTPAID  membership_claims,null psychare,null simple_county,null triangles,null cover,now() created_date,now()  updated_date, 
 'sarath' created_by, 'sarath' updated_by, 'Y'active_ind, :fileId file_id, null mony, null drug_label_name, null drug_version 
  from  csv2table_amg_pharmacy phar
- join membership_claims  mc on mc.claim_id_number= phar.CLAIMNUMBER and  mc.report_month = :reportMonth
+ LEFT OUTER JOIN (select * from membership_insurance group by SRC_SYS_MBR_NBR) mi  on mi.SRC_SYS_MBR_NBR =phar.SRC_SYS_MEMBER_NBR and mi.ins_id=:insId
+ join membership_claims  mc on mc.claim_id_number= phar.CLAIMNUMBER and mc.mbr_id =mi.mbr_id and  mc.report_month = :reportMonth
  left outer join membership_claim_details mcd on mcd.mbr_claim_id =mc.mbr_claim_id  
  where mcd.mbr_claim_id is null;
  
@@ -90,48 +91,18 @@ now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by
 group by mc.mbr_id,mc.ins_id,mc.prvdr_id,mcd.activity_Month; 
 
 
-  insert into unprocessed_amg_pharmacy_claims
-(
-	unprocessed_amg_pharmacy_claim_id, report_month,file_id, remarks, prvdr_id, ins_id, IPA_CD, IPANAME, PCP_PROVIDER_NBR, PCPFIRSTNAME, PCPLASTNAME, SRC_SYS_MEMBER_NBR, 
-    MFNAME, MLNAME, MBRDOB, MBRGENDER, MEDICAIDNO, MEDICARENO, ACTIVITYDATE, ACTIVITYMONTH, CLAIMTYPE, DATEFILLED, CLAIMNUMBER, 
-    PHARMACYNUMBER, PHARMACYNAME, PHARMACYADDRLINE1, PHARMACYADDRLINE2, PHARMACYCITYNAME, PHARMACYSTATECODE, PHARMACYZIP, 
-    PHARMACYPHONENUMBER, PHARMACYNCPDPNUMBER, PHARMACYNPINUMBER, PRESCRIPTIONNUMBER, NDCNUMBER, NDCDESCRIPTION, MAILORDERIND, 
-    NUMBEROFREFILLS, METRICQUANTITY, DAYSSUPPLY, INGREDIENTCOST, DISPENSINGFEE, COPAY, SALESTAX, AMOUNTPAID, CHECKMAILDATE, 
-    TRANSACTIONSTATUS, PRESDEANUMBER, PRESNPINUMBER, PRESCRIBINGPHYSICIAN, PRESCRIBERSPECCODE, GENERICINDICATOR, THERAPEUTICCLASS, 
-    MEDICAREBINDICATOR, MEDDCOVEREDDRUGFLAG, RISK_ENTITY_TYPE, CONTRACT_YEAR, TIME_PERIOD, CONTRACT_PERIOD_START_DT, 
-    CONTRACT_PERIOD_END_DT, TRACK_MODEL, RISK_IND, PRODUCT_LABEL, PRODUCT_LVL1, PRODUCT_LVL2, PRODUCT_LVL3, PRODUCT_LVL4, 
-    PRODUCT_LVL5, PRODUCT_LVL6, PRODUCT_LVL7, MARKET_LVL1, MARKET_LVL2, MARKET_LVL3, MARKET_LVL4, MARKET_LVL5, MARKET_LVL6, 
-    MARKET_LVL7, MARKET_LVL8, RISK_RECON_COS_DESC, TIN, created_date, updated_date, created_by, updated_by
-)
-    
-select NULL, :reportMonth, :fileId, "Member not belonged to us", prvdr_id, :insId, IPA_CD, IPANAME, csv2AmgPhar.PCP_PROVIDER_NBR, PCPFIRSTNAME, PCPLASTNAME, SRC_SYS_MEMBER_NBR, 
-    MFNAME, MLNAME, STRING_TO_DATE(MBRDOB), MBRGENDER, MEDICAIDNO, MEDICARENO, STRING_TO_DATE(csv2AmgPhar.ACTIVITYDATE), csv2AmgPhar.ACTIVITYMONTH, CLAIMTYPE, 
-    STRING_TO_DATE(DATEFILLED), CLAIMNUMBER,     PHARMACYNUMBER, PHARMACYNAME, PHARMACYADDRLINE1, PHARMACYADDRLINE2, PHARMACYCITYNAME, 
-    PHARMACYSTATECODE, PHARMACYZIP, PHARMACYPHONENUMBER, PHARMACYNCPDPNUMBER, PHARMACYNPINUMBER, PRESCRIPTIONNUMBER, NDCNUMBER,
-    NDCDESCRIPTION, MAILORDERIND, NUMBEROFREFILLS, METRICQUANTITY, DAYSSUPPLY, INGREDIENTCOST, DISPENSINGFEE, COPAY, SALESTAX, AMOUNTPAID, 
-    CHECKMAILDATE, TRANSACTIONSTATUS, PRESDEANUMBER, PRESNPINUMBER, PRESCRIBINGPHYSICIAN, PRESCRIBERSPECCODE, GENERICINDICATOR, 
-    THERAPEUTICCLASS, MEDICAREBINDICATOR, MEDDCOVEREDDRUGFLAG, RISK_ENTITY_TYPE, CONTRACT_YEAR, TIME_PERIOD, STRING_TO_DATE(CONTRACT_PERIOD_START_DT), 
-    STRING_TO_DATE(CONTRACT_PERIOD_END_DT), TRACK_MODEL, RISK_IND, csv2AmgPhar.PRODUCT_LABEL, PRODUCT_LVL1, PRODUCT_LVL2, PRODUCT_LVL3, PRODUCT_LVL4, 
-    PRODUCT_LVL5, PRODUCT_LVL6, PRODUCT_LVL7, MARKET_LVL1, MARKET_LVL2, MARKET_LVL3, MARKET_LVL4, MARKET_LVL5, MARKET_LVL6, 
-    MARKET_LVL7, MARKET_LVL8, RISK_RECON_COS_DESC, TIN, NOW(), NOW(), 'sarath', 'sarath'
-from csv2table_amg_pharmacy csv2AmgPhar
-LEFT JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgPhar.SRC_SYS_MEMBER_NBR,unsigned)
-LEFT OUTER JOIN contract c on c.PCP_PROVIDER_NBR like concat ('%', trim(csv2AmgPhar.PCP_PROVIDER_NBR) ,'%')
-LEFT OUTER JOIN reference_contract rc on  c.ref_contract_Id = rc.ref_contract_Id  
-where mi.mbr_id is null;
-
-
-
+ 
 INSERT IGNORE INTO medical_loss_ratio
   (ins_id, prvdr_id, report_month, activity_month, patients, fund, prof, inst, pharmacy, unwanted_claims,  stop_loss, file_id, created_date, updated_date, created_by, updated_by)
  SELECT  
-  mam.ins_id, mam.prvdr_id,  if(mc.report_month is null,:reportMonth,mc.report_month) as  report_month , mam.activity_month CAP_PERIOD,  count( distinct if(is_cap='Y',mam.mbr_id,null)  ) patients, count(distinct if(is_cap='Y', mam.mbr_id,null) ) *150  fund,
+  mam.ins_id, mam.prvdr_id,  if(mc.report_month is null,:reportMonth,mc.report_month) as  report_month , mam.activity_month CAP_PERIOD,  cap.patients patients, cap.patients *150  fund,
 round(sum(if (claim_type = 'PROF',membership_claims,null)) ,2) as 'PROF',
  round(sum(if (claim_type = 'INST',membership_claims,null)),2) as 'INST',
   round(sum(if (claim_type = 'PHAR',membership_claims,null)),2)   as 'PHAR' ,
 round(uc.unwantedClaims ,2) unwantedClaims,
   round(stoploss,2) stoploss,  1 ,  now(),  now(),  'sarath',  'sarath'    
   FROM  membership_activity_month mam
+  join ( select sum(mm) patients,ins_id,prvdr_id,CAP_PERIOD from membership_cap_report group by ins_id,prvdr_id,CAP_PERIOD)cap on cap.cap_period=mam.activity_month and cap.prvdr_id=mam.prvdr_id and cap.ins_id=mam.ins_id
 LEFT JOIN  membership_claims mc on  mam.ins_id=mc.ins_id and mc.prvdr_id=mam.prvdr_id and mam.mbr_id=mc.mbr_id and mc.ins_id = :insId and mc.report_month= :reportMonth
 LEFT JOIN  membership_claim_details mcd on mc.mbr_claim_id=mcd.mbr_claim_id and mcd.activity_month=mam.activity_month 
 LEFT JOIN  (SELECT mc.prvdr_id,mcd.activity_month  ,sum(mcd.membership_claims)  unwantedClaims  ,

@@ -56,7 +56,7 @@
     	}
     	
     	var facilityTypeTable =	$('#facilityTypeTable').dataTable({
-    	     "sAjaxSource" :  getContextPath()+'/facilityType/list',
+    	     "sAjaxSource" :  "${context}/"+'/facilityType/list',
     	     "sAjaxDataProp" : 'data.list',
     	     "aoColumns": [
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },

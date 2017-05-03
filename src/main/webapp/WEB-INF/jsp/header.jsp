@@ -491,6 +491,8 @@ $(document).ready(function () {
 					<li><a href="${context}/${userpath}/insuranceList">Insurance</a></li>
 					<li><a href="${context}/${userpath}/providerList">Provider</a></li>
 					<li><a href="${context}/${userpath}/membershipList">Membership</a></li>
+					<li><a href="${context}/${userpath}/leadMembershipList">Lead</a></li>
+					<li><a href="${context}/${userpath}/leadMembershipTest">Lead Test</a></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"
 						role="button" aria-haspopup="true" aria-expanded="false">Admin
 							<span class="caret"></span>
@@ -578,7 +580,7 @@ $(document).ready(function () {
 					<li><a href="${context}/${userpath}/profile"> <span
 							class="glyphicon glyphicon-user"></span> ${username}
 					</a></li>
-					<li><a href="${context}/logout"><span
+					<li><a href="${context}/${userpath}/logoutURL"><span
 							class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				</ul>
 			</div>

@@ -56,7 +56,7 @@
         	}
         	
         	$('#userTable').dataTable({
-        	     "sAjaxSource" : getContextPath()+'/user/list',
+        	     "sAjaxSource" : "${context}/"+'/user/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
@@ -76,6 +76,7 @@
         	     "bProcessing": true,
         	     "bServerSide" : true,
         	     "iDisplayLength": 15,
+        	     "bStateSave": true,
         	     "fnServerData" : datatable2RestUser
         	});
 

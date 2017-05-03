@@ -122,6 +122,10 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	private Integer dose5;
 	
 	@Expose
+	@Column(name = "dose_6")
+	private Integer dose6;
+	
+	@Expose
 	@Column(name = "datepart_1")
 	private String datepart1;
 	
@@ -141,7 +145,10 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	@Column(name = "datepart_5")
 	private String datepart5;
 	
-
+	@Expose
+	@Column(name = "datepart_6")
+	private String datepart6;
+	
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "frequency_type_code", referencedColumnName = "code")
@@ -684,6 +691,34 @@ public class HedisMeasureRule extends RecordDetails implements Serializable {
 	 */
 	public void setProblemDescription(String problemDescription) {
 		this.problemDescription = problemDescription;
+	}
+
+	/**
+	 * @return the dose6
+	 */
+	public Integer getDose6() {
+		return dose6;
+	}
+
+	/**
+	 * @param dose6 the dose6 to set
+	 */
+	public void setDose6(Integer dose6) {
+		this.dose6 = dose6;
+	}
+
+	/**
+	 * @return the datepart6
+	 */
+	public String getDatepart6() {
+		return datepart6;
+	}
+
+	/**
+	 * @param datepart6 the datepart6 to set
+	 */
+	public void setDatepart6(String datepart6) {
+		this.datepart6 = datepart6;
 	}
 
 	@Override

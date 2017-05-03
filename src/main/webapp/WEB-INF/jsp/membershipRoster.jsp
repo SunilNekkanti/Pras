@@ -96,7 +96,7 @@
 			} else {
 				var validExtensions = /(\.csv|\.xls|\.xlsx)$/i;
 				if (validExtensions.test(fileName)) {
-					var url = getContextPath()
+					var url = "${context}/"
 							+ 'membership/membershipRoster/fileProcessing.do?insId='+$('#insId').val()+'&fileTypeId='+$('#fileType').val()+"&activityMonth="+$('.datepicker').val();
 					var selector = 'mbrClaim';
 					if (window.FormData !== undefined) // for HTML5 browsers

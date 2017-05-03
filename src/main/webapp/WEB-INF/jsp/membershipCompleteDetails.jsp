@@ -3,6 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
 	prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <div class="row">
 	<div class="col-sm-12" id="mbrDetails">
 		<jsp:include page="/WEB-INF/jsp/membershipEdit.jsp">
@@ -52,7 +54,7 @@
 	function modifyMbrDetails()
 	{
 		
-		var url = getContextPath()+'membership/${id}/save.do?update';
+		var url = "${context}/"+'membership/${id}/save.do?update';
 		var dataList = 	$("#membership").serialize();
 		$.ajax({
 	           type: "POST",
@@ -72,7 +74,7 @@
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'membership/${id}/save.do?delete';
+			var url = "${context}/"+'membership/${id}/save.do?delete';
 			var dataList = 	$("#membership").serialize();
 			$.ajax({
 		           type: "POST",
@@ -89,7 +91,7 @@
 		         });
 		}		
 	}
-	var source = getContextPath()+'membership/${id}/contactList';
+	var source = "${context}/"+'membership/${id}/contactList';
 	$.ajax({
 		url : source,
 	    success: function(data, textStatus, jqXHR)
@@ -102,7 +104,7 @@
 	    }
 	});
 	
-	var source = getContextPath()+'membership/${id}/detailsList';
+	var source = "${context}/"+'membership/${id}/detailsList';
 	$.ajax({
 		url : source,
 	    success: function(data, textStatus, jqXHR)
@@ -117,7 +119,7 @@
 		
 	function contact(memberId,contactId)
 	{
-		var source = getContextPath()+'membership/'+memberId+'/contact/'+contactId;
+		var source = "${context}/"+'/membership/'+memberId+'/contact/'+contactId;
 		$.ajax({
 			url : source,
 		     success: function(data, textStatus, jqXHR)
@@ -134,7 +136,7 @@
 		
 	function newContact()
 	{
-		var source = getContextPath()+'membership/${id}/contact/new';
+		var source = "${context}/"+'membership/${id}/contact/new';
 		$.ajax({
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
@@ -152,7 +154,7 @@
 	
 	function contactList()
 	{
-		var source = getContextPath()+'membership/${id}/contactList';
+		var source = "${context}/"+'membership/${id}/contactList';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -168,7 +170,7 @@
 	
 	function addContact()
 	{
-		var url = getContextPath()+'membership/${id}/contact/save.do?add'; 
+		var url = "${context}/"+'membership/${id}/contact/save.do?add'; 
 		var dataList = 	$("#contact").serializeArray();
 		$.ajax({
 	           type: "POST",
@@ -187,7 +189,7 @@
 	
 	function modifyContact()
 	{
-		var url = getContextPath()+'membership/${id}/contact/save.do?update'; 
+		var url = "${context}/"+'membership/${id}/contact/save.do?update'; 
 		var dataList = 	$("#contact").serializeArray();
 		$.ajax({
 	           type: "POST",
@@ -207,7 +209,7 @@
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'membership/${id}/contact/save.do?delete'; 
+			var url = "${context}/"+'membership/${id}/contact/save.do?delete'; 
 			var dataList = 	$("#contact").serializeArray();
 			$.ajax({
 		           type: "POST",
@@ -227,7 +229,7 @@
 	
 	function prvdr(memberId,prvdrId)
 	{
-			var url = getContextPath()+'/membership/'+prvdrId+'/providerDetails'; 
+			var url = "${context}/"+'/membership/'+prvdrId+'/providerDetails'; 
 			$.ajax({
 		          url: url,
 		          success: function(data, textStatus, jqXHR)
@@ -243,7 +245,7 @@
 	
 	function mbrNewIns()
 	{
-		var source = getContextPath()+'membership/${id}/details/new';
+		var source = "${context}/"+'membership/${id}/details/new';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -260,7 +262,7 @@
 	function mbrDetails(mbrId,mbrDetailsId)
 	{
 		
-		var source = getContextPath()+'membership/${id}/details/'+mbrDetailsId+'/display';
+		var source = "${context}/"+'membership/${id}/details/'+mbrDetailsId+'/display';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -277,7 +279,7 @@
 	function mbrInsList()
 	{
 		
-		var source = getContextPath()+'membership/${id}/detailsList';
+		var source = "${context}/"+'membership/${id}/detailsList';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -293,7 +295,7 @@
 	
 	function addMbrInsDetails()
 	{
-		var url = getContextPath()+'membership/${id}/details/save.do?add'; 
+		var url = "${context}/"+'membership/${id}/details/save.do?add'; 
 		var dataList = 	$("#membershipInsurance").serialize();
 		$.ajax({
 	           type: "POST",
@@ -312,7 +314,7 @@
 	
 	function modifyMbrInsDetails(mbrInsId)
 	{
-		var url = getContextPath()+'membership/${id}/details/'+mbrInsId+'/save.do?update'; 
+		var url = "${context}/"+'membership/${id}/details/'+mbrInsId+'/save.do?update'; 
 		var dataList = 	$("#membershipInsurance").serialize();
 		$.ajax({
 	           type: "POST",
@@ -332,7 +334,7 @@
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'membership/${id}/details/'+mbrInsId+'/save.do?delete'; 
+			var url = "${context}/"+'membership/${id}/details/'+mbrInsId+'/save.do?delete'; 
 			var dataList = 	$("#membershipInsurance").serialize();
 			$.ajax({
 		           type: "POST",
@@ -352,7 +354,7 @@
 	function membershipDetails()
 	{
 		
-		var url = getContextPath()+'/membership/${id}'; 
+		var url = "${context}/"+'/membership/${id}'; 
 		$.ajax({
 	          url: url,
 	          success: function(data, textStatus, jqXHR)
@@ -368,7 +370,7 @@
 	membershipProblemList();
 	
 	function membershipProblemList(message){
-		var source = getContextPath()+'membershipProblemList/${id}';
+		var source = "${context}/"+'membershipProblemList/${id}';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -388,7 +390,7 @@
 	}	
 	
 	function newMembershipProblem() {
-			var source = getContextPath() + 'membershipProblem/${id}/new';
+			var source = "${context}/"+ 'membershipProblem/${id}/new';
 			$.ajax({
 				url : source,
 				success : function(data, textStatus, jqXHR) {
@@ -404,7 +406,7 @@
 	
 	
 	function addMembershipProblem() {
-		var url = getContextPath() + 'membershipProblem/${id}/save.do?add';
+		var url = "${context}/"+ 'membershipProblem/${id}/save.do?add';
 		$("#mbr").val('${id}')
 		var dataList = $("#membershipProblem").serialize();
 		$.ajax({
@@ -426,7 +428,7 @@
 	}
 	
 	function membershipProblemDetails(mbrPbmId) {
-		var source = getContextPath() + 'membershipProblem/'+mbrPbmId;
+		var source = "${context}/"+ 'membershipProblem/'+mbrPbmId;
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -440,7 +442,7 @@
 	}
 	
 	function modifyMembershipProblem() {
-		var url = getContextPath() + 'membershipProblem/${id}/save.do?update';
+		var url = "${context}/"+ 'membershipProblem/${id}/save.do?update';
 		$("#mbr").val('${id}')
 		var dataList = $("#membershipProblem").serialize();
 		$.ajax({
@@ -462,7 +464,7 @@
 	}
 	
 	function deleteMembershipProblem() {
-		var url = getContextPath() + 'membershipProblem/${id}/save.do?delete';
+		var url = "${context}/"+ 'membershipProblem/${id}/save.do?delete';
 		$("#mbr").val('${id}')
 		var dataList = $("#membershipProblem").serialize();
 		$.ajax({

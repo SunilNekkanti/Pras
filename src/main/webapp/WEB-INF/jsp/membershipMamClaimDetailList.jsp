@@ -65,7 +65,7 @@
 						var $selectIns = $('#extFilterIns');
 						$
 								.getJSON(
-										getContextPath()
+										"${context}/"
 												+ '/insurance/list?pageNo=0&pageSize=200',
 										function(data) {
 
@@ -100,7 +100,7 @@
 							var $selectPrvdr = $('#extFilterPrvdr');
 							$
 									.getJSON(
-											getContextPath()
+											"${context}/"
 													+ '/insurance/providerlist?insId='
 													+ insSelectValue,
 											function(data) {
@@ -757,7 +757,7 @@
 
 												],
 												"bDestroy" : true,
-												"sAjaxSource" : getContextPath()
+												"sAjaxSource" : "${context}/"
 														+ '/reports/membershipMamClaim/list',
 												"sAjaxDataProp" : 'data.list',
 												"aoColumns" : aoColumns,

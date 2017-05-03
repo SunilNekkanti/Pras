@@ -58,7 +58,7 @@ $(document).ready(function() {
 		
 	
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"mlrInsu\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -85,7 +85,7 @@ $(document).ready(function() {
 			     
 				$('select[id="mlrInsu"]').val(insSelectValue);
  			 var $selectPrvdr = $('#extFilterPrvdr');
- 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+ 	    	  $.getJSON("${context}/"+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
  				     var s = $('<select id=\"mlrPrvdr\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
@@ -123,38 +123,42 @@ $(document).ready(function() {
 		 
 		 var reportDateDropdown = function(){
 			 insSelectValue= $("#mlrInsu option:selected").val();
-			 prvdr_id 	= dropDownSelectedValue("mlrPrvdr",false, false);
-			 var params = { insId:insSelectValue, prvdrId:prvdr_id, pageNo:0, pageSize:200 };
-	 	    	var str = jQuery.param( params );
-	 	    
-	 	    	  $.getJSON(getContextPath()+'/mlrReportDate/list?'+str, function(data){
-					    
-					  //clear the current content of the select
-					   var $selectReportDat = $('#extFilterReportDate');
-					     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" >');
-					     //iterate over the data and append a select option
-					     $.each(data.data.list, function(key, val){
-					    	 if(key == 0) {
-					    		 s.append('<option value="'+val.reportMonth+'" Selected>' + val.reportMonth +'</option>');
-					    	 }  else {
-					    		 s.append('<option value="'+val.reportMonth+'">' + val.reportMonth +'</option>');
-					    	 }
-					    	 
-					     });
-					     
-					     s.append('</select>');
-					     $selectReportDat.html(s);
-					    
-					     
-					     if(data.data.list.length < 1)
-					    	 	$("#medicalLossRatioGenerate").hide();
-					     else
-					    	 $("#medicalLossRatioGenerate").show();
-					     
-				 }).success(function() { 
-					reportDateSelectValue= $("#mlrReportDate option:selected").val();
-					$('select[id="mlrReportDate"]').val(reportDateSelectValue);
-		    	 });
+			 if(insSelectValue){
+				 prvdr_id 	= dropDownSelectedValue("mlrPrvdr",false, false);
+				 if(prvdr_id){
+					 var params = { insId:insSelectValue, prvdrId:prvdr_id, pageNo:0, pageSize:200 };
+			 	    	var str = jQuery.param( params );
+			 	    
+			 	    	  $.getJSON("${context}/"+'/mlrReportDate/list?'+str, function(data){
+							    
+							  //clear the current content of the select
+							   var $selectReportDat = $('#extFilterReportDate');
+							     var s = $('<select id=\"mlrReportDate\" style=\"width:150px;\" class=\"btn btn-default\" >');
+							     //iterate over the data and append a select option
+							     $.each(data.data.list, function(key, val){
+							    	 if(key == 0) {
+							    		 s.append('<option value="'+val.reportMonth+'" Selected>' + val.reportMonth +'</option>');
+							    	 }  else {
+							    		 s.append('<option value="'+val.reportMonth+'">' + val.reportMonth +'</option>');
+							    	 }
+							    	 
+							     });
+							     
+							     s.append('</select>');
+							     $selectReportDat.html(s);
+							    
+							     
+							     if(data.data.list.length < 1)
+							    	 	$("#medicalLossRatioGenerate").hide();
+							     else
+							    	 $("#medicalLossRatioGenerate").show();
+							     
+						 }).success(function() { 
+							reportDateSelectValue= $("#mlrReportDate option:selected").val();
+							$('select[id="mlrReportDate"]').val(reportDateSelectValue);
+				    	 });
+				 }
+			 }
 		 }
     	  
     	  
@@ -319,7 +323,7 @@ function dropDownSelectedValue(elementId, text, index){
 					  "pageSize":500, "pageNo":0};
 		
 		var str = jQuery.param( params );
-		var url =  getContextPath()+'/medicalLossRatio/list?'+str;
+		var url =  "${context}/"+'/medicalLossRatio/list?'+str;
 	 	$.ajax({
 		  url: url,
 		  dataType: "json",
@@ -365,7 +369,7 @@ function dropDownSelectedValue(elementId, text, index){
 							}
 							
 							else if( tdindex <= 4  ||  json.data[index][4] == "PATIENTS" ) {
-									$("#"+table+" tbody tr:last").append("<td style='width:650px'>"+tdvalue+"</td>");
+									$("#"+table+" tbody tr:last").append("<td style='width:650px'>"+tdvalue +"</td>");
 							}else{
 								$("#"+table+" tbody tr:last").append("<td>$"+tdvalue+"</td>");
 							}
@@ -455,7 +459,7 @@ function dropDownSelectedValue(elementId, text, index){
 	    		 
 	    		$.each(json.data, function( index, text) {
   	    			
-  	    			if(index < json.data.length  && index > 0){ 
+  	    			if(index < json.data.length && index > 0){ 
   	    				if(json.data[index][thindex] == null) { json.data[index][thindex] = 0; }
   	    				val = json.data[index][4]+""+ json.data[index][3]+""+headerText;	
   	    				if(summaryList["'"+val+"'"]){
@@ -496,7 +500,7 @@ function dropDownSelectedValue(elementId, text, index){
 		    					}else if(val != 'PATIENTS'){
 		    						$("#"+table+" tbody tr:last").append('<td>$'+ summaryList["'"+value+"'"].formatMoney(2, '.', ',')  +'</td>');
 		    					}else{
-		    						$("#"+table+" tbody tr:last").append('<td>'+  summaryList["'"+value+"'"]  +'</td>');
+		    						$("#"+table+" tbody tr:last").append('<td>'+  Math.round(summaryList["'"+value+"'"] *100)/100  +'</td>');
 		    					}
 		    				}
 		    			}
@@ -523,10 +527,10 @@ function dropDownSelectedValue(elementId, text, index){
 		     $("#unwantedClaims tbody").empty();
 				var url ;
 				if(isUnwanted){
-					url= getContextPath()+"/unwantedClaims/list";
+					url= "${context}/"+"/unwantedClaims/list";
 					$(".modal-title").html( "Unwanted Claim Details - "+prvdrName);
 				}else{
-					url= getContextPath()+"/stoploss/list";
+					url= "${context}/"+"/stoploss/list";
 					$(".modal-title").html( "Stop Loss Details - "+prvdrName);
 				}
 				showModal($(".modal-title").html(), "unwantedClaims")

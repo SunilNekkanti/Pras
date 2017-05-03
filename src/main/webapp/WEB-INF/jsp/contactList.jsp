@@ -64,6 +64,11 @@
 													onclick="return contact(${cntct.refContact.ins.id},${cntct.id})"
 													href="javascript:void(0)" rel='tab'>Edit</a>
 											</c:when>
+											<c:when test="${cntct.refContact.leadMbr != null}">
+												<a
+													onclick="return contact(${cntct.refContact.leadMbr.id},${cntct.id})"
+													href="javascript:void(0)" rel='tab'>Edit</a>
+											</c:when>
 											<c:otherwise>
 											issue
 										</c:otherwise>
@@ -84,6 +89,11 @@
 											<c:when test="${cntct.refContact.ins != null}">
 												<a
 													onclick="return contact(${cntct.refContact.ins.id},${cntct.id})"
+													href="javascript:void(0)" rel='tab'>View</a>
+											</c:when>
+											<c:when test="${cntct.refContact.leadMbr != null}">
+												<a
+													onclick="return contact(${cntct.refContact.leadMbr.id},${cntct.id})"
 													href="javascript:void(0)" rel='tab'>View</a>
 											</c:when>
 											<c:otherwise>

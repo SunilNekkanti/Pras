@@ -892,14 +892,14 @@ public class ContractController {
 		List<Contract> contracts = (List<Contract>) page.getList();
 		Set<Insurance> insList = new HashSet<>();
 		insList.clear();
-		contracts.forEach(contract1 -> {
-			if (contract1.getActiveInd() == 'Y' && contract1.getReferenceContract().getActiveInd() == 'Y'
-					&& contract1.getReferenceContract().getIns() != null) {
+		contracts.forEach(contractitem -> {
+			if (contractitem.getActiveInd() == 'Y' && contractitem.getReferenceContract().getActiveInd() == 'Y'
+					&& contractitem.getReferenceContract().getIns() != null) {
 
-				if (contract1.getReferenceContract().getPrvdr() == null) {
-					insList.add(contract1.getReferenceContract().getIns());
-				} else if (contract1.getReferenceContract().getPrvdr().getId() == id && add) {
-					insList.remove(contract1.getReferenceContract().getIns());
+				if (contractitem.getReferenceContract().getPrvdr() == null) {
+					insList.add(contractitem.getReferenceContract().getIns());
+				} else if (contractitem.getReferenceContract().getPrvdr().getId() == id && add) {
+					insList.remove(contractitem.getReferenceContract().getIns());
 				}
 			}
 		});

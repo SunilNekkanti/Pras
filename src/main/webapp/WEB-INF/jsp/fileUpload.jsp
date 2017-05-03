@@ -150,25 +150,22 @@ $.ajax( {
 
 var $checkedCnt = 0;
 var fileList =	$('#fileList').DataTable({
-     "sAjaxSource" :  getContextPath()+'/file/list',
+     "sAjaxSource" :  "${context}/"+'/file/list',
      "sAjaxDataProp" : 'data.list',
      "aoColumns": [
                    { "mDataProp": "id","bSearchable" : true, "bSortable" : false },
                    { "mDataProp": "fileName","bSearchable" : true, "bSortable" : true},
                    { "mDataProp": "fileType.description","bSearchable" : true, "bSortable" : true},
                    { "mDataProp": "fileType.ins.name","bSearchable" : true, "bSortable" : true, "sDefaultContent": "" }
-                  
-                  
                ],
                
       "aoColumnDefs": [ 
                		   
                        {   "visible": false,	"aTargets": [ 0 ]  }
-                      
-            		  
-      ],          
+				      ],          
      "bLengthChange": false,
      "iDisplayLength": 15,
+     "bStateSave": true,
      "sPaginationType": "full_numbers",
      "bProcessing": true,
      "bServerSide" : true,
@@ -215,7 +212,7 @@ function fileUploadAndProcessing() {
 					}
 					var fileTypeText = $("#fileType option:selected").text();
 					var formData = new FormData($('#mbrClaim')[0]);
-					var ajaxUrl = getContextPath()
+					var ajaxUrl = "${context}/"
 					+ 'reports/claim/fileProcessing.do';
 					formData.append('fileUpload',$('input[type=file]')[0].files[0]);
 					if(fileTypeText.indexOf("Pharmacy") != -1)
@@ -269,7 +266,7 @@ function fileUploadAndProcessing() {
 				  $(".fileType").show();
 				  
 					var $selectFileTypeList = $('#fileTypeList');
-					$.getJSON(getContextPath()+ '/insurance/fileTypeList?insId='+ insSelectValue,
+					$.getJSON("${context}/"+ '/insurance/fileTypeList?insId='+ insSelectValue,
 					function(data) {
 
 										//clear the current content of the select

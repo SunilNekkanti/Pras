@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:set var="context"
+	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
 $(document).ready(function() {
 	
@@ -28,7 +30,7 @@ $(document).ready(function() {
 		
 		var result = ["JAN", "FEB", "MAR","APR","MAY", "JUN", "JUL","AUG","SEP","OCT", "NOV", "DEC"];
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -55,7 +57,7 @@ $(document).ready(function() {
 			     
 				$('select[id="insu"]').val(insSelectValue)
  			 var $selectPrvdr = $('#extFilterPrvdr');
- 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+ 	    	  $.getJSON("${context}/"+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
  				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -240,7 +242,7 @@ $(document).ready(function() {
 	        	             
 		                   ],
   	         "bDestroy" : true,	
-     	     "sAjaxSource" : getContextPath()+'/membership/membershipActivityMonth/list',
+     	     "sAjaxSource" : "${context}/"+'/membership/membershipActivityMonth/list',
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns":  aoColumns,      
      	     "bLengthChange": false,

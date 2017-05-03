@@ -17,9 +17,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,8 +189,8 @@ public class PrasUtil {
 	}
 
 	public static void getHeapSize() {
+		@SuppressWarnings("unused")
 		long heapsize = Runtime.getRuntime().totalMemory();
-		System.out.println("heapsize is :: " + heapsize);
 	}
 
 	public static JasperReport getCompiledFile(String fileName, HttpServletRequest request) throws JRException {
@@ -298,4 +301,26 @@ public class PrasUtil {
 		return sql;
 	}
 	
+	public static Date getDateWithFormatFromString(String dateInString, String dateFormat){
+		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+	     try {
+
+	         Date date = formatter.parse(dateInString);
+	         System.out.println(date);
+	         System.out.println(formatter.format(date));
+	         return date;
+	     } catch (ParseException e) {
+	         e.printStackTrace();
+	     }
+	     return null;
+	     
+	}
+	
+	public static String getDateWithFormatFromString(Date date, String dateFormat){
+		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+            String dateString =   formatter.format(date);
+	         System.out.println(formatter.format(date));
+	         return dateString;
+	     
+	}
 }

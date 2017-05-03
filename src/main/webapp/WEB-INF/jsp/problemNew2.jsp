@@ -87,7 +87,7 @@ $.ajax( {
   	
         // ICD POPUP   	
    	$('#icdListTable').dataTable({
-   	     "sAjaxSource" : getContextPath()+'/icd/icdMeasureLists',
+   	     "sAjaxSource" : "${context}/"+'/icd/icdMeasureLists',
    	     "sAjaxDataProp" : 'data.list',
    	     "aoColumns": [
 			 { "mData" : "id",  

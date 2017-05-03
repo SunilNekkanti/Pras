@@ -57,7 +57,7 @@
     	}
     	
     	var attPhysicianTable =	$('#attPhysicianTable').dataTable({
-    	     "sAjaxSource" :  getContextPath()+'/attPhysician/list',
+    	     "sAjaxSource" :  "${context}/attPhysician/list",
     	     "sAjaxDataProp" : 'data.list',
     	     "aoColumns": [
                            { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },

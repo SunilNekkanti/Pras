@@ -53,7 +53,7 @@ $.ajax( {
   	}
   	
   	$('#hedisMeasureRuleTable').dataTable({
-  	     "sAjaxSource" : getContextPath()+'/hedisMeasureRule/hedisMeasureRuleLists',
+  	     "sAjaxSource" : "${context}/"+'/hedisMeasureRule/hedisMeasureRuleLists',
   	     "sAjaxDataProp" : 'data.list',
   	     "aoColumns": [
                          { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },

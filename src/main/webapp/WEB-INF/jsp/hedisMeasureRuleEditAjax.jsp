@@ -245,7 +245,7 @@
 						$('#cptListTable')
 								.dataTable(
 										{
-											"sAjaxSource" : getContextPath()
+											"sAjaxSource" : "${context}/"
 													+ '/hedisMeasureRule/'
 													+ hedisRuleId
 													+ '/cpt/cptMeasureLists',
@@ -302,7 +302,7 @@
 						$('#icdListTable')
 								.dataTable(
 										{
-											"sAjaxSource" : getContextPath()
+											"sAjaxSource" : "${context}/"
 													+ '/hedisMeasureRule/'
 													+ hedisRuleId
 													+ '/icd/icdMeasureLists',

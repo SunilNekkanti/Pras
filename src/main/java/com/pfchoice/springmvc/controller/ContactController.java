@@ -1,5 +1,6 @@
 package com.pfchoice.springmvc.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Contact;
 import com.pfchoice.core.entity.Insurance;
+import com.pfchoice.core.entity.LeadMembership;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.entity.ReferenceContact;
@@ -35,6 +37,7 @@ import com.pfchoice.core.entity.State;
 import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.ContactService;
 import com.pfchoice.core.service.InsuranceService;
+import com.pfchoice.core.service.LeadMembershipService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.ProviderService;
 import com.pfchoice.core.service.StateService;
@@ -66,6 +69,9 @@ public class ContactController {
 
 	@Autowired
 	private InsuranceService insuranceService;
+	
+	@Autowired
+	private LeadMembershipService leadMembershipService;
 
 	@Autowired
 	@Qualifier("contactValidator")
@@ -269,9 +275,9 @@ public class ContactController {
 	 * @param username
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/membership/{id}/contact/save.do",
-			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
-	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact, Model model,
+	@RequestMapping(value = { "/admin/leadMembership/{id}/contact/save.do",
+			"/user/leadMembership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
+	public String deletLeadeMembershipContactAction(@PathVariable Integer id, @Validated Contact contact, Model model,
 			@ModelAttribute("username") String username) {
 
 		if (null != contact.getId()) {
@@ -691,5 +697,166 @@ public class ContactController {
 		Pagination pagination = contactService.getPage(pageNo, pageSize, sSearch, sort, sortdir);
 		logger.info("returning provider Contact List");
 		return Message.successMessage(CommonMessageContent.PROVIDER_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/contactList", "/user/leadMembership/{id}/contactList" })
+	public String handleRequestLeadMembershipContact(@PathVariable Integer id, Model model) {
+
+		List<Contact> listBean = contactService.findAllContactsByRefId("leadMembership", id);
+		model.addAttribute("contactList", listBean);
+
+		return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
+	}
+	
+	/**
+	 * @param id
+	 * @param username
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/contact/new", "/user/leadMembership/{id}/contact/new" })
+	public String addLeadMembershipContactPage(@PathVariable Integer id, Model model) {
+		logger.info("membership id is" + id);
+		Contact contact = createContactModel();
+		model.addAttribute("contact", contact);
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+	}
+	
+	
+	/**
+	 * @param id
+	 * @param cntId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/contact/{cntId}",
+			"/user/leadMembership/{id}/contact/{cntId}" }, method = RequestMethod.GET)
+	public String updateLeadMembershipContact1Page(@PathVariable Integer id, @PathVariable Integer cntId, Model model) {
+		logger.info("membership id is" + id);
+		Contact dbContact = contactService.findById(cntId);
+		if (dbContact == null) {
+			dbContact = createContactModel();
+		}
+		final Integer stateId = dbContact.getStateCode().getCode();
+		List<ZipCode> zipCodeList = zipCodeService.findByStateCode(stateId);
+		model.addAttribute("zipCodeList", zipCodeList);
+		model.addAttribute("contact", dbContact);
+		logger.info("Returning contactEdit.jsp page");
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+	}
+	
+	/**
+	 * @param id
+	 * @param contact
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/contact/save.do",
+			"/user/leadMembership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "add" })
+	public String saveLeadMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("membership id is" + id);
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning contactEdit.jsp page");
+			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+		}
+
+		LeadMembership dbLeadMembership = leadMembershipService.findById(id);
+		logger.info("Returning membership.getId()" + dbLeadMembership.getId());
+
+		model.addAttribute("contact", contact);
+		contact.setCreatedBy(username);
+		contact.setUpdatedBy(username);
+		contact.setFileId(1);
+		ReferenceContact refCnt = createRefContactModel();
+		refCnt.setCreatedBy(username);
+		refCnt.setUpdatedBy(username);
+		refCnt.setCreatedDate(new Date());
+		refCnt.setUpdatedDate(new Date());
+		refCnt.setLeadMbr(dbLeadMembership);
+		contact.setRefContact(refCnt);
+		logger.info("Returning contactEditSuccess.jsp page after create");
+		contact.setCreatedDate(new Date());
+		contact.setUpdatedDate(new Date());
+		contactService.save(contact);
+		model.addAttribute("Message", "Lead Member Contact Added Successfully");
+		List<Contact> listBean = contactService.findAllContactsByRefId("leadMembership", id);
+		model.addAttribute("contactList", listBean);
+
+		return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
+	}
+
+	/**
+	 * @param id
+	 * @param contact
+	 * @param bindingResult
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/contact/save.do",
+			"/user/leadMembership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
+	public String updateLeadMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
+			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+		logger.info("membership id is" + id);
+		contact.setActiveInd('Y');
+		if (bindingResult.hasErrors()) {
+			contact.setActiveInd('Y');
+			logger.info("Returning contactEdit.jsp page");
+			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+		}
+		if (null != contact.getId()) {
+			logger.info("Returning ContactEditSuccess.jsp page before update");
+			contact.setUpdatedBy(username);
+			contact.setCreatedBy(username);
+			contact.getRefContact().setUpdatedBy(username);
+			contact.getRefContact().setCreatedBy(username);
+			contact.getRefContact().setActiveInd('Y');
+			contactService.update(contact);
+			model.addAttribute("Message", "Lead Member Contact Updated Successfully");
+			List<Contact> listBean = contactService.findAllContactsByRefId("leadMembership", id);
+			model.addAttribute("contactList", listBean);
+
+			return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
+		}
+
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+	}
+
+	/**
+	 * @param id
+	 * @param contact
+	 * @param model
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/membership/{id}/contact/save.do",
+			"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "delete" })
+	public String deleteMembershipContactAction(@PathVariable Integer id, @Validated Contact contact, Model model,
+			@ModelAttribute("username") String username) {
+
+		if (null != contact.getId()) {
+			logger.info("Returning ContactEditSuccess.jsp page after update");
+			contact.setActiveInd('N');
+			contact.setUpdatedBy(username);
+			contact.setCreatedBy(username);
+			contact.getRefContact().setUpdatedBy(username);
+			contact.getRefContact().setCreatedBy(username);
+			contact.getRefContact().setActiveInd('N');
+			contactService.update(contact);
+			model.addAttribute("Message", "Lead Member Contact Deleted Successfully");
+			List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
+			model.addAttribute("contactList", listBean);
+			return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
+		}
+		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 	}
 }

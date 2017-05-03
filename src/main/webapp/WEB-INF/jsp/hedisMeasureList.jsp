@@ -55,7 +55,7 @@
         	}
         	
         	$('#hedisMeasureTable').dataTable({
-        	     "sAjaxSource" : getContextPath()+'/hedis/hedisMeasureLists',
+        	     "sAjaxSource" : "${context}/"+'/hedis/hedisMeasureLists',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },
@@ -74,6 +74,7 @@
                   ],          
         	     "bLengthChange": false,
         	     "iDisplayLength": 15,
+        	     "bStateSave": true,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,

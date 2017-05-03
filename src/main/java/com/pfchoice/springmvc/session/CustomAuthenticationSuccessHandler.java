@@ -33,10 +33,11 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			Authentication authentication) throws IOException, ServletException {
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = httpServletRequest.getSession(false);
 		String redirectUrl = null;
 		if (session != null) {
 			redirectUrl = (String) session.getAttribute("LAST_PAGE");
+			System.out.println("session != null redirectUrl "+redirectUrl);
 		}
 		User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		session.setAttribute(SystemDefaultProperties.ID, authUser.getUsername());
@@ -63,7 +64,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 		// since we have created our custom success handler, its up to us to
 		// where
 		// we will redirect the user after successfully login
-		if (redirectUrl != null) {
+		if (redirectUrl != null && !redirectUrl.endsWith("/") && !redirectUrl.endsWith("/index")) {
 			httpServletResponse.sendRedirect(redirectUrl);
 		} else {
 			httpServletResponse.sendRedirect(TileDefinitions.HOME.toString());

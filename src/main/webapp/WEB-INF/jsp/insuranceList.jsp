@@ -58,7 +58,7 @@
     	}
     	
     	var insuranceTable =	$('#insuranceTable').dataTable({
-    	     "sAjaxSource" :  getContextPath()+'/insurance/list',
+    	     "sAjaxSource" :  "${context}/"+'/insurance/list',
     	     "sAjaxDataProp" : 'data.list',
     	     "aoColumns": [
                            { "mDataProp": "name","bSearchable" : true, "bSortable" : true,"sWidth" : "20%"},

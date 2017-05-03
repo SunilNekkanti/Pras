@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
 
@@ -29,7 +29,6 @@
 	src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
 
 
-
 </head>
 
 <body>
@@ -37,6 +36,15 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">
 				Insurance Details <span class="clrRed">${Message}</span>
+					<c:choose>
+						<c:when
+							test="${fn:length(membershipDetailsList) < 1 }">
+								<button id="mbrInsList" class="btn btn-danger pull-right btn-xs"
+								onclick="return mbrNewIns();">
+								<span class="glyphicon glyphicon-plus-sign "></span> New Insurance
+							</button>
+						</c:when>
+					</c:choose>		
 			</div>
 			<div class="panel-body" id="tablediv">
 				<table id="tab"

@@ -24,7 +24,7 @@ $(document).ready(function() {
 		});
 	 		
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"insu\"  class=\"btn btn-default\" style=\"width:150px;\">');
@@ -53,7 +53,7 @@ $(document).ready(function() {
 				}
 				
  			 var $selectPrvdr = $('#extFilterPrvdr');
- 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+ 	    	  $.getJSON("${context}/"+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
  				     var s = $('<select id=\"prvdr\"  class=\"btn btn-default\" style=\"width:150px;\">');
@@ -109,7 +109,7 @@ $(document).ready(function() {
 		 	 restParams.push({"name" : "effYear" , "value" : 2016  });
 		 	 $.ajax({
 		 		  method: "GET",
-		 		  url: getContextPath()+"/problem/list",
+		 		  url: "${context}/"+"/problem/list",
 		 		  data: restParams
 		 	})
 		 	 .done(function( data ) {
@@ -360,7 +360,7 @@ $(document).ready(function() {
 	        	             
 		                   ],
   	         "bDestroy" : true,	
-     	     "sAjaxSource" : getContextPath()+'/reports/problemMembership/list',
+     	     "sAjaxSource" : "${context}/"+'/reports/problemMembership/list',
      	     "sAjaxDataProp" : 'data.list',
               "aoColumns":  aoColumns,      
      	     "bLengthChange": false,

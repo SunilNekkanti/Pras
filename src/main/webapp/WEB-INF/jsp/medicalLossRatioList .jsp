@@ -52,7 +52,7 @@ $(document).ready(function() {
 		
 	
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"mlrInsu\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -79,7 +79,7 @@ $(document).ready(function() {
 			     
 				$('select[id="mlrInsu"]').val(insSelectValue);
  			 var $selectPrvdr = $('#extFilterPrvdr');
- 	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+ 	    	  $.getJSON("${context}/"+'/insurance/providerlist?insId='+insSelectValue, function(data){
  				    
  				     //clear the current content of the select
  				     var s = $('<select id=\"mlrPrvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -112,7 +112,7 @@ $(document).ready(function() {
 			 var params = { insId:insSelectValue, prvdrId:prvdrSelectValue, pageNo:0, pageSize:200 };
 	 	    	var str = jQuery.param( params );
 	 	    
-	 	    	  $.getJSON(getContextPath()+'/mlrReportDate/list?'+str, function(data){
+	 	    	  $.getJSON("${context}/"+'/mlrReportDate/list?'+str, function(data){
 					    
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFilterReportDate');
@@ -286,7 +286,7 @@ $(document).ready(function() {
 		var params = { "insId":ins_id, "prvdrId":prvdr_id, "repMonth":reportMonth, "category":category,
 					  "pageSize":500, "pageNo":0};
 		var str = jQuery.param( params );
-		var url =  getContextPath()+'/medicalLossRatio/list?'+str;
+		var url =  "${context}/"+'/medicalLossRatio/list?'+str;
 	 	$.ajax({
 		  url: url,
 		  dataType: "json",
@@ -481,10 +481,10 @@ $(document).ready(function() {
 		     $("#unwantedClaims tbody").empty();
 				var url ;
 				if(isUnwanted){
-					url= getContextPath()+"/unwantedClaims/list";
+					url= "${context}/"+"/unwantedClaims/list";
 					$(".modal-title").html( "Unwanted Claim Details - "+prvdrName);
 				}else{
-					url= getContextPath()+"/stoploss/list";
+					url= "${context}/"+"/stoploss/list";
 					$(".modal-title").html( "Stop Loss Details - "+prvdrName);
 				}
 				showModal($(".modal-title").html(), "unwantedClaims")

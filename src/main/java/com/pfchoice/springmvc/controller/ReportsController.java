@@ -314,7 +314,7 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/reports/hospitalization/fileProcessing.do",
 			"/user/reports/hospitalization/fileProcessing.do", "/admin/reports/claim/fileProcessing.do",
 			"/user/reports/claim/fileProcessing.do" })
-	public String mbrHospitalizationFileProcessing(Model model, @ModelAttribute("username") String username,
+	public String fileProcessing(Model model, @ModelAttribute("username") String username,
 			@RequestParam(required = false, value = "insId") Integer insId,
 			@RequestParam(required = false, value = "fileUpload") CommonsMultipartFile fileUpload,
 			@RequestParam(required = false, value = "claimOrHospital") Integer claimOrHospital,
@@ -424,7 +424,7 @@ public class ReportsController {
 				return Message.failMessage("similar file already processed in past");
 			}
 
-			LOG.info("Loading  membershipRoster data");
+			LOG.info("Loading  membershipRoster data - fileId"+fileId);
 			Integer loadedData = membershipService.loadDataCSV2Table(fileName, mbrRoster);
 
 			if (loadedData < 1) {
@@ -997,10 +997,9 @@ public class ReportsController {
 	@RequestMapping(value = { "/admin/medicalLossRatio/list" }, method = RequestMethod.GET)
 	public Message viewAdminMLRList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) String prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) String prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
-
+			@RequestParam(required = true) String repMonth, @RequestParam(required = true) String category) {
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category ,"Y");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
@@ -1021,10 +1020,9 @@ public class ReportsController {
 	@RequestMapping(value = {  "/user/medicalLossRatio/list" }, method = RequestMethod.GET)
 	public Message viewUserMLRList(@RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize,@RequestParam(required = true) Integer insId,
-			@RequestParam(required = false) String prvdrId, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) String prvdrId, @RequestParam(required = false) String sSearch,
 			@RequestParam(required = false) String sort, @RequestParam(required = false) String sortdir,
-			@RequestParam(required = false) String repMonth, @RequestParam(required = false) String category) {
-		
+			@RequestParam(required = true) String repMonth, @RequestParam(required = true) String category) {
 		List<Object[]> entities = mlrService.reportQuery("sarath20160921",insId, prvdrId, repMonth,category, "N");
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(entities));
@@ -1046,7 +1044,6 @@ public class ReportsController {
 			@RequestParam(required = false) String sortdir, @RequestParam(required = false) String claimType,
 			@RequestParam(required = false) String category, @RequestParam(required = false) String generateDate,
 			@RequestParam(required = false) String roster, 	@RequestParam(required = false) String cap) {
-
 		Pagination pagination = mlrService.getMlrReportDate(pageNo, pageSize, insId, prvdrId, sort, sortdir);
 		LOG.info("returning insuranceList");
 		return Message.successMessage(CommonMessageContent.INSURANCE_LIST, JsonConverter.getJsonObject(pagination));

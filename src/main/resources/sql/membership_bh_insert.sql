@@ -164,9 +164,9 @@ where m1<=cast(now() as date)
 order by m1;
 
 
-insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,file_id,created_date,updated_date,created_by,updated_by)
+insert into membership_activity_month (mbr_id,ins_id,prvdr_id,activity_month,is_roster,is_cap,file_id,created_date,updated_date,created_by,updated_by)
 select  distinct
-mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth, :fileId fileId,
+mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth,'Y','Y', :fileId fileId,
 now() created_date,now() updated_date,'sarath' created_by,'sarath' updated_by  
 from  membership  m  
 join  membership_insurance mi on  m.mbr_id = mi.mbr_id and mi.ins_id=:insId 
@@ -179,6 +179,7 @@ join  activity_month_span ams on ams.activitymonth  between   DATE_FORMAT(mi.eff
 left outer join membership_activity_month mam on mam.mbr_id=mi.mbr_id and mam.prvdr_id =mp.prvdr_id and mam.ins_id= mi.ins_id  and mam.activity_month=ams.activityMonth
 where    mam.activity_month is null 
 group by mi.mbr_id,mi.ins_id,mp.prvdr_id,  ams.activityMonth; 
+
 
 insert ignore into reference_contact (mbr_id, created_date,updated_date,created_by,updated_by) 
 select m.Mbr_Id ,now() created_date,now()updated_date, 'sarath','sarath' from membership m

@@ -53,7 +53,7 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 	
 	@Expose
 	@Column(name = "patients")
-	private Integer patients;
+	private BigDecimal patients;
 	
 	@Expose
 	@Column(nullable = true, name = "fund")
@@ -138,11 +138,11 @@ public class MedicalLossRatio extends RecordDetails implements Serializable {
 		this.activityMonth = activityMonth;
 	}
 
-	public Integer getPatients() {
+	public BigDecimal getPatients() {
 		return patients;
 	}
 
-	public void setPatients(Integer patients) {
+	public void setPatients(BigDecimal patients) {
 		this.patients = patients;
 	}
 

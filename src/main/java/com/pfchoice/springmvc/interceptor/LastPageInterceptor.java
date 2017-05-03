@@ -26,6 +26,7 @@ public class LastPageInterceptor extends HandlerInterceptorAdapter {
 																					// 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0); // Proxies.
+		
 		return true;
 	};
 
@@ -33,7 +34,8 @@ public class LastPageInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			org.springframework.web.servlet.ModelAndView modelAndView) throws Exception {
 		String uri = request.getHeader("Referer");
-		request.getSession(true).setAttribute(LAST_PAGE, uri);
+		System.out.println("Uri"+uri);
+		request.getSession().setAttribute(LAST_PAGE, uri);
 	};
 
 	public static String getLastPage() {

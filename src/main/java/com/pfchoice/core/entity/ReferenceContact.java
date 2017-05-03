@@ -33,6 +33,10 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
 	private Membership mbr;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "lead_Mbr_Id", referencedColumnName = "lead_Mbr_Id")
+	private LeadMembership leadMbr;
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
@@ -134,6 +138,20 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	 */
 	public void setCnt(final Contact cnt) {
 		this.cnt = cnt;
+	}
+	
+	/**
+	 * @return
+	 */
+	public LeadMembership getLeadMbr() {
+		return leadMbr;
+	}
+
+	/**
+	 * @param leadMbr
+	 */
+	public void setLeadMbr(LeadMembership leadMbr) {
+		this.leadMbr = leadMbr;
 	}
 
 	@Override

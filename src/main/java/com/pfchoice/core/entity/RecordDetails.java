@@ -20,12 +20,12 @@ import com.google.gson.annotations.Expose;
 public class RecordDetails {
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_date")
-	private Date createdDate;
+	@Column(name = "created_date", updatable=false)
+	private Date createdDate = new Date();
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_date")
-	private Date updatedDate;
+	@Column(name = "updated_date", updatable=false)
+	private Date updatedDate = new Date();
 
 	@Column(name = "created_by")
 	private String createdBy;
@@ -35,7 +35,7 @@ public class RecordDetails {
 
 	@Expose
 	@Column(name = "active_ind", insertable = false)
-	private Character activeInd;
+	private Character activeInd = new Character('Y');
 
 	/**
 	 * 

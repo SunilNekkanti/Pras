@@ -55,7 +55,7 @@
         	}
         	
         	$('#hedisMeasureTable').dataTable({
-        	     "sAjaxSource" : getContextPath()+'/email/list',
+        	     "sAjaxSource" : "${context}/"+'/email/list',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
                                { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ]  },

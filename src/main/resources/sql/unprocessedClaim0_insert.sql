@@ -34,6 +34,6 @@ MARKET_LVL2, MARKET_LVL3, MARKET_LVL4, MARKET_LVL5, MARKET_LVL6, MARKET_LVL7, MA
 PROC_TYPE_CD, NOW(), NOW(), 'sarath', 'sarath'
 from csv2table_amg_claim csv2AmgClaim
 LEFT JOIN membership_insurance mi on mi.SRC_SYS_MBR_NBR  =  convert(csv2AmgClaim.SRC_SYS_MEMBER_NBR,unsigned)
-LEFT OUTER JOIN contract c on c.PCP_PROVIDER_NBR like concat ('%', trim(csv2AmgClaim.PCP_PROVIDER_NBR) ,'%')
+LEFT OUTER JOIN contract c on INSTR( c.PCP_PROVIDER_NBR  , trim(csv2AmgClaim.PCP_PROVIDER_NBR))> 0
 LEFT OUTER JOIN reference_contract rc on  c.ref_contract_Id = rc.ref_contract_Id  
 where mi.mbr_id is null;

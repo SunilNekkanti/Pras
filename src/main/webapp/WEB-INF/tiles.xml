@@ -845,4 +845,60 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/profile.jsp" />
 	</definition>
 	
+	<definition name="leadMembershipNew" extends="base.definition">
+		<put-attribute name="title" value="Lead Membership" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipEdit.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipList" extends="base.definition">
+		<put-attribute name="title" value="Lead Membership List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipList.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipEdit" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipEdit.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipCompleteDetails" extends="base.definition">
+		<put-attribute name="title" value="Lead Membership" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipCompleteDetails.jsp" />
+	</definition>
+
+	<definition name="leadMembershipProviderList" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Provider List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipProviderList.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipProviderEdit" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Provider Details" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipProviderEdit.jsp" />
+	</definition>
+	
+	
+	<definition name="leadMembershipHedisMeasureList" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Hedis Measure List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipHedisMeasureList.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipHedisMeasureDetails" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Hedis Measure Details" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipHedisMeasureDetails.jsp" />
+	</definition>
+	
+<!-- lead membership claim  start-->
+
+	<definition name="leadMembershipClaimList" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Claim List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipClaimList.jsp" />
+	</definition>	
+	
+	<definition name="leadMembershipClaimEdit" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Claim Edit" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipClaimEdit.jsp" />
+	</definition>	
+	
+<!-- lead membership claim end -->
+
+	
 </tiles-definitions>  

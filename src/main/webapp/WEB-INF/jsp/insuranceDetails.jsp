@@ -91,7 +91,7 @@
 
 <script>
 	function insuranceDetails() {
-		var source = getContextPath() + 'insurance/${id}/details';
+		var source = "${context}/"+ 'insurance/${id}/details';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -104,7 +104,7 @@
 	}
 
 	function modifyInsuranceDetails() {
-		var url = getContextPath() + 'insurance/${id}/save.do?update';
+		var url = "${context}/"+ 'insurance/${id}/save.do?update';
 		var dataList = $("#insurance").serialize();
 		$.ajax({
 			type : "POST",
@@ -120,7 +120,7 @@
 	}
 	function deleteInsuranceDetails() {
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-			var url = getContextPath() + 'insurance/${id}/save.do?delete';
+			var url = "${context}/"+ 'insurance/${id}/save.do?delete';
 			var dataList = $("#insurance").serialize();
 			$.ajax({
 				type : "POST",
@@ -136,7 +136,7 @@
 		}
 	}
 
-	var source = getContextPath() + 'insurance/${id}/contractList';
+	var source = "${context}/"+ 'insurance/${id}/contractList';
 	$.ajax({
 		url : source,
 		success : function(data, textStatus, jqXHR) {
@@ -148,7 +148,7 @@
 		}
 	});
 
-	var source = getContextPath() + 'insurance/${id}/contactList';
+	var source = "${context}/"+ 'insurance/${id}/contactList';
 	$.ajax({
 		url : source,
 		success : function(data, textStatus, jqXHR) {
@@ -160,7 +160,7 @@
 	});
 
 	function contract(insuranceId, contractId, pmpmRequired) {
-		var source = getContextPath() + 'insurance/' + insuranceId
+		var source = "${context}/"+ 'insurance/' + insuranceId
 				+ '/contract/' + contractId;
 		$.ajax({
 			url : source,
@@ -176,7 +176,7 @@
 	}
 
 	function contact(insuranceId, contactId) {
-		var source = getContextPath() + 'insurance/' + insuranceId
+		var source = "${context}/"+ 'insurance/' + insuranceId
 				+ '/contact/' + contactId;
 		$.ajax({
 			url : source,
@@ -191,7 +191,7 @@
 	}
 
 	function newContract(pmpmRequired) {
-		var source = getContextPath() + 'insurance/${id}/contract/new';
+		var source = "${context}/"+ 'insurance/${id}/contract/new';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -207,7 +207,7 @@
 	}
 
 	function newContact() {
-		var source = getContextPath() + 'insurance/${id}/contact/new';
+		var source = "${context}/"+ 'insurance/${id}/contact/new';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -220,7 +220,7 @@
 	}
 
 	function contractList(pmpmRequired) {
-		var source = getContextPath() + 'insurance/${id}/contractList';
+		var source = "${context}/"+ 'insurance/${id}/contractList';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -236,7 +236,7 @@
 
 	function contactList() {
 
-		var source = getContextPath() + 'insurance/${id}/contactList';
+		var source = "${context}/"+ 'insurance/${id}/contactList';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -258,7 +258,7 @@
 			}
 		}	
 		if (pmpmRequired) {
-			var url = getContextPath() + 'insurance/${id}/contract/save.do?add';
+			var url = "${context}/"+ 'insurance/${id}/contract/save.do?add';
 			ajaxCallWithFileUpload(url, pmpmRequired, 'insuranceContractList');
 			removeNewcontract();
 		}
@@ -287,7 +287,7 @@
 		
 		
 		var error = 0;
-		var source = getContextPath() + 'insurance/${id}/insuranceProviderContractJsonList';
+		var source = "${context}/"+ 'insurance/${id}/insuranceProviderContractJsonList';
 		$.ajax({
 			url : source,
 			success : function(data, textStatus, jqXHR) {
@@ -331,7 +331,7 @@
 					return false;
 				} else {
 					if (pmpmRequired) {
-						var url = getContextPath()
+						var url = "${context}/"
 								+ 'insurance/${id}/contract/save.do?update';
 						ajaxCallWithFileUpload(url, pmpmRequired,
 								'insuranceContractList');
@@ -345,7 +345,7 @@
 
 	function deleteContract(pmpmRequired) {
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-			var source = getContextPath() + 'insurance/${id}/contractJsonList';
+			var source = "${context}/"+ 'insurance/${id}/contractJsonList';
 			$
 					.ajax({
 						url : source,
@@ -356,7 +356,7 @@
 										.append(
 												"Cannot delete because of depending Third Party Agreements");
 							} else {
-								var url = getContextPath()
+								var url = "${context}/"
 										+ 'insurance/${id}/contract/save.do?delete';
 								var dataList = $("#contract" + pmpmRequired)
 										.serialize();
@@ -381,7 +381,7 @@
 	}
 
 	function addContact() {
-		var url = getContextPath() + 'insurance/${id}/contact/save.do?add';
+		var url = "${context}/"+ 'insurance/${id}/contact/save.do?add';
 		var dataList = $("#contact").serialize();
 		$.ajax({
 			type : "POST",
@@ -397,7 +397,7 @@
 	}
 
 	function modifyContact() {
-		var url = getContextPath() + 'insurance/${id}/contact/save.do?update';
+		var url = "${context}/"+ 'insurance/${id}/contact/save.do?update';
 		var dataList = $("#contact").serialize();
 
 		$.ajax({
@@ -414,7 +414,7 @@
 	}
 	function deleteContact() {
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) {
-			var url = getContextPath()
+			var url = "${context}/"
 					+ 'insurance/${id}/contact/save.do?delete';
 			var dataList = $("#contact").serialize();
 			$.ajax({

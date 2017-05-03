@@ -4,7 +4,7 @@
 	prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<c:set var="context" value="${pageContext.request.contextPath}/${userpath}" />
 <div class="panel-group">
 	<div class="panel panel-success">
 		<div class="panel-heading">
@@ -174,7 +174,7 @@
 			     var $select = $('#zip');
 			   
 			   //request the JSON data and parse into the select element
-				   $.getJSON(getContextPath()+'contact/state/'+stateId, function(data){
+				   $.getJSON("${context}/"+'contact/state/'+stateId, function(data){
 				   }).success(function(data) 
 				   {  
 					    //clear the current content of the select
@@ -216,7 +216,7 @@
 								//request the JSON data and parse into the select element
 								$
 										.getJSON(
-												getContextPath()
+												"${context}/"
 														+ 'contact/state/'
 														+ stateId,
 												function(data) {

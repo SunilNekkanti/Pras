@@ -121,7 +121,7 @@ $.ajax( {
   	 // CPT POPUP  
   	 
   	$('#cptListTable').dataTable({
-  	     "sAjaxSource" : getContextPath()+'/cpt/cptMeasureLists',
+  	     "sAjaxSource" : "${context}/"+'cpt/cptMeasureLists',
   	     "sAjaxDataProp" : 'data.list',
   	     "aoColumns": [
 						 { "mData" : "id",  
@@ -149,7 +149,7 @@ $.ajax( {
       
         // ICD POPUP   	
    	$('#icdListTable').dataTable({
-   	     "sAjaxSource" : getContextPath()+'/icd/icdMeasureLists',
+   	     "sAjaxSource" : "${context}/"+'icd/icdMeasureLists',
    	     "sAjaxDataProp" : 'data.list',
    	     "aoColumns": [
 			 { "mData" : "id",  
@@ -396,7 +396,7 @@ $.ajax( {
 				</div>
 			</div>
 
-			<c:forEach var="i" begin="1" end="5">
+			<c:forEach var="i" begin="1" end="6">
 				<div class="form-group dose required" id="doseblock${i}">
 					<label class="control-label  col-sm-2" for="dose${i}">dose
 						${i}</label>
@@ -410,7 +410,7 @@ $.ajax( {
 							id="dosePeriod${i}">
 							<springForm:options items="${datePartList}" />
 						</springForm:select>
-						<springForm:errors path="dateparat${i}"
+						<springForm:errors path="datepart${i}"
 							cssClass="error text-danger" />
 					</div>
 				</div>
@@ -564,7 +564,7 @@ $(document).ready(function() {
 			return false;
 		}
 		 if($('input[name=problemFlag]:checked').val() == 'Y'){
-			 var source = getContextPath()+'/problem/list';
+			 var source = "${context}/"+'problem/list';
 			 var restParams = new Array();
 			  restParams.push({"name" : "pageSize", "value" : 10000});
 			  restParams.push({"name" : "pageNo", "value" : 0 });

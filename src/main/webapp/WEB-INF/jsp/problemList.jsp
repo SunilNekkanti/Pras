@@ -28,7 +28,7 @@
 		    
 	  //Setting Insurance dropdown values
 	 var $selectIns = $('#extFilterIns');
-	 $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+	 $.getJSON("${context}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 		    
 	     //clear the current content of the select
 	     var s = $('<select id=\"insu\" style=\"width:150px;\">');
@@ -111,7 +111,7 @@ $.ajax( {
   		
 	        var oTable = 	$('#problemTable')
 	        					.dataTable({
-								  	     "sAjaxSource" : getContextPath()+'/problem/list',
+								  	     "sAjaxSource" : "${context}/"+'/problem/list',
 								  	     "sAjaxDataProp" : 'data.list',
 								  	     "aoColumns": [
 								                         { "mDataProp": "id", "bSearchable" : false, "bVisible" : false, "asSorting" : [ "asc" ],"sClass":"center"  },
@@ -135,6 +135,7 @@ $.ajax( {
 								                     ],
 								  	     "bLengthChange": false,
 								  	     "iDisplayLength": 15,
+								  	     "bStateSave": true,
 								  	     "sPaginationType": "full_numbers",
 								  	     "bProcessing": true,
 								  	     "bServerSide" : true,

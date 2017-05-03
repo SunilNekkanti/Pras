@@ -74,7 +74,7 @@ public class LoginController {
 	 * @param status
 	 * @return
 	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/logoutURL", "/user/logoutURL"}, method = RequestMethod.GET)
 	public String page(WebRequest request, SessionStatus status) {
 
 		status.setComplete();

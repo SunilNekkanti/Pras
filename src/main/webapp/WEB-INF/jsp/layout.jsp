@@ -13,7 +13,7 @@
 <title>Physicians' First Choice</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.0.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script type="text/javascript" src="${context}/resources/js/cookie.js"></script>
 <link rel="stylesheet"
@@ -45,10 +45,27 @@
 	src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
 <script type="text/javascript"
 	src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript"
+	src="http://cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js"></script>
 
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
 <script>
+
+function stringToDate(_date,_format,_delimiter)
+{
+            var formatLowerCase=_format.toLowerCase();
+            var formatItems=formatLowerCase.split(_delimiter);
+            var dateItems=_date.split(_delimiter);
+            var monthIndex=formatItems.indexOf("mm");
+            var dayIndex=formatItems.indexOf("dd");
+            var yearIndex=formatItems.indexOf("yyyy");
+            var month=parseInt(dateItems[monthIndex]);
+            month-=1;
+            var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+            return formatedDate;
+}
+
 
 Number.prototype.formatMoney = function(c, d, t){
 	 var n = this, 

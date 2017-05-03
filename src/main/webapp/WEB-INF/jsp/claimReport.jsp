@@ -54,7 +54,7 @@ $(document).ready(function() {
 		
 	
     	 var $selectIns = $('#extFilterIns');
-    	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+    	  $.getJSON("${context}/"+'insurance/list?pageNo=0&pageSize=200', function(data){
 			    
 			     //clear the current content of the select
 			     var s = $('<select id=\"clmInsu\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -81,7 +81,7 @@ $(document).ready(function() {
  			     
  				$('select[id="clmInsu"]').val(insSelectValue);
   			 var $selectPrvdr = $('#extFilterPrvdr');
-  	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+  	    	  $.getJSON("${context}/"+'insurance/providerlist?insId='+insSelectValue, function(data){
   				    
   				     //clear the current content of the select
   				     var s = $('<select id=\"clmPrvdr\" style=\"width:150px;\" class=\"btn btn-default selectAll\" multiple=\"multiple\">');
@@ -130,7 +130,7 @@ $(document).ready(function() {
 			 var params = { insId:insSelectValue, prvdrId:prvdrSelectValue, pageNo:0, pageSize:200 };
 	 	    	var str = jQuery.param( params );
 	 	    
-	 	    	  $.getJSON(getContextPath()+'/mlrReportDate/list?'+str, function(data){
+	 	    	  $.getJSON("${context}/"+'mlrReportDate/list?'+str, function(data){
 					    
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFilterReportDate');
@@ -164,7 +164,7 @@ $(document).ready(function() {
 	 	    	  
 	 	    	 
 	 	    	 
-	 	    	$.getJSON(getContextPath()+'/claimType/list?pageNo=0&pageSize=200', function(data){
+	 	    	$.getJSON("${context}/"+'claimType/list?pageNo=0&pageSize=200', function(data){
 					  //clear the current content of the select
 					   var $selectReportDat = $('#extFiltercategory');
 					   var s = $('<select id=\"clmType\" style=\"width:150px;\" class=\"btn btn-default selectAll content\" multiple=\"multiple\">');
@@ -237,7 +237,7 @@ $(document).ready(function() {
     			categoryList.push ($(this).val());
     				
     			});
-	 	    	$.getJSON(getContextPath()+'/riskReconClaimType/list?pageNo=0&pageSize=200&claimType='+categoryList, function(data){
+	 	    	$.getJSON("${context}/"+'riskReconClaimType/list?pageNo=0&pageSize=200&claimType='+categoryList, function(data){
 	 	    		
 					     
 				 }).success(function(data, arrayList) { 
@@ -382,7 +382,7 @@ $(document).ready(function() {
 	        	             
 		                   ],
   	         "bDestroy" : true,	
-     	     "sAjaxSource" : getContextPath()+'/claimReport/list', 
+     	     "sAjaxSource" : "${context}/"+'/claimReport/list', 
      	     "sAjaxDataProp" : 'data',
      	     "bLengthChange": false,
      	     "bPagination":false,
@@ -680,7 +680,7 @@ function level2(reportMonth, riskRecon, activityMonth){
 			"pageSize":500, "pageNo":0};
 	
 	var str = jQuery.param( params );
-	var url =  getContextPath()+'/claimReport/list?'+str;
+	var url =  "${context}/"+'claimReport/list?'+str;
 	
 	$.ajax({
 		  url: url,
@@ -756,7 +756,7 @@ function level3(prvdr_id, riskRecon, reportMonth, activityMonth)
 				"pageSize":500, "pageNo":0};
 		
 		var str = jQuery.param( params );
-		var url =  getContextPath()+'/claimReport/list?'+str;
+		var url =  "${context}/"+'claimReport/list?'+str;
 		
 	 	$.ajax({
 		  url: url,
@@ -823,7 +823,7 @@ function level4(prvdr_id, riskRecon, reportMonth, activityMonth, mbr_id)
 				"pageSize":500, "pageNo":0};
 		
 		var str = jQuery.param( params );
-		var url =  getContextPath()+'/claimReport/list?'+str;
+		var url =  "${context}/"+'claimReport/list?'+str;
 		datatableDelete(table);
 	 	$.ajax({
 		  url: url,

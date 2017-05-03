@@ -49,7 +49,7 @@
    		});
      	
     	  var $selectIns = $('#extFilterIns');
-	   	  $.getJSON(getContextPath()+'/insurance/list?pageNo=0&pageSize=200', function(data){
+	   	  $.getJSON("${context}/"+'/insurance/list?pageNo=0&pageSize=200', function(data){
 				    
 				     //clear the current content of the select
 				     var s = $('<select id=\"insu\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -73,7 +73,7 @@
 						Cookies.set('insu', insSelectValue, {path: cookiePath});
 					}
 			  var $selectPrvdr = $('#extFilterPrvdr');
-	    	  $.getJSON(getContextPath()+'/insurance/providerlist?insId='+insSelectValue, function(data){
+	    	  $.getJSON("${context}/"+'/insurance/providerlist?insId='+insSelectValue, function(data){
 					$('select[id="insu"]').val(insSelectValue);
 				     //clear the current content of the select
 				     var s = $('<select id=\"prvdr\" style=\"width:150px;\" class=\"btn btn-default\">');
@@ -142,7 +142,7 @@
      	
      	var callMembershipDataTable  = function (insId,prvdrId) {
      		$('#membershipTable').dataTable({
-        	     "sAjaxSource" : getContextPath()+'/membership/list',
+        	     "sAjaxSource" : "${context}/"+'/membership/list',
         	     "sAjaxDataProp" : 'data.pagination.list',
                  "aoColumns": [
 							   { "mDataProp": "lastName","bSearchable" : true, "bSortable": true,"sWidth" : "20%"  },
@@ -192,6 +192,7 @@
                   ],          
         	     "bLengthChange": false,
         	     "iDisplayLength": 15,
+        	     "bStateSave": true,
         	     "sPaginationType": "full_numbers",
         	     "bProcessing": true,
         	     "bServerSide" : true,
