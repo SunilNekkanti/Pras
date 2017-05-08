@@ -4,6 +4,7 @@
 	prefix="springForm"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:set var="context"
 	value="${pageContext.request.contextPath}/${userpath}" />
@@ -91,8 +92,69 @@
 				
 				
 				<div class="col-sm-12 claim_details">
+						<c:set var="count" value="0" scope="page" />
 						<c:forEach var="claimDetails" items="${leadMembershipClaim.leadMbrClaimDetailsList}">
-							    	<li>${claimDetails.claimStartDate}</li>
+							    <div class="col-sm-12 claimDetailsList list">	
+							    	<div class="form-group col-sm-2 required"><div class="col-sm-12"><label class="control-label">Start Date</label>
+							    		<fmt:formatDate value="${claimDetails.claimStartDate}" var="startDate" pattern="MM/dd/yyyy" />
+							    		<input value="${startDate}" name ="leadMbrClaimDetailsList[][claimStartDate]" id="leadMbrClaimDetailsList${count}.claimStartDate" class="checkData form-control startDate datepicker" />
+							    	</div></div>
+									<div class="form-group col-sm-2  required"><div class="col-sm-12"><label class="control-label">End Date</label> 
+										<fmt:formatDate value="${claimDetails.claimEndDate}" var="endDate" pattern="MM/dd/yyyy" />
+										<input value="${endDate}" name="leadMbrClaimDetailsList[][claimEndDate]" id="leadMbrClaimDetailsList${count}.claimEndDate" class="checkData form-control endDate datepicker" /></div></div>
+									<div class="form-group col-sm-2">
+										<div class="col-sm-12">
+											<label>
+												<a href="javascript:void(0)" id="addCPT${count}" class="btn btn-success btn-xs white-text addModalCPT"> 
+													<span class="glyphicon glyphicon-plus-sign"></span>
+												CPT</a> 
+												<a href="javascript:void(0)" id="removeCPT${count}" class="removeCPT btn btn-success btn-xs white-text"> 
+													<span class="glyphicon glyphicon-minus-sign"></span>
+												CPT</a>
+											</label>
+											<select name="leadMbrClaimDetailsList[][cpt][id]" id="leadMbrClaimDetailsList${count}.cpt.id" class="form-control">
+												<option value=${claimDetails.cpt.id}">${claimDetails.cpt.shortDescription}</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-sm-2  required">
+										<div class="col-sm-12">
+											<label class="control-label">RiskRecon
+											</label>
+											<select name="leadMbrClaimDetailsList[][riskReconCosDes]" id="leadMbrClaimDetailsList${count}.riskReconCosDes" class="checkData form-control"  >
+													<option value="">Select One</option>
+													<c:forEach var="riskRecon" items="${riskReconList}">
+													<c:choose>
+													  <c:when  test = "${claimDetails.riskReconCosDes.id == riskRecon.id}">
+													   <option value="${riskRecon.id}" selected="selected">${riskRecon.name}</option>
+													   </c:when>
+													   <c:otherwise>
+													    <option value="${riskRecon.id}">${riskRecon.name}</option>
+													   </c:otherwise>
+												    </c:choose>
+														
+												    </c:forEach>
+												    
+											</select>
+										</div>
+									</div>';
+									<div class="form-group col-sm-2"><div class="col-sm-12">
+										<label>Srv Prvdr Name</label>
+										<input name="leadMbrClaimDetailsList[][srvProviderName]" id="leadMbrClaimDetailsList${count}.srvProviderName"  value="${claimDetails.srvProviderName}" class="form-control"  />
+										</div>
+									</div>
+									<div class="form-group col-sm-2">
+										<div class="col-sm-12">
+											<label>Srv Prvdr Code</label>
+											<div class="col-sm-8">
+												<input name="leadMbrClaimDetailsList[][srvProvider]" id="leadMbrClaimDetailsList${count}.srvProvider" value="${claimDetails.srvProvider}" class="form-control" />
+											</div>
+										<div class="col-sm-4"><button type="button" onclick="deleteClaimDetailsRow()" class="deleteClaimDetailsRow btn btn-success btn-xs white-text">- Delete</button>
+										</div>
+									</div>
+								</div>
+								</div>
+									
 						</c:forEach> 
     								
 			  			
@@ -130,9 +192,10 @@
 <script>
 $(document).ready(function(){
 	
-	alert("${leadMembershipClaim.leadMbrClaimDetailsList}");
 	if("${leadMembershipClaim.id}" == ""){
 		addClaimDetailsRow();
 	}
+	if(${fn:length(leadMembershipClaim.leadMbrClaimDetailsList)} < 2)
+		$(".deleteClaimDetailsRow").hide();
 });
 </script>

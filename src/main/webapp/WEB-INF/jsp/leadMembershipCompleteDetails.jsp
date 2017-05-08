@@ -766,12 +766,12 @@ membershipProblemList();  // call membershipProblemList
 
 	
 
-	 modifyLeadMbrClaim = function($refrenceId){
-		alert(" inside  modifyLeadMbrClaim ");
+	 modifyLeadMbrClaim = function($referenceId){
+		alert(" inside  modifyLeadMbrClaim "+$referenceId);
 		return false;
 	}
 	
-	 deleteLeadMbrClaim =function($refrenceId){
+	 deleteLeadMbrClaim =function($referenceId){
 		alert(" inside  deleteLeadMbrClaim ");
 		return false;
 	}
@@ -1348,7 +1348,6 @@ deleteleadPrvdrDetails= function (id){
 	
 	
 	 leadClaimDetails = function($id){
-		alert(" id "+$id);
 		var source = getContextPath()+'/leadMembership/'+$id+'/claimDetails';
 		$.ajax({
 			url : source,
