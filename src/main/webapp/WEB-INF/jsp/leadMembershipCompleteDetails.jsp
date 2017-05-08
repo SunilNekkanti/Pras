@@ -1345,6 +1345,26 @@ deleteleadPrvdrDetails= function (id){
  	$(".claim_details .claimDetailsList:last").remove();
  	showDeleteClaimDetailsButton();
  });
+	
+	
+	 leadClaimDetails = function($id){
+		alert(" id "+$id);
+		var source = getContextPath()+'/leadMembership/'+$id+'/claimDetails';
+		$.ajax({
+			url : source,
+		    success: function(data, textStatus, jqXHR)
+		    {
+		       $('#leadMbrClaim').html(data);
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		  	  alert("Error leadMbrClaim");
+		    }
+		});	
+		return false;
+	}
+
+
 
 });
  

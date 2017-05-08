@@ -60,6 +60,8 @@
 
 <script>
         $(document).ready(function() {
+        	
+        	$.fn.dataTableExt.sErrMode = 'throw';
         	      
         	var datatable2RestLeadMbrClaims = function(sSource, aoData, fnCallback) {
         		//extract name/value pairs into a simpler map for use later
@@ -108,12 +110,17 @@
         	     "sAjaxSource" : "${context}/"+'leadMembership/${id}/claim/list?pageSize=20000',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-        	                   { "mDataProp": "claimType", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] },
-                               { "mDataProp": "facilityType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
-                               { "mDataProp": "billType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
-                               { "mDataProp": "frequencyType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ],"sDefaultContent": ""  },
-                               { "mDataProp": "dischargeStatus", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
-                               { "mDataProp": "diagnosis", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
+        	                   { "mDataProp": "claimType", "bSearchable" : false, "bVisible" : true, "sDefaultContent": "" ,
+		                        	 "render": function ( data, type, full, meta ) {
+		                                 return '<a onclick="leadClaimDetails('+full.id+');" href="javascript:void(0)">'+data+'</a>';
+		                		      }
+		                         },
+		                         
+                               { "mDataProp": "facilityType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "billType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "frequencyType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "dischargeStatus", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
+                               { "mDataProp": "diagnosis", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "leadMbrClaimDetailsList[].claimStartDate", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ],
                             	   "mRender": function(data, type, full, meta) {
                                        return full.leadMbrClaimDetailsList[meta.row].claimStartDate;
@@ -134,6 +141,11 @@
                                        return full.leadMbrClaimDetailsList[meta.row].riskReconCosDes;
                                        }}
                            ],
+                           
+                           "columnDefs": [{
+                        	    "defaultContent": "-",
+                        	    "targets": "_all"
+                        	  }],
                          
         	     "bLengthChange": false,
         	     "sPaginationType": "full_numbers",

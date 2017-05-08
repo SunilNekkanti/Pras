@@ -789,6 +789,24 @@ public class LeadMembershipController {
 	}
 	
 	
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/claimDetails", "/user/leadMembership/{id}/claimDetails" })
+	public String leadMembershipClaimDetails(@PathVariable Integer id, Model model) {
+
+		LeadMembershipClaim dbLeadMembershipClaim = leadMembershipClaimService.findById(id);
+		System.out.println("  id "+id);
+		System.out.println("  "+dbLeadMembershipClaim.getId()+"  "+dbLeadMembershipClaim.getClaimNumber()+"  id "+id);
+		System.out.println("  "+dbLeadMembershipClaim.getLeadMbrClaimDetailsList().get(0).getClaimStartDate());
+		model.addAttribute("leadMembershipClaim", dbLeadMembershipClaim);
+		
+		 
+		logger.info("Returning leadMembershipClaimEdit.jsp page");
+		return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
+	}
 	/* Lead leadMembership Hospitalization End */
 
 

@@ -91,12 +91,14 @@
 				
 				
 				<div class="col-sm-12 claim_details">
-						
+						<c:forEach var="claimDetails" items="${leadMembershipClaim.leadMbrClaimDetailsList}">
+							    	<li>${claimDetails.claimStartDate}</li>
+						</c:forEach> 
+    								
+			  			
 				</div>
 				<div class="col-sm-12">		
-							
 							<button type="button" class='addClaimDetailsRow'>+ Add Claim Details</button>
-				
 				</div>
 			
 			
@@ -127,6 +129,8 @@
 
 <script>
 $(document).ready(function(){
+	
+	alert("${leadMembershipClaim.leadMbrClaimDetailsList}");
 	if("${leadMembershipClaim.id}" == ""){
 		addClaimDetailsRow();
 	}
