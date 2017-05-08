@@ -36,8 +36,11 @@
 							<springForm:hidden path="id" />
 							<springForm:hidden path="refContact.id" />
 							<c:choose>
-								<c:when test="${contact.refContact.mbr != null}">
+							    <c:when test="${contact.refContact.mbr != null}">
 									<springForm:hidden path="refContact.mbr.id" />
+								</c:when> 
+								<c:when test="${contact.refContact.leadMbr != null}">
+									<springForm:hidden path="refContact.leadMbr.id" />
 								</c:when>
 								<c:when test="${contact.refContact.prvdr != null}">
 									<springForm:hidden path="refContact.prvdr.id" />
@@ -122,7 +125,7 @@
 					<div class="form-group required">
 						<label class="control-label col-sm-4" for="state">State</label>
 						<div class="col-sm-8">
-							<springForm:select path="stateCode" class="form-control"
+							<springForm:select path="stateCode.code" class="form-control"
 								id="state">
 								<springForm:options items="${stateList}" itemValue="code"
 									itemLabel="shortName" />
@@ -134,7 +137,7 @@
 					<div class="form-group required">
 						<label class="control-label  col-sm-4" for="zip">Zip</label>
 						<div class="col-sm-8" id="tmpZip">
-							<springForm:select path="zipCode" class="form-control" id="zip">
+							<springForm:select path="zipCode.code" class="form-control" id="zip">
 
 							</springForm:select>
 							<springForm:errors path="zipCode.code"
@@ -143,7 +146,7 @@
 					</div>
 					<div class="col-sm-offset-6 col-sm-6">
 						<c:choose>
-							<c:when test="${id != null && contact.activeInd == 89}">
+							<c:when test="${contact.id != null && contact.activeInd == 89}">
 								<button type="button" class="btn btn-success btn-sm"
 									id="updateButton" onclick="return modifyContact();"
 									name="update">Update</button>
@@ -169,6 +172,7 @@
 	<c:when
 		test="${contact.stateCode != null || request.getParameter('stateCode')}">
 		<script>
+	
 				 var zCode;
 				 var stateId = $( "#state" ).val();
 			     var $select = $('#zip');

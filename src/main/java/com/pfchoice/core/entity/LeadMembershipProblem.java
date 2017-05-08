@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.util.Date;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,21 +12,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.gson.annotations.Expose;
 
 /**
  *
- * @author sarath
+ * @author Mohanasundharam
  */
 @Entity
-@Table(name = "Lead_membership_provider")
-public class LeadMembershipProvider extends RecordDetails implements Serializable {
+@Table(name = "lead_membership_problems")
+public class LeadMembershipProblem extends RecordDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,28 +36,32 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-	@Column(name = "lead_mbr_prvdr_id", nullable = false)
+	@Column(name = "lead_mbr_pbm_id", nullable = false)
 	private Integer id;
 
-	@Expose
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "prvdr_id", nullable = false, referencedColumnName = "prvdr_id")
-	private Provider prvdr;
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lead_mbr_id", nullable = false, referencedColumnName = "lead_mbr_id")
 	private LeadMembership leadMbr;
 
 	@Expose
-	@Temporal(TemporalType.DATE)
-	@Column(name = "eff_start_date")
-	private Date effStartDate;
+	@OneToOne(fetch = FetchType.EAGER)
+	@NotNull(message = "Select Problem")
+	@JoinColumn(name = "pbm_id", nullable = false, referencedColumnName = "pbm_id")
+	private Problem pbm;
 
 	@Expose
+	@NotNull(message = "Diagnose date must not be null")
+	@Column(name = "start_date", nullable = false)
 	@Temporal(TemporalType.DATE)
-	@Column(name = "eff_end_date")
-	private Date effEndDate;
-	
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	private Date startDate;
+
+	@Expose
+	@Column(name = "resolved_date", nullable = true)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	private Date resolvedDate;
+
 	@Expose
 	@Column(name = "file_id")
 	private Integer fileId;
@@ -64,14 +69,14 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 	/**
 	 * 
 	 */
-	public LeadMembershipProvider() {
+	public LeadMembershipProblem() {
 		super();
 	}
 
 	/**
 	 * @param id
 	 */
-	public LeadMembershipProvider(final Integer id) {
+	public LeadMembershipProblem(final Integer id) {
 		super();
 		this.id = id;
 	}
@@ -91,7 +96,7 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 	}
 
 	/**
-	 * @return the mbrId
+	 * @return the leadMbr
 	 */
 	public LeadMembership getLeadMbr() {
 		return leadMbr;
@@ -99,59 +104,59 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 
 	/**
 	 * @param mbr
-	 *            the mbr to set
+	 *            the leadMbr to set
 	 */
-	public void setLeadMbr(final LeadMembership leadMbr) {
+	public void setLeadMbr(LeadMembership leadMbr) {
 		this.leadMbr = leadMbr;
 	}
 
 	/**
-	 * @return the prvdr
+	 * @return the pbm
 	 */
-	public Provider getPrvdr() {
-		return prvdr;
+	public Problem getPbm() {
+		return pbm;
 	}
 
 	/**
-	 * @param prvdr
-	 *            the prvdr to set
+	 * @param pbm
+	 *            the pbm to set
 	 */
-	public void setPrvdr(final Provider prvdr) {
-		this.prvdr = prvdr;
+	public void setPbm(Problem pbm) {
+		this.pbm = pbm;
 	}
 
 	/**
-	 * @return the effStartDate
+	 * @return the startDate
 	 */
-	public Date getEffStartDate() {
-		return effStartDate;
+	public Date getStartDate() {
+		return startDate;
 	}
 
 	/**
-	 * @param effStartDate
-	 *            the effStartDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
-	public void setEffStartDate(final Date effStartDate) {
-		this.effStartDate = effStartDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	/**
-	 * @return the effEndDate
+	 * @return the resolvedDate
 	 */
-	public Date getEffEndDate() {
-		return effEndDate;
+	public Date getResolvedDate() {
+		return resolvedDate;
 	}
 
 	/**
-	 * @param effEndDate
-	 *            the effEndDate to set
+	 * @param resolvedDate
+	 *            the resolvedDate to set
 	 */
-	public void setEffEndDate(final Date effEndDate) {
-		this.effEndDate = effEndDate;
+	public void setResolvedDate(Date resolvedDate) {
+		this.resolvedDate = resolvedDate;
 	}
-	
+
 	/**
-	 * @return
+	 * @return the fileId
 	 */
 	public Integer getFileId() {
 		return fileId;
@@ -159,6 +164,7 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 
 	/**
 	 * @param fileId
+	 *            the fileId to set
 	 */
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
@@ -173,10 +179,10 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof LeadMembershipProvider)) {
+		if (!(object instanceof LeadMembershipProblem)) {
 			return false;
 		}
-		LeadMembershipProvider other = (LeadMembershipProvider) object;
+		LeadMembershipProblem other = (LeadMembershipProblem) object;
 		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
@@ -186,6 +192,7 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 	@Override
 	public String toString() {
 		 StringBuilder result = new StringBuilder();
+		  
 
 		  result.append( this.getClass().getName() );
 		  result.append( " Object {" );
@@ -196,7 +203,6 @@ public class LeadMembershipProvider extends RecordDetails implements Serializabl
 
 		  //print field names paired with their values
 		  for ( Field field : fields  ) {
-			  if("serialVersionUID".equals(field.getName()))continue;
 		    result.append("  ");
 		    try {
 		      result.append( field.getName() );

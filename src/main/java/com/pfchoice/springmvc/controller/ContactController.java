@@ -1,6 +1,5 @@
 package com.pfchoice.springmvc.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,12 +10,14 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -220,7 +221,7 @@ public class ContactController {
 		ReferenceContact refCnt = createRefContactModel();
 		refCnt.setCreatedBy(username);
 		refCnt.setUpdatedBy(username);
-		refCnt.setMbr(dbMembership);
+		//refCnt.setMbr(dbMembership);
 		contact.setRefContact(refCnt);
 		logger.info("Returning contactEditSuccess.jsp page after create");
 		contactService.save(contact);
@@ -248,6 +249,9 @@ public class ContactController {
 		if (bindingResult.hasErrors()) {
 			contact.setActiveInd('Y');
 			logger.info("Returning contactEdit.jsp page");
+			for(ObjectError err: bindingResult.getAllErrors()) {
+				logger.info("err :"+err.getDefaultMessage());
+			}
 			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 		}
 		if (null != contact.getId()) {
@@ -257,6 +261,9 @@ public class ContactController {
 			contact.getRefContact().setUpdatedBy(username);
 			contact.getRefContact().setCreatedBy(username);
 			contact.getRefContact().setActiveInd('Y');
+			contact.setFileId(1);
+		//	contact.getRefContact().getMbr().setContactList(null);
+		//	logger.info("contact.getRefContact().getMbr()"+contact.getRefContact().getMbr());
 			contactService.update(contact);
 			model.addAttribute("Message", "Member Contact Updated Successfully");
 			List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
@@ -779,13 +786,9 @@ public class ContactController {
 		ReferenceContact refCnt = createRefContactModel();
 		refCnt.setCreatedBy(username);
 		refCnt.setUpdatedBy(username);
-		refCnt.setCreatedDate(new Date());
-		refCnt.setUpdatedDate(new Date());
 		refCnt.setLeadMbr(dbLeadMembership);
 		contact.setRefContact(refCnt);
 		logger.info("Returning contactEditSuccess.jsp page after create");
-		contact.setCreatedDate(new Date());
-		contact.setUpdatedDate(new Date());
 		contactService.save(contact);
 		model.addAttribute("Message", "Lead Member Contact Added Successfully");
 		List<Contact> listBean = contactService.findAllContactsByRefId("leadMembership", id);
@@ -804,10 +807,10 @@ public class ContactController {
 	 */
 	@RequestMapping(value = { "/admin/leadMembership/{id}/contact/save.do",
 			"/user/leadMembership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
-	public String updateLeadMembershipContactAction(@PathVariable Integer id, @Validated Contact contact,
+	public String updateLeadMembershipContactAction(@PathVariable Integer id,@Validated @RequestBody  Contact contact,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("membership id is" + id);
-		contact.setActiveInd('Y');
+		logger.info("leadmembership id is " + id);
+		//logger.info("contact   is" + contact.toString());
 		if (bindingResult.hasErrors()) {
 			contact.setActiveInd('Y');
 			logger.info("Returning contactEdit.jsp page");
@@ -816,15 +819,15 @@ public class ContactController {
 		if (null != contact.getId()) {
 			logger.info("Returning ContactEditSuccess.jsp page before update");
 			contact.setUpdatedBy(username);
-			contact.setCreatedBy(username);
 			contact.getRefContact().setUpdatedBy(username);
 			contact.getRefContact().setCreatedBy(username);
-			contact.getRefContact().setActiveInd('Y');
+			contact.setFileId(1);
 			contactService.update(contact);
+			
 			model.addAttribute("Message", "Lead Member Contact Updated Successfully");
 			List<Contact> listBean = contactService.findAllContactsByRefId("leadMembership", id);
 			model.addAttribute("contactList", listBean);
-
+			logger.info("Returning ContactEditSuccess.jsp page after update");
 			return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
 		}
 
@@ -859,4 +862,42 @@ public class ContactController {
 		}
 		return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 	}
+	
+	
+	@RequestMapping(value = { "/admin/leadMembership1/{id}/contact/save.do",
+	"/user/membership/{id}/contact/save.do" }, method = RequestMethod.POST, params = { "update" })
+public String saveMembership1ContactAction(@PathVariable Integer id,  Contact contact,
+	BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
+logger.info("membership id is" + id);
+
+//logger.info("contact   is" + contact.toString());
+contact.setActiveInd('Y');
+if (bindingResult.hasErrors()) {
+	contact.setActiveInd('Y');
+	logger.info("Returning contactEdit.jsp page");
+	for(ObjectError err: bindingResult.getAllErrors()) {
+		logger.info("err :"+err.getDefaultMessage());
+	}
+	return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+}
+if (null != contact.getId()) {
+	logger.info("Returning ContactEditSuccess.jsp page after update");
+	contact.setUpdatedBy(username);
+	contact.setCreatedBy(username);
+	contact.getRefContact().setUpdatedBy(username);
+	contact.getRefContact().setCreatedBy(username);
+	contact.getRefContact().setActiveInd('Y');
+	contact.setFileId(1);
+//	contact.getRefContact().getMbr().setContactList(null);
+//	logger.info("contact.getRefContact().getMbr()"+contact.getRefContact().getMbr());
+	contactService.update(contact);
+	model.addAttribute("Message", "Member Contact Updated Successfully");
+	List<Contact> listBean = contactService.findAllContactsByRefId("membership", id);
+	model.addAttribute("contactList", listBean);
+
+	return TileDefinitions.MEMBERSHIPCONTACTLIST.toString();
+}
+
+return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
+}
 }

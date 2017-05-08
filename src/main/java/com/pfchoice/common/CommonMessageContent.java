@@ -107,4 +107,8 @@ public interface CommonMessageContent {
 	String CLAIMTYPE_LIST = "Claim Type List";
 	
 	String LEAD_MEMBERSHIP_LIST = "Lead Membership List";
+	
+	String LEADMEMBERSHIPPROBLEM_LIST = "Lead Membership Problem List";
+	
+	String LEADMEMBERSHIPHOSPITALIZATION_LIST = "Lead Membership Hospitalization List";
 }

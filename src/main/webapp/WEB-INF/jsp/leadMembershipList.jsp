@@ -151,7 +151,7 @@
                                { "mDataProp": "id","bSearchable" : true, "bSortable": true,"sWidth" : "10%"  },
                                { "mDataProp": "genderId.code","bSearchable" : true, "bSortable": true,"sWidth" : "10%" },
                                { "mDataProp": "countyCode.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""  },
-                               { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%"  }
+                               { "mDataProp": "status.description","bSearchable" : true, "bSortable": true,"sWidth" : "15%", "sDefaultContent": ""   }
                              ],
                   "aoColumnDefs": [ 
                   		   		    { "sName": "lastName", "aTargets": [ 0 ],

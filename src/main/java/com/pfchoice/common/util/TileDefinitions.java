@@ -147,7 +147,9 @@ public enum TileDefinitions {
 																																																																																																																																																																																																																																																																																					"membershipCapReport"),RISKRECONLIST(
 																																																																																																																																																																																																																																																																																							"claimReport"),PROFILE("profile"), LEADMEMBERSHIPEDIT("leadMembershipEdit"),LEADMEMBERSHIPNEW("leadMembershipNew"),LEADMEMBERSHIPLIST("leadMembershipList")
 	,LEADMEMBERSHIPCOMPLETEDETAILS("leadMembershipCompleteDetails"), LEADMEMBERSHIPPROVIDERLIST("leadMembershipProviderList"),LEADMEMBERSHIPPROVIDEREDIT("leadMembershipProviderEdit"),LEADMEMBERSHIPHEDISMEASURELIST("leadMembershipHedisMeasureList"),
-	LEADMEMBERSHIPHEDISMEASUREDETAILS("leadMembershipHedisMeasureDetails"), LEADMEMBERSHIPCLAIMLIST("leadMembershipClaimList"),LEADMEMBERSHIPCLAIMEDIT("leadMembershipClaimEdit");
+	LEADMEMBERSHIPHEDISMEASUREDETAILS("leadMembershipHedisMeasureDetails"), LEADMEMBERSHIPCLAIMLIST("leadMembershipClaimList"),LEADMEMBERSHIPCLAIMEDIT("leadMembershipClaimEdit"),
+	LEADMEMBERSHIPPROBLEMLIST("leadMembershipProblemList"),LEADMEMBERSHIPPROBLEMEDIT("leadMembershipProblemEdit"),
+	LEADMEMBERSHIPHOSPITALIZATIONLIST("leadMembershipHospitalizationList"),LEADMEMBERSHIPHOSPITALIZATIONEDIT("leadMembershipHospitalizationEdit");
 
 	private final String text;
 

@@ -43,14 +43,18 @@ import com.pfchoice.core.entity.FacilityType;
 import com.pfchoice.core.entity.FileType;
 import com.pfchoice.core.entity.FrequencyType;
 import com.pfchoice.core.entity.Gender;
+import com.pfchoice.core.entity.Hospital;
 import com.pfchoice.core.entity.Insurance;
 import com.pfchoice.core.entity.LeadMembership;
 import com.pfchoice.core.entity.LeadMembershipClaim;
 import com.pfchoice.core.entity.LeadMembershipClaimDetails;
+import com.pfchoice.core.entity.LeadMembershipProblem;
 import com.pfchoice.core.entity.LeadMembershipHedisMeasure;
+import com.pfchoice.core.entity.LeadMembershipHospitalization;
 import com.pfchoice.core.entity.LeadMembershipInsurance;
 import com.pfchoice.core.entity.LeadMembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
+import com.pfchoice.core.entity.Problem;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.service.BillTypeService;
 import com.pfchoice.core.service.ClaimTypeService;
@@ -60,12 +64,16 @@ import com.pfchoice.core.service.FacilityTypeService;
 import com.pfchoice.core.service.FileTypeService;
 import com.pfchoice.core.service.FrequencyTypeService;
 import com.pfchoice.core.service.GenderService;
+import com.pfchoice.core.service.HospitalService;
 import com.pfchoice.core.service.InsuranceService;
 import com.pfchoice.core.service.LeadMembershipClaimService;
+import com.pfchoice.core.service.LeadMembershipHospitalizationService;
 import com.pfchoice.core.service.LeadMembershipInsuranceService;
+import com.pfchoice.core.service.LeadMembershipProblemService;
 import com.pfchoice.core.service.LeadMembershipProviderService;
 import com.pfchoice.core.service.LeadMembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
+import com.pfchoice.core.service.ProblemService;
 import com.pfchoice.core.service.ProviderService;
 
 import ml.rugal.sshcommon.page.Pagination;
@@ -121,6 +129,18 @@ public class LeadMembershipController {
 
 	@Autowired
 	private ClaimTypeService claimTypeService;
+
+	@Autowired
+	private ProblemService problemService;
+	
+	@Autowired
+	private HospitalService hospitalService;
+	
+	@Autowired
+	private LeadMembershipProblemService leadMembershipProblemService;
+	
+	@Autowired
+	private LeadMembershipHospitalizationService leadMembershipHospitalizationService;
 
 	@Autowired
 	@Qualifier("leadMembershipValidator")
@@ -196,7 +216,7 @@ public class LeadMembershipController {
 	public String newLeadMembershipInDetailsPage(@PathVariable Integer id,
 			@ModelAttribute("membershipInsurance") @Validated LeadMembershipInsurance leadMembershipInsurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("membership id is" + id);
+		logger.info("leadMembership id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			System.out.println(" leadMembershipInsurance " + leadMembershipInsurance.getId());
@@ -213,7 +233,7 @@ public class LeadMembershipController {
 			LeadMembershipInsurance dbMembershipInsurance = leadMembershipInsuranceService
 					.save(leadMembershipInsurance);
 			model.addAttribute("membershipInsurance", dbMembershipInsurance);
-			model.addAttribute("Message", "Membership Insurance Added Successfully");
+			model.addAttribute("Message", "leadMembership Insurance Added Successfully");
 			List<LeadMembershipInsurance> listBean = leadMembershipInsuranceService.findAllByMbrId(id);
 			model.addAttribute("membershipDetailsList", listBean);
 			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
@@ -232,7 +252,7 @@ public class LeadMembershipController {
 			Model model) {
 		LeadMembershipInsurance dbLeadMembershipInsurance = leadMembershipInsuranceService.findById(mbrInsId);
 		logger.info("Returning dbMembershipInsurance.getId()" + dbLeadMembershipInsurance.getId());
-		logger.info("membership id is" + id);
+		logger.info("leadMembership id is" + id);
 		model.addAttribute("membershipInsurance", dbLeadMembershipInsurance);
 		logger.info("Returning membershipDetailsDisplay.jsp page");
 		return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
@@ -240,7 +260,7 @@ public class LeadMembershipController {
 
 	/**
 	 * @param id
-	 * @param membership
+	 * @param leadMembership
 	 * @param bindingResult
 	 * @param model
 	 * @param username
@@ -253,7 +273,7 @@ public class LeadMembershipController {
 			@ModelAttribute("membershipInsurance") @Validated LeadMembershipInsurance leadMembershipInsurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
 		leadMembershipInsurance.setActiveInd('Y');
-		logger.info("membership id is" + id);
+		logger.info("leadMembership id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
@@ -267,7 +287,7 @@ public class LeadMembershipController {
 			LeadMembershipInsurance dbLeadMembershipInsurance = leadMembershipInsuranceService
 					.update(leadMembershipInsurance);
 			model.addAttribute("membershipInsurance", dbLeadMembershipInsurance);
-			model.addAttribute("Message", "Membership Insurance Updated Successfully");
+			model.addAttribute("Message", "leadMembership Insurance Updated Successfully");
 			List<LeadMembershipInsurance> listBean = leadMembershipInsuranceService.findAllByMbrId(id);
 			model.addAttribute("membershipDetailsList", listBean);
 			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
@@ -289,7 +309,7 @@ public class LeadMembershipController {
 	public String deleteLeadMembershipInsDetailsPage(@PathVariable Integer id, @PathVariable Integer mbrInsId,
 			@ModelAttribute("membershipInsurance") @Validated LeadMembershipInsurance leadMembershipInsurance,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("membership id is" + id);
+		logger.info("leadMembership id is" + id);
 		leadMembershipInsurance.setActiveInd('Y');
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
@@ -304,7 +324,7 @@ public class LeadMembershipController {
 			leadMembershipInsurance.setFileId(dbLeadMembershipInsurance.getFileId().intValue());
 			leadMembershipInsurance = leadMembershipInsuranceService.update(leadMembershipInsurance);
 			model.addAttribute("membershipInsurance", leadMembershipInsurance);
-			model.addAttribute("Message", "Membership Insurance Deleted Successfully");
+			model.addAttribute("Message", "leadMembership Insurance Deleted Successfully");
 			List<LeadMembershipInsurance> listBean = leadMembershipInsuranceService.findAllByMbrId(id);
 			model.addAttribute("membershipDetailsList", listBean);
 			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
@@ -315,7 +335,7 @@ public class LeadMembershipController {
 	@RequestMapping(value = { "/admin/leadMembership/{id}/providerDetailsList",
 			"/user/leadMembership/{id}/providerDetailsList" }, method = RequestMethod.GET)
 	public String displayLeadMembershipProviderDetailsListPage(@PathVariable Integer id,
-			@Validated LeadMembershipProvider leadMembershipProvider, BindingResult bindingResult, Model model) {
+			 Model model) {
 
 		List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
 		model.addAttribute("leadMembershipProviderList", leadMbrPrvdrList);
@@ -353,7 +373,7 @@ public class LeadMembershipController {
 	public String newLeadMembershipPrvdrDetailsPage(@PathVariable Integer id,
 			@ModelAttribute("leadMembershipProvider") @Validated LeadMembershipProvider leadMembershipProvider,
 			BindingResult bindingResult, Model model, @ModelAttribute("username") String username) {
-		logger.info("lead membership id is" + id);
+		logger.info("lead leadMembership id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipDetailsDisplay");
 			System.out.println(" leadMembershipInsurance " + leadMembershipProvider.getId());
@@ -369,7 +389,7 @@ public class LeadMembershipController {
 			leadMembershipProvider.setFileId(1);
 			leadMembershipProviderService.save(leadMembershipProvider);
 			List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
-			model.addAttribute("Message", "Membership Insurance Added Successfully");
+			model.addAttribute("Message", "leadMembership Insurance Added Successfully");
 			model.addAttribute("leadMembershipProviderList", leadMbrPrvdrList);
 			logger.info("Returning leadMembershipProviderList.jsp page");
 			return TileDefinitions.LEADMEMBERSHIPPROVIDERLIST.toString();
@@ -400,10 +420,10 @@ public class LeadMembershipController {
 		leadMembershipProvider.setUpdatedBy(username);
 		leadMembershipProvider.setFileId(1);
 		leadMembershipProvider.setUpdatedDate(new Date());
-		leadMembershipProviderService.update(leadMembershipProvider);
-		List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
-		model.addAttribute("Message", "Lead provider details updated Successfully");
+		leadMembershipProvider = leadMembershipProviderService.update(leadMembershipProvider);
+	 	List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
 		model.addAttribute("leadMembershipProviderList", leadMbrPrvdrList);
+		model.addAttribute("Message", "Lead provider details updated Successfully");
 		logger.info("Returning leadMembershipProviderList.jsp page");
 		return TileDefinitions.LEADMEMBERSHIPPROVIDERLIST.toString();
 	}
@@ -473,8 +493,8 @@ public class LeadMembershipController {
 	 */
 	@RequestMapping(value = { "/admin/leadMembership/new" })
 	public String addLeadMembershipPage(final Model model) {
-		LeadMembership membership = createLeadMembershipModel();
-		model.addAttribute("membership", membership);
+		LeadMembership leadMembership = createLeadMembershipModel();
+		model.addAttribute("leadMembership", leadMembership);
 		return TileDefinitions.LEADMEMBERSHIPNEW.toString();
 	}
 
@@ -524,7 +544,7 @@ public class LeadMembershipController {
 
 	/**
 	 * @param id
-	 * @param membership
+	 * @param leadMembership
 	 * @param bindingResult
 	 * @param model
 	 * @param username
@@ -535,7 +555,7 @@ public class LeadMembershipController {
 	public String saveMembershipAction(@PathVariable Integer id,
 			@ModelAttribute("leadMembership") @Validated LeadMembership leadMembership, BindingResult bindingResult,
 			Model model, @ModelAttribute("username") String username) {
-		logger.info("membership id is" + id);
+		logger.info("leadMembership id is" + id);
 		if (bindingResult.hasErrors()) {
 			leadMembership.setActiveInd('Y');
 			logger.info("Returning membershipEdit.jsp page");
@@ -551,12 +571,12 @@ public class LeadMembershipController {
 		logger.info("Returning MembershipSuccess.jsp page");
 
 		LeadMembership dbLeadMembership = leadMembershipService.findById(leadMembership.getId());
-		model.addAttribute("Message", "Membership details updated successfully");
-		model.addAttribute("membership", dbLeadMembership);
+		model.addAttribute("Message", "leadMembership details updated successfully");
+		model.addAttribute("leadMembership", dbLeadMembership);
 		return TileDefinitions.MEMBERSHIPEDIT.toString();
 	}
 
-	/* Lead Membership Hedis Measure */
+	/* Lead leadMembership Hedis Measure */
 
 	@RequestMapping(value = { "/admin/leadMembership/{id}/hedisMeasureList",
 			"/user/leadMembership/{id}/hedisMeasureList" }, method = RequestMethod.GET)
@@ -570,9 +590,9 @@ public class LeadMembershipController {
 		return TileDefinitions.LEADMEMBERSHIPHEDISMEASURELIST.toString();
 	}
 
-	/* Lead Membership Hedis Measure end */
+	/* Lead leadMembership Hedis Measure end */
 
-	/* Lead Membership Claim Start */
+	/* Lead leadMembership Claim Start */
 
 	/**
 	 * @return
@@ -620,7 +640,7 @@ public class LeadMembershipController {
 		return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
 	}
 
-	/* Lead Membership Claim End */
+	/* Lead leadMembership Claim End */
 
 	/**
 	 * @param id
@@ -668,7 +688,109 @@ public class LeadMembershipController {
 			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
 
 		}
+		
+		
 	}
+	
+	
+	
+	/* Lead leadMembership Problem Start */
+
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/problemList", "/user/leadMembership/{id}/problemList" })
+	public String leadMembershipProblemList(@PathVariable Integer id, Model model) {
+		logger.info("returning leadMembershipProblelmList.jsp");
+		model.addAttribute("id",id);
+		return TileDefinitions.LEADMEMBERSHIPPROBLEMLIST.toString();
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/leadMembership/{id}/problem/list",
+			"/user/leadMembership/{id}/problem/list" }, method = RequestMethod.GET)
+	public Message viewProblemList(@PathVariable Integer id, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize) {
+		Pagination pagination = leadMembershipProblemService.getPage(pageNo, pageSize);
+		return Message.successMessage(CommonMessageContent.LEADMEMBERSHIPPROBLEM_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/problem/new", "/user/leadMembership/{id}/problem/new" })
+	public String newLeadMembershipProblem(@PathVariable Integer id, Model model) {
+
+		LeadMembership dbLeadMembership = leadMembershipService.findById(id);
+
+		LeadMembershipProblem dbLeadMembershipProblem = new LeadMembershipProblem();
+		dbLeadMembershipProblem.setLeadMbr(dbLeadMembership);
+		model.addAttribute("leadMembershipProblem", dbLeadMembershipProblem);
+
+		logger.info("Returning leadMembershipProblemEdit.jsp page");
+		return TileDefinitions.LEADMEMBERSHIPPROBLEMEDIT.toString();
+	}
+	
+	
+	/* Lead leadMembership Problem End */
+	
+	
+	/* Lead leadMembership Hospitalization Start */
+
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalizationList", "/user/leadMembership/{id}/hospitalizationList" })
+	public String leadMembershipHospitalizationList(@PathVariable Integer id, Model model) {
+		logger.info("returning leadMembershipHospitalizationList.jsp");
+		model.addAttribute("id",id);
+		return TileDefinitions.LEADMEMBERSHIPHOSPITALIZATIONLIST.toString();
+	}
+
+	/**
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalization/list",
+			"/user/leadMembership/{id}/hospitalization/list" }, method = RequestMethod.GET)
+	public Message viewLeadMembershipHospitalizationList(@PathVariable Integer id, @RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize) {
+		Pagination pagination = leadMembershipHospitalizationService.getPage(pageNo, pageSize);
+		return Message.successMessage(CommonMessageContent.LEADMEMBERSHIPHOSPITALIZATION_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalization/new", "/user/leadMembership/{id}/hospitalization/new" })
+	public String newLeadMembershipHospitalization(@PathVariable Integer id, Model model) {
+
+		LeadMembership dbLeadMembership = leadMembershipService.findById(id);
+
+		LeadMembershipHospitalization dbLeadMembershipHospitalization = new LeadMembershipHospitalization();
+		dbLeadMembershipHospitalization.setLeadMbr(dbLeadMembership);
+		model.addAttribute("leadMembershipHospitalization", dbLeadMembershipHospitalization);
+
+		logger.info("Returning leadMembershipHospitalizationEdit.jsp page");
+		return TileDefinitions.LEADMEMBERSHIPHOSPITALIZATIONEDIT.toString();
+	}
+	
+	
+	/* Lead leadMembership Hospitalization End */
+
 
 	/**
 	 * @return
@@ -779,6 +901,23 @@ public class LeadMembershipController {
 		Pagination page = claimTypeService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<ClaimType>) page.getList();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("problemList")
+	public List<Problem> problemList() {
+		Pagination page = problemService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<Problem>) page.getList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("hospitalList")
+	public List<Hospital> hospitalList() {
+		Pagination page = hospitalService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<Hospital>) page.getList();
 	}
 
 }

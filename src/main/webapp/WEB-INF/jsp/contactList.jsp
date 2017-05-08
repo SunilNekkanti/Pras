@@ -53,7 +53,7 @@
 												<a
 													onclick="return contact(${cntct.refContact.mbr.id},${cntct.id})"
 													href="javascript:void(0)" rel='tab'>Edit</a>
-											</c:when>
+											</c:when> 
 											<c:when test="${cntct.refContact.prvdr != null}">
 												<a
 													onclick="return contact(${cntct.refContact.prvdr.id},${cntct.id})"

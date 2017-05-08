@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -97,15 +96,10 @@ public class LeadMembership extends RecordDetails implements Serializable {
 	@JoinColumn(name = "lead_Mbr_Status", referencedColumnName = "code")
 	private MembershipStatus status;
 
-	
 	@Expose
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "reference_contact", joinColumns = {
-			@JoinColumn(name = "lead_mbr_id", referencedColumnName = "lead_mbr_id") }, inverseJoinColumns = {
-					@JoinColumn(name = "ref_cnt_Id", referencedColumnName = "ref_cnt_Id") })
-	private List<Contact> contactList;
-	
-	
+	@OneToMany(mappedBy = "leadMbr", fetch = FetchType.LAZY)
+	private List<ReferenceContact> refContactList; 
+
 	@Expose
 	@OneToMany(mappedBy = "leadMbr", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LeadMembershipHedisMeasure> leadMbrHedisMeasureList;
@@ -323,16 +317,16 @@ public class LeadMembership extends RecordDetails implements Serializable {
 	/**
 	 * @return
 	 */
-	public List<Contact> getContactList() {
+	/*public List<Contact> getContactList() {
 		return contactList;
-	}
+	}*/
 
 	/**
 	 * @param contactList
 	 */
-	public void setContactList(List<Contact> contactList) {
+	/*public void setContactList(List<Contact> contactList) {
 		this.contactList = contactList;
-	}
+	}*/
 	
 	/**
 	 * @return
@@ -346,6 +340,20 @@ public class LeadMembership extends RecordDetails implements Serializable {
 	 */
 	public void setLeadMbrHedisMeasureList(List<LeadMembershipHedisMeasure> leadMbrHedisMeasureList) {
 		this.leadMbrHedisMeasureList = leadMbrHedisMeasureList;
+	}
+
+	/**
+	 * @return the refContactList
+	 */
+	public List<ReferenceContact> getRefContactList() {
+		return refContactList;
+	}
+
+	/**
+	 * @param refContactList the refContactList to set
+	 */
+	public void setRefContactList(List<ReferenceContact> refContactList) {
+		this.refContactList = refContactList;
 	}
 
 	@Override

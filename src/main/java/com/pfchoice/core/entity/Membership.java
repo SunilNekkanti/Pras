@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -110,14 +109,16 @@ public class Membership extends RecordDetails implements Serializable {
 	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
 	private List<MembershipActivityMonth> mbrActivityMonthList;
 	
-	@Expose
-	@OneToMany(fetch = FetchType.LAZY)
+	/*@Expose
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinTable(name = "reference_contact", joinColumns = {
 			@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "ref_cnt_Id", referencedColumnName = "ref_cnt_Id") })
-	private List<Contact> contactList;
+	private List<Contact> contactList;*/
 
-	
+	@Expose
+	@OneToMany(mappedBy = "mbr", fetch = FetchType.LAZY)
+	private List<ReferenceContact> refContactList; 
 
 	/**
 	 * 
@@ -391,16 +392,16 @@ public class Membership extends RecordDetails implements Serializable {
 	/**
 	 * @return
 	 */
-	public List<Contact> getContactList() {
+	/*public List<Contact> getContactList() {
 		return contactList;
-	}
+	}*/
 
 	/**
 	 * @param contactList
 	 */
-	public void setContactList(List<Contact> contactList) {
+	/*public void setContactList(List<Contact> contactList) {
 		this.contactList = contactList;
-	}
+	}*/
 
 	/**
 	 * @return
@@ -414,6 +415,20 @@ public class Membership extends RecordDetails implements Serializable {
 	 */
 	public void setMbrActivityMonthList(List<MembershipActivityMonth> mbrActivityMonthList) {
 		this.mbrActivityMonthList = mbrActivityMonthList;
+	}
+
+	/**
+	 * @return the refContactList
+	 */
+	public List<ReferenceContact> getRefContactList() {
+		return refContactList;
+	}
+
+	/**
+	 * @param refContactList the refContactList to set
+	 */
+	public void setRefContactList(List<ReferenceContact> refContactList) {
+		this.refContactList = refContactList;
 	}
 
 	@Override

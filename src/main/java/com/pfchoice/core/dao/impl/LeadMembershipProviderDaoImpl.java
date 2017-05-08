@@ -86,12 +86,11 @@ public class LeadMembershipProviderDaoImpl extends HibernateBaseDao<LeadMembersh
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<LeadMembershipProvider> findAllByMbrId(final Integer id) {
-		Criteria crit = createCriteria().createAlias("leadMbr", "leadMbr")
-				.createAlias("prvdr", "prvdr")
-				.add(Restrictions.eq("leadMbr.id", id))
-				.add(Restrictions.eq("prvdr.activeInd", 'Y'))
-				.add(Restrictions.eq("leadMbr.activeInd", 'Y'))
-				.add(Restrictions.eq("activeInd", 'Y'));
+		getSession().clear();
+		Criteria crit = getSession().createCriteria(getEntityClass(), "leadMbrPrvdr").createAlias("leadMbrPrvdr.leadMbr", "leadMbr")
+				.createAlias("leadMbrPrvdr.prvdr", "prvdr")
+				.add(Restrictions.eq("leadMbr.id", id)).add(Restrictions.eq("leadMbrPrvdr.activeInd", 'Y'))
+				.add(Restrictions.eq("leadMbr.activeInd", 'Y'));
 
 		return crit.list();
 	}
@@ -105,6 +104,7 @@ public class LeadMembershipProviderDaoImpl extends HibernateBaseDao<LeadMembersh
 	@SuppressWarnings("unchecked")
 	@Override
 	public LeadMembershipProvider findByMbrId(final Integer id) {
+		
 		LeadMembershipProvider dbMembershipProvider = null;
 		Criteria cr = getSession().createCriteria(getEntityClass(), "leadMbrPrvdr").createAlias("leadMbrPrvdr.leadMbr", "leadMbr")
 				.add(Restrictions.eq("leadMbr.id", id)).add(Restrictions.eq("leadMbrPrvdr.activeInd", 'Y'))

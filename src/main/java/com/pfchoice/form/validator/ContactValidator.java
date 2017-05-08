@@ -52,13 +52,9 @@ public class ContactValidator implements Validator {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address1", "address1", "Address1 Required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "error.city", "City Required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode", "error.stateCode", "StateCode Required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode", "error.zipCode", "zipCode Required");
-
-		if (cnt.getAddress1().length() < 10) {
-			errors.rejectValue("address1", "address1.tooshort", "Address1 must be at least 10 characters.");
-		}
-
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "stateCode.code", "error.stateCode", "StateCode Required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode.code", "error.zipCode", "zipCode Required");
+		
 		if (cnt.getCity().length() < 5) {
 			errors.rejectValue("city", "city.tooshort", "city must be at least 5 characters.");
 		}
@@ -70,6 +66,10 @@ public class ContactValidator implements Validator {
 				errors.rejectValue("email", "email.incorrect", "Enter a correct email");
 			}
 		}
+		if (cnt.getAddress1().length() < 10) {
+			errors.rejectValue("address1", "address1.tooshort", "Address1 must be at least 10 characters.");
+		}
+
 
 	}
 }

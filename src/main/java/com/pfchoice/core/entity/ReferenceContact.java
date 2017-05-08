@@ -31,21 +31,21 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	private Integer id;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id")
+	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id", nullable=true)
 	private Membership mbr;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lead_Mbr_Id", referencedColumnName = "lead_Mbr_Id")
+	@JoinColumn(name = "lead_Mbr_Id", referencedColumnName = "lead_Mbr_Id", nullable=true)
 	private LeadMembership leadMbr;
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "insurance_id", referencedColumnName = "insurance_id")
+	@JoinColumn(name = "insurance_id", referencedColumnName = "insurance_id", nullable=true)
 	private Insurance ins;
 
-	@Expose
+	//@Expose
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id")
+	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id", nullable=true)
 	private Provider prvdr;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "refContact")

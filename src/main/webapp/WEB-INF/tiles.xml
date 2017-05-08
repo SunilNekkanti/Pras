@@ -900,5 +900,31 @@
 	
 <!-- lead membership claim end -->
 
+<!-- lead membership problem start -->
+	<definition name="leadMembershipProblemList" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Problem List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipProblemList.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipProblemEdit" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Problem Edit" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipProblemEdit.jsp" />
+	</definition>	
+
+<!-- lead membership problem end -->
+
+<!-- lead membership hospitalization start -->
+	<definition name="leadMembershipHospitalizationList" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Hospitalization List" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipHospitalizationList.jsp" />
+	</definition>
+	
+	<definition name="leadMembershipHospitalizationEdit" extends="baseNoHeader.definition">
+		<put-attribute name="title" value="Lead Membership Hospitalization Edit" />
+		<put-attribute name="body" value="/WEB-INF/jsp/leadMembershipHospitalizationEdit.jsp" />
+	</definition>	
+
+<!-- lead membership hospitalization end -->
+
 	
 </tiles-definitions>  

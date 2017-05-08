@@ -22,9 +22,13 @@
 	<div class="col-sm-12" id="leadMbrPrdvrDetails"></div>
 </div>
 
-<div class="row">
-     <div class="col-sm-12" id="leadMbrClaim"></div>
-</div>
+<div class="row"><div class="col-sm-12" id="leadMbrClaim"></div></div>
+
+<div class="row"><div class="col-sm-12" id="leadMbrPbm"></div></div>
+
+<div class="row"><div class="col-sm-12" id="leadMbrHedisMeasureList"></div></div>
+
+<div class="row"><div class="col-sm-12" id="leadMbrHosp"></div></div>
 
 <div class="modal fade" id="modalICD" role="dialog">
 	<div class="modal-dialog modal-lg">
@@ -108,15 +112,99 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-sm-12" id="leadMbrHedisMeasureList"></div>
-</div>
 
 
 <script>
  
+
 $listLength = 0;
+$hosListLength = 0;
 $(document).ready(function() {
+	
+ removeAllBlankOrNull = function(JsonObj) {
+		
+	    $.each(JsonObj, function(key, value) {
+	    	 console.log('JsonObj'+ key);
+	        if (value === "" || value === null) {
+	            console.log('%s (%s) : DELETE', key, value);
+	            delete JsonObj[key];
+	        } else if (typeof(value) === "object") {
+	            console.log('%s (%o) : OBJECT', key, value);
+	            JsonObj[key] = removeAllBlankOrNull(value);
+	            if (jQuery.isEmptyObject(JsonObj[key] ))
+	            {
+	               console.log("Empty Object");
+	               delete JsonObj[key];
+	            }
+	        }
+	    });
+	    return JsonObj;
+	}
+ 
+ serializeObject = function(form) {
+	  var o = {};
+	  var a = $(form).serializeArray();
+	  var regArray = /^([^\[\]]+)\[(\d+)\]$/;
+
+	  $.each(a, function(i) {
+	      var name = this.name;
+	      var value = this.value;
+
+	      // let's also allow for "dot notation" in the input names
+	      var props = name.split('.');
+	      var position = o;
+	      while (props.length) {
+	          var key = props.shift();
+	          var matches;
+	          if (matches = regArray.exec(key)) {
+	              var p = matches[1];
+	              var n = matches[2];
+	              if (!position[p]) position[p] = [];
+	              if (!position[p][n]) position[p][n] = {};
+	              position = position[p][n];
+	          } else {
+	              if (!props.length) {
+	                  if (!position[key]) position[key] = value || '';
+	                  else if (position[key]) {
+	                      if (!position[key].push) position[key] = [position[key]];
+	                      position[key].push(value || '');
+	                  }
+	              } else {
+	                  if (!position[key]) position[key] = {};
+	                  position = position[key];
+	              }
+	          }
+	      }
+	  });
+	  return o;
+	};
+	
+	  modifyContact = function() {
+			
+			var url = getContextPath()+'leadMembership/${id}/contact/save.do?update'; 
+			 var leadContactData =  serializeObject('#contact');
+			 leadContactData = JSON.stringify(removeAllBlankOrNull(leadContactData));
+			 console.log(' leadContactData'+   leadContactData  ); 
+			 var dataList = 	$("#contact").serializeArray();
+			 console.log(' dataList'+   JSON.stringify(dataList) );
+			$.ajax({
+		           type: "POST",
+		           contentType: "application/json",
+		           url: url,
+		           data:  leadContactData , 
+		           success: function(data)
+		           {
+		               $('#leadMembershipContactList').html(data);
+		           },
+		    		error:function(xhr, ajaxOptions, thrownError)
+		    		{
+		    			 alert(xhr.status);
+		    		     alert(thrownError);
+		    		}
+		     });
+		}
+	
+		
 	var checkedCPTItemsMap = {};
 	var checkedICDItemsMap = {};
 	var cptListReference;
@@ -282,8 +370,12 @@ $('#icdListTable').dataTable({
 	      "fnServerData" : datatable2Rest
 	});
 
-});
+	 
 
+	
+
+
+ leadMbrHedisMeasureList = function(){
 	var source = getContextPath()+'leadMembership/${id}/hedisMeasureList';
 	$.ajax({
 		url : source,
@@ -296,16 +388,16 @@ $('#icdListTable').dataTable({
 	  	  alert("Error leadMbrHedisMeasureList");
 	    }
 	});
+}
 	
-	
-	function leadMbrNewHedisMeasure(){
+	 leadMbrNewHedisMeasure = function(){
 		
 		var source = getContextPath()+'leadMembership/${id}/hedisMeasureDetails';
 		$.ajax({
 			url : source,
 		 	success: function(data, textStatus, jqXHR)
 		    {
-		 		$('#leadMbrPrdvrDetails').html(data);
+		 		$('#leadMbrHedisMeasureList').html(data);
 		    },	
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
@@ -314,9 +406,153 @@ $('#icdListTable').dataTable({
 		});
 	}
 	
-	claimList();  // call leadMembershipClaimList
 	
-	function claimList(){
+ 
+var	 membershipProblemList = function(){
+		var source = getContextPath()+'/leadMembership/${id}/problemList';
+		$.ajax({
+			url : source,
+		    success: function(data, textStatus, jqXHR)
+		    {
+		       $('#leadMbrPbm').html(data);
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		  	  alert("Error leadMbrPbm");
+		    }
+		});	
+	}
+    
+membershipProblemList();  // call membershipProblemList
+
+	 leadMembershipProblemNew = function(){
+		var source = getContextPath()+'leadMembership/${id}/problem/new';
+		$.ajax({
+			url : source,
+		    success: function(data, textStatus, jqXHR)
+		    {
+		       $('#leadMbrPbm').html(data);
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		  	  alert("Error leadMbrPbm");
+		    }
+		});	
+	}
+	
+	 addLeadMbrProblem = function(){
+		alert(" inside  addleadmbrproblem ");
+		
+		var leadProblemData = $('#leadMembershipProblem').serializeJSON();
+		leadProblemData = removeAllBlankOrNull(JSON.parse(leadClaimData));
+		console.log(JSON.stringify(leadProblemData)); 
+		var source = getContextPath()+'leadMembership/${id}/problem/save.do?add' ;
+		$.ajax({
+			url : source,
+			type: "POST",
+	         data: JSON.stringify(leadProblemData),
+	         dataType: "json",
+	         contentType: "application/json",
+		    success: function(data, textStatus, jqXHR)
+		    {
+		       $('#leadMbrPbm').html(data);
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		  	  alert("Error leadMbrPbm");
+		    }
+		});	
+		
+		
+		
+		return false;
+	}
+	
+	 modifyLeadMbrProblem = function($refrenceId){
+		alert(" inside  modifyLeadMbrProblem ");
+		return false;
+	}
+	
+	 deleteLeadMbrProblem = function($refrenceId){
+		alert(" inside  deleteLeadMbrProblem ");
+		return false;
+	}
+	
+	
+	 	
+		 leadMbrHospList=function(){
+			var source = getContextPath()+'/leadMembership/${id}/hospitalizationList';
+			$.ajax({
+				url : source,
+			    success: function(data, textStatus, jqXHR)
+			    {
+			       $('#leadMbrHosp').html(data);
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			  	  alert("Error leadMbrHosp");
+			    }
+			});	
+		}
+	    
+		 leadMbrHospList();  // call leadMbrHospList
+			
+		 
+		 leadMbrHospNew=function(){
+			var source = getContextPath()+'leadMembership/${id}/hospitalization/new';
+			$.ajax({
+				url : source,
+			    success: function(data, textStatus, jqXHR)
+			    {
+			       $('#leadMbrHosp').html(data);
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			  	  alert("Error leadMbrHospNew");
+			    }
+			});	
+		}
+		
+		 addLeadMbrHosp =function(){
+			alert(" inside  addleadmbrproblem ");
+			
+			var leadProblemData = $('#leadMembershipProblem').serializeJSON();
+			leadProblemData = removeAllBlankOrNull(JSON.parse(leadClaimData));
+			console.log(JSON.stringify(leadProblemData)); 
+			var source = getContextPath()+'leadMembership/${id}/problem/save.do?add' ;
+			$.ajax({
+				url : source,
+				type: "POST",
+		         data: JSON.stringify(leadProblemData),
+		         dataType: "json",
+		         contentType: "application/json",
+			    success: function(data, textStatus, jqXHR)
+			    {
+			       $('#leadMbrHosp').html(data);
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			  	  alert("Error leadMbrHospAdd");
+			    }
+			});	
+			
+			
+			
+			return false;
+		}
+		
+		 modifyLeadMbrHosp =function($refrenceId){
+			alert(" inside  modifyLeadMbrHosP ");
+			return false;
+		}
+		
+		 deleteLeadMbrHosp =function($refrenceId){
+			alert(" inside  deleteleadMbrHospNew ");
+			return false;
+		}
+	
+	
+	 claimList =function(){
 		var source = getContextPath()+'/leadMembership/${id}/claimList';
 		$.ajax({
 			url : source,
@@ -330,8 +566,9 @@ $('#icdListTable').dataTable({
 		    }
 		});	
 	}
-		
-	function claimNew(){
+		claimList();  // call leadMembershipClaimList
+
+	 claimNew =function(){
 		var source = getContextPath()+'leadMembership/${id}/claim/new';
 		$.ajax({
 			url : source,
@@ -347,7 +584,7 @@ $('#icdListTable').dataTable({
 	}
 	
 	
-	function addLeadMbrClaim(){
+	 addLeadMbrClaim =function(){
 		(function(root, factory) {
 
 			  // AMD
@@ -527,28 +764,14 @@ $('#icdListTable').dataTable({
 	}
 	
 
-	  
-	function removeAllBlankOrNull(JsonObj) {
-		
-	    $.each(JsonObj, function(key, value) {
-	    	 console.log('JsonObj'+ key);
-	        if (value === "" || value === null) {
-	            console.log('%s (%s) : DELETE', key, value);
-	            delete JsonObj[key];
-	        } else if (typeof(value) === "object") {
-	            console.log('%s (%o) : OBJECT', key, value);
-	            JsonObj[key] = removeAllBlankOrNull(value);
-	        }
-	    });
-	    return JsonObj;
-	}
+	
 
-	function modifyLeadMbrClaim($refrenceId){
+	 modifyLeadMbrClaim = function($refrenceId){
 		alert(" inside  modifyLeadMbrClaim ");
 		return false;
 	}
 	
-	function deleteLeadMbrClaim($refrenceId){
+	 deleteLeadMbrClaim =function($refrenceId){
 		alert(" inside  deleteLeadMbrClaim ");
 		return false;
 	}
@@ -570,7 +793,7 @@ $('#icdListTable').dataTable({
 	});
 	
 	
-	function mbrNewPrvdr(){
+	 mbrNewPrvdr =function(){
 		
 		var source = getContextPath()+'leadMembership/${id}/providerDetails';
 		$.ajax({
@@ -586,7 +809,7 @@ $('#icdListTable').dataTable({
 		});
 	}
 	
-	function addLeadProvider()
+	 addLeadProvider = function()
 	{
 		var url = getContextPath()+'leadMembership/${id}/provider/save.do?add'; 
 		var dataList = 	$("#leadMembershipProvider").serializeArray();
@@ -605,7 +828,7 @@ $('#icdListTable').dataTable({
 	         });
 	}
 	
-	function leadPrvdrDetails(id){
+	leadPrvdrDetails =function (id){
 		
 		var source = getContextPath()+'leadMembership/${id}/providerDetails';
 		$.ajax({
@@ -621,7 +844,7 @@ $('#icdListTable').dataTable({
 		});
 	}
 	
-function modifyleadPrvdrDetails(id){
+	modifyleadPrvdrDetails =function (id){
 		
 	var url = getContextPath()+'leadMembership/${id}/provider/save.do?update'; 
 	var dataList = 	$("#leadMembershipProvider").serializeArray();
@@ -639,7 +862,7 @@ function modifyleadPrvdrDetails(id){
 		});
 	}
 
-function deleteleadPrvdrDetails(id){
+deleteleadPrvdrDetails= function (id){
 	
 	var url = getContextPath()+'leadMembership/${id}/provider/save.do?delete'; 
 	var dataList = 	$("#leadMembershipProvider").serializeArray();
@@ -657,7 +880,7 @@ function deleteleadPrvdrDetails(id){
 		});
 	}
 
-	function modifyLeadMbrDetails()
+	 modifyLeadMbrDetails = function()
 	{
 		
 		var url = getContextPath()+'leadMembership/${id}/save.do?update';
@@ -679,11 +902,11 @@ function deleteleadPrvdrDetails(id){
 	
 	
 	
-	function deleteLeadMbrDetails()
+	 deleteLeadMbrDetails = function()
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'membership/${id}/save.do?delete';
+			var url = getContextPath()+'leadMembership/${id}/save.do?delete';
 			var dataList = 	$("#leadMembership").serialize();
 			$.ajax({
 		           type: "POST",
@@ -700,6 +923,7 @@ function deleteleadPrvdrDetails(id){
 		         });
 		}		
 	}
+	 
 	var source = getContextPath()+'leadMembership/${id}/contactList';
 	$.ajax({
 		url : source,
@@ -726,7 +950,7 @@ function deleteleadPrvdrDetails(id){
 	    }
 	});
 		
-	function contact(leadId,contactId)
+	 contact =function(leadId,contactId)
 	{
 		var source = getContextPath()+'leadMembership/'+leadId+'/contact/'+contactId;
 		$.ajax({
@@ -743,7 +967,7 @@ function deleteleadPrvdrDetails(id){
 		return false;	
 	}
 		
-	function newContact()
+	newContact= function ()
 	{
 		var source = getContextPath()+'leadMembership/${id}/contact/new';
 		$.ajax({
@@ -761,7 +985,7 @@ function deleteleadPrvdrDetails(id){
 	
 	
 	
-	function contactList()
+	contactList = function ()
 	{
 		var source = getContextPath()+'leadMembership/${id}/contactList';
 		$.ajax({
@@ -777,7 +1001,7 @@ function deleteleadPrvdrDetails(id){
 		});
 	}
 	
-	function addContact()
+	addContact=	function ()
 	{
 		var url = getContextPath()+'leadMembership/${id}/contact/save.do?add'; 
 		var dataList = 	$("#contact").serializeArray();
@@ -795,31 +1019,15 @@ function deleteleadPrvdrDetails(id){
 	    		}
 	         });
 	}
+ 
+
+		  
 	
-	function modifyContact()
-	{
-		var url = getContextPath()+'leadMembership/${id}/contact/save.do?update'; 
-		alert(" url "+url);
-		var dataList = 	$("#contact").serializeArray();
-		$.ajax({
-	           type: "POST",
-	           url: url,
-	           data: dataList, 
-	           success: function(data)
-	           {
-	               $('#leadMembershipContactList').html(data);
-	           },
-	    		error:function(data)
-	    		{
-	    			 alert(data); 
-	    		}
-	     });
-	}
-	function deleteContact()
+	deleteContact = function ()
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
-			var url = getContextPath()+'membership/${id}/contact/save.do?delete'; 
+			var url = getContextPath()+'leadMembership/${id}/contact/save.do?delete'; 
 			var dataList = 	$("#contact").serializeArray();
 			$.ajax({
 		           type: "POST",
@@ -837,9 +1045,9 @@ function deleteleadPrvdrDetails(id){
 	    } 
 	}
 	
-	function prvdr(memberId,prvdrId)
+	 prvdr= function(memberId,prvdrId)
 	{
-			var url = getContextPath()+'/membership/'+prvdrId+'/providerDetails'; 
+			var url = getContextPath()+'/leadMembership/'+prvdrId+'/providerDetails'; 
 			$.ajax({
 		          url: url,
 		          success: function(data, textStatus, jqXHR)
@@ -853,7 +1061,7 @@ function deleteleadPrvdrDetails(id){
 		     });
 	}
 	
-	function mbrNewIns()
+	 mbrNewIns =function()
 	{
 		var source = getContextPath()+'leadmembership/${id}/details/new';
 		$.ajax({
@@ -870,7 +1078,7 @@ function deleteleadPrvdrDetails(id){
 		});
 	}
 	
-	function mbrDetails(mbrId,mbrDetailsId)
+	 mbrDetails =function(mbrId,mbrDetailsId)
 	{
 		
 		var source = getContextPath()+'leadMembership/${id}/details/'+mbrDetailsId+'/display';
@@ -888,10 +1096,10 @@ function deleteleadPrvdrDetails(id){
 		});
 	}
 	
-	function leadMbrInsList()
+	 leadMbrInsList =function()
 	{
 		
-		var source = getContextPath()+'membership/${id}/detailsList';
+		var source = getContextPath()+'leadMembership/${id}/detailsList';
 		$.ajax({
 			url : source,
 		    success: function(data, textStatus, jqXHR)
@@ -905,7 +1113,7 @@ function deleteleadPrvdrDetails(id){
 		});
 	}
 	
-	function addMbrInsDetails()
+	 addMbrInsDetails =function()
 	{
 		var url = getContextPath()+'leadMembership/${id}/details/save.do?add'; 
 		var dataList = 	$("#leadMembershipInsurance").serialize();
@@ -926,7 +1134,7 @@ function deleteleadPrvdrDetails(id){
 	         });
 	}
 	
-	function modifyMbrInsDetails(mbrInsId)
+	 modifyMbrInsDetails = function(mbrInsId)
 	{
 		var url = getContextPath()+'leadMembership/${id}/details/'+mbrInsId+'/save.do?update'; 
 		var dataList = 	$("#leadMembershipInsurance").serialize();
@@ -945,7 +1153,7 @@ function deleteleadPrvdrDetails(id){
 	    		}
 	         });
 	}
-	function deleteMbrInsDetails(mbrInsId)
+	 deleteMbrInsDetails =function(mbrInsId)
 	{
 		if (confirm("Action cannot be undone.Click 'Ok' to delete.") == true) 
 		{
@@ -967,10 +1175,10 @@ function deleteleadPrvdrDetails(id){
 		         });
 		}	
 	}
-	function membershipDetails()
+	 membershipDetails = function()
 	{
 		
-		var url = getContextPath()+'/membership/${id}'; 
+		var url = getContextPath()+'/leadMembership/${id}'; 
 		$.ajax({
 	          url: url,
 	          success: function(data, textStatus, jqXHR)
@@ -997,7 +1205,7 @@ function deleteleadPrvdrDetails(id){
 	    }
 	});
 	
-	function mbrInsList()
+	 mbrInsList = function()
 	{
 		
 		var source = getContextPath()+'leadMembership/${id}/detailsList';
@@ -1013,27 +1221,65 @@ function deleteleadPrvdrDetails(id){
 		    }
 		});
 	}
+ 
 	
-$(document).ready(function(){
-	if("${leadMembershipClaim.id}" == ""){
-		addClaimDetailsRow(false);
-	}
-	 $('body').on('click',".addClaimDetailsRow", function(){
-    	addClaimDetailsRow(true);
-    });
-	$('body').on('click',".deleteClaimDetailsRow", function(){
-    	$(".claim_details .claimDetailsList:last").remove();
-    	showDeleteClaimDetailsButton();
-    });
-});
 
-
-function deleteClaimDetailsRow($row){
+ deleteClaimDetailsRow = function($row){
 	$(".claim_details .list"+$row).remove();
 	showDeleteClaimDetailsButton();
 }
 
-function addClaimDetailsRow($checkData){
+
+ addHosptializationDetailsRow = function(){
+	
+	
+	$("#leadMbrClaim .clrRed").html("");
+	check=0;
+	$(".checkData").each(function( index ) {
+		if($(this).val()){
+			
+		}
+		else{ check++;}
+	});
+	if(check == 0 || !$checkData){
+	
+			$hospAttPhysician = '<div class="form-group col-sm-2 required"><div class="col-sm-12"><label class="control-label">Att Physician</label><select name="leadMbrHospitalizationDetailsList[][attPhysician][id]" id="leadMbrHospitalizationDetailsList'+$hosListLength+'.attPhysician.id" class="form-control" /></select></div></div>';
+			$hospRoomType = '<div class="form-group col-sm-2 required"><div class="col-sm-12"><label class="control-label">Room Type</label><select name="leadMbrHospitalizationDetailsList[][roomType][id]" id="leadMbrHospitalizationDetailsList'+$hosListLength+'.roomType.id" class="form-control" /></select></div></div>';
+			$claimAdmDx = '<div class="form-group col-sm-2  required"><div class="col-sm-12"><label class="control-label">Adm Dx</label><input name="leadMbrHospitalizationDetailsList[][admDx]" id="leadMbrHospitalizationDetailsList'+$hosListLength+'.admDx" class="form-control" /></div></div>';
+			$(".hospitalization_details").append('<div class="col-sm-12 HosptializationDetailsList list'+$hosListLength+'">'+$hospAttPhysician+$hospRoomType+$claimAdmDx+'</div>');
+		
+			$.getJSON(getContextPath()+'/attPhysician/list?pageNo=0&pageSize=200', function(data){
+			    //clear the current content of the select
+			    //iterate over the data and append a select option
+			    if(data.data.list){
+			    	$("[id='leadMbrHospitalizationDetailsList"+$hosListLength+".attPhysician.id']").append('<option value="">Select one</option>');
+			    }
+			    $.each(data.data.list, function(key, val){
+			    	 $("[id='leadMbrHospitalizationDetailsList"+$hosListLength+".attPhysician.id']").append('<option value="'+val.id+'">' + val.name +'</option>');
+			    });
+			   
+			}).success(function() {  
+				$.getJSON(getContextPath()+'/roomType/list?pageNo=0&pageSize=200', function(data){
+				    //clear the current content of the select
+				    //iterate over the data and append a select option
+				    if(data.data.list){
+				    	$("[id='leadMbrHospitalizationDetailsList"+$hosListLength+".roomType.id']").append('<option value="">Select one</option>');
+				    }
+				    $.each(data.data.list, function(key, val){
+				    	 $("[id='leadMbrHospitalizationDetailsList"+$hosListLength+".roomType.id']").append('<option value="'+val.id+'">' + val.name +'</option>');
+				    });
+				}).success(function() {  
+					$hosListLength++;
+				});   
+				
+			});
+	}
+	else if($checkData){
+		$("#leadMbrClaim .clrRed").html("Some of the required fields are missing. Please rectify it");
+	}
+}
+
+ var addClaimDetailsRow = function($checkData){
 	$("#leadMbrClaim .clrRed").html("");
 	check=0;
 	$(".checkData").each(function( index ) {
@@ -1070,7 +1316,7 @@ function addClaimDetailsRow($checkData){
 	}
 }
 
-function showDeleteClaimDetailsButton(){
+ showDeleteClaimDetailsButton = function(){
 	if($(".claimDetailsList").length > 1){
     	$(".deleteClaimDetailsRow").show();
     }
@@ -1079,7 +1325,28 @@ function showDeleteClaimDetailsButton(){
     }
 }
 
+ if("${leadMembershipClaim.id}" == ""){
+		addClaimDetailsRow(false);
+	}
+	
+	
+	 $('body').on('click',".addClaimDetailsRow", function(){
+ 	addClaimDetailsRow(true);
+ });
+	 $('body').on('click',".addHospitalizationDetailsRow", function(){
+		 addHosptializationDetailsRow(true);
+	    });
+	$('body').on('click',".deleteMembershipHospitalDetailsRow", function(){
+ 	$(".claim_details .claimDetailsList:last").remove();
+ 	showDeleteClaimDetailsButton();
+ });
+	
+	$('body').on('click',".deleteClaimDetailsRow", function(){
+ 	$(".claim_details .claimDetailsList:last").remove();
+ 	showDeleteClaimDetailsButton();
+ });
 
+});
  
 </script>
 

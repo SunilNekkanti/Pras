@@ -108,12 +108,12 @@
         	     "sAjaxSource" : "${context}/"+'leadMembership/${id}/claim/list?pageSize=20000',
         	     "sAjaxDataProp" : 'data.list',
         	     "aoColumns": [
-        	                   { "mDataProp": "claimType", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "facilityType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "billType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "frequencyType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "dischargeStatus", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
-                               { "mDataProp": "diagnosis", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
+        	                   { "mDataProp": "claimType", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] },
+                               { "mDataProp": "facilityType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
+                               { "mDataProp": "billType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
+                               { "mDataProp": "frequencyType.shortName", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ],"sDefaultContent": ""  },
+                               { "mDataProp": "dischargeStatus", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
+                               { "mDataProp": "diagnosis", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,"sDefaultContent": "" },
                                { "mDataProp": "leadMbrClaimDetailsList[].claimStartDate", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ],
                             	   "mRender": function(data, type, full, meta) {
                                        return full.leadMbrClaimDetailsList[meta.row].claimStartDate;

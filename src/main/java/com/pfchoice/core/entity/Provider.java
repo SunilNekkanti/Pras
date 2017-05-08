@@ -1,6 +1,7 @@
 package com.pfchoice.core.entity;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,6 +42,7 @@ public class Provider extends RecordDetails implements Serializable {
 	@Column(name = "name")
 	private String name;
 
+	@Expose
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "prvdr")
 	private Set<ReferenceContact> refContacts = new HashSet<>();
 
@@ -159,7 +161,32 @@ public class Provider extends RecordDetails implements Serializable {
 
 	@Override
 	public String toString() {
-		return "com.pfchoice.core.entity.Provider[ id=" + id + " ]";
+		StringBuilder result = new StringBuilder();
+
+		  result.append( this.getClass().getName() );
+		  result.append( " Object {" );
+		  result.append("\n");
+
+		  //determine fields declared in this class only (no fields of superclass)
+		  Field[] fields = this.getClass().getDeclaredFields();
+
+		  //print field names paired with their values
+		  for ( Field field : fields  ) {
+			  if("serialVersionUID".equals(field.getName()))continue;
+		    result.append("  ");
+		    try {
+		      result.append( field.getName() );
+		      result.append(": ");
+		      //requires access to private field:
+		      result.append( field.get(this) );
+		    } catch ( IllegalAccessException ex ) {
+		      System.out.println(ex);
+		    }
+		    result.append("\n");
+		  }
+		  result.append("}");
+
+		  return result.toString();
 	}
 
 }

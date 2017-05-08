@@ -45,8 +45,8 @@
 				<tbody id="contentprovider">
 
 					<c:forEach items="${leadMembershipProviderList}" var="mbrProvider">
-						<tr>
-							<td><a onclick="leadPrvdrDetails(${id})"; href="javascript:void(0)"
+						<tr> 
+							<td> <a onclick="leadPrvdrDetails(${id})" href="javascript:void(0)"
 								rel='tab'> ${mbrProvider.prvdr.name}</a></td>
 							<td>${mbrProvider.prvdr.code}</td>
 							<c:forEach items="${mbrProvider.prvdr.refContacts}"

@@ -161,7 +161,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 					.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "status")
 					.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
 					.createAlias("mbrProvider.prvdr", "prvdr")
-					.createAlias("contactList", "contact")
+					.createAlias("refContactList", "refContact")
+					.createAlias("refContact.cnt", "contact")
 					.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 
 			criteria.add(Restrictions.eq("activeInd", new Character('Y')));
@@ -209,7 +210,8 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 						.createAlias("mbrProviderList", "mbrProvider", JoinType.INNER_JOIN).createAlias("status", "status")
 						.createAlias("countyCode", "countyCode", JoinType.LEFT_OUTER_JOIN)
 						.createAlias("mbrProvider.prvdr", "prvdr")
-						.createAlias("contactList", "contact")
+						.createAlias("refContactList", "refContact")
+						.createAlias("refContact.cnt", "contact")
 						.createAlias("mbrInsuranceList", "mbrInsurance", JoinType.INNER_JOIN);
 	
 				criteria1.add(Restrictions.eq("activeInd", new Character('Y')));
