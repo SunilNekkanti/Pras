@@ -1,6 +1,7 @@
 package com.pfchoice.springmvc.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -56,6 +57,7 @@ import com.pfchoice.core.entity.LeadMembershipProvider;
 import com.pfchoice.core.entity.MembershipStatus;
 import com.pfchoice.core.entity.Problem;
 import com.pfchoice.core.entity.Provider;
+import com.pfchoice.core.entity.RiskRecon;
 import com.pfchoice.core.service.BillTypeService;
 import com.pfchoice.core.service.ClaimTypeService;
 import com.pfchoice.core.service.CountyService;
@@ -75,6 +77,7 @@ import com.pfchoice.core.service.LeadMembershipService;
 import com.pfchoice.core.service.MembershipStatusService;
 import com.pfchoice.core.service.ProblemService;
 import com.pfchoice.core.service.ProviderService;
+import com.pfchoice.core.service.RiskReconService;
 
 import ml.rugal.sshcommon.page.Pagination;
 import ml.rugal.sshcommon.springmvc.util.Message;
@@ -132,13 +135,16 @@ public class LeadMembershipController {
 
 	@Autowired
 	private ProblemService problemService;
-	
+
 	@Autowired
 	private HospitalService hospitalService;
-	
+
+	@Autowired
+	private RiskReconService riskReconService;
+
 	@Autowired
 	private LeadMembershipProblemService leadMembershipProblemService;
-	
+
 	@Autowired
 	private LeadMembershipHospitalizationService leadMembershipHospitalizationService;
 
@@ -334,8 +340,7 @@ public class LeadMembershipController {
 
 	@RequestMapping(value = { "/admin/leadMembership/{id}/providerDetailsList",
 			"/user/leadMembership/{id}/providerDetailsList" }, method = RequestMethod.GET)
-	public String displayLeadMembershipProviderDetailsListPage(@PathVariable Integer id,
-			 Model model) {
+	public String displayLeadMembershipProviderDetailsListPage(@PathVariable Integer id, Model model) {
 
 		List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
 		model.addAttribute("leadMembershipProviderList", leadMbrPrvdrList);
@@ -421,7 +426,7 @@ public class LeadMembershipController {
 		leadMembershipProvider.setFileId(1);
 		leadMembershipProvider.setUpdatedDate(new Date());
 		leadMembershipProvider = leadMembershipProviderService.update(leadMembershipProvider);
-	 	List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
+		List<LeadMembershipProvider> leadMbrPrvdrList = leadMembershipProviderService.findAllByMbrId(id);
 		model.addAttribute("leadMembershipProviderList", leadMbrPrvdrList);
 		model.addAttribute("Message", "Lead provider details updated Successfully");
 		logger.info("Returning leadMembershipProviderList.jsp page");
@@ -498,7 +503,6 @@ public class LeadMembershipController {
 		return TileDefinitions.LEADMEMBERSHIPNEW.toString();
 	}
 
-	
 	/**
 	 * @param id
 	 * @param model
@@ -600,7 +604,7 @@ public class LeadMembershipController {
 	@RequestMapping(value = { "/admin/leadMembership/{id}/claimList", "/user/leadMembership/{id}/claimList" })
 	public String leadMembershipClaimList(@PathVariable Integer id, Model model) {
 		logger.info("returning leadMembershipClaimList.jsp");
-		model.addAttribute("id",id);
+		model.addAttribute("id", id);
 		return TileDefinitions.LEADMEMBERSHIPCLAIMLIST.toString();
 	}
 
@@ -655,22 +659,24 @@ public class LeadMembershipController {
 			"/user/leadMembership/{id}/claim/save.do" }, method = RequestMethod.POST, params = { "add" })
 	public String addLeadMembershipClaimDetailsPage(@PathVariable Integer id,
 			@RequestBody @Valid LeadMembershipClaim leadMembershipClaim, BindingResult bindingResult, Model model,
-			@ModelAttribute("username") String username) {
+			@ModelAttribute("username") String username, @ModelAttribute("userpath") String userpath) {
 		logger.info("leadMembership id is" + id);
 		if (bindingResult.hasErrors()) {
 			logger.info("Returning membershipClaimDetailsDisplay");
 
-			return TileDefinitions.MEMBERSHIPDETAILSDISPLAY.toString();
+			return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
 		} else {
+			Calendar cal = Calendar.getInstance();
+			Date date = cal.getTime();
+			long dateTime = date.getTime();
 			LeadMembership leadMbr = leadMembershipService.findById(id);
 			leadMembershipClaim.setCreatedBy(username);
 			leadMembershipClaim.setUpdatedBy(username);
-			leadMembershipClaim.setClaimNumber(username + id);
+			leadMembershipClaim.setClaimNumber(username + id + dateTime);
 			leadMembershipClaim.setLeadMbr(leadMbr);
 			Insurance ins = insuranceService.findById(3);
 			leadMembershipClaim.setIns(ins);
-			Calendar cal = Calendar.getInstance();
-			Date date = cal.getTime();
+
 			String reportMonth = PrasUtil.getDateWithFormatFromString(date, "YYYYMM");
 			leadMembershipClaim.setReportMonth(Integer.parseInt(reportMonth));
 
@@ -685,15 +691,65 @@ public class LeadMembershipController {
 			leadMembershipClaimService.save(leadMembershipClaim);
 
 			model.addAttribute("Message", "LeadMembership Claim added Successfully");
-			return TileDefinitions.MEMBERSHIPDETAILSLIST.toString();
+			return "forward:/" + userpath + "/" + TileDefinitions.LEADMEMBERSHIPCLAIMLIST.toString();
+		}
+	}
+
+	/**
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/admin/leadMembership/{id}/claimDetails", "/user/leadMembership/{id}/claimDetails" })
+	public String leadMembershipClaimDetails(@PathVariable Integer id, Model model) {
+
+		LeadMembershipClaim dbLeadMembershipClaim = leadMembershipClaimService.findById(id);
+		System.out.println("  id " + id);
+		System.out.println(
+				"  " + dbLeadMembershipClaim.getId() + "  " + dbLeadMembershipClaim.getClaimNumber() + "  id " + id);
+		System.out.println("  " + dbLeadMembershipClaim.getLeadMbrClaimDetailsList().get(0).getClaimStartDate());
+		model.addAttribute("leadMembershipClaim", dbLeadMembershipClaim);
+
+		logger.info("Returning leadMembershipClaimEdit.jsp page");
+		return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
+	}
+
+	@RequestMapping(value = { "/admin/leadMembership/{id}/claim/save.do",
+			"/user/leadMembership/{id}/claim/save.do" }, method = RequestMethod.POST, params = { "update" })
+	public String updateLeadMembershipClaimDetailsPage(@PathVariable Integer id,
+			@RequestBody @Valid LeadMembershipClaim leadMembershipClaim, BindingResult bindingResult, Model model,
+			@ModelAttribute("username") String username, @ModelAttribute("userpath") String userpath) {
+		logger.info("leadMembership id is" + id);
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning membershipClaimDetailsDisplay");
+
+			return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
+		} else {
+			
+			LeadMembershipClaim leadMbrClaim = leadMembershipClaimService.findById(id);
+			leadMbrClaim.getLeadMbrClaimDetailsList().clear();
+			
+			leadMembershipClaim.setUpdatedBy(username);
+			leadMembershipClaim.setClaimNumber(leadMbrClaim.getClaimNumber());
+			leadMembershipClaim.setIns(leadMbrClaim.getIns());
+			leadMembershipClaim.setReportMonth(leadMbrClaim.getReportMonth());
+			List<LeadMembershipClaimDetails> leadMbrClaimDetailsList = new ArrayList<>();
+			for (LeadMembershipClaimDetails leadMembershipClaimDetails : leadMembershipClaim.getLeadMbrClaimDetailsList()) {
+				leadMembershipClaimDetails.setLeadMbrClaim(leadMembershipClaim);
+				leadMembershipClaimDetails.setCreatedBy(username);
+				leadMembershipClaimDetails.setUpdatedBy(username);
+				leadMbrClaimDetailsList.add(leadMembershipClaimDetails);
+			} 
+			leadMembershipClaimService.merge(leadMembershipClaim);
+
+			model.addAttribute("Message", "LeadMembership Claim updated Successfully");
+			logger.info("Before returning leadmembershipClaimList");
+			return "forward:/" + userpath + "/" +TileDefinitions.LEADMEMBERSHIPCLAIMLIST.toString();
 
 		}
-		
-		
+
 	}
-	
-	
-	
+
 	/* Lead leadMembership Problem Start */
 
 	/**
@@ -702,7 +758,7 @@ public class LeadMembershipController {
 	@RequestMapping(value = { "/admin/leadMembership/{id}/problemList", "/user/leadMembership/{id}/problemList" })
 	public String leadMembershipProblemList(@PathVariable Integer id, Model model) {
 		logger.info("returning leadMembershipProblelmList.jsp");
-		model.addAttribute("id",id);
+		model.addAttribute("id", id);
 		return TileDefinitions.LEADMEMBERSHIPPROBLEMLIST.toString();
 	}
 
@@ -717,10 +773,10 @@ public class LeadMembershipController {
 	public Message viewProblemList(@PathVariable Integer id, @RequestParam(required = false) Integer pageNo,
 			@RequestParam(required = false) Integer pageSize) {
 		Pagination pagination = leadMembershipProblemService.getPage(pageNo, pageSize);
-		return Message.successMessage(CommonMessageContent.LEADMEMBERSHIPPROBLEM_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.LEADMEMBERSHIPPROBLEM_LIST,
+				JsonConverter.getJsonObject(pagination));
 	}
-	
-	
+
 	/**
 	 * @param id
 	 * @param model
@@ -738,20 +794,19 @@ public class LeadMembershipController {
 		logger.info("Returning leadMembershipProblemEdit.jsp page");
 		return TileDefinitions.LEADMEMBERSHIPPROBLEMEDIT.toString();
 	}
-	
-	
+
 	/* Lead leadMembership Problem End */
-	
-	
+
 	/* Lead leadMembership Hospitalization Start */
 
 	/**
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalizationList", "/user/leadMembership/{id}/hospitalizationList" })
+	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalizationList",
+			"/user/leadMembership/{id}/hospitalizationList" })
 	public String leadMembershipHospitalizationList(@PathVariable Integer id, Model model) {
 		logger.info("returning leadMembershipHospitalizationList.jsp");
-		model.addAttribute("id",id);
+		model.addAttribute("id", id);
 		return TileDefinitions.LEADMEMBERSHIPHOSPITALIZATIONLIST.toString();
 	}
 
@@ -763,19 +818,20 @@ public class LeadMembershipController {
 	@ResponseBody
 	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalization/list",
 			"/user/leadMembership/{id}/hospitalization/list" }, method = RequestMethod.GET)
-	public Message viewLeadMembershipHospitalizationList(@PathVariable Integer id, @RequestParam(required = false) Integer pageNo,
-			@RequestParam(required = false) Integer pageSize) {
+	public Message viewLeadMembershipHospitalizationList(@PathVariable Integer id,
+			@RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer pageSize) {
 		Pagination pagination = leadMembershipHospitalizationService.getPage(pageNo, pageSize);
-		return Message.successMessage(CommonMessageContent.LEADMEMBERSHIPHOSPITALIZATION_LIST, JsonConverter.getJsonObject(pagination));
+		return Message.successMessage(CommonMessageContent.LEADMEMBERSHIPHOSPITALIZATION_LIST,
+				JsonConverter.getJsonObject(pagination));
 	}
-	
-	
+
 	/**
 	 * @param id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalization/new", "/user/leadMembership/{id}/hospitalization/new" })
+	@RequestMapping(value = { "/admin/leadMembership/{id}/hospitalization/new",
+			"/user/leadMembership/{id}/hospitalization/new" })
 	public String newLeadMembershipHospitalization(@PathVariable Integer id, Model model) {
 
 		LeadMembership dbLeadMembership = leadMembershipService.findById(id);
@@ -787,28 +843,8 @@ public class LeadMembershipController {
 		logger.info("Returning leadMembershipHospitalizationEdit.jsp page");
 		return TileDefinitions.LEADMEMBERSHIPHOSPITALIZATIONEDIT.toString();
 	}
-	
-	
-	/**
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = { "/admin/leadMembership/{id}/claimDetails", "/user/leadMembership/{id}/claimDetails" })
-	public String leadMembershipClaimDetails(@PathVariable Integer id, Model model) {
 
-		LeadMembershipClaim dbLeadMembershipClaim = leadMembershipClaimService.findById(id);
-		System.out.println("  id "+id);
-		System.out.println("  "+dbLeadMembershipClaim.getId()+"  "+dbLeadMembershipClaim.getClaimNumber()+"  id "+id);
-		System.out.println("  "+dbLeadMembershipClaim.getLeadMbrClaimDetailsList().get(0).getClaimStartDate());
-		model.addAttribute("leadMembershipClaim", dbLeadMembershipClaim);
-		
-		 
-		logger.info("Returning leadMembershipClaimEdit.jsp page");
-		return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
-	}
 	/* Lead leadMembership Hospitalization End */
-
 
 	/**
 	 * @return
@@ -920,8 +956,7 @@ public class LeadMembershipController {
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<ClaimType>) page.getList();
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	@ModelAttribute("problemList")
 	public List<Problem> problemList() {
@@ -929,13 +964,21 @@ public class LeadMembershipController {
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<Problem>) page.getList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@ModelAttribute("hospitalList")
 	public List<Hospital> hospitalList() {
 		Pagination page = hospitalService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
 				SystemDefaultProperties.MEDIUM_LIST_SIZE);
 		return (List<Hospital>) page.getList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@ModelAttribute("riskReconList")
+	public List<RiskRecon> riskReconList() {
+		Pagination page = riskReconService.getPage(SystemDefaultProperties.DEFAULT_PAGE_NO,
+				SystemDefaultProperties.MEDIUM_LIST_SIZE);
+		return (List<RiskRecon>) page.getList();
 	}
 
 }

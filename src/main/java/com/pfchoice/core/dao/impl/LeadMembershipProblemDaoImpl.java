@@ -106,11 +106,11 @@ public class LeadMembershipProblemDaoImpl extends HibernateBaseDao<LeadMembershi
 	 * com.pfchoice.core.dao.LeadMembershipProblemDao#loadData(java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode,final Integer reportMonth) {
+	public Integer loadData(final Integer fileId, final Integer insId, final Integer leadMbrId, final String insuranceCode,final Integer reportMonth) {
 		String loadDataQuery = PrasUtil.getInsertQuery(getEntityClass(), insuranceCode+QUERY_TYPE_INSERT);
 
 		return getSession().createSQLQuery(loadDataQuery).setInteger("fileId", fileId).setInteger("reportMonth", reportMonth)
-				.setInteger("insId", insId).executeUpdate();
+				.setInteger("insId", insId).setInteger("leadMbrId", leadMbrId).executeUpdate();
 	}
 	
 	/*

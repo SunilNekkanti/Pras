@@ -109,5 +109,9 @@ public interface LeadMembershipClaimService {
 	 */
 	List<LeadMembershipClaim> getUnwantedClaims(Integer insId, Integer prvdrId, Integer reportMonth, Integer activityMonth, Boolean isUnwanted);
 
-
+	/**
+	 * @param leadMembershipClaim
+	 * @return
+	 */
+	LeadMembershipClaim merge(LeadMembershipClaim leadMembershipClaim) ;
 }

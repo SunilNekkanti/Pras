@@ -27,7 +27,7 @@ public class RecordDetails {
 	@Column(name = "updated_date", updatable=false)
 	private Date updatedDate = new Date();
 
-	@Column(name = "created_by")
+	@Column(name = "created_by" , updatable=false)
 	private String createdBy;
 
 	@Column(name = "updated_by")

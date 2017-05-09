@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class LeadMembershipClaimDetails extends RecordDetails implements Seriali
 	private Integer id;
 
 	//@Expose
-	@ManyToOne( fetch = FetchType.EAGER )
+	@ManyToOne( fetch = FetchType.EAGER)
 	@JoinColumn(name = "lead_mbr_claim_id", nullable = false )
 	private LeadMembershipClaim leadMbrClaim; 
 
@@ -110,8 +111,9 @@ public class LeadMembershipClaimDetails extends RecordDetails implements Seriali
 	private PlaceOfService roomType;
 
 	@Expose
-	@Column(name = "risk_recon_cos_des")
-	private String riskReconCosDes;
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "risk_recon_cos_des", referencedColumnName = "risk_recon_id")
+	private RiskRecon riskReconCosDes;
 
 	@Expose
 	@Column(name = "amount_paid")
@@ -492,7 +494,7 @@ public class LeadMembershipClaimDetails extends RecordDetails implements Seriali
 	/**
 	 * @return the riskReconCosDes
 	 */
-	public String getRiskReconCosDes() {
+	public RiskRecon getRiskReconCosDes() {
 		return riskReconCosDes;
 	}
 
@@ -500,7 +502,7 @@ public class LeadMembershipClaimDetails extends RecordDetails implements Seriali
 	 * @param riskReconCosDes
 	 *            the riskReconCosDes to set
 	 */
-	public void setRiskReconCosDes(String riskReconCosDes) {
+	public void setRiskReconCosDes(RiskRecon riskReconCosDes) {
 		this.riskReconCosDes = riskReconCosDes;
 	}
 

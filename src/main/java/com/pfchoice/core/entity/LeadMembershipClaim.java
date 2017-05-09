@@ -112,7 +112,7 @@ public class LeadMembershipClaim extends RecordDetails implements Serializable {
 	private Integer fileId;
 
 	@Expose
-	@OneToMany( fetch = FetchType.LAZY, cascade =  CascadeType.ALL ,mappedBy = "leadMbrClaim")
+	@OneToMany( fetch = FetchType.LAZY, cascade =  CascadeType.ALL ,mappedBy = "leadMbrClaim", orphanRemoval=true)
 	private List<LeadMembershipClaimDetails> leadMbrClaimDetailsList;
 
 	@Expose

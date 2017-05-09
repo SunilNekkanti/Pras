@@ -123,22 +123,22 @@
                                { "mDataProp": "diagnosis", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ]  },
                                { "mDataProp": "leadMbrClaimDetailsList[].claimStartDate", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ],
                             	   "mRender": function(data, type, full, meta) {
-                                       return full.leadMbrClaimDetailsList[meta.row].claimStartDate;
+                                       return data;
                                        }
                                },
                                { "mDataProp": "leadMbrClaimDetailsList[].claimEndDate", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ],
                             	   "mRender": function(data, type, full, meta) {
-                                       return full.leadMbrClaimDetailsList[meta.row].claimEndDate;
+                                       return data;
                                        }
                                },
                                { "mDataProp": "leadMbrClaimDetailsList[].cpt.code", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,
                             	   "mRender": function(data, type, full, meta) {
-                                       return full.leadMbrClaimDetailsList[meta.row].cpt.code;
+                                       return data;
                                        }
                                },
-                               { "mDataProp": "leadMbrClaimDetailsList[].riskReconCosDes", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,
+                               { "mDataProp": "leadMbrClaimDetailsList[].riskReconCosDes.name", "bSearchable" : false, "bVisible" : true, "asSorting" : [ "asc" ] ,
                             	   "mRender": function(data, type, full, meta) {
-                                       return full.leadMbrClaimDetailsList[meta.row].riskReconCosDes;
+                                       return data;
                                        }}
                            ],
                            

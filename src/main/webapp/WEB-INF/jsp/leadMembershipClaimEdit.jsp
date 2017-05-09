@@ -113,7 +113,7 @@
 												CPT</a>
 											</label>
 											<select name="leadMbrClaimDetailsList[][cpt][id]" id="leadMbrClaimDetailsList${count}.cpt.id" class="form-control">
-												<option value=${claimDetails.cpt.id}">${claimDetails.cpt.shortDescription}</option>
+												<option value=${claimDetails.cpt.id}>${claimDetails.cpt.shortDescription}</option>
 											</select>
 										</div>
 									</div>
@@ -121,7 +121,7 @@
 										<div class="col-sm-12">
 											<label class="control-label">RiskRecon
 											</label>
-											<select name="leadMbrClaimDetailsList[][riskReconCosDes]" id="leadMbrClaimDetailsList${count}.riskReconCosDes" class="checkData form-control"  >
+											<select name="leadMbrClaimDetailsList[][riskReconCosDes][id]" id="leadMbrClaimDetailsList${count}.riskReconCosDes" class="checkData form-control"  >
 													<option value="">Select One</option>
 													<c:forEach var="riskRecon" items="${riskReconList}">
 													<c:choose>
@@ -137,7 +137,7 @@
 												    
 											</select>
 										</div>
-									</div>';
+									</div>
 									<div class="form-group col-sm-2"><div class="col-sm-12">
 										<label>Srv Prvdr Name</label>
 										<input name="leadMbrClaimDetailsList[][srvProviderName]" id="leadMbrClaimDetailsList${count}.srvProviderName"  value="${claimDetails.srvProviderName}" class="form-control"  />

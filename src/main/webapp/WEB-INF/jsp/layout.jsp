@@ -222,11 +222,21 @@ jQuery( document ).ready(function( $ ) {
 	$(".datepicker").datepicker({
         dateFormat: 'mm/dd/yy',
         changeMonth: true,
-        changeYear: true
+        changeYear: true,
+        
     });
 
 	  $('body').on('focus',".datepicker", function(){
-		    $(this).datepicker();
+		    $(this).datepicker({
+		    	onSelect:function(date){
+		    		$id = $(this).attr('id');
+		    		$dateValue = $("#"+$id).val();
+		    		if($id.search( 'claimStartDate' ) != -1){
+		    			$id = $id.replace("claimStartDate", "claimEndDate");
+		    			$("[id='"+$id+"']").val(date);
+		    		}
+		    	}
+		    });
 		   });
 	  
 	  $("#deleteButton").click(function(e){

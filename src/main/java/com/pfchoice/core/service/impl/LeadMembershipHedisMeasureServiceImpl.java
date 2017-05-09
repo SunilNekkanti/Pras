@@ -119,8 +119,8 @@ public class LeadMembershipHedisMeasureServiceImpl implements LeadMembershipHedi
 	 * lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode, Integer reportMonth) {
-		return leadMembershipHedisMeasureDao.loadData(fileId, insId, insuranceCode, reportMonth);
+	public Integer loadData(final Integer fileId, final Integer insId, final Integer leadMbrId, final String insuranceCode, Integer reportMonth) {
+		return leadMembershipHedisMeasureDao.loadData(fileId, insId, leadMbrId, insuranceCode, reportMonth);
 	}
 	
 	/* (non-Javadoc)

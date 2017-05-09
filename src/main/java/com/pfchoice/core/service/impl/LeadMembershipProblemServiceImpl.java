@@ -105,8 +105,8 @@ public class LeadMembershipProblemServiceImpl implements LeadMembershipProblemSe
 	 * @see com.pfchoice.core.service.LeadMembershipProblemService#loadData(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer)
 	 */
 	@Override
-	public Integer loadData(final Integer fileId, final Integer insId, final String insuranceCode, Integer reportMonth) {
-		return leadMbrProblemDao.loadData(fileId, insId, insuranceCode, reportMonth);
+	public Integer loadData(final Integer fileId, final Integer insId, final Integer leadMbrId, final String insuranceCode, Integer reportMonth) {
+		return leadMbrProblemDao.loadData(fileId, insId, leadMbrId, insuranceCode, reportMonth);
 	}
 	
 	/* (non-Javadoc)

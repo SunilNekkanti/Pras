@@ -63,7 +63,7 @@ public interface LeadMembershipProblemDao {
 	/**
 	 * @return
 	 */
-	Integer loadData(Integer fileId, Integer insId, String insuranceCode, Integer reportMonth);
+	Integer loadData(Integer fileId, Integer insId, Integer leadMbrId, String insuranceCode, Integer reportMonth);
 
 	/**
 	 * @param mbrId

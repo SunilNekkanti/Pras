@@ -182,4 +182,9 @@ public class LeadMembershipClaimServiceImpl implements LeadMembershipClaimServic
 		
 		return leadMembershipClaimDao.getUnwantedClaims(insId, prvdrId, reportMonth, activityMonth,  isUnwanted);
 	}
+	
+	@Override
+	public LeadMembershipClaim merge(LeadMembershipClaim leadMembershipClaim) {
+		return leadMembershipClaimDao.merge(leadMembershipClaim);
+	}
 }

@@ -342,4 +342,14 @@ public class LeadMembershipClaimDaoImpl extends HibernateBaseDao<LeadMembershipC
 				.setInteger("activityMonth", activityMonth);
 		return query.setResultTransformer(Transformers.aliasToBean(MembershipClaimsUnwanted.class)).list();
 	}
+	
+	/**
+	 * @param leadMembershipClaim
+	 * @return
+	 */
+	@Override
+	public LeadMembershipClaim merge(LeadMembershipClaim leadMembershipClaim){
+		LeadMembershipClaim reattached = (LeadMembershipClaim) getSession().merge(leadMembershipClaim);
+	    return reattached;
+	}
 }

@@ -584,7 +584,7 @@ membershipProblemList();  // call membershipProblemList
 	}
 	
 	
-	 addLeadMbrClaim =function(){
+	 addLeadMbrClaim =function($url){
 		(function(root, factory) {
 
 			  // AMD
@@ -725,7 +725,6 @@ membershipProblemList();  // call membershipProblemList
 			  return FormSerializer;
 			}));
 
-		alert( " addLeadMbrClaim ");
 		
 		$("#leadMbrClaim .clrRed").html("");
 		check=0;
@@ -741,6 +740,8 @@ membershipProblemList();  // call membershipProblemList
 			  leadClaimData = removeAllBlankOrNull(JSON.parse(leadClaimData));
 			 console.log(JSON.stringify(leadClaimData)); 
 			var source = getContextPath()+'leadMembership/${id}/claim/save.do?add' ;
+			if($url)
+				source = $url;
 			$.ajax({
 				url : source,
 				type: "POST",
@@ -768,11 +769,12 @@ membershipProblemList();  // call membershipProblemList
 
 	 modifyLeadMbrClaim = function($referenceId){
 		alert(" inside  modifyLeadMbrClaim "+$referenceId);
+		addLeadMbrClaim(getContextPath()+'leadMembership/'+$referenceId+'/claim/save.do?update' );
 		return false;
 	}
 	
-	 deleteLeadMbrClaim =function($referenceId){
-		alert(" inside  deleteLeadMbrClaim ");
+	 deleteLeadMbrClaim =function($referenceId){alert(" inside deleteLeadMbrClaim "+$referenceId);
+		addLeadMbrClaim(getContextPath()+'leadMembership/'+$referenceId+'/claim/save.do?delete' );
 		return false;
 	}
 	
@@ -1279,7 +1281,7 @@ deleteleadPrvdrDetails= function (id){
 	}
 }
 
- var addClaimDetailsRow = function($checkData){
+ addClaimDetailsRow = function($checkData){
 	$("#leadMbrClaim .clrRed").html("");
 	check=0;
 	$(".checkData").each(function( index ) {
@@ -1292,7 +1294,7 @@ deleteleadPrvdrDetails= function (id){
 		$claimStartDate = '<div class="form-group col-sm-2 required"><div class="col-sm-12"><label class="control-label">Start Date</label><input name ="leadMbrClaimDetailsList[][claimStartDate]" id="leadMbrClaimDetailsList'+$listLength+'.claimStartDate" class="checkData form-control startDate datepicker" /></div></div>';
 		$claimEndDate = '<div class="form-group col-sm-2  required"><div class="col-sm-12"><label class="control-label">End Date</label><input name="leadMbrClaimDetailsList[][claimEndDate]" id="leadMbrClaimDetailsList'+$listLength+'.claimEndDate" class="checkData form-control endDate datepicker" /></div></div>';
 		$cpt = '<div class="form-group col-sm-2"><div class="col-sm-12"><label><a href="javascript:void(0)" id="addCPT'+$listLength+'" class="btn btn-success btn-xs white-text addModalCPT"> <span class="glyphicon glyphicon-plus-sign"></span>CPT</a> <a href="javascript:void(0)" id="removeCPT'+$listLength+'" class="removeCPT btn btn-success btn-xs white-text"> <span class="glyphicon glyphicon-minus-sign"></span>CPT</a></label><select name="leadMbrClaimDetailsList[][cpt][id]" id="leadMbrClaimDetailsList'+$listLength+'.cpt.id" class="form-control" /></select></div></div>';
-		$riskReconCosDes = '<div class="form-group col-sm-2  required"><div class="col-sm-12"><label class="control-label">RiskRecon</label><select name="leadMbrClaimDetailsList[][riskReconCosDes]" id="leadMbrClaimDetailsList'+$listLength+'.riskReconCosDes" class="checkData form-control"  ></select></div></div>';
+		$riskReconCosDes = '<div class="form-group col-sm-2  required"><div class="col-sm-12"><label class="control-label">RiskRecon</label><select name="leadMbrClaimDetailsList[][riskReconCosDes][id]" id="leadMbrClaimDetailsList'+$listLength+'.riskReconCosDes.id" class="checkData form-control"  ></select></div></div>';
 		$srvProviderName = '<div class="form-group col-sm-2"><div class="col-sm-12"><label>Srv Prvdr Name</label><input name="leadMbrClaimDetailsList[][srvProviderName]" id="leadMbrClaimDetailsList'+$listLength+'.srvProviderName" class="form-control"  /></div></div>';
 		$srvProviderDesc = '<div class="form-group col-sm-2"><div class="col-sm-12"><label>Srv Prvdr Code</label><div class="col-sm-8"><input name="leadMbrClaimDetailsList[][srvProvider]" id="leadMbrClaimDetailsList'+$listLength+'.srvProvider" class="form-control" /></div><div class="col-sm-4"><button type="button" onclick="deleteClaimDetailsRow('+$listLength+')" class="deleteClaimDetailsRow btn btn-success btn-xs white-text">- Delete</button></div></div></div>';
 		$(".claim_details").append('<div class="col-sm-12 claimDetailsList list'+$listLength+'">'+$claimStartDate+$claimEndDate+$cpt+$riskReconCosDes+$srvProviderName+$srvProviderDesc+'</div>');
@@ -1301,10 +1303,10 @@ deleteleadPrvdrDetails= function (id){
 		    //clear the current content of the select
 		    //iterate over the data and append a select option
 		    if(data.data.list){
-		    	$("[id='leadMbrClaimDetailsList"+$listLength+".riskReconCosDes']").append('<option value="">Select one</option>');
+		    	$("[id='leadMbrClaimDetailsList"+$listLength+".riskReconCosDes.id']").append('<option value="">Select one</option>');
 		    }
 		    $.each(data.data.list, function(key, val){
-		    	 $("[id='leadMbrClaimDetailsList"+$listLength+".riskReconCosDes']").append('<option value="'+val.id+'">' + val.name +'</option>');
+		    	 $("[id='leadMbrClaimDetailsList"+$listLength+".riskReconCosDes.id']").append('<option value="'+val.id+'">' + val.name +'</option>');
 		    });
 		   
 		}).success(function() {  
