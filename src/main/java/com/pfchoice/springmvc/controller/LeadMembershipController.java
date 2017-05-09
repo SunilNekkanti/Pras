@@ -725,27 +725,50 @@ public class LeadMembershipController {
 
 			return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
 		} else {
-			
+
 			LeadMembershipClaim leadMbrClaim = leadMembershipClaimService.findById(id);
 			leadMbrClaim.getLeadMbrClaimDetailsList().clear();
-			
+
 			leadMembershipClaim.setUpdatedBy(username);
 			leadMembershipClaim.setClaimNumber(leadMbrClaim.getClaimNumber());
 			leadMembershipClaim.setIns(leadMbrClaim.getIns());
 			leadMembershipClaim.setReportMonth(leadMbrClaim.getReportMonth());
 			List<LeadMembershipClaimDetails> leadMbrClaimDetailsList = new ArrayList<>();
-			for (LeadMembershipClaimDetails leadMembershipClaimDetails : leadMembershipClaim.getLeadMbrClaimDetailsList()) {
+			for (LeadMembershipClaimDetails leadMembershipClaimDetails : leadMembershipClaim
+					.getLeadMbrClaimDetailsList()) {
 				leadMembershipClaimDetails.setLeadMbrClaim(leadMembershipClaim);
 				leadMembershipClaimDetails.setCreatedBy(username);
 				leadMembershipClaimDetails.setUpdatedBy(username);
 				leadMbrClaimDetailsList.add(leadMembershipClaimDetails);
-			} 
+			}
 			leadMembershipClaimService.merge(leadMembershipClaim);
 
 			model.addAttribute("Message", "LeadMembership Claim updated Successfully");
 			logger.info("Before returning leadmembershipClaimList");
-			return "forward:/" + userpath + "/" +TileDefinitions.LEADMEMBERSHIPCLAIMLIST.toString();
+			return "forward:/" + userpath + "/" + TileDefinitions.LEADMEMBERSHIPCLAIMLIST.toString();
 
+		}
+
+	}
+
+	@RequestMapping(value = { "/admin/leadMembership/{id}/claim/save.do",
+			"/user/leadMembership/{id}/claim/save.do" }, method = RequestMethod.POST, params = { "delete" })
+	public String deleteLeadMembershipClaimDetailsPage(@PathVariable Integer id, BindingResult bindingResult,
+			Model model, @ModelAttribute("username") String username, @ModelAttribute("userpath") String userpath) {
+		logger.info("leadMembership id is" + id);
+		if (bindingResult.hasErrors()) {
+			logger.info("Returning membershipClaimDetailsDisplay");
+
+			return TileDefinitions.LEADMEMBERSHIPCLAIMEDIT.toString();
+		} else {
+
+			LeadMembershipClaim leadMbrClaim = leadMembershipClaimService.findById(id);
+			leadMbrClaim.setActiveInd('N');
+			leadMembershipClaimService.update(leadMbrClaim);
+
+			model.addAttribute("Message", "LeadMembership Claim deleted Successfully");
+			logger.info("Before returning leadmembershipClaimList");
+			return "forward:/" + userpath + "/" + TileDefinitions.LEADMEMBERSHIPCLAIMLIST.toString();
 		}
 
 	}
