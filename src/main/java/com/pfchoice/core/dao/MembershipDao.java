@@ -152,5 +152,12 @@ public interface MembershipDao {
 	 * @return
 	 */
 	Integer unloadCSV2Table(String tableName);
+	
+	Pagination getNewHedisMeasure(int pageNo, int pageSize, String sSearch, int sSearchIns, int sSearchPrvdr, 
+			String sSearchHedisRule, String sSearchReportMonth, Date sSearchStartDate, Date sSearchEndDate, 
+			String sSearchRoster, String sSearchCap, String userName, String sort, String sortdir);
+	
+	Pagination getMbrNewHedisMeasure(int pageNo, int pageSize,int sSearchMbrId, int sSearchRuleId,
+			String userName, String sort, String sortdir);
 
 }

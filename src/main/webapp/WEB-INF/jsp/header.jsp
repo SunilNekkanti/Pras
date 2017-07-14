@@ -563,6 +563,7 @@ $(document).ready(function () {
 							<li><a href="${context}/${userpath}/reports/generateReport?insId=2&reportFormat=pdf">Dashboard</a></li>
 							<li><a href="${context}/${userpath}/reports/membershipList?insId=2&reportFormat=pdf">MembershipStatusCountPerProvider</a></li>
 							<li><a href="${context}/${userpath}/reports/hedis">Hedis</a></li>
+							<li><a href="${context}/${userpath}/reports/newHedis">New Hedis</a></li>
 							<li><a href="${context}/${userpath}/reports/hospitalization">Hospitalization</a></li>
 							<li><a href="${context}/${userpath}/claimReport">Claims</a></li>
 							<li><a href="${context}/${userpath}/reports/problem">Problems</a></li>

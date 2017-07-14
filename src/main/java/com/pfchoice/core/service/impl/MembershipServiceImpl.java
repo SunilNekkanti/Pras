@@ -212,4 +212,23 @@ public class MembershipServiceImpl implements MembershipService {
 	public Integer unloadCSV2Table(String tableName) {
 		return membershipDao.unloadCSV2Table(tableName);
 	}
+	
+	public Pagination getNewHedisMeasure(final int pageNo, final int pageSize, final String sSearch,
+			final int sSearchIns, final int sSearchPrvdr, final String sSearchHedisRule, final String sSearchReportMonth,
+			final Date sSearchStartDate, final Date sSearchEndDate, final String sSearchRoster, final String sSearchCap,
+			final String userName, final String sort, final String sortdir
+			){
+		
+		return membershipDao.getNewHedisMeasure(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
+				sSearchHedisRule, sSearchReportMonth, sSearchStartDate, sSearchEndDate, sSearchRoster, sSearchCap, 
+				userName, sort, sortdir);
+	}
+	
+	public Pagination getMbrNewHedisMeasure(final int pageNo, final int pageSize, int sSearchMbrId,
+			final int sSearchRuleId, final String userName, final String sort, final String sortdir
+			){
+		
+		return membershipDao.getMbrNewHedisMeasure(pageNo, pageSize, sSearchMbrId, sSearchRuleId,
+				userName, sort, sortdir);
+	}
 }

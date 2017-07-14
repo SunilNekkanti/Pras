@@ -34,9 +34,9 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	@JoinColumn(name = "mbr_id", referencedColumnName = "mbr_id", nullable=true)
 	private Membership mbr;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lead_Mbr_Id", referencedColumnName = "lead_Mbr_Id", nullable=true)
-	private LeadMembership leadMbr;
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "lead_Mbr_Id", referencedColumnName = "lead_Mbr_Id", nullable=true)
+//	private LeadMembership leadMbr;
 
 	@Expose
 	@OneToOne(fetch = FetchType.LAZY)
@@ -48,6 +48,7 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	@JoinColumn(name = "prvdr_id", referencedColumnName = "prvdr_id", nullable=true)
 	private Provider prvdr;
 
+	@Expose
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "refContact")
 	private Contact cnt;
 
@@ -143,16 +144,16 @@ public class ReferenceContact extends RecordDetails implements Serializable {
 	/**
 	 * @return
 	 */
-	public LeadMembership getLeadMbr() {
+	/*public LeadMembership getLeadMbr() {
 		return leadMbr;
-	}
+	}*/
 
 	/**
 	 * @param leadMbr
 	 */
-	public void setLeadMbr(LeadMembership leadMbr) {
+	/*public void setLeadMbr(LeadMembership leadMbr) {
 		this.leadMbr = leadMbr;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

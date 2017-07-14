@@ -488,6 +488,11 @@
 			value="/WEB-INF/jsp/hedisMembershipList.jsp" />
 	</definition>
 
+    <definition name="newHedisMembershipList" extends="base.definition">
+		<put-attribute name="title" value="New Hedis Report" />
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/newHedisMembershipList.jsp" />
+	</definition>
 	<definition name="hedisMembershipList2" extends="base.definition">
 		<put-attribute name="title" value="Hedis Report" />
 		<put-attribute name="body"

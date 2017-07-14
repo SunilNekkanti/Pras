@@ -67,7 +67,7 @@ public class Contact extends RecordDetails implements Serializable {
 	@Column(name = "city")
 	private String city;
 
-	@Expose
+	//@Expose
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ref_cnt_id", referencedColumnName = "ref_cnt_id")
 	private ReferenceContact refContact;

@@ -2,6 +2,7 @@ package com.pfchoice.core.dao.impl;
 
 import static com.pfchoice.common.SystemDefaultProperties.FILTER_BY_PROCESSING_DATE;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_INSERT;
+import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_FETCH;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_BH_LOAD;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_INSERT;
 import static com.pfchoice.common.SystemDefaultProperties.QUERY_TYPE_LOAD;
@@ -11,6 +12,9 @@ import static com.pfchoice.common.SystemDefaultProperties.FILES_UPLOAD_DIRECTORY
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_MBR_ROSTER;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_BH_MBR_ROSTER;
 import static com.pfchoice.common.SystemDefaultProperties.FILE_TYPE_AMG_CAP_REPORT; 
+import com.pfchoice.core.entity.HedisMeasure;
+import com.pfchoice.core.entity.MembershipHedisMeasure;
+
 
 import ml.rugal.sshcommon.hibernate.HibernateBaseDao;
 import ml.rugal.sshcommon.page.Pagination;
@@ -20,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
@@ -731,5 +736,51 @@ public class MembershipDaoImpl extends HibernateBaseDao<Membership, Integer> imp
 	protected Class<Membership> getEntityClass() {
 		return Membership.class;
 	}
+	
+	public Pagination getNewHedisMeasure(final int pageNo, final int pageSize, final String sSearch, final int insId,
+			final int prvdrId, final String hedisRuleList, final String reportMonth,
+			final  Date startDate, final Date endDate, final String roster,
+			final String cap, final String userName, final String sort, final String sortdir)
+	{
+		String loadDataQuery = PrasUtil.getInsertQuery(HedisMeasure.class, QUERY_TYPE_FETCH);
+		SQLQuery  queryCount =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setInteger("insId", insId)
+				.setInteger("prvdrId", prvdrId).setString("hedisRuleList", hedisRuleList)
+				  .setDate("startDate", startDate).setDate("endDate", endDate) 
+				.setString("reportMonth", reportMonth) .setString("roster", roster)
+				.setString("cap", cap).setString("userName", userName)
+				.setInteger("pageSize", pageSize).setInteger("pageNo", pageNo).setInteger("cnt", 0);
+		Pagination pagination = new Pagination(pageNo, pageSize, queryCount.list().size());
+	
+	
+		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery).setInteger("insId", insId)
+				.setInteger("prvdrId", prvdrId).setString("hedisRuleList", hedisRuleList)
+				  .setDate("startDate", startDate).setDate("endDate", endDate) 
+				.setString("reportMonth", reportMonth) .setString("roster", roster)
+				.setString("cap", cap).setString("userName", userName)
+				.setInteger("pageSize", pageSize).setInteger("pageNo", pageNo).setInteger("cnt", 1);
+		pagination.setList(query.list());
+		return pagination;
+	}
 
+	
+	public Pagination getMbrNewHedisMeasure(final int pageNo, final int pageSize,  final int mbrId,
+			final int ruleId, final String userName, final String sort, final String sortdir)
+	{
+		String loadDataQuery = PrasUtil.getInsertQuery(MembershipHedisMeasure.class, QUERY_TYPE_FETCH);
+		
+		SQLQuery  query =   (SQLQuery) getSession().createSQLQuery(loadDataQuery)
+				.setInteger("mbrId", mbrId).setInteger("ruleId", ruleId)
+				 .setString("userName", userName)
+				.setInteger("pageSize", pageSize).setInteger("pageNo", pageNo).setInteger("count", 1);
+		
+		SQLQuery  queryCount =   (SQLQuery) getSession().createSQLQuery(loadDataQuery)
+				.setInteger("mbrId", mbrId).setInteger("ruleId", ruleId)
+				 .setString("userName", userName)
+				.setInteger("pageSize", pageSize).setInteger("pageNo", pageNo).setInteger("count", 0);
+		
+		
+		Pagination pagination = new Pagination(pageNo, pageSize, queryCount.list().size());
+		pagination.setList(query.list());
+		return pagination;
+	}
 }

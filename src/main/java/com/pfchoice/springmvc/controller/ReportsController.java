@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -179,6 +180,12 @@ public class ReportsController {
 
 		return TileDefinitions.HEDISMEMBERSHIPLIST.toString();
 	}
+	
+	@RequestMapping(value = { "/admin/reports/newHedis", "/user/reports/newHedis" })
+	public String handleNewHedisRequest() {
+
+		return TileDefinitions.NEWHEDISMEMBERSHIPLIST.toString();
+	}
 
 	/**
 	 * @param pageNo
@@ -208,7 +215,45 @@ public class ReportsController {
 
 		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/newHedisMembership/list",
+			"/user/reports/newHedisMembership/list" }, method = RequestMethod.GET)
+	public Message viewNewHedisMeasureList(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sSearch,
+			@RequestParam(required = true) Integer sSearchIns, @RequestParam(required = true) Integer sSearchPrvdr,
+			@RequestParam(required = true)  String sSearchHedisRule, @RequestParam(required = true)  String sSearchReportMonth, 
+			@RequestParam(required = true)  String sSearchCap, @RequestParam(required = true)  String sSearchRoster, 
+			@RequestParam(required = false)  @DateTimeFormat(pattern="MM/dd/yyyy") Date sSearchStartDate,
+			@RequestParam(required = false)  @DateTimeFormat(pattern="MM/dd/yyyy") Date sSearchEndDate,
+			@RequestParam(required = false) String sort,@RequestParam(required = false) String sortdir,
+			@ModelAttribute String username) {
+		assert  pageNo != null  ;
+		Pagination pagination = membershipService.getNewHedisMeasure(pageNo, pageSize, sSearch, sSearchIns, sSearchPrvdr,
+				sSearchHedisRule, sSearchReportMonth, sSearchStartDate, sSearchEndDate, sSearchRoster, sSearchCap, 
+				username, sort, sortdir);
 
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
+
+	
+	@ResponseBody
+	@RequestMapping(value = { "/admin/reports/mbrNewHedisMembership/list",
+			"/user/reports/mbrNewHedisMembership/list" }, method = RequestMethod.GET)
+	public Message viewMbrNewHedisMembership(@RequestParam(required = false) Integer pageNo,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = true) Integer sSearchMbrId, 
+			@RequestParam(required = true) Integer sSearchRuleId,
+			@RequestParam(required = false) String sort,@RequestParam(required = false) String sortdir,
+			@ModelAttribute String username) {
+		assert  pageNo != null  ;
+		Pagination pagination = membershipService.getMbrNewHedisMeasure(pageNo, pageSize, sSearchMbrId, sSearchRuleId,
+				username, sort, sortdir);
+
+		return Message.successMessage(CommonMessageContent.MEMBERSHIP_LIST, JsonConverter.getJsonObject(pagination));
+	}
+	
+	
 	/**
 	 * @param mbrHedisFollowup
 	 * @param username

@@ -30,7 +30,6 @@ import com.pfchoice.common.util.JsonConverter;
 import com.pfchoice.common.util.TileDefinitions;
 import com.pfchoice.core.entity.Contact;
 import com.pfchoice.core.entity.Insurance;
-import com.pfchoice.core.entity.LeadMembership;
 import com.pfchoice.core.entity.Membership;
 import com.pfchoice.core.entity.Provider;
 import com.pfchoice.core.entity.ReferenceContact;
@@ -38,7 +37,6 @@ import com.pfchoice.core.entity.State;
 import com.pfchoice.core.entity.ZipCode;
 import com.pfchoice.core.service.ContactService;
 import com.pfchoice.core.service.InsuranceService;
-import com.pfchoice.core.service.LeadMembershipService;
 import com.pfchoice.core.service.MembershipService;
 import com.pfchoice.core.service.ProviderService;
 import com.pfchoice.core.service.StateService;
@@ -71,8 +69,8 @@ public class ContactController {
 	@Autowired
 	private InsuranceService insuranceService;
 	
-	@Autowired
-	private LeadMembershipService leadMembershipService;
+//	@Autowired
+//	private LeadMembershipService leadMembershipService;
 
 	@Autowired
 	@Qualifier("contactValidator")
@@ -776,8 +774,8 @@ public class ContactController {
 			return TileDefinitions.MEMBERSHIPCONTACTEDIT.toString();
 		}
 
-		LeadMembership dbLeadMembership = leadMembershipService.findById(id);
-		logger.info("Returning membership.getId()" + dbLeadMembership.getId());
+	//	LeadMembership dbLeadMembership = leadMembershipService.findById(id);
+	//	logger.info("Returning membership.getId()" + dbLeadMembership.getId());
 
 		model.addAttribute("contact", contact);
 		contact.setCreatedBy(username);
@@ -786,7 +784,7 @@ public class ContactController {
 		ReferenceContact refCnt = createRefContactModel();
 		refCnt.setCreatedBy(username);
 		refCnt.setUpdatedBy(username);
-		refCnt.setLeadMbr(dbLeadMembership);
+	//	refCnt.setLeadMbr(dbLeadMembership);
 		contact.setRefContact(refCnt);
 		logger.info("Returning contactEditSuccess.jsp page after create");
 		contactService.save(contact);

@@ -33,7 +33,6 @@ public interface SystemDefaultProperties {
 
 	String EMAIL_ATTACHMENTS_FILES_DIRECTORY_PATH = "/tmp/emailTemplates/";
 	
-    
 	String SQL_DIRECTORY_PATH = "c:\\softwares\\gitworkspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Pras\\WEB-INF\\classes\\sql\\";
 
 	String FILES_UPLOAD_DIRECTORY_PATH = "C:\\ProgramData\\MySQL\\MySQL Server 5.6\\Uploads\\";

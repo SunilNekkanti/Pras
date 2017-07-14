@@ -45,7 +45,8 @@ public enum TileDefinitions {
 																																																																									"contactEdit"), CONTACTEDITSUCCESS(
 																																																																											"contactEditSuccess"), CONTACTDISPLAY(
 																																																																													"contactDisplay"), MBRLIST(
-																																																																															"mbrList"), HEDISMEASURELIST(
+																																																																															"mbrList"),NEWHEDISMEASURELIST(
+																																																																																	"newHedisMeasureList"), HEDISMEASURELIST(
 																																																																																	"hedisMeasureList"), HEDISMEASURENEW(
 																																																																																			"hedisMeasureNew"), HEDISMEASUREEDIT(
 																																																																																					"hedisMeasureEdit"), HEDISMEASUREEDITSUCCESS(
@@ -85,7 +86,8 @@ public enum TileDefinitions {
 																																																																																																																																																									"userEditSuccess"), USERNEW(
 																																																																																																																																																											"userNew"), AD403(
 																																																																																																																																																													"ad403"), HEDISMEMBERSHIPLIST(
-																																																																																																																																																															"hedisMembershipList"), HEDISMEMBERSHIPLIST2(
+																																																																																																																																																															"hedisMembershipList"), NEWHEDISMEMBERSHIPLIST(
+																																																																																																																																																																	"newHedisMembershipList"),HEDISMEMBERSHIPLIST2(
 																																																																																																																																																																	"hedisMembershipList2"), PLANTYPELIST(
 																																																																																																																																																																			"planTypeList"), PLANTYPENEW(
 																																																																																																																																																																					"planTypeNew"), PLANTYPEEDIT(
